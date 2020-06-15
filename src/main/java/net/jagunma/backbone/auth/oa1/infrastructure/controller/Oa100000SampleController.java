@@ -7,17 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping(path = "oa100000Sample")
 public class Oa100000SampleController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Oa100000SampleController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Oa100000SampleController.class);
 //	private Oa100000SampleService oa100000SampleService;
 //
 //	public Oa100000SampleController(Oa100000SampleService oa100000SampleService) {
@@ -25,20 +21,20 @@ public class Oa100000SampleController {
 //
 //	}
 
-	@GetMapping(path="/get")
-	private String get(Model model) {
+    @GetMapping(path = "/get")
+    private String get(Model model) {
 
-		return "hello";
-	}
+        return "hello";
+    }
 
-	@PostMapping(path = "/execute/{jaCode}/{tempoCode}/{operatorCode}")
-	public String execute(@PathVariable("jaCode") String jaCode,
-		@PathVariable("tempoCode") String tempoCode,
-		@PathVariable("operatorCode") String operatorCode,
-		Model model) {
+    @PostMapping(path = "/execute/{jaCode}/{tempoCode}/{operatorCode}")
+    public String execute(@PathVariable("jaCode") String jaCode,
+        @PathVariable("tempoCode") String tempoCode,
+        @PathVariable("operatorCode") String operatorCode,
+        Model model) {
 
-		model.addAttribute("message","POSTされたよ");
+        model.addAttribute("message", "POSTされたよ");
 
-		return "hello";
-	}
+        return "hello";
+    }
 }
