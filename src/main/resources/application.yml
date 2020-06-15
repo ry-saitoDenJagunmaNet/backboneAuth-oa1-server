@@ -1,0 +1,44 @@
+server:
+  port: 19001
+  compression:
+    enabled: true
+    mime-types: text/html,text/css,application/javascript,application/json
+  # アクセスログを出力したい場合に指定する
+  tomcat:
+    basedir: ./build/path/to/dir
+    accesslog:
+      enabled: true
+      directory: logs
+      suffix: .log
+      prefix: access_log
+      file-date-format: .yyyy-MM-dd
+
+spring:
+  # データソース設定
+  datasource:
+    url: jdbc:sqlserver://145.254.216.122:1433;databaseName=TEMPLATE
+    username: sa
+    password: sqlAdmin2020
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    time-zone: Asia/Tokyo
+  profiles:
+    active: develop
+  thymeleaf:
+    mode=HTML:
+
+# Dao関連設定
+doma:
+  dialect: MSSQL
+  sql-file-repository: NO_CACHE
+
+#ログ出力設定
+logging:
+  # 出力先設定
+  file:
+    name: ./build/logs/myapp.log
+  level:
+    org.seasar.doma: INFO
+    net.jagunma: DEBUG
+
