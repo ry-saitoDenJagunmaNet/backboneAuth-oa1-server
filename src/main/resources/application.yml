@@ -1,5 +1,5 @@
 server:
-  port: 19001
+  port: 18701
   compression:
     enabled: true
     mime-types: text/html,text/css,application/javascript,application/json
