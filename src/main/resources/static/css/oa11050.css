@@ -1,0 +1,44 @@
+/**
+ * OA11050 サブシステムロール付与
+ */
+
+/** 
+ * 付与ロールテーブル
+ */
+ .oaex_granted_role_table {
+	height: 266px; 
+	overflow-y: scroll;
+}
+.oaex_granted_role_table td {
+	padding: 2px 2px;
+}
+.oaex_granted_role_code {display: none;}
+.oaex_granted_role_name {min-width: 280px; width: 65%;}
+.oaex_granted_role_expiration {min-width: 240px; width: 35%;}
+.oaex_granted_role_expiration input[type=text] {
+	width: 45% !important;
+	margin: 0px !important;
+}
+.oaex_granted_role_table_template_row {display: none;}
+
+/** 
+ * 移動ボタン 
+ */
+.oaex_move_btn {
+	margin-top: 40px;
+	text-align: center;
+}
+
+/** 
+ * 未付与ロールテーブル
+ */
+.oaex_not_granted_role_table {
+	height: 266px; 
+	overflow-y: scroll;
+}
+.oaex_not_granted_role_table td {
+	height: 38px;
+}
+.oaex_not_granted_role_code {display: none;}
+.oaex_not_granted_role_name {min-width: 280px; width: 100%;}
+.oaex_not_granted_role_table_hidden_row {display: none;}

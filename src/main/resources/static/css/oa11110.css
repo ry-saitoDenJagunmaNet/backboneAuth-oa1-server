@@ -1,0 +1,29 @@
+/**
+ * OA11110 パスワード変更履歴照会
+ */
+
+/**
+ * パスワード変更履歴照会テーブル
+ */
+#password_history_table {visibility: collapse;}
+#password_history_pagination {visibility: collapse;}
+
+.oaex_password_history_table {
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 300px;
+}
+
+.oaex_password_history_tempo_th {min-width: 230px; width: 25%;}
+.oaex_password_history_tempo_code {min-width: 30px; width: 3%;}
+.oaex_password_history_tempo_name {min-width: 200px; width: 22%;}
+
+.oaex_password_history_operator_th {min-width: 280px; width: 31%;}
+.oaex_password_history_operator_code {min-width: 80px; width: 9%;}
+.oaex_password_history_operator_name {min-width: 200px; width: 22%;}
+
+.oaex_password_history_change_datetime_th {min-width: 200px; width: 22%;}
+.oaex_password_history_change_datetime {min-width: 200px; width: 22%;}
+
+.oaex_password_history_change_type_th {min-width: 200px; width: 22%;}
+.oaex_password_history_change_type {min-width: 200px; width: 22%;}

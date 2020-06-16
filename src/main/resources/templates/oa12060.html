@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>カレンダーメンテナンス | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa12060.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa12060.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa12060");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa12060", "カレンダーメンテナンス");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<div class="row">
+				<!-- 年月 -->
+				<div class="col s5">
+					<div>
+						<label class="oa_content_label">年月</label>
+					</div>
+					<div class="input-field oaex_inline">
+						<a class="btn-small waves-effect waves-light" href="javascript:oaex_lastMonthBtn_onClick();">◀</a>
+					</div>
+					<div class="input-field oaex_inline">
+						<input type="text" id="year_month" class="validate datepicker" onchange="oaex_year_month_onChange()"></input>
+						<label for="year_month"></label>
+					</div>
+					<div class="input-field oaex_inline">
+						<a class="btn-small waves-effect waves-light" href="javascript:oaex_nextMonthBtn_onClick();">▶</a>
+					</div>
+				</div>
+				<!-- 表示対象 -->
+				<div class="col s4">
+					<div>
+						<label class="oa_content_label">表示対象</label>
+					</div>
+					<div>
+						<label>
+							<input type="checkbox" id="calendar_type_check1" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<span>経済システム稼働カレンダー</span>
+						</label>
+					</div>
+					<div>
+						<label>
+							<input type="checkbox" id="calendar_type_check2" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<span>信用カレンダー</span>
+						</label>
+					</div>
+					<div>
+						<label>
+							<input type="checkbox" id="calendar_type_check3" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<span>広域物流カレンダー</span>
+						</label>
+					</div>
+				</div>
+				<!-- 稼働・休日 -->
+				<div class="col s3">
+					<div class="input-field">
+						<select id="workingday_or_holiday" class="validate" onchange="oaex_filterCalendar()">
+							<option value=""></option>
+							<option value="1">稼働のみ</option>
+							<option value="2">休日のみ</option>
+						</select>
+						<label>稼働・休日</label>
+					</div>	
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<!-- カレンダー -->
+			<div class="row">
+				<div class="col s12">
+					<div id="calendar_list"></div>
+				</div>
+			</div>
+		</section>
+
+		<br>
+
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+			<div class="col s3 offset-s6">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_applyBtn_onClick();">適用</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

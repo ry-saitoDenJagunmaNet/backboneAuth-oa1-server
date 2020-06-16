@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>アカウントロック照会 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11090.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11090.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11090");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11090", "アカウントロック照会");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>	
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーターコード -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="operater_code"  class="validate"></input>
+						<label for="operater_code">オペレーターコード</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーター名 -->
+			<div class="row oa_optional">
+				<div class="col s8">
+					<div class="input-field">
+						<input type="text" id="operater_name" class="validate"></input>
+						<label for="operater_name">オペレーター名</label>
+					</div>
+				</div>
+			</div>
+			<!-- 発生日 -->
+			<div class="row oa_optional">
+				<div class="row">
+					<div class="col s3">
+						<label class="oa_content_label">発生日</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="occurred_start_date" class="validate datepicker"></input>
+							<label for="occurred_start_date">（開始日）</label>
+						</div>
+					</div>
+					<div class="col s1">
+						<p>～</p>
+					</div>
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="occurred_end_date" class="validate datepicker"></input>
+							<label for="occurred_end_date">（終了日）</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 現在ロック状態 -->
+			<div class="row oa_optional">
+				<div class="col s3">
+					<label class="oa_content_label">現在ロック状態</label>
+				</div>
+				<div class="col s9">
+					<div class="row">
+						<div class="col s12">
+							<label>
+								<input type="checkbox"  checked="checked"></input>
+								<span>ロック</span>
+							</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<label>
+								<input type="checkbox"  checked="checked"></input>
+								<span>アンロック</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<!-- 検索ボタン -->
+			<div class="row">
+				<div class="col s3 offset-s9">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div class="row">
+				<!-- テーブルタイトル-->
+				<div class="col s4">
+					<label class="oa_content_label">現在状態</label>
+				</div>
+				<!-- 全アンロック -->
+				<div class="col s2 offset-s2">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_unlockAllBtn_onClick();">全アンロック</a>
+				</div>
+				<!-- テーブルタイトル-->
+				<div class="col s3">
+					<label class="oa_content_label">アカウントロック履歴</label>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div class="row">
+				<!-- 現在状態テーブル -->
+				<div class="col s8">
+					<div class="oa_table_head_dflex">
+						<div id="current_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr>
+										<th class="oaex_current_table_tempo_th">店舗</th>
+										<th class="oaex_current_table_operator_th">オペレーター</th>
+										<th class="oaex_current_table_occurred_datetime_th">発生日時</th>
+										<th class="oaex_current_table_status_th">ロック状態</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_current_table" onScroll="oa_linkageScrollX(this, 'current_table_head')">
+						<table id="current_table" class="highlight">	
+							<tbody>
+								<tr class="oaex_current_table_template_row" onclick="oa_setTableRowSelected(this); oaex_currentTableRow_onClick();">
+									<td class="oaex_current_table_tempo_code"></td>
+									<td class="oaex_current_table_tempo_name"></td>
+									<td class="oaex_current_table_operator_code"></td>
+									<td class="oaex_current_table_operator_name"></td>
+									<td class="oaex_current_table_occurred_datetime"></td>
+									<td class="oaex_current_table_status_current"><p>●</p></td>
+									<td class="oaex_current_table_status_apply">
+										<div class="switch">
+											<label>
+												<input type="checkbox" id="current_status_apply" checked="checked"></input>
+												<span class="lever"></span>
+											</label>
+										</div>				
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- アカウントロック履歴テーブル -->
+				<div class="col s4">
+					<div class="oa_table_head_dflex">
+						<div id="history_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr>
+										<th class="oaex_history_table_occurred_datetime_th">発生日時</th>
+										<th class="oaex_history_table_lock_status_th">ロック状態</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_history_table" onScroll="oa_linkageScrollX(this, 'history_table_head')">
+						<table id="history_table" class="highlight">
+							<tbody>
+								<tr class="oaex_history_table_template_row" onclick="oa_setTableRowSelected(this)">
+									<td class="oaex_history_table_occurred_datetime"></td>
+									<td class="oaex_history_table_lock_status_mark"><p>●</p></td>
+									<td class="oaex_history_table_lock_status_name"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- pagination -->
+			<div class="row" id="pagination_row" style="visibility: hidden;">
+				<div class="col s12">
+					<ul class="pagination">
+						<li class="disabled"><a href="#!">&lt;</a></li>
+						<li class="active"><a href="#!">1</a></li>
+						<li class="waves-effect"><a href="#!">2</a></li>
+						<li class="waves-effect"><a href="#!">3</a></li>
+						<li class="waves-effect"><a href="#!">4</a></li>
+						<li class="waves-effect"><a href="#!">5</a></li>
+						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!-- <br> -->
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+			<div class="col s3 offset-s6">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_applyBtn_onClick();">適用</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

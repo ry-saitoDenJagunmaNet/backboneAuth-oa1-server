@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>取引ロール付与 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11060.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11060.js"></script>
+	<script src="../static/js/oa11050.js"></script>	<!-- ★モックアップ上は同じ為指定★（現段階ではoa11060.jsは独自部分のみ記述） -->
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11060");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11060", "取引ロール付与");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーター -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="operator" readonly="readonly" value="OP006027 前橋小太郎"></input>
+						<label for="operator">オペレーター</label>
+					</div>	
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div class="row">
+				<!-- テーブルタイトル-->
+				<div class="col s3">
+					<label class="oa_content_label">取引ロール</label>
+				</div>
+				<!-- コピーボタン -->
+				<div class="col s3 offset-s2">
+					<a class="btn waves-effect waves-light" href="#!">コピー</a>
+				</div>
+				<!-- サブシステムフィルタ -->
+				<div class="col s4">
+					<div class="input-field">
+						<select id="subsystem_filter" class="validate" onchange="oaex_subsystemFilter_onChange();">
+							<option value=""></option>
+							<option value="KB">購買</option>
+							<option value="YS">販売・青果</option>
+							<option value="YF">販売・花卉</option>
+							<option value="HK">販売・米</option>
+							<option value="HM">販売・麦</option>
+							<option value="AN">販売・畜産</option>
+						</select>
+						<label>サブシステムフィルタ</label>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<!-- 付与ロールテーブル -->
+				<div class="col s7">
+					<div class="oa_table_head_dflex">
+						<div id="granted_role_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr>
+										<th class="oaex_granted_role_table_name_th">付与ロール</th>
+										<th class="oaex_granted_role_table_expiration_th">有効期限</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_granted_role_table" onScroll="oa_linkageScrollX(this, 'granted_role_table_head')">
+						<table id="granted_role_table" class="highlight">
+							<tbody>
+								<tr class="oaex_granted_role_table_template_row" onclick="oa_setTableRowSelected(this)"> 
+									<td class="oaex_granted_role_table_code"></td>
+									<td class="oaex_granted_role_table_name"></td>
+									<td class="oaex_granted_role_table_expiration">
+										<div class="input-field">
+											<input type="text" class="datepicker" value=""></input>
+										</div>
+										<span>～</span>
+										<div class="input-field">
+											<input type="text" class="datepicker" value=""></input>
+										</div>
+									</td>
+								</tr>
+								<tr onclick="oa_setTableRowSelected(this)">
+									<td class="oaex_granted_role_table_code">YSAG30</td>
+									<td class="oaex_granted_role_table_name">（青果）集荷場担当</td>
+									<td class="oaex_granted_role_table_expiration">
+										<div class="input-field">
+											<input type="text" class="datepicker" value="2020/05/01"></input>
+										</div>
+										<span>～</span>
+										<div class="input-field">
+											<input type="text" class="datepicker" value="9999/12/31"></input>
+										</div>
+									</td>
+								</tr>
+								<tr onclick="oa_setTableRowSelected(this)">
+									<td class="oaex_granted_role_table_code">YSAG40</td>
+									<td class="oaex_granted_role_table_name">（青果）単価計算担当</td>
+									<td class="oaex_granted_role_table_expiration">
+										<div class="input-field">
+											<input type="text" class="datepicker" value="2020/09/01"></input>
+										</div>
+										<span>～</span>
+										<div class="input-field">
+											<input type="text" class="datepicker" value="9999/12/31"></input>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>		
+				<!-- 移動ボタン -->
+				<div class="col s1">
+					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveAdditionBtn_onClick();">◀</a></div>
+					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveRemovalBtn_onClick();">▶</a></div>
+				</div>
+				<!-- 未付与ロールテーブル -->
+				<div class="col s4">
+					<div class="oa_table_head_dflex">
+						<div id="not_granted_role_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr><th class="oaex_not_granted_role_table_name_th">未付与ロール</th></tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_not_granted_role_table" onScroll="oa_linkageScrollX(this, 'not_granted_role_table_head')">
+						<table id="not_granted_role_table" class="highlight">
+							<tbody>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG01</td><td class="oaex_not_granted_role_table_name">（購買）購買業務基本</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG02</td><td class="oaex_not_granted_role_table_name">（購買）本所業務</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG03</td><td class="oaex_not_granted_role_table_name">（購買）本所管理業務</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG04</td><td class="oaex_not_granted_role_table_name">（購買）バラエサ処理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG05</td><td class="oaex_not_granted_role_table_name">（購買）在庫管理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG06</td><td class="oaex_not_granted_role_table_name">（購買）支払業務</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG07</td><td class="oaex_not_granted_role_table_name">（購買）受入業務</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG08</td><td class="oaex_not_granted_role_table_name">（購買）受注管理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG09</td><td class="oaex_not_granted_role_table_name">（購買）未収金管理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG10</td><td class="oaex_not_granted_role_table_name">（購買）損害金利息管理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG11</td><td class="oaex_not_granted_role_table_name">（購買）配送管理</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG12</td><td class="oaex_not_granted_role_table_name">（購買）LPG担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG13</td><td class="oaex_not_granted_role_table_name">（購買）LPG入金</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG14</td><td class="oaex_not_granted_role_table_name">（購買）レジ担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG15</td><td class="oaex_not_granted_role_table_name">（購買）支所マスタ担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG16</td><td class="oaex_not_granted_role_table_name">（購買）食材担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG17</td><td class="oaex_not_granted_role_table_name">（購買）購買業務基本２</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG18</td><td class="oaex_not_granted_role_table_name">（購買）窓口供給（店舗用２）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG19</td><td class="oaex_not_granted_role_table_name">（購買）合併</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG20</td><td class="oaex_not_granted_role_table_name">（購買）購買業務基本３</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG50</td><td class="oaex_not_granted_role_table_name">（購買）マスタ移行</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">KBAG99</td><td class="oaex_not_granted_role_table_name">（購買）電算センター</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG10</td><td class="oaex_not_granted_role_table_name">（青果）管理者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG20</td><td class="oaex_not_granted_role_table_name">（青果）精算担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG30</td><td class="oaex_not_granted_role_table_name">（青果）集荷場担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG40</td><td class="oaex_not_granted_role_table_name">（青果）単価計算担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG50</td><td class="oaex_not_granted_role_table_name">（青果）入力担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG60</td><td class="oaex_not_granted_role_table_name">（青果）安定基金管理者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG70</td><td class="oaex_not_granted_role_table_name">（青果）支所担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YSAG90</td><td class="oaex_not_granted_role_table_name">（青果）電算センター維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG10</td><td class="oaex_not_granted_role_table_name">（花卉）管理者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG20</td><td class="oaex_not_granted_role_table_name">（花卉）精算担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG30</td><td class="oaex_not_granted_role_table_name">（花卉）集荷場担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG40</td><td class="oaex_not_granted_role_table_name">（花卉）単価計算担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG50</td><td class="oaex_not_granted_role_table_name">（花卉）入力担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG70</td><td class="oaex_not_granted_role_table_name">（花卉）支所担当</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">YFAG90</td><td class="oaex_not_granted_role_table_name">（花卉）電算センター維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HKAG10</td><td class="oaex_not_granted_role_table_name">（米）ＪＡ取引全般</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HKAG15</td><td class="oaex_not_granted_role_table_name">（米）ＪＡ取引振込以外全般</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HKAG99</td><td class="oaex_not_granted_role_table_name">（米）センター維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HMAG20</td><td class="oaex_not_granted_role_table_name">（麦）ＪＡ取引全般</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HMAG25</td><td class="oaex_not_granted_role_table_name">（麦）ＪＡ取引振込以外全般</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">HMAG99</td><td class="oaex_not_granted_role_table_name">（麦）センター維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">ANAG01</td><td class="oaex_not_granted_role_table_name">（畜産）取引全般</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">ANAG02</td><td class="oaex_not_granted_role_table_name">（畜産）維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">ANAG98</td><td class="oaex_not_granted_role_table_name">（畜産）センター維持管理担当者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_table_code">ANAG99</td><td class="oaex_not_granted_role_table_name">（畜産）維持管理責任者</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- 変更事由 -->
+			<div class="row oa_required">
+				<div class="col s7">
+					<div class="input-field">
+						<input type="text" id="change_cause" class="validate" placeholder="（青果）集荷場担当を担当／（青果）単価計算担当を担当…"></input>
+						<label for="change_cause">変更事由</label>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br>
+	</main>
+		
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+			<div class="col s3 offset-s6">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_applyBtn_onClick();">適用</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

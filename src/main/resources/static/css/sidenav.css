@@ -1,0 +1,87 @@
+/**
+ * サイドナビ
+ */
+
+/* sidenav openアイコンを固定*/
+.oa_sidenav_open {
+	position: fixed;
+	top: 10px;
+  	left: 1px;
+}
+/* OPENアイコン（ハンバーガー：〓） */
+a.oa_sidenav_open img {
+	position: absolute;
+	top: 8px;
+	left: 4px; 
+	height: 30px;
+}
+/* ヘッダー */
+.oa_sidenav_header {
+	height: 50px;
+	background-color: #00695c;										/* (teal darken-3) */
+	color: #ffffff;
+}
+/* ヘッダーのタイトルセル */
+.oa_sidenav_header_col {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 10px;
+}
+/* CLOSEアイコン（バツ：×） */
+a.oa_sidenav_close img {
+	position: relative;
+	top: 10px;
+	left: 24px; 
+	height: 30px;
+ }
+
+ /* 折りたたみ矢印アイコン close */
+li.oa_collapsible_root > a > img {
+	transform: rotate(90deg);
+	height: 10px;
+	margin-right: 4px;
+} 
+/* 折りたたみ矢印アイコン open */
+li.oa_collapsible_root[class*="active"] > a > img {
+	transform: rotate(180deg);
+}
+
+/* アイテム */
+.oa_sidenav_row {
+	margin: 0 4px 4px 10px;
+	width: 100%;
+	border-bottom: solid 1px #80cbc4;								/* (teal lighten-3) */
+	margin-top: 4px;
+}
+/* 既選択アイテム */
+.oa_sidenav_row_selected {
+	background-color: rgba(165, 214, 167, 0.3);						/* (green lighten-3) */
+}
+/* アイテムアイコン配置セル */
+.oa_sidenav_icon_col {
+	/* padding-left: 4px; */
+	width: 40px;
+}
+/* アイテムアイコンサイズ */
+.oa_sidenav_icon {
+	width: 36px;
+}
+/* アイテム説明セル */
+.oa_sidenav_guide_col {
+	line-height:24px;
+	color: #424242;
+}
+/* アイテム説明セル１行目 */
+.oa_sidenav_guide_description {
+	font-size: 12px; 
+	padding-left: 16px;
+}
+/* アイテム説明セル2行目以降 */
+.oa_sidenav_guide_descriptions {
+	font-size: 12px; 
+	padding-left: 24px;
+}
+/* アイテムマウスhover */
+.oa_sidenav_row a:hover div.oa_display_table {
+	background-color: rgba(245, 124, 0, 0.1);						/* (deep-orange lighten-4) */
+}

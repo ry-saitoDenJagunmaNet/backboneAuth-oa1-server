@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>システム利用可能時間帯＜一覧＞ | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa12040.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa12040.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa12040");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa12040", "システム利用可能時間帯＜一覧＞");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- 表示方法 -->
+			<div class="row">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s3">
+							<label class="oa_content_label">表示方法</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<label>
+								<input type="radio" id="disp_mode_week_subsystem" name="disp_mode_sel" value="0" onChange="oaex_disp_mode_sel_onChange();"></input>
+								<span>曜日 ＼ サブシステム</span>
+							</label>
+							<label>
+								<input type="radio" id="disp_mode_subsystem_week" name="disp_mode_sel" value="1" onChange="oaex_disp_mode_sel_onChange();"></input>
+								<span>サブシステム ＼ 曜日</span>
+							</label>
+							<label>
+								<input type="radio" id="disp_mode_both" name="disp_mode_sel" value="2" onChange="oaex_disp_mode_sel_onChange();"></input>
+								<span>両方</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section id="week_subsystem_table_section">
+			<!-- システム利用可能時間帯テーブル（曜日 ＼ サブシステム） -->
+			<div class="row">
+				<div class="col s12">
+					<table id="week_subsystem_table">
+						<thead>
+							<tr>
+								<th class="right-align">サブシステム</th>
+								<th colspan="2">購買</th>
+								<th colspan="2">販売・青果</th>
+								<th colspan="2">販売・花卉</th>
+								<th colspan="2">販売・米</th>
+								<th colspan="2">販売・麦</th>
+								<th colspan="2">販売・畜産</th>
+							</tr>
+							<tr>
+								<th class="right-left">曜日</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><th class="oaex_day_of_week oaex_table_head">月</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week">火</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week">水</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week">木</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week">金</th><td>0:00</td><td>0:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week blue-text">土</th><td>10:00</td><td>15:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr><th class="oaex_day_of_week red-text">日</th><td>8:00</td><td>20:00</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td><td>―</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		
+		<section id="subsystem_week_table_section">
+			<!-- システム利用可能時間帯テーブル（サブシステム ＼ 曜日） -->
+			<div class="row">
+				<div class="col s12">
+					<table id="subsystem_week_table">
+						<thead>
+							<tr>
+								<th class="right-align">曜日</th>
+								<th colspan="2">月曜日</th>
+								<th colspan="2">火曜日</th>
+								<th colspan="2">水曜日</th>
+								<th colspan="2">木曜日</th>
+								<th colspan="2">金曜日</th>
+								<th class="oaex_day_of_week blue-text" colspan="2">土曜日</th>
+								<th class="oaex_day_of_week red-text" colspan="2">日曜日</th>
+							</tr>
+							<tr>
+								<th class="right-left">サブシステム</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+								<th class="oaex_table_head">開始時刻</th>
+								<th class="oaex_table_head">終了時刻</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week oaex_table_head">購買</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>0:00</td><td>0:00</td><td>10:00</td><td>15:00</td><td>8:00</td><td>20:00</td></tr>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week">販売・青果</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>―</td><td>―</td></tr>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week">販売・花卉</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>―</td><td>―</td></tr>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week">販売・米</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>―</td><td>―</td></tr>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week">販売・麦</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>―</td><td>―</td></tr>
+							<tr onclick="oaex_subsystemWeekList_onClick(this)"><th class="oaex_day_of_week">販売・畜産</th><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>8:00</td><td>20:00</td><td>―</td><td>―</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<br>
+
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+			<div class="col s3 offset-s6">
+				<a class="btn waves-effect waves-light" href="javascript:oa_transferForm('oa12050')">詳細</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

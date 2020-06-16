@@ -1,0 +1,31 @@
+/**
+ * OA11080 取引ロールオペレーター割当
+ */
+
+/** 
+ * ロールテーブル
+ */
+ .oaex_role_table {
+	height: 380px; 
+	overflow-y: scroll;
+}
+.oaex_role_table td {
+	padding: 2px 2px;
+}
+.oaex_role_table_template_row {display: none;}
+
+.oaex_role_table_tempo_th {min-width: 300px; width: 35%;}
+.oaex_role_table_tempo_code {min-width: 50px; width: 5%;}
+.oaex_role_table_tempo_name {min-width: 250px; width: 30%;}
+
+.oaex_role_table_operator_th {min-width: 400px; width: 40%;}
+.oaex_role_table_operator_code {min-width: 100px; width: 10%;}
+.oaex_role_table_operator_name {min-width: 250px; width: 25%;}
+.oaex_role_table_operator_select {min-width: 50px; width: 5%;}
+
+.oaex_role_table_expiration_th {min-width: 240px; width: 25%;}
+.oaex_role_table_expiration {min-width: 240px; width: 25%;}
+.oaex_role_table_expiration input[type=text] {
+	width: 45% !important;
+	margin: 0px !important;
+}

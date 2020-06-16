@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>サービス呼出証跡照会 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa12070.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa12070.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa12070");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa12070", "サービス呼出証跡照会");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- 出力日 -->
+			<div class="row oa_required">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12">
+							<label class="oa_content_label">出力日</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="conditions_output_date_from" class="validate datepicker"></input>
+								<label for="conditions_output_date_from">（開始日）</label>
+							</div>
+						</div>
+						<div class="col s1"><div class="center-align"><p>～</p></div></div>
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="conditions_output_date_to" class="validate datepicker"></input>
+								<label for="conditions_output_date_to">（終了日）</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 出力時間 -->
+			<div class="row oa_optional">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12">
+							<label class="oa_content_label">出力時間</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="conditions_output_time_from" class="validate timepicker"></input>
+								<label for="conditions_output_time_from">（開始時間）</label>
+							</div>
+						</div>
+						<div class="col s1"><div class="center-align"><p>～</p></div></div>
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="conditions_output_time_to" class="validate timepicker"></input>
+								<label for="conditions_output_time_to">（終了時間）</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- クライアントIPアドレス -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="conditions_client_ipaddress" class="validate"></input>
+						<label for="conditions_client_ipaddress">クライアントIPアドレス</label>
+					</div>
+				</div>
+				<div class="col s6 oaex_explanation"><p>前方一致検索</p></div>
+			</div>
+
+			<!-- 'サーバクラス名 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="conditions_server_classname" class="validate"></input>
+						<label for="conditions_server_classname">サーバクラス名</label>
+					</div>
+				</div>
+				<div class="col s6 oaex_explanation"><p>部分一致検索</p></div>
+			</div>
+		</section>
+
+		<!-- 検索ボタン -->
+		<section>
+			<div class="row">
+				<div class="col s3 offset-s9">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="row">
+				<div class="col s12">
+					<div class="oaex_servicecall_trace_table">
+						<table class="highlight">
+							<thead>
+								<tr>
+									<th class="oaex_output_date">出力日</th>
+									<th class="oaex_output_time">出力時間</th>
+									<th class="oaex_client_ipaddress">クライアントIPアドレス</th>
+									<th class="oaex_server_classname">サーバクラス名</th>
+								</tr>
+							</thead>
+							<tbody id="servicecall_trace_table">
+								<tr><td></td><td>09:01:02.001</td><td>145.254.211.nnn</td><td>Kb302501Search</td></tr>
+								<tr><td></td><td>09:01:02.002</td><td>145.254.211.nnn</td><td>Kb302502Shuusei</td></tr>
+								<tr><td></td><td>09:01:02.003</td><td>145.254.211.nnn</td><td>Kb302502Shuusei</td></tr>
+								<tr><td></td><td>09:01:02.004</td><td>145.254.211.nnn</td><td>Kb302601Entry</td></tr>
+								<tr><td></td><td>09:01:03.005</td><td>145.254.211.nnn</td><td>Kb302701TensouNoInput</td></tr>
+								<tr><td></td><td>09:01:04.006</td><td>145.254.211.nnn</td><td>Kb302702Shuusei</td></tr>
+								<tr><td></td><td>09:01:05.007</td><td>145.254.211.nnn</td><td>Kb302711Search</td></tr>
+								<tr><td></td><td>09:01:06.008</td><td>145.254.211.nnn</td><td>Kb302801TensouNoInput</td></tr>
+								<tr><td></td><td>09:01:07.009</td><td>145.254.211.nnn</td><td>Kb302802GyouSakujo</td></tr>
+								<tr><td></td><td>09:01:08.010</td><td>145.254.211.nnn</td><td>Kb302803ZenSakujo</td></tr>
+								<!-- <tr><td></td><td>09:01:09.011</td><td>145.254.211.nnn</td><td>Kb302901Entry</td></tr>
+								<tr><td></td><td>09:01:10.012</td><td>145.254.211.nnn</td><td>Kb303001Entry</td></tr>
+								<tr><td></td><td>09:01:11.013</td><td>145.254.211.nnn</td><td>Kb303101DempyouNoInput</td></tr>
+								<tr><td></td><td>09:01:12.014</td><td>145.254.211.nnn</td><td>Kb303102GyouTorikeshi</td></tr>
+								<tr><td></td><td>09:01:13.015</td><td>145.254.211.nnn</td><td>Kb303103ZenTorikeshi</td></tr>
+								<tr><td></td><td>09:01:14.016</td><td>145.254.211.nnn</td><td>Kb303111Search</td></tr>
+								<tr><td></td><td>09:01:15.017</td><td>145.254.211.nnn</td><td>K>B303601Entry</td></tr>
+								<tr><td></td><td>09:01:16.018</td><td>145.254.211.nnn</td><td>KB303701Entry</td></tr>
+								<tr><td></td><td>09:01:17.019</td><td>145.254.211.nnn</td><td>KB303801Search</td></tr>
+								<tr><td></td><td>09:01:18.020</td><td>145.254.211.nnn</td><td>KB303802Shuusei</td></tr> -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- pagination -->
+			<div class="row">
+				<div class="col s12">
+					<ul id="servicecall_trace_pagination" class="pagination">
+						<li class="disabled"><a href="#!">&lt;</a></li>
+						<li class="active"><a href="#!">1</a></li>
+						<li class="waves-effect"><a href="#!">2</a></li>
+						<li class="waves-effect"><a href="#!">3</a></li>
+						<li class="waves-effect"><a href="#!">4</a></li>
+						<li class="waves-effect"><a href="#!">5</a></li>
+						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- <br> -->
+
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

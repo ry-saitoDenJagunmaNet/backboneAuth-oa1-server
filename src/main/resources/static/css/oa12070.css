@@ -1,0 +1,22 @@
+/**
+ * OA12070 サービス呼出証跡照会
+ */
+
+/* 入力項目右の説明 */
+.oaex_explanation {padding-top: 20px !important;}
+
+/**
+ * サービス呼出証跡テーブル
+ */
+ #servicecall_trace_table {visibility: collapse;}
+ #servicecall_trace_pagination {visibility: collapse;}
+  
+.oaex_servicecall_trace_table {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 298px;
+}
+.oaex_output_date {min-width: 100px; width: 10%;}
+.oaex_output_time {min-width: 100px; width: 10%;}
+.oaex_client_ipaddress {min-width: 200px; width: 20%;}
+.oaex_server_classname {min-width: 600px; width: 60%;}

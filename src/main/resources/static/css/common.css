@@ -1,0 +1,480 @@
+/**
+ * Materialize.csのオーバーライド 
+ */
+
+/* grid row の余白変更 */
+.row {
+	margin: 4px 0 2px 0;
+}
+/* Radio・Checkboxコントロール のコンテンツラベル文字色 */
+label {
+	color: #607d8b;													/* (blue-grey) */
+}
+/* inputコントロール の余白 */
+.input-field {
+	margin-bottom: 0;
+}
+/* input・selectコントロール のタイトルラベル文字色 */
+.input-field > label {
+	color: #80cbc4;													/* (teal lighten-3) */
+}
+/* selectコントロール の下線追加（選択済時＆フォーカス無し時） */
+.oa_validate_valid {
+	border-bottom: 1px solid #4caf50 !important;
+	-webkit-box-shadow: 0 1px 0 0 #4caf50 !important;
+	        box-shadow: 0 1px 0 0 #4caf50 !important;
+}
+/* selectコントロール の下線に影を追加（フォーカス時） */
+.select-wrapper input.select-dropdown:focus {
+	box-shadow: 0 1px 0 0 #26a69a;
+	-webkit-box-shadow: 0 1px 0 0 #26a69a;
+	        box-shadow: 0 1px 0 0 #26a69a;
+}
+/* inputコントロール の文字色（readonlyタイプ設定時） */
+input:not([type]):disabled, input:not([type])[readonly="readonly"],
+/* input[type=text]:not(.browser-default):disabled, */
+input[type=text]:not(.browser-default)[readonly="readonly"],
+/* input[type=password]:not(.browser-default):disabled, */
+input[type=password]:not(.browser-default)[readonly="readonly"],
+/* input[type=email]:not(.browser-default):disabled, */
+input[type=email]:not(.browser-default)[readonly="readonly"],
+/* input[type=url]:not(.browser-default):disabled, */
+input[type=url]:not(.browser-default)[readonly="readonly"],
+/* input[type=time]:not(.browser-default):disabled, */
+input[type=time]:not(.browser-default)[readonly="readonly"],
+/* input[type=date]:not(.browser-default):disabled, */
+input[type=date]:not(.browser-default)[readonly="readonly"],
+/* input[type=datetime]:not(.browser-default):disabled, */
+input[type=datetime]:not(.browser-default)[readonly="readonly"],
+/* input[type=datetime-local]:not(.browser-default):disabled, */
+input[type=datetime-local]:not(.browser-default)[readonly="readonly"],
+/* input[type=tel]:not(.browser-default):disabled, */
+input[type=tel]:not(.browser-default)[readonly="readonly"],
+/* input[type=number]:not(.browser-default):disabled, */
+input[type=number]:not(.browser-default)[readonly="readonly"],
+/* input[type=search]:not(.browser-default):disabled, */
+input[type=search]:not(.browser-default)[readonly="readonly"],
+/* textarea.materialize-textarea:disabled, */
+textarea.materialize-textarea[readonly="readonly"] {
+	color: #607d8b;													/* (blue-grey) */
+	border-bottom: 1px solid #4caf50;
+	-webkit-box-shadow: 0 1px 0 0 #4caf50;
+	        box-shadow: 0 1px 0 0 #4caf50;
+}
+/* inputコントロール のタイトルラベル文字色（readonlyタイプ設定時） */
+input:not([type]):disabled + label,
+input:not([type])[readonly="readonly"] + label,
+input[type=text]:not(.browser-default):disabled + label,
+input[type=text]:not(.browser-default)[readonly="readonly"] + label,
+input[type=password]:not(.browser-default):disabled + label,
+input[type=password]:not(.browser-default)[readonly="readonly"] + label,
+input[type=email]:not(.browser-default):disabled + label,
+input[type=email]:not(.browser-default)[readonly="readonly"] + label,
+input[type=url]:not(.browser-default):disabled + label,
+input[type=url]:not(.browser-default)[readonly="readonly"] + label,
+input[type=time]:not(.browser-default):disabled + label,
+input[type=time]:not(.browser-default)[readonly="readonly"] + label,
+input[type=date]:not(.browser-default):disabled + label,
+input[type=date]:not(.browser-default)[readonly="readonly"] + label,
+input[type=datetime]:not(.browser-default):disabled + label,
+input[type=datetime]:not(.browser-default)[readonly="readonly"] + label,
+input[type=datetime-local]:not(.browser-default):disabled + label,
+input[type=datetime-local]:not(.browser-default)[readonly="readonly"] + label,
+input[type=tel]:not(.browser-default):disabled + label,
+input[type=tel]:not(.browser-default)[readonly="readonly"] + label,
+input[type=number]:not(.browser-default):disabled + label,
+input[type=number]:not(.browser-default)[readonly="readonly"] + label,
+input[type=search]:not(.browser-default):disabled + label,
+input[type=search]:not(.browser-default)[readonly="readonly"] + label,
+textarea.materialize-textarea:disabled + label,
+textarea.materialize-textarea[readonly="readonly"] + label {
+	color: #80cbc4;													/* (teal lighten-3) */
+}
+/* サイドナビ の幅変更 */
+.sidenav {
+	width: 430px;
+	overflow-x: hidden;
+}
+/* Firefox・Edgeで sidenav の高さが足りない（最下のメニューが隠れる）*/
+/* Firefox */
+@-moz-document url-prefix() {
+	.sidenav {
+		height: 100%;
+	}
+}
+/* Edge */
+@supports (-ms-ime-align:auto) {
+	.sidenav {
+		height: 100%;
+	}
+}
+
+.sidenav li {
+	line-height: 28px !important;
+}
+/* teble 内の input-field の改行抑止 */
+td > div.input-field {
+	display: inline;
+}
+/* ボタンラベルが改行された場合の高さを自動調整 */
+a.btn {
+	height: auto;
+	line-height: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+/* datepickerを常時、縦レイアウトに変更 */
+.datepicker-modal {
+	max-width: 325px;
+	min-width: 300px;
+	max-height: none;
+}
+.datepicker-container.modal-content {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+			flex-direction: column;
+	padding: 0;
+}
+.datepicker-date-display {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1 auto;
+		-ms-flex: 1 auto;
+			flex: 1 auto;
+	background-color: #26a69a;
+	color: #fff;
+	padding: 20px 22px;
+	font-weight: 500;
+}
+.datepicker-controls {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+		-ms-flex-pack: justify;
+			justify-content: space-between;
+	width: 280px;
+	margin: 0 auto;
+}
+.datepicker-table {
+	width: 280px;
+	font-size: 1rem;
+	margin: 0 auto;
+}
+.datepicker-footer {
+	width: 280px;
+	margin: 0 auto;
+	padding-bottom: 5px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+		-ms-flex-pack: justify;
+			justify-content: space-between;
+}
+.datepicker-day-button {
+	background-color: transparent;
+	border: none;
+	line-height: 38px;
+	display: block;
+	width: 100%;
+	border-radius: 50%;
+	padding: 0 5px;
+	cursor: pointer;
+	color: inherit;
+}
+/* timepickerを常時、縦レイアウトに変更 */
+.timepicker-modal {
+	max-width: 325px;
+	max-height: none;
+}
+.timepicker-container.modal-content {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+			flex-direction: column;
+	padding: 0;
+}
+.timepicker-text-container {
+	top: 32%;
+}
+.timepicker-display-am-pm {
+	position: relative;
+	right: auto;
+	bottom: auto;
+	text-align: center;
+	margin-top: 1.2rem;
+}
+/* pagination 現在ページ以外の文字色の変更 */
+.pagination li a {
+	color: #607d8b;													/* (blue-grey) */
+}
+/* pagination 現在ページの文字色の変更 */
+.pagination li.active a {
+	color: #ffffff;													/* (white) */
+ }
+/* pagination 現在ページの背景色の変更 */
+.pagination li.active {
+	background-color: #9ccc65;										/* (light-green lighten-1) */
+ }
+/* pagination 無効文字色の変更（現在ページが先頭時の「＜」または最終時の「＞」） */
+.pagination li.disabled a {
+	color: #bdbdbd;													/* (grey lighten-1) */
+}
+/* チェックボックスの余白調整 */
+[type="checkbox"] + span:not(.lever) {
+	padding-left: 25px;
+	padding-right: 20px;
+}
+/* table配置用チェックボックスの余白調整 */
+label.oa_non_label_checkbox > [type="checkbox"] + span:not(.lever) {
+	padding-left: 0;
+	padding-right: 0;
+}
+/* ラジオボタンの余白調整 */
+[type="radio"]:not(:checked) + span,
+[type="radio"]:checked + span {
+	padding-left: 25px;
+	padding-right: 20px;
+}
+/* sidenav open 時のコンテンツを覆うoverlayを非表示 */
+.sidenav-overlay {
+	display: none;
+	opacity: 0 !important;
+}
+/* bodyの余白（サイドナビ－ハンバーガーボタン領域用） */
+body {
+	padding: 0 10px 0 40px; 
+}
+/* 各ブロックの下余白（header, section) */
+header, section{
+	padding-bottom: 10px;
+}
+/* 説明文・補助文 文字色 */
+p {
+	color: #757575;													/* (grey darken-1) */
+	display: block;
+    margin-block-start: 2px;
+	margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+/* その他コントロール（input・Radio・Checkbox） のタイトルラベル文字色 */
+label.oa_content_label {
+	color: #80cbc4;													/* (teal lighten-3) */
+}
+
+
+/**
+ * ヘッダー/フッター固定表示
+ */
+header {
+	position: fixed;
+	z-index: 3;
+	min-width: calc(100% - 50px);
+	background-color: #ffffff;
+	height: 80px;
+}
+main {
+	padding-top: 80px;
+	padding-bottom: 65px;
+}
+footer {
+	position: fixed;
+	z-index: 2;
+	min-width: calc(100% - 50px);
+	background-color: #ffffff;
+	height: 65px;
+	bottom: 0;
+	padding-top: 15px;
+}
+/**
+ * ヘッダー の各種設定
+ */
+.oa_header {
+	height: 60px;
+	margin-top: 4px;
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+	background-color: #a5d6a7;										/* (green lighten-3) */
+	color: #1b5e20;													/* (green darken-4) */
+}
+.oa_header img {
+	width: 40px;
+}
+.oa_header span {
+	font-weight: bold;
+	padding-left: 10px;
+	font-size: 20px;
+}
+
+
+/**
+ * アイテムタイプ
+ * ※ 基本はrowに設定
+ *    特別な場合のみ各グリッドセルに設定も可能
+ *    その場合、異コントロールを並べる際は高さ調整が必要
+ */
+/* 必須入力 */
+.oa_required {
+	border-left: solid 4px #ffccbc;									/* (deep-orange lighten-4) */
+}
+/* 任意入力 */
+.oa_optional {
+	border-left: solid 4px #b2dfdb;									/* (teal lighten-4) */
+}
+/* 読み取り専用表示 */
+.oa_readonly {
+	border-left: solid 4px #eceff1;									/* (blue-grey lighten-5) */
+}
+
+
+/**
+ * inputコントロール のサイズ調整
+ */
+input[type=text] {
+	height: 32px !important;
+	margin: 0 !important; 
+}
+input[type=number] {
+	height: 31px !important;
+	margin: 0 !important;
+}
+input[type=email] {
+	height: 31px !important;
+	margin: 0 !important;
+}
+input[type=password] {
+	height: 31px !important;
+	margin: 0 !important;
+}
+input[type=checkbox] {
+	margin: 20px !important;
+}
+
+/**
+ * table コントロール
+ * 　余白の変更
+ * 　フォントサイズの固定設定 
+ * 　※他コントロールのフォントサイズはmaterializeにより固定化されているが、tableは画面サイズにより変更される為、ここで固定化 
+ */
+table {
+	line-height: 18px;
+    font-size: 15px;
+}
+table th, table td {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+/* table - header の背景色・文字色 */
+table th {
+	background-color: #e8f5e9;										/* (green lighten-5) */
+	color: #78909c;													/* (blue-grey lighten-1) */
+}
+/* table - データ行の文字色 */
+table td {
+	color: #607d8b;													/* (blue-grey) */
+}
+
+
+/**
+ * tableの垂直スクロールバー設定
+ */
+/* ヘッダー固定設定 */
+.oa_table_head_dflex {
+	display: -webkit-flex;
+	display: flex; 
+	width: 100%;
+}
+.oa_table_head_flex {
+	flex-grow: 1; 
+	width: auto;
+	overflow-x: hidden;
+}
+/* Chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0){
+	.oa_table_head_flex_scroll_bar {
+		min-width: 17px;
+		width: 17px;
+		flex-grow: 0; 
+	}
+}
+/* Firefox */
+@-moz-document url-prefix() {
+	.oa_table_head_flex_scroll_bar {
+		min-width: 17px;
+		width: 17px;
+		flex-grow: 0; 
+	}
+}
+/* Edge */
+@supports (-ms-ime-align:auto) {
+	.oa_table_head_flex_scroll_bar {
+		min-width: 16px;
+		width: 16px;
+		flex-grow: 0; 
+	}
+}
+
+/* 折りたたみの余白、下線を削除 */
+ul.oa_collapsible {
+	border: 0;
+	margin: 0;
+	-webkit-box-shadow: 0 0 0 0 #ffffff;
+            box-shadow: 0 0 0 0 #ffffff;
+}
+/* 折りたたみ見出しの余白、下線を削除 */
+ul.oa_collapsible > li > .oa_collapsible_header {
+	padding: 8px 0 14px 0;
+	border-bottom: 0;
+}
+/* 折りたたみ矢印アイコン close */
+ul.oa_collapsible > li > .oa_collapsible_header img {
+	transform: rotate(90deg);
+	height: 10px;
+	margin-right: 4px;
+	margin-top: 4px;
+	cursor: pointer;
+}
+/* 折りたたみ矢印アイコン open */
+ul.oa_collapsible > li[class*="active"] > .oa_collapsible_header img {
+	transform: rotate(180deg);
+}
+ul.oa_collapsible > li > .collapsible-header label {cursor: pointer;} 
+/* 折りたたみ明細の余白、下線を削除 */
+ul.oa_collapsible > li > .collapsible-body {
+	padding: 0 ;
+	border-bottom: 0;
+}
+
+/**
+ * div を table の様に使用する際の設定
+ * （materializeのrow,colの様に割合ではなく固定幅で列を定義した場合に使用）
+ */
+.oa_display_table {
+	display: table !important;
+	width: 100%;
+}
+.oa_display_table_col {
+	display: table-cell;
+	vertical-align: top;
+	text-align: left;
+}
+
+/* footerボタンの下余白設定 */ 
+.oa_footer_button {margin-bottom: 4px;}

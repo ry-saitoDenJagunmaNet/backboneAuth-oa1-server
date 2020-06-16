@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>取引ロールオペレーター割当 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11080.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11080.js"></script>
+	<script src="../static/js/oa11070.js"></script>	<!-- ★モックアップ上は同じ為指定★（現段階ではoa11080.jsは独自部分のみ記述） -->
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11080");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11080", "取引ロールオペレーター割当");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>
+				</div>
+			</div>
+			<!-- サブシステム -->
+			<div class="row oa_required">
+				<div class="col s4">
+					<div class="input-field">
+						<select id="subsystem" class="validate" onchange="oaex_subsystem_onChange();">
+							<option value=""></option>
+							<option value="KB">購買</option>
+							<option value="YS">販売・青果</option>
+							<option value="YF">販売・花卉</option>
+							<option value="HK">販売・米</option>
+							<option value="HM">販売・麦</option>
+							<option value="AN">販売・畜産</option>
+						</select>
+						<label>サブシステム</label>
+					</div>
+				</div>
+			</div>
+			<!-- 取引ロール -->
+			<div class="row oa_required">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="biztran_role" class="validate">
+							<option value=""></option>
+						</select>
+						<label>取引ロール</label>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<!-- 検索ボタン -->
+			<div class="row">
+				<div class="col s3 offset-s8">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- ロールテーブル -->
+			<div class="row">
+				<div class="col s12">
+					<div class="oa_table_head_dflex">
+						<div id="role_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr>
+										<th class="oaex_role_table_tempo_th">店舗</th>
+										<th class="oaex_role_table_operator_th">オペレーター</th>
+										<th class="oaex_role_table_expiration_th">有効期限</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_role_table" onScroll="oa_linkageScrollX(this, 'role_table_head')">
+						<table id="role_table" class="highlight">
+							<tbody>
+								<tr class="oaex_role_table_template_row" onclick="oa_setTableRowSelected(this)"> 
+									<td class="oaex_role_table_tempo_code"></td>
+									<td class="oaex_role_table_tempo_name"></td>
+									<td class="oaex_role_table_operator_code">
+										<div class="input-field">
+											<input type="text" id="operater_code" class="validate"></input>
+										</div>
+									</td>
+									<td class="oaex_role_table_operator_name">
+										<span></span>							
+									</td>
+									<td class="oaex_role_table_operator_select">
+										<a class="btn waves-effect waves-light" href="#!">…</a>
+									</td>
+									<td class="oaex_role_table_expiration">
+										<div class="input-field">
+											<input type="text" class="datepicker" value=""></input>
+										</div>
+										<span>～</span>
+										<div class="input-field">
+											<input type="text" class="datepicker" value=""></input>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- 追加ボタン・削除ボタン  -->		
+			<div class="row">
+				<div class="col s4 offset-s8">
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_additionBtn_onClick('oa11070');">追加</a>
+					&nbsp;&nbsp;&nbsp;
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_removalBtn_onClick();">削除</a>
+				</div>
+			</div>			
+		</section>
+
+		<section>
+			<!-- 変更事由 -->
+			<div class="row oa_required">
+				<div class="col s8">
+					<div class="input-field">
+						<input type="text" id="change_cause" class="validate"></input>
+						<label for="change_cause">変更事由</label>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br>
+	</main>
+	
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3 offset-s8">
+				<a class="btn waves-effect waves-light" href="#!">適用</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>サインイン証跡照会 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11120.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11120.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11120");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11120", "サインイン証跡照会");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーターコード -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="operater_code"  class="validate"></input>
+						<label for="operater_code">オペレーターコード</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーター名 -->
+			<div class="row oa_optional">
+				<div class="col s8">
+					<div class="input-field">
+						<input type="text" id="operater_name" class="validate"></input>
+						<label for="operater_name">オペレーター名</label>
+					</div>
+				</div>
+			</div>
+			<!-- 試行日 -->
+			<div class="row oa_optional">
+				<div class="row">
+					<div class="col s3">
+						<label class="oa_content_label">試行日</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="try_start_date" class="validate datepicker"></input>
+							<label for="try_start_date">（開始日）</label>
+						</div>
+					</div>
+					<div class="col s1">
+						<p>～</p>
+					</div>
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="try_end_date" class="validate datepicker"></input>
+							<label for="try_end_date">（終了日）</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- IPアドレス -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ip_address" class="validate"></input>
+						<label for="ip_address">IPアドレス</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row oa_optional">			
+				<!-- オペレーション -->
+				<div class="row">
+					<div class="col s12">
+						<label class="oa_content_label">オペレーション</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<!-- サインイン -->
+					<div class="col s2 oaex_operation_checkbox_col">
+						<label>
+							<input type="checkbox"></input>
+							<span>サインイン</span>
+						</label>
+					</div>
+					<!-- サインイン結果 -->
+					<div class="col s10">
+						<div class="input-field">
+							<select multiple id="sign_cause" class="validate">
+								<option value="0">成功</option>
+								<option value="1">失敗（存在しないオペレーター）</option>
+								<option value="2">失敗（パスワード誤り）</option>
+								<option value="3">遮断（IPアドレス範囲外）</option>
+								<option value="4">拒否（アカウントロック中）</option>
+								<option value="5">拒否（有効期限範囲外）</option>
+							</select>
+							<label>サインイン結果</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<!-- サインアウト -->
+					<div class="col s12 oaex_operation_checkbox_col">
+						<label>
+							<input type="checkbox"></input>
+							<span>サインアウト</span>
+						</label>
+					</div>
+				</div>	
+			</div>
+		</section>
+		
+		<section>
+			<!-- 検索ボタン -->
+			<div class="row">
+				<div class="col s3 offset-s8">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- 証跡テーブル -->
+			<div class="row">
+				<div class="col s12">
+					<div class="oa_table_head_dflex">
+						<div id="trace_table_head" class="oa_table_head_flex">
+							<table>
+								<thead>
+									<tr>
+										<th class="oaex_trace_table_tempo_th">店舗</th>
+										<th class="oaex_trace_table_operator_th">オペレーター</th>
+										<th class="oaex_trace_table_datetime_th">日時</th>
+										<th class="oaex_trace_table_operation_th">オペレーション</th>
+										<th class="oaex_trace_table_result_th">結果</th>
+										<th class="oaex_trace_table_ip_address_th">IPアドレス</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="oa_table_head_flex_scroll_bar"></div>
+					</div>
+					<div class="oaex_trace_table" onScroll="oa_linkageScrollX(this, 'trace_table_head')">
+						<table id="trace_table" class="highlight">
+							<tbody>
+								<tr class="oaex_trace_table_template_row"> 
+									<td class="oaex_trace_table_tempo_code"></td>
+									<td class="oaex_trace_table_tempo_name"></td>
+									<td class="oaex_trace_table_operator_code"></td>
+									<td class="oaex_trace_table_operator_name"></td>
+									<td class="oaex_trace_table_datetime"></td>
+									<td class="oaex_trace_table_operation"></td>
+									<td class="oaex_trace_table_result"></td>
+									<td class="oaex_trace_table_ip_address"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- pagination -->
+			<div class="row" id="pagination_row" style="visibility: hidden;">
+				<div class="col s12">
+					<ul class="pagination">
+						<li class="disabled"><a href="#!">&lt;</a></li>
+						<li class="active"><a href="#!">1</a></li>
+						<li class="waves-effect"><a href="#!">2</a></li>
+						<li class="waves-effect"><a href="#!">3</a></li>
+						<li class="waves-effect"><a href="#!">4</a></li>
+						<li class="waves-effect"><a href="#!">5</a></li>
+						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!-- <br> -->
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

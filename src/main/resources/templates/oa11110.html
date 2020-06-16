@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>パスワード変更履歴照会 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11110.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11110.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11110");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11110", "パスワード変更履歴照会");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" tabindex="-1"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>	
+				</div>
+			</div>
+			<!-- オペレーターコード -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="operater_code" class="validate"></input>
+						<label for="operater_code">オペレーターコード</label>
+					</div>	
+				</div>
+			</div>
+			<!-- オペレーター名 -->
+			<div class="row oa_optional">
+				<div class="col s8">
+					<div class="input-field">
+						<input type="text" id="operater_name" class="validate"></input>
+						<label for="operater_name">オペレーター名</label>
+					</div>
+				</div>
+			</div>
+			<!-- 変更日 -->
+			<div class="row oa_optional">
+				<div class="col s1">
+					<label class="oa_content_label">変更日</label>
+				</div>
+				<div class="col s11">
+					<!-- 過去 -->
+					<div class="row">
+						<div class="col s2">
+							<label>
+								<input type="radio" id="change_date_past" name="change_date" checked="checked" value="1" onchange="oaex_change_date_onChange()"></input>
+								<span>過去</span>
+							</label>
+						</div>
+						<div class="col s2">
+							<div class="input-field">
+								<input type="number" id="update_day" class="validate" max="999"></input>
+								<label for="update_day"></label>
+							</div>
+						</div>
+						<div class="col s2 center-align"><p>日以内に</p></div>
+						<div class="col s2">
+							<div class="input-field">
+								<select id="update_day_sel" class="validate">
+									<option value=""></option>
+									<option value="1">変更した</option>
+									<option value="2">変更していない</option>
+								</select>
+								<label for="update_day_sel"></label>
+							</div>
+						</div>
+						<div class="col s4"><p>（最新履歴のみ対象となります）</p></div>
+					</div>
+					<!-- 日付範囲指定 -->
+					<div class="row">
+						<div class="col s2">
+							<label>
+								<input type="radio" id="change_date_range" name="change_date" value="2" onchange="oaex_change_date_onChange()"></input>
+								<span>日付範囲指定</span>
+							</label>
+						</div>
+						<div class="col s6">
+							<div class="row">
+								<div class="col s5">
+									<div class="input-field">
+										<input type="text" id="update_date_from" class="validate datepicker" value=""></input>
+										<label for="update_date_from"></label>
+									</div>
+								</div>
+								<div class="col s1 center-align"><div class="center-align"><p>～</p></div></div>
+								<div class="col s5">
+									<div class="input-field">
+										<input type="text" id="update_date_to" class="validate datepicker" value=""></input>
+										<label for="update_date_to"></label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col s4"><p>（全履歴が対象となります）</p></div>
+					</div>
+				</div>
+			</div>
+			<!-- 変更種別 -->
+			<div class="row oa_optional">
+				<div class="col s1">
+					<label class="oa_content_label">変更種別</label>
+				</div>
+				<div class="col s11">
+					<div class="row">
+						<div class="col s12">
+							<label>
+								<input type="checkbox"></input>
+								<span>初期</span>
+							</label>
+							<label>
+								<input type="checkbox"></input>
+								<span>ユーザーによる変更</span>
+							</label>
+							<label>
+								<input type="checkbox"></input>
+								<span>管理者によるリセット</span>
+							</label>
+							<label >
+								<input type="checkbox"></input>
+								<span>機器認証パスワード</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- 検索ボタン -->
+			<div class="row">
+				<div class="col s3 offset-s9">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- パスワード変更履歴照会テーブル -->
+			<div class="row">
+				<div class="col s12">
+					<div class="oaex_password_history_table">
+						<table class="highlight">
+							<thead>
+								<tr>
+									<th class="oaex_password_history_tempo_th" colspan="2">店舗</th>
+									<th class="oaex_password_history_operator_th" colspan="2">オペレータ</th>
+									<th class="oaex_password_history_change_datetime_th">変更日時</th>
+									<th class="oaex_password_history_change_type_th">変更種別</th>
+								</tr>
+							</thead>
+							<tbody id="password_history_table">
+								<tr><td class="oaex_password_history_tempo_code">000</td><td class="oaex_password_history_tempo_name">本所</td><td class="oaex_password_history_operator_code">OP101001</td><td class="oaex_password_history_operator_name">前橋太郎</td><td class="oaex_password_history_change_datetime">2019/04/01 12:16:17</td><td class="oaex_password_history_change_type_th">機器認証パスワード</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101001</td><td>前橋太郎</td><td>2019/04/01 12:13:14</td><td>ユーザーによる変更</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101001</td><td>前橋太郎</td><td>2019/04/01 12:10:00</td><td>管理者によるリセット</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101001</td><td>前橋太郎</td><td>2019/04/01 08:10:11</td><td>ユーザーによる変更</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101001</td><td>前橋太郎</td><td>2019/04/01 08:10:10</td><td>初期</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101003</td><td>前橋三郎</td><td>2019/04/01 08:08:11</td><td>初期</td></tr>
+								<tr><td>000</td><td>本所</td><td>OP101004</td><td>前橋四郎</td><td>2019/04/01 08:09:11</td><td>初期</td></tr>
+								<tr><td>999</td><td>ＮＮ</td><td>XXXXXXXX</td><td>ＮＮＮＮＮ</td><td>2020/04/01 08:08:11</td><td>初期</td></tr>
+								<tr><td>999</td><td>ＮＮ</td><td>XXXXXXXX</td><td>ＮＮＮＮＮ</td><td>2020/04/01 08:08:11</td><td>初期</td></tr>
+								<tr><td>999</td><td>ＮＮ</td><td>XXXXXXXX</td><td>ＮＮＮＮＮ</td><td>2020/04/01 08:08:11</td><td>初期</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- pagination -->
+			<div class="row">
+				<div class="col s12">
+					<ul id="password_history_pagination" class="pagination">
+						<li class="disabled"><a href="#!">&lt;</a></li>
+						<li class="active"><a href="#!">1</a></li>
+						<li class="waves-effect"><a href="#!">2</a></li>
+						<li class="waves-effect"><a href="#!">3</a></li>
+						<li class="waves-effect"><a href="#!">4</a></li>
+						<li class="waves-effect"><a href="#!">5</a></li>
+						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- <br> -->
+		
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/**
+ * OA12060 カレンダーメンテナンス
+ */
+
+/* 年・月 */
+#year_month {width: 60%; margin: 0 10px !important;} 
+/* 同じdiv内の年・月を改行抑止 */
+.oaex_inline {display: inline;}
+
+/* カレンダーセルの左側（日を表示） */
+td.oaex_calendarcell_left {
+    font-size: 28px;
+    vertical-align: top;
+    text-align: right;
+    padding: 10px 5px 0 0;
+    border-left: solid 1px rgba(0, 0, 0, 0.12);
+    border-top: solid 1px rgba(0, 0, 0, 0.12);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+/* カレンダーセルの右側（休日チェックを表示） */
+td.oaex_calendarcell_right {
+    line-height: 4px;
+    border-right: solid 1px rgba(0, 0, 0, 0.12);
+    border-top: solid 1px rgba(0, 0, 0, 0.12);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+/* 休日チェック時の色設定 */
+td.oaex_calendarcell_right [type="checkbox"]:not(:checked) + span {
+    color : #f44336;
+}
+/* カレンダーセルの下線（materializeで設定）を削除 */
+#calendar_table tr {
+    border-bottom: 0px none;
+}
+/* カレンダーヘッダー（曜日）セルの罫線 */
+#calendar_table th {
+    border: solid 1px rgba(0, 0, 0, 0.12);
+}
+/* 表示対象や稼働・休日表示によるチェックボックスの非表示定義 */
+.oaex_calendar_type_check_hidden {
+    visibility: hidden;
+}
+/* チェックボックスの改行を抑止 */
+label.oaex_calendarcell_check1 span,
+label.oaex_calendarcell_check2 span,
+label.oaex_calendarcell_check3 span {
+    white-space: nowrap;
+}

@@ -1,0 +1,43 @@
+/**
+ * OA11120 サインイン証跡照会
+ */
+
+/** 
+ * オペレーションチェックボックスカラム
+ */
+ .oaex_operation_checkbox_col {
+	min-height: 47.5px;
+	padding-top: 11.25px !important;
+}
+
+/** 
+ * 証跡テーブル
+ */
+ .oaex_trace_table {
+	height: 180px; 
+	overflow-y: scroll;
+}
+.oaex_trace_table td {
+	padding: 2px 2px;
+}
+.oaex_trace_table_template_row {display: none;}
+
+.oaex_trace_table_tempo_th {min-width: 160px; width: 20%;}
+.oaex_trace_table_tempo_code {min-width: 40px; width: 4%;}
+.oaex_trace_table_tempo_name {min-width: 120px; width: 16%;}
+
+.oaex_trace_table_operator_th {min-width: 220px; width: 25%;}
+.oaex_trace_table_operator_code {min-width: 80px; width: 10%;}
+.oaex_trace_table_operator_name {min-width: 140px; width: 15%;}
+
+.oaex_trace_table_datetime_th {min-width: 150px; width: 10%;}
+.oaex_trace_table_datetime {min-width: 150px; width: 10%;}
+
+.oaex_trace_table_operation_th {min-width: 120px; width: 10%;}
+.oaex_trace_table_operation {min-width: 120px; width: 10%;}
+
+.oaex_trace_table_result_th {min-width: 240px; width: 25%;}
+.oaex_trace_table_result {min-width: 240px; width: 25%;}
+
+.oaex_trace_table_ip_address_th {min-width: 130px; width: 10%;}
+.oaex_trace_table_ip_address {min-width: 130px; width: 10%;}

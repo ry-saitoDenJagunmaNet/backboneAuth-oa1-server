@@ -1,0 +1,30 @@
+/**
+ * OA12030 一時取引抑止登録／一時取引抑止更新
+ */
+
+/**
+ * 取引グループテーブル
+ */
+.oaex_biztran_grp_table {
+	height: 234px;
+	overflow-y: auto;
+	visibility: collapse;
+}
+.oaex_biztran_grp_table td {height: 38px;}
+.oaex_biztran_grp_table tr {display: block}
+.oaex_biztran_grp_code {min-width: 72px; width: 20%;}
+.oaex_biztran_grp_name {min-width: 270px; width: 80%;}
+
+/**
+ * 取引テーブル
+ */
+.oaex_biztran_table {
+	height: 234px;
+	overflow-y: auto;
+	visibility: collapse;
+}
+.oaex_biztran_table td {height: 38px;}
+.oaex_biztran_table tr {display: block}
+.oaex_biztran_table_biztran_grp_code {display: none}
+.oaex_biztran_code {min-width: 72px; width: 20%;}
+.oaex_biztran_name {min-width: 270px; width: 80%;}

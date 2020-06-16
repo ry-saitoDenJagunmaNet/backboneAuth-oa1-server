@@ -1,0 +1,74 @@
+/**
+ * OA11090 アカウントロック照会
+ */
+
+ /** 
+ * 現在状態テーブル
+ */
+ .oaex_current_table {
+	height: 241px; 
+	overflow-y: scroll;
+}
+.oaex_current_table td {
+	padding: 2px 2px;
+}
+.oaex_current_table_template_row {display: none;}
+
+.oaex_current_table_tempo_th {min-width: 160px; width: 25%;}
+.oaex_current_table_tempo_code {min-width: 40px; width: 5%;}
+.oaex_current_table_tempo_name {min-width: 120px; width: 20%;}
+
+.oaex_current_table_operator_th {min-width: 220px; width: 45%;}
+.oaex_current_table_operator_code {min-width: 80px; width: 10%;}
+.oaex_current_table_operator_name {min-width: 140px; width: 35%;}
+
+.oaex_current_table_occurred_datetime_th {min-width: 150px; width: 20%;}
+.oaex_current_table_occurred_datetime {min-width: 150px; width: 20%;}
+
+.oaex_current_table_status_th {min-width: 110px; width: 10%;}
+.oaex_current_table_status_current {min-width: 35px; width: 3%;}
+.oaex_current_table_status_apply {min-width: 75px; width: 7%;}
+
+/* ロック状態（アンロック） */
+ .oaex_lock_status_unlock {
+	color: #1de9b6;
+	font-size: 300%;
+	/* vertical-align: middle; */
+	margin-top: -12px;
+	/* line-height: 0; */
+}
+/* ロック状態（ロック） */
+ .oaex_lock_status_lock {
+	color: #ff1744;
+	font-size: 300%;
+	/* vertical-align: middle; */
+	margin-top: -12px;
+	/* line-height: 0; */
+}
+
+/* スイッチ色変更 */
+input[type=checkbox]:checked+.lever:after {
+	background-color: #F44336 !important;
+}
+input[type=checkbox]:checked+.lever {
+   background-color: #FFCDD2 !important;
+}
+
+/** 
+ * アカウントロック履歴テーブル
+ */
+ .oaex_history_table {
+	height: 241px; 
+	overflow-y: scroll;
+}
+.oaex_history_table td {
+	padding: 2px 2px;
+}
+.oaex_history_table_template_row {display: none;}
+
+.oaex_history_table_occurred_datetime_th {min-width: 150px; width: 50%;}
+.oaex_history_table_occurred_datetime {min-width: 150px; width: 50%;}
+
+.oaex_history_table_lock_status_th {min-width: 125px; width: 50%;}
+.oaex_history_table_lock_status_mark {min-width: 35px; width: 10%;}
+.oaex_history_table_lock_status_name {min-width: 90px; width: 40%;}
