@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "template"
+        label "backbone"
     }
     // 定数や変数を定義する
     environment {
