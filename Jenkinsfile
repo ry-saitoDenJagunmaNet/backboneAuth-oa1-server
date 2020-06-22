@@ -15,6 +15,7 @@ pipeline {
         libsDir = 'build/libs'
         appName = 'backBoneApp'
         appVersion = '20.0.0'
+        oa1ServerProps = null
     }
 
     // stagesブロック中に一つ以上のstageを定義する
@@ -22,7 +23,7 @@ pipeline {
         stage('Preparation') {
             // 実際の処理はstepsブロック中に定義する
             steps {
-                deleteDir()
+                cleanWs()
 
                 // このJobをトリガーしてきたGithubのプロジェクトをチェックアウト
                 checkout scm
@@ -36,6 +37,7 @@ pipeline {
                     // Permission deniedで怒られないために実行権限を付与する
                     if (isUnix()) {
                         sh 'chmod +x gradlew'
+                        sh 'git config core.filemode false'
                     }
                 }
                 gradlew 'clean'
@@ -50,6 +52,25 @@ pipeline {
                 error('Skipping release build')
             }
         }
+        // stage('dependencyUpdate') {
+        //     when {
+        //         branch 'develop'
+        //     }
+        //     steps {
+        //         //gradlewのバージョンアップ
+        //         gradlew 'wrapper'
+
+        //         //依存関係バージョン更新
+        //         gradlew 'useLatestVersions'
+
+        //         sh script: "git add -A"
+        //         sh script: "git diff --cached --exit-code --quiet || git commit -m '[gradle-use-latest-versions-plugin]use-latest-version'"
+        //         //Push
+        //         withCredentials([usernameColonPassword(credentialsId: 'keizai-dev', variable: 'GIT_USER_PASSWORD')]) {
+        //             sh script: "git push https://${GIT_USER_PASSWORD}@github.com/jagunma/backboneAuth-oa1-server.git develop:develop"
+        //         }
+        //     }
+        // }
         stage('Compile') {
             steps {
                 gradlew 'classes testClasses'
@@ -140,11 +161,32 @@ pipeline {
         }
         stage('Release application to staging') {
             when {
-                branch 'master'
+                allOf {
+                    branch 'master'
+                    // 静的コード解析とテスト失敗時はリリースしない
+                    expression { currentBuild.currentResult == 'SUCCESS' }
+                }
             }
             steps {
-                // jenkinsの後続ジョブを定義する
-                gradlew 'release -x classes -x test'
+                //バージョン読み取り(gradle.properties読み取り)
+                script{
+                    oa1ServerProps = readProperties file: "gradle.properties"
+                }
+
+                //認証情報ファイルを使用するようにconfig設定
+                withCredentials([usernameColonPassword(credentialsId: 'keizai-dev', variable: 'GIT_USER_PASSWORD')]) {
+                    sh "echo https://${GIT_USER_PASSWORD}@github.com > ~/.git-credentials"
+                }
+                sh "git config credential.helper store"
+
+                //リリースリポジトリへアップロード
+                gradlew '-Prelease.useAutomaticVersion=true release'
+
+                //認証情報ファイル後始末
+                sh "git config credential.helper ''"
+                sh "echo '' > ~/.git-credentials"
+
+                slackSend channel: "#jenkins-build", color: "#2196F3", message: "Release backboneAuth-oa1-server - ${oa1ServerProps.version.replace('-SNAPSHOT','')} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", tokenCredentialId: 'slack-integration-token'
             }
         }
         stage('kick job depended on') {
