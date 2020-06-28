@@ -12,16 +12,16 @@ buildscript {
         assertjVersion = '3.16.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.1.39'
-        commonCommonVersion = '20.0.84'
-        commonValuesVersion = '20.0.38'
-        commonUtilsVersion = '20.1.54'
+        commonServerVersion = '20.1.40'
+        commonCommonVersion = '20.0.85'
+        commonValuesVersion = '20.0.41'
+        commonUtilsVersion = '20.1.57'
         domaCoreVersion = '2.37.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'
         commonTestsVersion = '20.0.8'
         domaSpringBootStarterVersion = '1.4.0'
-        jacksonAnnotationVersion = '2.11.0'
+        jacksonAnnotationVersion = '2.11.1'
         mssqlJdbcVersion='8.3.1.jre11-preview'
 
     }
@@ -36,7 +36,7 @@ plugins {
     id 'idea'
     id "com.github.ben-manes.versions" version '0.28.0'
     id 'se.patrikerdes.use-latest-versions' version '0.2.14'
-    id "com.github.spotbugs" version "4.3.0"
+    id "com.github.spotbugs" version "4.4.3"
     id 'jacoco'
 }
 
