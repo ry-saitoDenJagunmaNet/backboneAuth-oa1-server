@@ -12,7 +12,9 @@
 	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
 	<script src="../static/js/oa11010.js" th:src="@{/js/oa11010.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_onload();">
+	<form method="post" action="search">
+
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
 	<script>oa_getMassageDialog();</script>
@@ -30,22 +32,24 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<input type="text" id="ja" name="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
+					<input type="hidden" name="jaId" th:value="${form.jaId}">
 				</div>
 			</div>
 			<!-- 店舗 -->
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" class="validate">
-							<option value=""></option>
-							<option value="001">本所</option>
-							<option value="002">○○○支所</option>
-							<option value="003">△△センター</option>
-							<option value="004">□□□□店</option>
-							<option value="005">××××館</option>
+						<select id="tempo" name="tempoCode" class="validate" th:value="${form.tempoCode}">
+							<option th:each="item  : ${tempos}" th:value="${item.key}" th:text="${item.value}" th:selected="${form.tempoCode == item.key}"></option>
+							<option value="" th:remove="all"></option>
+							<option value="001" th:remove="all">本所</option>
+							<option value="002" th:remove="all">○○○支所</option>
+							<option value="003" th:remove="all">△△センター</option>
+							<option value="004" th:remove="all">□□□□店</option>
+							<option value="005" th:remove="all">××××館</option>
 						</select>
 						<label>店舗</label>
 					</div>
@@ -55,7 +59,7 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="operater_code" class="validate" value=""></input>
+						<input type="text" id="operater_code" name="operatorCode" class="validate" th:value="${form.operatorCode}"></input>
 						<label for="operater_code">オペレーターコード</label>
 					</div>
 				</div>
@@ -64,7 +68,7 @@
 			<div class="row oa_optional">
 				<div class="col s8">
 					<div class="input-field">
-						<input type="text" id="operater_name" class="validate" value=""></input>
+						<input type="text" id="operater_name" name="operatorName" class="validate" th:value="${form.operatorName}"></input>
 						<label for="operater_name">オペレーター名</label>
 					</div>
 				</div>
@@ -73,7 +77,7 @@
 			<div class="row oa_optional">
 				<div class="col s8">
 					<div class="input-field">
-						<input type="text" id="mail_address" class="validate" value=""></input>
+						<input type="text" id="mail_address" name="mailAddress" class="validate" th:value="${form.mailAddress}"></input>
 						<label for="mail_address">メールアドレス</label>
 					</div>
 				</div>
@@ -88,11 +92,11 @@
 				<div class="row">
 					<div class="col s8">
 						<label>
-							<input type="checkbox"/>
+							<input type="checkbox" name="availableStatus0" value="1" th:checked="${form.availableStatus0 == 1}"/>
 							<span>利用可能</span>
 						</label>
 						<label>
-							<input type="checkbox"/>
+							<input type="checkbox" name="availableStatus1" value="1" th:checked="${form.availableStatus1 == 1}"/>
 							<span>利用不可</span>
 						</label>
 					</div>
@@ -975,34 +979,38 @@
 							<div class="col s12">
 								<div class="row">
 									<div class="col s12">
-										<label class="oa_content_label">最終サインイン結果</label>
+										<label class="oa_content_label">最終サインオペレーション</label>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col s12">
+									<!-- サインイン -->
+									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox"/>
-											<span>成功</span>
+											<input type="checkbox"></input>
+											<span>サインイン</span>
 										</label>
+									</div>
+									<!-- サインイン結果 -->
+									<div class="col s10">
+										<div class="input-field">
+											<select multiple id="sign_cause" class="validate">
+												<option value="0">成功</option>
+												<option value="1">失敗（存在しないオペレーター）</option>
+												<option value="2">失敗（パスワード誤り）</option>
+												<option value="3">遮断（IPアドレス範囲外）</option>
+												<option value="4">拒否（アカウントロック中）</option>
+												<option value="5">拒否（有効期限範囲外）</option>
+											</select>
+											<label>サインイン結果</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<!-- サインイン -->
+									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox"/>
-											<span>失敗(存在しないオペレーター)</span>
-										</label>
-										<label>
-											<input type="checkbox"/>
-											<span>失敗(パスワード誤り)</span>
-										</label>
-										<label>
-											<input type="checkbox"/>
-											<span>遮断(IPアドレス範囲外)</span>
-										</label>
-										<label>
-											<input type="checkbox"/>
-											<span>拒否(アカウントロック中)</span>
-										</label>
-										<label>
-											<input type="checkbox"/>
-											<span>拒否(有効期限範囲外)</span>
+											<input type="checkbox"></input>
+											<span>サインアウト</span>
 										</label>
 									</div>
 								</div>
@@ -1017,7 +1025,7 @@
 			<!-- 検索ボタン -->
 			<div class="row">
 				<div class="col s3 offset-s9">
-					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();" th:onclick="javascript:document.forms[0].submit(); ">検索</a>
 				</div>
 			</div>
 		</section>
@@ -1042,7 +1050,80 @@
 								</tr>
 							</thead>
 							<tbody id="operator_table">
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this);"> 
+								<!-- trタグ　最終行または、オペレータIDが変わる前に下線を引くStyleを定義 -->
+								<tr onclick="oaex_operator_table_onClick(this);"
+									th:class="${iterStat.last} or ${ope.OperatorId} != *{operatorList[__${iterStat.index+1}__].OperatorId}? 'oaex_operator_table_row oaex_operator_table_operator_' + ${ope.OperatorCode} : 'oaex_operator_table_operator_' + ${ope.OperatorCode}"
+									th:each="ope, iterStat : *{operatorList}">
+									<!-- tdタグ　オペレータIDが全行と同じ場合、オペレータ情報は非表示 -->
+									<!-- 　　　　店舗IDが全行と同じ場合、店舗情報は非表示 -->
+									<!-- 　　　　サブシステムロールコードが全行と同じ場合、サブシステムロール情報は非表示 -->
+									<td class="oaex_operator_available_status">
+										<div class="oaex_available_status_possible"
+											 th:if="${ope.AvailableStatus == 0 and iterStat.first}"></div>
+										<div class="oaex_available_status_possible"
+											 th:if="${ope.AvailableStatus == 0 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
+										<div class="oaex_available_status_inpossible"
+											 th:if="${ope.AvailableStatus == 1 and iterStat.first}"></div>
+										<div class="oaex_available_status_inpossible"
+											 th:if="${ope.AvailableStatus == 1 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
+									</td>
+									<td class="oaex_operator_account_lock">
+										<div class="oaex_account_unlock"
+											 th:if="${ope.LockStatus == 0 and iterStat.first}"></div>
+										<div class="oaex_account_unlock"
+											 th:if="${ope.LockStatus == 0 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
+										<div class="oaex_account_lock"
+											 th:if="${ope.LockStatus == 1 and iterStat.first}"></div>
+										<div class="oaex_account_lock"
+											 th:if="${ope.LockStatus == 1 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
+									</td>
+									<td class="oaex_operator_tempo_code">
+										<div th:if="${iterStat.first}"
+											 th:text="${ope.TempoCode}"></div>
+										<div th:if="${not iterStat.first} and ${ope.TempoId} != *{operatorList[__${iterStat.index-1}__].TempoId}"
+											 th:text="${ope.TempoCode}"></div>
+									</td>
+									<td class="oaex_operator_tempo_name">
+										<div th:if="${iterStat.first}"
+											 th:text="${ope.TempoName}"></div>
+										<div th:if="${not iterStat.first} and ${ope.TempoId} != *{operatorList[__${iterStat.index-1}__].TempoId}"
+											 th:text="${ope.TempoName}"></div>
+									</td>
+									<td class="oaex_operator_operator_code">
+										<div th:if="${iterStat.first}"
+											 th:text="${ope.OperatorCode}"></div>
+										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
+											 th:text="${ope.OperatorCode}"></div>
+									</td>
+									<td class="oaex_operator_operator_name">
+										<div th:if="${iterStat.first}"
+											 th:text="${ope.OperatorName}"></div>
+										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
+											 th:text="${ope.OperatorName}"></div>
+									</td>
+									<td class="oaex_operator_expiration_date">
+										<div th:if="${iterStat.first}"
+											 th:text="${#temporals.format(ope.ExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.ExpirationEndDate, 'yyyy/MM/dd')}"></div>
+										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
+											 th:text="${#temporals.format(ope.ExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.ExpirationEndDate, 'yyyy/MM/dd')}"></div>
+									</td>
+									<td class="oaex_operator_subsystem_role">
+										<div th:if="${iterStat.first}"
+											 th:text="${ope.SubSystemRoleName}"></div>
+										<div th:if="${not iterStat.first} and (${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId} or ${ope.SubSystemRoleCode} != *{operatorList[__${iterStat.index-1}__].SubSystemRoleCode})"
+											 th:text="${ope.SubSystemRoleName}"></div>
+									</td>
+									<td class="oaex_operator_subsystem_role_expiration_date">
+										<div th:if="${iterStat.first}"
+											 th:text="${#temporals.format(ope.SubSystemRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.SubSystemRoleExpirationEndDate, 'yyyy/MM/dd')}"></div>
+										<div th:if="${not iterStat.first} and (${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId} or ${ope.SubSystemRoleCode} != *{operatorList[__${iterStat.index-1}__].SubSystemRoleCode})"
+											 th:text="${#temporals.format(ope.SubSystemRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.SubSystemRoleExpirationEndDate, 'yyyy/MM/dd')}"></div>
+									</td>
+									<td class="oaex_operator_biztran_role_code" th:text="${ope.BizTranRoleCode}"></td>
+									<td class="oaex_operator_biztran_role_name" th:text="${ope.BizTranRoleName}"></td>
+									<td class="oaex_operator_biztran_role_expiration_date" th:text="${#temporals.format(ope.BizTranRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.BizTranRoleExpirationEndDate, 'yyyy/MM/dd')}"></td>
+								</tr>
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this);" th:remove="all">
 									<td class="oaex_operator_available_status"><div class="oaex_available_status_possible"></div></td>
 									<td class="oaex_operator_account_lock"><div class="oaex_account_unlock"></div></td>
 									<td class="oaex_operator_tempo_code">000</td>
@@ -1056,7 +1137,7 @@
 									<td class="oaex_operator_biztran_role_name">（青果）精算担当</td>
 									<td class="oaex_operator_biztran_role_expiration_date">2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1070,7 +1151,7 @@
 									<td>（青果）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1084,7 +1165,7 @@
 									<td>（花卉）精算担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_0 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)"th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1098,7 +1179,7 @@
 									<td>（花卉）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_1" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_1" onclick="oaex_operator_table_onClick(this)" th:remove="all">
 									<td><div class="oaex_available_status_possible"></div></td>
 									<td><div class="oaex_account_lock"></div></td>
 									<td></td>
@@ -1112,7 +1193,7 @@
 									<td>（花卉）精算担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_1 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_1 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1126,7 +1207,7 @@
 									<td>（花卉）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_2 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)"> 
+								<tr class="oaex_operator_table_operator_2 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)" th:remove="all">
 									<td><div class="oaex_available_status_inpossible"></div></td>
 									<td><div class="oaex_account_unlock"></div></td>
 									<td></td>
@@ -1167,13 +1248,14 @@
 		<section>
 			<div class="row">
 				<div class="col s12">
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')">オペレーター履歴</a>
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')">パスワード変更履歴</a>
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')">サインイン証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')">オペレーター履歴確認</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')">パスワードリセット</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')">パスワード変更履歴照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')">サインイン証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11130')">サービス呼出証跡照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a> 
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')">取引ロール付与</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')">パスワードリセット</a>
 				</div>
 			</div>
 		</section>
@@ -1192,5 +1274,6 @@
 			</div>
 		</div>
 	</footer>
+	</form>
 </body>
 </html>

@@ -97,6 +97,14 @@ div.oa_collapsible_header {width: 150px;}
 .oaex_biztran_role_expiration_end_date_to {min-width: 92px; width: 8%;}
 
 /**
+ * 最終サインオペレーション チェックボックス
+ */
+.oaex_signintrace_checkbox_col {
+	min-height: 47.5px;
+	padding-top: 11.25px !important;
+}
+
+/**
  * オペレーターテーブル 
  */
 
@@ -105,9 +113,10 @@ div.oa_collapsible_header {width: 150px;}
 
  /* 水平スクロール設定 */
  .oaex_operator_table {
-	overflow-x: auto;
-	overflow-y: hidden;
-	height: 249px;
+	overflow-y: auto;
+	/*overflow-x: auto;*/
+	/*overflow-y: hidden;*/
+	/*height: 249px;*/
 }
 /* 明細行　下線を削除 */
 .oaex_operator_table tr {

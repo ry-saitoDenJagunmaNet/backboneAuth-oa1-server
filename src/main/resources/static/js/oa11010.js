@@ -1,5 +1,13 @@
 /**
  * 画面Loadイベントです。
+ *  Thymeleaf で起動時のみ実行
+ */
+function oaex_onload() {
+	oaex_searchBtn_onClick();
+}
+
+/**
+ * 画面Loadイベントです。
  */
 window.onload = function() {
 	// Collapsible の初期化（画面独自に再初期化）
