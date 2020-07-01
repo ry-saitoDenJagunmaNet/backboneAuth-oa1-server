@@ -519,11 +519,16 @@ function oa_getMassageDialog() {
  * @param  {String} id 画面ID
  * @param  {String} title 画面名
  */
-function oa_getHeader(id, title) {
+function oa_getHeader(id, title, isThymeleaf) {
     let html = '';
+    let imgUrl = '../static/img/';
+    if (document.getElementById("imageUrl") != null && document.getElementById("imageUrl").value != "") {
+    	imgUrl = document.getElementById("imageUrl").value;
+    }
 
     html += '<div class="card-panel oa_header">';
-    html += '	<img class="responsive-img" src="../static/img/' + id.toLowerCase() + '.png" alt="' + title + '"/>';
+    //html += '	<img class="responsive-img" src="../static/img/' + id.toLowerCase() + '.png" alt="' + title + '"/>';
+    html += '	<img class="responsive-img" src="' + imgUrl + id.toLowerCase() + '.png" alt="' + title + '"/>';
     html += '	<span>' + title + '</span>';
     html += '</div>';
     

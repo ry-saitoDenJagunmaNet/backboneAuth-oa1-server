@@ -103,16 +103,20 @@ function oaex_sidenav_onCloseStart() {
  */
 function oa_getSidenav(selectNavId) {
 	let html = '';
+    let imgUrl = '../static/img/';
+    if (document.getElementById("imageUrl") != null && document.getElementById("imageUrl").value != "") {
+    	imgUrl = document.getElementById("imageUrl").value;
+    }
 
 	// html += '<a class="sidenav-trigger oa_sidenav_humberger" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>';
-	html += '<a class="sidenav-trigger oa_sidenav_open" href="#" data-target="slide-out"><img src="../static/img/sidenav_open.png" alt="sidenav open"/></a>';
+	html += '<a class="sidenav-trigger oa_sidenav_open" href="#" data-target="slide-out"><img src="' + imgUrl + 'sidenav_open.png" alt="sidenav open"/></a>';
 	html += '<ul class="sidenav" id="slide-out">';
 	html += '	<li>';
 	html += '		<div class="row oa_sidenav_header">';
 	html += '			<div class="col s10 oa_sidenav_header_col">基幹系認証管理システム</div>';
 	html += '			<div class="col s2">';
 	// html += '				<a href="#!" class="sidenav-close" data-target="mobile-demo"><i class="material-icons">close</i></a>';
-	html += '				<a href="#!" class="sidenav-close oa_sidenav_close" data-target="mobile-demo"><img src="../static/img/sidenav_close.png" alt="sidenav close"/></a>';
+	html += '				<a href="#!" class="sidenav-close oa_sidenav_close" data-target="mobile-demo"><img src="' + imgUrl + 'sidenav_close.png" alt="sidenav close"/></a>';
 	html += '			</div>';
 	html += '		</div>';
 	html += '	</li>';
@@ -120,48 +124,48 @@ function oa_getSidenav(selectNavId) {
 	html += '		<ul class="collapsible">';
 	
 	html += '			<li class="active oa_collapsible_root">';
-	html += '				<a class="waves-effect collapsible-header"><img src="../static/img/collapsible.png" alt="collapsible"/>オペレータ</a>';
+	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>オペレータ</a>';
 	html += '				<div class="collapsible-body">';
-	html += oa_getSidenavRow(selectNavId, "OA11020", "../static/img/oa11020.png", "新規登録", "… 新規登録を行います", []);
-	html += oa_getSidenavRow(selectNavId, "OA11010", "../static/img/oa11010.png", "オペレーター＜一覧＞", "… 下記の各取引を行う際の入口です", ["・更新（利用可否設定含む）", "・サブシステムロール付与", "・取引ロール付与", "・パスワードリセット"]);
-	html += oa_getSidenavRow(selectNavId, "OA11090", "../static/img/oa11090.png", "アカウントロック照会", "… アカウントのロック状態を確認、またアンロックを行います", []);
-	html += oa_getSidenavRow(selectNavId, "OA11100", "../static/img/oa11100.png", "オペレーター履歴確認", "… 変更履歴の確認用に情報をExcelファイルに出力します", []);
-	html += oa_getSidenavRow(selectNavId, "OA11110", "../static/img/oa11110.png", "パスワード変更履歴照会", "… パスワード変更履歴を照会します", []);
-	html += oa_getSidenavRow(selectNavId, "OA11120", "../static/img/oa11120.png", "サインイン証跡照会", "… サインイン及び、サインアウトの証跡を照会します", []);
+	html += oa_getSidenavRow(selectNavId, "OA11020", imgUrl + "oa11020.png", "新規登録", "… 新規登録を行います", []);
+	html += oa_getSidenavRow(selectNavId, "OA11010", imgUrl + "oa11010.png", "オペレーター＜一覧＞", "… 下記の各取引を行う際の入口です", ["・更新（利用可否設定含む）", "・サブシステムロール付与", "・取引ロール付与", "・パスワードリセット"]);
+	html += oa_getSidenavRow(selectNavId, "OA11090", imgUrl + "oa11090.png", "アカウントロック照会", "… アカウントのロック状態を確認、またアンロックを行います", []);
+	html += oa_getSidenavRow(selectNavId, "OA11100", imgUrl + "oa11100.png", "オペレーター履歴確認", "… 変更履歴の確認用に情報をExcelファイルに出力します", []);
+	html += oa_getSidenavRow(selectNavId, "OA11110", imgUrl + "oa11110.png", "パスワード変更履歴照会", "… パスワード変更履歴を照会します", []);
+	html += oa_getSidenavRow(selectNavId, "OA11120", imgUrl + "oa11120.png", "サインイン証跡照会", "… サインイン及び、サインアウトの証跡を照会します", []);
 	html += '				</div>';
 	html += '			</li>';
 
 	html += '			<li class="active oa_collapsible_root">';
-	html += '				<a class="waves-effect collapsible-header"><img src="../static/img/collapsible.png" alt="collapsible"/>ロール</a>';
+	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>ロール</a>';
 	html += '				<div class="collapsible-body">';
-	html += oa_getSidenavRow(selectNavId, "OA11130", "../static/img/oa11130.png", "ロール確認", "… 各ロール設定の確認用に情報をExcelファイルに出力します", []);
-	html += oa_getSidenavRow(selectNavId, "OA11070", "../static/img/oa11070.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", []);
-	html += oa_getSidenavRow(selectNavId, "OA11080", "../static/img/oa11080.png", "取引ロールオペレーター割当", "…取引ロールに対してオペレーターを割り当てます", []);
+	html += oa_getSidenavRow(selectNavId, "OA11130", imgUrl + "oa11130.png", "ロール確認", "… 各ロール設定の確認用に情報をExcelファイルに出力します", []);
+	html += oa_getSidenavRow(selectNavId, "OA11070", imgUrl + "oa11070.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", []);
+	html += oa_getSidenavRow(selectNavId, "OA11080", imgUrl + "oa11080.png", "取引ロールオペレーター割当", "…取引ロールに対してオペレーターを割り当てます", []);
 	html += '				</div>';
 	html += '			</li>';
 
 	html += '			<li class="active oa_collapsible_root">';
-	html += '				<a class="waves-effect collapsible-header"><img src="../static/img/collapsible.png" alt="collapsible"/>パスワード変更</a>';
+	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>パスワード変更</a>';
 	html += '				<div class="collapsible-body">';
-	html += oa_getSidenavRow(selectNavId, "OA11040", "../static/img/oa11040.png", "パスワード変更", "… 現在サインインしている自分のパスワードを変更します", []);
+	html += oa_getSidenavRow(selectNavId, "OA11040", imgUrl + "oa11040.png", "パスワード変更", "… 現在サインインしている自分のパスワードを変更します", []);
 	html += '				</div>';
 	html += '			</li>';
 
 	html += '			<li class="active oa_collapsible_root">';
-	html += '				<a class="waves-effect collapsible-header"><img src="../static/img/collapsible.png" alt="collapsible"/>電算センターオペレーター専用</a>';
+	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>電算センターオペレーター専用</a>';
 	html += '				<div class="collapsible-body">';
-	html += oa_getSidenavRow(selectNavId, "OA12010", "../static/img/oa12010.png", "取引ロール編成インポート＆エクスポート", "… 取引ロールと取引グループの編成、", ["取引グループと取引の編成 を一括で登録または出力します"]);
-	html += oa_getSidenavRow(selectNavId, "OA12020", "../static/img/oa12020.png", "一時取引抑止<一覧>", "… 下記の各取引を行う際の入口です", ["・一時取引抑止登録", "・一時取引抑止更新"]);
-	html += oa_getSidenavRow(selectNavId, "OA12040", "../static/img/oa12040.png", "システム利用可能時間帯メンテナンス", "… 各サブシステムの曜日毎の利用可能時間帯を設定します", []);
-	html += oa_getSidenavRow(selectNavId, "OA12060", "../static/img/oa12060.png", "カレンダーメンテナンス", "… 各サブシステムで使用する稼働日カレンダーを設定します", []);
-	html += oa_getSidenavRow(selectNavId, "OA12070", "../static/img/oa12070.png", "サービス呼出証跡照会", "… サーバーサービスの呼出証跡を照会します", []);
+	html += oa_getSidenavRow(selectNavId, "OA12010", imgUrl + "oa12010.png", "取引ロール編成インポート＆エクスポート", "… 取引ロールと取引グループの編成、", ["取引グループと取引の編成 を一括で登録または出力します"]);
+	html += oa_getSidenavRow(selectNavId, "OA12020", imgUrl + "oa12020.png", "一時取引抑止<一覧>", "… 下記の各取引を行う際の入口です", ["・一時取引抑止登録", "・一時取引抑止更新"]);
+	html += oa_getSidenavRow(selectNavId, "OA12040", imgUrl + "oa12040.png", "システム利用可能時間帯メンテナンス", "… 各サブシステムの曜日毎の利用可能時間帯を設定します", []);
+	html += oa_getSidenavRow(selectNavId, "OA12060", imgUrl + "oa12060.png", "カレンダーメンテナンス", "… 各サブシステムで使用する稼働日カレンダーを設定します", []);
+	html += oa_getSidenavRow(selectNavId, "OA12070", imgUrl + "oa12070.png", "サービス呼出証跡照会", "… サーバーサービスの呼出証跡を照会します", []);
 	html += '				</div>';
 	html += '			</li>';
 
 	html += '			<li class="active oa_collapsible_root">';
-	html += '				<a class="waves-effect collapsible-header"><img src="../static/img/collapsible.png" alt="collapsible"/>サインアウト</a>';
+	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>サインアウト</a>';
 	html += '				<div class="collapsible-body">';
-	html += oa_getSidenavRow(selectNavId, "ED00010", "../static/img/ed00010.png", "サインアウト", "… サインアウトし基幹系認証管理システムを終了します", []);
+	html += oa_getSidenavRow(selectNavId, "ED00010", imgUrl + "ed00010.png", "サインアウト", "… サインアウトし基幹系認証管理システムを終了します", []);
 	html += '				</div>';
 	html += '			</li>';
 
