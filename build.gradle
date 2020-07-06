@@ -22,7 +22,7 @@ buildscript {
         commonTestsVersion = '20.0.8'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.0'
-        mssqlJdbcVersion='8.2.2.jre11'
+        mssqlJdbcVersion = '8.2.2.jre11'
 
     }
 }
@@ -57,8 +57,8 @@ repositories {
     }
 }
 
-group='net.jagunma.backbone.auth'
-archivesBaseName='backboneAuth-oa1-server'
+group = 'net.jagunma.backbone.auth'
+archivesBaseName = 'backboneAuth-oa1-server'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -87,9 +87,8 @@ dependencies {
     implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
     implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
     implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
-    implementation"net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
+    implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
     testImplementation "net.jagunma.common2020:jagunma-common-tests:${commonTestsVersion}"
-
     implementation 'org.springframework:spring-beans:5.2.6.RELEASE'
     implementation 'org.springframework:spring-jdbc:5.2.6.RELEASE'
     implementation "org.springframework:spring-context"
@@ -101,6 +100,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
