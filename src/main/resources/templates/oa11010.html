@@ -1,18 +1,19 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>オペレーター＜一覧＞ | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa11010.css"/>
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa11010.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+	<link rel="stylesheet" href="../static/css/oa11010.css" th:href="@{/css/oa11010.css}"/>
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa11010.js" th:src="@{/js/oa11010.js}"></script>
 </head>
 <body>
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
 	<script>oa_getMassageDialog();</script>
 	<!-- 左に表示するメニュー用定義 -->
@@ -105,7 +106,7 @@
 				<!-- 有効期限 -->
 				<li>
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
 						<label class="oa_content_label">有効期限</label>
 					</div>
 					<div class="collapsible-body">
@@ -195,7 +196,7 @@
 				<!-- サブシステムロール -->
 				<li class="oaex_subsystem_role_header">
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
 						<label class="oa_content_label">サブシステムロール</label>
 					</div>
 					<div class="oaex_subsystem_role_header_conditions oaex_subsystem_role_clsoe">
@@ -490,7 +491,7 @@
 				<!-- 取引ロール -->
 				<li class="oaex_biztran_role_header">
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
 						<label class="oa_content_label">取引ロール</label>
 					</div>
 					<div class="oaex_biztran_role_header_conditions oaex_biztran_role_clsoe">
@@ -802,7 +803,7 @@
 				<!-- その他 -->
 				<li>
 					<div  class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
 						<label class="oa_content_label">その他</label>
 					</div>
 					<div class="collapsible-body">
