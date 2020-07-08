@@ -26,7 +26,9 @@ spring:
   profiles:
     active: develop
   thymeleaf:
-    mode=HTML:
+    mode: HTML
+    # htmlファイルをキャッシュするか？本番ではtrueに設定すること
+    cache: false
 
 # Dao関連設定
 doma:
