@@ -14,7 +14,7 @@ buildscript {
         logbackCoreVersion = '1.2.3'
         commonServerVersion = '20.1.40'
         commonCommonVersion = '20.0.87'
-        commonValuesVersion = '20.0.42'
+        commonValuesVersion = '20.0.44'
         commonUtilsVersion = '20.1.59'
         domaCoreVersion = '2.37.0'
         sf4jApiVersion = '1.7.30'
