@@ -15,24 +15,28 @@ div.oa_collapsible_header {width: 100px;}
     overflow-y: hidden;
     height: 360px;
 }
-.oaex_table_ja_th {min-width: 120px; width: 13%;}
-.oaex_table_ja_code {min-width: 30px; width: 3%;}
-.oaex_table_ja_name {min-width: 120px; width: 10%;}
-
-.oaex_table_tempo_th {min-width: 120px; width: 13%;}
-.oaex_table_tempo_code {min-width: 30px; width: 3%;}
-.oaex_table_tempo_name {min-width: 120px; width: 10%;}
-
-.oaex_table_subsystem_th {min-width: 110px; width: 10%;}
-.oaex_table_subsystem {min-width: 110px; width: 10%;}
-
-.oaex_table_biztran_grp_th {min-width: 340px; width: 18%;}
-.oaex_table_biztran_grp_code {min-width: 60px; width: 5%;}
-.oaex_table_biztran_grp_name {min-width: 280px; width: 13%;}
-
-.oaex_table_biztran_th {min-width: 200px; width: 18%;}
-.oaex_table_biztran_code {min-width: 50px; width: 5%;}
-.oaex_table_biztran_name {min-width: 150px; width: 13%;}
-
-.oaex_table_expiration_date_th {min-width: 180px; width: 16%;}
-.oaex_table_expiration_date {min-width: 180px; width: 16%;}
+/* ＪＡ */
+.oaex_table_ja_th {min-width: 150px; width: 10%;}
+.oaex_table_ja_code {min-width: 30px; width: 2%;}
+.oaex_table_ja_name {min-width: 120px; width: 8%;}
+/* 店舗 */
+.oaex_table_tempo_th {min-width: 150x; width: 10%;}
+.oaex_table_tempo_code {min-width: 30px; width: 2%;}
+.oaex_table_tempo_name {min-width: 120px; width: 8%;}
+/* サブシステム */
+.oaex_table_subsystem_th {min-width: 110px; width: 8%;}
+.oaex_table_subsystem {min-width: 110px; width: 8%;}
+/* 取引グループ */
+.oaex_table_biztran_grp_th {min-width: 340px; width: 23%;}
+.oaex_table_biztran_grp_code {min-width: 60px; width: 4%;}
+.oaex_table_biztran_grp_name {min-width: 280px; width: 19%;}
+/* 取引 */
+.oaex_table_biztran_th {min-width: 200px; width: 14%;}
+.oaex_table_biztran_code {min-width: 50px; width: 4%;}
+.oaex_table_biztran_name {min-width: 150px; width: 10%;}
+/* 有効期限 */
+.oaex_table_expiration_date_th {min-width: 180px; width: 13%;}
+.oaex_table_expiration_date {min-width: 180px; width: 13%;}
+/* 抑止理由 */
+.oaex_table_suspend_reason_th {min-width: 320px; width: 22%;}
+.oaex_table_suspend_reason {min-width: 320px; width: 22%;}
