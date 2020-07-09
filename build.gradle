@@ -13,9 +13,9 @@ buildscript {
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
         commonServerVersion = '20.1.40'
-        commonCommonVersion = '20.0.85'
-        commonValuesVersion = '20.0.41'
-        commonUtilsVersion = '20.1.57'
+        commonCommonVersion = '20.0.87'
+        commonValuesVersion = '20.0.44'
+        commonUtilsVersion = '20.1.59'
         domaCoreVersion = '2.37.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'
@@ -36,7 +36,7 @@ plugins {
     id 'idea'
     id "com.github.ben-manes.versions" version '0.28.0'
     id 'se.patrikerdes.use-latest-versions' version '0.2.14'
-    id "com.github.spotbugs" version "4.4.3"
+    id "com.github.spotbugs" version "4.4.4"
     id 'jacoco'
 }
 
@@ -57,8 +57,8 @@ repositories {
     }
 }
 
-group='net.jagunma.backbone.auth'
-archivesBaseName='backboneAuth-oa1-server'
+group = 'net.jagunma.backbone.auth'
+archivesBaseName = 'backboneAuth-oa1-server'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -87,7 +87,7 @@ dependencies {
     implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
     implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
     implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
-    implementation"net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
+    implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
     testImplementation "net.jagunma.common2020:jagunma-common-tests:${commonTestsVersion}"
 
     implementation 'org.springframework:spring-beans:5.2.7.RELEASE'
@@ -101,6 +101,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
