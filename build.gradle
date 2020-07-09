@@ -23,6 +23,7 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
         mssqlJdbcVersion='8.3.1.jre11-preview'
+        backboneAuthDaoVersion = '20.0.6'
 
     }
 }
@@ -88,6 +89,7 @@ dependencies {
     implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
     implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
     implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
+    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
     testImplementation "net.jagunma.common2020:jagunma-common-tests:${commonTestsVersion}"
 
     implementation 'org.springframework:spring-beans:5.2.7.RELEASE'
