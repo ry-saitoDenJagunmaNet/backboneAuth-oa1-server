@@ -159,6 +159,7 @@ function oa_getSidenav(selectNavId) {
 	html += oa_getSidenavRow(selectNavId, "OA12020", imgUrl + "oa12020.png", "一時取引抑止<一覧>", "… 下記の各取引を行う際の入口です", ["・一時取引抑止登録", "・一時取引抑止更新"]);
 	html += oa_getSidenavRow(selectNavId, "OA12040", imgUrl + "oa12040.png", "システム利用可能時間帯メンテナンス", "… 各サブシステムの曜日毎の利用可能時間帯を設定します", []);
 	html += oa_getSidenavRow(selectNavId, "OA12060", imgUrl + "oa12060.png", "カレンダーメンテナンス", "… 各サブシステムで使用する稼働日カレンダーを設定します", []);
+	html += oa_getSidenavRow(selectNavId, "OA12070", imgUrl + "oa12070.png", "ＪＡ割当IPアドレス範囲メンテナンス", "… 各ＪＡに割り当てているIPアドレスを設定します", []);
 	html += '				</div>';
 	html += '			</li>';
 

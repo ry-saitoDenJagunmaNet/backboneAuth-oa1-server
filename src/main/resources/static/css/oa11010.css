@@ -138,7 +138,7 @@ tr.oaex_operator_table_row {
 /* オペレーター */
 .oaex_operator_operator_th {min-width: 200px; width: 13%;}
 .oaex_operator_operator_code {min-width: 80px; width: 5%;}
-.oaex_operator_operator_name {min-width: 120px; width: 8%;}
+.oaex_operator_operator_name {min-width: 150px; width: 8%;}
 /* オペレーター有効期限 */
 .oaex_operator_expiration_date_th {min-width: 180px; width: 12%;}
 .oaex_operator_expiration_date {min-width: 180px; width: 12%;}
@@ -183,3 +183,5 @@ tr.oaex_operator_table_row {
 	border-radius: 50%;
 	background: #f44336;											/* (red) */
 }
+
+.oaex_table_row_filter {display: none;}

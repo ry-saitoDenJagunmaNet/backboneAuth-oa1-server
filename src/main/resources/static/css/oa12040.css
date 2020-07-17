@@ -6,7 +6,7 @@
  * システム利用可能時間帯テーブル（曜日 ＼ サブシステム）
  */
 /* テーブル　左線を表示 */
-#week_subsystem_table {border-left: solid 1px rgba(0, 0, 0, 0.12);}
+#week_subsystem_table {border: solid 1px rgba(0, 0, 0, 0.12);}
 /* 見出し行　上下線を削除 */
 #week_subsystem_table thead tr {
     border-top: 0; 
@@ -36,7 +36,7 @@
  * システム利用可能時間帯テーブル（サブシステム ＼ 曜日）
  */
 /* テーブル　左線を表示 */
-#subsystem_week_table {border-left: solid 1px rgba(0, 0, 0, 0.12);}
+#subsystem_week_table {border: solid 1px rgba(0, 0, 0, 0.12);}
 /* 見出し行　上下線を削除 */
 #subsystem_week_table thead tr {
     border-top: 0; 

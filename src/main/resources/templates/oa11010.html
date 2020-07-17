@@ -12,9 +12,10 @@
 	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
 	<script src="../static/js/oa11010.js" th:src="@{/js/oa11010.js}"></script>
 </head>
-<body th:onLoad="oaex_onload();">
-	<form method="post" action="search">
+<body th:onLoad="oaex_th_onload();">
+<form method="post" action="search">
 
+	<!-- imgファイルのファイルパス定義 TemplateとThymeleafでパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
 	<script>oa_getMassageDialog();</script>
@@ -43,7 +44,7 @@
 				<div class="col s6">
 					<div class="input-field">
 						<select id="tempo" name="tempoCode" class="validate" th:value="${form.tempoCode}">
-							<option th:each="item  : ${tempos}" th:value="${item.key}" th:text="${item.value}" th:selected="${form.tempoCode == item.key}"></option>
+							<option th:each="item  : ${form.tempoList}" th:value="${item.key}" th:text="${item.value}" th:selected="${form.tempoCode == item.key}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -110,7 +111,7 @@
 				<!-- 有効期限 -->
 				<li>
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" alt="collapsible" th:src="@{/img/collapsible.png}"/>
 						<label class="oa_content_label">有効期限</label>
 					</div>
 					<div class="collapsible-body">
@@ -120,19 +121,22 @@
 									<div class="col s3">
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"></input>
+												<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"
+													   th:name="expirationSelect" th:checked="${form.expirationSelect == 0}"></input>
 												<span>指定なし</span>
 											</label>
 										</div>
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"></input>
+												<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"
+													   th:name="expirationSelect" th:checked="${form.expirationSelect == 1}"></input>
 												<span>状態指定日</span>
 											</label>
 										</div>
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"></input>
+												<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"
+													   th:name="expirationSelect" th:checked="${form.expirationSelect == 2}"></input>
 												<span>条件指定</span>
 											</label>
 										</div>
@@ -142,7 +146,8 @@
 											<div class="row">
 												<div class="col s6">
 													<div class="input-field">
-														<input type="text" id="expiration_status_date" class="validate datepicker" value=""></input>
+														<input type="text" id="expiration_status_date" name="expirationStatusDate" class="validate datepicker"
+															   th:value="${form.expirationStatusDate}"></input>
 														<label for="expiration_status_date">状態指定日</label>
 													</div>
 												</div>
@@ -157,14 +162,16 @@
 											<div class="row">
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_start_date_from" class="validate datepicker" value=""></input>
+														<input type="text" id="expiration_start_date_from" name="expirationStartDateFrom" class="validate datepicker"
+															   th:value="${form.expirationStartDateFrom}"></input>
 														<label for="expiration_start_date_from">（開始日）</label>
 													</div>
 												</div>
 												<div class="col s1"><div class="center-align"><p>～</p></div></div>
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_start_date_to" class="validate datepicker" value=""></input>
+														<input type="text" id="expiration_start_date_to" name="expirationStartDateTo" class="validate datepicker"
+															   th:value="${form.expirationStartDateTo}"></input>
 														<label for="expiration_start_date_to">（終了日）</label>
 													</div>
 												</div>
@@ -177,14 +184,16 @@
 											<div class="row">
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_end_date_from" class="validate datepicker" value=""></input>
+														<input type="text" id="expiration_end_date_from" name="expirationEndDateFrom" class="validate datepicker"
+															   th:value="${form.expirationEndDateFrom}"></input>
 														<label for="expiration_end_date_from">（開始日）</label>
 													</div>
 												</div>
 												<div class="col s1"><div class="center-align"><p>～</p></div></div>
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_end_date_to" class="validate datepicker" value=""></input>
+														<input type="text" id="expiration_end_date_to" name="expirationEndDateTo" class="validate datepicker"
+															   th:value="${form.expirationEndDateTo}"></input>
 														<label for="expiration_end_date_to">（終了日）</label>
 													</div>
 												</div>
@@ -200,22 +209,25 @@
 				<!-- サブシステムロール -->
 				<li class="oaex_subsystem_role_header">
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" alt="collapsible" th:src="@{/img/collapsible.png}"/>
 						<label class="oa_content_label">サブシステムロール</label>
 					</div>
 					<div class="oaex_subsystem_role_header_conditions oaex_subsystem_role_clsoe">
 						<div class="row">
 							<div class="col s12">
 								<label>
-									<input type="radio" id="subsystem_role_sel_non" name="subsystem_role_sel" value="0" onchange="oaex_subsystem_role_sel_onChange();"></input>
+									<input type="radio" id="subsystem_role_sel_non" name="subsystemRoleConditionsSelect" value="0" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subsystemRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_and" name="subsystem_role_sel" value="1" onchange="oaex_subsystem_role_sel_onChange();"></input>
+									<input type="radio" id="subsystem_role_sel_and" name="subsystemRoleConditionsSelect" value="1" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subsystemRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_or" name="subsystem_role_sel" value="2" onchange="oaex_subsystem_role_sel_onChange();"></input>
+									<input type="radio" id="subsystem_role_sel_or" name="subsystemRoleConditionsSelect" value="2" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subsystemRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
 							</div>
@@ -244,7 +256,100 @@
 								<div class="oaex_subsystem_role_table" onScroll="oa_linkageScrollX(this, 'subsystem_role_head')">
 									<table id="subsystem_role" class="highlight">
 										<tbody>
-											<tr>
+											<tr th:each="itemrow, iterStat : *{form.subsystemRoleList}">
+												<td class="oaex_subsystem_role_check">
+													<label class="oa_non_label_checkbox">
+														<input type="checkbox" value="1"
+															   th:name="'subsystemRoleList['+${iterStat.index}+'].subsystemRoleSelected'"
+															   th:checked="${itemrow.subsystemRoleSelected == 1}"/>
+														<span></span>
+													</label>
+													<input type="hidden"
+														   th:field="*{form.subsystemRoleList[__${iterStat.index}__].subsystemRoleCode}"></input>
+													<input type="hidden"
+														   th:field="*{form.subsystemRoleList[__${iterStat.index}__].subsystemRoleName}"></input>
+												</td>
+												<td class="oaex_subsystem_role_subsystem_role_code"
+													th:text="${itemrow.subsystemRoleCode}">
+												</td>
+												<td class="oaex_subsystem_role_subsystem_role_name"
+													th:text="${itemrow.subsystemRoleName}">
+												</td>
+												<td class="oaex_subsystem_role_expiration_sel_non">
+													<label>
+														<input type="radio" value="0"
+															   th:id="'subsystem_role_expiration_sel_non['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 0}"
+															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>指定なし</span>
+													</label>
+												</td>
+												<td class="oaex_subsystem_role_expiration_sel_status">
+													<label>
+														<input type="radio" value="1"
+															   th:id="'subsystem_role_expiration_sel_status['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 1}"
+															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>状態指定日</span>
+													</label>
+												</td>
+												<td class="oaex_subsystem_role_expiration_status_date">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'subsystem_role_expiration_status_date['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
+														<label th:for="'+subsystem_role_expiration_status_date['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_subsystem_role_expiration_sel_conditions">
+													<label>
+														<input type="radio" value="2"
+															   th:id="'subsystem_role_expiration_sel_conditions['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 2}"
+															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>条件指定</span>
+													</label>
+												</td>
+												<td class="oaex_subsystem_role_expiration_start_date_from">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
+														<label th:for="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_subsystem_role_expiration_start_date_tilde">～</td>
+												<td class="oaex_subsystem_role_expiration_start_date_to">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
+														<label th:for="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_subsystem_role_expiration_end_date_from">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
+														<label th:for="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_subsystem_role_expiration_end_date_tilde">～</td>
+												<td class="oaex_subsystem_role_expiration_end_date_to">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
+														<label th:for="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+											</tr>
+
+											<tr th:remove="all">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -255,13 +360,13 @@
 												<td class="oaex_subsystem_role_subsystem_role_name">JA管理者</td>
 												<td class="oaex_subsystem_role_expiration_sel_non">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[0]" name="subsystem_role_expiration_sel[0]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_non[0]" name="subsystemRoleExpirationSelect[0]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td class="oaex_subsystem_role_expiration_sel_status">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[0]" name="subsystem_role_expiration_sel[0]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_status[0]" name="subsystemRoleExpirationSelect[0]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
@@ -273,7 +378,7 @@
 												</td>
 												<td class="oaex_subsystem_role_expiration_sel_conditions">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[0]" name="subsystem_role_expiration_sel[0]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_conditions[0]" name="subsystemRoleExpirationSelect[0]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
@@ -304,7 +409,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -315,13 +420,13 @@
 												<td>業務統括者（購買）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[1]" name="subsystem_role_expiration_sel[1]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_non[1]" name="subsystemRoleExpirationSelect[1]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[1]" name="subsystem_role_expiration_sel[1]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_status[1]" name="subsystemRoleExpirationSelect[1]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
@@ -333,7 +438,7 @@
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[1]" name="subsystem_role_expiration_sel[1]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_conditions[1]" name="subsystemRoleExpirationSelect[1]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
@@ -364,7 +469,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -375,13 +480,13 @@
 												<td>業務統括者（販売・青果）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[2]" name="subsystem_role_expiration_sel[2]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_non[2]" name="subsystemRoleExpirationSelect[2]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[2]" name="subsystem_role_expiration_sel[2]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_status[2]" name="subsystemRoleExpirationSelect[2]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
@@ -393,7 +498,7 @@
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[2]" name="subsystem_role_expiration_sel[2]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_conditions[2]" name="subsystemRoleExpirationSelect[2]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
@@ -424,7 +529,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -435,13 +540,13 @@
 												<td>業務統括者（販売・花卉）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[3]" name="subsystem_role_expiration_sel[3]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_non[3]" name="subsystemRoleExpirationSelect[3]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[3]" name="subsystem_role_expiration_sel[3]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_status[3]" name="subsystemRoleExpirationSelect[3]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
@@ -453,7 +558,7 @@
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[3]" name="subsystem_role_expiration_sel[3]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_expiration_sel_conditions[3]" name="subsystemRoleExpirationSelect[3]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
@@ -495,22 +600,25 @@
 				<!-- 取引ロール -->
 				<li class="oaex_biztran_role_header">
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" alt="collapsible" th:src="@{/img/collapsible.png}"/>
 						<label class="oa_content_label">取引ロール</label>
 					</div>
 					<div class="oaex_biztran_role_header_conditions oaex_biztran_role_clsoe">
 						<div class="row">
 							<div class="col s5">
 								<label>
-									<input type="radio" id="biztran_role_sel_non" name="biztran_role_sel" value="0" onchange="oaex_biztran_role_sel_onChange();"></input>
+									<input type="radio" id="biztran_role_sel_non" name="biztran_role_sel" value="0" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.biztranRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_and" name="biztran_role_sel" value="1" onchange="oaex_biztran_role_sel_onChange();"></input>
+									<input type="radio" id="biztran_role_sel_and" name="biztran_role_sel" value="1" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.biztranRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_or" name="biztran_role_sel" value="2" onchange="oaex_biztran_role_sel_onChange();"></input>
+									<input type="radio" id="biztran_role_sel_or" name="biztran_role_sel" value="2" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.biztranRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
 							</div>
@@ -519,14 +627,19 @@
 							</div>
 							<div class="col s4">
 								<div class="input-field">
-									<select id="subsystem_filter" class="validate">
-										<option value=""></option>
-										<option value="KB">購買</option>
-										<option value="YS">販売・青果</option>
-										<option value="YF">販売・花卉</option>
-										<option value="HK">販売・米</option>
-										<option value="HM">販売・麦</option>
-										<option value="AN">販売・畜産</option>
+									<select id="subsystem_filter" name="subsystemRoleSubsystemCode" class="validate"
+											th:value="${form.subsystemRoleSubsystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
+										<option th:each="item  : ${form.subsystemRoleSubsystemList}"
+												th:value="${item.key}"
+												th:text="${item.value}"
+												th:selected="${form.subsystemRoleSubsystemCode == item.key}"></option>
+										<option value="" th:remove="all"></option>
+										<option value="KB" th:remove="all">購買</option>
+										<option value="YS" th:remove="all">販売・青果</option>
+										<option value="YF" th:remove="all">販売・花卉</option>
+										<option value="HK" th:remove="all">販売・米</option>
+										<option value="HM" th:remove="all">販売・麦</option>
+										<option value="AN" th:remove="all">販売・畜産</option>
 									</select>
 									<label></label>
 								</div>
@@ -556,7 +669,101 @@
 								<div class="oaex_biztran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_head')">
 									<table id="biztran_role" class="highlight">
 										<tbody>
-											<tr>
+											<tr th:each="itemrow, iterStat : *{form.biztranRoleList}">
+												<td class="oaex_biztran_role_check">
+													<label class="oa_non_label_checkbox">
+														<input type="checkbox" value="1"
+															   th:id="'biztranRoleList['+${iterStat.index}+'].biztranRoleSelected'"
+															   th:name="'biztranRoleList['+${iterStat.index}+'].biztranRoleSelected'"
+															   th:checked="${itemrow.biztranRoleSelected == 1}"/>
+														<span></span>
+													</label>
+													<!-- POST用にコード、名称を定義 -->
+													<input type="hidden"
+														   th:field="*{form.biztranRoleList[__${iterStat.index}__].biztranRoleCode}"></input>
+													<input type="hidden"
+														   th:field="*{form.biztranRoleList[__${iterStat.index}__].biztranRoleName}"></input>
+													<input type="hidden"
+														   th:field="*{form.biztranRoleList[__${iterStat.index}__].subSystemCode}"></input>
+												</td>
+												<td class="oaex_biztran_role_biztran_role_code" th:text="${itemrow.biztranRoleCode}"></td>
+												<td class="oaex_biztran_role_biztran_role_name" th:text="${itemrow.biztranRoleName}"></td>
+												<td class="oaex_biztran_role_expiration_sel_non">
+													<label>
+														<input type="radio" value="0"
+															   th:id="'biztran_role_expiration_sel_non['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 0}"
+															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>指定なし</span>
+													</label>
+												</td>
+												<td class="oaex_biztran_role_expiration_sel_status">
+													<label>
+														<input type="radio" value="1"
+															   th:id="'biztran_role_expiration_sel_status['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 1}"
+															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>状態指定日</span>
+													</label>
+												</td>
+												<td class="oaex_biztran_role_expiration_status_date">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'biztran_role_expiration_status_date['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
+														<label th:for="'+biztran_role_expiration_status_date['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_biztran_role_expiration_sel_conditions">
+													<label>
+														<input type="radio" value="2"
+															   th:id="'biztran_role_expiration_sel_conditions['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:checked="${itemrow.expirationSelect == 2}"
+															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+														<span>条件指定</span>
+													</label>
+												</td>
+												<td class="oaex_biztran_role_expiration_start_date_from">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'biztran_role_expiration_start_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
+														<label th:for="'+biztran_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_biztran_role_expiration_start_date_tilde">～</td>
+												<td class="oaex_biztran_role_expiration_start_date_to">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'biztran_role_expiration_start_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
+														<label th:for="'+biztran_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_biztran_role_expiration_end_date_from">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'biztran_role_expiration_end_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
+														<label th:for="'+biztran_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+												<td class="oaex_biztran_role_expiration_end_date_tilde">～</td>
+												<td class="oaex_biztran_role_expiration_end_date_to">
+													<div class="input-field">
+														<input type="text" class="validate datepicker"
+															   th:id="'biztran_role_expiration_end_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
+														<label th:for="'+biztran_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
+													</div>
+												</td>
+											</tr>
+
+
+											<tr th:remove="all">
 												<td class="oaex_biztran_role_check">
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -616,7 +823,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -676,7 +883,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -736,7 +943,7 @@
 													</div>
 												</td>
 											</tr>
-											<tr>
+											<tr th:remove="all">
 												<td>
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox"/>
@@ -807,7 +1014,7 @@
 				<!-- その他 -->
 				<li>
 					<div  class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" th:src="@{/img/collapsible.png}" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" alt="collapsible" th:src="@{/img/collapsible.png}"/>
 						<label class="oa_content_label">その他</label>
 					</div>
 					<div class="collapsible-body">
@@ -821,11 +1028,11 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="deviceAuthUse" value="1" th:checked="${form.deviceAuthUse == 1}"/>
 											<span>使用</span>
 										</label>
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="deviceAuthUnused" value="1" th:checked="${form.deviceAuthUnused == 1}"/>
 											<span>未使用</span>
 										</label>
 									</div>
@@ -843,15 +1050,15 @@
 								<div class="row">
 									<div class="col s5">
 										<div class="input-field">
-											<input type="text" id="passwordhistory_occurred_date_time_from" class="validate datepicker" value=""></input>
-											<label for="passwordhistory_occurred_date_time_from"></label>
+											<input type="text" id="accountLock_occurred_time_from" name="accountLockOccurredDateFrom" class="validate datepicker" th:value="${form.accountLockOccurredDateFrom}"></input>
+											<label for="accountLock_occurred_time_from"></label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s5">
 										<div class="input-field">
-											<input type="text" id="passwordhistory_occurred_date_time_to" class="validate datepicker" value=""></input>
-											<label for="passwordhistory_occurred_date_time_to"></label>
+											<input type="text" id="accountLock_occurred_date_to" name="accountLockOccurredDateTo" class="validate datepicker" th:value="${form.accountLockOccurredDateTo}"></input>
+											<label for="accountLock_occurred_date_to"></label>
 										</div>
 									</div>
 								</div>
@@ -867,11 +1074,11 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="accountLockStatusLock" value="1" th:checked="${form.accountLockStatusLock == 1}"/>
 											<span>ロック</span>
 										</label>
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="accountLockStatusUnlock" value="1" th:checked="${form.accountLockStatusUnlock == 1}"/>
 											<span>アンロック</span>
 										</label>
 									</div>
@@ -889,25 +1096,25 @@
 								<div class="row">
 									<div class="col s2">
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="passwordHistoryCheck" value="1" th:checked="${form.passwordHistoryCheck == 1}"/>
 											<span>過去</span>
 										</label>
 									</div>
 									<div class="col s4">
 										<div class="input-field">
-											<input type="number" id="password_last_change_date" class="validate" max="999"></input>
-											<label for="password_last_change_date"></label>
+											<input type="number" id="password_history_last_change_date" name="passwordHistoryLastChangeDate" class="validate" max="999" th:value="${form.passwordHistoryLastChangeDate}"></input>
+											<label for="password_history_last_change_date"></label>
 										</div>
 									</div>
 									<div class="col s2"><p>日以内に</p></div>
 									<div class="col s4">
 										<div class="input-field">
-											<select id="update_day_sel" class="validate">
-												<option value=""></option>
-												<option value="1">変更した</option>
-												<option value="2">変更していない</option>
+											<select id="password_history_last_change_date_status" name="passwordHistoryLastChangeDateStatus" class="validate" th:value="${form.passwordHistoryLastChangeDateStatus}">
+												<option value="" th:selected="${form.passwordHistoryLastChangeDateStatus == ''}"></option>
+												<option value="1" th:selected="${form.passwordHistoryLastChangeDateStatus == '1'}">変更した</option>
+												<option value="2" th:selected="${form.passwordHistoryLastChangeDateStatus == '2'}">変更していない</option>
 											</select>
-											<label for="update_day_sel"></label>
+											<label for="password_history_last_change_date_status"></label>
 										</div>
 									</div>
 								</div>
@@ -923,19 +1130,19 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="passwordHistoryChangeType0" value="1" th:checked="${form.passwordHistoryChangeType0 == 1}"/>
 											<span>初期</span>
 										</label>
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="passwordHistoryChangeType1" value="1" th:checked="${form.passwordHistoryChangeType1 == 1}"/>
 											<span>ユーザによる変更</span>
 										</label>
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="passwordHistoryChangeType2" value="1" th:checked="${form.passwordHistoryChangeType2 == 1}"/>
 											<span>管理者によるリセット</span>
 										</label>
 										<label>
-											<input type="checkbox"/>
+											<input type="checkbox" name="passwordHistoryChangeType3" value="1" th:checked="${form.passwordHistoryChangeType3 == 1}"/>
 											<span>機器認証パスワード</span>
 										</label>
 									</div>
@@ -947,21 +1154,21 @@
 							<div class="col s12">
 								<div class="row">
 									<div class="col s12">
-										<label class="oa_content_label">最終サインイン試行日</label>
+										<label class="oa_content_label">最終サインオペレーション試行日</label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col s5">
 										<div class="input-field">
-											<input type="text" id="signintrace_trydateTime_from" class="validate datepicker" value=""></input>
-											<label for="signintrace_trydateTime_from">（開始日）</label>
+											<input type="text" id="signintrace_trydate_from" name="signintraceTrydateFrom" class="validate datepicker" th:value="${form.signintraceTrydateFrom}"></input>
+											<label for="signintrace_trydate_from">（開始日）</label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s5">
 										<div class="input-field">
-											<input type="text" id="signintrace_trydateTime_to" class="validate datepicker" value=""></input>
-											<label for="signintrace_trydateTime_to">（終了日）</label>
+											<input type="text" id="signintrace_trydate_to" name="signintraceTrydateTo" class="validate datepicker" th:value="${form.signintraceTrydateTo}"></input>
+											<label for="signintrace_trydate_to">（終了日）</label>
 										</div>
 									</div>
 								</div>
@@ -970,8 +1177,8 @@
 						<div class="row oa_optional">
 							<div class="col s12">
 								<div class="input-field">
-									<input type="text" id="signintrace_tryipaddress" class="validate" value=""></input>
-									<label for="signintrace_tryipaddress">最終サインイン元IPアドレス</label>
+									<input type="text" id="signintrace_tryipaddress" name="signintraceTryIpAddress" class="validate" th:value="${form.signintraceTryIpAddress}"></input>
+									<label for="signintrace_tryipaddress">最終サインオペレーション元IPアドレス</label>
 								</div>
 							</div>
 						</div>
@@ -986,20 +1193,20 @@
 									<!-- サインイン -->
 									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox"></input>
+											<input type="checkbox" name="signintraceSignIn" value="1" th:checked="${form.signintraceSignIn == 1}"/>
 											<span>サインイン</span>
 										</label>
 									</div>
 									<!-- サインイン結果 -->
 									<div class="col s10">
 										<div class="input-field">
-											<select multiple id="sign_cause" class="validate">
-												<option value="0">成功</option>
-												<option value="1">失敗（存在しないオペレーター）</option>
-												<option value="2">失敗（パスワード誤り）</option>
-												<option value="3">遮断（IPアドレス範囲外）</option>
-												<option value="4">拒否（アカウントロック中）</option>
-												<option value="5">拒否（有効期限範囲外）</option>
+											<select multiple name="signintraceSignInResult" class="validate" th:field="*{form.signintraceSignInResult}">
+												<option value="0" th:field="*{form.signintraceSignInResult}" th:value="0">成功</option>
+												<option value="1" th:field="*{form.signintraceSignInResult}" th:value="1">失敗（存在しないオペレーター）</option>
+												<option value="2" th:field="*{form.signintraceSignInResult}" th:value="2">失敗（パスワード誤り）</option>
+												<option value="3" th:field="*{form.signintraceSignInResult}" th:value="3">遮断（IPアドレス範囲外）</option>
+												<option value="4" th:field="*{form.signintraceSignInResult}" th:value="4">拒否（アカウントロック中）</option>
+												<option value="5" th:field="*{form.signintraceSignInResult}" th:value="5">拒否（有効期限範囲外）</option>
 											</select>
 											<label>サインイン結果</label>
 										</div>
@@ -1009,7 +1216,7 @@
 									<!-- サインイン -->
 									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox"></input>
+											<input type="checkbox" name="signintraceSignOut" value="1" th:checked="${form.signintraceSignOut == 1}"/>
 											<span>サインアウト</span>
 										</label>
 									</div>
@@ -1025,7 +1232,7 @@
 			<!-- 検索ボタン -->
 			<div class="row">
 				<div class="col s3 offset-s9">
-					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();" th:onclick="javascript:document.forms[0].submit(); ">検索</a>
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();" th:onclick="oaex_th_searchBtn_onClick(1);">検索</a>
 				</div>
 			</div>
 		</section>
@@ -1037,7 +1244,7 @@
 					<div class="oaex_operator_table">
 						<table>
 							<thead>
-								<tr>
+								<tr class="oaex_operator_table_row">
 									<th class="oaex_operator_available_status_th">利用<br/>可否</th>
 									<th class="oaex_operator_account_lock_th">ﾛｯｸ</th>
 									<th class="oaex_operator_tempo_th" colspan="2">店舗</th>
@@ -1050,79 +1257,6 @@
 								</tr>
 							</thead>
 							<tbody id="operator_table">
-								<!-- trタグ　最終行または、オペレータIDが変わる前に下線を引くStyleを定義 -->
-								<tr onclick="oaex_operator_table_onClick(this);"
-									th:class="${iterStat.last} or ${ope.OperatorId} != *{operatorList[__${iterStat.index+1}__].OperatorId}? 'oaex_operator_table_row oaex_operator_table_operator_' + ${ope.OperatorCode} : 'oaex_operator_table_operator_' + ${ope.OperatorCode}"
-									th:each="ope, iterStat : *{operatorList}">
-									<!-- tdタグ　オペレータIDが全行と同じ場合、オペレータ情報は非表示 -->
-									<!-- 　　　　店舗IDが全行と同じ場合、店舗情報は非表示 -->
-									<!-- 　　　　サブシステムロールコードが全行と同じ場合、サブシステムロール情報は非表示 -->
-									<td class="oaex_operator_available_status">
-										<div class="oaex_available_status_possible"
-											 th:if="${ope.AvailableStatus == 0 and iterStat.first}"></div>
-										<div class="oaex_available_status_possible"
-											 th:if="${ope.AvailableStatus == 0 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
-										<div class="oaex_available_status_inpossible"
-											 th:if="${ope.AvailableStatus == 1 and iterStat.first}"></div>
-										<div class="oaex_available_status_inpossible"
-											 th:if="${ope.AvailableStatus == 1 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
-									</td>
-									<td class="oaex_operator_account_lock">
-										<div class="oaex_account_unlock"
-											 th:if="${ope.LockStatus == 0 and iterStat.first}"></div>
-										<div class="oaex_account_unlock"
-											 th:if="${ope.LockStatus == 0 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
-										<div class="oaex_account_lock"
-											 th:if="${ope.LockStatus == 1 and iterStat.first}"></div>
-										<div class="oaex_account_lock"
-											 th:if="${ope.LockStatus == 1 and not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"></div>
-									</td>
-									<td class="oaex_operator_tempo_code">
-										<div th:if="${iterStat.first}"
-											 th:text="${ope.TempoCode}"></div>
-										<div th:if="${not iterStat.first} and ${ope.TempoId} != *{operatorList[__${iterStat.index-1}__].TempoId}"
-											 th:text="${ope.TempoCode}"></div>
-									</td>
-									<td class="oaex_operator_tempo_name">
-										<div th:if="${iterStat.first}"
-											 th:text="${ope.TempoName}"></div>
-										<div th:if="${not iterStat.first} and ${ope.TempoId} != *{operatorList[__${iterStat.index-1}__].TempoId}"
-											 th:text="${ope.TempoName}"></div>
-									</td>
-									<td class="oaex_operator_operator_code">
-										<div th:if="${iterStat.first}"
-											 th:text="${ope.OperatorCode}"></div>
-										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
-											 th:text="${ope.OperatorCode}"></div>
-									</td>
-									<td class="oaex_operator_operator_name">
-										<div th:if="${iterStat.first}"
-											 th:text="${ope.OperatorName}"></div>
-										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
-											 th:text="${ope.OperatorName}"></div>
-									</td>
-									<td class="oaex_operator_expiration_date">
-										<div th:if="${iterStat.first}"
-											 th:text="${#temporals.format(ope.ExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.ExpirationEndDate, 'yyyy/MM/dd')}"></div>
-										<div th:if="${not iterStat.first} and ${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId}"
-											 th:text="${#temporals.format(ope.ExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.ExpirationEndDate, 'yyyy/MM/dd')}"></div>
-									</td>
-									<td class="oaex_operator_subsystem_role">
-										<div th:if="${iterStat.first}"
-											 th:text="${ope.SubSystemRoleName}"></div>
-										<div th:if="${not iterStat.first} and (${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId} or ${ope.SubSystemRoleCode} != *{operatorList[__${iterStat.index-1}__].SubSystemRoleCode})"
-											 th:text="${ope.SubSystemRoleName}"></div>
-									</td>
-									<td class="oaex_operator_subsystem_role_expiration_date">
-										<div th:if="${iterStat.first}"
-											 th:text="${#temporals.format(ope.SubSystemRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.SubSystemRoleExpirationEndDate, 'yyyy/MM/dd')}"></div>
-										<div th:if="${not iterStat.first} and (${ope.OperatorId} != *{operatorList[__${iterStat.index-1}__].OperatorId} or ${ope.SubSystemRoleCode} != *{operatorList[__${iterStat.index-1}__].SubSystemRoleCode})"
-											 th:text="${#temporals.format(ope.SubSystemRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.SubSystemRoleExpirationEndDate, 'yyyy/MM/dd')}"></div>
-									</td>
-									<td class="oaex_operator_biztran_role_code" th:text="${ope.BizTranRoleCode}"></td>
-									<td class="oaex_operator_biztran_role_name" th:text="${ope.BizTranRoleName}"></td>
-									<td class="oaex_operator_biztran_role_expiration_date" th:text="${#temporals.format(ope.BizTranRoleExpirationStartDate, 'yyyy/MM/dd')}+'～'+${#temporals.format(ope.BizTranRoleExpirationEndDate, 'yyyy/MM/dd')}"></td>
-								</tr>
 								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this);" th:remove="all">
 									<td class="oaex_operator_available_status"><div class="oaex_available_status_possible"></div></td>
 									<td class="oaex_operator_account_lock"><div class="oaex_account_unlock"></div></td>
@@ -1230,16 +1364,17 @@
 			<!-- pagination -->
 			<div class="row">
 				<div class="col s12">
-					<ul id="operator_table_pagination" class="pagination">
-						<li class="disabled"><a href="#!">&lt;</a></li>
-						<li class="active"><a href="#!">1</a></li>
-						<li class="waves-effect"><a href="#!">2</a></li>
-						<li class="waves-effect"><a href="#!">3</a></li>
-						<li class="waves-effect"><a href="#!">4</a></li>
-						<li class="waves-effect"><a href="#!">5</a></li>
-						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					<ul id="operator_pagination" class="pagination">
+						<li class="disabled" th:remove="all"><a href="#!">&lt;</a></li>
+						<li class="active" th:remove="all"><a href="#!">1</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">2</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">3</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">4</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">5</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">&gt;</a></li>
 					</ul>
 				</div>
+				<input type="hidden" id="pageNo" name="pageNo"value="1"/>
 			</div>
 		</section>
 
@@ -1274,6 +1409,6 @@
 			</div>
 		</div>
 	</footer>
-	</form>
+</form>
 </body>
 </html>

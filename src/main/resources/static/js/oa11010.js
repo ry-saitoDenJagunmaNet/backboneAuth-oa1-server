@@ -1,11 +1,109 @@
+/** Thymeleaf で起動時のみ実行 **/
+
+let _isThymeleaf = false;
+
 /**
  * 画面Loadイベントです。
- *  Thymeleaf で起動時のみ実行
  */
-function oaex_onload() {
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	// Collapsible の初期化（画面独自に再初期化）
+	let elems = document.querySelectorAll(".oa_collapsible");
+	// 折りたたみのopen/closeのインベトを追加
+	let instances = M.Collapsible.init(elems,
+		{accordion: false,
+			onOpenEnd: oaex_collapsible_onOpenEnd,
+			onCloseEnd: oaex_collapsible_onCloseEnd,
+		});
+
+	// 有効期限のラジオボタン初期化
+	oaex_expiration_sel_onChange();
+	// サブシステムロール/取引ロールの指定方法（指定なし/OR/AND）を非表示
+	oaex_collapsible_onCloseEnd();
+	// サブシステムロール有効期限のラジオボタン初期化
+	for (let i = 0; i < document.getElementById("subsystem_role").rows.length; i++) {
+		oaex_subsystem_role_expiration_sel_onChange(i);
+	}
+	// 取引ロール有効期限のラジオボタン初期化
+	for (let i = 0; i < document.getElementById("biztran_role").rows.length; i++) {
+		oaex_biztran_role_expiration_sel_onChange(i);
+	}
+
 	oaex_searchBtn_onClick();
 }
 
+/**
+ * 検索ボタンクリックイベントです。
+ * @param {int}} pageno 表示するページ番号
+ */
+function oaex_th_searchBtn_onClick(pageNo) {
+	// 表示するページ番号を設定
+	document.getElementById("pageNo").value = pageNo;
+	let xhr = oa_th_sendFormData("search", document.forms[0]);
+
+	if (xhr == null) {return;}
+
+	let result = JSON.parse(xhr.responseText);
+	document.getElementById("operator_table").innerHTML = result.operatorTable
+	document.getElementById("operator_pagination").innerHTML = result.pagination
+}
+
+const _TABLE_ROW_FILTER = "oaex_table_row_filter";
+/**
+ * サブシステムフィルター選択変更イベントです。
+ * @param {Object}} obj サブシステムフィルターオジェクト
+ */
+function oaex_th_subsystem_filter_onChange(obj) {
+	let index = obj.selectedIndex;
+	let biztranRole = document.getElementById("biztran_role");
+
+	// 全行フィルター解除
+	for (let row of biztranRole.rows) {
+		row.classList.remove(_TABLE_ROW_FILTER);
+	}
+
+	if (index >= 0){
+		let subsystemcode = obj.options[index].value;
+		// 選択したサブシステムでフィルター
+		for (let row of biztranRole.rows) {
+			let subSystemCode = document.getElementById("biztranRoleList"+row.rowIndex+".subSystemCode");
+			if (subSystemCode != null) {
+				if (subsystemcode != subSystemCode.value) {
+					row.classList.add(_TABLE_ROW_FILTER);
+					// 検索条件対象から外す
+					let biztranRoleSelected = document.getElementById("biztranRoleList["+row.rowIndex+"].biztranRoleSelected");
+					biztranRoleSelected.checked = false;
+				}
+			}
+		}
+    }
+}
+
+// TODO: common.jsに移動する
+/**
+ * サーバーにFORMオブジェクトを送信します。
+ * @param {String} url リクエスト先URL
+ * @param {Json} formObj リクエスト送信するFORMオブジェクト
+ */
+function oa_th_sendFormData(url, formObj) {
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, false);
+	xhr.send(new FormData(formObj));
+
+	if(xhr.readyState === 4 && xhr.status === 200) {
+		// 正常
+		return xhr;
+	} else {
+		// 異常
+		alert(xhr.responseText);
+		return null;
+	}
+}
+
+
+
+/** Thymeleafとモックで共用 **/
 /**
  * 画面Loadイベントです。
  */
@@ -13,7 +111,7 @@ window.onload = function() {
 	// Collapsible の初期化（画面独自に再初期化）
 	let elems = document.querySelectorAll(".oa_collapsible");
 	// 折りたたみのopen/closeのインベトを追加
-	let instances = M.Collapsible.init(elems, 
+	let instances = M.Collapsible.init(elems,
 		{accordion: false,
 			onOpenEnd: oaex_collapsible_onOpenEnd,
 			onCloseEnd: oaex_collapsible_onCloseEnd,
@@ -23,7 +121,7 @@ window.onload = function() {
 	oaex_collapsible_onCloseEnd();
 
 	// 有効期限のラジオボタン初期化
-	document.getElementById("expiration_sel_non").checked = true;	
+	document.getElementById("expiration_sel_non").checked = true;
 	oaex_expiration_sel_onChange();
 
 	//  サブシステムロール条件のラジオボタン初期化
@@ -99,7 +197,12 @@ function oaex_collapsible_onCloseEnd() {
  * 有効期限ラジオボタンの変更イベントです。
  */
 function oaex_expiration_sel_onChange() {
-	let val = oa_getRadioCheckedValue("expiration_sel");
+	let val;
+	if (_isThymeleaf) {
+		val = oa_getRadioCheckedValue("expirationSelect");
+	} else {
+		val = oa_getRadioCheckedValue("expiration_sel");
+	}
 
 	document.getElementById("expiration_status_date_div").style.display = "none";
 	document.getElementById("expiration_conditions_div").style.display = "none";
@@ -130,7 +233,7 @@ function oaex_expiration_sel_onChange() {
  * サブシステムロール条件のラジオボタンの変更イベントです。
  */
 function oaex_subsystem_role_sel_onChange() {
-	let val = oa_getRadioCheckedValue("subsystem_role_sel");
+	let val = oa_getRadioCheckedValue("subsystemRoleConditionsSelect");
 
 	if (val == "0") {
 		// 指定なし　無効にする
@@ -152,7 +255,12 @@ function oaex_subsystem_role_sel_onChange() {
  * @param {int}} objRow サブシステムロールテーブルの対象行
  */
 function oaex_subsystem_role_expiration_sel_onChange(objRow) {
-	let val = oa_getRadioCheckedValue("subsystem_role_expiration_sel[" + objRow + "]");
+	let val;
+	if (_isThymeleaf) {
+		val = oa_getRadioCheckedValue("subsystemRoleList[" + objRow + "].expirationSelect");
+	} else {
+		val = oa_getRadioCheckedValue("subsystemRoleExpirationSelect[" + objRow + "]");
+	}
 
 	oa_setDisabled("subsystem_role_expiration_status_date[" + objRow + "]", true);
 	oa_setDisabled("subsystem_role_expiration_start_date_from[" + objRow + "]", true);
@@ -203,7 +311,12 @@ function oaex_biztran_role_sel_onChange() {
  * @param {int}} objRow サブシステムロールテーブルの対象行
  */
 function oaex_biztran_role_expiration_sel_onChange(objRow) {
-	let val = oa_getRadioCheckedValue("biztran_role_expiration_sel[" + objRow + "]");
+	let val;
+	if (_isThymeleaf) {
+		val = oa_getRadioCheckedValue("biztranRoleList[" + objRow + "].expirationSelect");
+	} else {
+		val = oa_getRadioCheckedValue("biztran_role_expiration_sel[" + objRow + "]");
+	}
 
 	oa_setDisabled("biztran_role_expiration_status_date[" + objRow + "]", true);
 	oa_setDisabled("biztran_role_expiration_start_date_from[" + objRow + "]", true);
@@ -254,8 +367,14 @@ function oaex_operator_table_onClick(objRow) {
  */
 function oaex_searchBtn_onClick() {
 	// todo:テーブル＆ページネーションを表示
-	document.getElementById("operator_table").style.visibility = "visible";
-	document.getElementById("operator_table_pagination").style.visibility = "visible";
+	let table = document.getElementById("operator_table");
+	if (table != null) {
+		table.style.visibility = "visible";
+	}
+	let pagination = document.getElementById("operator_table_pagination");
+	if (pagination != null) {
+		pagination.style.visibility = "visible";
+	}
 }
 
 /**
