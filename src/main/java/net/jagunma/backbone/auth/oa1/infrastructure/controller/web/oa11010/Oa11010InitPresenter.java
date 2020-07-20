@@ -2,9 +2,9 @@ package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
 import java.util.List;
 import java.util.Map;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010BiztranRoleDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010ResponseDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010SubsystemRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010BiztranRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010ResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010SubsystemRoleDto;
 import net.jagunma.backbone.auth.usecase.oa11010.Oa11010InitFormResponse;
 
 /**

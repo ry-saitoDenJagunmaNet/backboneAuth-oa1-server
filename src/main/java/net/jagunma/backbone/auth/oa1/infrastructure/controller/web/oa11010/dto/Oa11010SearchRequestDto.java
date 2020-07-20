@@ -1,4 +1,6 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto;
+
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,7 +14,7 @@ import net.jagunma.common.server.annotation.SystemInfo;
 import org.springframework.stereotype.Controller;
 
 /**
- * OA11010レスポンス
+ * OA11010検索リクエスト
  *
  * <pre>
  * -------------------------------------------------
@@ -33,7 +35,7 @@ import org.springframework.stereotype.Controller;
 @FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
 @ServiceInfo(id = "OA11010", name = "OA11010サービス")
 @Controller
-public class Oa11010ResponseDto implements Serializable {
+public class Oa11010SearchRequestDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -77,7 +79,7 @@ public class Oa11010ResponseDto implements Serializable {
 	 * */
 	private Integer expirationSelect;
 	/**
-	 態指定日
+	 * 状態指定日 状態指定日
 	 */
 	private LocalDate expirationStatusDate;
 	/**
@@ -200,6 +202,11 @@ public class Oa11010ResponseDto implements Serializable {
 	 */
 	private Integer[] signintraceSignInResult;
 
+	/**
+	 * オペレータ一覧表示ページ
+	 */
+	private int pageNo;
+
 	public String getJa() { return ja; }
 	public void setJa(String ja) { this.ja = ja; }
 	public long getJaId() { return jaId; }
@@ -283,4 +290,18 @@ public class Oa11010ResponseDto implements Serializable {
 	public void setSignintraceSignOut(Integer signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
 	public Integer[] getSignintraceSignInResult() { return signintraceSignInResult; }
 	public void setSignintraceSignInResult(Integer[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
+
+	public int getPageNo() { return pageNo; }
+	public void setPageNo(int pageNo) { this.pageNo = pageNo; }
+
+	/**
+	 * 利用可否状態IncludesList取得
+	 * @return 利用可否状態IncludesList
+	 */
+	public List<Short> getAvailableStatusIncludesList() {
+		List<Short> result = newArrayList();
+		if (availableStatus0 != null && availableStatus0 == 1) {result.add((short) 0);}
+		if (availableStatus1 != null && availableStatus1 == 1) {result.add((short) 1);}
+		return result;
+	}
 }

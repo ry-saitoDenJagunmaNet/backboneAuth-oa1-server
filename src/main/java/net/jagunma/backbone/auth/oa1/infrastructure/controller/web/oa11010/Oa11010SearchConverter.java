@@ -8,7 +8,7 @@ import java.util.Map;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.operator.OperatorBiztranRoleRequest;
 import net.jagunma.backbone.auth.model.operator.OperatorSubsystemRoleRequest;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010SearchRequestDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010SearchRequestDto;
 import net.jagunma.backbone.auth.usecase.operator.OperatorSearchRequest;
 
 /**

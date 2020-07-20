@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto;
 
 import java.time.LocalDate;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
