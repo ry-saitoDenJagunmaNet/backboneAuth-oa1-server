@@ -125,6 +125,7 @@ public class Oa11010SearchService {
 						html.append("<td class=\"oaex_operator_expiration_date\"></td>");
 					}
 
+
 					if (o.getOperatorSubSystemRoleList().size() > is ) {
 						// サブシステムロール
 						html.append("<td class=\"oaex_operator_subsystem_role\">")
@@ -135,6 +136,9 @@ public class Oa11010SearchService {
 							.append(o.getOperatorSubSystemRoleList().get(is).getExpirationStartDate()).append("～")
 							.append(o.getOperatorSubSystemRoleList().get(is).getExpirationEndDate())
 							.append("</td>");
+
+
+
 						is++;
 					} else {
 						// サブシステムロール未設定

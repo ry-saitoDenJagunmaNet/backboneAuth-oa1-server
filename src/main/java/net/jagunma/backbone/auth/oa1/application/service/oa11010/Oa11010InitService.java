@@ -7,8 +7,8 @@ import net.jagunma.backbone.auth.application.queryService.SubSystemReferenceServ
 import net.jagunma.backbone.auth.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010BiztranRoleDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SubsystemRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010BiztranRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010SubsystemRoleDto;
 import net.jagunma.backbone.auth.usecase.oa11010.Oa11010InitFormResponse;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;

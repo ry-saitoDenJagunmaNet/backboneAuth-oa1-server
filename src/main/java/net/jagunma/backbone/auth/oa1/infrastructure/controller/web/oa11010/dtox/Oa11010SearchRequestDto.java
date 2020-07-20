@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 

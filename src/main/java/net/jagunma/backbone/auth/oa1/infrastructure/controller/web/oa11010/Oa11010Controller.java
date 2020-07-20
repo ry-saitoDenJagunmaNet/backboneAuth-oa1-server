@@ -2,9 +2,9 @@ package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010InitService;
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010SearchService;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010ResponseDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchRequestDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010ResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010SearchRequestDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dtox.Oa11010SearchResponseDto;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
