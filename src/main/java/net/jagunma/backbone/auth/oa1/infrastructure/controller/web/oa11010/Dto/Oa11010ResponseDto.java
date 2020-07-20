@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Controller;
 @FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
 @ServiceInfo(id = "OA11010", name = "OA11010サービス")
 @Controller
-public class Oa11010ResponseDto<LoaclDate> implements Serializable {
+public class Oa11010ResponseDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

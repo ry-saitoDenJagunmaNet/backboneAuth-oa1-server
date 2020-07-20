@@ -2,12 +2,15 @@ package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
 import java.util.List;
 import java.util.Map;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010BiztranRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010ResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SubsystemRoleDto;
 import net.jagunma.backbone.auth.usecase.oa11010.Oa11010InitFormResponse;
 
 /**
  * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
  */
-class InitPresenter implements Oa11010InitFormResponse {
+class Oa11010InitPresenter implements Oa11010InitFormResponse {
 
 	private long jaId;
 	private String jaCode;
@@ -20,7 +23,7 @@ class InitPresenter implements Oa11010InitFormResponse {
 	private Map<String, String> tempoList;
 	private Map<String, String> subsystemRoleSubsystemList;
 
-	InitPresenter() {
+	Oa11010InitPresenter() {
 	}
 
 	/**
@@ -87,12 +90,13 @@ class InitPresenter implements Oa11010InitFormResponse {
 	public void bindTo(Oa11010ResponseDto response) {
 		response.setJa(jaCode + " " + jaName);
 		response.setJaId(jaId);
+
+		response.setTempoList(tempoList);
 		response.setExpirationSelect(expirationSelect);
 		response.setSubsystemRoleConditionsSelect(subsystemRoleConditionsSelect);
 		response.setSubsystemRoleList(subsystemRoleList);
 		response.setBiztranRoleConditionsSelect(biztranRoleConditionsSelect);
 		response.setBiztranRoleList(biztranRoleList);
-		response.setTempoList(tempoList);
 		response.setSubsystemRoleSubsystemList(subsystemRoleSubsystemList);
 	}
 }

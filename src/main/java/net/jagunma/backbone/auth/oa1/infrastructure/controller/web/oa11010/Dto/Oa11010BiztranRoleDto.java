@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -100,5 +100,5 @@ public class Oa11010BiztranRoleDto {
 	public LocalDate getExpirationEndDateFrom() { return expirationEndDateFrom; }
 	public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) { this.expirationEndDateFrom = expirationEndDateFrom; }
 	public LocalDate getExpirationEndDateTo() { return expirationEndDateTo; }
-	public void setExpirationEndDateTo(LocalDate biztranRoleExpirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
+	public void setExpirationEndDateTo(LocalDate expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 }

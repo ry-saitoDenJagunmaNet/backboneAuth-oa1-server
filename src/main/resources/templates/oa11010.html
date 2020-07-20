@@ -15,7 +15,7 @@
 <body th:onLoad="oaex_th_onload();">
 <form method="post" action="search">
 
-	<!-- imgファイルのファイルパス定義 TemplateとThymeleafでパスが異なるため -->
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
 	<script>oa_getMassageDialog();</script>

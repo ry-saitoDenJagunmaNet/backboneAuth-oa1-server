@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.application.queryService;
 
-import java.util.ArrayList;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
@@ -18,9 +19,9 @@ public class OperatorReferenceService {
 	 */
 	private final int PAGE_SIZE = 10;
 
-	private OperatorEntityDao operatorEntityDao;
-	private OperatorSubSystemRoleReferenceService operatorSubSystemRoleReferenceService;
-	private OperatorBizTranRoleReferenceService operatorBizTranRoleReferenceService;
+	private final OperatorEntityDao operatorEntityDao;
+	private final OperatorSubSystemRoleReferenceService operatorSubSystemRoleReferenceService;
+	private final OperatorBizTranRoleReferenceService operatorBizTranRoleReferenceService;
 
 	public OperatorReferenceService(OperatorEntityDao operatorEntityDao,
 		OperatorSubSystemRoleReferenceService operatorSubSystemRoleReferenceService,
@@ -34,7 +35,7 @@ public class OperatorReferenceService {
 	/**
 	 * オペレータリストを取得します。
 	 * @param request 条件
-	 * @return
+	 * @return オペレータリストを
 	 */
 	public List<Operator> getOperatorList(OperatorSearchRequest request) {
 
@@ -50,7 +51,7 @@ public class OperatorReferenceService {
 		List<OperatorBizTranRole> operatorBizTranRoles = operatorBizTranRoleReferenceService.getOperatorBizTranRoleList(request);
 
 
-		List<Operator> operatorList = new ArrayList<Operator>();
+		List<Operator> operatorList = newArrayList();
 
 		operatorEntitys.forEach(o -> {
 			Operator entity = new Operator();
@@ -80,13 +81,11 @@ public class OperatorReferenceService {
 			//entity.setLockStatus(0);
 
 			// オペレーター_サブシステムロール割当リスト
-			operatorSubSystemRoles.stream().filter(s->s.getOperatorId() == o.getOperatorId()).forEach(s ->  {
-				entity.getOperatorSubSystemRoleList().add(s);
-			});
+			entity.setOperatorSubSystemRoleList(
+				operatorSubSystemRoles.stream().filter(s->s.getOperatorId() == o.getOperatorId()).collect(Collectors.toList()));
 			// オペレーター_取引ロール割当リスト
-			operatorBizTranRoles.stream().filter(s->s.getOperatorId() == o.getOperatorId()).forEach(s ->  {
-				entity.getOperatorBizTranRoleList().add(s);
-			});
+			entity.setOperatorBizTranRoleList(
+				operatorBizTranRoles.stream().filter(s->s.getOperatorId() == o.getOperatorId()).collect(Collectors.toList()));
 
 			operatorList.add(entity);
 		});

@@ -69,5 +69,5 @@ public class OperatorBiztranRoleRequest {
 	public LocalDate getExpirationEndDateFrom() { return expirationEndDateFrom; }
 	public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) { this.expirationEndDateFrom = expirationEndDateFrom; }
 	public LocalDate getExpirationEndDateTo() { return expirationEndDateTo; }
-	public void setExpirationEndDateTo(LocalDate biztranRoleExpirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
+	public void setExpirationEndDateTo(LocalDate expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 }

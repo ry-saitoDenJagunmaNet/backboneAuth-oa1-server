@@ -1,6 +1,5 @@
 package net.jagunma.backbone.auth.application.queryService;
 
-import java.util.List;
 import java.util.Map;
 
 public class SubSystemRole {

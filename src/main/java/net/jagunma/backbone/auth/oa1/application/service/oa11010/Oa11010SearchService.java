@@ -124,6 +124,7 @@ public class Oa11010SearchService {
 						// オペレーター有効期限
 						html.append("<td class=\"oaex_operator_expiration_date\"></td>");
 					}
+
 					if (o.getOperatorSubSystemRoleList().size() > is ) {
 						// サブシステムロール
 						html.append("<td class=\"oaex_operator_subsystem_role\">")
@@ -139,6 +140,7 @@ public class Oa11010SearchService {
 						// サブシステムロール未設定
 						html.append(getOperatorSubSystemRoleBlankHtml());
 					}
+
 					if (o.getOperatorBizTranRoleList().size() > ib ) {
 						// 取引ロール
 						html.append("<td class=\"oaex_operator_biztran_role_code\">")

@@ -1,27 +1,29 @@
 package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.operator.OperatorBiztranRoleRequest;
 import net.jagunma.backbone.auth.model.operator.OperatorSubsystemRoleRequest;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchRequestDto;
 import net.jagunma.backbone.auth.usecase.operator.OperatorSearchRequest;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Converter
  */
-class SearchConverter implements OperatorSearchRequest {
+class Oa11010SearchConverter implements OperatorSearchRequest {
 
 	private Oa11010SearchRequestDto arg;
 
-	SearchConverter(Oa11010SearchRequestDto anArg)  {
+	Oa11010SearchConverter(Oa11010SearchRequestDto anArg)  {
 		arg = anArg;
 	}
 
-	public static SearchConverter with(Oa11010SearchRequestDto anArg) {
-		return new SearchConverter(anArg);
+	public static Oa11010SearchConverter with(Oa11010SearchRequestDto anArg) {
+		return new Oa11010SearchConverter(anArg);
 	}
 
 	public String getJa() { return arg.getJa(); }
@@ -44,7 +46,7 @@ class SearchConverter implements OperatorSearchRequest {
 	public String getSubsystemRoleSubsystemCode() { return arg.getSubsystemRoleSubsystemCode(); }
 	public Map<String, String> getSubsystemRoleSubsystemList() { return arg.getSubsystemRoleSubsystemList(); }
 	public List<OperatorSubsystemRoleRequest> getSubsystemRoleList() {
-		List<OperatorSubsystemRoleRequest> list = new ArrayList<OperatorSubsystemRoleRequest>();
+		List<OperatorSubsystemRoleRequest> list = newArrayList();
 		arg.getSubsystemRoleList().forEach(s -> {
 			OperatorSubsystemRoleRequest os = new OperatorSubsystemRoleRequest();
 			os.setSubsystemRoleSelected(s.getSubsystemRoleSelected());
@@ -64,7 +66,7 @@ class SearchConverter implements OperatorSearchRequest {
 
 	public Integer getBiztranRoleConditionsSelect() { return arg.getBiztranRoleConditionsSelect(); }
 	public List<OperatorBiztranRoleRequest> getBiztranRoleList() {
-		List<OperatorBiztranRoleRequest> list = new ArrayList<OperatorBiztranRoleRequest>();
+		List<OperatorBiztranRoleRequest> list = newArrayList();
 		arg.getBiztranRoleList().forEach(b -> {
 			OperatorBiztranRoleRequest ob = new OperatorBiztranRoleRequest();
 			ob.setBiztranRoleSelected(b.getBiztranRoleSelected());

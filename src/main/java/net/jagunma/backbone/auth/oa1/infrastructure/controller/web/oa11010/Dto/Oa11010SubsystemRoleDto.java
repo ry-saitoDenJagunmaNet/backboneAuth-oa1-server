@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -94,5 +94,5 @@ public class Oa11010SubsystemRoleDto implements Serializable {
 	public LocalDate getExpirationEndDateFrom() { return expirationEndDateFrom; }
 	public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) { this.expirationEndDateFrom = expirationEndDateFrom; }
 	public String getExpirationEndDateTo() { return expirationEndDateTo; }
-	public void setExpirationEndDateTo(String subsystemRoleExpirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
+	public void setExpirationEndDateTo(String expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 }

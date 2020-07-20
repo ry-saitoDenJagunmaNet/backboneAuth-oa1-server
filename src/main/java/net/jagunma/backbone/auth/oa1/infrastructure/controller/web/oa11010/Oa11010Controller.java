@@ -2,6 +2,9 @@ package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010InitService;
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010SearchService;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010ResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchRequestDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchResponseDto;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -55,7 +58,7 @@ public class Oa11010Controller {
 	}
 
 	/**
-	 * 画面の初期表示します。
+	 * 画面を初期表示します。
 	 *
 	 * @param model
 	 * @return
@@ -67,7 +70,7 @@ public class Oa11010Controller {
 
 		Oa11010ResponseDto response = new Oa11010ResponseDto();
 
-		InitPresenter presenter = new InitPresenter();
+		Oa11010InitPresenter presenter = new Oa11010InitPresenter();
 		oa11010InitService.initForm(presenter);
 
 		presenter.bindTo(response);
@@ -89,8 +92,8 @@ public class Oa11010Controller {
 		System.out.println("### pageno=" + oa11010SearchRequestDto.getPageNo());
 
 		Oa11010SearchResponseDto response = new Oa11010SearchResponseDto();
-		SearchConverter converter = SearchConverter.with(oa11010SearchRequestDto);
-		SearchPresenter presenter = new SearchPresenter();
+		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010SearchRequestDto);
+		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
 		//オぺレーター検索してオぺレーターテーブルHtmlを作成
 		oa11010SearchService.search(converter, presenter);

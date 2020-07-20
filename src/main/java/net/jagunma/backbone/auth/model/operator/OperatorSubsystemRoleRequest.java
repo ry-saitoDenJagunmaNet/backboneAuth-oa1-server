@@ -63,5 +63,5 @@ public class OperatorSubsystemRoleRequest {
 	public LocalDate getExpirationEndDateFrom() { return expirationEndDateFrom; }
 	public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) { this.expirationEndDateFrom = expirationEndDateFrom; }
 	public String getExpirationEndDateTo() { return expirationEndDateTo; }
-	public void setExpirationEndDateTo(String subsystemRoleExpirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
+	public void setExpirationEndDateTo(String expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 }

@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
 
 import java.io.Serializable;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;

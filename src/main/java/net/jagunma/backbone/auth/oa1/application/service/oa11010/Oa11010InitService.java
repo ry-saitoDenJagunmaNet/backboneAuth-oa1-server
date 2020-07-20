@@ -1,13 +1,14 @@
 package net.jagunma.backbone.auth.oa1.application.service.oa11010;
 
-import java.util.ArrayList;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.util.List;
 import net.jagunma.backbone.auth.application.queryService.SubSystemReferenceService;
 import net.jagunma.backbone.auth.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Oa11010BiztranRoleDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Oa11010SubsystemRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010BiztranRoleDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SubsystemRoleDto;
 import net.jagunma.backbone.auth.usecase.oa11010.Oa11010InitFormResponse;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class Oa11010InitService {
 	 */
 	private List<Oa11010SubsystemRoleDto> getSubsystemRoleList() {
 		// todo: サブシステムロールを取得してリストを作成する
-		List<String[]> oplist = new ArrayList<String[]>();
+		List<String[]> oplist = newArrayList();
 		oplist.add(new String[]{"0000", "JA管理者"});
 		oplist.add(new String[]{"1000", "業務統括者（購買）"});
 		oplist.add(new String[]{"2110", "業務統括者（販売・野菜）"});
@@ -70,7 +71,7 @@ public class Oa11010InitService {
 		oplist.add(new String[]{"2220", "業務統括者（販売・麦）"});
 		oplist.add(new String[]{"2300", "業務統括者（販売・畜産）"});
 
-		List<Oa11010SubsystemRoleDto> list = new ArrayList<Oa11010SubsystemRoleDto>();
+		List<Oa11010SubsystemRoleDto> list = newArrayList();
 		oplist.forEach(s -> {
 			Oa11010SubsystemRoleDto item = new Oa11010SubsystemRoleDto();
 			item.setSubsystemRoleSelected(0);
@@ -103,7 +104,7 @@ public class Oa11010InitService {
 
 
 		// todo: 取引ロールを取得してリストを作成する
-		List<String[]> oplist = new ArrayList<String[]>();
+		List<String[]> oplist = newArrayList();
 		oplist.add(new String[]{"ANAG01", "（畜産）取引全般", "AN"});
 		oplist.add(new String[]{"ANAG02", "（畜産）維持管理担当者", "AN"});
 		oplist.add(new String[]{"ANAG98", "（畜産）センター維持管理担当者", "AN"});
@@ -153,7 +154,7 @@ public class Oa11010InitService {
 		oplist.add(new String[]{"YSAG70", "（青果）支所担当", "YS"});
 		oplist.add(new String[]{"YSAG90", "（青果）取引全般", "YS"});
 
-		List<Oa11010BiztranRoleDto> list = new ArrayList<Oa11010BiztranRoleDto>();
+		List<Oa11010BiztranRoleDto> list = newArrayList();
 		oplist.forEach(s -> {
 			Oa11010BiztranRoleDto item = new Oa11010BiztranRoleDto();
 			item.setBiztranRoleSelected(0);

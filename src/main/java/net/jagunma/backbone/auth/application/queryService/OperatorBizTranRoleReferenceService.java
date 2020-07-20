@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.application.queryService;
 
-import java.util.ArrayList;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.util.List;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
@@ -14,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OperatorBizTranRoleReferenceService {
-	private Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
-	private BizTranRoleEntityDao bizTranRoleEntityDao;
+	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
+	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
 	public OperatorBizTranRoleReferenceService(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
 		BizTranRoleEntityDao bizTranRoleEntityDao) {
@@ -43,7 +44,7 @@ public class OperatorBizTranRoleReferenceService {
 			.addOrder("BizTranRoleCode");
 		List<BizTranRoleEntity> bTREntitys = bizTranRoleEntityDao.findAll(orders);
 
-		List<OperatorBizTranRole> list = new ArrayList<OperatorBizTranRole>();
+		List<OperatorBizTranRole> list = newArrayList();
 		entitys.forEach(o -> {
 			OperatorBizTranRole item = new OperatorBizTranRole();
 

@@ -1,15 +1,16 @@
 package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto.Oa11010SearchResponseDto;
 import net.jagunma.backbone.auth.usecase.operator.OperatorSearchResponse;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Presenter
  */
-public class SearchPresenter implements OperatorSearchResponse {
+public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	private String operatorTable;
 	private String pagination;
 
-	SearchPresenter() {
+	Oa11010SearchPresenter() {
 	}
 
 	/**

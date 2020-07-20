@@ -1,8 +1,9 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.Dto;
+
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -298,7 +299,7 @@ public class Oa11010SearchRequestDto implements Serializable {
 	 * @return 利用可否状態IncludesList
 	 */
 	public List<Short> getAvailableStatusIncludesList() {
-		ArrayList<Short> result = new ArrayList();
+		List<Short> result = newArrayList();
 		if (availableStatus0 != null && availableStatus0 == 1) {result.add((short) 0);}
 		if (availableStatus1 != null && availableStatus1 == 1) {result.add((short) 1);}
 		return result;

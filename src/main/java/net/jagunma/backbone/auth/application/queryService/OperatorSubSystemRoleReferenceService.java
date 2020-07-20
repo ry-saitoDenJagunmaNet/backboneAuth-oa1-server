@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.application.queryService;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.util.ArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
@@ -12,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OperatorSubSystemRoleReferenceService {
-	private Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
-	private SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice;
+	private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
+	private final SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice;
 
 	public OperatorSubSystemRoleReferenceService(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
 		SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice) {
@@ -38,7 +40,7 @@ public class OperatorSubSystemRoleReferenceService {
 		// サブシステムロール検索
 		List<SubSystemRole> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
-		List<OperatorSubSystemRole> list = new ArrayList<OperatorSubSystemRole>();
+		List<OperatorSubSystemRole> list = newArrayList();
 		entitys.forEach(o -> {
 			OperatorSubSystemRole item = new OperatorSubSystemRole();
 

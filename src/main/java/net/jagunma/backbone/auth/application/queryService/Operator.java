@@ -1,8 +1,9 @@
 package net.jagunma.backbone.auth.application.queryService;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Operator {
@@ -82,11 +83,18 @@ public class Operator {
 	 * レコードバージョン
 	 */
 	private int RecordVersion;
-
 	/**
 	 * 店舗名
 	 */
 	private String tempoName;
+	/**
+	 * アカウントロック情報ID
+	 */
+	private long accountLockId;
+	/**
+	 * 発生日時
+	 */
+	private LocalDateTime occurredDateTime;
 	/**
 	 * ロック状態
 	 */
@@ -95,11 +103,11 @@ public class Operator {
 	/**
 	 * オペレーターサブシステムロール割当リスト
 	 */
-	private List<OperatorSubSystemRole> operatorSubSystemRoleList = new ArrayList<OperatorSubSystemRole>();
+	private List<OperatorSubSystemRole> operatorSubSystemRoleList = newArrayList();
 	/**
 	 * オペレーター取引ロール割当リスト
 	 */
-	private List<OperatorBizTranRole> operatorBizTranRoleList = new ArrayList<OperatorBizTranRole>();
+	private List<OperatorBizTranRole> operatorBizTranRoleList = newArrayList();
 
 	public long getOperatorId() { return operatorId; }
 	public void setOperatorId(long operatorId) { this.operatorId = operatorId; }
@@ -139,9 +147,12 @@ public class Operator {
 	public void setUpdatedIpAddress(String UpdatedIpAddress) { this.UpdatedIpAddress = UpdatedIpAddress; }
 	public int getRecordVersion() { return RecordVersion; }
 	public void setRecordVersion(int RecordVersion) { this.RecordVersion = RecordVersion; }
-
 	public String getTempoName() { return tempoName; }
 	public void setTempoName(String tempoName) { this.tempoName = tempoName; }
+	public long getAccountLockId() { return accountLockId; }
+	public void setAccountLockId(long accountLockId) { this.accountLockId = accountLockId; }
+	public LocalDateTime getOccurredDateTime() { return occurredDateTime; }
+	public void setOccurredDateTime(LocalDateTime occurredDateTime) { this.occurredDateTime = occurredDateTime; }
 	public int getLockStatus() { return lockStatus; }
 	public void setLockStatus(int lockStatus) { this.lockStatus = lockStatus; }
 
