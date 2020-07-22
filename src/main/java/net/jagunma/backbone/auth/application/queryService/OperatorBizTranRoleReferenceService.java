@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import net.jagunma.backbone.auth.application.queryService.dto.OperatorBizTranRoleDto;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntity;
@@ -30,7 +31,7 @@ public class OperatorBizTranRoleReferenceService {
 	 * @param request 検索条件
 	 * @return オペレーター_取引ロール割当リスト
 	 */
-	public List<OperatorBizTranRole> getOperatorBizTranRoleList(OperatorSearchRequest request) {
+	public List<OperatorBizTranRoleDto> getOperatorBizTranRoleList(OperatorSearchRequest request) {
 
 		// オペレーター_取引ロール割当検索
 		Orders orders = Orders.empty()
@@ -44,9 +45,9 @@ public class OperatorBizTranRoleReferenceService {
 			.addOrder("BizTranRoleCode");
 		List<BizTranRoleEntity> bTREntitys = bizTranRoleEntityDao.findAll(orders);
 
-		List<OperatorBizTranRole> list = newArrayList();
+		List<OperatorBizTranRoleDto> list = newArrayList();
 		entitys.forEach(o -> {
-			OperatorBizTranRole item = new OperatorBizTranRole();
+			OperatorBizTranRoleDto item = new OperatorBizTranRoleDto();
 
 			item.setOperator_BizTranRoleId(o.getOperator_BizTranRoleId());
 			item.setOperatorId(o.getOperatorId());
@@ -60,7 +61,7 @@ public class OperatorBizTranRoleReferenceService {
 			item.setUpdatedAt(o.getUpdatedAt());
 			item.setUpdatedIpAddress(o.getUpdatedIpAddress());
 			item.setRecordVersion(o.getRecordVersion());
-			bTREntitys.stream().filter(s->s.getBizTranRoleId() == o.getBizTranRoleId()).forEach(s ->  {
+			bTREntitys.stream().filter(s-> s.getBizTranRoleId().equals(o.getBizTranRoleId())).forEach(s ->  {
 				item.setBizTranRoleCode(s.getBizTranRoleCode());
 				item.setBizTranRoleName(s.getBizTranRoleName());
 				item.setSubSystemCode(s.getSubSystemCode());

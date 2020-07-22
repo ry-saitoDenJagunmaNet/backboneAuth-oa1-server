@@ -43,8 +43,12 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" name="tempoCode" class="validate" th:value="${form.tempoCode}">
-							<option th:each="item  : ${form.tempoList}" th:value="${item.key}" th:text="${item.value}" th:selected="${form.tempoCode == item.key}"></option>
+						<select id="tempo" name="tempoCode" class="validate"
+								th:value="${form.tempoCode}">
+							<option th:each="item  : ${form.tempoList}"
+									th:value="${item.tempoCode}"
+									th:text="${item.tempoName}"
+									th:selected="${form.tempoCode == item.tempoCode}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -630,9 +634,9 @@
 									<select id="subsystem_filter" name="subsystemRoleSubsystemCode" class="validate"
 											th:value="${form.subsystemRoleSubsystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
 										<option th:each="item  : ${form.subsystemRoleSubsystemList}"
-												th:value="${item.key}"
-												th:text="${item.value}"
-												th:selected="${form.subsystemRoleSubsystemCode == item.key}"></option>
+												th:value="${item.subSystemCode}"
+												th:text="${item.subSystemName}"
+												th:selected="${form.subsystemRoleSubsystemCode == item.subSystemCode}"></option>
 										<option value="" th:remove="all"></option>
 										<option value="KB" th:remove="all">購買</option>
 										<option value="YS" th:remove="all">販売・青果</option>
@@ -1032,7 +1036,7 @@
 											<span>使用</span>
 										</label>
 										<label>
-											<input type="checkbox" name="deviceAuthUnused" value="1" th:checked="${form.deviceAuthUnused == 1}"/>
+											<input type="checkbox" name="deviceAuthUnuse" value="1" th:checked="${form.deviceAuthUnuse == 1}"/>
 											<span>未使用</span>
 										</label>
 									</div>

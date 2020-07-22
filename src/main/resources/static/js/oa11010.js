@@ -1,7 +1,5 @@
 /** Thymeleaf で起動時のみ実行 **/
 
-let _isThymeleaf = false;
-
 /**
  * 画面Loadイベントです。
  */
@@ -63,7 +61,7 @@ function oaex_th_subsystem_filter_onChange(obj) {
 		row.classList.remove(_TABLE_ROW_FILTER);
 	}
 
-	if (index >= 0){
+	if (index > 0){
 		let subsystemcode = obj.options[index].value;
 		// 選択したサブシステムでフィルター
 		for (let row of biztranRole.rows) {
@@ -78,27 +76,6 @@ function oaex_th_subsystem_filter_onChange(obj) {
 			}
 		}
     }
-}
-
-// TODO: common.jsに移動する
-/**
- * サーバーにFORMオブジェクトを送信します。
- * @param {String} url リクエスト先URL
- * @param {Json} formObj リクエスト送信するFORMオブジェクト
- */
-function oa_th_sendFormData(url, formObj) {
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, false);
-	xhr.send(new FormData(formObj));
-
-	if(xhr.readyState === 4 && xhr.status === 200) {
-		// 正常
-		return xhr;
-	} else {
-		// 異常
-		alert(xhr.responseText);
-		return null;
-	}
 }
 
 

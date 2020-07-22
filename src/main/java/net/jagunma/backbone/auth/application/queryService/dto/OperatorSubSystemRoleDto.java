@@ -1,10 +1,10 @@
-package net.jagunma.backbone.auth.application.queryService;
+package net.jagunma.backbone.auth.application.queryService.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OperatorSubSystemRole {
+public class OperatorSubSystemRoleDto {
 	/**
 	 * オペレーター_サブシステムロール割当ID
 	 */
@@ -64,11 +64,11 @@ public class OperatorSubSystemRole {
 	/**
 	 * サブシステムロール名
 	 */
-	private String SubSystemRoleName;
+	private String subSystemRoleName;
 	/**
 	 * サブシステムコードリスト
 	 */
-	private List<String> SubSystemCodeList;
+	private List<SubSystemDto> subSystemCodeList;
 
 	public long getOperator_SubSystemRoleId() { return operator_SubSystemRoleId; }
 	public void setOperator_SubSystemRoleId(long operator_SubSystemRoleId) { this.operator_SubSystemRoleId = operator_SubSystemRoleId; }
@@ -98,8 +98,8 @@ public class OperatorSubSystemRole {
 	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
 	public String getOperatorName() { return operatorName; }
 	public void setOperatorName(String operatorName) { this.operatorName = operatorName; }
-	public String getSubSystemRoleName() { return SubSystemRoleName; }
-	public void setSubSystemRoleName(String SubSystemRoleName) { this.SubSystemRoleName = SubSystemRoleName; }
-	public List<String> getSubSystemCodeList() { return SubSystemCodeList; }
-	public void setSubSystemCodeList(List<String> SubSystemCodeList) { this.SubSystemCodeList = SubSystemCodeList; }
+	public String getSubSystemRoleName() { return subSystemRoleName; }
+	public void setSubSystemRoleName(String subSystemRoleName) { this.subSystemRoleName = subSystemRoleName; }
+	public List<SubSystemDto> getSubSystemCodeList() { return subSystemCodeList; }
+	public void setSubSystemCodeList(List<SubSystemDto> subSystemCodeList) { this.subSystemCodeList = subSystemCodeList; }
 }

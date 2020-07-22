@@ -1,7 +1,9 @@
 package net.jagunma.backbone.auth.application.queryService;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
+import java.util.List;
+import net.jagunma.backbone.auth.application.queryService.dto.TempoDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,15 +17,14 @@ public class TempoReferenceService {
 	 * コンボボックス用のリストを取得します。
 	 * @return コンボボックス用のリスト
 	 */
-	public Map<String, String> getComboBoxList() {
-		//TODO:　オペレータ情報を読む（CMSからAPIで取得）
-		Map<String, String> selectMap = new LinkedHashMap<String, String>();
-		selectMap.put("", "");
-		selectMap.put("001", "本所");
-		selectMap.put("002", "○○○支所");
-		selectMap.put("003", "△△センター");
-		selectMap.put("004", "□□□□店");
-		selectMap.put("005", "××××館");
-		return selectMap;
+	public List<TempoDto> getComboBoxList() {
+		List<TempoDto> list = newArrayList();
+		list.add(new TempoDto("", ""));
+		list.add(new TempoDto("001", "本所"));
+		list.add(new TempoDto("002", "○○○支所"));
+		list.add(new TempoDto("003", "△△センター"));
+		list.add(new TempoDto("004", "□□□□店"));
+		list.add(new TempoDto("005", "××××館"));
+		return list;
 	}
 }

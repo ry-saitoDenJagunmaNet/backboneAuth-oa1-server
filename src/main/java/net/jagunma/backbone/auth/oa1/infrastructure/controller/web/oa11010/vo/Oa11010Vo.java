@@ -1,11 +1,12 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.vo;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+import net.jagunma.backbone.auth.application.queryService.dto.SubSystemDto;
+import net.jagunma.backbone.auth.application.queryService.dto.TempoDto;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -35,7 +36,7 @@ import org.springframework.stereotype.Controller;
 @FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
 @ServiceInfo(id = "OA11010", name = "OA11010サービス")
 @Controller
-public class Oa11010SearchRequestDto implements Serializable {
+public class Oa11010Vo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -53,7 +54,7 @@ public class Oa11010SearchRequestDto implements Serializable {
 	/**
 	 * 店舗コンボボックスリスト
 	 */
-	private Map<String, String> tempoList;
+	private List<TempoDto> tempoList;
 	/**
 	 * オペレーターコード
 	 */
@@ -79,7 +80,7 @@ public class Oa11010SearchRequestDto implements Serializable {
 	 * */
 	private Integer expirationSelect;
 	/**
-	 * 状態指定日 状態指定日
+	 * 状態指定日
 	 */
 	private LocalDate expirationStatusDate;
 	/**
@@ -106,7 +107,7 @@ public class Oa11010SearchRequestDto implements Serializable {
 	/**
 	 * サブシステムロール一覧
 	 */
-	private List<Oa11010SubsystemRoleDto> subsystemRoleList;
+	private List<Oa11010SubsystemRoleVo> subsystemRoleList;
 
 	/**
 	 * 取引ロール条件選択
@@ -119,11 +120,11 @@ public class Oa11010SearchRequestDto implements Serializable {
 	/**
 	 * サブシステムロールサブシステムコンボボックスリスト
 	 */
-	private Map<String, String> subsystemRoleSubsystemList;
+	private List<SubSystemDto> subsystemRoleSubsystemList;
 	/**
 	 * 取引ロール一覧
 	 */
-	private List<Oa11010BiztranRoleDto> biztranRoleList;
+	private List<Oa11010BiztranRoleVo> biztranRoleList;
 
 	/**
 	 * 機器認証使用
@@ -132,7 +133,7 @@ public class Oa11010SearchRequestDto implements Serializable {
 	/**
 	 * 機器認証未使用
 	 */
-	private Integer deviceAuthUnused;
+	private Integer deviceAuthUnuse;
 	/**
 	 * 最終ロック・アンロック発生日（開始日）
 	 */
@@ -213,8 +214,8 @@ public class Oa11010SearchRequestDto implements Serializable {
 	public void setJaId(long jaId) { this.jaId = jaId; }
 	public String getTempoCode() { return tempoCode; }
 	public void setTempoCode(String tempoCode) { this.tempoCode = tempoCode; }
-	public Map<String, String> getTempoList() { return tempoList; }
-	public void setTempoList(Map<String, String> tempoList) { this.tempoList = tempoList; }
+	public List<TempoDto> getTempoList() { return tempoList; }
+	public void setTempoList(List<TempoDto> tempoList) { this.tempoList = tempoList; }
 	public String getOperatorCode() { return operatorCode; }
 	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
 	public String getOperatorName() { return operatorName; }
@@ -240,22 +241,22 @@ public class Oa11010SearchRequestDto implements Serializable {
 
 	public Integer getSubsystemRoleConditionsSelect() { return subsystemRoleConditionsSelect; }
 	public void setSubsystemRoleConditionsSelect(Integer subsystemRoleConditionsSelect) { this.subsystemRoleConditionsSelect = subsystemRoleConditionsSelect; }
-	public List<Oa11010SubsystemRoleDto> getSubsystemRoleList() { return subsystemRoleList; }
-	public void setSubsystemRoleList(List<Oa11010SubsystemRoleDto> subsystemRoleList) { this.subsystemRoleList = subsystemRoleList; }
+	public List<Oa11010SubsystemRoleVo> getSubsystemRoleList() { return subsystemRoleList; }
+	public void setSubsystemRoleList(List<Oa11010SubsystemRoleVo> subsystemRoleList) { this.subsystemRoleList = subsystemRoleList; }
 
 	public Integer getBiztranRoleConditionsSelect() { return biztranRoleConditionsSelect; }
 	public void setBiztranRoleConditionsSelect(Integer biztranRoleConditionsSelect) { this.biztranRoleConditionsSelect = biztranRoleConditionsSelect; }
 	public String getSubsystemRoleSubsystemCode() { return subsystemRoleSubsystemCode; }
 	public void setSubsystemRoleSubsystemCode(String subsystemRoleSubsystemCode) { this.subsystemRoleSubsystemCode = subsystemRoleSubsystemCode; }
-	public Map<String, String> getSubsystemRoleSubsystemList() { return subsystemRoleSubsystemList; }
-	public void setSubsystemRoleSubsystemList(Map<String, String> subsystemRoleSubsystemList) { this.subsystemRoleSubsystemList = subsystemRoleSubsystemList; }
-	public List<Oa11010BiztranRoleDto> getBiztranRoleList() { return biztranRoleList; }
-	public void setBiztranRoleList(List<Oa11010BiztranRoleDto> biztranRoleList) { this.biztranRoleList = biztranRoleList; }
+	public List<SubSystemDto> getSubsystemRoleSubsystemList() { return subsystemRoleSubsystemList; }
+	public void setSubsystemRoleSubsystemList(List<SubSystemDto> subsystemRoleSubsystemList) { this.subsystemRoleSubsystemList = subsystemRoleSubsystemList; }
+	public List<Oa11010BiztranRoleVo> getBiztranRoleList() { return biztranRoleList; }
+	public void setBiztranRoleList(List<Oa11010BiztranRoleVo> biztranRoleList) { this.biztranRoleList = biztranRoleList; }
 
 	public Integer getDeviceAuthUse() { return deviceAuthUse; }
 	public void setDeviceAuthUse(Integer deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
-	public Integer getDeviceAuthUnused() { return deviceAuthUnused; }
-	public void setDeviceAuthUnused(Integer deviceAuthUnused) { this.deviceAuthUnused = deviceAuthUnused; }
+	public Integer getDeviceAuthUnuse() { return deviceAuthUnuse; }
+	public void setDeviceAuthUnuse(Integer deviceAuthUnuse) { this.deviceAuthUnuse = deviceAuthUnuse; }
 	public LocalDate getAccountLockOccurredDateFrom() { return accountLockOccurredDateFrom; }
 	public void setAccountLockOccurredDateFrom(LocalDate accountLockOccurredDateFrom) { this.accountLockOccurredDateFrom = accountLockOccurredDateFrom; }
 	public LocalDate getAccountLockOccurredDateTo() { return accountLockOccurredDateTo; }

@@ -2,9 +2,8 @@ package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010;
 
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010InitService;
 import net.jagunma.backbone.auth.oa1.application.service.oa11010.Oa11010SearchService;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010ResponseDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010SearchRequestDto;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010SearchResponseDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -68,7 +67,7 @@ public class Oa11010Controller {
 		//TODO: パラメータでサインインオペレータの情報を取得する
 		//AuditInfoHolder.
 
-		Oa11010ResponseDto response = new Oa11010ResponseDto();
+		Oa11010Vo response = new Oa11010Vo();
 
 		Oa11010InitPresenter presenter = new Oa11010InitPresenter();
 		oa11010InitService.initForm(presenter);
@@ -82,17 +81,17 @@ public class Oa11010Controller {
 	/**
 	 * オペレーター検索処理を行います。
 	 *
-	 * @param oa11010SearchRequestDto 検索条件（form json）
+	 * @param oa11010Vo 検索条件（form json）
 	 * @return オペレーター検索結果
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Oa11010SearchResponseDto> search(
-		@ModelAttribute("Oa11010SearchRequestDto") Oa11010SearchRequestDto oa11010SearchRequestDto) {
-		System.out.println("### pageno=" + oa11010SearchRequestDto.getPageNo());
+	public ResponseEntity<Oa11010SearchResponseVo> search(
+		@ModelAttribute("Oa11010SearchRequestDto") Oa11010Vo oa11010Vo) {
+		System.out.println("### pageno=" + oa11010Vo.getPageNo());
 
-		Oa11010SearchResponseDto response = new Oa11010SearchResponseDto();
-		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010SearchRequestDto);
+		Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
 		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
 		//オぺレーター検索してオぺレーターテーブルHtmlを作成

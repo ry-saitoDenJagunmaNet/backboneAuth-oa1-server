@@ -2,7 +2,8 @@ package net.jagunma.backbone.auth.usecase.operator;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+import net.jagunma.backbone.auth.application.queryService.dto.SubSystemDto;
+import net.jagunma.backbone.auth.application.queryService.dto.TempoDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.operator.OperatorBiztranRoleRequest;
 import net.jagunma.backbone.auth.model.operator.OperatorSubsystemRoleRequest;
@@ -14,7 +15,7 @@ public interface OperatorSearchRequest {
 	String getJa();
 	long getJaId();
 	String getTempoCode();
-	Map<String, String> getTempoList();
+	List<TempoDto> getTempoList();
 	String getOperatorCode();
 	String getOperatorName();
 	String getMailAddress();
@@ -30,14 +31,14 @@ public interface OperatorSearchRequest {
 
 	Integer getSubsystemRoleConditionsSelect();
 	String getSubsystemRoleSubsystemCode();
-	Map<String, String> getSubsystemRoleSubsystemList();
+	List<SubSystemDto> getSubsystemRoleSubsystemList();
 	List<OperatorSubsystemRoleRequest> getSubsystemRoleList();
 
 	Integer getBiztranRoleConditionsSelect();
 	List<OperatorBiztranRoleRequest> getBiztranRoleList();
 
 	Integer getDeviceAuthUse();
-	Integer getDeviceAuthUnused();
+	Integer getDeviceAuthUnuse();
 	LocalDate getAccountLockOccurredDateFrom();
 	LocalDate getAccountLockOccurredDateTo();
 	Integer getAccountLockStatusLock();

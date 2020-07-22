@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto;
+package net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.vo;
 
 import java.io.Serializable;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Controller;
 @FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
 @ServiceInfo(id = "OA11010", name = "OA11010サービス")
 @Controller
-public class Oa11010SearchResponseDto implements Serializable {
+public class Oa11010SearchResponseVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

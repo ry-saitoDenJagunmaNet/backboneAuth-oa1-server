@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.application.queryService;
+package net.jagunma.backbone.auth.application.queryService.dto;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Operator {
+public class OperatorDto {
 	/**
 	 * オペレーターID
 	 */
@@ -103,11 +103,11 @@ public class Operator {
 	/**
 	 * オペレーターサブシステムロール割当リスト
 	 */
-	private List<OperatorSubSystemRole> operatorSubSystemRoleList = newArrayList();
+	private List<OperatorSubSystemRoleDto> operatorSubSystemRoleList = newArrayList();
 	/**
 	 * オペレーター取引ロール割当リスト
 	 */
-	private List<OperatorBizTranRole> operatorBizTranRoleList = newArrayList();
+	private List<OperatorBizTranRoleDto> operatorBizTranRoleList = newArrayList();
 
 	public long getOperatorId() { return operatorId; }
 	public void setOperatorId(long operatorId) { this.operatorId = operatorId; }
@@ -156,8 +156,8 @@ public class Operator {
 	public int getLockStatus() { return lockStatus; }
 	public void setLockStatus(int lockStatus) { this.lockStatus = lockStatus; }
 
-	public List<OperatorSubSystemRole> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
-	public void setOperatorSubSystemRoleList(List<OperatorSubSystemRole> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
-	public List<OperatorBizTranRole> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
-	public void setOperatorBizTranRoleList(List<OperatorBizTranRole> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
+	public List<OperatorSubSystemRoleDto> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
+	public void setOperatorSubSystemRoleList(List<OperatorSubSystemRoleDto> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
+	public List<OperatorBizTranRoleDto> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
+	public void setOperatorBizTranRoleList(List<OperatorBizTranRoleDto> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
 }

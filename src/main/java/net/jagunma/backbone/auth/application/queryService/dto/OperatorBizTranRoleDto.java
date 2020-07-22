@@ -1,9 +1,9 @@
-package net.jagunma.backbone.auth.application.queryService;
+package net.jagunma.backbone.auth.application.queryService.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class OperatorBizTranRole {
+public class OperatorBizTranRoleDto {
 
 	/**
 	 * オペレーター_取引ロール割当ID

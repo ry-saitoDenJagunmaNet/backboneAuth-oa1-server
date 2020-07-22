@@ -1,3 +1,27 @@
+/** Thymeleaf で起動時のみ実行 **/
+let _isThymeleaf = false;
+
+/**
+ * サーバーにFORMオブジェクトを送信します。
+ * @param {String} url リクエスト先URL
+ * @param {Json} formObj リクエスト送信するFORMオブジェクト
+ */
+function oa_th_sendFormData(url, formObj) {
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, false);
+	xhr.send(new FormData(formObj));
+
+	if(xhr.readyState === 4 && xhr.status === 200) {
+		// 正常
+		return xhr;
+	} else {
+		// 異常
+		alert(xhr.responseText);
+		return null;
+	}
+}
+
+
 /******** イベント処理 ********/
 
 /**

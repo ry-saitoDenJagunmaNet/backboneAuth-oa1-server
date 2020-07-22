@@ -2,8 +2,9 @@ package net.jagunma.backbone.auth.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.List;
+import net.jagunma.backbone.auth.application.queryService.dto.OperatorSubSystemRoleDto;
+import net.jagunma.backbone.auth.application.queryService.dto.SubSystemRoleDto;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntityDao;
 import net.jagunma.backbone.auth.usecase.operator.OperatorSearchRequest;
@@ -28,7 +29,7 @@ public class OperatorSubSystemRoleReferenceService {
 	 * @param request 検索条件
 	 * @return オペレーター_サブシステムロール割当リスト
 	 */
-	public List<OperatorSubSystemRole> getOperatorSubSystemRoleList(OperatorSearchRequest request) {
+	public List<OperatorSubSystemRoleDto> getOperatorSubSystemRoleList(OperatorSearchRequest request) {
 
 		// オペレーター_サブシステムロール割当検索
 		Orders orders = Orders.empty()
@@ -38,11 +39,11 @@ public class OperatorSubSystemRoleReferenceService {
 		List<Operator_SubSystemRoleEntity> entitys = operator_SubSystemRoleEntityDao.findAll(orders);
 
 		// サブシステムロール検索
-		List<SubSystemRole> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
+		List<SubSystemRoleDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
-		List<OperatorSubSystemRole> list = newArrayList();
+		List<OperatorSubSystemRoleDto> list = newArrayList();
 		entitys.forEach(o -> {
-			OperatorSubSystemRole item = new OperatorSubSystemRole();
+			OperatorSubSystemRoleDto item = new OperatorSubSystemRoleDto();
 
 			item.setOperator_SubSystemRoleId(o.getOperator_SubSystemRoleId());
 			item.setOperatorId(o.getOperatorId());
@@ -56,8 +57,9 @@ public class OperatorSubSystemRoleReferenceService {
 			item.setUpdatedAt(o.getUpdatedAt());
 			item.setUpdatedIpAddress(o.getUpdatedIpAddress());
 			item.setRecordVersion(o.getRecordVersion());
-			subSystemRoles.stream().filter(s->s.getSubSystemRoleCode().equals(o.getSubSystemRoleCode())).forEach(s ->  {
-				item.setSubSystemRoleName(s.getSubSystemRoleName());
+			subSystemRoles.stream().filter(ssr->ssr.getSubSystemRoleCode().equals(o.getSubSystemRoleCode())).forEach(ssrf ->  {
+				item.setSubSystemRoleName(ssrf.getSubSystemRoleName());
+				item.setSubSystemCodeList(ssrf.getSubSystemCodeList());
 			});
 			list.add(item);
 		});

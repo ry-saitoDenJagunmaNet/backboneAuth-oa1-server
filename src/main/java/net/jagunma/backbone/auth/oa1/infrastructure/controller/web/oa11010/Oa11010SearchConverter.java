@@ -4,11 +4,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+import net.jagunma.backbone.auth.application.queryService.dto.SubSystemDto;
+import net.jagunma.backbone.auth.application.queryService.dto.TempoDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.operator.OperatorBiztranRoleRequest;
 import net.jagunma.backbone.auth.model.operator.OperatorSubsystemRoleRequest;
-import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.dto.Oa11010SearchRequestDto;
+import net.jagunma.backbone.auth.oa1.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.usecase.operator.OperatorSearchRequest;
 
 /**
@@ -16,20 +17,20 @@ import net.jagunma.backbone.auth.usecase.operator.OperatorSearchRequest;
  */
 class Oa11010SearchConverter implements OperatorSearchRequest {
 
-	private Oa11010SearchRequestDto arg;
+	private Oa11010Vo arg;
 
-	Oa11010SearchConverter(Oa11010SearchRequestDto anArg)  {
+	Oa11010SearchConverter(Oa11010Vo anArg)  {
 		arg = anArg;
 	}
 
-	public static Oa11010SearchConverter with(Oa11010SearchRequestDto anArg) {
+	public static Oa11010SearchConverter with(Oa11010Vo anArg) {
 		return new Oa11010SearchConverter(anArg);
 	}
 
 	public String getJa() { return arg.getJa(); }
 	public long getJaId() { return arg.getJaId(); }
 	public String getTempoCode() { return arg.getTempoCode(); }
-	public Map<String, String> getTempoList() { return arg.getTempoList(); }
+	public List<TempoDto> getTempoList() { return arg.getTempoList(); }
 	public String getOperatorCode() { return arg.getOperatorCode(); }
 	public String getOperatorName() { return arg.getOperatorName(); }
 	public String getMailAddress() { return arg.getMailAddress(); }
@@ -44,7 +45,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 
 	public Integer getSubsystemRoleConditionsSelect() { return arg.getSubsystemRoleConditionsSelect(); }
 	public String getSubsystemRoleSubsystemCode() { return arg.getSubsystemRoleSubsystemCode(); }
-	public Map<String, String> getSubsystemRoleSubsystemList() { return arg.getSubsystemRoleSubsystemList(); }
+	public List<SubSystemDto> getSubsystemRoleSubsystemList() { return arg.getSubsystemRoleSubsystemList(); }
 	public List<OperatorSubsystemRoleRequest> getSubsystemRoleList() {
 		List<OperatorSubsystemRoleRequest> list = newArrayList();
 		arg.getSubsystemRoleList().forEach(s -> {
@@ -86,7 +87,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	}
 
 	public Integer getDeviceAuthUse() { return arg.getDeviceAuthUse(); }
-	public Integer getDeviceAuthUnused() { return arg.getDeviceAuthUnused(); }
+	public Integer getDeviceAuthUnuse() { return arg.getDeviceAuthUnuse(); }
 	public LocalDate getAccountLockOccurredDateFrom() { return arg.getAccountLockOccurredDateFrom(); }
 	public LocalDate getAccountLockOccurredDateTo() { return arg.getAccountLockOccurredDateTo(); }
 	public Integer getAccountLockStatusLock() { return arg.getAccountLockStatusLock(); }
@@ -145,10 +146,10 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 		// TODO: OPTION検索条件 取引ロール
 
 		// OPTION検索条件 その他
-		if (arg.getDeviceAuthUse() != arg.getDeviceAuthUnused()) {
+		if (arg.getDeviceAuthUse() != arg.getDeviceAuthUnuse()) {
 			if (arg.getDeviceAuthUse() == 1) {
 				criteria.getIsDeviceAuthCriteria().setEqualTo(true);
-			} else if (arg.getDeviceAuthUnused() == 1) {
+			} else if (arg.getDeviceAuthUnuse() == 1) {
 				criteria.getIsDeviceAuthCriteria().setEqualTo(false);
 			}
 		}
