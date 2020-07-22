@@ -12,8 +12,8 @@ buildscript {
         assertjVersion = '3.16.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.1.42'
-        commonCommonVersion = '20.0.92'
+        commonServerVersion = '20.1.43'
+        commonCommonVersion = '20.0.95'
         commonValuesVersion = '20.0.53'
         commonUtilsVersion = '20.1.60'
         domaCoreVersion = '2.38.0'
@@ -93,8 +93,8 @@ dependencies {
     implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
     testImplementation "net.jagunma.common2020:jagunma-common-tests:${commonTestsVersion}"
 
-    implementation 'org.springframework:spring-beans:5.2.7.RELEASE'
-    implementation 'org.springframework:spring-jdbc:5.2.7.RELEASE'
+    implementation 'org.springframework:spring-beans:5.2.8.RELEASE'
+    implementation 'org.springframework:spring-jdbc:5.2.8.RELEASE'
     implementation "org.springframework:spring-context"
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
