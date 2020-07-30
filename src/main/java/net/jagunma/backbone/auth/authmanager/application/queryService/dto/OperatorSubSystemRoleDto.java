@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -102,4 +104,23 @@ public class OperatorSubSystemRoleDto {
 	public void setSubSystemRoleName(String subSystemRoleName) { this.subSystemRoleName = subSystemRoleName; }
 	public List<SubSystemDto> getSubSystemCodeList() { return subSystemCodeList; }
 	public void setSubSystemCodeList(List<SubSystemDto> subSystemCodeList) { this.subSystemCodeList = subSystemCodeList; }
+
+	public OperatorSubSystemRoleDto() {
+		this.operator_SubSystemRoleId = 0;
+		this.operatorId = 0;
+		this.subSystemRoleCode = "";
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+		this.operatorCode = "";
+		this.operatorName = "";
+		this.subSystemRoleName = "";
+		this.subSystemCodeList = newArrayList();
+	}
 }

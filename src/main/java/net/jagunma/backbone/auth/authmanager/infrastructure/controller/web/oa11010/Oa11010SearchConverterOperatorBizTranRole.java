@@ -2,24 +2,24 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11
 
 import java.time.LocalDate;
 
-public class Oa11010SearchRequestOperatorBiztranRole {
+public class Oa11010SearchConverterOperatorBizTranRole {
 
 	/**
 	 * 取引ロール選択
 	 */
-	private Integer biztranRoleSelected;
+	private Integer bizTranRoleSelected;
 	/**
 	 * 取引ロールID
 	 */
-	private long biztranRoleId;
+	private long bizTranRoleId;
 	/**
 	 * 取引ロールコード
 	 */
-	private String biztranRoleCode;
+	private String bizTranRoleCode;
 	/**
 	 * 取引ロール名
 	 */
-	private String biztranRoleName;
+	private String bizTranRoleName;
 	/**
 	 * サブシステムコード
 	 */
@@ -31,7 +31,7 @@ public class Oa11010SearchRequestOperatorBiztranRole {
 	/**
 	 * 状態指定日
 	 */
-	private String expirationStatusDate;
+	private LocalDate expirationStatusDate;
 	/**
 	 * 条件指定日開始（開始日）
 	 */
@@ -49,20 +49,20 @@ public class Oa11010SearchRequestOperatorBiztranRole {
 	 */
 	private LocalDate expirationEndDateTo;
 
-	public Integer getBiztranRoleSelected() { return biztranRoleSelected; }
-	public void setBiztranRoleSelected(Integer biztranRoleSelected) { this.biztranRoleSelected = biztranRoleSelected; }
-	public long getBiztranRoleId() { return biztranRoleId; }
-	public void setBiztranRoleId(long biztranRoleId) { this.biztranRoleId = biztranRoleId; }
-	public String getBiztranRoleCode() { return biztranRoleCode; }
-	public void setBiztranRoleCode(String biztranRoleCode) { this.biztranRoleCode = biztranRoleCode; }
-	public String getBiztranRoleName() { return biztranRoleName; }
-	public void setBiztranRoleName(String biztranRoleName) { this.biztranRoleName = biztranRoleName; }
+	public Integer getBizTranRoleSelected() { return bizTranRoleSelected; }
+	public void setBizTranRoleSelected(Integer bizTranRoleSelected) { this.bizTranRoleSelected = bizTranRoleSelected; }
+	public long getBizTranRoleId() { return bizTranRoleId; }
+	public void setBizTranRoleId(long bizTranRoleId) { this.bizTranRoleId = bizTranRoleId; }
+	public String getBizTranRoleCode() { return bizTranRoleCode; }
+	public void setBizTranRoleCode(String bizTranRoleCode) { this.bizTranRoleCode = bizTranRoleCode; }
+	public String getBizTranRoleName() { return bizTranRoleName; }
+	public void setBizTranRoleName(String bizTranRoleName) { this.bizTranRoleName = bizTranRoleName; }
 	public String getSubSystemCode() { return subSystemCode; }
 	public void setSubSystemCode(String subSystemCode) { this.subSystemCode = subSystemCode; }
 	public Integer getExpirationSelect() { return expirationSelect; }
 	public void setExpirationSelect(Integer expirationSelect) { this.expirationSelect = expirationSelect; }
-	public String getExpirationStatusDate() { return expirationStatusDate; }
-	public void setExpirationStatusDate(String expirationStatusDate) { this.expirationStatusDate = expirationStatusDate; }
+	public LocalDate getExpirationStatusDate() { return expirationStatusDate; }
+	public void setExpirationStatusDate(LocalDate expirationStatusDate) { this.expirationStatusDate = expirationStatusDate; }
 	public LocalDate getExpirationStartDateFrom() { return expirationStartDateFrom; }
 	public void setExpirationStartDateFrom(LocalDate expirationStartDateFrom) { this.expirationStartDateFrom = expirationStartDateFrom; }
 	public LocalDate getExpirationStartDateTo() { return expirationStartDateTo; }

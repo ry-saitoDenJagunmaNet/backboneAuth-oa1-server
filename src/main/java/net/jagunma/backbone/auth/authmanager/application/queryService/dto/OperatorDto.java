@@ -58,36 +58,36 @@ public class OperatorDto {
 	/**
 	 * 登録者ID
 	 */
-	private long CreatedBy;
+	private long createdBy;
 	/**
 	 * 登録日時
 	 */
-	private LocalDateTime CreatedAt;
+	private LocalDateTime createdAt;
 	/**
 	 * 登録元IPアドレス
 	 */
-	private String CreatedIpAddress;
+	private String createdIpAddress;
 	/**
 	 * 更新者ID
 	 */
-	private Long UpdatedBy;
+	private Long updatedBy;
 	/**
 	 * 更新日時
 	 */
-	private LocalDateTime UpdatedAt;
+	private LocalDateTime updatedAt;
 	/**
 	 * 更新元IPアドレス
 	 */
-	private String UpdatedIpAddress;
+	private String updatedIpAddress;
 	/**
 	 * レコードバージョン
 	 */
-	private int RecordVersion;
+	private int recordVersion;
 	/**
 	 * 店舗名
 	 */
 	private String tempoName;
-	/**
+		/**
 	 * アカウントロック情報ID
 	 */
 	private long accountLockId;
@@ -98,7 +98,51 @@ public class OperatorDto {
 	/**
 	 * ロック状態
 	 */
-	private int lockStatus;
+	private Short lockStatus;
+	/**
+	 * パスワード履歴ID
+	 */
+	private Long passwordHistoryId;
+	/**
+	 * パスワード履歴変更日時
+	 */
+	private LocalDateTime changeDateTime;
+	/**
+	 * 変更種別
+	 */
+	private Short changeType;
+	/**
+	 * サインイン証跡ID
+	 */
+	private Long signInTraceId;
+	/**
+	 * サインイン試行日時
+	 */
+	private LocalDateTime tryDateTime;
+	/**
+	 * サインイン試行IPアドレス
+	 */
+	private String tryIpAddress;
+	/**
+	 * サインイン起因
+	 */
+	private Short signInCause;
+	/**
+	 * サインイン結果
+	 */
+	private Short signInResult;
+	/**
+	 * サインアウト証跡ID
+	 */
+	private Long signOutTraceId;
+	/**
+	 * サインアウト日時
+	 */
+	private LocalDateTime signOutDateTime;
+	/**
+	 * サインアウトIPアドレス
+	 */
+	private String signOutIpAddress;
 
 	/**
 	 * オペレーターサブシステムロール割当リスト
@@ -133,31 +177,90 @@ public class OperatorDto {
 	public void setTempoCode(String tempoCode) { this.tempoCode = tempoCode; }
 	public int getAvailableStatus() { return availableStatus; }
 	public void setAvailableStatus(int availableStatus) { this.availableStatus = availableStatus; }
-	public long getCreatedBy() { return CreatedBy; }
-	public void setCreatedBy(long CreatedBy) { this.CreatedBy = CreatedBy; }
-	public LocalDateTime getCreatedAt() { return CreatedAt; }
-	public void setCreatedAt(LocalDateTime CreatedAt) { this.CreatedAt = CreatedAt; }
-	public String getCreatedIpAddress() { return CreatedIpAddress; }
-	public void setCreatedIpAddress(String CreatedIpAddress) { this.CreatedIpAddress = CreatedIpAddress; }
-	public Long getUpdatedBy() { return UpdatedBy; }
-	public void setUpdatedBy(Long UpdatedBy) { this.UpdatedBy = UpdatedBy; }
-	public LocalDateTime getUpdatedAt() { return UpdatedAt; }
-	public void setUpdatedAt(LocalDateTime UpdatedAt) { this.UpdatedAt = UpdatedAt; }
-	public String getUpdatedIpAddress() { return UpdatedIpAddress; }
-	public void setUpdatedIpAddress(String UpdatedIpAddress) { this.UpdatedIpAddress = UpdatedIpAddress; }
-	public int getRecordVersion() { return RecordVersion; }
-	public void setRecordVersion(int RecordVersion) { this.RecordVersion = RecordVersion; }
+	public long getCreatedBy() { return createdBy; }
+	public void setCreatedBy(long createdBy) { this.createdBy = createdBy; }
+	public LocalDateTime getCreatedAt() { return createdAt; }
+	public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+	public String getCreatedIpAddress() { return createdIpAddress; }
+	public void setCreatedIpAddress(String createdIpAddress) { this.createdIpAddress = createdIpAddress; }
+	public Long getUpdatedBy() { return updatedBy; }
+	public void setUpdatedBy(Long updatedBy) { this.updatedBy = updatedBy; }
+	public LocalDateTime getUpdatedAt() { return updatedAt; }
+	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+	public String getUpdatedIpAddress() { return updatedIpAddress; }
+	public void setUpdatedIpAddress(String updatedIpAddress) { this.updatedIpAddress = updatedIpAddress; }
+	public int getRecordVersion() { return recordVersion; }
+	public void setRecordVersion(int recordVersion) { this.recordVersion = recordVersion; }
 	public String getTempoName() { return tempoName; }
 	public void setTempoName(String tempoName) { this.tempoName = tempoName; }
 	public long getAccountLockId() { return accountLockId; }
 	public void setAccountLockId(long accountLockId) { this.accountLockId = accountLockId; }
 	public LocalDateTime getOccurredDateTime() { return occurredDateTime; }
 	public void setOccurredDateTime(LocalDateTime occurredDateTime) { this.occurredDateTime = occurredDateTime; }
-	public int getLockStatus() { return lockStatus; }
-	public void setLockStatus(int lockStatus) { this.lockStatus = lockStatus; }
+	public Short getLockStatus() { return lockStatus; }
+	public void setLockStatus(Short lockStatus) { this.lockStatus = lockStatus; }
+	public Long getPasswordHistoryId() { return passwordHistoryId; }
+	public void setPasswordHistoryId(Long passwordHistoryId) { this.passwordHistoryId = passwordHistoryId; }
+	public LocalDateTime getChangeDateTime() { return changeDateTime; }
+	public void setChangeDateTime(LocalDateTime changeDateTime) { this.changeDateTime = changeDateTime; }
+	public Short getChangeType() { return changeType; }
+	public void setChangeType(Short changeType) { this.changeType = changeType; }
+	public Long getSignInTraceId() { return signInTraceId; }
+	public void setSignInTraceId(Long signInTraceId) { this.signInTraceId = signInTraceId; }
+	public LocalDateTime getTryDateTime() { return tryDateTime; }
+	public void setTryDateTime(LocalDateTime tryDateTime) { this.tryDateTime = tryDateTime; }
+	public String getTryIpAddress() { return tryIpAddress; }
+	public void setTryIpAddress(String tryIpAddress) { this.tryIpAddress = tryIpAddress; }
+	public Short getSignInCause() { return signInCause; }
+	public void setSignInCause(Short signInCause) { this.signInCause = signInCause; }
+	public Short getSignInResult() { return signInResult; }
+	public void setSignInResult(Short signInResult) { this.signInResult = signInResult; }
+	public Long getSignOutTraceId() { return signOutTraceId; }
+	public void setSignOutTraceId(Long signOutTraceId) { this.signOutTraceId = signOutTraceId; }
+	public LocalDateTime getSignOutDateTime() { return signOutDateTime; }
+	public void setSignOutDateTime(LocalDateTime signOutDateTime) { this.signOutDateTime = signOutDateTime; }
+	public String getSignOutIpAddress() { return signOutIpAddress; }
+	public void setSignOutIpAddress(String signOutIpAddress) { this.signOutIpAddress = signOutIpAddress; }
 
 	public List<OperatorSubSystemRoleDto> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
 	public void setOperatorSubSystemRoleList(List<OperatorSubSystemRoleDto> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
 	public List<OperatorBizTranRoleDto> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
 	public void setOperatorBizTranRoleList(List<OperatorBizTranRoleDto> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
+
+	public OperatorDto() {
+		this.operatorId = 0;
+		this.operatorCode = "";
+		this.operatorName = "";
+		this.mailAddress = "";
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.isDeviceAuth = false;
+		this.jaId = 0;
+		this.jaCode = "";
+		this.tempoId = 0;
+		this.tempoCode = "";
+		this.availableStatus = 0;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+		this.tempoName = "";
+		this.accountLockId = 0;
+		this.occurredDateTime = null;
+		this.lockStatus = 0;
+		this.passwordHistoryId = null;
+		this.changeDateTime = null;
+		this.changeType = null;
+		this.signInTraceId = null;
+		this.tryDateTime = null;
+		this.tryIpAddress = "";
+		this.signInCause = null;
+		this.signInResult = null;
+		this.signOutTraceId = null;
+		this.operatorSubSystemRoleList = newArrayList();
+		this.operatorBizTranRoleList = newArrayList();
+	}
 }

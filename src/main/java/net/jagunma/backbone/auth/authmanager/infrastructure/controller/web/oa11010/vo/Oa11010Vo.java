@@ -7,37 +7,17 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
-import net.jagunma.common.server.annotation.FeatureGroupInfo;
-import net.jagunma.common.server.annotation.FeatureInfo;
-import net.jagunma.common.server.annotation.ServiceInfo;
-import net.jagunma.common.server.annotation.SubSystemInfo;
-import net.jagunma.common.server.annotation.SystemInfo;
-import org.springframework.stereotype.Controller;
 
 /**
- * OA11010検索リクエスト
- *
- * <pre>
- * -------------------------------------------------
- * システム：O 業務共通システム
- * サブシステム：OA 基幹系認証管理サブシステム
- * 機能グループID：OA1
- * 機能グループ名：管理WEB
- * 機能ID：OA11010
- * 機能名：オペレーター＜一覧＞
- * サービスID：OA11010
- * サービス名：OA11010サービス
- * -------------------------------------------------
- * </pre>
+ * OA11010 View Object
  */
-@SystemInfo(id = "O", name = "業務共通システム")
-@SubSystemInfo(id = "OA", name = "基幹系認証管理サブシステム")
-@FeatureGroupInfo(id = "OA1", name = "管理WEB")
-@FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
-@ServiceInfo(id = "OA11010", name = "OA11010サービス")
-@Controller
 public class Oa11010Vo implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * チェックボックスのチェックtrue状態値
+	 */
+	public static final Integer CHECKBOX_TRUE  = 1;
 
 	/**
 	 * ＪＡ
@@ -103,28 +83,28 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * サブシステムロール条件選択
 	 */
-	private Integer subsystemRoleConditionsSelect;
+	private Integer subSystemRoleConditionsSelect;
 	/**
 	 * サブシステムロール一覧
 	 */
-	private List<Oa11010SubsystemRoleVo> subsystemRoleList;
+	private List<Oa11010SubSystemRoleVo> subSystemRoleList;
 
 	/**
 	 * 取引ロール条件選択
 	 */
-	private Integer biztranRoleConditionsSelect;
+	private Integer bizTranRoleConditionsSelect;
 	/**
-	 * サブシステムロールサブシステムコード
+	 * 取引ロール一覧フィルター用サブシステムコード
 	 */
-	private String subsystemRoleSubsystemCode;
+	private String bizTranRoleSubSystemCode;
 	/**
-	 * サブシステムロールサブシステムコンボボックスリスト
+	 * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	private List<SubSystemDto> subsystemRoleSubsystemList;
+	private List<SubSystemDto> bizTranRoleSubSystemList;
 	/**
 	 * 取引ロール一覧
 	 */
-	private List<Oa11010BiztranRoleVo> biztranRoleList;
+	private List<Oa11010BizTranRoleVo> bizTranRoleList;
 
 	/**
 	 * 機器認証使用
@@ -239,19 +219,19 @@ public class Oa11010Vo implements Serializable {
 	public LocalDate getExpirationEndDateTo() { return expirationEndDateTo; }
 	public void setExpirationEndDateTo(LocalDate expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 
-	public Integer getSubsystemRoleConditionsSelect() { return subsystemRoleConditionsSelect; }
-	public void setSubsystemRoleConditionsSelect(Integer subsystemRoleConditionsSelect) { this.subsystemRoleConditionsSelect = subsystemRoleConditionsSelect; }
-	public List<Oa11010SubsystemRoleVo> getSubsystemRoleList() { return subsystemRoleList; }
-	public void setSubsystemRoleList(List<Oa11010SubsystemRoleVo> subsystemRoleList) { this.subsystemRoleList = subsystemRoleList; }
+	public Integer getSubSystemRoleConditionsSelect() { return subSystemRoleConditionsSelect; }
+	public void setSubSystemRoleConditionsSelect(Integer subSystemRoleConditionsSelect) { this.subSystemRoleConditionsSelect = subSystemRoleConditionsSelect; }
+	public List<Oa11010SubSystemRoleVo> getSubSystemRoleList() { return subSystemRoleList; }
+	public void setSubSystemRoleList(List<Oa11010SubSystemRoleVo> subSystemRoleList) { this.subSystemRoleList = subSystemRoleList; }
 
-	public Integer getBiztranRoleConditionsSelect() { return biztranRoleConditionsSelect; }
-	public void setBiztranRoleConditionsSelect(Integer biztranRoleConditionsSelect) { this.biztranRoleConditionsSelect = biztranRoleConditionsSelect; }
-	public String getSubsystemRoleSubsystemCode() { return subsystemRoleSubsystemCode; }
-	public void setSubsystemRoleSubsystemCode(String subsystemRoleSubsystemCode) { this.subsystemRoleSubsystemCode = subsystemRoleSubsystemCode; }
-	public List<SubSystemDto> getSubsystemRoleSubsystemList() { return subsystemRoleSubsystemList; }
-	public void setSubsystemRoleSubsystemList(List<SubSystemDto> subsystemRoleSubsystemList) { this.subsystemRoleSubsystemList = subsystemRoleSubsystemList; }
-	public List<Oa11010BiztranRoleVo> getBiztranRoleList() { return biztranRoleList; }
-	public void setBiztranRoleList(List<Oa11010BiztranRoleVo> biztranRoleList) { this.biztranRoleList = biztranRoleList; }
+	public Integer getBizTranRoleConditionsSelect() { return bizTranRoleConditionsSelect; }
+	public void setBizTranRoleConditionsSelect(Integer bizTranRoleConditionsSelect) { this.bizTranRoleConditionsSelect = bizTranRoleConditionsSelect; }
+	public String getBizTranRoleSubSystemCode() { return bizTranRoleSubSystemCode; }
+	public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) { this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode; }
+	public List<SubSystemDto> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
+	public void setBizTranRoleSubSystemList(List<SubSystemDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+	public List<Oa11010BizTranRoleVo> getBizTranRoleList() { return bizTranRoleList; }
+	public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) { this.bizTranRoleList = bizTranRoleList; }
 
 	public Integer getDeviceAuthUse() { return deviceAuthUse; }
 	public void setDeviceAuthUse(Integer deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
@@ -301,8 +281,19 @@ public class Oa11010Vo implements Serializable {
 	 */
 	public List<Short> getAvailableStatusIncludesList() {
 		List<Short> result = newArrayList();
-		if (availableStatus0 != null && availableStatus0 == 1) {result.add((short) 0);}
-		if (availableStatus1 != null && availableStatus1 == 1) {result.add((short) 1);}
+		if (CHECKBOX_TRUE.equals(availableStatus0)) {result.add((short) 0);}
+		if (CHECKBOX_TRUE.equals(availableStatus1)) {result.add((short) 1);}
+		return result;
+	}
+
+	/**
+	 * アカウントロック状態IncludesList取得
+	 * @return アカウントロック状態IncludesList
+	 */
+	public List<Integer> getAccountLockStatusIncludesList() {
+		List<Integer> result = newArrayList();
+		if (CHECKBOX_TRUE.equals(accountLockStatusLock)) {result.add(0);}
+		if (CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {result.add(1);}
 		return result;
 	}
 }

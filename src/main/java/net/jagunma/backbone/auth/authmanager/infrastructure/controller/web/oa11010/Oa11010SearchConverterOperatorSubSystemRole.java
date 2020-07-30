@@ -2,23 +2,23 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11
 
 import java.time.LocalDate;
 
-public class Oa11010SearchRequestOperatorSubsystemRoleRequest {
+public class Oa11010SearchConverterOperatorSubSystemRole {
 	/**
 	 * サブシステムロール選択
 	 */
-	private Integer subsystemRoleSelected;
+	private Integer subSystemRoleSelected;
 	/**
 	 * サブシステムロールID
 	 */
-	private long subsystemRoleId;
+	private long subSystemRoleId;
 	/**
 	 * サブシステムロールコード
 	 */
-	private String subsystemRoleCode;
+	private String subSystemRoleCode;
 	/**
 	 * サブシステムロール名
 	 */
-	private String subsystemRoleName;
+	private String subSystemRoleName;
 	/**
 	 * 有効期限選択
 	 */
@@ -42,16 +42,16 @@ public class Oa11010SearchRequestOperatorSubsystemRoleRequest {
 	/**
 	 * 条件指定日終了（終了日）
 	 */
-	private String expirationEndDateTo;
+	private LocalDate expirationEndDateTo;
 
-	public Integer getSubsystemRoleSelected() { return subsystemRoleSelected; }
-	public void setSubsystemRoleSelected(Integer subsystemRoleSelected) { this.subsystemRoleSelected = subsystemRoleSelected; }
-	public long getSubsystemRoleId() { return subsystemRoleId; }
-	public void setSubsystemRoleId(long subsystemRoleId) { this.subsystemRoleId = subsystemRoleId; }
-	public String getSubsystemRoleCode() { return subsystemRoleCode; }
-	public void setSubsystemRoleCode(String subsystemRoleCode) { this.subsystemRoleCode = subsystemRoleCode; }
-	public String getSubsystemRoleName() { return subsystemRoleName; }
-	public void setSubsystemRoleName(String subsystemRoleName) { this.subsystemRoleName = subsystemRoleName; }
+	public Integer getSubSystemRoleSelected() { return subSystemRoleSelected; }
+	public void setSubSystemRoleSelected(Integer subSystemRoleSelected) { this.subSystemRoleSelected = subSystemRoleSelected; }
+	public long getSubSystemRoleId() { return subSystemRoleId; }
+	public void setSubSystemRoleId(long subSystemRoleId) { this.subSystemRoleId = subSystemRoleId; }
+	public String getSubSystemRoleCode() { return subSystemRoleCode; }
+	public void setSubSystemRoleCode(String subSystemRoleCode) { this.subSystemRoleCode = subSystemRoleCode; }
+	public String getSubSystemRoleName() { return subSystemRoleName; }
+	public void setSubSystemRoleName(String subSystemRoleName) { this.subSystemRoleName = subSystemRoleName; }
 	public Integer getExpirationSelect() { return expirationSelect; }
 	public void setExpirationSelect(Integer expirationSelect) { this.expirationSelect = expirationSelect; }
 	public LocalDate getExpirationStatusDate() { return expirationStatusDate; }
@@ -62,6 +62,6 @@ public class Oa11010SearchRequestOperatorSubsystemRoleRequest {
 	public void setExpirationStartDateTo(LocalDate expirationStartDateTo) { this.expirationStartDateTo = expirationStartDateTo; }
 	public LocalDate getExpirationEndDateFrom() { return expirationEndDateFrom; }
 	public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) { this.expirationEndDateFrom = expirationEndDateFrom; }
-	public String getExpirationEndDateTo() { return expirationEndDateTo; }
-	public void setExpirationEndDateTo(String expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
+	public LocalDate getExpirationEndDateTo() { return expirationEndDateTo; }
+	public void setExpirationEndDateTo(LocalDate expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 }

@@ -91,6 +91,7 @@ public class Oa11010Controller {
 		System.out.println("### pageno=" + oa11010Vo.getPageNo());
 
 		Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+		Oa11010SearchValidator.with(oa11010Vo).validate();
 		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
 		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 

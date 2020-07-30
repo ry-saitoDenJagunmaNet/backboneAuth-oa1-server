@@ -96,4 +96,22 @@ public class OperatorBizTranRoleDto {
 	public void setBizTranRoleName(String bizTranRoleName) { this.bizTranRoleName = bizTranRoleName; }
 	public String getSubSystemCode() { return subSystemCode; }
 	public void setSubSystemCode(String subSystemCode) { this.subSystemCode = subSystemCode; }
+
+	public OperatorBizTranRoleDto() {
+		this.operator_BizTranRoleId = 0;
+		this.operatorId = 0;
+		this.bizTranRoleId = 0;
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+		this.bizTranRoleCode = "";
+		this.bizTranRoleName = "";
+		this.subSystemCode = "";
+	}
 }

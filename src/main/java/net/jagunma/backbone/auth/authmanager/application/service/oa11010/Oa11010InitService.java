@@ -9,8 +9,8 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemR
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010BiztranRoleVo;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SubsystemRoleVo;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010BizTranRoleVo;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010InitResponse;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
@@ -51,32 +51,32 @@ public class Oa11010InitService {
 		// 有効期限選択
 		response.setExpirationSelect(0);
 		// サブシステムロール初期選択
-		response.setSubsystemRoleConditionsSelect(1);
+		response.setSubSystemRoleConditionsSelect(1);
 		// サブシステムロールリスト取得
 		response.setSubsystemRoleList(getSubsystemRoleList());
 		// 取引ロール初期選択
 		response.setBiztranRoleConditionsSelect(1);
 		// 取引ロールリスト取得
-		response.setBiztranRoleList(getBiztranRoleList());
+		response.setBizTranRoleList(getBizTranRoleList());
 		// サブシステムコンボボックスリスト取得
-		response.setSubsystemRoleSubsystemList(subSystemReferenceService.getComboBoxList());
+		response.setBizTranRoleSubSystemList(subSystemReferenceService.getComboBoxList());
 	}
 
 	/**
 	 * サブシステムロールリストを取得します
 	 * @return サブシステムロールリスト
 	 */
-	private List<Oa11010SubsystemRoleVo> getSubsystemRoleList() {
+	private List<Oa11010SubSystemRoleVo> getSubsystemRoleList() {
 		// サブシステムロール検索
 		List<SubSystemRoleDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
-		List<Oa11010SubsystemRoleVo> list = newArrayList();
+		List<Oa11010SubSystemRoleVo> list = newArrayList();
 		for(SubSystemRoleDto subSystemRole : subSystemRoles) {
-			Oa11010SubsystemRoleVo item = new Oa11010SubsystemRoleVo();
-			item.setSubsystemRoleSelected(0);
-			item.setSubsystemRoleId(0);
-			item.setSubsystemRoleCode(subSystemRole.getSubSystemRoleCode());
-			item.setSubsystemRoleName(subSystemRole.getSubSystemRoleName());
+			Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
+			item.setSubSystemRoleSelected(0);
+			item.setSubSystemRoleId(0);
+			item.setSubSystemRoleCode(subSystemRole.getSubSystemRoleCode());
+			item.setSubSystemRoleName(subSystemRole.getSubSystemRoleName());
 			item.setExpirationSelect(0);
 			item.setExpirationStatusDate(null);
 			item.setExpirationStartDateFrom(null);
@@ -93,23 +93,23 @@ public class Oa11010InitService {
 	 * 取引ロールリストを取得します
 	 * @return 取引ロールリスト
 	 */
-	private List<Oa11010BiztranRoleVo> getBiztranRoleList() {
+	private List<Oa11010BizTranRoleVo> getBizTranRoleList() {
 		// 取引ロール検索
 		Orders orders = Orders.empty()
 			.addOrder("BizTranRoleCode")
 			.addOrder("SubSystemCode");
 		List<BizTranRoleEntity> bizTranRoles = bizTranRoleEntityDao.findAll(orders);
 
-		List<Oa11010BiztranRoleVo> list = newArrayList();
+		List<Oa11010BizTranRoleVo> list = newArrayList();
 		for (BizTranRoleEntity bizTranRole :  bizTranRoles) {
-			Oa11010BiztranRoleVo item = new Oa11010BiztranRoleVo();
-			item.setBiztranRoleSelected(0);
-			item.setBiztranRoleId(0);
-			item.setBiztranRoleCode(bizTranRole.getBizTranRoleCode());
-			item.setBiztranRoleName(bizTranRole.getBizTranRoleName());
+			Oa11010BizTranRoleVo item = new Oa11010BizTranRoleVo();
+			item.setBizTranRoleSelected(0);
+			item.setBizTranRoleId(0);
+			item.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
+			item.setBizTranRoleName(bizTranRole.getBizTranRoleName());
 			item.setSubSystemCode(bizTranRole.getSubSystemCode());
 			item.setExpirationSelect(0);
-			item.setExpirationStatusDate("");
+			item.setExpirationStatusDate(null);
 			item.setExpirationStartDateFrom(null);
 			item.setExpirationStartDateTo(null);
 			item.setExpirationEndDateFrom(null);

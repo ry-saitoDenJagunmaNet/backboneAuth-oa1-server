@@ -65,12 +65,12 @@ function oaex_th_subsystem_filter_onChange(obj) {
 		let subsystemcode = obj.options[index].value;
 		// 選択したサブシステムでフィルター
 		for (let row of biztranRole.rows) {
-			let subSystemCode = document.getElementById("biztranRoleList"+row.rowIndex+".subSystemCode");
+			let subSystemCode = document.getElementById("bizTranRoleList"+row.rowIndex+".subSystemCode");
 			if (subSystemCode != null) {
 				if (subsystemcode != subSystemCode.value) {
 					row.classList.add(_TABLE_ROW_FILTER);
 					// 検索条件対象から外す
-					let biztranRoleSelected = document.getElementById("biztranRoleList["+row.rowIndex+"].biztranRoleSelected");
+					let biztranRoleSelected = document.getElementById("bizTranRoleList["+row.rowIndex+"].bizTranRoleSelected");
 					biztranRoleSelected.checked = false;
 				}
 			}
@@ -210,7 +210,7 @@ function oaex_expiration_sel_onChange() {
  * サブシステムロール条件のラジオボタンの変更イベントです。
  */
 function oaex_subsystem_role_sel_onChange() {
-	let val = oa_getRadioCheckedValue("subsystemRoleConditionsSelect");
+	let val = oa_getRadioCheckedValue("subSystemRoleConditionsSelect");
 
 	if (val == "0") {
 		// 指定なし　無効にする
@@ -234,7 +234,7 @@ function oaex_subsystem_role_sel_onChange() {
 function oaex_subsystem_role_expiration_sel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("subsystemRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("subSystemRoleList[" + objRow + "].expirationSelect");
 	} else {
 		val = oa_getRadioCheckedValue("subsystemRoleExpirationSelect[" + objRow + "]");
 	}
@@ -263,7 +263,7 @@ function oaex_subsystem_role_expiration_sel_onChange(objRow) {
  * 取引ロール条件のラジオボタンの変更イベントです。
  */
 function oaex_biztran_role_sel_onChange() {
-	let val = oa_getRadioCheckedValue("biztran_role_sel");
+	let val = oa_getRadioCheckedValue("biztranRoleConditionsSelect");
 
 	if (val == "0") {
 		// 指定なし　無効にする
@@ -290,7 +290,7 @@ function oaex_biztran_role_sel_onChange() {
 function oaex_biztran_role_expiration_sel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("biztranRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("bizTranRoleList[" + objRow + "].expirationSelect");
 	} else {
 		val = oa_getRadioCheckedValue("biztran_role_expiration_sel[" + objRow + "]");
 	}
