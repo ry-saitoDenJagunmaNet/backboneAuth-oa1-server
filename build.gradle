@@ -12,18 +12,18 @@ buildscript {
         assertjVersion = '3.16.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.1.44'
-        commonCommonVersion = '20.0.99'
-        commonValuesVersion = '20.0.57'
+        commonServerVersion = '20.1.45'
+        commonCommonVersion = '20.0.107'
+        commonValuesVersion = '20.0.65'
         commonUtilsVersion = '20.1.60'
         domaCoreVersion = '2.38.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'
-        commonTestsVersion = '20.0.8'
+        commonTestsVersion = '20.0.9'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
         mssqlJdbcVersion='8.3.1.jre11-preview'
-        backboneAuthDaoVersion = '20.0.8'
+        backboneAuthDaoVersion = '20.0.10'
 
     }
 }
