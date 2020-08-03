@@ -64,13 +64,13 @@ public class Oa11010Controller {
 	 */
 	@GetMapping(path = "/get")
 	private String get(Model model) {
-		//TODO: パラメータでサインインオペレータの情報を取得する
+		//TODO: パラメータでサインインオペレーターの情報を取得する
 		//AuditInfoHolder.
 
 		Oa11010Vo response = new Oa11010Vo();
 
 		Oa11010InitPresenter presenter = new Oa11010InitPresenter();
-		oa11010InitService.initForm(presenter);
+		oa11010InitService.init(presenter);
 
 		presenter.bindTo(response);
 
@@ -86,8 +86,8 @@ public class Oa11010Controller {
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Oa11010SearchResponseVo> search(
-		@ModelAttribute("Oa11010SearchRequestDto") Oa11010Vo oa11010Vo) {
+	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo oa11010Vo) {
+
 		System.out.println("### pageno=" + oa11010Vo.getPageNo());
 
 		Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();

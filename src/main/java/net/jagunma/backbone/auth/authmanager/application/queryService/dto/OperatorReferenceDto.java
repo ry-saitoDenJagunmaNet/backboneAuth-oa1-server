@@ -4,9 +4,10 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class OperatorDto {
+public class OperatorReferenceDto {
 	/**
 	 * オペレーターID
 	 */
@@ -54,7 +55,7 @@ public class OperatorDto {
 	/**
 	 * 利用可否状態
 	 */
-	private int availableStatus;
+	private Short availableStatus;
 	/**
 	 * 登録者ID
 	 */
@@ -82,12 +83,12 @@ public class OperatorDto {
 	/**
 	 * レコードバージョン
 	 */
-	private int recordVersion;
+	private Integer recordVersion;
 	/**
 	 * 店舗名
 	 */
 	private String tempoName;
-		/**
+	/**
 	 * アカウントロック情報ID
 	 */
 	private long accountLockId;
@@ -147,11 +148,11 @@ public class OperatorDto {
 	/**
 	 * オペレーターサブシステムロール割当リスト
 	 */
-	private List<OperatorSubSystemRoleDto> operatorSubSystemRoleList = newArrayList();
+	private List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoleReferenceDtoList = newArrayList();
 	/**
 	 * オペレーター取引ロール割当リスト
 	 */
-	private List<OperatorBizTranRoleDto> operatorBizTranRoleList = newArrayList();
+	private List<OperatorBizTranRoleReferenceDto> operatorBizTranRoleReferenceDtoList = newArrayList();
 
 	public long getOperatorId() { return operatorId; }
 	public void setOperatorId(long operatorId) { this.operatorId = operatorId; }
@@ -175,8 +176,8 @@ public class OperatorDto {
 	public void setTempoId(long tempoId) { this.tempoId = tempoId; }
 	public String getTempoCode() { return tempoCode; }
 	public void setTempoCode(String tempoCode) { this.tempoCode = tempoCode; }
-	public int getAvailableStatus() { return availableStatus; }
-	public void setAvailableStatus(int availableStatus) { this.availableStatus = availableStatus; }
+	public Short getAvailableStatus() { return availableStatus; }
+	public void setAvailableStatus(Short availableStatus) { this.availableStatus = availableStatus; }
 	public long getCreatedBy() { return createdBy; }
 	public void setCreatedBy(long createdBy) { this.createdBy = createdBy; }
 	public LocalDateTime getCreatedAt() { return createdAt; }
@@ -189,8 +190,8 @@ public class OperatorDto {
 	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 	public String getUpdatedIpAddress() { return updatedIpAddress; }
 	public void setUpdatedIpAddress(String updatedIpAddress) { this.updatedIpAddress = updatedIpAddress; }
-	public int getRecordVersion() { return recordVersion; }
-	public void setRecordVersion(int recordVersion) { this.recordVersion = recordVersion; }
+	public Integer getRecordVersion() { return recordVersion; }
+	public void setRecordVersion(Integer recordVersion) { this.recordVersion = recordVersion; }
 	public String getTempoName() { return tempoName; }
 	public void setTempoName(String tempoName) { this.tempoName = tempoName; }
 	public long getAccountLockId() { return accountLockId; }
@@ -222,12 +223,23 @@ public class OperatorDto {
 	public String getSignOutIpAddress() { return signOutIpAddress; }
 	public void setSignOutIpAddress(String signOutIpAddress) { this.signOutIpAddress = signOutIpAddress; }
 
-	public List<OperatorSubSystemRoleDto> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
-	public void setOperatorSubSystemRoleList(List<OperatorSubSystemRoleDto> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
-	public List<OperatorBizTranRoleDto> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
-	public void setOperatorBizTranRoleList(List<OperatorBizTranRoleDto> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
+	public List<OperatorSubSystemRoleReferenceDto> getOperatorSubSystemRoleReferenceDtoList() { return operatorSubSystemRoleReferenceDtoList; }
+	public void setOperatorSubSystemRoleReferenceDtoList(List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoleReferenceDtoList) { this.operatorSubSystemRoleReferenceDtoList = operatorSubSystemRoleReferenceDtoList; }
+	public List<OperatorBizTranRoleReferenceDto> getOperatorBizTranRoleReferenceDtoList() { return operatorBizTranRoleReferenceDtoList; }
+	public void setOperatorBizTranRoleReferenceDtoList(List<OperatorBizTranRoleReferenceDto> operatorBizTranRoleReferenceDtoList) { this.operatorBizTranRoleReferenceDtoList = operatorBizTranRoleReferenceDtoList; }
 
-	public OperatorDto() {
+	/**
+	 * 有効期限開始日をフォーマットして取得します。
+	 * @return フォーマットした有効期限開始日
+	 */
+	public String getExpirationStartDateToStringFormat() { return formatLocalDate(expirationStartDate); }
+	/**
+	 * 有効期限終了日をフォーマットして取得します。
+	 * @return フォーマットした有効期限終了日
+	 */
+	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
+
+	public OperatorReferenceDto() {
 		this.operatorId = 0;
 		this.operatorCode = "";
 		this.operatorName = "";
@@ -260,7 +272,19 @@ public class OperatorDto {
 		this.signInCause = null;
 		this.signInResult = null;
 		this.signOutTraceId = null;
-		this.operatorSubSystemRoleList = newArrayList();
-		this.operatorBizTranRoleList = newArrayList();
+		this.operatorSubSystemRoleReferenceDtoList = newArrayList();
+		this.operatorBizTranRoleReferenceDtoList = newArrayList();
+	}
+
+	/**
+	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 * @param localDt フォーマット対象の日付
+	 * @return フォ－マットした日付
+	 */
+	private String formatLocalDate(LocalDate localDt) {
+		if (localDt == null) {
+			return "";
+		}
+		return localDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 	}
 }

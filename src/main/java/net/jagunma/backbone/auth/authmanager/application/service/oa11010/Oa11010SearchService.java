@@ -3,12 +3,12 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.OperatorReferenceService;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,25 +25,25 @@ public class Oa11010SearchService {
 		OperatorSearchResponse response) {
 
 		// オペレーターリスト取得
-		List<OperatorDto> list = operatorReferenceService.getOperatorList(request);
-		// オペレーターテーブルHtmlを取得
-		response.setOperatorTable(getOperatorTableHtml(list, request.getPageNo()));
-		// Pagination Htmlを取得
-		response.setPagination(getPaginationHtml(list, request.getPageNo()));
+		List<OperatorReferenceDto> list = operatorReferenceService.getOperatorList(request);
+		// オペレーターテーブルHtmlを生成
+		response.setOperatorTable(genOperatorTableHtml(list, request.getPageNo()));
+		// Pagination Htmlを生成
+		response.setPagination(genPaginationHtml(list, request.getPageNo()));
 	}
 
 	/**
-	 * オペレーターテーブルHtmlを取得します。
+	 * オペレーターテーブルHtmlを生成します。
 	 * @param list オペレーターリスト
 	 * @param pageNo 表示ページ番号
 	 * @return オペレーターテーブルHtml
 	 */
-	private String getOperatorTableHtml(List<OperatorDto> list, int pageNo) {
+	private String genOperatorTableHtml(List<OperatorReferenceDto> list, int pageNo) {
 
 		StringBuffer html = new StringBuffer();
 
-		// オペレータページリスト取得
-		List<OperatorDto> pagelist = operatorReferenceService.getPageList(list, pageNo);
+		// オペレーターページリスト取得
+		List<OperatorReferenceDto> pagelist = operatorReferenceService.getPageList(list, pageNo);
 		pagelist.forEach(o -> {
 			html.append("<tr class=\"oaex_operator_table_operator_").append(o.getOperatorCode())
 				.append(" oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\">");
@@ -81,22 +81,24 @@ public class Oa11010SearchService {
 				.append("</td>");
 			// オペレーター有効期限
 			html.append("<td class=\"oaex_operator_expiration_date\">")
-				.append(o.getExpirationStartDate()).append("～").append(o.getExpirationEndDate())
+				.append(o.getExpirationStartDateToStringFormat())
+				.append("～")
+				.append(o.getExpirationEndDateToStringFormat())
 				.append("</td>");
 
 			// サブシステムロール
-			if (o.getOperatorSubSystemRoleList().size() == 0
-				&& o.getOperatorBizTranRoleList().size() == 0) {
+			if (o.getOperatorSubSystemRoleReferenceDtoList().size() == 0
+				&& o.getOperatorBizTranRoleReferenceDtoList().size() == 0) {
 				// サブシステムロール未設定
-				html.append(getOperatorSubSystemRoleBlankHtml());
+				html.append(genOperatorSubSystemRoleBlankHtml());
 				// 取引ロール未設定
-				html.append(getOperatorBizTranRoleBlankHtml());
+				html.append(genOperatorBizTranRoleBlankHtml());
 			} else {
 				// オペレーターに紐付くサブシステムロール、取引ロールを設定
 				int is = 0;
 				for (int i = 0; true; i++) {
-					if (o.getOperatorSubSystemRoleList().size() <= is
-						&& o.getOperatorBizTranRoleList().size() == 0 ) {
+					if (o.getOperatorSubSystemRoleReferenceDtoList().size() <= is
+						&& o.getOperatorBizTranRoleReferenceDtoList().size() == 0 ) {
 						// オペレーターに紐付くサブシステムロール、取引ロールが無くなったら終了
 						break;
 					}
@@ -119,25 +121,26 @@ public class Oa11010SearchService {
 						html.append("<td class=\"oaex_operator_expiration_date\"></td>");
 					}
 
-					if (o.getOperatorSubSystemRoleList().size() > is) {
+					if (o.getOperatorSubSystemRoleReferenceDtoList().size() > is) {
 						// サブシステムロール
 						html.append("<td class=\"oaex_operator_subsystem_role\">")
-							.append(o.getOperatorSubSystemRoleList().get(is).getSubSystemRoleName())
+							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getSubSystemRoleName())
 							.append("</td>");
 						// サブシステムロール有効期限
 						html.append("<td class=\"oaex_operator_subsystem_role_expiration_date\">")
-							.append(o.getOperatorSubSystemRoleList().get(is).getExpirationStartDate()).append("～")
-							.append(o.getOperatorSubSystemRoleList().get(is).getExpirationEndDate())
+							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getExpirationStartDateToStringFormat())
+							.append("～")
+							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getExpirationEndDateToStringFormat())
 							.append("</td>");
 
-						if (o.getOperatorBizTranRoleList().size() == 0) {
+						if (o.getOperatorBizTranRoleReferenceDtoList().size() == 0) {
 							// 取引ロール未設定
-							html.append(getOperatorBizTranRoleBlankHtml());
+							html.append(genOperatorBizTranRoleBlankHtml());
 						} else {
 							boolean ssfirst = true;
-							for(SubSystemDto ss : o.getOperatorSubSystemRoleList().get(is).getSubSystemCodeList()) {
-								// サブシステムロールに紐付く取引ロール定義Htmlを設定
-								String BizTranRoleHtml = getOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
+							for(SubSystemReferenceDto ss : o.getOperatorSubSystemRoleReferenceDtoList().get(is).getSubSystemReferenceDtoList()) {
+								// サブシステムロールに紐付く取引ロール定義Htmlを生成
+								String BizTranRoleHtml = genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleReferenceDtoList()
 									, o.getOperatorCode()
 									, ss.getSubSystemCode()
 									, ssfirst);
@@ -149,18 +152,18 @@ public class Oa11010SearchService {
 							if (ssfirst) {
 								// サブシステムロールに紐付く取引ロールが１件も無い場合、
 								// 取引ロール未設定
-								html.append(getOperatorBizTranRoleBlankHtml());
+								html.append(genOperatorBizTranRoleBlankHtml());
 							}
 						}
 						is++;
 					} else {
 						// サブシステムロール未設定
-						html.append(getOperatorSubSystemRoleBlankHtml());
+						html.append(genOperatorSubSystemRoleBlankHtml());
 
-						if (o.getOperatorBizTranRoleList().size() > 0) {
+						if (o.getOperatorBizTranRoleReferenceDtoList().size() > 0) {
 							boolean ssfirst = true;
-							// サブシステムロールに紐付かない取引ロール定義Htmlを表示
-							html.append(getOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
+							// サブシステムロールに紐付かない取引ロール定義Htmlを生成
+							html.append(genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleReferenceDtoList()
 								, o.getOperatorCode()
 								, ""
 								, ssfirst));
@@ -175,14 +178,14 @@ public class Oa11010SearchService {
 	}
 
 	/**
-	 * 取引ロール定義Htmlを取得します。
+	 * 取引ロール定義Htmlを生成します。
 	 * @param list オペレーター取引ロールリスト
 	 * @param operatorCode オペレーターコード
 	 * @param subSystemCode サブシステムコード
 	 * @param isFirst 対象オペレーターで最初の定義（falseの時、空のオペレーター情報、サブシステムロール情報を表示）
 	 * @return 取引ロール定義Html
 	 */
-	private String getOperatorBizTranRoleHtml(List<OperatorBizTranRoleDto> list,
+	private String genOperatorBizTranRoleHtml(List<OperatorBizTranRoleReferenceDto> list,
 		String operatorCode,
 		String subSystemCode,
 		boolean isFirst) {
@@ -191,7 +194,7 @@ public class Oa11010SearchService {
 
 		if (list != null && list.size() > 0) {
 			boolean isFirstlocal = isFirst;
-			List<OperatorBizTranRoleDto> tempList = newArrayList();
+			List<OperatorBizTranRoleReferenceDto> tempList = newArrayList();
 			if ("".equals(subSystemCode)) {
 				tempList.addAll(list);
 			} else {
@@ -199,13 +202,13 @@ public class Oa11010SearchService {
 					tempList.add(obtr);
 				});
 			}
-			for(OperatorBizTranRoleDto obtr : tempList) {
+			for(OperatorBizTranRoleReferenceDto obtr : tempList) {
 				if (!isFirstlocal) {
 					html.append("</tr>");
 					// オペレーター情報未設定
-					html.append(getOperatorBlankHtml(operatorCode));
+					html.append(genOperatorBlankHtml(operatorCode));
 					// サブシステムロール未設定
-					html.append(getOperatorSubSystemRoleBlankHtml());
+					html.append(genOperatorSubSystemRoleBlankHtml());
 				}
 				// 取引ロール
 				html.append("<td class=\"oaex_operator_biztran_role_code\">")
@@ -216,8 +219,9 @@ public class Oa11010SearchService {
 					.append("</td>");
 				// 取引ロール有効期限
 				html.append("<td class=\"oaex_operator_biztran_role_expiration_date\">")
-					.append(obtr.getExpirationStartDate()).append("～")
-					.append(obtr.getExpirationEndDate())
+					.append(obtr.getExpirationStartDateToStringFormat())
+					.append("～")
+					.append(obtr.getExpirationEndDateToStringFormat())
 					.append("</td>");
 				isFirstlocal = false;
 
@@ -230,10 +234,10 @@ public class Oa11010SearchService {
 	}
 
 	/**
-	 * オペレーターの未設定Htmlを取得します。
+	 * オペレーターの未設定Htmlを生成します。
 	 * @return オペレーターの未設定Html
 	 */
-	private String getOperatorBlankHtml(String operatorCode) {
+	private String genOperatorBlankHtml(String operatorCode) {
 
 		StringBuffer html = new StringBuffer();
 
@@ -255,10 +259,10 @@ public class Oa11010SearchService {
 	}
 
 	/**
-	 * オペレーターサブシステムロールの未設定Htmlを取得します。
+	 * オペレーターサブシステムロールの未設定Htmlを生成します。
 	 * @return オペレーターサブシステムロールの未設定Html
 	 */
-	private String getOperatorSubSystemRoleBlankHtml() {
+	private String genOperatorSubSystemRoleBlankHtml() {
 
 		StringBuffer html = new StringBuffer();
 		// サブシステムロール
@@ -269,10 +273,10 @@ public class Oa11010SearchService {
 	}
 
 	/**
-	 * 取引ロールの未設定Htmlを取得します。
+	 * 取引ロールの未設定Htmlを生成します。
 	 * @return 取引ロールの未設定Html
 	 */
-	private String getOperatorBizTranRoleBlankHtml() {
+	private String genOperatorBizTranRoleBlankHtml() {
 
 		StringBuffer html = new StringBuffer();
 		// 取引ロール
@@ -285,12 +289,12 @@ public class Oa11010SearchService {
 	}
 
 	/**
-	 * Pagination Htmlを取得します。
+	 * Pagination Htmlを生成します。
 	 * @param list オペレーターリスト
 	 * @param pageNo 表示ページ番号
 	 * @return Pagination Html
 	 */
-	private String getPaginationHtml(List<OperatorDto> list, int pageNo) {
+	private String genPaginationHtml(List<OperatorReferenceDto> list, int pageNo) {
 
 		StringBuffer html = new StringBuffer();
 		int maxPage = operatorReferenceService.getMaxPage(list);

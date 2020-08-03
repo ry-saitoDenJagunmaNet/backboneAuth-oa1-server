@@ -4,9 +4,10 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class OperatorSubSystemRoleDto {
+public class OperatorSubSystemRoleReferenceDto {
 	/**
 	 * オペレーター_サブシステムロール割当ID
 	 */
@@ -54,15 +55,15 @@ public class OperatorSubSystemRoleDto {
 	/**
 	 * レコードバージョン
 	 */
-	private int recordVersion;
-	/**
-	 * オペレーターコード
-	 */
-	private String operatorCode;
-	/**
-	 * オペレーター名
-	 */
-	private String operatorName;
+	private Integer recordVersion;
+//	/**
+//	 * オペレーターコード
+//	 */
+//	private String operatorCode;
+//	/**
+//	 * オペレーター名
+//	 */
+//	private String operatorName;
 	/**
 	 * サブシステムロール名
 	 */
@@ -70,7 +71,7 @@ public class OperatorSubSystemRoleDto {
 	/**
 	 * サブシステムコードリスト
 	 */
-	private List<SubSystemDto> subSystemCodeList;
+	private List<SubSystemReferenceDto> subSystemReferenceDtoList;
 
 	public long getOperator_SubSystemRoleId() { return operator_SubSystemRoleId; }
 	public void setOperator_SubSystemRoleId(long operator_SubSystemRoleId) { this.operator_SubSystemRoleId = operator_SubSystemRoleId; }
@@ -94,18 +95,29 @@ public class OperatorSubSystemRoleDto {
 	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 	public String getUpdatedIpAddress() { return updatedIpAddress; }
 	public void setUpdatedIpAddress(String updatedIpAddress) { this.updatedIpAddress = updatedIpAddress; }
-	public int getRecordVersion() { return recordVersion; }
-	public void setRecordVersion(int recordVersion) { this.recordVersion = recordVersion; }
-	public String getOperatorCode() { return operatorCode; }
-	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
-	public String getOperatorName() { return operatorName; }
-	public void setOperatorName(String operatorName) { this.operatorName = operatorName; }
+	public Integer getRecordVersion() { return recordVersion; }
+	public void setRecordVersion(Integer recordVersion) { this.recordVersion = recordVersion; }
+//	public String getOperatorCode() { return operatorCode; }
+//	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
+//	public String getOperatorName() { return operatorName; }
+//	public void setOperatorName(String operatorName) { this.operatorName = operatorName; }
 	public String getSubSystemRoleName() { return subSystemRoleName; }
 	public void setSubSystemRoleName(String subSystemRoleName) { this.subSystemRoleName = subSystemRoleName; }
-	public List<SubSystemDto> getSubSystemCodeList() { return subSystemCodeList; }
-	public void setSubSystemCodeList(List<SubSystemDto> subSystemCodeList) { this.subSystemCodeList = subSystemCodeList; }
+	public List<SubSystemReferenceDto> getSubSystemReferenceDtoList() { return subSystemReferenceDtoList; }
+	public void setSubSystemReferenceDtoList(List<SubSystemReferenceDto> subSystemReferenceDtoList) { this.subSystemReferenceDtoList = subSystemReferenceDtoList; }
 
-	public OperatorSubSystemRoleDto() {
+	/**
+	 * 有効期限開始日をフォーマットして取得します。
+	 * @return フォーマットした有効期限開始日
+	 */
+	public String getExpirationStartDateToStringFormat() { return formatLocalDate(expirationStartDate); }
+	/**
+	 * 有効期限終了日をフォーマットして取得します。
+	 * @return フォーマットした有効期限終了日
+	 */
+	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
+
+	public OperatorSubSystemRoleReferenceDto() {
 		this.operator_SubSystemRoleId = 0;
 		this.operatorId = 0;
 		this.subSystemRoleCode = "";
@@ -118,9 +130,21 @@ public class OperatorSubSystemRoleDto {
 		this.updatedAt = null;
 		this.updatedIpAddress = "";
 		this.recordVersion = 0;
-		this.operatorCode = "";
-		this.operatorName = "";
+//		this.operatorCode = "";
+//		this.operatorName = "";
 		this.subSystemRoleName = "";
-		this.subSystemCodeList = newArrayList();
+		this.subSystemReferenceDtoList = newArrayList();
+	}
+
+	/**
+	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 * @param localDt フォーマット対象の日付
+	 * @return フォ－マットした日付
+	 */
+	private String formatLocalDate(LocalDate localDt) {
+		if (localDt == null) {
+			return "";
+		}
+		return localDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 	}
 }

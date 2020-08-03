@@ -1,230 +1,230 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference;
+package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorBizTranRole;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
 /**
- * OA11010 オペレーター＜一覧＞ SearchConverter interface
+ * オペレーター検索Converter interface
  */
 public interface OperatorSearchRequest {
 	/**
-	 * ＪＡ（ＪＡコード＆ＪＡ名）のゲット
+	 * ＪＡ（ＪＡコード＆ＪＡ名）のＧｅｔ
 	 * @return ＪＡID
 	 */
 	String getJa();
 	/**
-	 * ＪＡIDのゲット
+	 * ＪＡIDのＧｅｔ
 	 * @return ＪＡID
 	 */
 	long getJaId();
 	/**
-	 * 店舗コードのゲット
+	 * 店舗コードのＧｅｔ
 	 * @return 店舗コード
 	 */
 	String getTempoCode();
 	/**
-	 * 店舗コンボボックスリストのゲット
+	 * 店舗コンボボックスリストのＧｅｔ
 	 * @return 店舗コンボボックスリスト
 	 */
-	List<TempoDto> getTempoList();
+	List<TempoReferenceDto> getTempoList();
 	/**
-	 * オペレーターコードのゲット
+	 * オペレーターコードのＧｅｔ
 	 * @return オペレーターコード
 	 */
 	String getOperatorCode();
 	/**
-	 * オペレーター名のゲット
+	 * オペレーター名のＧｅｔ
 	 * @return オペレーター名
 	 */
 	String getOperatorName();
 	/**
-	 * メールアドレスのゲット
+	 * メールアドレスのＧｅｔ
 	 * @return メールアドレス
 	 */
 	String getMailAddress();
 	/**
-	 * 利用可否状態 利用可能のゲット
+	 * 利用可否状態 利用可能のＧｅｔ
 	 * @return 利用可否状態 利用可能
 	 */
 	Integer getAvailableStatus0();
 	/**
-	 * 利用可否状態 利用不可のゲット
+	 * 利用可否状態 利用不可のＧｅｔ
 	 * @return 利用可否状態 利用不可
 	 */
 	Integer getAvailableStatus1();
 	/**
-	 * 有効期限選択のゲット
+	 * 有効期限選択のＧｅｔ
 	 * @return 有効期限選択
 	 */
 	Integer getExpirationSelect();
 	/**
-	 * 状態指定日 状態指定日のゲット
+	 * 状態指定日 状態指定日のＧｅｔ
 	 * @return 状態指定日 状態指定日
 	 */
 	LocalDate getExpirationStatusDate();
 	/**
-	 * 条件指定 有効期限開始（開始日）のゲット
+	 * 条件指定 有効期限開始（開始日）のＧｅｔ
 	 * @return 条件指定 有効期限開始（開始日）
 	 */
 	LocalDate getExpirationStartDateFrom();
 	/**
-	 * 条件指定 有効期限開始（終了日）のゲット
+	 * 条件指定 有効期限開始（終了日）のＧｅｔ
 	 * @return 条件指定 有効期限開始（終了日）
 	 */
 	LocalDate getExpirationStartDateTo();
 	/**
-	 * 条件指定 有効期限終了（開始日）のゲット
+	 * 条件指定 有効期限終了（開始日）のＧｅｔ
 	 * @return 条件指定 有効期限終了（開始日）
 	 */
 	LocalDate getExpirationEndDateFrom();
 	/**
-	 * 条件指定 有効期限終了（終了日）のゲット
+	 * 条件指定 有効期限終了（終了日）のＧｅｔ
 	 * @return 条件指定 有効期限終了（終了日）
 	 */
 	LocalDate getExpirationEndDateTo();
 
 	/**
-	 * サブシステムロール条件選択のゲット
+	 * サブシステムロール条件選択のＧｅｔ
 	 * @return サブシステムロール条件選択
 	 */
 	Integer getSubSystemRoleConditionsSelect();
 	/**
-	 * サブシステムロール一覧のゲット
+	 * サブシステムロール一覧のＧｅｔ
 	 * @return サブシステムロール一覧
 	 */
 	List<Oa11010SearchConverterOperatorSubSystemRole> getSubSystemRoleList();
 
 	/**
-	 * 取引ロール条件選択のゲット
+	 * 取引ロール条件選択のＧｅｔ
 	 * @return 取引ロール条件選択
 	 */
 	Integer getBizTranRoleConditionsSelect();
 	/**
-	 * 取引ロール一覧フィルター用サブシステムコードのゲット
+	 * 取引ロール一覧フィルター用サブシステムコードのＧｅｔ
 	 * @return 取引ロール一覧フィルター用サブシステムコード
 	 */
 	String getBizTranRoleSubSyStemCode();
 	/**
-	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのゲット
+	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのＧｅｔ
 	 * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	List<SubSystemDto> getBizTranRoleSubSystemList();
+	List<SubSystemReferenceDto> getBizTranRoleSubSystemList();
 	/**
-	 * 取引ロール一覧のゲット
+	 * 取引ロール一覧のＧｅｔ
 	 * @return 取引ロール一覧
 	 */
 	List<Oa11010SearchConverterOperatorBizTranRole> getBizTranRoleList();
 
 	/**
-	 * 機器認証使用のゲット
+	 * 機器認証使用のＧｅｔ
 	 * @return 機器認証使用
 	 */
 	Integer getDeviceAuthUse();
 	/**
-	 * 機器認証未使用のゲット
+	 * 機器認証未使用のＧｅｔ
 	 * @return 機器認証未使用
 	 */
 	Integer getDeviceAuthUnuse();
 	/**
-	 * 最終ロック・アンロック発生日（開始日）のゲット
+	 * 最終ロック・アンロック発生日（開始日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（開始日）
 	 */
 	LocalDate getAccountLockOccurredDateFrom();
 	/**
-	 * 最終ロック・アンロック発生日（終了日）のゲット
+	 * 最終ロック・アンロック発生日（終了日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（終了日）
 	 */
 	LocalDate getAccountLockOccurredDateTo();
 	/**
-	 * 現在ロック状態ロックのゲット
+	 * 現在ロック状態ロックのＧｅｔ
 	 * @return 現在ロック状態ロック
 	 */
 	Integer getAccountLockStatusLock();
 	/**
-	 * 現在ロック状態アンロックのゲット
+	 * 現在ロック状態アンロックのＧｅｔ
 	 * @return 現在ロック状態アンロック
 	 */
 	Integer getAccountLockStatusUnlock();
 	/**
-	 * 最終パスワード変更日チェックのゲット
+	 * 最終パスワード変更日チェックのＧｅｔ
 	 * @return 最終パスワード変更日チェック
 	 */
 	Integer getPasswordHistoryCheck();
 	/**
-	 * 最終パスワード変更日数のゲット
+	 * 最終パスワード変更日数のＧｅｔ
 	 * @return 最終パスワード変更日数
 	 */
 	Integer getPasswordHistoryLastChangeDate();
 	/**
-	 * 最終パスワード変更日状態のゲット
+	 * 最終パスワード変更日状態のＧｅｔ
 	 * @return 最終パスワード変更日状態
 	 */
 	String getPasswordHistoryLastChangeDateStatus();
 	/**
-	 * 最終パスワード変更種別初期のゲット
+	 * 最終パスワード変更種別初期のＧｅｔ
 	 * @return 最終パスワード変更種別初期
 	 */
 	Integer getPasswordHistoryChangeType0();
 	/**
-	 * 最終パスワード変更種別ユーザによる変更のゲット
+	 * 最終パスワード変更種別ユーザによる変更のＧｅｔ
 	 * @return 最終パスワード変更種別ユーザによる変更
 	 */
 	Integer getPasswordHistoryChangeType1();
 	/**
-	 * 最終パスワード変更種別管理者によるリセットのゲット
+	 * 最終パスワード変更種別管理者によるリセットのＧｅｔ
 	 * @return 最終パスワード変更種別管理者によるリセット
 	 */
 	Integer getPasswordHistoryChangeType2();
 	/**
-	 * 最終パスワード変更種別機器認証パスワードのゲット
+	 * 最終パスワード変更種別機器認証パスワードのＧｅｔ
 	 * @return 最終パスワード変更種別機器認証パスワード
 	 */
 	Integer getPasswordHistoryChangeType3();
 	/**
-	 * 最終サインオペレーション試行日（開始日）のゲット
+	 * 最終サインオペレーション試行日（開始日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（開始日）
 	 */
 	LocalDate getSignintraceTrydateFrom();
 	/**
-	 * 最終サインオペレーション試行日（終了日）のゲット
+	 * 最終サインオペレーション試行日（終了日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（終了日）
 	 */
 	LocalDate getSignintraceTrydateTo();
 	/**
-	 * 最終サインオペレーション元IPアドレスのゲット
+	 * 最終サインオペレーション元IPアドレスのＧｅｔ
 	 * @return 最終サインオペレーション元IPアドレス
 	 */
 	String getSignintraceTryIpAddress();
 	/**
-	 * 最終サインオペレーションサインインのゲット
+	 * 最終サインオペレーションサインインのＧｅｔ
 	 * @return 最終サインオペレーションサインイン
 	 */
 	Integer getSignintraceSignIn();
 	/**
-	 * 最最終サインオペレーションサインアウトのゲット
+	 * 最最終サインオペレーションサインアウトのＧｅｔ
 	 * @return 最終サインオペレーションサインアウト
 	 */
 	Integer getSignintraceSignOut();
 	/**
-	 * 最終サインオペレーションサインイン結果のゲット
+	 * 最終サインオペレーションサインイン結果のＧｅｔ
 	 * @return 最終サインオペレーションサインイン結果
 	 */
-	Integer[] getSignintraceSignInResult();
+	Short[] getSignintraceSignInResult();
 
 	/**
-	 * 表示ページのゲット
+	 * 表示ページのＧｅｔ
 	 * @return 表示ページ
 	 */
 	int getPageNo();
 
 	/**
-	 * オペレータの検索条件を取得
-	 * @return オペレータの検索条件
+	 * オペレーターの検索条件を生成
+	 * @return オペレーターの検索条件
 	 */
-	OperatorEntityCriteria getOperatorEntityCriteria(OperatorSearchRequest request);
+	OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request);
 }

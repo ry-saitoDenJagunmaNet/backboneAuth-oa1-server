@@ -3,12 +3,11 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntityDao;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchRequest;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +27,9 @@ public class OperatorBizTranRoleReferenceService {
 
 	/**
 	 * オペレーター_取引ロール割当リストを取得します。
-	 * @param request 検索条件
 	 * @return オペレーター_取引ロール割当リスト
 	 */
-	public List<OperatorBizTranRoleDto> getOperatorBizTranRoleList(OperatorSearchRequest request) {
+	public List<OperatorBizTranRoleReferenceDto> getOperatorBizTranRoleList() {
 
 		// オペレーター_取引ロール割当検索
 		Orders orders = Orders.empty()
@@ -45,9 +43,9 @@ public class OperatorBizTranRoleReferenceService {
 			.addOrder("BizTranRoleCode");
 		List<BizTranRoleEntity> bTREntitys = bizTranRoleEntityDao.findAll(orders);
 
-		List<OperatorBizTranRoleDto> list = newArrayList();
+		List<OperatorBizTranRoleReferenceDto> list = newArrayList();
 		entitys.forEach(o -> {
-			OperatorBizTranRoleDto item = new OperatorBizTranRoleDto();
+			OperatorBizTranRoleReferenceDto item = new OperatorBizTranRoleReferenceDto();
 
 			item.setOperator_BizTranRoleId(o.getOperator_BizTranRoleId());
 			item.setOperatorId(o.getOperatorId());

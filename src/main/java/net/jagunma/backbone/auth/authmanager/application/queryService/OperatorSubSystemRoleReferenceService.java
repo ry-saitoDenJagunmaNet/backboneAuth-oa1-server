@@ -3,11 +3,10 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorSubSystemRoleDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorSubSystemRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntityDao;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchRequest;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +25,9 @@ public class OperatorSubSystemRoleReferenceService {
 
 	/**
 	 * オペレーター_サブシステムロール割当リストを取得します。
-	 * @param request 検索条件
 	 * @return オペレーター_サブシステムロール割当リスト
 	 */
-	public List<OperatorSubSystemRoleDto> getOperatorSubSystemRoleList(OperatorSearchRequest request) {
+	public List<OperatorSubSystemRoleReferenceDto> getOperatorSubSystemRoleList() {
 
 		// オペレーター_サブシステムロール割当検索
 		Orders orders = Orders.empty()
@@ -39,11 +37,11 @@ public class OperatorSubSystemRoleReferenceService {
 		List<Operator_SubSystemRoleEntity> entitys = operator_SubSystemRoleEntityDao.findAll(orders);
 
 		// サブシステムロール検索
-		List<SubSystemRoleDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
+		List<SubSystemRoleReferenceDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
-		List<OperatorSubSystemRoleDto> list = newArrayList();
+		List<OperatorSubSystemRoleReferenceDto> list = newArrayList();
 		entitys.forEach(o -> {
-			OperatorSubSystemRoleDto item = new OperatorSubSystemRoleDto();
+			OperatorSubSystemRoleReferenceDto item = new OperatorSubSystemRoleReferenceDto();
 
 			item.setOperator_SubSystemRoleId(o.getOperator_SubSystemRoleId());
 			item.setOperatorId(o.getOperatorId());
@@ -59,7 +57,7 @@ public class OperatorSubSystemRoleReferenceService {
 			item.setRecordVersion(o.getRecordVersion());
 			subSystemRoles.stream().filter(ssr->ssr.getSubSystemRoleCode().equals(o.getSubSystemRoleCode())).forEach(ssrf ->  {
 				item.setSubSystemRoleName(ssrf.getSubSystemRoleName());
-				item.setSubSystemCodeList(ssrf.getSubSystemCodeList());
+				item.setSubSystemReferenceDtoList(ssrf.getSubSystemReferenceDtoList());
 			});
 			list.add(item);
 		});

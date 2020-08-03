@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 
-public class SubSystemDto {
+public class SubSystemReferenceDto {
 	/**
 	 * サブシステムコード
 	 */
@@ -18,14 +18,14 @@ public class SubSystemDto {
 	/**
 	 * コンストラクタ
 	 */
-	public SubSystemDto() {}
+	public SubSystemReferenceDto() {}
 
 	/**
 	 * コンストラクタ
 	 * @param subSystemCode サブシステムコード
 	 * @param subSystemName サブシステム名
 	 */
-	public SubSystemDto(String subSystemCode, String subSystemName) {
+	public SubSystemReferenceDto(String subSystemCode, String subSystemName) {
 		this.subSystemCode = subSystemCode;
 		this.subSystemName = subSystemName;
 	}

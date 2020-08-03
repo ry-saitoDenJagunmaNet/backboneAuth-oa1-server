@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SubSystemRoleVo;
 
@@ -11,53 +11,53 @@ import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa110
  */
 public interface Oa11010InitResponse {
 	/**
-	 * ＪＡIDのセット
+	 * ＪＡIDのＳｅｔ
 	 * @param jaId
 	 */
 	void setJaId(long jaId);
 	/**
-	 * ＪＡコードのセット
+	 * ＪＡコードのＳｅｔ
 	 * @param jaCode
 	 */
 	void setJaCode(String jaCode);
 	/**
-	 * ＪＡ名のセット
+	 * ＪＡ名のＳｅｔ
 	 * @param jaName
 	 */
 	void setJaName(String jaName);
 	/**
-	 * 店舗コンボボックスリストのセット
-	 * @param tempoList
+	 * 店舗コンボボックスリストのＳｅｔ
+	 * @param tempoReferenceDtoList
 	 */
-	void setTempoList(List<TempoDto> tempoList);
+	void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList);
 	/**
-	 * 有効期限選択のセット
+	 * 有効期限選択のＳｅｔ
 	 * @param expirationSelect
 	 */
 	void setExpirationSelect(Integer expirationSelect);
 	/**
-	 * サブシステムロール条件選択のセット
+	 * サブシステムロール条件選択のＳｅｔ
 	 * @param subSystemRoleConditionsSelect
 	 */
 	void setSubSystemRoleConditionsSelect(Integer subSystemRoleConditionsSelect);
 	/**
-	 * サブシステムロールリストのセット
+	 * サブシステムロールリストのＳｅｔ
 	 * @param subSystemRoleList
 	 */
 	void setSubsystemRoleList(List<Oa11010SubSystemRoleVo> subSystemRoleList);
 	/**
-	 * 取引ロール条件選択のセット
+	 * 取引ロール条件選択のＳｅｔ
 	 * @param biztranRoleConditionsSelect
 	 */
 	void setBiztranRoleConditionsSelect(Integer biztranRoleConditionsSelect);
 	/**
-	 * 取引ロール一覧のセット
+	 * 取引ロール一覧のＳｅｔ
 	 * @param bizTranRoleList
 	 */
 	void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList);
 	/**
-	 * サブシステムロールサブシステムコンボボックスリストのセット
+	 * サブシステムロールサブシステムコンボボックスリストのＳｅｔ
 	 * @param bizTranRoleSubSystemList
 	 */
-	void setBizTranRoleSubSystemList(List<SubSystemDto> bizTranRoleSubSystemList);
+	void setBizTranRoleSubSystemList(List<SubSystemReferenceDto> bizTranRoleSubSystemList);
 }

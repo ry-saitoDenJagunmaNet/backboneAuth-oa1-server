@@ -4,11 +4,11 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Converter
@@ -29,97 +29,97 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 */
 	private final Oa11010Vo arg;
 
-	Oa11010SearchConverter(Oa11010Vo anArg)  {
-		arg = anArg;
+	Oa11010SearchConverter(Oa11010Vo oa11010Vo)  {
+		arg = oa11010Vo;
 	}
 
-	public static Oa11010SearchConverter with(Oa11010Vo anArg) {
-		return new Oa11010SearchConverter(anArg);
+	public static Oa11010SearchConverter with(Oa11010Vo oa11010Vo) {
+		return new Oa11010SearchConverter(oa11010Vo);
 	}
 
 	/**
-	 * ＪＡ（ＪＡコード＆ＪＡ名）のゲット
+	 * ＪＡ（ＪＡコード＆ＪＡ名）のＧｅｔ
 	 * @return ＪＡID
 	 */
 	public String getJa() { return arg.getJa(); }
 	/**
-	 * ＪＡIDのゲット
+	 * ＪＡIDのＧｅｔ
 	 * @return ＪＡID
 	 */
 	public long getJaId() { return arg.getJaId(); }
 	/**
-	 * 店舗コードのゲット
+	 * 店舗コードのＧｅｔ
 	 * @return 店舗コード
 	 */
 	public String getTempoCode() { return arg.getTempoCode(); }
 	/**
-	 * 店舗コンボボックスリストのゲット
+	 * 店舗コンボボックスリストのＧｅｔ
 	 * @return 店舗コンボボックスリスト
 	 */
-	public List<TempoDto> getTempoList() { return arg.getTempoList(); }
+	public List<TempoReferenceDto> getTempoList() { return arg.getTempoReferenceDtoList(); }
 	/**
-	 * オペレーターコードのゲット
+	 * オペレーターコードのＧｅｔ
 	 * @return オペレーターコード
 	 */
 	public String getOperatorCode() { return arg.getOperatorCode(); }
 	/**
-	 * オペレーター名のゲット
+	 * オペレーター名のＧｅｔ
 	 * @return オペレーター名
 	 */
 	public String getOperatorName() { return arg.getOperatorName(); }
 	/**
-	 * メールアドレスのゲット
+	 * メールアドレスのＧｅｔ
 	 * @return メールアドレス
 	 */
 	public String getMailAddress() { return arg.getMailAddress(); }
 	/**
-	 * 利用可否状態 利用可能のゲット
+	 * 利用可否状態 利用可能のＧｅｔ
 	 * @return 利用可否状態 利用可能
 	 */
 	public Integer getAvailableStatus0() { return arg.getAvailableStatus0(); }
 	/**
-	 * 利用可否状態 利用不可のゲット
+	 * 利用可否状態 利用不可のＧｅｔ
 	 * @return 利用可否状態 利用不可
 	 */
 	public Integer getAvailableStatus1() { return arg.getAvailableStatus1(); }
 	/**
-	 * 有効期限選択のゲット
+	 * 有効期限選択のＧｅｔ
 	 * @return 有効期限選択
 	 */
 	public Integer getExpirationSelect() { return arg.getExpirationSelect(); }
 	/**
-	 * 状態指定日 状態指定日のゲット
+	 * 状態指定日 状態指定日のＧｅｔ
 	 * @return 状態指定日 状態指定日
 	 */
 	public LocalDate getExpirationStatusDate() { return arg.getExpirationStatusDate(); }
 	/**
-	 * 条件指定 有効期限開始（開始日）のゲット
+	 * 条件指定 有効期限開始（開始日）のＧｅｔ
 	 * @return 条件指定 有効期限開始（開始日）
 	 */
 	public LocalDate getExpirationStartDateFrom() { return arg.getExpirationStartDateFrom(); }
 	/**
-	 * 条件指定 有効期限開始（終了日）のゲット
+	 * 条件指定 有効期限開始（終了日）のＧｅｔ
 	 * @return 条件指定 有効期限開始（終了日）
 	 */
 	public LocalDate getExpirationStartDateTo() { return arg.getExpirationStartDateTo(); }
 	/**
-	 * 条件指定 有効期限終了（開始日）のゲット
+	 * 条件指定 有効期限終了（開始日）のＧｅｔ
 	 * @return 条件指定 有効期限終了（開始日）
 	 */
 	public LocalDate getExpirationEndDateFrom() { return arg.getExpirationEndDateFrom(); }
 	/**
-	 * 条件指定 有効期限終了（終了日）のゲット
+	 * 条件指定 有効期限終了（終了日）のＧｅｔ
 	 * @return 条件指定 有効期限終了（終了日）
 	 */
 	public LocalDate getExpirationEndDateTo() { return arg.getExpirationEndDateTo(); }
 
 	/**
-	 * サブシステムロール条件選択のゲット
+	 * サブシステムロール条件選択のＧｅｔ
 	 * @return サブシステムロール条件選択
 	 */
 	public Integer getSubSystemRoleConditionsSelect() { return arg.getSubSystemRoleConditionsSelect(); }
 	/**
-	 * サブシステムロール一覧のゲット
+	 * サブシステムロール一覧のＧｅｔ
 	 * @return サブシステムロール一覧
 	 */
 	public List<Oa11010SearchConverterOperatorSubSystemRole> getSubSystemRoleList() {
@@ -160,22 +160,22 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	}
 
 	/**
-	 * 取引ロール条件選択のゲット
+	 * 取引ロール条件選択のＧｅｔ
 	 * @return 取引ロール条件選択
 	 */
 	public Integer getBizTranRoleConditionsSelect() { return arg.getBizTranRoleConditionsSelect(); }
 	/**
-	 * 取引ロール一覧フィルター用サブシステムコードのゲット
+	 * 取引ロール一覧フィルター用サブシステムコードのＧｅｔ
 	 * @return 取引ロールサブシステムコード
 	 */
 	public String getBizTranRoleSubSyStemCode() { return arg.getBizTranRoleSubSystemCode(); }
 	/**
-	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのゲット
+	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのＧｅｔ
 	 * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	public List<SubSystemDto> getBizTranRoleSubSystemList() { return arg.getBizTranRoleSubSystemList(); }
+	public List<SubSystemReferenceDto> getBizTranRoleSubSystemList() { return arg.getBizTranRoleSubSystemList(); }
 	/**
-	 * 取引ロール一覧のゲット
+	 * 取引ロール一覧のＧｅｔ
 	 * @return 取引ロール一覧
 	 */
 	public List<Oa11010SearchConverterOperatorBizTranRole> getBizTranRoleList() {
@@ -217,112 +217,112 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	}
 
 	/**
-	 * 機器認証使用のゲット
+	 * 機器認証使用のＧｅｔ
 	 * @return 機器認証使用
 	 */
 	public Integer getDeviceAuthUse() { return arg.getDeviceAuthUse(); }
 	/**
-	 * 機器認証未使用のゲット
+	 * 機器認証未使用のＧｅｔ
 	 * @return 機器認証未使用
 	 */
 	public Integer getDeviceAuthUnuse() { return arg.getDeviceAuthUnuse(); }
 	/**
-	 * 最終ロック・アンロック発生日（開始日）のゲット
+	 * 最終ロック・アンロック発生日（開始日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（開始日）
 	 */
 	public LocalDate getAccountLockOccurredDateFrom() { return arg.getAccountLockOccurredDateFrom(); }
 	/**
-	 * 最終ロック・アンロック発生日（終了日）のゲット
+	 * 最終ロック・アンロック発生日（終了日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（終了日）
 	 */
 	public LocalDate getAccountLockOccurredDateTo() { return arg.getAccountLockOccurredDateTo(); }
 	/**
-	 * 現在ロック状態ロックのゲット
+	 * 現在ロック状態ロックのＧｅｔ
 	 * @return 現在ロック状態ロック
 	 */
 	public Integer getAccountLockStatusLock() { return arg.getAccountLockStatusLock(); }
 	/**
-	 * 現在ロック状態アンロックのゲット
+	 * 現在ロック状態アンロックのＧｅｔ
 	 * @return 現在ロック状態アンロック
 	 */
 	public Integer getAccountLockStatusUnlock() { return arg.getAccountLockStatusUnlock(); }
 	/**
-	 * 最終パスワード変更日チェックのゲット
+	 * 最終パスワード変更日チェックのＧｅｔ
 	 * @return 最終パスワード変更日チェック
 	 */
 	public Integer getPasswordHistoryCheck() { return arg.getPasswordHistoryCheck(); }
 	/**
-	 * 最終パスワード変更日数のゲット
+	 * 最終パスワード変更日数のＧｅｔ
 	 * @return 最終パスワード変更日数
 	 */
 	public Integer getPasswordHistoryLastChangeDate() { return arg.getPasswordHistoryLastChangeDate(); }
 	/**
-	 * 最終パスワード変更日状態のゲット
+	 * 最終パスワード変更日状態のＧｅｔ
 	 * @return 最終パスワード変更日状態
 	 */
 	public String getPasswordHistoryLastChangeDateStatus() { return arg.getPasswordHistoryLastChangeDateStatus(); }
 	/**
-	 * 最終パスワード変更種別初期のゲット
+	 * 最終パスワード変更種別初期のＧｅｔ
 	 * @return 最終パスワード変更種別初期
 	 */
 	public Integer getPasswordHistoryChangeType0() { return arg.getPasswordHistoryChangeType0(); }
 	/**
-	 * 最終パスワード変更種別ユーザによる変更のゲット
+	 * 最終パスワード変更種別ユーザによる変更のＧｅｔ
 	 * @return 最終パスワード変更種別ユーザによる変更
 	 */
 	public Integer getPasswordHistoryChangeType1() { return arg.getPasswordHistoryChangeType1(); }
 	/**
-	 * 最終パスワード変更種別管理者によるリセットのゲット
+	 * 最終パスワード変更種別管理者によるリセットのＧｅｔ
 	 * @return 最終パスワード変更種別管理者によるリセット
 	 */
 	public Integer getPasswordHistoryChangeType2() { return arg.getPasswordHistoryChangeType2(); }
 	/**
-	 * 最終パスワード変更種別機器認証パスワードのゲット
+	 * 最終パスワード変更種別機器認証パスワードのＧｅｔ
 	 * @return 最終パスワード変更種別機器認証パスワード
 	 */
 	public Integer getPasswordHistoryChangeType3() { return arg.getPasswordHistoryChangeType3(); }
 	/**
-	 * 最終サインオペレーション試行日（開始日）のゲット
+	 * 最終サインオペレーション試行日（開始日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（開始日）
 	 */
 	public LocalDate getSignintraceTrydateFrom() { return arg.getSignintraceTrydateFrom(); }
 	/**
-	 * 最終サインオペレーション試行日（終了日）のゲット
+	 * 最終サインオペレーション試行日（終了日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（終了日）
 	 */
 	public LocalDate getSignintraceTrydateTo() { return arg.getSignintraceTrydateTo(); }
 	/**
-	 * 最終サインオペレーション元IPアドレスのゲット
+	 * 最終サインオペレーション元IPアドレスのＧｅｔ
 	 * @return 最終サインオペレーション元IPアドレス
 	 */
 	public String getSignintraceTryIpAddress() { return arg.getSignintraceTryIpAddress(); }
 	/**
-	 * 最終サインオペレーションサインインのゲット
+	 * 最終サインオペレーションサインインのＧｅｔ
 	 * @return 最終サインオペレーションサインイン
 	 */
 	public Integer getSignintraceSignIn() { return arg.getSignintraceSignIn(); }
 	/**
-	 * 最最終サインオペレーションサインアウトのゲット
+	 * 最最終サインオペレーションサインアウトのＧｅｔ
 	 * @return 最終サインオペレーションサインアウト
 	 */
 	public Integer getSignintraceSignOut() { return arg.getSignintraceSignOut(); }
 	/**
-	 * 最終サインオペレーションサインイン結果のゲット
+	 * 最終サインオペレーションサインイン結果のＧｅｔ
 	 * @return 最終サインオペレーションサインイン結果
 	 */
-	public Integer[] getSignintraceSignInResult() { return arg.getSignintraceSignInResult(); }
+	public Short[] getSignintraceSignInResult() { return arg.getSignintraceSignInResult(); }
 
 	/**
-	 * 表示ページのゲット
+	 * 表示ページのＧｅｔ
 	 * @return 表示ページ
 	 */
 	public int getPageNo() { return arg.getPageNo(); }
 
 	/**
-	 * オペレータの検索条件を取得
-	 * @return オペレータの検索条件
+	 * オペレーターの検索条件を生成
+	 * @return オペレーターの検索条件
 	 */
-	public OperatorEntityCriteria getOperatorEntityCriteria(OperatorSearchRequest request) {
+	public OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request) {
 		OperatorEntityCriteria criteria = new OperatorEntityCriteria();
 
 		criteria.getJaIdCriteria().setEqualTo(arg.getJaId());

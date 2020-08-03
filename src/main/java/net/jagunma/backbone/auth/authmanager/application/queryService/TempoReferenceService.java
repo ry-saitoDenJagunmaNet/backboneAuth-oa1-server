@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
@@ -26,7 +26,7 @@ public class TempoReferenceService {
 	 * @param jaid ＪＡID
 	 * @return コンボボックス用のリスト
 	 */
-	public List<TempoDto> getComboBoxList(long jaid) {
+	public List<TempoReferenceDto> getComboBoxList(long jaid) {
 
 		// TODO: 店舗情報はCMSよりAPIで取得
 //		List<TempoDto> list = newArrayList();
@@ -37,8 +37,8 @@ public class TempoReferenceService {
 //		list.add(new TempoDto("004", "□□□□店"));
 //		list.add(new TempoDto("005", "××××館"));
 //		return list;
-		List<TempoDto> list = getTempoList(jaid);
-		list.add(0, new TempoDto("", ""));
+		List<TempoReferenceDto> list = getTempoList(jaid);
+		list.add(0, new TempoReferenceDto("", ""));
 		return list;
 	}
 
@@ -47,8 +47,8 @@ public class TempoReferenceService {
 	 * @param jaid ＪＡID
 	 * @return コンボボックス用のリスト
 	 */
-	public List<TempoDto> getTempoList(long jaid) {
-		List<TempoDto> list = newArrayList();
+	public List<TempoReferenceDto> getTempoList(long jaid) {
+		List<TempoReferenceDto> list = newArrayList();
 
 		// TODO: 店舗情報はCMSよりAPIで取得
 		// TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
@@ -67,10 +67,10 @@ public class TempoReferenceService {
 
 		// 重複削除
 		tempos.stream().distinct().forEach(t -> {
-			TempoDto tempoDto = new TempoDto();
-			tempoDto.setTempoCode(t);
-			tempoDto.setTempoName(t+"店舗");
-			list.add(tempoDto);
+			TempoReferenceDto tempoReferenceDto = new TempoReferenceDto();
+			tempoReferenceDto.setTempoCode(t);
+			tempoReferenceDto.setTempoName(t+"店舗");
+			list.add(tempoReferenceDto);
 		});
 
 		return list;

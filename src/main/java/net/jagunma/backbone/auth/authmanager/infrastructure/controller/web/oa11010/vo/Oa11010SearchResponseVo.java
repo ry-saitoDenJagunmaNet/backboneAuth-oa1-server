@@ -9,11 +9,11 @@ public class Oa11010SearchResponseVo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * オペレータTable
+	 * オペレーターTable
 	 */
 	private String operatorTable;
 	/**
-	 * オペレータ一覧pagination
+	 * オペレーター一覧pagination
 	 */
 	private String pagination;
 

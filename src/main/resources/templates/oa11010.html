@@ -45,7 +45,7 @@
 					<div class="input-field">
 						<select id="tempo" name="tempoCode" class="validate"
 								th:value="${form.tempoCode}">
-							<option th:each="item  : ${form.tempoList}"
+							<option th:each="item  : ${form.tempoReferenceDtoList}"
 									th:value="${item.tempoCode}"
 									th:text="${item.tempoName}"
 									th:selected="${form.tempoCode == item.tempoCode}"></option>

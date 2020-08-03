@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.model.types.ConditionsSelect;
 import net.jagunma.backbone.auth.authmanager.application.model.types.ExpirationSelect;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorSubSystemRoleDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorreference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorSubSystemRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorBizTranRole;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OperatorReferenceService {
 	/**
-	 * オペレータ一覧の１ページ当たりの行数
+	 * オペレーター一覧の１ページ当たりの行数
 	 */
 	private final int PAGE_SIZE = 10;
 
@@ -68,24 +68,24 @@ public class OperatorReferenceService {
 	}
 
 	/**
-	 * オペレータリストを取得します。
+	 * オペレーターリストを取得します。
 	 * @param request 条件
 	 * @return オペレーターリスト
 	 */
-	public List<OperatorDto> getOperatorList(OperatorSearchRequest request) {
+	public List<OperatorReferenceDto> getOperatorList(OperatorSearchRequest request) {
 
-		// オペレータ検索
+		// オペレーター検索
 		Orders orders = Orders.empty()
 			.addOrder("TempoCode")
 			.addOrder("OperatorCode");
-		List<OperatorEntity> operatorEntitys = operatorEntityDao.findBy(request.getOperatorEntityCriteria(request), orders);
+		List<OperatorEntity> operatorEntitys = operatorEntityDao.findBy(request.genOperatorEntityCriteria(request), orders);
 
 		// オペレーター_サブシステムロール割当検索
-		List<OperatorSubSystemRoleDto> operatorSubSystemRoles = operatorSubSystemRoleReferenceService.getOperatorSubSystemRoleList(request);
+		List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoles = operatorSubSystemRoleReferenceService.getOperatorSubSystemRoleList();
 		// オペレーター_取引ロール割当リスト
-		List<OperatorBizTranRoleDto> operatorBizTranRoles = operatorBizTranRoleReferenceService.getOperatorBizTranRoleList(request);
+		List<OperatorBizTranRoleReferenceDto> operatorBizTranRoles = operatorBizTranRoleReferenceService.getOperatorBizTranRoleList();
 		// 店舗リスト
-		List<TempoDto> tempos = tempoReferenceService.getTempoList(request.getJaId());
+		List<TempoReferenceDto> tempos = tempoReferenceService.getTempoList(request.getJaId());
 		// アカウントロック検索
 		orders = Orders.empty()
 			.addOrder("OperatorId")
@@ -107,10 +107,10 @@ public class OperatorReferenceService {
 			.addOrder("SignOutDateTime", Order.ASC);
 		List<SignOutTraceEntity> signOutTraceEntitys = signOutTraceEntityDao.findAll(orders);
 
-		List<OperatorDto> operatorList = newArrayList();
+		List<OperatorReferenceDto> operatorList = newArrayList();
 
 		for(OperatorEntity operatorEntity : operatorEntitys) {
-			OperatorDto dto = new OperatorDto();
+			OperatorReferenceDto dto = new OperatorReferenceDto();
 
 			// オペレーター_サブシステムロール割当の項目設定および条件判定
 			if (!setOperatorSubSystemRoleInfo(dto, request, operatorEntity, operatorSubSystemRoles)) {
@@ -143,10 +143,14 @@ public class OperatorReferenceService {
 			dto.setOperatorCode(operatorEntity.getOperatorCode());
 			// オペレーター名
 			dto.setOperatorName(operatorEntity.getOperatorName());
+			// メールアドレス
+			dto.setMailAddress(operatorEntity.getMailAddress());
 			// 有効期限開始日
 			dto.setExpirationStartDate(operatorEntity.getExpirationStartDate());
 			// 有効期限終了日
 			dto.setExpirationEndDate(operatorEntity.getExpirationEndDate());
+			// 機器認証
+			dto.setIsDeviceAuth(operatorEntity.getIsDeviceAuth());
 			// JAID
 			dto.setJaId(operatorEntity.getJaId());
 			// JAコード
@@ -157,10 +161,24 @@ public class OperatorReferenceService {
 			dto.setTempoCode(operatorEntity.getTempoCode());
 			// 利用可否状態
 			dto.setAvailableStatus(operatorEntity.getAvailableStatus());
+			// 登録者ID
+			dto.setCreatedBy(operatorEntity.getCreatedBy());
+			// 登録日時
+			dto.setCreatedAt(operatorEntity.getCreatedAt());
+			// 登録元IPアドレス
+			dto.setCreatedIpAddress(operatorEntity.getCreatedIpAddress());
+			// 更新者ID
+			dto.setUpdatedBy(operatorEntity.getUpdatedBy());
+			// 更新日時
+			dto.setUpdatedAt(operatorEntity.getUpdatedAt());
+			// 更新元IPアドレス
+			dto.setUpdatedIpAddress(operatorEntity.getUpdatedIpAddress());
+			// レコードバージョン
+			dto.setRecordVersion(operatorEntity.getRecordVersion());
 			// 店舗名
-			List<TempoDto> tempoDtos =  tempos.stream().filter(t->t.getTempoCode().equals(operatorEntity.getTempoCode())).collect(Collectors.toList());
-			if (tempoDtos.size() > 0) {
-				dto.setTempoName(tempoDtos.get(0).getTempoName());
+			List<TempoReferenceDto> tempoReferenceDto =  tempos.stream().filter(t->t.getTempoCode().equals(operatorEntity.getTempoCode())).collect(Collectors.toList());
+			if (tempoReferenceDto.size() > 0) {
+				dto.setTempoName(tempoReferenceDto.get(0).getTempoName());
 			}
 
 			operatorList.add(dto);
@@ -173,13 +191,13 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param operatorSubSystemRoleDtos オペレーター_サブシステムロール割当リスト
+	 * @param operatorSubSystemRoleReferenceDto オペレーター_サブシステムロール割当リスト
 	 * @return true：オペレーター_サブシステムロール割当の条件で表示対象、false：オペレーター_サブシステムロール割当の条件で表示対象外
 	 */
-	private boolean setOperatorSubSystemRoleInfo(OperatorDto dto,
+	private boolean setOperatorSubSystemRoleInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<OperatorSubSystemRoleDto> operatorSubSystemRoleDtos) {
+		List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoleReferenceDto) {
 
 		// 選択チェックしたサブシステムロールを検索条件にする
 		List<Oa11010SearchConverterOperatorSubSystemRole> requestOperatorSubSystemRoles =
@@ -189,9 +207,9 @@ public class OperatorReferenceService {
 			//サブシステムロールでの検索条件設定あり（無しの場合は全件対象）
 
 			// オペレーターにオペレーター_サブシステムロール割当
-			List<OperatorSubSystemRoleDto> operatorSubSystemRoleDto = operatorSubSystemRoleDtos.stream().filter(
-				ossrd->ossrd.getOperatorId() == operatorEntity.getOperatorId()).collect(Collectors.toList());
-			if (operatorSubSystemRoleDto.size() == 0) {
+			List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoleReferenceDtos = operatorSubSystemRoleReferenceDto
+				.stream().filter(ossrd->ossrd.getOperatorId() == operatorEntity.getOperatorId()).collect(Collectors.toList());
+			if (operatorSubSystemRoleReferenceDtos.size() == 0) {
 				//対象オペレーターにオペレーター_サブシステムロール割当無し
 				return false;
 			}
@@ -200,7 +218,7 @@ public class OperatorReferenceService {
 			if (ConditionsSelect.ＡＮＤ.getCode().equals(request.getSubSystemRoleConditionsSelect())) {
 				// AND
 				for(Oa11010SearchConverterOperatorSubSystemRole requestOperatorSubSystemRole : requestOperatorSubSystemRoles) {
-					if (getFilterOperatorSubSystemRoleDtoList(operatorSubSystemRoleDto, requestOperatorSubSystemRole).size() == 0) {
+					if (getFilterOperatorSubSystemRoleDtoList(operatorSubSystemRoleReferenceDtos, requestOperatorSubSystemRole).size() == 0) {
 						System.out.println("### OperatorId="+operatorEntity.getOperatorId());
 						return false;
 					}
@@ -209,7 +227,7 @@ public class OperatorReferenceService {
 				// OR
 				boolean orReturn = false;
 				for(Oa11010SearchConverterOperatorSubSystemRole requestOperatorSubSystemRole : requestOperatorSubSystemRoles) {
-					if (getFilterOperatorSubSystemRoleDtoList(operatorSubSystemRoleDto, requestOperatorSubSystemRole).size() > 0) {
+					if (getFilterOperatorSubSystemRoleDtoList(operatorSubSystemRoleReferenceDto, requestOperatorSubSystemRole).size() > 0) {
 						orReturn = true;
 						break;
 					}
@@ -219,8 +237,8 @@ public class OperatorReferenceService {
 		}
 
 		// オペレーター_サブシステムロール割当リスト
-		dto.setOperatorSubSystemRoleList(
-			operatorSubSystemRoleDtos.stream().filter(
+		dto.setOperatorSubSystemRoleReferenceDtoList(
+			operatorSubSystemRoleReferenceDto.stream().filter(
 				ossr->ossr.getOperatorId() == operatorEntity.getOperatorId()
 			).collect(Collectors.toList()));
 
@@ -229,22 +247,22 @@ public class OperatorReferenceService {
 
 	/**
 	 * サブシステムロール検索条件によるオペレーター_サブシステムロール割当の抽出を行います。
-	 * @param operatorSubSystemRoleDto オペレーター_サブシステムロール割当
+	 * @param operatorSubSystemRoleReferenceDto オペレーター_サブシステムロール割当
 	 * @param requestOperatorSubSystemRole サブシステムロール検索条件
 	 * @return サブシステムロール検索条件によるオペレーター_サブシステムロール割当リスト
 	 */
-	private List<OperatorSubSystemRoleDto> getFilterOperatorSubSystemRoleDtoList(List<OperatorSubSystemRoleDto> operatorSubSystemRoleDto,
+	private List<OperatorSubSystemRoleReferenceDto> getFilterOperatorSubSystemRoleDtoList(List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoleReferenceDto,
 		Oa11010SearchConverterOperatorSubSystemRole requestOperatorSubSystemRole) {
 
-		List<OperatorSubSystemRoleDto> filters = newArrayList();
+		List<OperatorSubSystemRoleReferenceDto> filters = newArrayList();
 		if (ExpirationSelect.指定なし.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
 			// 指定無し
-			filters = operatorSubSystemRoleDto.stream().filter(ossrd->
+			filters = operatorSubSystemRoleReferenceDto.stream().filter(ossrd->
 				ossrd.getSubSystemRoleCode().equals(requestOperatorSubSystemRole.getSubSystemRoleCode()))
 				.collect(Collectors.toList());
 		} else if (ExpirationSelect.状態指定日.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
 			// 状態指定日
-			filters = operatorSubSystemRoleDto.stream().filter(ossrd->
+			filters = operatorSubSystemRoleReferenceDto.stream().filter(ossrd->
 				ossrd.getSubSystemRoleCode().equals(requestOperatorSubSystemRole.getSubSystemRoleCode()) &&
 				ossrd.getExpirationStartDate().compareTo(requestOperatorSubSystemRole.getExpirationStatusDate()) <= 0 &&
 				ossrd.getExpirationEndDate().compareTo(requestOperatorSubSystemRole.getExpirationStatusDate()) >= 0)
@@ -255,7 +273,7 @@ public class OperatorReferenceService {
 //				",StartDateTo="+requestOperatorSubSystemRole.getExpirationStartDateTo()+
 //				",EndDateFrom="+requestOperatorSubSystemRole.getExpirationEndDateFrom()+
 //				",EndDateTo="+requestOperatorSubSystemRole.getExpirationEndDateTo());
-			filters = operatorSubSystemRoleDto.stream().filter(ossrd->
+			filters = operatorSubSystemRoleReferenceDto.stream().filter(ossrd->
 				ossrd.getSubSystemRoleCode().equals(requestOperatorSubSystemRole.getSubSystemRoleCode()) &&
 					(ossrd.getExpirationStartDate().compareTo(requestOperatorSubSystemRole.getExpirationStartDateFrom()) >= 0) &&
 					ossrd.getExpirationStartDate().compareTo(requestOperatorSubSystemRole.getExpirationStartDateTo()) <= 0 &&
@@ -271,13 +289,13 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param operatorBizTranRoleDtos オペレーター_取引ロール割当リスト
-	 * @return true：オペレーター_取引ロール割当の条件で表示対象、false：アオペレーター_取引ロール割当の条件で表示対象外
+	 * @param operatorBizTranRoleReferenceDto オペレーター_取引ロール割当リスト
+	 * @return true：オペレーター_取引ロール割当の条件で表示対象、false：オペレーター_取引ロール割当の条件で表示対象外
 	 */
-	private boolean setOperatorBizTranRoleInfo(OperatorDto dto,
+	private boolean setOperatorBizTranRoleInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<OperatorBizTranRoleDto> operatorBizTranRoleDtos) {
+		List<OperatorBizTranRoleReferenceDto> operatorBizTranRoleReferenceDto) {
 
 		// 選択チェックした取引ロールを検索条件にする
 		List<Oa11010SearchConverterOperatorBizTranRole> requestOperatorBizTranRoles =
@@ -287,9 +305,9 @@ public class OperatorReferenceService {
 			//取引ロールでの検索条件設定あり（無しの場合は全件対象）
 
 			// オペレーターにオペレーター_取引ロール割当
-			List<OperatorBizTranRoleDto> operatorBizTranRoleDto = operatorBizTranRoleDtos.stream().filter(
-				ossrd->ossrd.getOperatorId() == operatorEntity.getOperatorId()).collect(Collectors.toList());
-			if (operatorBizTranRoleDto.size() == 0) {
+			List<OperatorBizTranRoleReferenceDto> operatorBizTranRoleReferenceDtos = operatorBizTranRoleReferenceDto
+				.stream().filter(ossrd->ossrd.getOperatorId() == operatorEntity.getOperatorId()).collect(Collectors.toList());
+			if (operatorBizTranRoleReferenceDtos.size() == 0) {
 				//対象オペレーターにオペレーター_取引ロール割当無し
 				return false;
 			}
@@ -298,7 +316,7 @@ public class OperatorReferenceService {
 			if (ConditionsSelect.ＡＮＤ.getCode().equals(request.getBizTranRoleConditionsSelect())) {
 				// AND
 				for(Oa11010SearchConverterOperatorBizTranRole requestOperatorBizTranRole : requestOperatorBizTranRoles) {
-					if (getFilterOperatorBizTranRoleDtoList(operatorBizTranRoleDto, requestOperatorBizTranRole).size() == 0) {
+					if (getFilterOperatorBizTranRoleDtoList(operatorBizTranRoleReferenceDtos, requestOperatorBizTranRole).size() == 0) {
 						return false;
 					}
 				}
@@ -306,7 +324,7 @@ public class OperatorReferenceService {
 				// OR
 				boolean orReturn = false;
 				for(Oa11010SearchConverterOperatorBizTranRole requestOperatorBizTranRole : requestOperatorBizTranRoles) {
-					if (getFilterOperatorBizTranRoleDtoList(operatorBizTranRoleDto, requestOperatorBizTranRole).size() > 0) {
+					if (getFilterOperatorBizTranRoleDtoList(operatorBizTranRoleReferenceDto, requestOperatorBizTranRole).size() > 0) {
 						orReturn = true;
 						break;
 					}
@@ -316,8 +334,8 @@ public class OperatorReferenceService {
 		}
 
 		// オペレーター_取引ロール割当リスト
-		dto.setOperatorBizTranRoleList(
-			operatorBizTranRoleDtos.stream().filter(
+		dto.setOperatorBizTranRoleReferenceDtoList(
+			operatorBizTranRoleReferenceDto.stream().filter(
 				ossr->ossr.getOperatorId() == operatorEntity.getOperatorId()
 			).collect(Collectors.toList()));
 
@@ -326,24 +344,24 @@ public class OperatorReferenceService {
 
 	/**
 	 * 取引ロール検索条件によるオペレーター_取引ロール割当の抽出を行います。
-	 * @param operatorBizTranRoleDto オペレーター_取引ロール割当
+	 * @param operatorBizTranRoleReferenceDto オペレーター_取引ロール割当
 	 * @param requestOperatorBizTranRole 取引ロール検索条件
 	 * @return サ取引ロール検索条件によるオペレーター_取引ロール割当リスト
 	 */
-	private List<OperatorBizTranRoleDto> getFilterOperatorBizTranRoleDtoList(List<OperatorBizTranRoleDto> operatorBizTranRoleDto,
+	private List<OperatorBizTranRoleReferenceDto> getFilterOperatorBizTranRoleDtoList(List<OperatorBizTranRoleReferenceDto> operatorBizTranRoleReferenceDto,
 		Oa11010SearchConverterOperatorBizTranRole requestOperatorBizTranRole) {
 
-		List<OperatorBizTranRoleDto> filters = newArrayList();
+		List<OperatorBizTranRoleReferenceDto> filters = newArrayList();
 		if (ExpirationSelect.指定なし.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
 			// 指定無し
-			filters = operatorBizTranRoleDto.stream().filter(obtrd->
+			filters = operatorBizTranRoleReferenceDto.stream().filter(obtrd->
 				obtrd.getBizTranRoleCode().equals(requestOperatorBizTranRole.getBizTranRoleCode()))
 				.collect(Collectors.toList());
 		} else if (ExpirationSelect.状態指定日.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
 			// 状態指定日
 			System.out.println("### StatusDate="+requestOperatorBizTranRole.getExpirationStatusDate()+
 				",BizTranRoleCode="+requestOperatorBizTranRole.getBizTranRoleCode());
-			filters = operatorBizTranRoleDto.stream().filter(obtrd->
+			filters = operatorBizTranRoleReferenceDto.stream().filter(obtrd->
 				obtrd.getBizTranRoleCode().equals(requestOperatorBizTranRole.getBizTranRoleCode()) &&
 					obtrd.getExpirationStartDate().compareTo(requestOperatorBizTranRole.getExpirationStatusDate()) <= 0 &&
 					obtrd.getExpirationEndDate().compareTo(requestOperatorBizTranRole.getExpirationStatusDate()) >= 0)
@@ -354,7 +372,7 @@ public class OperatorReferenceService {
 				",StartDateTo="+requestOperatorBizTranRole.getExpirationStartDateTo()+
 				",EndDateFrom="+requestOperatorBizTranRole.getExpirationEndDateFrom()+
 				",EndDateTo="+requestOperatorBizTranRole.getExpirationEndDateTo());
-			filters = operatorBizTranRoleDto.stream().filter(obtrd->
+			filters = operatorBizTranRoleReferenceDto.stream().filter(obtrd->
 				obtrd.getBizTranRoleCode().equals(requestOperatorBizTranRole.getBizTranRoleCode()) &&
 					(obtrd.getExpirationStartDate().compareTo(requestOperatorBizTranRole.getExpirationStartDateFrom()) >= 0) &&
 					obtrd.getExpirationStartDate().compareTo(requestOperatorBizTranRole.getExpirationStartDateTo()) <= 0 &&
@@ -373,7 +391,7 @@ public class OperatorReferenceService {
 	 * @param accountLockEntitys アカウントロックリスト
 	 * @return true：アカウントロックの条件で表示対象、false：アカウントロックの条件で表示対象外
 	 */
-	private boolean setAccountLockInfo(OperatorDto dto,
+	private boolean setAccountLockInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
 		List<AccountLockEntity> accountLockEntitys) {
@@ -416,14 +434,12 @@ public class OperatorReferenceService {
 			//アンロック
 			if (accountLockStatusLock != accountLockStatusUnlock
 				&& accountLockStatusUnlock != 1) {
-				//continue;
 				return false;
 			}
 		} else if (dto.getLockStatus() == 1) {
 			//ロック
 			if (accountLockStatusLock != accountLockStatusUnlock
 				&& accountLockStatusLock != 1) {
-				//continue;
 				return false;
 			}
 		}
@@ -438,7 +454,7 @@ public class OperatorReferenceService {
 	 * @param passwordHistoryEntitys パスワード履歴リスト
 	 * @return true：パスワード履歴の条件で表示対象、false：パスワード履歴の条件で表示対象外
 	 */
-	private boolean setPasswordHistoryInfo(OperatorDto dto,
+	private boolean setPasswordHistoryInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
 		List<PasswordHistoryEntity> passwordHistoryEntitys) {
@@ -519,7 +535,7 @@ public class OperatorReferenceService {
 	 * @param signInTraceEntitys サインイン証跡リスト
 	 * @return true：サインイン証跡の条件で表示対象、false：サインイン証跡の条件で表示対象外
 	 */
-	private boolean setSignInTraceInfo(OperatorDto dto,
+	private boolean setSignInTraceInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
 		List<SignInTraceEntity> signInTraceEntitys) {
@@ -571,7 +587,7 @@ public class OperatorReferenceService {
 				return false;
 			}
 			// 配列をリストに変換
-			List<Integer> signInResultList = Arrays.asList(request.getSignintraceSignInResult());
+			List<Short> signInResultList = Arrays.asList(request.getSignintraceSignInResult());
 			if (!signInResultList.contains(dto.getSignInResult())) {
 				return false;
 			}
@@ -588,7 +604,7 @@ public class OperatorReferenceService {
 	 * @param signOutTraceEntitys サインアウト証跡リスト
 	 * @return true：サインアウト証跡の条件で表示対象、false：サインアウト証跡の条件で表示対象外
 	 */
-	private boolean setSignOutTraceInfo(OperatorDto dto,
+	private boolean setSignOutTraceInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
 		List<SignOutTraceEntity> signOutTraceEntitys) {
@@ -613,21 +629,21 @@ public class OperatorReferenceService {
 	}
 
 	/**
-	 * オペレータ一覧の最終ページを取得します、
+	 * オペレーター一覧の最終ページを取得します、
 	 * @param list オペレーターリスト
-	 * @return オペレータ一覧の最終ページ
+	 * @return オペレーター一覧の最終ページ
 	 */
-	public int getMaxPage(List<OperatorDto> list) {
+	public int getMaxPage(List<OperatorReferenceDto> list) {
 		return (int) Math.ceil((double)list.size() / PAGE_SIZE);
 	}
 
 	/**
-	 * 該当ページのオペレータ一覧を取得します。
+	 * 該当ページのオペレーター一覧を取得します。
 	 * @param list オペレーターリスト
 	 * @param pageNo 対象ページ
-	 * @return 該当ページのオペレータ一覧
+	 * @return 該当ページのオペレーター一覧
 	 */
-	public List<OperatorDto> getPageList(List<OperatorDto> list, int pageNo) {
+	public List<OperatorReferenceDto> getPageList(List<OperatorReferenceDto> list, int pageNo) {
 		int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
 		return list.stream().skip(skip).limit(10).collect(Collectors.toList());
 	}

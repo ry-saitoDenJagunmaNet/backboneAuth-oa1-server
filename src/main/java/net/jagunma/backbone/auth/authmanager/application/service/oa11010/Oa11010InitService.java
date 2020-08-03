@@ -4,7 +4,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemReferenceService;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemRoleReferenceSetvice;
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
@@ -37,9 +37,8 @@ public class Oa11010InitService {
 
 	/**
 	 * Formの初期化処理です。
-	 * @return Formの初期項目
 	 */
-	public void initForm(Oa11010InitResponse response) {
+	public void init(Oa11010InitResponse response) {
 
 		// TODO: サインインオペレーターのJA
 		response.setJaCode("006");
@@ -47,7 +46,7 @@ public class Oa11010InitService {
 		response.setJaId(6);
 
 		// 店舗コンボボックスリスト取得
-		response.setTempoList(tempoReferenceService.getComboBoxList(6));
+		response.setTempoReferenceDtoList(tempoReferenceService.getComboBoxList(6));
 		// 有効期限選択
 		response.setExpirationSelect(0);
 		// サブシステムロール初期選択
@@ -68,10 +67,10 @@ public class Oa11010InitService {
 	 */
 	private List<Oa11010SubSystemRoleVo> getSubsystemRoleList() {
 		// サブシステムロール検索
-		List<SubSystemRoleDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
+		List<SubSystemRoleReferenceDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
 		List<Oa11010SubSystemRoleVo> list = newArrayList();
-		for(SubSystemRoleDto subSystemRole : subSystemRoles) {
+		for(SubSystemRoleReferenceDto subSystemRole : subSystemRoles) {
 			Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
 			item.setSubSystemRoleSelected(0);
 			item.setSubSystemRoleId(0);

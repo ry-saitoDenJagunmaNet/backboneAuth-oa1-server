@@ -5,8 +5,8 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 
 /**
  * OA11010 View Object
@@ -34,7 +34,7 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 店舗コンボボックスリスト
 	 */
-	private List<TempoDto> tempoList;
+	private List<TempoReferenceDto> tempoReferenceDtoList;
 	/**
 	 * オペレーターコード
 	 */
@@ -100,7 +100,7 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	private List<SubSystemDto> bizTranRoleSubSystemList;
+	private List<SubSystemReferenceDto> bizTranRoleSubSystemList;
 	/**
 	 * 取引ロール一覧
 	 */
@@ -181,10 +181,10 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 最終サインオペレーションサインイン結果
 	 */
-	private Integer[] signintraceSignInResult;
+	private Short[] signintraceSignInResult;
 
 	/**
-	 * オペレータ一覧表示ページ
+	 * オペレーター一覧表示ページ
 	 */
 	private int pageNo;
 
@@ -194,8 +194,8 @@ public class Oa11010Vo implements Serializable {
 	public void setJaId(long jaId) { this.jaId = jaId; }
 	public String getTempoCode() { return tempoCode; }
 	public void setTempoCode(String tempoCode) { this.tempoCode = tempoCode; }
-	public List<TempoDto> getTempoList() { return tempoList; }
-	public void setTempoList(List<TempoDto> tempoList) { this.tempoList = tempoList; }
+	public List<TempoReferenceDto> getTempoReferenceDtoList() { return tempoReferenceDtoList; }
+	public void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList) { this.tempoReferenceDtoList = tempoReferenceDtoList; }
 	public String getOperatorCode() { return operatorCode; }
 	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
 	public String getOperatorName() { return operatorName; }
@@ -228,8 +228,8 @@ public class Oa11010Vo implements Serializable {
 	public void setBizTranRoleConditionsSelect(Integer bizTranRoleConditionsSelect) { this.bizTranRoleConditionsSelect = bizTranRoleConditionsSelect; }
 	public String getBizTranRoleSubSystemCode() { return bizTranRoleSubSystemCode; }
 	public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) { this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode; }
-	public List<SubSystemDto> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
-	public void setBizTranRoleSubSystemList(List<SubSystemDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+	public List<SubSystemReferenceDto> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
+	public void setBizTranRoleSubSystemList(List<SubSystemReferenceDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
 	public List<Oa11010BizTranRoleVo> getBizTranRoleList() { return bizTranRoleList; }
 	public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) { this.bizTranRoleList = bizTranRoleList; }
 
@@ -269,8 +269,8 @@ public class Oa11010Vo implements Serializable {
 	public void setSignintraceSignIn(Integer signintraceSignIn) { this.signintraceSignIn = signintraceSignIn; }
 	public Integer getSignintraceSignOut() { return signintraceSignOut; }
 	public void setSignintraceSignOut(Integer signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
-	public Integer[] getSignintraceSignInResult() { return signintraceSignInResult; }
-	public void setSignintraceSignInResult(Integer[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
+	public Short[] getSignintraceSignInResult() { return signintraceSignInResult; }
+	public void setSignintraceSignInResult(Short[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
 
 	public int getPageNo() { return pageNo; }
 	public void setPageNo(int pageNo) { this.pageNo = pageNo; }

@@ -2,8 +2,9 @@ package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class OperatorBizTranRoleDto {
+public class OperatorBizTranRoleReferenceDto {
 
 	/**
 	 * オペレーター_取引ロール割当ID
@@ -52,7 +53,7 @@ public class OperatorBizTranRoleDto {
 	/**
 	 * レコードバージョン
 	 */
-	private int recordVersion;
+	private Integer recordVersion;
 	/**
 	 * 取引ロールコード
 	 */
@@ -88,8 +89,8 @@ public class OperatorBizTranRoleDto {
 	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 	public String getUpdatedIpAddress() { return updatedIpAddress; }
 	public void setUpdatedIpAddress(String updatedIpAddress) { this.updatedIpAddress = updatedIpAddress; }
-	public int getRecordVersion() { return recordVersion; }
-	public void setRecordVersion(int recordVersion) { this.recordVersion = recordVersion; }
+	public Integer getRecordVersion() { return recordVersion; }
+	public void setRecordVersion(Integer recordVersion) { this.recordVersion = recordVersion; }
 	public String getBizTranRoleCode() { return bizTranRoleCode; }
 	public void setBizTranRoleCode(String bizTranRoleCode) { this.bizTranRoleCode = bizTranRoleCode; }
 	public String getBizTranRoleName() { return bizTranRoleName; }
@@ -97,7 +98,18 @@ public class OperatorBizTranRoleDto {
 	public String getSubSystemCode() { return subSystemCode; }
 	public void setSubSystemCode(String subSystemCode) { this.subSystemCode = subSystemCode; }
 
-	public OperatorBizTranRoleDto() {
+	/**
+	 * 有効期限開始日をフォーマットして取得します。
+	 * @return フォーマットした有効期限開始日
+	 */
+	public String getExpirationStartDateToStringFormat() { return formatLocalDate(expirationStartDate); }
+	/**
+	 * 有効期限終了日をフォーマットして取得します。
+	 * @return フォーマットした有効期限終了日
+	 */
+	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
+
+	public OperatorBizTranRoleReferenceDto() {
 		this.operator_BizTranRoleId = 0;
 		this.operatorId = 0;
 		this.bizTranRoleId = 0;
@@ -113,5 +125,17 @@ public class OperatorBizTranRoleDto {
 		this.bizTranRoleCode = "";
 		this.bizTranRoleName = "";
 		this.subSystemCode = "";
+	}
+
+	/**
+	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 * @param localDt フォーマット対象の日付
+	 * @return フォ－マットした日付
+	 */
+	private String formatLocalDate(LocalDate localDt) {
+		if (localDt == null) {
+			return "";
+		}
+		return localDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 	}
 }

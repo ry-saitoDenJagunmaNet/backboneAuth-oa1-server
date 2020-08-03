@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 
-public class TempoDto {
+public class TempoReferenceDto {
 	/**
 	 * 店舗コード
 	 */
@@ -18,14 +18,14 @@ public class TempoDto {
 	/**
 	 * コンストラクタ
 	 */
-	public TempoDto() {}
+	public TempoReferenceDto() {}
 
 	/**
 	 * コンストラクタ
 	 * @param tempoCode 店舗コード
 	 * @param tempoName 店舗名
 	 */
-	public TempoDto(String tempoCode, String tempoName) {
+	public TempoReferenceDto(String tempoCode, String tempoName) {
 		this.tempoCode = tempoCode;
 		this.tempoName = tempoName;
 	}
