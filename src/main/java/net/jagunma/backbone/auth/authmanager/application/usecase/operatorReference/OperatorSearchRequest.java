@@ -51,12 +51,12 @@ public interface OperatorSearchRequest {
 	 * 利用可否状態 利用可能のＧｅｔ
 	 * @return 利用可否状態 利用可能
 	 */
-	Integer getAvailableStatus0();
+	Short getAvailableStatus0();
 	/**
 	 * 利用可否状態 利用不可のＧｅｔ
 	 * @return 利用可否状態 利用不可
 	 */
-	Integer getAvailableStatus1();
+	Short getAvailableStatus1();
 	/**
 	 * 有効期限選択のＧｅｔ
 	 * @return 有効期限選択
@@ -124,12 +124,12 @@ public interface OperatorSearchRequest {
 	 * 機器認証使用のＧｅｔ
 	 * @return 機器認証使用
 	 */
-	Integer getDeviceAuthUse();
+	Short getDeviceAuthUse();
 	/**
 	 * 機器認証未使用のＧｅｔ
 	 * @return 機器認証未使用
 	 */
-	Integer getDeviceAuthUnuse();
+	Short getDeviceAuthUnuse();
 	/**
 	 * 最終ロック・アンロック発生日（開始日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（開始日）
@@ -144,17 +144,17 @@ public interface OperatorSearchRequest {
 	 * 現在ロック状態ロックのＧｅｔ
 	 * @return 現在ロック状態ロック
 	 */
-	Integer getAccountLockStatusLock();
+	Short getAccountLockStatusLock();
 	/**
 	 * 現在ロック状態アンロックのＧｅｔ
 	 * @return 現在ロック状態アンロック
 	 */
-	Integer getAccountLockStatusUnlock();
+	Short getAccountLockStatusUnlock();
 	/**
 	 * 最終パスワード変更日チェックのＧｅｔ
 	 * @return 最終パスワード変更日チェック
 	 */
-	Integer getPasswordHistoryCheck();
+	Short getPasswordHistoryCheck();
 	/**
 	 * 最終パスワード変更日数のＧｅｔ
 	 * @return 最終パスワード変更日数
@@ -169,22 +169,22 @@ public interface OperatorSearchRequest {
 	 * 最終パスワード変更種別初期のＧｅｔ
 	 * @return 最終パスワード変更種別初期
 	 */
-	Integer getPasswordHistoryChangeType0();
+	Short getPasswordHistoryChangeType0();
 	/**
 	 * 最終パスワード変更種別ユーザによる変更のＧｅｔ
 	 * @return 最終パスワード変更種別ユーザによる変更
 	 */
-	Integer getPasswordHistoryChangeType1();
+	Short getPasswordHistoryChangeType1();
 	/**
 	 * 最終パスワード変更種別管理者によるリセットのＧｅｔ
 	 * @return 最終パスワード変更種別管理者によるリセット
 	 */
-	Integer getPasswordHistoryChangeType2();
+	Short getPasswordHistoryChangeType2();
 	/**
 	 * 最終パスワード変更種別機器認証パスワードのＧｅｔ
 	 * @return 最終パスワード変更種別機器認証パスワード
 	 */
-	Integer getPasswordHistoryChangeType3();
+	Short getPasswordHistoryChangeType3();
 	/**
 	 * 最終サインオペレーション試行日（開始日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（開始日）
@@ -204,12 +204,12 @@ public interface OperatorSearchRequest {
 	 * 最終サインオペレーションサインインのＧｅｔ
 	 * @return 最終サインオペレーションサインイン
 	 */
-	Integer getSignintraceSignIn();
+	Short getSignintraceSignIn();
 	/**
 	 * 最最終サインオペレーションサインアウトのＧｅｔ
 	 * @return 最終サインオペレーションサインアウト
 	 */
-	Integer getSignintraceSignOut();
+	Short getSignintraceSignOut();
 	/**
 	 * 最終サインオペレーションサインイン結果のＧｅｔ
 	 * @return 最終サインオペレーションサインイン結果

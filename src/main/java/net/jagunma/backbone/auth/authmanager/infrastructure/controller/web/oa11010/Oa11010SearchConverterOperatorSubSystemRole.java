@@ -6,7 +6,7 @@ public class Oa11010SearchConverterOperatorSubSystemRole {
 	/**
 	 * サブシステムロール選択
 	 */
-	private Integer subSystemRoleSelected;
+	private Short subSystemRoleSelected;
 	/**
 	 * サブシステムロールID
 	 */
@@ -44,8 +44,8 @@ public class Oa11010SearchConverterOperatorSubSystemRole {
 	 */
 	private LocalDate expirationEndDateTo;
 
-	public Integer getSubSystemRoleSelected() { return subSystemRoleSelected; }
-	public void setSubSystemRoleSelected(Integer subSystemRoleSelected) { this.subSystemRoleSelected = subSystemRoleSelected; }
+	public Short getSubSystemRoleSelected() { return subSystemRoleSelected; }
+	public void setSubSystemRoleSelected(Short subSystemRoleSelected) { this.subSystemRoleSelected = subSystemRoleSelected; }
 	public long getSubSystemRoleId() { return subSystemRoleId; }
 	public void setSubSystemRoleId(long subSystemRoleId) { this.subSystemRoleId = subSystemRoleId; }
 	public String getSubSystemRoleCode() { return subSystemRoleCode; }

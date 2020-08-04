@@ -6,8 +6,10 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import net.jagunma.backbone.auth.authmanager.application.model.types.AccountLockLockStatus;
 import net.jagunma.backbone.auth.authmanager.application.model.types.ConditionsSelect;
-import net.jagunma.backbone.auth.authmanager.application.model.types.ExpirationSelect;
+import net.jagunma.backbone.auth.authmanager.application.model.types.ConditionsExpirationSelect;
+import net.jagunma.backbone.auth.authmanager.application.model.types.PasswordHistoryChangeType;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorSubSystemRoleReferenceDto;
@@ -255,19 +257,19 @@ public class OperatorReferenceService {
 		Oa11010SearchConverterOperatorSubSystemRole requestOperatorSubSystemRole) {
 
 		List<OperatorSubSystemRoleReferenceDto> filters = newArrayList();
-		if (ExpirationSelect.指定なし.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
+		if (ConditionsExpirationSelect.指定なし.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
 			// 指定無し
 			filters = operatorSubSystemRoleReferenceDto.stream().filter(ossrd->
 				ossrd.getSubSystemRoleCode().equals(requestOperatorSubSystemRole.getSubSystemRoleCode()))
 				.collect(Collectors.toList());
-		} else if (ExpirationSelect.状態指定日.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
+		} else if (ConditionsExpirationSelect.状態指定日.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
 			// 状態指定日
 			filters = operatorSubSystemRoleReferenceDto.stream().filter(ossrd->
 				ossrd.getSubSystemRoleCode().equals(requestOperatorSubSystemRole.getSubSystemRoleCode()) &&
 				ossrd.getExpirationStartDate().compareTo(requestOperatorSubSystemRole.getExpirationStatusDate()) <= 0 &&
 				ossrd.getExpirationEndDate().compareTo(requestOperatorSubSystemRole.getExpirationStatusDate()) >= 0)
 				.collect(Collectors.toList());
-		} else if (ExpirationSelect.条件指定.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
+		} else if (ConditionsExpirationSelect.条件指定.getCode().equals(requestOperatorSubSystemRole.getExpirationSelect())) {
 			// 条件指定
 //			System.out.println("### StartDateFrom="+requestOperatorSubSystemRole.getExpirationStartDateFrom()+
 //				",StartDateTo="+requestOperatorSubSystemRole.getExpirationStartDateTo()+
@@ -352,12 +354,12 @@ public class OperatorReferenceService {
 		Oa11010SearchConverterOperatorBizTranRole requestOperatorBizTranRole) {
 
 		List<OperatorBizTranRoleReferenceDto> filters = newArrayList();
-		if (ExpirationSelect.指定なし.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
+		if (ConditionsExpirationSelect.指定なし.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
 			// 指定無し
 			filters = operatorBizTranRoleReferenceDto.stream().filter(obtrd->
 				obtrd.getBizTranRoleCode().equals(requestOperatorBizTranRole.getBizTranRoleCode()))
 				.collect(Collectors.toList());
-		} else if (ExpirationSelect.状態指定日.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
+		} else if (ConditionsExpirationSelect.状態指定日.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
 			// 状態指定日
 			System.out.println("### StatusDate="+requestOperatorBizTranRole.getExpirationStatusDate()+
 				",BizTranRoleCode="+requestOperatorBizTranRole.getBizTranRoleCode());
@@ -366,7 +368,7 @@ public class OperatorReferenceService {
 					obtrd.getExpirationStartDate().compareTo(requestOperatorBizTranRole.getExpirationStatusDate()) <= 0 &&
 					obtrd.getExpirationEndDate().compareTo(requestOperatorBizTranRole.getExpirationStatusDate()) >= 0)
 				.collect(Collectors.toList());
-		} else if (ExpirationSelect.条件指定.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
+		} else if (ConditionsExpirationSelect.条件指定.getCode().equals(requestOperatorBizTranRole.getExpirationSelect())) {
 			// 条件指定
 			System.out.println("### StartDateFrom="+requestOperatorBizTranRole.getExpirationStartDateFrom()+
 				",StartDateTo="+requestOperatorBizTranRole.getExpirationStartDateTo()+
@@ -426,20 +428,20 @@ public class OperatorReferenceService {
 			}
 		}
 		// アカウントロック ロック状態による抽出
-		int accountLockStatusLock = 0;
-		int accountLockStatusUnlock = 0;
+		Short accountLockStatusLock = 0;
+		Short accountLockStatusUnlock = 0;
 		if (request.getAccountLockStatusLock() != null) {accountLockStatusLock = request.getAccountLockStatusLock();}
 		if (request.getAccountLockStatusUnlock() != null) {accountLockStatusUnlock = request.getAccountLockStatusUnlock();}
-		if (dto.getLockStatus() == 0) {
+		if (AccountLockLockStatus.UnLock.getCode().equals(dto.getLockStatus())) {
 			//アンロック
-			if (accountLockStatusLock != accountLockStatusUnlock
-				&& accountLockStatusUnlock != 1) {
+			if (!accountLockStatusLock.equals(accountLockStatusUnlock)
+				&& !Oa11010Vo.CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {
 				return false;
 			}
-		} else if (dto.getLockStatus() == 1) {
+		} else if (AccountLockLockStatus.Lock.getCode().equals(dto.getLockStatus())) {
 			//ロック
-			if (accountLockStatusLock != accountLockStatusUnlock
-				&& accountLockStatusLock != 1) {
+			if (!accountLockStatusLock.equals(accountLockStatusUnlock)
+				&& !Oa11010Vo.CHECKBOX_TRUE.equals(accountLockStatusLock)) {
 				return false;
 			}
 		}
@@ -469,12 +471,11 @@ public class OperatorReferenceService {
 
 		// パスワード履歴検索の検索条件で抽出
 		// パスワード履歴　最終パスワード変更日による抽出
-		if (request.getPasswordHistoryCheck() != null &&
-			request.getPasswordHistoryCheck().equals(1) &&
+		if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getPasswordHistoryCheck()) &&
 			request.getPasswordHistoryLastChangeDate() != null) {
 
 			LocalDate passwodrChanheDate = LocalDate.now().minusDays(request.getPasswordHistoryLastChangeDate());
-			if (request.getPasswordHistoryLastChangeDateStatus().equals("1")) {
+			if ("1".equals(request.getPasswordHistoryLastChangeDateStatus())) {
 				// 変更した
 				if (dto.getPasswordHistoryId() == null) {
 					return false;
@@ -483,7 +484,7 @@ public class OperatorReferenceService {
 						return false;
 					}
 				}
-			} else if (request.getPasswordHistoryLastChangeDateStatus().equals("2")) {
+			} else if ("2".equals(request.getPasswordHistoryLastChangeDateStatus())) {
 				// 変更していない
 				if (dto.getPasswordHistoryId() != null) {
 					if (dto.getChangeDateTime().toLocalDate().compareTo(passwodrChanheDate) >= 0) {
@@ -493,32 +494,32 @@ public class OperatorReferenceService {
 			}
 		}
 		// パスワード履歴　最終パスワード変更種別による抽出
-		int passwordHistoryChangeType0 = 0;
-		int passwordHistoryChangeType1 = 0;
-		int passwordHistoryChangeType2 = 0;
-		int passwordHistoryChangeType3 = 0;
+		Short passwordHistoryChangeType0 = 0;
+		Short passwordHistoryChangeType1 = 0;
+		Short passwordHistoryChangeType2 = 0;
+		Short passwordHistoryChangeType3 = 0;
 		if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0();}
 		if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1();}
 		if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2();}
 		if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType2();}
-		if (passwordHistoryChangeType0 != passwordHistoryChangeType1 ||
-			passwordHistoryChangeType0 != passwordHistoryChangeType2 ||
-			passwordHistoryChangeType0 != passwordHistoryChangeType3) {
+		if (!passwordHistoryChangeType0.equals(passwordHistoryChangeType1) ||
+			!passwordHistoryChangeType0.equals(passwordHistoryChangeType2) ||
+			!passwordHistoryChangeType0.equals(passwordHistoryChangeType3)) {
 
 			if (dto.getChangeType() == null) {
 				return false;
 			}
 			// 最終パスワード変更種別が全て同じでない
-			if (dto.getChangeType() == 0 && passwordHistoryChangeType0 != 1) {
+			if (PasswordHistoryChangeType.初期.getCode().equals(dto.getChangeType()) && !Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType0)) {
 				// 初期
 				return false;
-			} else if (dto.getChangeType() == 1 && passwordHistoryChangeType1 != 1) {
+			} else if (PasswordHistoryChangeType.ユーザーによる変更.getCode().equals(dto.getChangeType()) && !Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType1)) {
 				// ユーザーによる変更
 				return false;
-			} else if (dto.getChangeType() == 2 && passwordHistoryChangeType2 != 1) {
+			} else if (PasswordHistoryChangeType.管理者によるリセット.getCode().equals(dto.getChangeType()) && !Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType2)) {
 				// 管理者によるリセット
 				return false;
-			} else if (dto.getChangeType() == 3 && passwordHistoryChangeType3 != 1) {
+			} else if (PasswordHistoryChangeType.機器認証パスワード.getCode().equals(dto.getChangeType()) && !Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType3)) {
 				// 機器認証パスワード
 				return false;
 			}
@@ -577,7 +578,7 @@ public class OperatorReferenceService {
 			}
 		}
 		// サインイン証跡　最終サインオペレーションによる抽出
-		if (request.getSignintraceSignIn() != null && request.getSignintraceSignIn().equals(1)) {
+		if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getSignintraceSignIn())) {
 			if (signInTraces.size() == 0) {
 				return false;
 			}
@@ -619,7 +620,7 @@ public class OperatorReferenceService {
 
 		// サインアウト証跡検索の検索条件で抽出
 		// サインアウト証跡　最終サインオペレーションによる抽出
-		if (request.getSignintraceSignOut() != null && request.getSignintraceSignOut().equals(1)) {
+		if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getSignintraceSignOut())) {
 			if (signOutTraces.size() == 0) {
 				return false;
 			}

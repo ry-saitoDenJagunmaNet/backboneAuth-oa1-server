@@ -72,7 +72,7 @@ public class Oa11010InitService {
 		List<Oa11010SubSystemRoleVo> list = newArrayList();
 		for(SubSystemRoleReferenceDto subSystemRole : subSystemRoles) {
 			Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
-			item.setSubSystemRoleSelected(0);
+			item.setSubSystemRoleSelected((short) 0);
 			item.setSubSystemRoleId(0);
 			item.setSubSystemRoleCode(subSystemRole.getSubSystemRoleCode());
 			item.setSubSystemRoleName(subSystemRole.getSubSystemRoleName());
@@ -102,7 +102,7 @@ public class Oa11010InitService {
 		List<Oa11010BizTranRoleVo> list = newArrayList();
 		for (BizTranRoleEntity bizTranRole :  bizTranRoles) {
 			Oa11010BizTranRoleVo item = new Oa11010BizTranRoleVo();
-			item.setBizTranRoleSelected(0);
+			item.setBizTranRoleSelected((short) 0);
 			item.setBizTranRoleId(0);
 			item.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
 			item.setBizTranRoleName(bizTranRole.getBizTranRoleName());

@@ -7,7 +7,7 @@ public class Oa11010SearchConverterOperatorBizTranRole {
 	/**
 	 * 取引ロール選択
 	 */
-	private Integer bizTranRoleSelected;
+	private Short bizTranRoleSelected;
 	/**
 	 * 取引ロールID
 	 */
@@ -49,8 +49,8 @@ public class Oa11010SearchConverterOperatorBizTranRole {
 	 */
 	private LocalDate expirationEndDateTo;
 
-	public Integer getBizTranRoleSelected() { return bizTranRoleSelected; }
-	public void setBizTranRoleSelected(Integer bizTranRoleSelected) { this.bizTranRoleSelected = bizTranRoleSelected; }
+	public Short getBizTranRoleSelected() { return bizTranRoleSelected; }
+	public void setBizTranRoleSelected(Short bizTranRoleSelected) { this.bizTranRoleSelected = bizTranRoleSelected; }
 	public long getBizTranRoleId() { return bizTranRoleId; }
 	public void setBizTranRoleId(long bizTranRoleId) { this.bizTranRoleId = bizTranRoleId; }
 	public String getBizTranRoleCode() { return bizTranRoleCode; }

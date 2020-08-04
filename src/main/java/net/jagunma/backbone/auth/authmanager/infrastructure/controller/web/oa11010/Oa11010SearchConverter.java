@@ -4,6 +4,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.types.ConditionsExpirationSelect;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
@@ -76,12 +77,12 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 利用可否状態 利用可能のＧｅｔ
 	 * @return 利用可否状態 利用可能
 	 */
-	public Integer getAvailableStatus0() { return arg.getAvailableStatus0(); }
+	public Short getAvailableStatus0() { return arg.getAvailableStatus0(); }
 	/**
 	 * 利用可否状態 利用不可のＧｅｔ
 	 * @return 利用可否状態 利用不可
 	 */
-	public Integer getAvailableStatus1() { return arg.getAvailableStatus1(); }
+	public Short getAvailableStatus1() { return arg.getAvailableStatus1(); }
 	/**
 	 * 有効期限選択のＧｅｔ
 	 * @return 有効期限選択
@@ -220,12 +221,12 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 機器認証使用のＧｅｔ
 	 * @return 機器認証使用
 	 */
-	public Integer getDeviceAuthUse() { return arg.getDeviceAuthUse(); }
+	public Short getDeviceAuthUse() { return arg.getDeviceAuthUse(); }
 	/**
 	 * 機器認証未使用のＧｅｔ
 	 * @return 機器認証未使用
 	 */
-	public Integer getDeviceAuthUnuse() { return arg.getDeviceAuthUnuse(); }
+	public Short getDeviceAuthUnuse() { return arg.getDeviceAuthUnuse(); }
 	/**
 	 * 最終ロック・アンロック発生日（開始日）のＧｅｔ
 	 * @return 最終ロック・アンロック発生日（開始日）
@@ -240,17 +241,17 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 現在ロック状態ロックのＧｅｔ
 	 * @return 現在ロック状態ロック
 	 */
-	public Integer getAccountLockStatusLock() { return arg.getAccountLockStatusLock(); }
+	public Short getAccountLockStatusLock() { return arg.getAccountLockStatusLock(); }
 	/**
 	 * 現在ロック状態アンロックのＧｅｔ
 	 * @return 現在ロック状態アンロック
 	 */
-	public Integer getAccountLockStatusUnlock() { return arg.getAccountLockStatusUnlock(); }
+	public Short getAccountLockStatusUnlock() { return arg.getAccountLockStatusUnlock(); }
 	/**
 	 * 最終パスワード変更日チェックのＧｅｔ
 	 * @return 最終パスワード変更日チェック
 	 */
-	public Integer getPasswordHistoryCheck() { return arg.getPasswordHistoryCheck(); }
+	public Short getPasswordHistoryCheck() { return arg.getPasswordHistoryCheck(); }
 	/**
 	 * 最終パスワード変更日数のＧｅｔ
 	 * @return 最終パスワード変更日数
@@ -265,22 +266,22 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 最終パスワード変更種別初期のＧｅｔ
 	 * @return 最終パスワード変更種別初期
 	 */
-	public Integer getPasswordHistoryChangeType0() { return arg.getPasswordHistoryChangeType0(); }
+	public Short getPasswordHistoryChangeType0() { return arg.getPasswordHistoryChangeType0(); }
 	/**
 	 * 最終パスワード変更種別ユーザによる変更のＧｅｔ
 	 * @return 最終パスワード変更種別ユーザによる変更
 	 */
-	public Integer getPasswordHistoryChangeType1() { return arg.getPasswordHistoryChangeType1(); }
+	public Short getPasswordHistoryChangeType1() { return arg.getPasswordHistoryChangeType1(); }
 	/**
 	 * 最終パスワード変更種別管理者によるリセットのＧｅｔ
 	 * @return 最終パスワード変更種別管理者によるリセット
 	 */
-	public Integer getPasswordHistoryChangeType2() { return arg.getPasswordHistoryChangeType2(); }
+	public Short getPasswordHistoryChangeType2() { return arg.getPasswordHistoryChangeType2(); }
 	/**
 	 * 最終パスワード変更種別機器認証パスワードのＧｅｔ
 	 * @return 最終パスワード変更種別機器認証パスワード
 	 */
-	public Integer getPasswordHistoryChangeType3() { return arg.getPasswordHistoryChangeType3(); }
+	public Short getPasswordHistoryChangeType3() { return arg.getPasswordHistoryChangeType3(); }
 	/**
 	 * 最終サインオペレーション試行日（開始日）のＧｅｔ
 	 * @return 最終サインオペレーション試行日（開始日）
@@ -300,12 +301,12 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 最終サインオペレーションサインインのＧｅｔ
 	 * @return 最終サインオペレーションサインイン
 	 */
-	public Integer getSignintraceSignIn() { return arg.getSignintraceSignIn(); }
+	public Short getSignintraceSignIn() { return arg.getSignintraceSignIn(); }
 	/**
 	 * 最最終サインオペレーションサインアウトのＧｅｔ
 	 * @return 最終サインオペレーションサインアウト
 	 */
-	public Integer getSignintraceSignOut() { return arg.getSignintraceSignOut(); }
+	public Short getSignintraceSignOut() { return arg.getSignintraceSignOut(); }
 	/**
 	 * 最終サインオペレーションサインイン結果のＧｅｔ
 	 * @return 最終サインオペレーションサインイン結果
@@ -346,10 +347,10 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 		criteria.getAvailableStatusCriteria().getIncludes().addAll(arg.getAvailableStatusIncludesList());
 
 		// OPTION検索条件 有効期限
-		if (arg.getExpirationSelect() == 1) {
+		if (ConditionsExpirationSelect.状態指定日.equals(arg.getExpirationSelect())) {
 			criteria.getExpirationStartDateCriteria().setLessOrEqual(arg.getExpirationStatusDate());
 			criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationStatusDate());
-		} else if (arg.getExpirationSelect() == 2) {
+		} else if (ConditionsExpirationSelect.条件指定.equals(arg.getExpirationSelect())) {
 			criteria.getExpirationStartDateCriteria().setMoreOrEqual(arg.getExpirationStartDateFrom());
 			criteria.getExpirationStartDateCriteria().setLessOrEqual(arg.getExpirationStartDateTo());
 			criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationEndDateFrom());
@@ -357,7 +358,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 		}
 
 		// OPTION検索条件 その他　機器認証
-		if (!nvl(arg.getDeviceAuthUse(), 0).equals(nvl(arg.getDeviceAuthUnuse(), 0))) {
+		if (!nvl(arg.getDeviceAuthUse(), (short) 0).equals(nvl(arg.getDeviceAuthUnuse(), (short) 0))) {
 			if (Oa11010Vo.CHECKBOX_TRUE.equals(arg.getDeviceAuthUse())) {
 				criteria.getIsDeviceAuthCriteria().setEqualTo(true);
 			} else if (Oa11010Vo.CHECKBOX_TRUE.equals(arg.getDeviceAuthUnuse())) {
@@ -372,8 +373,8 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 		// strがnullもしくは空文字であればtrueを返す
 		return (str == null || str.length() == 0);
 	}
-	private Integer nvl(Integer val, Integer changeVal) {
-		if (val == null) {return changeVal;}
+	private Short nvl(Short val, Short changeVal) {
+		if (val == null) {return  changeVal;}
 		return val;
 	}
 }

@@ -17,7 +17,7 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * チェックボックスのチェックtrue状態値
 	 */
-	public static final Integer CHECKBOX_TRUE  = 1;
+	public static final Short CHECKBOX_TRUE  = 1;
 
 	/**
 	 * ＪＡ
@@ -50,11 +50,11 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 利用可否状態 利用可能
 	 */
-	private Integer availableStatus0;
+	private Short availableStatus0;
 	/**
 	 * 利用可否状態 利用不可
 	 */
-	private Integer availableStatus1;
+	private Short availableStatus1;
 	/**
 	 * 有効期限選択
 	 * */
@@ -109,11 +109,11 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 機器認証使用
 	 */
-	private Integer deviceAuthUse;
+	private Short deviceAuthUse;
 	/**
 	 * 機器認証未使用
 	 */
-	private Integer deviceAuthUnuse;
+	private Short deviceAuthUnuse;
 	/**
 	 * 最終ロック・アンロック発生日（開始日）
 	 */
@@ -125,15 +125,15 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 現在ロック状態ロック
 	 */
-	private Integer accountLockStatusLock;
+	private Short accountLockStatusLock;
 	/**
 	 * 現在ロック状態アンロック
 	 */
-	private Integer accountLockStatusUnlock;
+	private Short accountLockStatusUnlock;
 	/**
 	 * 最終パスワード変更日チェック
 	 */
-	private Integer passwordHistoryCheck;
+	private Short passwordHistoryCheck;
 	/**
 	 * 最終パスワード変更日数
 	 */
@@ -145,19 +145,19 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 最終パスワード変更種別初期
 	 */
-	private Integer passwordHistoryChangeType0;
+	private Short passwordHistoryChangeType0;
 	/**
 	 * 最終パスワード変更種別ユーザによる変更
 	 */
-	private Integer passwordHistoryChangeType1;
+	private Short passwordHistoryChangeType1;
 	/**
 	 * 最終パスワード変更種別管理者によるリセット
 	 */
-	private Integer passwordHistoryChangeType2;
+	private Short passwordHistoryChangeType2;
 	/**
 	 * 最終パスワード変更種別機器認証パスワード
 	 */
-	private Integer passwordHistoryChangeType3;
+	private Short passwordHistoryChangeType3;
 	/**
 	 * 最終サインオペレーション試行日（開始日）
 	 */
@@ -173,11 +173,11 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 最終サインオペレーションサインイン
 	 */
-	private Integer signintraceSignIn;
+	private Short signintraceSignIn;
 	/**
 	 * 最終サインオペレーションサインアウト
 	 */
-	private Integer signintraceSignOut;
+	private Short signintraceSignOut;
 	/**
 	 * 最終サインオペレーションサインイン結果
 	 */
@@ -202,10 +202,10 @@ public class Oa11010Vo implements Serializable {
 	public void setOperatorName(String operatorName) { this.operatorName = operatorName; }
 	public String getMailAddress() { return mailAddress; }
 	public void setMailAddress(String mailAddress) { this.mailAddress = mailAddress; }
-	public Integer getAvailableStatus0() { return availableStatus0; }
-	public void setAvailableStatus0(Integer availableStatus0) { this.availableStatus0 = availableStatus0; }
-	public Integer getAvailableStatus1() { return availableStatus1; }
-	public void setAvailableStatus1(Integer availableStatus1) { this.availableStatus1 = availableStatus1; }
+	public Short getAvailableStatus0() { return availableStatus0; }
+	public void setAvailableStatus0(Short availableStatus0) { this.availableStatus0 = availableStatus0; }
+	public Short getAvailableStatus1() { return availableStatus1; }
+	public void setAvailableStatus1(Short availableStatus1) { this.availableStatus1 = availableStatus1; }
 	public Integer getExpirationSelect() { return expirationSelect; }
 	public void setExpirationSelect(Integer expirationSelect) { this.expirationSelect = expirationSelect; }
 	public LocalDate getExpirationStatusDate() { return expirationStatusDate; }
@@ -233,42 +233,42 @@ public class Oa11010Vo implements Serializable {
 	public List<Oa11010BizTranRoleVo> getBizTranRoleList() { return bizTranRoleList; }
 	public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) { this.bizTranRoleList = bizTranRoleList; }
 
-	public Integer getDeviceAuthUse() { return deviceAuthUse; }
-	public void setDeviceAuthUse(Integer deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
-	public Integer getDeviceAuthUnuse() { return deviceAuthUnuse; }
-	public void setDeviceAuthUnuse(Integer deviceAuthUnuse) { this.deviceAuthUnuse = deviceAuthUnuse; }
+	public Short getDeviceAuthUse() { return deviceAuthUse; }
+	public void setDeviceAuthUse(Short deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
+	public Short getDeviceAuthUnuse() { return deviceAuthUnuse; }
+	public void setDeviceAuthUnuse(Short deviceAuthUnuse) { this.deviceAuthUnuse = deviceAuthUnuse; }
 	public LocalDate getAccountLockOccurredDateFrom() { return accountLockOccurredDateFrom; }
 	public void setAccountLockOccurredDateFrom(LocalDate accountLockOccurredDateFrom) { this.accountLockOccurredDateFrom = accountLockOccurredDateFrom; }
 	public LocalDate getAccountLockOccurredDateTo() { return accountLockOccurredDateTo; }
 	public void setAccountLockOccurredDateTo(LocalDate accountLockOccurredDateTo) { this.accountLockOccurredDateTo = accountLockOccurredDateTo; }
-	public Integer getAccountLockStatusLock() { return accountLockStatusLock; }
-	public void setAccountLockStatusLock(Integer accountLockStatusLock) { this.accountLockStatusLock = accountLockStatusLock; }
-	public Integer getAccountLockStatusUnlock() { return accountLockStatusUnlock; }
-	public void setAccountLockStatusUnlock(Integer accountLockStatusUnlock) { this.accountLockStatusUnlock = accountLockStatusUnlock; }
-	public Integer getPasswordHistoryCheck() { return passwordHistoryCheck; }
-	public void setPasswordHistoryCheck(Integer passwordHistoryCheck) { this.passwordHistoryCheck = passwordHistoryCheck; }
+	public Short getAccountLockStatusLock() { return accountLockStatusLock; }
+	public void setAccountLockStatusLock(Short accountLockStatusLock) { this.accountLockStatusLock = accountLockStatusLock; }
+	public Short getAccountLockStatusUnlock() { return accountLockStatusUnlock; }
+	public void setAccountLockStatusUnlock(Short accountLockStatusUnlock) { this.accountLockStatusUnlock = accountLockStatusUnlock; }
+	public Short getPasswordHistoryCheck() { return passwordHistoryCheck; }
+	public void setPasswordHistoryCheck(Short passwordHistoryCheck) { this.passwordHistoryCheck = passwordHistoryCheck; }
 	public Integer getPasswordHistoryLastChangeDate() { return passwordHistoryLastChangeDate; }
 	public void setPasswordHistoryLastChangeDate(Integer passwordHistoryLastChangeDate) { this.passwordHistoryLastChangeDate = passwordHistoryLastChangeDate; }
 	public String getPasswordHistoryLastChangeDateStatus() { return passwordHistoryLastChangeDateStatus; }
 	public void setPasswordHistoryLastChangeDateStatus(String passwordHistoryLastChangeDateStatus) { this.passwordHistoryLastChangeDateStatus = passwordHistoryLastChangeDateStatus; }
-	public Integer getPasswordHistoryChangeType0() { return passwordHistoryChangeType0; }
-	public void setPasswordHistoryChangeType0(Integer passwordHistoryChangeType0) { this.passwordHistoryChangeType0 = passwordHistoryChangeType0; }
-	public Integer getPasswordHistoryChangeType1() { return passwordHistoryChangeType1; }
-	public void setPasswordHistoryChangeType1(Integer passwordHistoryChangeType1) { this.passwordHistoryChangeType1 = passwordHistoryChangeType1; }
-	public Integer getPasswordHistoryChangeType2() { return passwordHistoryChangeType2; }
-	public void setPasswordHistoryChangeType2(Integer passwordHistoryChangeType2) { this.passwordHistoryChangeType2 = passwordHistoryChangeType2; }
-	public Integer getPasswordHistoryChangeType3() { return passwordHistoryChangeType3; }
-	public void setPasswordHistoryChangeType3(Integer passwordHistoryChangeType3) { this.passwordHistoryChangeType3 = passwordHistoryChangeType3; }
+	public Short getPasswordHistoryChangeType0() { return passwordHistoryChangeType0; }
+	public void setPasswordHistoryChangeType0(Short passwordHistoryChangeType0) { this.passwordHistoryChangeType0 = passwordHistoryChangeType0; }
+	public Short getPasswordHistoryChangeType1() { return passwordHistoryChangeType1; }
+	public void setPasswordHistoryChangeType1(Short passwordHistoryChangeType1) { this.passwordHistoryChangeType1 = passwordHistoryChangeType1; }
+	public Short getPasswordHistoryChangeType2() { return passwordHistoryChangeType2; }
+	public void setPasswordHistoryChangeType2(Short passwordHistoryChangeType2) { this.passwordHistoryChangeType2 = passwordHistoryChangeType2; }
+	public Short getPasswordHistoryChangeType3() { return passwordHistoryChangeType3; }
+	public void setPasswordHistoryChangeType3(Short passwordHistoryChangeType3) { this.passwordHistoryChangeType3 = passwordHistoryChangeType3; }
 	public LocalDate getSignintraceTrydateFrom() { return signintraceTrydateFrom; }
 	public void setSignintraceTrydateFrom(LocalDate signintraceTrydateFrom) { this.signintraceTrydateFrom = signintraceTrydateFrom; }
 	public LocalDate getSignintraceTrydateTo() { return signintraceTrydateTo; }
 	public void setSignintraceTrydateTo(LocalDate signintraceTrydateTo) { this.signintraceTrydateTo = signintraceTrydateTo; }
 	public String getSignintraceTryIpAddress() { return signintraceTryIpAddress; }
 	public void setSignintraceTryIpAddress(String signintraceTryIpAddress) { this.signintraceTryIpAddress = signintraceTryIpAddress; }
-	public Integer getSignintraceSignIn() { return signintraceSignIn; }
-	public void setSignintraceSignIn(Integer signintraceSignIn) { this.signintraceSignIn = signintraceSignIn; }
-	public Integer getSignintraceSignOut() { return signintraceSignOut; }
-	public void setSignintraceSignOut(Integer signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
+	public Short getSignintraceSignIn() { return signintraceSignIn; }
+	public void setSignintraceSignIn(Short signintraceSignIn) { this.signintraceSignIn = signintraceSignIn; }
+	public Short getSignintraceSignOut() { return signintraceSignOut; }
+	public void setSignintraceSignOut(Short signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
 	public Short[] getSignintraceSignInResult() { return signintraceSignInResult; }
 	public void setSignintraceSignInResult(Short[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
 

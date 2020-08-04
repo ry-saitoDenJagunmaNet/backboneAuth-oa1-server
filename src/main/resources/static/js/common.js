@@ -17,7 +17,7 @@ function oa_th_sendFormData(url, formObj) {
 	} else {
 		// 異常
 		//alert(xhr.responseText);
-		oa_showAlert(xhr.responseText)
+		oa_showAlert(xhr.responseText);
 		return null;
 	}
 }
