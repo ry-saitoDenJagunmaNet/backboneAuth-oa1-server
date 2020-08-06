@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorBizTranRole;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorBizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
 /**

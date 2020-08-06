@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010;
+package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 

@@ -1,7 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010InitService;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchService;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
@@ -11,8 +9,6 @@ import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
-import net.jagunma.common.server.aop.AuditInfoHolder;
-import net.jagunma.common.server.exception.WarningException;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,14 +71,11 @@ public class Oa11010Controller {
 		//AuditInfoHolder
 
 		try {
-			Oa11010Vo response = new Oa11010Vo();
+			Oa11010Vo vo = new Oa11010Vo();
 
-			Oa11010InitPresenter presenter = new Oa11010InitPresenter();
-			oa11010InitService.init(presenter);
+			oa11010InitService.init(vo);
 
-			presenter.bindTo(response);
-
-			model.addAttribute("form", response);
+			model.addAttribute("form", vo);
 			return "oa11010";
 
 		} catch (GunmaRuntimeException gre) {
@@ -103,25 +96,32 @@ public class Oa11010Controller {
 	/**
 	 * オペレーター検索処理を行います。
 	 *
-	 * @param oa11010Vo 検索条件（form json）
+	 * @param vo 検索条件（form json）
 	 * @return オペレーター検索結果
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo oa11010Vo) {
+	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo vo) {
 
 		try {
-			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-			Oa11010SearchValidator.with(oa11010Vo).validate();
-			Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
-			Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+//			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+//			Oa11010SearchValidator.with(oa11010Vo).validate();
+//			Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
+//			Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+//
+//			//オぺレーター検索してオぺレーターテーブルHtmlを作成
+//			oa11010SearchService.search(converter, presenter);
+//
+//			presenter.bindTo(response);
+//
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+
+			Oa11010SearchResponseVo responseVo = new Oa11010SearchResponseVo();
 
 			//オぺレーター検索してオぺレーターテーブルHtmlを作成
-			oa11010SearchService.search(converter, presenter);
+			oa11010SearchService.search(vo, responseVo);
 
-			presenter.bindTo(response);
-
-			return new ResponseEntity<>(response, HttpStatus.OK);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
 
 		} catch (GunmaRuntimeException gre) {
 			// 業務例外が発生した場合
