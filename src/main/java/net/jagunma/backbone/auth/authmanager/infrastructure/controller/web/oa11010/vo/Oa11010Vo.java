@@ -7,11 +7,12 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
 
 /**
  * OA11010 View Object
  */
-public class Oa11010Vo implements Serializable {
+public class Oa11010Vo extends BaseOfResponseVo {
 	private static final long serialVersionUID = 1L;
 
 	/**

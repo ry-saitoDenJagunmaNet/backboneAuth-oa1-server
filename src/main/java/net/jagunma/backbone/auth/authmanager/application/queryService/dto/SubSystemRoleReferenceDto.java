@@ -2,6 +2,9 @@ package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 
 import java.util.List;
 
+/**
+ * サブシステムロール割当参照Ｄｔｏ
+ */
 public class SubSystemRoleReferenceDto {
 	/**
 	 * サブシステムロールコード

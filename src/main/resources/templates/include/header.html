@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>header</title>
+</head>
+<body>
+
+<div class="card-panel oa_header" th:fragment="header">
+	<img class="responsive-img" th:src="@{/img/}+${id}+@{.png}" th:alt="${title}"/>
+	<span th:text="${title}">${title}</span>
+</div>
+
+</body>
+</html>

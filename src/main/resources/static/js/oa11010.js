@@ -28,7 +28,8 @@ function oaex_th_onload() {
 		oaex_biztran_role_expiration_sel_onChange(i);
 	}
 
-	oaex_searchBtn_onClick();
+	// オペレーター一覧領域を表示
+	oaex_viewOperatorTable();
 }
 
 /**
@@ -78,6 +79,29 @@ function oaex_th_subsystem_filter_onChange(obj) {
     }
 }
 
+/**
+ * オペレーター履歴確認ボタンクリックイベントｆです。
+ */
+function oaex_th_oa11100Btn_onClick() {
+	// 選択したオペレータコードを取得
+	let operatorTable = document.getElementById("operator_table");
+	let selectRow = oa_getTableSelectedRowIndex(operatorTable);
+	if (selectRow == -1) {return;}
+
+	let operatorId = "";
+	for (let cellChildNode of operatorTable.rows[selectRow].cells[4].childNodes) {
+		if (cellChildNode.nodeName.toLowerCase() == "input") {
+			operatorId = cellChildNode.value;
+			break;
+		}
+	}
+	if (operatorId.length == 0)  {return;}
+	//alert(operatorId);
+
+	// オペレーター履歴確認に遷移
+	location.href = "../oa11100/get?oi=" + operatorId;
+	return;
+}
 
 
 /** Thymeleafとモックで共用 **/
@@ -343,7 +367,15 @@ function oaex_operator_table_onClick(objRow) {
  * 検索ボタンクリックイベントです。
  */
 function oaex_searchBtn_onClick() {
-	// todo:テーブル＆ページネーションを表示
+	// オペレーター一覧領域を表示
+	oaex_viewOperatorTable();
+}
+
+/**
+ * オペレーター一覧領域を表示します。
+ */
+function oaex_viewOperatorTable() {
+	// テーブル＆ページネーションを表示
 	let table = document.getElementById("operator_table");
 	if (table != null) {
 		table.style.visibility = "visible";

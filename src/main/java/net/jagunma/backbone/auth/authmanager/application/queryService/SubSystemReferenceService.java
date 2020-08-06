@@ -8,9 +8,16 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSys
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * サブシステム参照サービス
+ */
 @Service
 @Transactional
 public class SubSystemReferenceService {
+
+	/**
+	 * コンストラクタ
+	 */
 	public SubSystemReferenceService() {
 	}
 

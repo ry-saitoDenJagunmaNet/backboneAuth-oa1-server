@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.model.types;
 
 /**
- * 有効期限検索条件の選択列挙型です。
+ * 有効期限検索条件の選択列挙型
  */
 public enum ConditionsExpirationSelect {
 	指定なし(0),

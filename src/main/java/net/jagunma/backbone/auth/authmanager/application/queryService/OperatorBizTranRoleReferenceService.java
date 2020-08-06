@@ -12,12 +12,18 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * オペレーター取引ロール割当参照サービス
+ */
 @Service
 @Transactional
 public class OperatorBizTranRoleReferenceService {
 	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
+	/**
+	 * コンストラクタ
+	 */
 	public OperatorBizTranRoleReferenceService(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
 		BizTranRoleEntityDao bizTranRoleEntityDao) {
 
@@ -36,15 +42,15 @@ public class OperatorBizTranRoleReferenceService {
 			.addOrder("OperatorId")
 			.addOrder("BizTranRoleId")
 			.addOrder("ExpirationStartDate");
-		List<Operator_BizTranRoleEntity> entitys = operator_BizTranRoleEntityDao.findAll(orders);
+		List<Operator_BizTranRoleEntity> entities = operator_BizTranRoleEntityDao.findAll(orders);
 
 		// 取引ロール検索
 		orders = Orders.empty()
 			.addOrder("BizTranRoleCode");
-		List<BizTranRoleEntity> bTREntitys = bizTranRoleEntityDao.findAll(orders);
+		List<BizTranRoleEntity> bTREntities = bizTranRoleEntityDao.findAll(orders);
 
 		List<OperatorBizTranRoleReferenceDto> list = newArrayList();
-		entitys.forEach(o -> {
+		entities.forEach(o -> {
 			OperatorBizTranRoleReferenceDto item = new OperatorBizTranRoleReferenceDto();
 
 			item.setOperator_BizTranRoleId(o.getOperator_BizTranRoleId());
@@ -59,7 +65,7 @@ public class OperatorBizTranRoleReferenceService {
 			item.setUpdatedAt(o.getUpdatedAt());
 			item.setUpdatedIpAddress(o.getUpdatedIpAddress());
 			item.setRecordVersion(o.getRecordVersion());
-			bTREntitys.stream().filter(s-> s.getBizTranRoleId().equals(o.getBizTranRoleId())).forEach(s ->  {
+			bTREntities.stream().filter(s-> s.getBizTranRoleId().equals(o.getBizTranRoleId())).forEach(s ->  {
 				item.setBizTranRoleCode(s.getBizTranRoleCode());
 				item.setBizTranRoleName(s.getBizTranRoleName());
 				item.setSubSystemCode(s.getSubSystemCode());

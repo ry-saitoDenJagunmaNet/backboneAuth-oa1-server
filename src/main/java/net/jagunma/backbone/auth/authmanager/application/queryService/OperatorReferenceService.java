@@ -30,9 +30,14 @@ import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntityDao;
 import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.util.base.Preconditions;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * オペレーター参照サービス
+ */
 @Service
 @Transactional
 public class OperatorReferenceService {
@@ -50,6 +55,9 @@ public class OperatorReferenceService {
 	private final OperatorBizTranRoleReferenceService operatorBizTranRoleReferenceService;
 	private final TempoReferenceService tempoReferenceService;
 
+	/**
+	 * コンストラクタ
+	 */
 	public OperatorReferenceService(OperatorEntityDao operatorEntityDao,
 		AccountLockEntityDao accountLockEntityDao,
 		PasswordHistoryEntityDao passwordHistoryEntityDao,
@@ -76,11 +84,14 @@ public class OperatorReferenceService {
 	 */
 	public List<OperatorReferenceDto> getOperatorList(OperatorSearchRequest request) {
 
+		// リクエストのチェック
+		validate(request);
+
 		// オペレーター検索
 		Orders orders = Orders.empty()
 			.addOrder("TempoCode")
 			.addOrder("OperatorCode");
-		List<OperatorEntity> operatorEntitys = operatorEntityDao.findBy(request.genOperatorEntityCriteria(request), orders);
+		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(request.genOperatorEntityCriteria(request), orders);
 
 		// オペレーター_サブシステムロール割当検索
 		List<OperatorSubSystemRoleReferenceDto> operatorSubSystemRoles = operatorSubSystemRoleReferenceService.getOperatorSubSystemRoleList();
@@ -92,26 +103,26 @@ public class OperatorReferenceService {
 		orders = Orders.empty()
 			.addOrder("OperatorId")
 			.addOrder("OccurredDateTime", Order.ASC);
-		List<AccountLockEntity> accountLockEntitys = accountLockEntityDao.findAll(orders);
+		List<AccountLockEntity> accountLockEntities = accountLockEntityDao.findAll(orders);
 		// パスワード履歴検索
 		orders = Orders.empty()
 			.addOrder("OperatorId")
 			.addOrder("ChangeDateTime", Order.ASC);
-		List<PasswordHistoryEntity> passwordHistoryEntitys = passwordHistoryEntityDao.findAll(orders);
+		List<PasswordHistoryEntity> passwordHistoryEntities = passwordHistoryEntityDao.findAll(orders);
 		// サインイン証跡検索
 		orders = Orders.empty()
 			.addOrder("OperatorCode")
 			.addOrder("TryDateTime", Order.ASC);
-		List<SignInTraceEntity> signInTraceEntitys = signInTraceEntityDao.findAll(orders);
+		List<SignInTraceEntity> signInTraceEntities = signInTraceEntityDao.findAll(orders);
 		// サインアウト証跡検索
 		orders = Orders.empty()
 			.addOrder("OperatorId")
 			.addOrder("SignOutDateTime", Order.ASC);
-		List<SignOutTraceEntity> signOutTraceEntitys = signOutTraceEntityDao.findAll(orders);
+		List<SignOutTraceEntity> signOutTraceEntities = signOutTraceEntityDao.findAll(orders);
 
 		List<OperatorReferenceDto> operatorList = newArrayList();
 
-		for(OperatorEntity operatorEntity : operatorEntitys) {
+		for(OperatorEntity operatorEntity : operatorEntities) {
 			OperatorReferenceDto dto = new OperatorReferenceDto();
 
 			// オペレーター_サブシステムロール割当の項目設定および条件判定
@@ -123,19 +134,19 @@ public class OperatorReferenceService {
 				continue;
 			}
 			// アカウントロックの項目設定および条件判定
-			if (!setAccountLockInfo(dto, request, operatorEntity, accountLockEntitys)) {
+			if (!setAccountLockInfo(dto, request, operatorEntity, accountLockEntities)) {
 				continue;
 			}
 			// パスワード履歴の項目設定および条件判定
-			if (!setPasswordHistoryInfo(dto, request, operatorEntity, passwordHistoryEntitys)) {
+			if (!setPasswordHistoryInfo(dto, request, operatorEntity, passwordHistoryEntities)) {
 				continue;
 			}
 			// サインイン証跡の項目設定および条件判定
-			if (!setSignInTraceInfo(dto, request, operatorEntity, signInTraceEntitys)) {
+			if (!setSignInTraceInfo(dto, request, operatorEntity, signInTraceEntities)) {
 				continue;
 			}
 			// サインアウト証跡の項目設定および条件判定
-			if (!setSignOutTraceInfo(dto, request, operatorEntity, signOutTraceEntitys)) {
+			if (!setSignOutTraceInfo(dto, request, operatorEntity, signOutTraceEntities)) {
 				continue;
 			}
 
@@ -390,16 +401,16 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param accountLockEntitys アカウントロックリスト
+	 * @param accountLockEntities アカウントロックリスト
 	 * @return true：アカウントロックの条件で表示対象、false：アカウントロックの条件で表示対象外
 	 */
 	private boolean setAccountLockInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<AccountLockEntity> accountLockEntitys) {
+		List<AccountLockEntity> accountLockEntities) {
 
 		// アカウントロックの項目設定
-		List<AccountLockEntity> asccountLocks = accountLockEntitys.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
+		List<AccountLockEntity> asccountLocks = accountLockEntities.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
 		if (asccountLocks.size() > 0) {
 			dto.setAccountLockId(asccountLocks.get(0).getAccountLockId());
 			dto.setOccurredDateTime(asccountLocks.get(0).getOccurredDateTime());
@@ -453,16 +464,16 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param passwordHistoryEntitys パスワード履歴リスト
+	 * @param passwordHistoryEntities パスワード履歴リスト
 	 * @return true：パスワード履歴の条件で表示対象、false：パスワード履歴の条件で表示対象外
 	 */
 	private boolean setPasswordHistoryInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<PasswordHistoryEntity> passwordHistoryEntitys) {
+		List<PasswordHistoryEntity> passwordHistoryEntities) {
 
 		// パスワード履歴の項目設定
-		List<PasswordHistoryEntity> passwordHistorys = passwordHistoryEntitys.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
+		List<PasswordHistoryEntity> passwordHistorys = passwordHistoryEntities.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
 		if (passwordHistorys.size() > 0) {
 			dto.setPasswordHistoryId(passwordHistorys.get(0).getPasswordHistoryId());
 			dto.setChangeDateTime(passwordHistorys.get(0).getChangeDateTime());
@@ -533,16 +544,16 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param signInTraceEntitys サインイン証跡リスト
+	 * @param signInTraceEntities サインイン証跡リスト
 	 * @return true：サインイン証跡の条件で表示対象、false：サインイン証跡の条件で表示対象外
 	 */
 	private boolean setSignInTraceInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<SignInTraceEntity> signInTraceEntitys) {
+		List<SignInTraceEntity> signInTraceEntities) {
 
 		// サインイン証跡の項目設定
-		List<SignInTraceEntity> signInTraces = signInTraceEntitys.stream().filter(a->a.getOperatorCode().equals(operatorEntity.getOperatorCode())).collect(Collectors.toList());
+		List<SignInTraceEntity> signInTraces = signInTraceEntities.stream().filter(a->a.getOperatorCode().equals(operatorEntity.getOperatorCode())).collect(Collectors.toList());
 		if (signInTraces.size() > 0) {
 			dto.setSignInTraceId(signInTraces.get(0).getSignInTraceId());
 			dto.setTryDateTime(signInTraces.get(0).getTryDateTime());
@@ -602,16 +613,16 @@ public class OperatorReferenceService {
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
-	 * @param signOutTraceEntitys サインアウト証跡リスト
+	 * @param signOutTraceEntities サインアウト証跡リスト
 	 * @return true：サインアウト証跡の条件で表示対象、false：サインアウト証跡の条件で表示対象外
 	 */
 	private boolean setSignOutTraceInfo(OperatorReferenceDto dto,
 		OperatorSearchRequest request,
 		OperatorEntity operatorEntity,
-		List<SignOutTraceEntity> signOutTraceEntitys) {
+		List<SignOutTraceEntity> signOutTraceEntities) {
 
 		// サインアウト証跡の項目設定
-		List<SignOutTraceEntity> signOutTraces = signOutTraceEntitys.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
+		List<SignOutTraceEntity> signOutTraces = signOutTraceEntities.stream().filter(a->a.getOperatorId().equals(operatorEntity.getOperatorId())).collect(Collectors.toList());
 		if (signOutTraces.size() > 0) {
 			dto.setSignOutTraceId(signOutTraces.get(0).getSignOutTraceId());
 			dto.setSignOutDateTime(signOutTraces.get(0).getSignOutDateTime());
@@ -647,5 +658,120 @@ public class OperatorReferenceService {
 	public List<OperatorReferenceDto> getPageList(List<OperatorReferenceDto> list, int pageNo) {
 		int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
 		return list.stream().skip(skip).limit(10).collect(Collectors.toList());
+	}
+
+	/**
+	 * リクエストのチェックを行います。
+	 */
+	private void validate(OperatorSearchRequest request) {
+		// 有効期限のチェック
+		if (ConditionsExpirationSelect.状態指定日.getCode().equals(request.getExpirationSelect())) {
+			Preconditions.checkNotNull(request.getExpirationStatusDate(),
+				() -> new GunmaRuntimeException("EOA10002", "有効期限の状態指定日"));
+		}
+
+		if (ConditionsExpirationSelect.条件指定.getCode().equals(request.getExpirationSelect())) {
+			if (request.getExpirationStartDateFrom() == null &&
+				request.getExpirationStartDateTo() == null &&
+				request.getExpirationEndDateFrom() == null &&
+				request.getExpirationStartDateTo() == null) {
+				throw new GunmaRuntimeException("EOA10002", "有効期限の条件指定");
+			}
+			if (request.getExpirationStartDateFrom() != null &&
+				request.getExpirationStartDateTo() != null) {
+				if (request.getExpirationStartDateFrom().compareTo(request.getExpirationStartDateTo()) > 0) {
+					throw new GunmaRuntimeException("EOA10003", "有効期限開始の条件指定");
+				}
+			}
+			if (request.getExpirationEndDateFrom() != null &&
+				request.getExpirationStartDateTo() != null) {
+				if (request.getExpirationEndDateFrom().compareTo(request.getExpirationStartDateTo()) > 0) {
+					throw new GunmaRuntimeException("EOA10003", "有効期限終了の条件指定");
+				}
+			}
+		}
+
+		// サブシステムロールのチェック
+		request.getSubSystemRoleList().forEach(a -> {
+			if (Oa11010Vo.CHECKBOX_TRUE.equals(a.getSubSystemRoleSelected())) {
+				if (ConditionsExpirationSelect.状態指定日.getCode().equals(a.getExpirationSelect())) {
+					Preconditions.checkNotNull(a.getExpirationStatusDate(),
+						() -> new GunmaRuntimeException("EOA10002", "サブシステムロール " + a.getSubSystemRoleCode() + "の状態指定日"));
+				}
+
+				if (ConditionsExpirationSelect.条件指定.getCode().equals(a.getExpirationSelect())) {
+					if (a.getExpirationStartDateFrom() == null &&
+						a.getExpirationStartDateTo() == null &&
+						a.getExpirationEndDateFrom() == null &&
+						a.getExpirationEndDateTo() == null) {
+						throw new GunmaRuntimeException("EOA10002", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
+					}
+					if (a.getExpirationStartDateFrom() != null &&
+						a.getExpirationStartDateTo() != null) {
+						if (a.getExpirationStartDateFrom().compareTo(a.getExpirationStartDateTo()) > 0) {
+							throw new GunmaRuntimeException("EOA10003", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
+						}
+					}
+					if (a.getExpirationEndDateFrom() != null &&
+						a.getExpirationEndDateTo() != null) {
+						if (a.getExpirationEndDateFrom().compareTo(a.getExpirationEndDateTo()) > 0) {
+							throw new GunmaRuntimeException("EOA10003", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
+						}
+					}
+				}
+			}
+		});
+
+		// 取引ロールのチェック
+		request.getBizTranRoleList().forEach(a -> {
+			if (Oa11010Vo.CHECKBOX_TRUE.equals(a.getBizTranRoleSelected())) {
+				if (ConditionsExpirationSelect.状態指定日.getCode().equals(a.getExpirationSelect())) {
+					Preconditions.checkNotNull(a.getExpirationStatusDate(),
+						() -> new GunmaRuntimeException("EOA10002", "取引ロール " + a.getBizTranRoleCode() + "の状態指定日"));
+				}
+
+				if (ConditionsExpirationSelect.条件指定.getCode().equals(a.getExpirationSelect())) {
+					if (a.getExpirationStartDateFrom() == null &&
+						a.getExpirationStartDateTo() == null &&
+						a.getExpirationEndDateFrom() == null &&
+						a.getExpirationStartDateTo() == null) {
+						throw new GunmaRuntimeException("EOA10002", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
+					}
+					if (a.getExpirationStartDateFrom() != null &&
+						a.getExpirationStartDateTo() != null) {
+						if (a.getExpirationStartDateFrom().compareTo(a.getExpirationStartDateTo()) > 0) {
+							throw new GunmaRuntimeException("EOA10003", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
+						}
+					}
+					if (a.getExpirationEndDateFrom() != null &&
+						a.getExpirationEndDateTo() != null) {
+						if (a.getExpirationEndDateFrom().compareTo(a.getExpirationEndDateTo()) > 0) {
+							throw new GunmaRuntimeException("EOA10003", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
+						}
+					}
+				}
+			}
+		});
+
+		// その他 最終パスワード変更日のチェック
+		if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getPasswordHistoryCheck())) {
+			if (request.getPasswordHistoryLastChangeDate() == null) {
+				throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の日数");
+			}
+
+			if (request.getPasswordHistoryLastChangeDateStatus() == null ||
+				request.getPasswordHistoryLastChangeDateStatus().length() == 0) {
+				throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の変更有無");
+			}
+		}
+
+		// その他 最終サインイン試行日のチェック
+		if (request.getSignintraceTrydateFrom() != null &&
+			request.getSignintraceTrydateTo() != null) {
+			if (request.getSignintraceTrydateFrom().compareTo(request.getSignintraceTrydateTo()) > 0) {
+				throw new GunmaRuntimeException("EOA10003", "最終サインイン試行日");
+			}
+		}
+
 	}
 }

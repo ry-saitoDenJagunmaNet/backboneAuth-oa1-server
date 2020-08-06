@@ -13,17 +13,19 @@
 	<script src="../static/js/oa11010.js" th:src="@{/js/oa11010.js}"></script>
 </head>
 <body th:onLoad="oaex_th_onload();">
-<form method="post" action="search">
+<form>
 
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<div th:replace="include/messageDialog :: messageDialog"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa11010");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11010", "オペレーター＜一覧＞");</script>
+		<script th:remove="all">oa_getHeader("oa11010", "オペレーター＜一覧＞");</script>
+		<div th:replace="include/header :: header (id='oa11010', title='オペレーター＜一覧＞')"></div>
 	</header>
 
 	<!-- main定義 -->
@@ -1387,12 +1389,22 @@
 		<section>
 			<div class="row">
 				<div class="col s12">
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')">オペレーター履歴確認</a>
+
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')" th:remove="all">オペレーター履歴確認</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')" th:remove="all">アカウントロック照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')" th:remove="all">パスワード変更履歴照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')" th:remove="all">サインイン証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11130')" th:remove="all">サービス呼出証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')" th:remove="all">サブシステムロール付与</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')" th:remove="all">取引ロール付与</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')" th:remove="all">パスワードリセット</a>
+
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_th_oa11100Btn_onClick();">オペレーター履歴確認</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')">パスワード変更履歴照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')">サインイン証跡照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11130')">サービス呼出証跡照会</a>
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a> 
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')">取引ロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')">パスワードリセット</a>
 				</div>

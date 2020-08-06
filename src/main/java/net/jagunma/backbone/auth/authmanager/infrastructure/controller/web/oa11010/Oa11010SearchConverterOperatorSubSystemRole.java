@@ -2,6 +2,9 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11
 
 import java.time.LocalDate;
 
+/**
+ * OA11010 オペレーター＜一覧＞ 検索 サブシステムロール Converter
+ */
 public class Oa11010SearchConverterOperatorSubSystemRole {
 	/**
 	 * サブシステムロール選択

@@ -10,6 +10,9 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	private String operatorTable;
 	private String pagination;
 
+	/**
+	 * コンストラクタ
+	 */
 	Oa11010SearchPresenter() {
 	}
 

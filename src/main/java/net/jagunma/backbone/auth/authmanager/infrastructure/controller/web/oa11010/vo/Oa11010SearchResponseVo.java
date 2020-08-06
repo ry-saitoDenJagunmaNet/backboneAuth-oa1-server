@@ -1,11 +1,12 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo;
 
-import java.io.Serializable;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 
 /**
  * OA11010検索レスポンス
  */
-public class Oa11010SearchResponseVo implements Serializable {
+public class Oa11010SearchResponseVo extends BaseOfResponseVo {
 	private static final long serialVersionUID = 1L;
 
 	/**

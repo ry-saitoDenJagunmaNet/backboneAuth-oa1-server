@@ -11,13 +11,18 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 店舗参照サービス
+ */
 @Service
 @Transactional
 public class TempoReferenceService {
 	private final OperatorEntityDao operatorEntityDao;
 
+	/**
+	 * コンストラクタ
+	 */
 	public TempoReferenceService(OperatorEntityDao operatorEntityDao) {
-
 		this.operatorEntityDao = operatorEntityDao;
 	}
 
@@ -59,9 +64,9 @@ public class TempoReferenceService {
 			.addOrder("JaId")
 			.addOrder("TempoId");
 
-		List<OperatorEntity> operatorEntitys = operatorEntityDao.findBy(criteria, orders);
+		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
 		List<String> tempos = newArrayList();
-		operatorEntitys.forEach(o -> {
+		operatorEntities.forEach(o -> {
 			tempos.add(o.getTempoCode());
 		});
 

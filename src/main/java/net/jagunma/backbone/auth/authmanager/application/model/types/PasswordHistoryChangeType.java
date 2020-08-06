@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.model.types;
 
 /**
- * パスワード変更種別の列挙型です。
+ * パスワード変更種別の列挙型
  */
 public enum PasswordHistoryChangeType {
 	初期((short) 0),

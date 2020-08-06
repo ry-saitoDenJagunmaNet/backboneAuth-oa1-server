@@ -7,7 +7,51 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * オペレーター参照Ｄｔｏ
+ */
 public class OperatorReferenceDto {
+
+	/**
+	 * コンストラクタ
+	 */
+	public OperatorReferenceDto() {
+		this.operatorId = 0;
+		this.operatorCode = "";
+		this.operatorName = "";
+		this.mailAddress = "";
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.isDeviceAuth = false;
+		this.jaId = 0;
+		this.jaCode = "";
+		this.tempoId = 0;
+		this.tempoCode = "";
+		this.availableStatus = 0;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+		this.tempoName = "";
+		this.accountLockId = 0;
+		this.occurredDateTime = null;
+		this.lockStatus = 0;
+		this.passwordHistoryId = null;
+		this.changeDateTime = null;
+		this.changeType = null;
+		this.signInTraceId = null;
+		this.tryDateTime = null;
+		this.tryIpAddress = "";
+		this.signInCause = null;
+		this.signInResult = null;
+		this.signOutTraceId = null;
+		this.operatorSubSystemRoleReferenceDtoList = newArrayList();
+		this.operatorBizTranRoleReferenceDtoList = newArrayList();
+	}
+
 	/**
 	 * オペレーターID
 	 */
@@ -238,43 +282,6 @@ public class OperatorReferenceDto {
 	 * @return フォーマットした有効期限終了日
 	 */
 	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
-
-	public OperatorReferenceDto() {
-		this.operatorId = 0;
-		this.operatorCode = "";
-		this.operatorName = "";
-		this.mailAddress = "";
-		this.expirationStartDate = null;
-		this.expirationEndDate = null;
-		this.isDeviceAuth = false;
-		this.jaId = 0;
-		this.jaCode = "";
-		this.tempoId = 0;
-		this.tempoCode = "";
-		this.availableStatus = 0;
-		this.createdBy = 0;
-		this.createdAt = null;
-		this.createdIpAddress = "";
-		this.updatedBy = null;
-		this.updatedAt = null;
-		this.updatedIpAddress = "";
-		this.recordVersion = 0;
-		this.tempoName = "";
-		this.accountLockId = 0;
-		this.occurredDateTime = null;
-		this.lockStatus = 0;
-		this.passwordHistoryId = null;
-		this.changeDateTime = null;
-		this.changeType = null;
-		this.signInTraceId = null;
-		this.tryDateTime = null;
-		this.tryIpAddress = "";
-		this.signInCause = null;
-		this.signInResult = null;
-		this.signOutTraceId = null;
-		this.operatorSubSystemRoleReferenceDtoList = newArrayList();
-		this.operatorBizTranRoleReferenceDtoList = newArrayList();
-	}
 
 	/**
 	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。

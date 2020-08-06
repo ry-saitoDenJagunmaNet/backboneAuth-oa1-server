@@ -4,6 +4,9 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 
+/**
+ * サブシステムロールの列挙型
+ */
 public enum SubSystemRole {
 	JaAdmin("JA管理者","KB,YS,YF,HK,HM,AN"),
 	KbManager("業務統括者（購買）","KB"),

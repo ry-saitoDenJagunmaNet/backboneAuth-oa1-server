@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>messageDialog</title>
+</head>
+<body>
+
+<div th:fragment="messageDialog">
+	<button class="modal-trigger" id="btnShowAlert" data-target="alert" style="display: none;">alert</button>
+	<div id="alert" class="modal">
+		<div class="modal-content" id="alertMessage"></div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close btn waves-effect waves-light btn">OK</a>
+		</div>
+	</div>
+
+	<button class="modal-trigger" id="btnShowConfirm" data-target="confirm" style="display: none;">alert</button>
+	<div id="confirm" class="modal">
+		<div class="modal-content" id="confirmMessage"></div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-close btn waves-effect waves-light btn" id="confirmOKOnClick">OK</a>
+			<a href="#!" class="modal-close btn waves-effect waves-light btn" id="confirmCancelOnClick">キャンセル</a>
+		</div>
+	</div>
+
+	<input type="hidden" id="message" th:value="${form.message}"></input>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.model.types;
 
 /**
- * アカウントロックロック状態の列挙型です。
+ * アカウントロックロック状態の列挙型
  */
 public enum AccountLockLockStatus {
 	UnLock((short) 0),

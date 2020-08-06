@@ -13,9 +13,13 @@ import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa110
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.Oa11010InitResponse;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * OA11010 オペレーター＜一覧＞ 初期表示 サービス
+ */
 @Service
 @Transactional
 public class Oa11010InitService {
@@ -24,6 +28,9 @@ public class Oa11010InitService {
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 	private final SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice;
 
+	/**
+	 * コンストラクタ
+	 */
 	public Oa11010InitService(TempoReferenceService tempoReferenceService,
 		SubSystemReferenceService subSystemReferenceService,
 		BizTranRoleEntityDao bizTranRoleEntityDao,
@@ -59,6 +66,8 @@ public class Oa11010InitService {
 		response.setBizTranRoleList(getBizTranRoleList());
 		// サブシステムコンボボックスリスト取得
 		response.setBizTranRoleSubSystemList(subSystemReferenceService.getComboBoxList());
+
+		//throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の変更有無");
 	}
 
 	/**

@@ -11,12 +11,18 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * オペレーターサブシステムロール割当参照サービス
+ */
 @Service
 @Transactional
 public class OperatorSubSystemRoleReferenceService {
 	private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
 	private final SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice;
 
+	/**
+	 * コンストラクタ
+	 */
 	public OperatorSubSystemRoleReferenceService(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
 		SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice) {
 		this.operator_SubSystemRoleEntityDao = operator_SubSystemRoleEntityDao;
@@ -34,13 +40,13 @@ public class OperatorSubSystemRoleReferenceService {
 			.addOrder("OperatorId")
 			.addOrder("SubSystemRoleCode")
 			.addOrder("ExpirationStartDate");
-		List<Operator_SubSystemRoleEntity> entitys = operator_SubSystemRoleEntityDao.findAll(orders);
+		List<Operator_SubSystemRoleEntity> entities = operator_SubSystemRoleEntityDao.findAll(orders);
 
 		// サブシステムロール検索
 		List<SubSystemRoleReferenceDto> subSystemRoles = subSystemRoleReferenceSetvice.getSubSystemRoleList();
 
 		List<OperatorSubSystemRoleReferenceDto> list = newArrayList();
-		entitys.forEach(o -> {
+		entities.forEach(o -> {
 			OperatorSubSystemRoleReferenceDto item = new OperatorSubSystemRoleReferenceDto();
 
 			item.setOperator_SubSystemRoleId(o.getOperator_SubSystemRoleId());

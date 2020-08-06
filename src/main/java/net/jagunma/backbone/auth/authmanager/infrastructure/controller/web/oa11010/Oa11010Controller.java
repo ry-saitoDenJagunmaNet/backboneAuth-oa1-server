@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010InitService;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchService;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
@@ -9,6 +11,9 @@ import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
+import net.jagunma.common.server.aop.AuditInfoHolder;
+import net.jagunma.common.server.exception.WarningException;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +54,9 @@ public class Oa11010Controller {
 	private final Oa11010InitService oa11010InitService;
 	private final Oa11010SearchService oa11010SearchService;
 
+	/**
+	 * コンストラクタ
+	 */
 	public Oa11010Controller(Oa11010InitService oa11010InitService,
 		Oa11010SearchService oa11010SearchService) {
 		this.oa11010InitService = oa11010InitService;
@@ -65,17 +72,32 @@ public class Oa11010Controller {
 	@GetMapping(path = "/get")
 	private String get(Model model) {
 		//TODO: パラメータでサインインオペレーターの情報を取得する
-		//AuditInfoHolder.
+		//AuditInfoHolder
 
-		Oa11010Vo response = new Oa11010Vo();
+		try {
+			Oa11010Vo response = new Oa11010Vo();
 
-		Oa11010InitPresenter presenter = new Oa11010InitPresenter();
-		oa11010InitService.init(presenter);
+			Oa11010InitPresenter presenter = new Oa11010InitPresenter();
+			oa11010InitService.init(presenter);
 
-		presenter.bindTo(response);
+			presenter.bindTo(response);
 
-		model.addAttribute("form", response);
-		return "oa11010";
+			model.addAttribute("form", response);
+			return "oa11010";
+
+		} catch (GunmaRuntimeException gre) {
+			// 業務例外が発生した場合
+			Oa11010Vo response = new Oa11010Vo();
+			response.setExceptionMessage(gre);
+			model.addAttribute("form", response);
+			return "oa11010";
+		} catch (RuntimeException re) {
+			// その他予期せぬ例外が発生した場合
+			Oa11010Vo response = new Oa11010Vo();
+			model.addAttribute("form", response);
+			response.setExceptionMessage(re);
+			return "oa11010";
+		}
 	}
 
 	/**
@@ -88,17 +110,29 @@ public class Oa11010Controller {
 	@ResponseBody
 	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo oa11010Vo) {
 
-		System.out.println("### pageno=" + oa11010Vo.getPageNo());
+		try {
+			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+			Oa11010SearchValidator.with(oa11010Vo).validate();
+			Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
+			Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
-		Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-		Oa11010SearchValidator.with(oa11010Vo).validate();
-		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
-		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+			//オぺレーター検索してオぺレーターテーブルHtmlを作成
+			oa11010SearchService.search(converter, presenter);
 
-		//オぺレーター検索してオぺレーターテーブルHtmlを作成
-		oa11010SearchService.search(converter, presenter);
+			presenter.bindTo(response);
 
-		presenter.bindTo(response);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+
+		} catch (GunmaRuntimeException gre) {
+			// 業務例外が発生した場合
+			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+			response.setExceptionMessage(gre);
+			return  new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (RuntimeException re) {
+			// その他予期せぬ例外が発生した場合
+			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
+			response.setExceptionMessage(re);
+			return  new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 }

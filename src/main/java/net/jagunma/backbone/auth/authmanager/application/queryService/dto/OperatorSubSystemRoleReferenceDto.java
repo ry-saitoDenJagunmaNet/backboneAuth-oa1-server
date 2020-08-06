@@ -7,7 +7,33 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * オペレーターサブシステムロール割当参照Ｄｔｏ
+ */
 public class OperatorSubSystemRoleReferenceDto {
+
+	/**
+	 * コンストラクタ
+	 */
+	public OperatorSubSystemRoleReferenceDto() {
+		this.operator_SubSystemRoleId = 0;
+		this.operatorId = 0;
+		this.subSystemRoleCode = "";
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+//		this.operatorCode = "";
+//		this.operatorName = "";
+		this.subSystemRoleName = "";
+		this.subSystemReferenceDtoList = newArrayList();
+	}
+
 	/**
 	 * オペレーター_サブシステムロール割当ID
 	 */
@@ -116,25 +142,6 @@ public class OperatorSubSystemRoleReferenceDto {
 	 * @return フォーマットした有効期限終了日
 	 */
 	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
-
-	public OperatorSubSystemRoleReferenceDto() {
-		this.operator_SubSystemRoleId = 0;
-		this.operatorId = 0;
-		this.subSystemRoleCode = "";
-		this.expirationStartDate = null;
-		this.expirationEndDate = null;
-		this.createdBy = 0;
-		this.createdAt = null;
-		this.createdIpAddress = "";
-		this.updatedBy = null;
-		this.updatedAt = null;
-		this.updatedIpAddress = "";
-		this.recordVersion = 0;
-//		this.operatorCode = "";
-//		this.operatorName = "";
-		this.subSystemRoleName = "";
-		this.subSystemReferenceDtoList = newArrayList();
-	}
 
 	/**
 	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。

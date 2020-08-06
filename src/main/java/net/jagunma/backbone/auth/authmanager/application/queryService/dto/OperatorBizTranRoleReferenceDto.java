@@ -4,7 +4,31 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * オペレーター取引ロール割当参照Ｄｔｏ
+ */
 public class OperatorBizTranRoleReferenceDto {
+
+	/**
+	 * コンストラクタ
+	 */
+	public OperatorBizTranRoleReferenceDto() {
+		this.operator_BizTranRoleId = 0;
+		this.operatorId = 0;
+		this.bizTranRoleId = 0;
+		this.expirationStartDate = null;
+		this.expirationEndDate = null;
+		this.createdBy = 0;
+		this.createdAt = null;
+		this.createdIpAddress = "";
+		this.updatedBy = null;
+		this.updatedAt = null;
+		this.updatedIpAddress = "";
+		this.recordVersion = 0;
+		this.bizTranRoleCode = "";
+		this.bizTranRoleName = "";
+		this.subSystemCode = "";
+	}
 
 	/**
 	 * オペレーター_取引ロール割当ID
@@ -108,24 +132,6 @@ public class OperatorBizTranRoleReferenceDto {
 	 * @return フォーマットした有効期限終了日
 	 */
 	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
-
-	public OperatorBizTranRoleReferenceDto() {
-		this.operator_BizTranRoleId = 0;
-		this.operatorId = 0;
-		this.bizTranRoleId = 0;
-		this.expirationStartDate = null;
-		this.expirationEndDate = null;
-		this.createdBy = 0;
-		this.createdAt = null;
-		this.createdIpAddress = "";
-		this.updatedBy = null;
-		this.updatedAt = null;
-		this.updatedIpAddress = "";
-		this.recordVersion = 0;
-		this.bizTranRoleCode = "";
-		this.bizTranRoleName = "";
-		this.subSystemCode = "";
-	}
 
 	/**
 	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。

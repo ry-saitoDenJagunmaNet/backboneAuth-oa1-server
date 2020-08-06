@@ -1,7 +1,10 @@
 package net.jagunma.backbone.auth.authmanager.application.model.types;
 
+/**
+ * サブシステムの列挙型
+ */
 public enum SubSystem {
-	KB("購買・全般"),
+	KB("購買"),
 	YS("販売・青果"),
 	YF("販売・花卉"),
 	HK("販売・米"),

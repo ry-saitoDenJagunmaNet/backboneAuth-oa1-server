@@ -1,3 +1,12 @@
+/** Thymeleaf で起動時のみ実行 **/
+
+/**
+ * 画面Loadイベントです。
+ */
+function oaex_th_onload() {
+	_isThymeleaf = true;
+}
+
 /**
  * 登録ボタンクリックイベントです。
  */

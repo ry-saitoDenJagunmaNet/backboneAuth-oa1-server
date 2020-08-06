@@ -3,24 +3,35 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.OperatorReferenceService;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * OA11010 オペレーター＜一覧＞ 検索 サービス
+ */
 @Service
 @Transactional
 public class Oa11010SearchService {
 	private final OperatorReferenceService operatorReferenceService;
 
+	/**
+	 * コンストラクタ
+	 */
 	public Oa11010SearchService(OperatorReferenceService operatorReferenceService) {
 		this.operatorReferenceService = operatorReferenceService;
 	}
 
+	/**
+	 * オペレーター検索を行います。
+	 * @param request 検索条件
+	 * @param response 検索結果（オペレーターテーブル、Pagination Html）
+	 */
 	public void search(OperatorSearchRequest request,
 		OperatorSearchResponse response) {
 
@@ -76,6 +87,7 @@ public class Oa11010SearchService {
 			}
 			// オペレーター
 			html.append("<td class=\"oaex_operator_operator_code\">").append(o.getOperatorCode())
+				.append("<input type=\"hidden\" value=\"").append(String.valueOf(o.getTempoId())).append("\"/>")
 				.append("</td>");
 			html.append("<td class=\"oaex_operator_operator_name\">").append(o.getOperatorName())
 				.append("</td>");
