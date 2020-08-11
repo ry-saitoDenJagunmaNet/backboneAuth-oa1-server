@@ -1,25 +1,31 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>オペレーター登録 | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<!-- <link rel="stylesheet" href="../static/css/oa11020.css"/> -->
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa11020.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+<!--	<link rel="stylesheet" href="../static/css/oa11020.css" th:href="@{/css/oa11020.css}"/>-->
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa11020.js" th:src="@{/js/oa11020.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_th_onload();">
+<form method="post" action="search">
+
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<div th:replace="include/messageDialog :: messageDialog"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa11020");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11020", "オペレーター登録");</script>
+		<script th:remove="all">oa_getHeader("oa11020", "オペレーター登録");</script>
+		<div th:replace="include/header :: header (id='oa11020', title='オペレーター登録')"></div>
 	</header>
 
 	<!-- main定義 -->
@@ -29,22 +35,28 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
+					<input type="hidden" name="jaId" th:value="${form.jaId}">
 				</div>
 			</div>
 			<!-- 店舗 -->
 			<div class="row oa_required">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" class="validate">
-							<option value=""></option>
-							<option value="001">本所</option>
-							<option value="002">○○○支所</option>
-							<option value="003">△△センター</option>
-							<option value="004">□□□□店</option>
-							<option value="005">××××館</option>
+						<select id="tempo" name="tempoCode" class="validate"
+								th:value="${form.tempoCode}">
+							<option th:each="item  : ${form.tempoList}"
+									th:value="${item.tempoCode}"
+									th:text="${item.tempoName}"
+									th:selected="${form.tempoCode == item.tempoCode}"></option>
+							<option value="" th:remove="all"></option>
+							<option value="001" th:remove="all">本所</option>
+							<option value="002" th:remove="all">○○○支所</option>
+							<option value="003" th:remove="all">△△センター</option>
+							<option value="004" th:remove="all">□□□□店</option>
+							<option value="005" th:remove="all">××××館</option>
 						</select>
 						<label>店舗</label>
 					</div>
@@ -55,14 +67,14 @@
 				<!-- 識別 -->			
 				<div class="col s2">
 					<div class="input-field">
-						<input type="text" id="operater_code_prefix" readonly="readonly" value="xx"></input>
+						<input type="text" id="operater_code_prefix" name="operatorCodePrefix" readonly="readonly" value="xx" th:value="${form.operatorCodePrefix}"></input>
 						<label for="operater_code_prefix">識別</label>
 					</div>
 				</div>
 				<!-- オペレーターコード（下6桁） -->		
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="operater_code" class="validate"></input>
+						<input type="text" id="operater_code" name="operatorCode" class="validate" th:value="${form.operatorCode}"></input>
 						<label for="operater_code">オペレーターコード（下6桁）</label>
 					</div>
 				</div>
@@ -71,7 +83,7 @@
 			<div class="row oa_required">
 				<div class="col s8">
 					<div class="input-field">
-						<input type="text" id="operater_name" class="validate"></input>
+						<input type="text" id="operater_name" name="operatorName" class="validate" th:value="${form.operatorName}"></input>
 						<label for="operater_name">オペレーター名</label>
 					</div>
 				</div>
@@ -80,7 +92,7 @@
 			<div class="row oa_optional">
 				<div class="col s8">
 					<div class="input-field">
-						<input type="email" id="mail_address" class="validate"></input>
+						<input type="email" id="mail_address" name="mailAddress" class="validate" th:value="${form.mailAddress}"></input>
 						<label for="mail_address">メールアドレス</label>
 					</div>
 				</div>
@@ -95,7 +107,7 @@
 				<div class="row">
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="expiration_start_date" class="validate datepicker"></input>
+							<input type="text" id="expiration_start_date" name="expirationStartDate" class="validate datepicker" th:value="${form.expirationStartDate}"></input>
 							<label for="expiration_start_date">（開始日）</label>
 						</div>
 					</div>
@@ -104,7 +116,7 @@
 					</div>
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="expiration_end_date" class="validate datepicker"></input>
+							<input type="text" id="expiration_end_date" name="expirationEndDate" class="validate datepicker" th:value="${form.expirationEndDate}"></input>
 							<label for="expiration_end_date">（終了日）</label>
 						</div>
 					</div>
@@ -117,7 +129,7 @@
 			<div class="row oa_required">
 				<div class="col s8">
 					<div class="input-field">
-						<input type="text" id="change_cause" class="validate"></input>
+						<input type="text" id="change_cause" name="changeCause" class="validate" th:value="${form.changeCause}"></input>
 						<label for="change_cause">変更事由</label>
 					</div>
 				</div>
@@ -137,6 +149,6 @@
 			</div>
 		</div>
 	</footer>
-
+</form>
 </body>
 </html>
