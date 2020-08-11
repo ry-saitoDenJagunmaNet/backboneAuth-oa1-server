@@ -7,7 +7,7 @@ import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
 /**
- * OA11010 オペレーター＜一覧＞ 検索 Validator
+ * オペレーター参照サービス Validator
  */
 class OperatorReferenceValidator {
 	private OperatorSearchRequest request;

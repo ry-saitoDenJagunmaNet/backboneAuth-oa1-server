@@ -70,9 +70,10 @@ public class Oa11010Controller {
 		//TODO: パラメータでサインインオペレーターの情報を取得する
 		//AuditInfoHolder
 
+		Oa11010Vo vo = new Oa11010Vo();
 		try {
-			Oa11010Vo vo = new Oa11010Vo();
 
+			// 画面を初期化
 			oa11010InitService.init(vo);
 
 			model.addAttribute("form", vo);
@@ -80,15 +81,13 @@ public class Oa11010Controller {
 
 		} catch (GunmaRuntimeException gre) {
 			// 業務例外が発生した場合
-			Oa11010Vo response = new Oa11010Vo();
-			response.setExceptionMessage(gre);
-			model.addAttribute("form", response);
+			vo.setExceptionMessage(gre);
+			model.addAttribute("form", vo);
 			return "oa11010";
 		} catch (RuntimeException re) {
 			// その他予期せぬ例外が発生した場合
-			Oa11010Vo response = new Oa11010Vo();
-			model.addAttribute("form", response);
-			response.setExceptionMessage(re);
+			model.addAttribute("form", vo);
+			vo.setExceptionMessage(re);
 			return "oa11010";
 		}
 	}
@@ -103,20 +102,8 @@ public class Oa11010Controller {
 	@ResponseBody
 	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo vo) {
 
+		Oa11010SearchResponseVo responseVo = new Oa11010SearchResponseVo();
 		try {
-//			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-//			Oa11010SearchValidator.with(oa11010Vo).validate();
-//			Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
-//			Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
-//
-//			//オぺレーター検索してオぺレーターテーブルHtmlを作成
-//			oa11010SearchService.search(converter, presenter);
-//
-//			presenter.bindTo(response);
-//
-//			return new ResponseEntity<>(response, HttpStatus.OK);
-
-			Oa11010SearchResponseVo responseVo = new Oa11010SearchResponseVo();
 
 			//オぺレーター検索してオぺレーターテーブルHtmlを作成
 			oa11010SearchService.search(vo, responseVo);
@@ -125,14 +112,12 @@ public class Oa11010Controller {
 
 		} catch (GunmaRuntimeException gre) {
 			// 業務例外が発生した場合
-			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-			response.setExceptionMessage(gre);
-			return  new ResponseEntity<>(response, HttpStatus.OK);
+			responseVo.setExceptionMessage(gre);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
 		} catch (RuntimeException re) {
 			// その他予期せぬ例外が発生した場合
-			Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-			response.setExceptionMessage(re);
-			return  new ResponseEntity<>(response, HttpStatus.OK);
+			responseVo.setExceptionMessage(re);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
 		}
 	}
 }

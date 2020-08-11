@@ -3,6 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
@@ -20,15 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class OperatorBizTranRoleReferenceService {
 	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
+	private final BizTranRolesRepository bizTranRolesRepository;
 
 	/**
 	 * コンストラクタ
 	 */
 	public OperatorBizTranRoleReferenceService(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
-		BizTranRoleEntityDao bizTranRoleEntityDao) {
+		BizTranRoleEntityDao bizTranRoleEntityDao,
+		BizTranRolesRepository bizTranRolesRepository) {
 
 		this.operator_BizTranRoleEntityDao = operator_BizTranRoleEntityDao;
 		this.bizTranRoleEntityDao = bizTranRoleEntityDao;
+		this.bizTranRolesRepository = bizTranRolesRepository;
 	}
 
 	/**
@@ -48,6 +53,7 @@ public class OperatorBizTranRoleReferenceService {
 		orders = Orders.empty()
 			.addOrder("BizTranRoleCode");
 		List<BizTranRoleEntity> bTREntities = bizTranRoleEntityDao.findAll(orders);
+//		BizTranRoles bizTranRoles = bizTranRolesRepository.findAll();
 
 		List<OperatorBizTranRoleReferenceDto> list = newArrayList();
 		entities.forEach(o -> {

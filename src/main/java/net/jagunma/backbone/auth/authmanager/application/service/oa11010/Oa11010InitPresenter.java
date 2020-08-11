@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
@@ -126,10 +127,10 @@ class Oa11010InitPresenter {
 	 *
 	 * @param bizTranRoles 取引ロールＤｔｏリスト
 	 */
-	public void getBizTranRoleList(List<BizTranRoleEntity> bizTranRoles) {
+	public void getBizTranRoleList(List<BizTranRole> bizTranRoles) {
 
 		List<Oa11010BizTranRoleVo> list = newArrayList();
-		for (BizTranRoleEntity bizTranRole :  bizTranRoles) {
+		for (BizTranRole bizTranRole :  bizTranRoles) {
 			Oa11010BizTranRoleVo item = new Oa11010BizTranRoleVo();
 			item.setBizTranRoleSelected((short) 0);
 			item.setBizTranRoleId(0);

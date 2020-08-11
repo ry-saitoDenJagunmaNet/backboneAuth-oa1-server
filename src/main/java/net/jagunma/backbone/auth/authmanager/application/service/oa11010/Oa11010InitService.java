@@ -1,12 +1,11 @@
 package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 
-import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemReferenceService;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemRoleReferenceSetvice;
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
-import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,21 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class Oa11010InitService {
 	private final TempoReferenceService tempoReferenceService;
 	private final SubSystemReferenceService subSystemReferenceService;
-	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 	private final SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice;
+	private final BizTranRolesRepository bizTranRolesRepository;
 
 	/**
 	 * コンストラクタ
 	 */
 	public Oa11010InitService(TempoReferenceService tempoReferenceService,
 		SubSystemReferenceService subSystemReferenceService,
-		BizTranRoleEntityDao bizTranRoleEntityDao,
-		SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice) {
+		SubSystemRoleReferenceSetvice subSystemRoleReferenceSetvice,
+		BizTranRolesRepository bizTranRolesRepository) {
 
 		this.tempoReferenceService = tempoReferenceService;
 		this.subSystemReferenceService = subSystemReferenceService;
-		this.bizTranRoleEntityDao = bizTranRoleEntityDao;
 		this.subSystemRoleReferenceSetvice = subSystemRoleReferenceSetvice;
+		this.bizTranRolesRepository = bizTranRolesRepository;
 	}
 
 	/**
@@ -64,8 +63,8 @@ public class Oa11010InitService {
 		presenter.setBizTranRoleSubSystemList(subSystemReferenceService.getComboBoxList());
 		// 取引ロールリスト取得
 		Orders orders = Orders.empty().addOrder("BizTranRoleCode").addOrder("SubSystemCode");
-		List<BizTranRoleEntity> bizTranRoles = bizTranRoleEntityDao.findAll(orders);
-		presenter.getBizTranRoleList(bizTranRoles);
+		BizTranRoles bizTranRoles = bizTranRolesRepository.findAll();
+		presenter.getBizTranRoleList(bizTranRoles.getValues());
 
 		presenter.bindTo(vo);
 

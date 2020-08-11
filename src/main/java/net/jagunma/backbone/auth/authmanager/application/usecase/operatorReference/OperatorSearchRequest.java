@@ -9,7 +9,7 @@ import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
 /**
- * オペレーター検索Converter interface
+ * オペレーター参照サービス Request
  */
 public interface OperatorSearchRequest {
 	/**

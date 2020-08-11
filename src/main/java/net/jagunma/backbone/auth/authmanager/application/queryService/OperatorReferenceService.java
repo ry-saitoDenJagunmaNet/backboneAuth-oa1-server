@@ -17,6 +17,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoR
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorBizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
@@ -39,10 +40,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OperatorReferenceService {
-	/**
-	 * オペレーター一覧の１ページ当たりの行数
-	 */
-	private final int PAGE_SIZE = 10;
 
 	private final OperatorEntityDao operatorEntityDao;
 	private final AccountLockEntityDao accountLockEntityDao;
@@ -78,9 +75,24 @@ public class OperatorReferenceService {
 	/**
 	 * オペレーターリストを取得します。
 	 * @param request 条件
+	 * @param response 検索結果
+	 */
+	public void getOperators(OperatorSearchRequest request, OperatorSearchResponse response) {
+		// オペレーターリスト取得
+		List<OperatorReferenceDto> list = getOperatorList(request);
+		response.setOperatorReferenceDtos(list);
+		// オペレーターテーブルHtmlを生成
+		response.genOperatorTableHtml(request.getPageNo());
+		// Pagination Htmlを生成
+		response.genPaginationHtml(request.getPageNo());
+	}
+
+	/**
+	 * オペレーターリストを取得します。
+	 * @param request 条件
 	 * @return オペレーターリスト
 	 */
-	public List<OperatorReferenceDto> getOperatorList(OperatorSearchRequest request) {
+	private List<OperatorReferenceDto> getOperatorList(OperatorSearchRequest request) {
 
 		// パラメーターの検証
 		OperatorReferenceValidator.with(request).validate();
@@ -637,139 +649,4 @@ public class OperatorReferenceService {
 
 		return true;
 	}
-
-	/**
-	 * オペレーター一覧の最終ページを取得します、
-	 * @param list オペレーターリスト
-	 * @return オペレーター一覧の最終ページ
-	 */
-	public int getMaxPage(List<OperatorReferenceDto> list) {
-		return (int) Math.ceil((double)list.size() / PAGE_SIZE);
-	}
-
-	/**
-	 * 該当ページのオペレーター一覧を取得します。
-	 * @param list オペレーターリスト
-	 * @param pageNo 対象ページ
-	 * @return 該当ページのオペレーター一覧
-	 */
-	public List<OperatorReferenceDto> getPageList(List<OperatorReferenceDto> list, int pageNo) {
-		int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
-		return list.stream().skip(skip).limit(10).collect(Collectors.toList());
-	}
-
-//	/**
-//	 * リクエストのチェックを行います。
-//	 */
-//	private void validate(OperatorSearchRequest request) {
-//		// 有効期限のチェック
-//		if (ConditionsExpirationSelect.状態指定日.getCode().equals(request.getExpirationSelect())) {
-//			Preconditions.checkNotNull(request.getExpirationStatusDate(),
-//				() -> new GunmaRuntimeException("EOA10002", "有効期限の状態指定日"));
-//		}
-//
-//		if (ConditionsExpirationSelect.条件指定.getCode().equals(request.getExpirationSelect())) {
-//			if (request.getExpirationStartDateFrom() == null &&
-//				request.getExpirationStartDateTo() == null &&
-//				request.getExpirationEndDateFrom() == null &&
-//				request.getExpirationStartDateTo() == null) {
-//				throw new GunmaRuntimeException("EOA10002", "有効期限の条件指定");
-//			}
-//			if (request.getExpirationStartDateFrom() != null &&
-//				request.getExpirationStartDateTo() != null) {
-//				if (request.getExpirationStartDateFrom().compareTo(request.getExpirationStartDateTo()) > 0) {
-//					throw new GunmaRuntimeException("EOA10003", "有効期限開始の条件指定");
-//				}
-//			}
-//			if (request.getExpirationEndDateFrom() != null &&
-//				request.getExpirationStartDateTo() != null) {
-//				if (request.getExpirationEndDateFrom().compareTo(request.getExpirationStartDateTo()) > 0) {
-//					throw new GunmaRuntimeException("EOA10003", "有効期限終了の条件指定");
-//				}
-//			}
-//		}
-//
-//		// サブシステムロールのチェック
-//		request.getSubSystemRoleList().forEach(a -> {
-//			if (Oa11010Vo.CHECKBOX_TRUE.equals(a.getSubSystemRoleSelected())) {
-//				if (ConditionsExpirationSelect.状態指定日.getCode().equals(a.getExpirationSelect())) {
-//					Preconditions.checkNotNull(a.getExpirationStatusDate(),
-//						() -> new GunmaRuntimeException("EOA10002", "サブシステムロール " + a.getSubSystemRoleCode() + "の状態指定日"));
-//				}
-//
-//				if (ConditionsExpirationSelect.条件指定.getCode().equals(a.getExpirationSelect())) {
-//					if (a.getExpirationStartDateFrom() == null &&
-//						a.getExpirationStartDateTo() == null &&
-//						a.getExpirationEndDateFrom() == null &&
-//						a.getExpirationEndDateTo() == null) {
-//						throw new GunmaRuntimeException("EOA10002", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
-//					}
-//					if (a.getExpirationStartDateFrom() != null &&
-//						a.getExpirationStartDateTo() != null) {
-//						if (a.getExpirationStartDateFrom().compareTo(a.getExpirationStartDateTo()) > 0) {
-//							throw new GunmaRuntimeException("EOA10003", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
-//						}
-//					}
-//					if (a.getExpirationEndDateFrom() != null &&
-//						a.getExpirationEndDateTo() != null) {
-//						if (a.getExpirationEndDateFrom().compareTo(a.getExpirationEndDateTo()) > 0) {
-//							throw new GunmaRuntimeException("EOA10003", "サブシステムロール " + a.getSubSystemRoleCode() + "の条件指定");
-//						}
-//					}
-//				}
-//			}
-//		});
-//
-//		// 取引ロールのチェック
-//		request.getBizTranRoleList().forEach(a -> {
-//			if (Oa11010Vo.CHECKBOX_TRUE.equals(a.getBizTranRoleSelected())) {
-//				if (ConditionsExpirationSelect.状態指定日.getCode().equals(a.getExpirationSelect())) {
-//					Preconditions.checkNotNull(a.getExpirationStatusDate(),
-//						() -> new GunmaRuntimeException("EOA10002", "取引ロール " + a.getBizTranRoleCode() + "の状態指定日"));
-//				}
-//
-//				if (ConditionsExpirationSelect.条件指定.getCode().equals(a.getExpirationSelect())) {
-//					if (a.getExpirationStartDateFrom() == null &&
-//						a.getExpirationStartDateTo() == null &&
-//						a.getExpirationEndDateFrom() == null &&
-//						a.getExpirationStartDateTo() == null) {
-//						throw new GunmaRuntimeException("EOA10002", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
-//					}
-//					if (a.getExpirationStartDateFrom() != null &&
-//						a.getExpirationStartDateTo() != null) {
-//						if (a.getExpirationStartDateFrom().compareTo(a.getExpirationStartDateTo()) > 0) {
-//							throw new GunmaRuntimeException("EOA10003", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
-//						}
-//					}
-//					if (a.getExpirationEndDateFrom() != null &&
-//						a.getExpirationEndDateTo() != null) {
-//						if (a.getExpirationEndDateFrom().compareTo(a.getExpirationEndDateTo()) > 0) {
-//							throw new GunmaRuntimeException("EOA10003", "取引ロール " + a.getBizTranRoleCode() + "の条件指定");
-//						}
-//					}
-//				}
-//			}
-//		});
-//
-//		// その他 最終パスワード変更日のチェック
-//		if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getPasswordHistoryCheck())) {
-//			if (request.getPasswordHistoryLastChangeDate() == null) {
-//				throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の日数");
-//			}
-//
-//			if (request.getPasswordHistoryLastChangeDateStatus() == null ||
-//				request.getPasswordHistoryLastChangeDateStatus().length() == 0) {
-//				throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の変更有無");
-//			}
-//		}
-//
-//		// その他 最終サインイン試行日のチェック
-//		if (request.getSignintraceTrydateFrom() != null &&
-//			request.getSignintraceTrydateTo() != null) {
-//			if (request.getSignintraceTrydateFrom().compareTo(request.getSignintraceTrydateTo()) > 0) {
-//				throw new GunmaRuntimeException("EOA10003", "最終サインイン試行日");
-//			}
-//		}
-//
-//	}
 }

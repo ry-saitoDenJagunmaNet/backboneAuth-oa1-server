@@ -3,23 +3,36 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Presenter
  */
-public class Oa11010SearchPresenter {
+public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	private String operatorTable;
 	private String pagination;
+	private List<OperatorReferenceDto> OperatorReferenceDtos;
+
+	/**
+	 * オペレーター一覧の１ページ当たりの行数
+	 */
+	private final int PAGE_SIZE = 10;
 
 	/**
 	 * コンストラクタ
 	 */
-	Oa11010SearchPresenter() {
-	}
+	Oa11010SearchPresenter() {}
+
+	/**
+	 * オペレーター参照ＤｔｏのＳｅｔ
+	 * @param operatorReferenceDtos オペレーター参照Ｄｔｏ
+	 */
+	public void setOperatorReferenceDtos(List<OperatorReferenceDto> operatorReferenceDtos) { this.OperatorReferenceDtos = operatorReferenceDtos; }
 
 	/**
 	 * responseに変換
@@ -32,9 +45,10 @@ public class Oa11010SearchPresenter {
 
 	/**
 	 * オペレーターテーブルHtmlを生成します。
-	 * @param list オペレーターリスト
+	 * @param pageNo 対象ページ
 	 */
-	public void genOperatorTableHtml(List<OperatorReferenceDto> list) {
+	public void genOperatorTableHtml(int pageNo) {
+		List<OperatorReferenceDto> list = getPageList(pageNo);
 
 		StringBuffer html = new StringBuffer();
 
@@ -173,6 +187,16 @@ public class Oa11010SearchPresenter {
 	}
 
 	/**
+	 * 該当ページのオペレーター一覧を取得します。
+	 * @param pageNo 対象ページ
+	 * @return 該当ページのオペレーター一覧
+	 */
+	private List<OperatorReferenceDto> getPageList(int pageNo) {
+		int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
+		return OperatorReferenceDtos.stream().skip(skip).limit(10).collect(Collectors.toList());
+	}
+
+	/**
 	 * 取引ロール定義Htmlを生成します。
 	 * @param list オペレーター取引ロールリスト
 	 * @param operatorCode オペレーターコード
@@ -284,12 +308,12 @@ public class Oa11010SearchPresenter {
 
 	/**
 	 * Pagination Htmlを生成します。
-	 * @param maxPageNo 最大ページ番号
 	 * @param pageNo 表示ページ番号
 	 */
-	public void genPaginationHtml(int maxPageNo, int pageNo) {
+	public void genPaginationHtml(int pageNo) {
 
 		StringBuffer html = new StringBuffer();
+		int maxPageNo = getMaxPage();
 
 		if (pageNo == 1) {
 			html.append("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>");
@@ -312,5 +336,13 @@ public class Oa11010SearchPresenter {
 				.append(pageNo+1).append(");\">&gt;</a></li>");
 		}
 		pagination =  html.toString();
+	}
+
+	/**
+	 * オペレーター一覧の最終ページを取得します、
+	 * @return オペレーター一覧の最終ページ
+	 */
+	private int getMaxPage() {
+		return (int) Math.ceil((double)OperatorReferenceDtos.size() / PAGE_SIZE);
 	}
 }

@@ -1,8 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 
-import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.OperatorReferenceService;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import org.springframework.stereotype.Service;
@@ -36,11 +34,7 @@ public class Oa11010SearchService {
 		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
 		// オペレーターリスト取得
-		List<OperatorReferenceDto> list = operatorReferenceService.getOperatorList(converter);
-		// オペレーターテーブルHtmlを生成
-		presenter.genOperatorTableHtml(operatorReferenceService.getPageList(list, vo.getPageNo()));
-		// Pagination Htmlを生成
-		presenter.genPaginationHtml(operatorReferenceService.getMaxPage(list), vo.getPageNo());
+		operatorReferenceService.getOperators(converter, presenter);
 
 		presenter.bindTo(response);
 	}
