@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * サブシステムロールの列挙型
  */
-public enum SubSystemRole {
+public enum SubSystemRoleType {
 	JaAdmin("JA管理者","KB,YS,YF,HK,HM,AN"),
 	KbManager("業務統括者（購買）","KB"),
 	YsManager("業務統括者（販売・野菜）","YS"),
@@ -20,7 +20,7 @@ public enum SubSystemRole {
 	private final String subSystemRolename;
 	private final String subSystemCode;
 
-	private SubSystemRole(String subSystemRolename, String subSystemCode) {
+	private SubSystemRoleType(String subSystemRolename, String subSystemCode) {
 		this.subSystemRolename = subSystemRolename;
 		this.subSystemCode = subSystemCode;
 	}

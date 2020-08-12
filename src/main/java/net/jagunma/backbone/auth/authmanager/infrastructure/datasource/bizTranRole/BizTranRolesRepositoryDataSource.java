@@ -1,8 +1,7 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.BizTranRole;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.bizTranRole;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
@@ -18,6 +17,9 @@ public class BizTranRolesRepositoryDataSource implements BizTranRolesRepository 
 
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
+	/**
+	 * コンストラクタ
+	 */
 	BizTranRolesRepositoryDataSource(BizTranRoleEntityDao bizTranRoleEntityDao) {
 		this.bizTranRoleEntityDao = bizTranRoleEntityDao;
 	}
@@ -28,7 +30,7 @@ public class BizTranRolesRepositoryDataSource implements BizTranRolesRepository 
 	 * @return 取引ロール群
 	 */
 	@Override
-	public BizTranRoles findBy(BizTranRoleCriteria bizTranRoleCriteria) {
+	public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria) {
 		Orders orders = Orders.empty().addOrder("BizTranRoleCode");
 		List<BizTranRoleEntity> list = bizTranRoleEntityDao.findBy(bizTranRoleCriteria, orders);
 		return BizTranRoles.createFrom(list);
@@ -39,7 +41,7 @@ public class BizTranRolesRepositoryDataSource implements BizTranRolesRepository 
 	 * @return 取引ロール群
 	 */
 	@Override
-	public BizTranRoles findAll() {
+	public BizTranRoles selectAll() {
 		Orders orders = Orders.empty().addOrder("BizTranRoleCode");
 		return BizTranRoles.createFrom(bizTranRoleEntityDao.findAll(orders));
 	}

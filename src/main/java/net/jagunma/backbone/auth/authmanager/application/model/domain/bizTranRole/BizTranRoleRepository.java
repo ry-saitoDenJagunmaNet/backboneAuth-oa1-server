@@ -9,5 +9,5 @@ public interface BizTranRoleRepository {
 	 * @param bizTranRoleCriteria 取引ロールの検索条件
 	 * @return 取引ロール
 	 */
-	BizTranRole findBy(BizTranRoleCriteria bizTranRoleCriteria);
+	BizTranRole findOneBy(BizTranRoleCriteria bizTranRoleCriteria);
 }

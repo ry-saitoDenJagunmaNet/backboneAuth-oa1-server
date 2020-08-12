@@ -4,12 +4,14 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.application.model.types.ConditionsExpirationSelect;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
+import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
+
+//import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Converter
@@ -174,7 +176,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのＧｅｔ
 	 * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	public List<SubSystemReferenceDto> getBizTranRoleSubSystemList() { return arg.getBizTranRoleSubSystemList(); }
+	public List<SubSystem> getBizTranRoleSubSystemList() { return arg.getBizTranRoleSubSystemList(); }
 	/**
 	 * 取引ロール一覧のＧｅｔ
 	 * @return 取引ロール一覧

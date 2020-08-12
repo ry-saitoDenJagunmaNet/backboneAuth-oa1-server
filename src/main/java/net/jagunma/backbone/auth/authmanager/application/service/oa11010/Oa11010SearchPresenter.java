@@ -2,11 +2,13 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorBizTranRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operatorBizTranRole.Operator_BizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SearchResponseVo;
 
@@ -96,9 +98,9 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 				.append(o.getExpirationEndDateToStringFormat())
 				.append("</td>");
 
-			// サブシステムロール
-			if (o.getOperatorSubSystemRoleReferenceDtoList().size() == 0
-				&& o.getOperatorBizTranRoleReferenceDtoList().size() == 0) {
+			// サブシステムロール、取引ロール
+			if (o.getOperatorSubSystemRoleList().size() == 0
+				&& o.getOperatorBizTranRoleList().size() == 0) {
 				// サブシステムロール未設定
 				html.append(genOperatorSubSystemRoleBlankHtml());
 				// 取引ロール未設定
@@ -107,8 +109,8 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 				// オペレーターに紐付くサブシステムロール、取引ロールを設定
 				int is = 0;
 				for (int i = 0; true; i++) {
-					if (o.getOperatorSubSystemRoleReferenceDtoList().size() <= is
-						&& o.getOperatorBizTranRoleReferenceDtoList().size() == 0 ) {
+					if (o.getOperatorSubSystemRoleList().size() <= is
+						&& o.getOperatorBizTranRoleList().size() == 0 ) {
 						// オペレーターに紐付くサブシステムロール、取引ロールが無くなったら終了
 						break;
 					}
@@ -131,26 +133,27 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 						html.append("<td class=\"oaex_operator_expiration_date\"></td>");
 					}
 
-					if (o.getOperatorSubSystemRoleReferenceDtoList().size() > is) {
+					if (o.getOperatorSubSystemRoleList().size() > is) {
 						// サブシステムロール
 						html.append("<td class=\"oaex_operator_subsystem_role\">")
-							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getSubSystemRoleName())
+							.append(o.getOperatorSubSystemRoleList().get(is).getSubSystemRole().getSubSystemRoleName())
 							.append("</td>");
 						// サブシステムロール有効期限
 						html.append("<td class=\"oaex_operator_subsystem_role_expiration_date\">")
-							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getExpirationStartDateToStringFormat())
+							.append(formatLocalDate(o.getOperatorSubSystemRoleList().get(is).getExpirationStartDate()))
 							.append("～")
-							.append(o.getOperatorSubSystemRoleReferenceDtoList().get(is).getExpirationEndDateToStringFormat())
+							.append(formatLocalDate(o.getOperatorSubSystemRoleList().get(is).getExpirationEndDate()))
 							.append("</td>");
 
-						if (o.getOperatorBizTranRoleReferenceDtoList().size() == 0) {
+						if (o.getOperatorBizTranRoleList().size() == 0) {
 							// 取引ロール未設定
 							html.append(genOperatorBizTranRoleBlankHtml());
 						} else {
 							boolean ssfirst = true;
-							for(SubSystemReferenceDto ss : o.getOperatorSubSystemRoleReferenceDtoList().get(is).getSubSystemReferenceDtoList()) {
 								// サブシステムロールに紐付く取引ロール定義Htmlを生成
-								String BizTranRoleHtml = genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleReferenceDtoList()
+							for(SubSystem ss : o.getOperatorSubSystemRoleList().get(is).getSubSystemRole().getSubSystemList()) {
+								// サブシステムロールに紐付く取引ロール定義Htmlを生成
+								String BizTranRoleHtml = genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
 									, o.getOperatorCode()
 									, ss.getSubSystemCode()
 									, ssfirst);
@@ -169,11 +172,10 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 					} else {
 						// サブシステムロール未設定
 						html.append(genOperatorSubSystemRoleBlankHtml());
-
-						if (o.getOperatorBizTranRoleReferenceDtoList().size() > 0) {
+						if (o.getOperatorBizTranRoleList().size() > 0) {
 							boolean ssfirst = true;
 							// サブシステムロールに紐付かない取引ロール定義Htmlを生成
-							html.append(genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleReferenceDtoList()
+							html.append(genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
 								, o.getOperatorCode()
 								, ""
 								, ssfirst));
@@ -204,7 +206,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	 * @param isFirst 対象オペレーターで最初の定義（falseの時、空のオペレーター情報、サブシステムロール情報を表示）
 	 * @return 取引ロール定義Html
 	 */
-	private String genOperatorBizTranRoleHtml(List<OperatorBizTranRoleReferenceDto> list,
+	private String genOperatorBizTranRoleHtml(List<Operator_BizTranRole> list,
 		String operatorCode,
 		String subSystemCode,
 		boolean isFirst) {
@@ -213,14 +215,14 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 		if (list != null && list.size() > 0) {
 			boolean isFirstlocal = isFirst;
-			List<OperatorBizTranRoleReferenceDto> tempList = newArrayList();
+			List<Operator_BizTranRole> tempList = newArrayList();
 			if ("".equals(subSystemCode)) {
 				tempList.addAll(list);
 			} else {
-				list.stream().filter(obtrf -> obtrf.getSubSystemCode().equals(subSystemCode)).forEach(
+				list.stream().filter(obtr -> obtr.getBizTranRole().getSubSystemCode().equals(subSystemCode)).forEach(
 					tempList::add);
 			}
-			for(OperatorBizTranRoleReferenceDto obtr : tempList) {
+			for(Operator_BizTranRole obtr : tempList) {
 				if (!isFirstlocal) {
 					html.append("</tr>");
 					// オペレーター情報未設定
@@ -230,16 +232,16 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 				}
 				// 取引ロール
 				html.append("<td class=\"oaex_operator_biztran_role_code\">")
-					.append(obtr.getBizTranRoleCode())
+					.append(obtr.getBizTranRole().getBizTranRoleCode())
 					.append("</td>");
 				html.append("<td class=\"oaex_operator_biztran_role_name\">")
-					.append(obtr.getBizTranRoleName())
+					.append(obtr.getBizTranRole().getBizTranRoleName())
 					.append("</td>");
 				// 取引ロール有効期限
 				html.append("<td class=\"oaex_operator_biztran_role_expiration_date\">")
-					.append(obtr.getExpirationStartDateToStringFormat())
+					.append(formatLocalDate(obtr.getExpirationStartDate()))
 					.append("～")
-					.append(obtr.getExpirationEndDateToStringFormat())
+					.append(formatLocalDate(obtr.getExpirationEndDate()))
 					.append("</td>");
 				isFirstlocal = false;
 
@@ -344,5 +346,17 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	 */
 	private int getMaxPage() {
 		return (int) Math.ceil((double)OperatorReferenceDtos.size() / PAGE_SIZE);
+	}
+
+	/**
+	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 * @param localDt フォーマット対象の日付
+	 * @return フォ－マットした日付
+	 */
+	private String formatLocalDate(LocalDate localDt) {
+		if (localDt == null) {
+			return "";
+		}
+		return localDt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 	}
 }

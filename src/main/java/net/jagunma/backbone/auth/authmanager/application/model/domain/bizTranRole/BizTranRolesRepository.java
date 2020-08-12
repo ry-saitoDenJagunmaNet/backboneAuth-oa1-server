@@ -10,10 +10,10 @@ public interface BizTranRolesRepository {
 	 * @param bizTranRoleCriteria 取引ロールの検索条件
 	 * @return 取引ロール群
 	 */
-	BizTranRoles findBy(BizTranRoleCriteria bizTranRoleCriteria);
+	BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria);
 	/**
 	 * 取引ロールの全件検索を行います。
 	 * @return 取引ロール群
 	 */
-	BizTranRoles findAll();
+	BizTranRoles selectAll();
 }

@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.BizTranRole;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.bizTranRole;
 
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoleCriteria;
@@ -15,6 +15,9 @@ public class BizTranRoleRepositoryDataSource implements BizTranRoleRepository {
 
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
+	/**
+	 * コンストラクタ
+	 */
 	public BizTranRoleRepositoryDataSource(BizTranRoleEntityDao bizTranRoleEntityDao) {
 		this.bizTranRoleEntityDao = bizTranRoleEntityDao;
 	}
@@ -25,7 +28,7 @@ public class BizTranRoleRepositoryDataSource implements BizTranRoleRepository {
 	 * @return 取引ロール
 	 */
 	@Override
-	public BizTranRole findBy(BizTranRoleCriteria bizTranRoleCriteria) {
+	public BizTranRole findOneBy(BizTranRoleCriteria bizTranRoleCriteria) {
 		BizTranRoleEntity bizTranRoleEntity = bizTranRoleEntityDao.findOneBy(bizTranRoleCriteria);
 		return BizTranRole.of(bizTranRoleEntity);
 	}

@@ -1,10 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
-
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystem;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystemsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,33 +13,38 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SubSystemReferenceService {
 
+	private final SubSystemsRepository subSystemsRepository;
+	
 	/**
 	 * コンストラクタ
 	 */
-	public SubSystemReferenceService() {
+	public SubSystemReferenceService(SubSystemsRepository subSystemsRepository) {
+		this.subSystemsRepository = subSystemsRepository;
 	}
 
-	/**
-	 * サブシステムリストを取得します。
-	 * @return サブシステムリスト
-	 */
-	public List<SubSystemReferenceDto> getSubSystemList() {
-		List<SubSystemReferenceDto> list = newArrayList();
-
-		for(SubSystem sybsysrem : SubSystem.values()) {
-			//System.out.println(sybsysrem.getSubSystemName() + "," + sybsysrem.name() + "," + sybsysrem.ordinal());
-			list.add(new SubSystemReferenceDto(sybsysrem.name(), sybsysrem.getSubSystemName()));
-		}
-		return list;
-	}
+//	/**
+//	 * サブシステムリストを取得します。
+//	 * @return サブシステムリスト
+//	 */
+//	public List<SubSystemReferenceDto> getSubSystemList() {
+//		List<SubSystemReferenceDto> list = newArrayList();
+//
+//		for(SubSystemType sybsysrem : SubSystemType.values()) {
+//			//System.out.println(sybsysrem.getSubSystemName() + "," + sybsysrem.name() + "," + sybsysrem.ordinal());
+//			list.add(new SubSystemReferenceDto(sybsysrem.name(), sybsysrem.getSubSystemName()));
+//		}
+//		return list;
+//	}
 
 	/***
 	 * コンボボックス用のリストを取得します。
 	 * @return コンボボックス用のリスト
 	 */
-	public List<SubSystemReferenceDto> getComboBoxList() {
-		List<SubSystemReferenceDto> list = getSubSystemList();
-		list.add(0, new SubSystemReferenceDto("", ""));
+	public List<SubSystem> getComboBoxList() {
+		//List<SubSystemReferenceDto> list = getSubSystemList();
+		//list.add(0, new SubSystemReferenceDto("", ""));
+		List<SubSystem> list = subSystemsRepository.selectAll().getValues();
+		list.add(0, SubSystem.empty());
 
 //		List<SubSystemDto> list = newArrayList();
 //		list.add(new SubSystemDto("", ""));

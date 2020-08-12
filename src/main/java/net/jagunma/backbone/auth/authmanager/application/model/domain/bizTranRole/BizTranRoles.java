@@ -12,8 +12,11 @@ import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
  */
 public class BizTranRoles {
 
-	private ArrayList<BizTranRole> list = newArrayList();
+	private final ArrayList<BizTranRole> list = newArrayList();
 
+	/**
+	 * コンストラクタ
+	 */
 	BizTranRoles(Collection<BizTranRole> collection) {
 		this.list.addAll(collection);
 	}
@@ -25,13 +28,13 @@ public class BizTranRoles {
 	 * @return 取引ロール群
 	 */
 	public static BizTranRoles createFrom(List<BizTranRoleEntity> bizTranRoleList) {
-		List<BizTranRole> BizTranRoles = new ArrayList<>();
+		List<BizTranRole> bizTranRoles = new ArrayList<>();
 
 		bizTranRoleList.forEach(d -> {
 			BizTranRole bizTranRole = BizTranRole.of(d);
-			BizTranRoles.add(bizTranRole);
+			bizTranRoles.add(bizTranRole);
 		});
-		return new BizTranRoles(BizTranRoles);
+		return new BizTranRoles(bizTranRoles);
 	}
 
 	public List<BizTranRole> getValues() {

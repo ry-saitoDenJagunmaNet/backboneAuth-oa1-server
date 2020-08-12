@@ -9,14 +9,17 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class BizTranRole {
 
-	private BizTranRoleEntity bizTranRoleEntity;
+	private final BizTranRoleEntity bizTranRoleEntity;
 
+	/**
+	 * コンストラクタ
+	 */
 	BizTranRole(BizTranRoleEntity bizTranRoleEntity) {
 		this.bizTranRoleEntity = bizTranRoleEntity;
 	}
 
-	/**
-	 * コンストラクタ
+	/*
+	 * ファクトリメソッド
 	 */
 	public static BizTranRole of(BizTranRoleEntity bizTranRoleEntity) {
 		return new BizTranRole(bizTranRoleEntity);
@@ -88,10 +91,9 @@ public class BizTranRole {
 
 	/**
 	 * リポジトリ用のEntityGetterです
-	 * <strong>
 	 *
 	 * @return リポジトリ間で使用するDBEntity
-	 * @implNote 項目を取得する目的では使用しないでください <strong/>
+	 * @implNote 項目を取得する目的では使用しないでください
 	 */
 	public BizTranRoleEntity getBizTranRoleEntityForRepository() {
 		return bizTranRoleEntity;

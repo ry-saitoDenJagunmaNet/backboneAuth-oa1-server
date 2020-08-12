@@ -4,13 +4,14 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystemRole.SubSystemRole;
+//import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+//import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 
 /**
  * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
@@ -25,7 +26,8 @@ class Oa11010InitPresenter {
 	private Integer subSystemRoleConditionsSelect;
 	private List<Oa11010SubSystemRoleVo> subSystemRoleList;
 	private Integer bizTranRoleConditionsSelect;
-	private List<SubSystemReferenceDto> bizTranRoleSubSystemList;
+//	private List<SubSystemReferenceDto> bizTranRoleSubSystemList;
+	private List<SubSystem> bizTranRoleSubSystemList;
 	private List<Oa11010BizTranRoleVo> bizTranRoleList;
 
 	Oa11010InitPresenter() {
@@ -76,7 +78,8 @@ class Oa11010InitPresenter {
 	 * 取引ロールサブシステムコンボボックスリストのＳｅｔ
 	 * @param bizTranRoleSubSystemList 取引ロールサブシステムコンボボックスリスト
 	 */
-	public void setBizTranRoleSubSystemList(List<SubSystemReferenceDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+//	public void setBizTranRoleSubSystemList(List<SubSystemReferenceDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+	public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
 
 	/**
 	 * responseに変換
@@ -101,10 +104,12 @@ class Oa11010InitPresenter {
 	 *
 	 * @param subSystemRoles サブシステムロールＤｔｏリスト
 	 */
-	public void getSubsystemRoleList(List<SubSystemRoleReferenceDto> subSystemRoles) {
+	public void getSubsystemRoleList(List<SubSystemRole> subSystemRoles) {
+//	public void getSubsystemRoleList(List<SubSystemRoleReferenceDto> subSystemRoles) {
 
 		List<Oa11010SubSystemRoleVo> list = newArrayList();
-		for(SubSystemRoleReferenceDto subSystemRole : subSystemRoles) {
+//		for(SubSystemRoleReferenceDto subSystemRole : subSystemRoles) {
+		for(SubSystemRole subSystemRole : subSystemRoles) {
 			Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
 			item.setSubSystemRoleSelected((short) 0);
 			item.setSubSystemRoleId(0);

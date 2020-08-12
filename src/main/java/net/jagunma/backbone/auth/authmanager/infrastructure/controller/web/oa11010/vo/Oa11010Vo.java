@@ -2,10 +2,9 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
 
@@ -101,7 +100,7 @@ public class Oa11010Vo extends BaseOfResponseVo {
 	/**
 	 * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	private List<SubSystemReferenceDto> bizTranRoleSubSystemList;
+	private List<SubSystem> bizTranRoleSubSystemList;
 	/**
 	 * 取引ロール一覧
 	 */
@@ -229,8 +228,8 @@ public class Oa11010Vo extends BaseOfResponseVo {
 	public void setBizTranRoleConditionsSelect(Integer bizTranRoleConditionsSelect) { this.bizTranRoleConditionsSelect = bizTranRoleConditionsSelect; }
 	public String getBizTranRoleSubSystemCode() { return bizTranRoleSubSystemCode; }
 	public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) { this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode; }
-	public List<SubSystemReferenceDto> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
-	public void setBizTranRoleSubSystemList(List<SubSystemReferenceDto> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+	public List<SubSystem> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
+	public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
 	public List<Oa11010BizTranRoleVo> getBizTranRoleList() { return bizTranRoleList; }
 	public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) { this.bizTranRoleList = bizTranRoleList; }
 
