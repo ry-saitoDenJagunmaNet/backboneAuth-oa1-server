@@ -2,6 +2,16 @@
 let _isThymeleaf = false;
 
 /**
+ * 画面ロード時のイベントです。
+ */
+window.addEventListener('load', function() {
+    let message = document.getElementById("message").value;
+	if (message != null && message.length > 0) {
+		oa_showAlert(message);
+	}
+})
+
+/**
  * サーバーにFORMオブジェクトを送信します。
  * @param {String} url リクエスト先URL
  * @param {Json} formObj リクエスト送信するFORMオブジェクト
@@ -13,10 +23,18 @@ function oa_th_sendFormData(url, formObj) {
 
 	if(xhr.readyState === 4 && xhr.status === 200) {
 		// 正常
+		let result = JSON.parse(xhr.responseText);
+		//if (typeof result.message !== "undefined" && result.message != null && result.message.length > 0) {
+		if (result.message != null && result.message.length > 0) {
+			oa_showAlert(result.message);
+			return null;
+		}
 		return xhr;
+
 	} else {
 		// 異常
-		alert(xhr.responseText);
+		//alert(xhr.responseText);
+		oa_showAlert(xhr.responseText);
 		return null;
 	}
 }
@@ -426,7 +444,7 @@ function oa_n2br(val) {
  */
 function oa_showAlert(msg) {
 	msg = oa_n2br(msg);
-	document.getElementById("alertMesage").innerHTML = msg;
+	document.getElementById("alertMessage").innerHTML = msg;
 	document.getElementById("btnShowAlert").click();
 }
 
@@ -446,7 +464,7 @@ function oa_showConfirm(msg, func) {
 	};
 
     msg = oa_n2br(msg);
-	document.getElementById("confirmMesage").innerHTML = msg;
+	document.getElementById("confirmMessage").innerHTML = msg;
 	document.getElementById("btnShowConfirm").click();
 }
 
@@ -514,12 +532,12 @@ function oa_getParam(key) {
 /**
  * メッセージダイアログを取得（作成）します。
  */
-function oa_getMassageDialog() {
+function oa_getMessageDialog() {
 	let html = '';
     html += '<div>';
     html += '   <button class="modal-trigger" id="btnShowAlert" data-target="alert" style="display: none;">alert</button>';
     html += '   <div id="alert" class="modal">';
-    html += '       <div class="modal-content" id="alertMesage"></div>';
+    html += '       <div class="modal-content" id="alertMessage"></div>';
     html += '       <div class="modal-footer">';
     html += '           <a href="#!" class="modal-close btn waves-effect waves-light btn">OK</a>';
     html += '       </div>';
@@ -527,7 +545,7 @@ function oa_getMassageDialog() {
 
     html += '   <button class="modal-trigger" id="btnShowConfirm" data-target="confirm" style="display: none;">alert</button>';
     html += '   <div id="confirm" class="modal">';
-    html += '       <div class="modal-content" id="confirmMesage"></div>';
+    html += '       <div class="modal-content" id="confirmMessage"></div>';
     html += '       <div class="modal-footer">';
     html += '           <a href="#!" class="modal-close btn waves-effect waves-light btn" id="confirmOKOnClick">OK</a>';
     html += '           <a href="#!" class="modal-close btn waves-effect waves-light btn" id="confirmCancelOnClick">キャンセル</a>';
@@ -555,6 +573,6 @@ function oa_getHeader(id, title, isThymeleaf) {
     html += '	<img class="responsive-img" src="' + imgUrl + id.toLowerCase() + '.png" alt="' + title + '"/>';
     html += '	<span>' + title + '</span>';
     html += '</div>';
-    
+
     document.write(html);
 }

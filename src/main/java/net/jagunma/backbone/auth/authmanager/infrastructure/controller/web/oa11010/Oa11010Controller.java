@@ -9,6 +9,7 @@ import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +50,9 @@ public class Oa11010Controller {
 	private final Oa11010InitService oa11010InitService;
 	private final Oa11010SearchService oa11010SearchService;
 
+	/**
+	 * コンストラクタ
+	 */
 	public Oa11010Controller(Oa11010InitService oa11010InitService,
 		Oa11010SearchService oa11010SearchService) {
 		this.oa11010InitService = oa11010InitService;
@@ -64,40 +67,57 @@ public class Oa11010Controller {
 	 */
 	@GetMapping(path = "/get")
 	private String get(Model model) {
-		//TODO: パラメータでサインインオペレータの情報を取得する
-		//AuditInfoHolder.
+		//TODO: パラメータでサインインオペレーターの情報を取得する
+		//AuditInfoHolder
 
-		Oa11010Vo response = new Oa11010Vo();
+		Oa11010Vo vo = new Oa11010Vo();
+		try {
 
-		Oa11010InitPresenter presenter = new Oa11010InitPresenter();
-		oa11010InitService.initForm(presenter);
+			// 画面を初期化
+			oa11010InitService.init(vo);
 
-		presenter.bindTo(response);
+			model.addAttribute("form", vo);
+			return "oa11010";
 
-		model.addAttribute("form", response);
-		return "oa11010";
+		} catch (GunmaRuntimeException gre) {
+			// 業務例外が発生した場合
+			vo.setExceptionMessage(gre);
+			model.addAttribute("form", vo);
+			return "oa11010";
+		} catch (RuntimeException re) {
+			// その他予期せぬ例外が発生した場合
+			model.addAttribute("form", vo);
+			vo.setExceptionMessage(re);
+			return "oa11010";
+		}
 	}
 
 	/**
 	 * オペレーター検索処理を行います。
 	 *
-	 * @param oa11010Vo 検索条件（form json）
+	 * @param vo 検索条件（form json）
 	 * @return オペレーター検索結果
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Oa11010SearchResponseVo> search(
-		@ModelAttribute("Oa11010SearchRequestDto") Oa11010Vo oa11010Vo) {
-		System.out.println("### pageno=" + oa11010Vo.getPageNo());
+	public ResponseEntity<Oa11010SearchResponseVo> search(Oa11010Vo vo) {
 
-		Oa11010SearchResponseVo response = new Oa11010SearchResponseVo();
-		Oa11010SearchConverter converter = Oa11010SearchConverter.with(oa11010Vo);
-		Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+		Oa11010SearchResponseVo responseVo = new Oa11010SearchResponseVo();
+		try {
 
-		//オぺレーター検索してオぺレーターテーブルHtmlを作成
-		oa11010SearchService.search(converter, presenter);
+			//オぺレーター検索してオぺレーターテーブルHtmlを作成
+			oa11010SearchService.search(vo, responseVo);
 
-		presenter.bindTo(response);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+
+		} catch (GunmaRuntimeException gre) {
+			// 業務例外が発生した場合
+			responseVo.setExceptionMessage(gre);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+		} catch (RuntimeException re) {
+			// その他予期せぬ例外が発生した場合
+			responseVo.setExceptionMessage(re);
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+		}
 	}
 }

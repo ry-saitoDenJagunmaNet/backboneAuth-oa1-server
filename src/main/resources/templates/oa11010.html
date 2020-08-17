@@ -13,17 +13,19 @@
 	<script src="../static/js/oa11010.js" th:src="@{/js/oa11010.js}"></script>
 </head>
 <body th:onLoad="oaex_th_onload();">
-<form method="post" action="search">
+<form>
 
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<div th:replace="include/messageDialog :: messageDialog"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa11010");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11010", "オペレーター＜一覧＞");</script>
+		<script th:remove="all">oa_getHeader("oa11010", "オペレーター＜一覧＞");</script>
+		<div th:replace="include/header :: header (id='oa11010', title='オペレーター＜一覧＞')"></div>
 	</header>
 
 	<!-- main定義 -->
@@ -45,7 +47,7 @@
 					<div class="input-field">
 						<select id="tempo" name="tempoCode" class="validate"
 								th:value="${form.tempoCode}">
-							<option th:each="item  : ${form.tempoList}"
+							<option th:each="item  : ${form.tempoReferenceDtoList}"
 									th:value="${item.tempoCode}"
 									th:text="${item.tempoName}"
 									th:selected="${form.tempoCode == item.tempoCode}"></option>
@@ -220,18 +222,18 @@
 						<div class="row">
 							<div class="col s12">
 								<label>
-									<input type="radio" id="subsystem_role_sel_non" name="subsystemRoleConditionsSelect" value="0" onchange="oaex_subsystem_role_sel_onChange();"
-										   th:checked="${form.subsystemRoleConditionsSelect == 0}"></input>
+									<input type="radio" id="subsystem_role_sel_non" name="subSystemRoleConditionsSelect" value="0" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subSystemRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_and" name="subsystemRoleConditionsSelect" value="1" onchange="oaex_subsystem_role_sel_onChange();"
-										   th:checked="${form.subsystemRoleConditionsSelect == 1}"></input>
+									<input type="radio" id="subsystem_role_sel_and" name="subSystemRoleConditionsSelect" value="1" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subSystemRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_or" name="subsystemRoleConditionsSelect" value="2" onchange="oaex_subsystem_role_sel_onChange();"
-										   th:checked="${form.subsystemRoleConditionsSelect == 2}"></input>
+									<input type="radio" id="subsystem_role_sel_or" name="subSystemRoleConditionsSelect" value="2" onchange="oaex_subsystem_role_sel_onChange();"
+										   th:checked="${form.subSystemRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
 							</div>
@@ -260,30 +262,30 @@
 								<div class="oaex_subsystem_role_table" onScroll="oa_linkageScrollX(this, 'subsystem_role_head')">
 									<table id="subsystem_role" class="highlight">
 										<tbody>
-											<tr th:each="itemrow, iterStat : *{form.subsystemRoleList}">
+											<tr th:each="itemrow, iterStat : *{form.subSystemRoleList}">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox" value="1"
-															   th:name="'subsystemRoleList['+${iterStat.index}+'].subsystemRoleSelected'"
-															   th:checked="${itemrow.subsystemRoleSelected == 1}"/>
+															   th:name="'subSystemRoleList['+${iterStat.index}+'].subSystemRoleSelected'"
+															   th:checked="${itemrow.subSystemRoleSelected == 1}"/>
 														<span></span>
 													</label>
 													<input type="hidden"
-														   th:field="*{form.subsystemRoleList[__${iterStat.index}__].subsystemRoleCode}"></input>
+														   th:field="*{form.subSystemRoleList[__${iterStat.index}__].subSystemRoleCode}"></input>
 													<input type="hidden"
-														   th:field="*{form.subsystemRoleList[__${iterStat.index}__].subsystemRoleName}"></input>
+														   th:field="*{form.subSystemRoleList[__${iterStat.index}__].subSystemRoleName}"></input>
 												</td>
 												<td class="oaex_subsystem_role_subsystem_role_code"
-													th:text="${itemrow.subsystemRoleCode}">
+													th:text="${itemrow.subSystemRoleCode}">
 												</td>
 												<td class="oaex_subsystem_role_subsystem_role_name"
-													th:text="${itemrow.subsystemRoleName}">
+													th:text="${itemrow.subSystemRoleName}">
 												</td>
 												<td class="oaex_subsystem_role_expiration_sel_non">
 													<label>
 														<input type="radio" value="0"
 															   th:id="'subsystem_role_expiration_sel_non['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 0}"
 															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>指定なし</span>
@@ -293,7 +295,7 @@
 													<label>
 														<input type="radio" value="1"
 															   th:id="'subsystem_role_expiration_sel_status['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 1}"
 															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>状態指定日</span>
@@ -303,7 +305,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'subsystem_role_expiration_status_date['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
 														<label th:for="'+subsystem_role_expiration_status_date['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -311,7 +313,7 @@
 													<label>
 														<input type="radio" value="2"
 															   th:id="'subsystem_role_expiration_sel_conditions['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 2}"
 															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>条件指定</span>
@@ -321,7 +323,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
 														<label th:for="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -330,7 +332,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
 														<label th:for="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -338,7 +340,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
 														<label th:for="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -347,7 +349,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.subsystemRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
 														<label th:for="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -611,18 +613,18 @@
 						<div class="row">
 							<div class="col s5">
 								<label>
-									<input type="radio" id="biztran_role_sel_non" name="biztran_role_sel" value="0" onchange="oaex_biztran_role_sel_onChange();"
-										   th:checked="${form.biztranRoleConditionsSelect == 0}"></input>
+									<input type="radio" id="biztran_role_sel_non" name="bizTranRoleConditionsSelect" value="0" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.bizTranRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_and" name="biztran_role_sel" value="1" onchange="oaex_biztran_role_sel_onChange();"
-										   th:checked="${form.biztranRoleConditionsSelect == 1}"></input>
+									<input type="radio" id="biztran_role_sel_and" name="bizTranRoleConditionsSelect" value="1" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.bizTranRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_or" name="biztran_role_sel" value="2" onchange="oaex_biztran_role_sel_onChange();"
-										   th:checked="${form.biztranRoleConditionsSelect == 2}"></input>
+									<input type="radio" id="biztran_role_sel_or" name="bizTranRoleConditionsSelect" value="2" onchange="oaex_biztran_role_sel_onChange();"
+										   th:checked="${form.bizTranRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
 							</div>
@@ -631,12 +633,12 @@
 							</div>
 							<div class="col s4">
 								<div class="input-field">
-									<select id="subsystem_filter" name="subsystemRoleSubsystemCode" class="validate"
-											th:value="${form.subsystemRoleSubsystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
-										<option th:each="item  : ${form.subsystemRoleSubsystemList}"
+									<select id="subsystem_filter" name="subSystemRoleSubSystemCode" class="validate"
+											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
+										<option th:each="item  : ${form.bizTranRoleSubSystemList}"
 												th:value="${item.subSystemCode}"
 												th:text="${item.subSystemName}"
-												th:selected="${form.subsystemRoleSubsystemCode == item.subSystemCode}"></option>
+												th:selected="${form.bizTranRoleSubSystemCode == item.subSystemCode}"></option>
 										<option value="" th:remove="all"></option>
 										<option value="KB" th:remove="all">購買</option>
 										<option value="YS" th:remove="all">販売・青果</option>
@@ -673,30 +675,30 @@
 								<div class="oaex_biztran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_head')">
 									<table id="biztran_role" class="highlight">
 										<tbody>
-											<tr th:each="itemrow, iterStat : *{form.biztranRoleList}">
+											<tr th:each="itemrow, iterStat : *{form.bizTranRoleList}">
 												<td class="oaex_biztran_role_check">
 													<label class="oa_non_label_checkbox">
 														<input type="checkbox" value="1"
-															   th:id="'biztranRoleList['+${iterStat.index}+'].biztranRoleSelected'"
-															   th:name="'biztranRoleList['+${iterStat.index}+'].biztranRoleSelected'"
-															   th:checked="${itemrow.biztranRoleSelected == 1}"/>
+															   th:id="'bizTranRoleList['+${iterStat.index}+'].bizTranRoleSelected'"
+															   th:name="'bizTranRoleList['+${iterStat.index}+'].bizTranRoleSelected'"
+															   th:checked="${itemrow.bizTranRoleSelected == 1}"/>
 														<span></span>
 													</label>
 													<!-- POST用にコード、名称を定義 -->
 													<input type="hidden"
-														   th:field="*{form.biztranRoleList[__${iterStat.index}__].biztranRoleCode}"></input>
+														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].bizTranRoleCode}"></input>
 													<input type="hidden"
-														   th:field="*{form.biztranRoleList[__${iterStat.index}__].biztranRoleName}"></input>
+														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].bizTranRoleName}"></input>
 													<input type="hidden"
-														   th:field="*{form.biztranRoleList[__${iterStat.index}__].subSystemCode}"></input>
+														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].subSystemCode}"></input>
 												</td>
-												<td class="oaex_biztran_role_biztran_role_code" th:text="${itemrow.biztranRoleCode}"></td>
-												<td class="oaex_biztran_role_biztran_role_name" th:text="${itemrow.biztranRoleName}"></td>
+												<td class="oaex_biztran_role_biztran_role_code" th:text="${itemrow.bizTranRoleCode}"></td>
+												<td class="oaex_biztran_role_biztran_role_name" th:text="${itemrow.bizTranRoleName}"></td>
 												<td class="oaex_biztran_role_expiration_sel_non">
 													<label>
 														<input type="radio" value="0"
 															   th:id="'biztran_role_expiration_sel_non['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 0}"
 															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>指定なし</span>
@@ -706,7 +708,7 @@
 													<label>
 														<input type="radio" value="1"
 															   th:id="'biztran_role_expiration_sel_status['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 1}"
 															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>状態指定日</span>
@@ -716,7 +718,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'biztran_role_expiration_status_date['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
 														<label th:for="'+biztran_role_expiration_status_date['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -724,7 +726,7 @@
 													<label>
 														<input type="radio" value="2"
 															   th:id="'biztran_role_expiration_sel_conditions['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationSelect}"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
 															   th:checked="${itemrow.expirationSelect == 2}"
 															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
 														<span>条件指定</span>
@@ -734,7 +736,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'biztran_role_expiration_start_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
 														<label th:for="'+biztran_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -743,7 +745,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'biztran_role_expiration_start_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
 														<label th:for="'+biztran_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -751,7 +753,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'biztran_role_expiration_end_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
 														<label th:for="'+biztran_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -760,7 +762,7 @@
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
 															   th:id="'biztran_role_expiration_end_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.biztranRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
 														<label th:for="'+biztran_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
@@ -1387,12 +1389,22 @@
 		<section>
 			<div class="row">
 				<div class="col s12">
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')">オペレーター履歴確認</a>
+
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11100')" th:remove="all">オペレーター履歴確認</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')" th:remove="all">アカウントロック照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')" th:remove="all">パスワード変更履歴照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')" th:remove="all">サインイン証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11130')" th:remove="all">サービス呼出証跡照会</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')" th:remove="all">サブシステムロール付与</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')" th:remove="all">取引ロール付与</a>
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')" th:remove="all">パスワードリセット</a>
+
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_th_oa11100Btn_onClick();">オペレーター履歴確認</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')">パスワード変更履歴照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11120')">サインイン証跡照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11130')">サービス呼出証跡照会</a>
-					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a> 
+					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')">取引ロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')">パスワードリセット</a>
 				</div>

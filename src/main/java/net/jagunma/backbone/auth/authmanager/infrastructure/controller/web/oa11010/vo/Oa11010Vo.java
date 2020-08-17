@@ -2,42 +2,22 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemDto;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoDto;
-import net.jagunma.common.server.annotation.FeatureGroupInfo;
-import net.jagunma.common.server.annotation.FeatureInfo;
-import net.jagunma.common.server.annotation.ServiceInfo;
-import net.jagunma.common.server.annotation.SubSystemInfo;
-import net.jagunma.common.server.annotation.SystemInfo;
-import org.springframework.stereotype.Controller;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
 
 /**
- * OA11010検索リクエスト
- *
- * <pre>
- * -------------------------------------------------
- * システム：O 業務共通システム
- * サブシステム：OA 基幹系認証管理サブシステム
- * 機能グループID：OA1
- * 機能グループ名：管理WEB
- * 機能ID：OA11010
- * 機能名：オペレーター＜一覧＞
- * サービスID：OA11010
- * サービス名：OA11010サービス
- * -------------------------------------------------
- * </pre>
+ * OA11010 View Object
  */
-@SystemInfo(id = "O", name = "業務共通システム")
-@SubSystemInfo(id = "OA", name = "基幹系認証管理サブシステム")
-@FeatureGroupInfo(id = "OA1", name = "管理WEB")
-@FeatureInfo(id = "OA11010", name = "オペレーター＜一覧＞")
-@ServiceInfo(id = "OA11010", name = "OA11010サービス")
-@Controller
-public class Oa11010Vo implements Serializable {
+public class Oa11010Vo extends BaseOfResponseVo {
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * チェックボックスのチェックtrue状態値
+	 */
+	public static final Short CHECKBOX_TRUE  = 1;
 
 	/**
 	 * ＪＡ
@@ -54,7 +34,7 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 店舗コンボボックスリスト
 	 */
-	private List<TempoDto> tempoList;
+	private List<TempoReferenceDto> tempoReferenceDtoList;
 	/**
 	 * オペレーターコード
 	 */
@@ -70,11 +50,11 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 利用可否状態 利用可能
 	 */
-	private Integer availableStatus0;
+	private Short availableStatus0;
 	/**
 	 * 利用可否状態 利用不可
 	 */
-	private Integer availableStatus1;
+	private Short availableStatus1;
 	/**
 	 * 有効期限選択
 	 * */
@@ -103,37 +83,37 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * サブシステムロール条件選択
 	 */
-	private Integer subsystemRoleConditionsSelect;
+	private Integer subSystemRoleConditionsSelect;
 	/**
 	 * サブシステムロール一覧
 	 */
-	private List<Oa11010SubsystemRoleVo> subsystemRoleList;
+	private List<Oa11010SubSystemRoleVo> subSystemRoleList;
 
 	/**
 	 * 取引ロール条件選択
 	 */
-	private Integer biztranRoleConditionsSelect;
+	private Integer bizTranRoleConditionsSelect;
 	/**
-	 * サブシステムロールサブシステムコード
+	 * 取引ロール一覧フィルター用サブシステムコード
 	 */
-	private String subsystemRoleSubsystemCode;
+	private String bizTranRoleSubSystemCode;
 	/**
-	 * サブシステムロールサブシステムコンボボックスリスト
+	 * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	private List<SubSystemDto> subsystemRoleSubsystemList;
+	private List<SubSystem> bizTranRoleSubSystemList;
 	/**
 	 * 取引ロール一覧
 	 */
-	private List<Oa11010BiztranRoleVo> biztranRoleList;
+	private List<Oa11010BizTranRoleVo> bizTranRoleList;
 
 	/**
 	 * 機器認証使用
 	 */
-	private Integer deviceAuthUse;
+	private Short deviceAuthUse;
 	/**
 	 * 機器認証未使用
 	 */
-	private Integer deviceAuthUnuse;
+	private Short deviceAuthUnuse;
 	/**
 	 * 最終ロック・アンロック発生日（開始日）
 	 */
@@ -145,15 +125,15 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 現在ロック状態ロック
 	 */
-	private Integer accountLockStatusLock;
+	private Short accountLockStatusLock;
 	/**
 	 * 現在ロック状態アンロック
 	 */
-	private Integer accountLockStatusUnlock;
+	private Short accountLockStatusUnlock;
 	/**
 	 * 最終パスワード変更日チェック
 	 */
-	private Integer passwordHistoryCheck;
+	private Short passwordHistoryCheck;
 	/**
 	 * 最終パスワード変更日数
 	 */
@@ -165,19 +145,19 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 最終パスワード変更種別初期
 	 */
-	private Integer passwordHistoryChangeType0;
+	private Short passwordHistoryChangeType0;
 	/**
 	 * 最終パスワード変更種別ユーザによる変更
 	 */
-	private Integer passwordHistoryChangeType1;
+	private Short passwordHistoryChangeType1;
 	/**
 	 * 最終パスワード変更種別管理者によるリセット
 	 */
-	private Integer passwordHistoryChangeType2;
+	private Short passwordHistoryChangeType2;
 	/**
 	 * 最終パスワード変更種別機器認証パスワード
 	 */
-	private Integer passwordHistoryChangeType3;
+	private Short passwordHistoryChangeType3;
 	/**
 	 * 最終サインオペレーション試行日（開始日）
 	 */
@@ -193,18 +173,18 @@ public class Oa11010Vo implements Serializable {
 	/**
 	 * 最終サインオペレーションサインイン
 	 */
-	private Integer signintraceSignIn;
+	private Short signintraceSignIn;
 	/**
 	 * 最終サインオペレーションサインアウト
 	 */
-	private Integer signintraceSignOut;
+	private Short signintraceSignOut;
 	/**
 	 * 最終サインオペレーションサインイン結果
 	 */
-	private Integer[] signintraceSignInResult;
+	private Short[] signintraceSignInResult;
 
 	/**
-	 * オペレータ一覧表示ページ
+	 * オペレーター一覧表示ページ
 	 */
 	private int pageNo;
 
@@ -214,18 +194,18 @@ public class Oa11010Vo implements Serializable {
 	public void setJaId(long jaId) { this.jaId = jaId; }
 	public String getTempoCode() { return tempoCode; }
 	public void setTempoCode(String tempoCode) { this.tempoCode = tempoCode; }
-	public List<TempoDto> getTempoList() { return tempoList; }
-	public void setTempoList(List<TempoDto> tempoList) { this.tempoList = tempoList; }
+	public List<TempoReferenceDto> getTempoReferenceDtoList() { return tempoReferenceDtoList; }
+	public void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList) { this.tempoReferenceDtoList = tempoReferenceDtoList; }
 	public String getOperatorCode() { return operatorCode; }
 	public void setOperatorCode(String operatorCode) { this.operatorCode = operatorCode; }
 	public String getOperatorName() { return operatorName; }
 	public void setOperatorName(String operatorName) { this.operatorName = operatorName; }
 	public String getMailAddress() { return mailAddress; }
 	public void setMailAddress(String mailAddress) { this.mailAddress = mailAddress; }
-	public Integer getAvailableStatus0() { return availableStatus0; }
-	public void setAvailableStatus0(Integer availableStatus0) { this.availableStatus0 = availableStatus0; }
-	public Integer getAvailableStatus1() { return availableStatus1; }
-	public void setAvailableStatus1(Integer availableStatus1) { this.availableStatus1 = availableStatus1; }
+	public Short getAvailableStatus0() { return availableStatus0; }
+	public void setAvailableStatus0(Short availableStatus0) { this.availableStatus0 = availableStatus0; }
+	public Short getAvailableStatus1() { return availableStatus1; }
+	public void setAvailableStatus1(Short availableStatus1) { this.availableStatus1 = availableStatus1; }
 	public Integer getExpirationSelect() { return expirationSelect; }
 	public void setExpirationSelect(Integer expirationSelect) { this.expirationSelect = expirationSelect; }
 	public LocalDate getExpirationStatusDate() { return expirationStatusDate; }
@@ -239,58 +219,58 @@ public class Oa11010Vo implements Serializable {
 	public LocalDate getExpirationEndDateTo() { return expirationEndDateTo; }
 	public void setExpirationEndDateTo(LocalDate expirationEndDateTo) { this.expirationEndDateTo = expirationEndDateTo; }
 
-	public Integer getSubsystemRoleConditionsSelect() { return subsystemRoleConditionsSelect; }
-	public void setSubsystemRoleConditionsSelect(Integer subsystemRoleConditionsSelect) { this.subsystemRoleConditionsSelect = subsystemRoleConditionsSelect; }
-	public List<Oa11010SubsystemRoleVo> getSubsystemRoleList() { return subsystemRoleList; }
-	public void setSubsystemRoleList(List<Oa11010SubsystemRoleVo> subsystemRoleList) { this.subsystemRoleList = subsystemRoleList; }
+	public Integer getSubSystemRoleConditionsSelect() { return subSystemRoleConditionsSelect; }
+	public void setSubSystemRoleConditionsSelect(Integer subSystemRoleConditionsSelect) { this.subSystemRoleConditionsSelect = subSystemRoleConditionsSelect; }
+	public List<Oa11010SubSystemRoleVo> getSubSystemRoleList() { return subSystemRoleList; }
+	public void setSubSystemRoleList(List<Oa11010SubSystemRoleVo> subSystemRoleList) { this.subSystemRoleList = subSystemRoleList; }
 
-	public Integer getBiztranRoleConditionsSelect() { return biztranRoleConditionsSelect; }
-	public void setBiztranRoleConditionsSelect(Integer biztranRoleConditionsSelect) { this.biztranRoleConditionsSelect = biztranRoleConditionsSelect; }
-	public String getSubsystemRoleSubsystemCode() { return subsystemRoleSubsystemCode; }
-	public void setSubsystemRoleSubsystemCode(String subsystemRoleSubsystemCode) { this.subsystemRoleSubsystemCode = subsystemRoleSubsystemCode; }
-	public List<SubSystemDto> getSubsystemRoleSubsystemList() { return subsystemRoleSubsystemList; }
-	public void setSubsystemRoleSubsystemList(List<SubSystemDto> subsystemRoleSubsystemList) { this.subsystemRoleSubsystemList = subsystemRoleSubsystemList; }
-	public List<Oa11010BiztranRoleVo> getBiztranRoleList() { return biztranRoleList; }
-	public void setBiztranRoleList(List<Oa11010BiztranRoleVo> biztranRoleList) { this.biztranRoleList = biztranRoleList; }
+	public Integer getBizTranRoleConditionsSelect() { return bizTranRoleConditionsSelect; }
+	public void setBizTranRoleConditionsSelect(Integer bizTranRoleConditionsSelect) { this.bizTranRoleConditionsSelect = bizTranRoleConditionsSelect; }
+	public String getBizTranRoleSubSystemCode() { return bizTranRoleSubSystemCode; }
+	public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) { this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode; }
+	public List<SubSystem> getBizTranRoleSubSystemList() { return bizTranRoleSubSystemList; }
+	public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) { this.bizTranRoleSubSystemList = bizTranRoleSubSystemList; }
+	public List<Oa11010BizTranRoleVo> getBizTranRoleList() { return bizTranRoleList; }
+	public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) { this.bizTranRoleList = bizTranRoleList; }
 
-	public Integer getDeviceAuthUse() { return deviceAuthUse; }
-	public void setDeviceAuthUse(Integer deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
-	public Integer getDeviceAuthUnuse() { return deviceAuthUnuse; }
-	public void setDeviceAuthUnuse(Integer deviceAuthUnuse) { this.deviceAuthUnuse = deviceAuthUnuse; }
+	public Short getDeviceAuthUse() { return deviceAuthUse; }
+	public void setDeviceAuthUse(Short deviceAuthUse) { this.deviceAuthUse = deviceAuthUse; }
+	public Short getDeviceAuthUnuse() { return deviceAuthUnuse; }
+	public void setDeviceAuthUnuse(Short deviceAuthUnuse) { this.deviceAuthUnuse = deviceAuthUnuse; }
 	public LocalDate getAccountLockOccurredDateFrom() { return accountLockOccurredDateFrom; }
 	public void setAccountLockOccurredDateFrom(LocalDate accountLockOccurredDateFrom) { this.accountLockOccurredDateFrom = accountLockOccurredDateFrom; }
 	public LocalDate getAccountLockOccurredDateTo() { return accountLockOccurredDateTo; }
 	public void setAccountLockOccurredDateTo(LocalDate accountLockOccurredDateTo) { this.accountLockOccurredDateTo = accountLockOccurredDateTo; }
-	public Integer getAccountLockStatusLock() { return accountLockStatusLock; }
-	public void setAccountLockStatusLock(Integer accountLockStatusLock) { this.accountLockStatusLock = accountLockStatusLock; }
-	public Integer getAccountLockStatusUnlock() { return accountLockStatusUnlock; }
-	public void setAccountLockStatusUnlock(Integer accountLockStatusUnlock) { this.accountLockStatusUnlock = accountLockStatusUnlock; }
-	public Integer getPasswordHistoryCheck() { return passwordHistoryCheck; }
-	public void setPasswordHistoryCheck(Integer passwordHistoryCheck) { this.passwordHistoryCheck = passwordHistoryCheck; }
+	public Short getAccountLockStatusLock() { return accountLockStatusLock; }
+	public void setAccountLockStatusLock(Short accountLockStatusLock) { this.accountLockStatusLock = accountLockStatusLock; }
+	public Short getAccountLockStatusUnlock() { return accountLockStatusUnlock; }
+	public void setAccountLockStatusUnlock(Short accountLockStatusUnlock) { this.accountLockStatusUnlock = accountLockStatusUnlock; }
+	public Short getPasswordHistoryCheck() { return passwordHistoryCheck; }
+	public void setPasswordHistoryCheck(Short passwordHistoryCheck) { this.passwordHistoryCheck = passwordHistoryCheck; }
 	public Integer getPasswordHistoryLastChangeDate() { return passwordHistoryLastChangeDate; }
 	public void setPasswordHistoryLastChangeDate(Integer passwordHistoryLastChangeDate) { this.passwordHistoryLastChangeDate = passwordHistoryLastChangeDate; }
 	public String getPasswordHistoryLastChangeDateStatus() { return passwordHistoryLastChangeDateStatus; }
 	public void setPasswordHistoryLastChangeDateStatus(String passwordHistoryLastChangeDateStatus) { this.passwordHistoryLastChangeDateStatus = passwordHistoryLastChangeDateStatus; }
-	public Integer getPasswordHistoryChangeType0() { return passwordHistoryChangeType0; }
-	public void setPasswordHistoryChangeType0(Integer passwordHistoryChangeType0) { this.passwordHistoryChangeType0 = passwordHistoryChangeType0; }
-	public Integer getPasswordHistoryChangeType1() { return passwordHistoryChangeType1; }
-	public void setPasswordHistoryChangeType1(Integer passwordHistoryChangeType1) { this.passwordHistoryChangeType1 = passwordHistoryChangeType1; }
-	public Integer getPasswordHistoryChangeType2() { return passwordHistoryChangeType2; }
-	public void setPasswordHistoryChangeType2(Integer passwordHistoryChangeType2) { this.passwordHistoryChangeType2 = passwordHistoryChangeType2; }
-	public Integer getPasswordHistoryChangeType3() { return passwordHistoryChangeType3; }
-	public void setPasswordHistoryChangeType3(Integer passwordHistoryChangeType3) { this.passwordHistoryChangeType3 = passwordHistoryChangeType3; }
+	public Short getPasswordHistoryChangeType0() { return passwordHistoryChangeType0; }
+	public void setPasswordHistoryChangeType0(Short passwordHistoryChangeType0) { this.passwordHistoryChangeType0 = passwordHistoryChangeType0; }
+	public Short getPasswordHistoryChangeType1() { return passwordHistoryChangeType1; }
+	public void setPasswordHistoryChangeType1(Short passwordHistoryChangeType1) { this.passwordHistoryChangeType1 = passwordHistoryChangeType1; }
+	public Short getPasswordHistoryChangeType2() { return passwordHistoryChangeType2; }
+	public void setPasswordHistoryChangeType2(Short passwordHistoryChangeType2) { this.passwordHistoryChangeType2 = passwordHistoryChangeType2; }
+	public Short getPasswordHistoryChangeType3() { return passwordHistoryChangeType3; }
+	public void setPasswordHistoryChangeType3(Short passwordHistoryChangeType3) { this.passwordHistoryChangeType3 = passwordHistoryChangeType3; }
 	public LocalDate getSignintraceTrydateFrom() { return signintraceTrydateFrom; }
 	public void setSignintraceTrydateFrom(LocalDate signintraceTrydateFrom) { this.signintraceTrydateFrom = signintraceTrydateFrom; }
 	public LocalDate getSignintraceTrydateTo() { return signintraceTrydateTo; }
 	public void setSignintraceTrydateTo(LocalDate signintraceTrydateTo) { this.signintraceTrydateTo = signintraceTrydateTo; }
 	public String getSignintraceTryIpAddress() { return signintraceTryIpAddress; }
 	public void setSignintraceTryIpAddress(String signintraceTryIpAddress) { this.signintraceTryIpAddress = signintraceTryIpAddress; }
-	public Integer getSignintraceSignIn() { return signintraceSignIn; }
-	public void setSignintraceSignIn(Integer signintraceSignIn) { this.signintraceSignIn = signintraceSignIn; }
-	public Integer getSignintraceSignOut() { return signintraceSignOut; }
-	public void setSignintraceSignOut(Integer signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
-	public Integer[] getSignintraceSignInResult() { return signintraceSignInResult; }
-	public void setSignintraceSignInResult(Integer[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
+	public Short getSignintraceSignIn() { return signintraceSignIn; }
+	public void setSignintraceSignIn(Short signintraceSignIn) { this.signintraceSignIn = signintraceSignIn; }
+	public Short getSignintraceSignOut() { return signintraceSignOut; }
+	public void setSignintraceSignOut(Short signintraceSignOut) { this.signintraceSignOut = signintraceSignOut; }
+	public Short[] getSignintraceSignInResult() { return signintraceSignInResult; }
+	public void setSignintraceSignInResult(Short[] signintraceSignInResult) { this.signintraceSignInResult = signintraceSignInResult; }
 
 	public int getPageNo() { return pageNo; }
 	public void setPageNo(int pageNo) { this.pageNo = pageNo; }
@@ -301,8 +281,19 @@ public class Oa11010Vo implements Serializable {
 	 */
 	public List<Short> getAvailableStatusIncludesList() {
 		List<Short> result = newArrayList();
-		if (availableStatus0 != null && availableStatus0 == 1) {result.add((short) 0);}
-		if (availableStatus1 != null && availableStatus1 == 1) {result.add((short) 1);}
+		if (CHECKBOX_TRUE.equals(availableStatus0)) {result.add((short) 0);}
+		if (CHECKBOX_TRUE.equals(availableStatus1)) {result.add((short) 1);}
+		return result;
+	}
+
+	/**
+	 * アカウントロック状態IncludesList取得
+	 * @return アカウントロック状態IncludesList
+	 */
+	public List<Integer> getAccountLockStatusIncludesList() {
+		List<Integer> result = newArrayList();
+		if (CHECKBOX_TRUE.equals(accountLockStatusLock)) {result.add(0);}
+		if (CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {result.add(1);}
 		return result;
 	}
 }

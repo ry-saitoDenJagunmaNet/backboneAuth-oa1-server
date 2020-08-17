@@ -28,7 +28,8 @@ function oaex_th_onload() {
 		oaex_biztran_role_expiration_sel_onChange(i);
 	}
 
-	oaex_searchBtn_onClick();
+	// オペレーター一覧領域を表示
+	oaex_viewOperatorTable();
 }
 
 /**
@@ -65,12 +66,12 @@ function oaex_th_subsystem_filter_onChange(obj) {
 		let subsystemcode = obj.options[index].value;
 		// 選択したサブシステムでフィルター
 		for (let row of biztranRole.rows) {
-			let subSystemCode = document.getElementById("biztranRoleList"+row.rowIndex+".subSystemCode");
+			let subSystemCode = document.getElementById("bizTranRoleList"+row.rowIndex+".subSystemCode");
 			if (subSystemCode != null) {
 				if (subsystemcode != subSystemCode.value) {
 					row.classList.add(_TABLE_ROW_FILTER);
 					// 検索条件対象から外す
-					let biztranRoleSelected = document.getElementById("biztranRoleList["+row.rowIndex+"].biztranRoleSelected");
+					let biztranRoleSelected = document.getElementById("bizTranRoleList["+row.rowIndex+"].bizTranRoleSelected");
 					biztranRoleSelected.checked = false;
 				}
 			}
@@ -78,6 +79,29 @@ function oaex_th_subsystem_filter_onChange(obj) {
     }
 }
 
+/**
+ * オペレーター履歴確認ボタンクリックイベントｆです。
+ */
+function oaex_th_oa11100Btn_onClick() {
+	// 選択したオペレータコードを取得
+	let operatorTable = document.getElementById("operator_table");
+	let selectRow = oa_getTableSelectedRowIndex(operatorTable);
+	if (selectRow == -1) {return;}
+
+	let operatorId = "";
+	for (let cellChildNode of operatorTable.rows[selectRow].cells[4].childNodes) {
+		if (cellChildNode.nodeName.toLowerCase() == "input") {
+			operatorId = cellChildNode.value;
+			break;
+		}
+	}
+	if (operatorId.length == 0)  {return;}
+	//alert(operatorId);
+
+	// オペレーター履歴確認に遷移
+	location.href = "../oa11100/get?oi=" + operatorId;
+	return;
+}
 
 
 /** Thymeleafとモックで共用 **/
@@ -210,7 +234,7 @@ function oaex_expiration_sel_onChange() {
  * サブシステムロール条件のラジオボタンの変更イベントです。
  */
 function oaex_subsystem_role_sel_onChange() {
-	let val = oa_getRadioCheckedValue("subsystemRoleConditionsSelect");
+	let val = oa_getRadioCheckedValue("subSystemRoleConditionsSelect");
 
 	if (val == "0") {
 		// 指定なし　無効にする
@@ -234,7 +258,7 @@ function oaex_subsystem_role_sel_onChange() {
 function oaex_subsystem_role_expiration_sel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("subsystemRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("subSystemRoleList[" + objRow + "].expirationSelect");
 	} else {
 		val = oa_getRadioCheckedValue("subsystemRoleExpirationSelect[" + objRow + "]");
 	}
@@ -263,7 +287,7 @@ function oaex_subsystem_role_expiration_sel_onChange(objRow) {
  * 取引ロール条件のラジオボタンの変更イベントです。
  */
 function oaex_biztran_role_sel_onChange() {
-	let val = oa_getRadioCheckedValue("biztran_role_sel");
+	let val = oa_getRadioCheckedValue("biztranRoleConditionsSelect");
 
 	if (val == "0") {
 		// 指定なし　無効にする
@@ -290,7 +314,7 @@ function oaex_biztran_role_sel_onChange() {
 function oaex_biztran_role_expiration_sel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("biztranRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("bizTranRoleList[" + objRow + "].expirationSelect");
 	} else {
 		val = oa_getRadioCheckedValue("biztran_role_expiration_sel[" + objRow + "]");
 	}
@@ -343,7 +367,15 @@ function oaex_operator_table_onClick(objRow) {
  * 検索ボタンクリックイベントです。
  */
 function oaex_searchBtn_onClick() {
-	// todo:テーブル＆ページネーションを表示
+	// オペレーター一覧領域を表示
+	oaex_viewOperatorTable();
+}
+
+/**
+ * オペレーター一覧領域を表示します。
+ */
+function oaex_viewOperatorTable() {
+	// テーブル＆ページネーションを表示
 	let table = document.getElementById("operator_table");
 	if (table != null) {
 		table.style.visibility = "visible";
