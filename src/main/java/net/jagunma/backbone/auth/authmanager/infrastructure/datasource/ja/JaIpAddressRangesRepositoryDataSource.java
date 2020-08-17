@@ -17,35 +17,38 @@ public class JaIpAddressRangesRepositoryDataSource implements JaIpAddressRangesR
 
 	private final JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao;
 
+	// コンストラクタ
 	JaIpAddressRangesRepositoryDataSource(JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao) {
 		this.jaIpAddressRangeEntityDao = jaIpAddressRangeEntityDao;
 	}
 
 	/**
 	 * JA割当IPアドレス範囲の条件検索を行います。
+	 *
 	 * @param jaIpAddressRangeCriteria JA割当IPアドレス範囲の検索条件
 	 * @return JA割当IPアドレス範囲群
 	 */
 	@Override
 	public JaIpAddressRanges selectBy(JaIpAddressRangeCriteria jaIpAddressRangeCriteria) {
 		Orders orders = Orders.empty()
-			.addOrder("JaCode")
-			.addOrder("IpAddressRange")
-			.addOrder("ExpirationStartDate");
+			.addOrder("jaCode")
+			.addOrder("ipAddressRange")
+			.addOrder("expirationStartDate");
 		List<JaIpAddressRangeEntity> list = jaIpAddressRangeEntityDao.findBy(jaIpAddressRangeCriteria, orders);
 		return JaIpAddressRanges.createFrom(list);
 	}
 
 	/**
 	 * JA割当IPアドレス範囲の全件検索を行います。
+	 *
 	 * @return JA割当IPアドレス範囲群
 	 */
 	@Override
 	public JaIpAddressRanges selectAll() {
 		Orders orders = Orders.empty()
-			.addOrder("JaCode")
-			.addOrder("IpAddressRange")
-			.addOrder("ExpirationStartDate");
+			.addOrder("jaCode")
+			.addOrder("ipAddressRange")
+			.addOrder("expirationStartDate");
 		return JaIpAddressRanges.createFrom(jaIpAddressRangeEntityDao.findAll(orders));
 	}
 

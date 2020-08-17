@@ -15,15 +15,14 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
 
 	private final CalendarEntityDao calendarEntityDao;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public CalendarRepositoryDataSource(CalendarEntityDao calendarEntityDao) {
 		this.calendarEntityDao = calendarEntityDao;
 	}
 
 	/**
 	 * カレンダーの条件検索を行います。
+	 *
 	 * @param calendarCriteria カレンダーの検索条件
 	 * @return カレンダー
 	 */

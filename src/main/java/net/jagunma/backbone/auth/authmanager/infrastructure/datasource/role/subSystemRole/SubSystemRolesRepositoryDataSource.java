@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class SubSystemRolesRepositoryDataSource implements SubSystemRolesRepository {
 	/**
 	 * ササブシステムロールの全件検索を行います。
+	 *
 	 * @return サブシステムロール群
 	 */
 	@Override

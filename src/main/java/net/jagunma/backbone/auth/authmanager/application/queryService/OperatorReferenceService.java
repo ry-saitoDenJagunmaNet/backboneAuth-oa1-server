@@ -50,15 +50,11 @@ public class OperatorReferenceService {
 	private final PasswordHistoryEntityDao passwordHistoryEntityDao;
 	private final SignInTraceEntityDao signInTraceEntityDao;
 	private final SignOutTraceEntityDao signOutTraceEntityDao;
-//	private final XOperatorSubSystemRoleReferenceService XOperatorSubSystemRoleReferenceService;
-//	private final OperatorBizTranRoleReferenceService operatorBizTranRoleReferenceService;
 	private final TempoReferenceService tempoReferenceService;
 	private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
 	private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public OperatorReferenceService(OperatorEntityDao operatorEntityDao,
 		AccountLockEntityDao accountLockEntityDao,
 		PasswordHistoryEntityDao passwordHistoryEntityDao,
@@ -80,6 +76,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * オペレーターリストを取得します。
+	 *
 	 * @param request 条件
 	 * @param response 検索結果
 	 */
@@ -95,6 +92,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * オペレーターリストを取得します。
+	 *
 	 * @param request 条件
 	 * @return オペレーターリスト
 	 */
@@ -105,8 +103,8 @@ public class OperatorReferenceService {
 
 		// オペレーター検索
 		Orders orders = Orders.empty()
-			.addOrder("TempoCode")
-			.addOrder("OperatorCode");
+			.addOrder("tempoCode")
+			.addOrder("operatorCode");
 		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(request.genOperatorEntityCriteria(request), orders);
 
 		// オペレーター_サブシステムロール割当検索
@@ -117,23 +115,23 @@ public class OperatorReferenceService {
 		List<TempoReferenceDto> tempos = tempoReferenceService.getTempoList(request.getJaId());
 		// アカウントロック検索
 		orders = Orders.empty()
-			.addOrder("OperatorId")
-			.addOrder("OccurredDateTime", Order.ASC);
+			.addOrder("operatorId")
+			.addOrder("occurredDateTime", Order.ASC);
 		List<AccountLockEntity> accountLockEntities = accountLockEntityDao.findAll(orders);
 		// パスワード履歴検索
 		orders = Orders.empty()
-			.addOrder("OperatorId")
-			.addOrder("ChangeDateTime", Order.ASC);
+			.addOrder("operatorId")
+			.addOrder("changeDateTime", Order.ASC);
 		List<PasswordHistoryEntity> passwordHistoryEntities = passwordHistoryEntityDao.findAll(orders);
 		// サインイン証跡検索
 		orders = Orders.empty()
-			.addOrder("OperatorCode")
-			.addOrder("TryDateTime", Order.ASC);
+			.addOrder("operatorCode")
+			.addOrder("tryDateTime", Order.ASC);
 		List<SignInTraceEntity> signInTraceEntities = signInTraceEntityDao.findAll(orders);
 		// サインアウト証跡検索
 		orders = Orders.empty()
-			.addOrder("OperatorId")
-			.addOrder("SignOutDateTime", Order.ASC);
+			.addOrder("operatorId")
+			.addOrder("signOutDateTime", Order.ASC);
 		List<SignOutTraceEntity> signOutTraceEntities = signOutTraceEntityDao.findAll(orders);
 
 		List<OperatorReferenceDto> operatorList = newArrayList();
@@ -217,6 +215,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * オペレーター_サブシステムロール割当の項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
@@ -276,6 +275,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * サブシステムロール検索条件によるオペレーター_サブシステムロール割当の抽出を行います。
+	 *
 	 * @param operatorSubSystemRoles オペレーター_サブシステムロール割当
 	 * @param requestOperatorSubSystemRole サブシステムロール検索条件
 	 * @return サブシステムロール検索条件によるオペレーター_サブシステムロール割当リスト
@@ -311,6 +311,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * オペレーター_取引ロール割当の項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
@@ -369,6 +370,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * 取引ロール検索条件によるオペレーター_取引ロール割当の抽出を行います。
+	 *
 	 * @param operatorBizTranRoleList オペレーター_取引ロール割当
 	 * @param requestOperatorBizTranRole 取引ロール検索条件
 	 * @return サ取引ロール検索条件によるオペレーター_取引ロール割当リスト
@@ -410,6 +412,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * アカウントロックの項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
@@ -473,6 +476,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * パスワード履歴の項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
@@ -553,6 +557,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * サインイン証跡の項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター
@@ -622,6 +627,7 @@ public class OperatorReferenceService {
 
 	/**
 	 * サインアウト証跡の項目設定および条件判定を行います。
+	 *
 	 * @param dto オペレーターDto
 	 * @param request 条件
 	 * @param operatorEntity オペレーター

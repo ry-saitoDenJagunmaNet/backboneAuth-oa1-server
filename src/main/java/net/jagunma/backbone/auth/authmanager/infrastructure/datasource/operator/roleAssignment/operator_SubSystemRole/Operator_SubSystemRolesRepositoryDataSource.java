@@ -23,9 +23,7 @@ public class Operator_SubSystemRolesRepositoryDataSource implements Operator_Sub
 	private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
 	private final SubSystemRolesRepository subSystemRolesRepository;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Operator_SubSystemRolesRepositoryDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
 		SubSystemRolesRepository subSystemRolesRepository) {
 
@@ -43,9 +41,9 @@ public class Operator_SubSystemRolesRepositoryDataSource implements Operator_Sub
 
 		// オペレーター_サブシステムロール割当検索
 		Orders orders = Orders.empty()
-			.addOrder("OperatorId")
-			.addOrder("SubSystemRoleCode")
-			.addOrder("ExpirationStartDate");
+			.addOrder("operatorId")
+			.addOrder("subSystemRoleCode")
+			.addOrder("expirationStartDate");
 		List<Operator_SubSystemRoleEntity> entities = operator_SubSystemRoleEntityDao.findAll(orders);
 
 		// サブシステムロール検索

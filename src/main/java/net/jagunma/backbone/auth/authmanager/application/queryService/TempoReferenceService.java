@@ -19,15 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class TempoReferenceService {
 	private final OperatorEntityDao operatorEntityDao;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public TempoReferenceService(OperatorEntityDao operatorEntityDao) {
 		this.operatorEntityDao = operatorEntityDao;
 	}
 
 	/***
 	 * コンボボックス用のリストを取得します。
+	 *
 	 * @param jaid ＪＡID
 	 * @return コンボボックス用のリスト
 	 */
@@ -49,6 +48,7 @@ public class TempoReferenceService {
 
 	/**
 	 * コンボボックス用のリストを取得します。
+	 *
 	 * @param jaid ＪＡID
 	 * @return コンボボックス用のリスト
 	 */
@@ -61,8 +61,8 @@ public class TempoReferenceService {
 		criteria.getJaIdCriteria().setEqualTo(jaid);
 
 		Orders orders = Orders.empty()
-			.addOrder("JaId")
-			.addOrder("TempoId");
+			.addOrder("jaId")
+			.addOrder("tempoId");
 
 		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
 		List<String> tempos = newArrayList();
@@ -80,6 +80,4 @@ public class TempoReferenceService {
 
 		return list;
 	}
-
-
 }

@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class Oa11020EntryService {
 	private final OperatorCommandService operatorCommandService;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Oa11020EntryService(OperatorCommandService operatorCommandService) {
 		this.operatorCommandService = operatorCommandService;
 	}

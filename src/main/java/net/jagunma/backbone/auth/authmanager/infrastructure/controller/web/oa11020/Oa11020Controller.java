@@ -49,9 +49,7 @@ public class Oa11020Controller {
 	private final Oa11020InitService oa11020InitService;
 	private final Oa11020EntryService oa11020EntryService;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Oa11020Controller(
 		Oa11020InitService oa11020InitService,
 		Oa11020EntryService oa11020EntryService) {

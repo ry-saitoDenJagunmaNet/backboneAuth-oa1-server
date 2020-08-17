@@ -23,9 +23,7 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
 	private final BizTranRolesRepository bizTranRolesRepository;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Operator_BizTranRolesRepositoryDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
 		BizTranRolesRepository bizTranRolesRepository) {
 
@@ -43,9 +41,9 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 
 		// オペレーター_取引ロール割当
 		Orders orders = Orders.empty()
-			.addOrder("OperatorId")
-			.addOrder("BizTranRoleId")
-			.addOrder("ExpirationStartDate");
+			.addOrder("operatorId")
+			.addOrder("bizTranRoleId")
+			.addOrder("expirationStartDate");
 		List<Operator_BizTranRoleEntity> entityList = operator_BizTranRoleEntityDao.findAll(orders);
 
 		// 取引ロール

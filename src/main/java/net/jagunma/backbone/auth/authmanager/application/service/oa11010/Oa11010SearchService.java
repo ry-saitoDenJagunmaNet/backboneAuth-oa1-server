@@ -14,9 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class Oa11010SearchService {
 	private final OperatorReferenceService operatorReferenceService;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Oa11010SearchService(OperatorReferenceService operatorReferenceService) {
 		this.operatorReferenceService = operatorReferenceService;
 	}

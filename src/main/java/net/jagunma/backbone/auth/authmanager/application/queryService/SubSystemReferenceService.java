@@ -15,9 +15,7 @@ public class SubSystemReferenceService {
 
 	private final SubSystemsRepository subSystemsRepository;
 	
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public SubSystemReferenceService(SubSystemsRepository subSystemsRepository) {
 		this.subSystemsRepository = subSystemsRepository;
 	}
@@ -38,6 +36,7 @@ public class SubSystemReferenceService {
 
 	/***
 	 * コンボボックス用のリストを取得します。
+	 *
 	 * @return コンボボックス用のリスト
 	 */
 	public List<SubSystem> getComboBoxList() {

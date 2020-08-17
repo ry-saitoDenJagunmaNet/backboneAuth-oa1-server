@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class Oa11020InitService {
 	private final TempoReferenceService tempoReferenceService;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Oa11020InitService(
 		TempoReferenceService tempoReferenceService) {
 

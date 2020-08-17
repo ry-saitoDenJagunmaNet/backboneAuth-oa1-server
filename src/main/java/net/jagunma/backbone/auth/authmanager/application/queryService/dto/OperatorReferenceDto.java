@@ -14,9 +14,7 @@ import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.r
  */
 public class OperatorReferenceDto {
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public OperatorReferenceDto() {
 		this.operatorId = 0;
 		this.operatorCode = "";
@@ -278,17 +276,20 @@ public class OperatorReferenceDto {
 
 	/**
 	 * 有効期限開始日をフォーマットして取得します。
+	 *
 	 * @return フォーマットした有効期限開始日
 	 */
 	public String getExpirationStartDateToStringFormat() { return formatLocalDate(expirationStartDate); }
 	/**
 	 * 有効期限終了日をフォーマットして取得します。
+	 *
 	 * @return フォーマットした有効期限終了日
 	 */
 	public String getExpirationEndDateToStringFormat() { return formatLocalDate(expirationEndDate); }
 
 	/**
 	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 *
 	 * @param localDt フォーマット対象の日付
 	 * @return フォ－マットした日付
 	 */

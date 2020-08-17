@@ -14,7 +14,7 @@ import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 public interface OperatorSearchRequest {
 	/**
 	 * ＪＡ（ＪＡコード＆ＪＡ名）のＧｅｔ
-	 * @return ＪＡID
+	 * @return ＪＡ
 	 */
 	String getJa();
 	/**
@@ -223,7 +223,8 @@ public interface OperatorSearchRequest {
 	int getPageNo();
 
 	/**
-	 * オペレーターの検索条件を生成
+	 * オペレーターの検索条件を生成します。
+	 *
 	 * @return オペレーターの検索条件
 	 */
 	OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request);

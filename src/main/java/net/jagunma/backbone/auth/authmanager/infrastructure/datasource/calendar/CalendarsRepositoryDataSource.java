@@ -17,32 +17,32 @@ public class CalendarsRepositoryDataSource implements CalendarsRepository {
 
 	private final CalendarEntityDao calendarEntityDao;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	CalendarsRepositoryDataSource(CalendarEntityDao calendarEntityDao) {
 		this.calendarEntityDao = calendarEntityDao;
 	}
 
 	/**
 	 * カレンダーの条件検索を行います。
+	 *
 	 * @param calendarCriteria カレンダーの検索条件
 	 * @return カレンダー群
 	 */
 	@Override
 	public Calendars selectBy(CalendarCriteria calendarCriteria) {
-		Orders orders = Orders.empty().addOrder("CalendarType").addOrder("Date");
+		Orders orders = Orders.empty().addOrder("calendarType").addOrder("date");
 		List<CalendarEntity> list = calendarEntityDao.findBy(calendarCriteria, orders);
 		return Calendars.createFrom(list);
 	}
 
 	/**
 	 * カレンダーの全件検索を行います。
+	 *
 	 * @return カレンダー群
 	 */
 	@Override
 	public Calendars selectAll() {
-		Orders orders = Orders.empty().addOrder("CalendarType").addOrder("Date");
+		Orders orders = Orders.empty().addOrder("calendarType").addOrder("date");
 		return Calendars.createFrom(calendarEntityDao.findAll(orders));
 	}
 }

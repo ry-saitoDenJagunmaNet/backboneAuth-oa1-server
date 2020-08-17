@@ -14,11 +14,13 @@ public interface OperatorSearchResponse {
 	void setOperatorReferenceDtos(List<OperatorReferenceDto> operatorReferenceDtos);
 	/**
 	 * オペレーターテーブルHtmlを生成します。
+	 *
 	 * @param pageNo 対象ページ
 	 */
 	void genOperatorTableHtml(int pageNo);
 	/**
 	 * Pagination Htmlを生成します。
+	 *
 	 * @param pageNo 表示ページ番号
 	 */
 	void genPaginationHtml(int pageNo);

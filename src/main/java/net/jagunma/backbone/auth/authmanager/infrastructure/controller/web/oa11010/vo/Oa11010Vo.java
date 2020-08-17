@@ -276,7 +276,8 @@ public class Oa11010Vo extends BaseOfResponseVo {
 	public void setPageNo(int pageNo) { this.pageNo = pageNo; }
 
 	/**
-	 * 利用可否状態IncludesList取得
+	 * 利用可否状態IncludesListを取得します。
+	 *
 	 * @return 利用可否状態IncludesList
 	 */
 	public List<Short> getAvailableStatusIncludesList() {
@@ -287,7 +288,8 @@ public class Oa11010Vo extends BaseOfResponseVo {
 	}
 
 	/**
-	 * アカウントロック状態IncludesList取得
+	 * アカウントロック状態IncludesListを取得します。
+	 *
 	 * @return アカウントロック状態IncludesList
 	 */
 	public List<Integer> getAccountLockStatusIncludesList() {

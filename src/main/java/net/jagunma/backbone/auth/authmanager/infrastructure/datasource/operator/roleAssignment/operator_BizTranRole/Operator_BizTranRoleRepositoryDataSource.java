@@ -18,9 +18,7 @@ public class Operator_BizTranRoleRepositoryDataSource implements Operator_BizTra
 	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
 	private final BizTranRoleRepository bizTranRoleRepository;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Operator_BizTranRoleRepositoryDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
 		BizTranRoleRepository bizTranRoleRepository) {
 
@@ -30,6 +28,7 @@ public class Operator_BizTranRoleRepositoryDataSource implements Operator_BizTra
 
 	/**
 	 * オペレーター_取引ロール割当の条件検索を行います。
+	 *
 	 * @param operator_BizTranRoleCriteria オペレーター_取引ロール割当の検索条件
 	 * @return オペレーター_取引ロール割当
 	 */
@@ -46,5 +45,4 @@ public class Operator_BizTranRoleRepositoryDataSource implements Operator_BizTra
 		return Operator_BizTranRole.createOf(operator_BizTranRoleEntity,
 			bizTranRoleRepository.findOneBy(bizTranRoleCriteria));
 	}
-
 }

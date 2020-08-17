@@ -15,12 +15,14 @@ public class JaIpAddressRangeRepositoryDataSource implements JaIpAddressRangeRep
 
 	private final JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao;
 
+	// コンストラクタ
 	public JaIpAddressRangeRepositoryDataSource(JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao) {
 		this.jaIpAddressRangeEntityDao = jaIpAddressRangeEntityDao;
 	}
 
 	/**
 	 * JA割当IPアドレス範囲の条件検索を行います。
+	 *
 	 * @param jaIpAddressRangeCriteria JA割当IPアドレス範囲の検索条件
 	 * @return JA割当IPアドレス範囲
 	 */
