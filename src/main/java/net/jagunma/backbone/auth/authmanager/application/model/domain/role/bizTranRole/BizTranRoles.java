@@ -14,15 +14,13 @@ public class BizTranRoles {
 
 	private final ArrayList<BizTranRole> list = newArrayList();
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	BizTranRoles(Collection<BizTranRole> collection) {
 		this.list.addAll(collection);
 	}
 
 	/**
-	 * 取引ロールリストから作成
+	 * 取引ロールリストから作成します。
 	 *
 	 * @param bizTranRoleList 取引ロールリスト
 	 * @return 取引ロール群
@@ -37,6 +35,10 @@ public class BizTranRoles {
 		return new BizTranRoles(bizTranRoles);
 	}
 
+	/**
+	 * 取引ロールリストを取得します。
+	 * @return 取引ロールリスト
+	 */
 	public List<BizTranRole> getValues() {
 		return list;
 	}
@@ -58,6 +60,5 @@ public class BizTranRoles {
 					.anyMatch(s::sameValueAs));
 		}
 		return false;
-
 	}
 }

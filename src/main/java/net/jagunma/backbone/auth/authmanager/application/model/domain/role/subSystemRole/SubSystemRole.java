@@ -10,43 +10,30 @@ import net.jagunma.common.util.objects2.Objects2;
  * サブシステムロール
  */
 public class SubSystemRole {
+
 	private final String subSystemRoleCode;
 	private final String subSystemRoleName;
 	private final List<SubSystem> subSystemList;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	SubSystemRole(String subSystemRoleCode, String subSystemRoleName, List<SubSystem> subSystemList) {
 		this.subSystemRoleCode = subSystemRoleCode;
 		this.subSystemRoleName = subSystemRoleName;
 		this.subSystemList = subSystemList;
 	}
 
-	/*
-	 * ファクトリメソッド
-	 */
+	// ファクトリーメソッド
 	public static SubSystemRole createOf(String subSystemRoleCode, String subSystemRoleName, List<SubSystem> subSystemList) {
 		return new SubSystemRole(subSystemRoleCode, subSystemRoleName, subSystemList);
 	}
-
+	// 空生成メソッド
 	public static SubSystemRole empty() {
 		return new SubSystemRole("", "", newArrayList());
 	}
-	/**
-	 * サブシステムロールコードのＧｅｔ
-	 * @return サブシステムロールコード
-	 */
+
+	// Getter
 	public String getSubSystemRoleCode() { return subSystemRoleCode; }
-	/**
-	 * サブシステムロール名のＧｅｔ
-	 * @return サブシステムロール名
-	 */
 	public String getSubSystemRoleName() { return subSystemRoleName; }
-	/**
-	 * サブシステムリストのＧｅｔ
-	 * @return サブシステムリスト
-	 */
 	public List<SubSystem> getSubSystemList() { return subSystemList; }
 
 	/**
@@ -66,5 +53,4 @@ public class SubSystemRole {
 			return false;
 		}
 	}
-
 }

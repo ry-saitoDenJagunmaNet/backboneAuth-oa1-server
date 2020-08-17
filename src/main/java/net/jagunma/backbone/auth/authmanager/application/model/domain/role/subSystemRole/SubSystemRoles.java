@@ -15,15 +15,13 @@ import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemTy
 public class SubSystemRoles {
 	private final ArrayList<SubSystemRole> list = newArrayList();
 
-	/*
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	SubSystemRoles(Collection<SubSystemRole> collection) {
 		this.list.addAll(collection);
 	}
 
 	/**
-	 * サブシステムロール列挙型から作成
+	 * サブシステムロール列挙型から作成します。
 	 *
 	 * @return サブシステムロール群
 	 */
@@ -42,10 +40,18 @@ public class SubSystemRoles {
 		return new SubSystemRoles(subSystemRoleList);
 	}
 
+	/**
+	 * サブシステムロールリストを取得します。
+	 * @return サブシステムロールリスト
+	 */
 	public List<SubSystemRole> getValues() {
 		return list;
 	}
 
+	/**
+	 * サブシステムリストを取得します。
+	 * @return サブシステムリスト
+	 */
 	private static List<SubSystem> getSubSystemList() {
 		List<SubSystem> list = newArrayList();
 

@@ -13,9 +13,7 @@ import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemTy
 public class SubSystems {
 	private final ArrayList<SubSystem> list = newArrayList();
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	SubSystems(Collection<SubSystem> collection) {
 		this.list.addAll(collection);
 	}
@@ -37,6 +35,10 @@ public class SubSystems {
 		return new SubSystems(SubSystemList);
 	}
 
+	/**
+	 * サブシステムリストを取得します。
+	 * @return サブシステムリスト
+	 */
 	public List<SubSystem> getValues() {
 		return list;
 	}

@@ -4,7 +4,6 @@ package net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizT
  * 取引ロール検索
  */
 public interface BizTranRolesRepository {
-
 	/**
 	 * 取引ロールの条件検索を行います。
 	 * @param bizTranRoleCriteria 取引ロールの検索条件
