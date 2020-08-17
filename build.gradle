@@ -18,11 +18,10 @@ buildscript {
         commonUtilsVersion = '20.1.60'
         domaCoreVersion = '2.38.0'
         sf4jApiVersion = '1.7.30'
-        springBootVersion = '2.2.4.RELEASE'
         commonTestsVersion = '20.0.9'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
-        mssqlJdbcVersion='8.3.1.jre11-preview'
+        mssqlJdbcVersion = '8.3.1.jre11-preview'
         backboneAuthDaoVersion = '20.0.10'
 
     }
@@ -86,15 +85,11 @@ idea {
 
 dependencies {
     implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
-    implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
-    implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
-    implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
+//    implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
+//    implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
+//    implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
     implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
-    testImplementation "net.jagunma.common2020:jagunma-common-tests:${commonTestsVersion}"
 
-    implementation 'org.springframework:spring-beans:5.2.8.RELEASE'
-    implementation 'org.springframework:spring-jdbc:5.2.8.RELEASE'
-    implementation "org.springframework:spring-context"
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.seasar.doma.boot:doma-spring-boot-autoconfigure:${domaSpringBootStarterVersion}"
@@ -103,8 +98,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
-    implementation "org.springframework.boot:spring-boot-devtools"
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly "org.springframework.boot:spring-boot-devtools"
+    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
