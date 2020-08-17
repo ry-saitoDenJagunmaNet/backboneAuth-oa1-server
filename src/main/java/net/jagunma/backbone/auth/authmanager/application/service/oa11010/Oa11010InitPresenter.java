@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystemRole.SubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRole;
 //import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
 //import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;

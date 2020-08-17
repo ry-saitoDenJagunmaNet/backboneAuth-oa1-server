@@ -1,9 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operatorSubSystemRole.Operator_SubSystemRole;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystemRole.SubSystemRole;
-import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
-
 /**
  * サブシステム
  */

@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.bizTranRole.BizTranRolesRepository;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystemRole.SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemReferenceService;
 //import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemRoleReferenceSetvice;
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
