@@ -37,6 +37,7 @@ public class BizTranRoles {
 
 	/**
 	 * 取引ロールリストを取得します。
+	 *
 	 * @return 取引ロールリスト
 	 */
 	public List<BizTranRole> getValues() {
@@ -45,6 +46,7 @@ public class BizTranRoles {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

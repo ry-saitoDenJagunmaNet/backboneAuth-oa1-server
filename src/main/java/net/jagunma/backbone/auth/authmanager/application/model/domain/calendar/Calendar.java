@@ -16,7 +16,6 @@ public class Calendar {
 	Calendar(CalendarEntity calendarEntity) {
 		this.calendarEntity = calendarEntity;
 	}
-
 	// ファクトリーメソッド
 	public static Calendar of(CalendarEntity calendarEntity) {
 		return new Calendar(calendarEntity);
@@ -29,7 +28,6 @@ public class Calendar {
 	public boolean isEmpty() {
 		return calendarEntity == null || calendarEntity.sameValueAs(new CalendarEntity());
 	}
-
 	// Getter
 	public Long getCalendarId() { return this.calendarEntity.getCalendarId(); }
 	public Short getCalendarType() { return this.calendarEntity.getCalendarType(); }
@@ -46,7 +44,7 @@ public class Calendar {
 	public Integer getRecordVersion() { return this.calendarEntity.getRecordVersion(); }
 
 	/**
-	 * リポジトリ用のEntityGetterです
+	 * リポジトリ用のEntityGetterです。
 	 *
 	 * @return リポジトリ間で使用するDBEntity
 	 * @implNote 項目を取得する目的では使用しないでください
@@ -57,6 +55,7 @@ public class Calendar {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */
@@ -82,5 +81,4 @@ public class Calendar {
 			return false;
 		}
 	}
-
 }

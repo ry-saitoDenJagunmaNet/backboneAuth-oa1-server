@@ -15,7 +15,6 @@ public class BizTranRole {
 	BizTranRole(BizTranRoleEntity bizTranRoleEntity) {
 		this.bizTranRoleEntity = bizTranRoleEntity;
 	}
-
 	// ファクトリーメソッド
 	public static BizTranRole of(BizTranRoleEntity bizTranRoleEntity) {
 		return new BizTranRole(bizTranRoleEntity);
@@ -28,7 +27,6 @@ public class BizTranRole {
 	public boolean isEmpty() {
 		return bizTranRoleEntity == null || bizTranRoleEntity.sameValueAs(new BizTranRoleEntity());
 	}
-
 	// Getter
 	public Long getBizTranRoleId() { return this.bizTranRoleEntity.getBizTranRoleId(); }
 	public String getBizTranRoleCode() { return this.bizTranRoleEntity.getBizTranRoleCode(); }
@@ -43,7 +41,7 @@ public class BizTranRole {
 	public Integer getRecordVersion() { return this.bizTranRoleEntity.getRecordVersion(); }
 
 	/**
-	 * リポジトリ用のEntityGetterです
+	 * リポジトリ用のEntityGetterです。
 	 *
 	 * @return リポジトリ間で使用するDBEntity
 	 * @implNote 項目を取得する目的では使用しないでください
@@ -54,6 +52,7 @@ public class BizTranRole {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

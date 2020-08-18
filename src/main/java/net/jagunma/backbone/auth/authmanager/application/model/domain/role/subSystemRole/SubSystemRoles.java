@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystemsRepository;
 import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemRoleType;
 import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemType;
 
@@ -13,6 +14,7 @@ import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemTy
  * サブシステムロール群
  */
 public class SubSystemRoles {
+
 	private final ArrayList<SubSystemRole> list = newArrayList();
 
 	// コンストラクタ
@@ -42,6 +44,7 @@ public class SubSystemRoles {
 
 	/**
 	 * サブシステムロールリストを取得します。
+	 *
 	 * @return サブシステムロールリスト
 	 */
 	public List<SubSystemRole> getValues() {
@@ -50,6 +53,7 @@ public class SubSystemRoles {
 
 	/**
 	 * サブシステムリストを取得します。
+	 *
 	 * @return サブシステムリスト
 	 */
 	private static List<SubSystem> getSubSystemList() {

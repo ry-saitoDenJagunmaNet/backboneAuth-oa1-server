@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
 
 /**
  * オペレーター参照Ｄｔｏ
