@@ -64,7 +64,7 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 
 		List<Operator_BizTranRole> operator_BizTranRolesList = newArrayList();
 		entityList.forEach(entity -> {
-			// 精算プールの特定
+			// 取引ロールの結合
 			var bizTranRole = bizTranRoles.getValues()
 				.stream()
 				.filter(btr -> btr.getBizTranRoleId().equals(entity.getBizTranRoleId()))

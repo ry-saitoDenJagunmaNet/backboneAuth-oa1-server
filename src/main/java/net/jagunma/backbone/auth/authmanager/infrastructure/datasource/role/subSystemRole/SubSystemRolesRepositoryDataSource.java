@@ -2,6 +2,8 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.role.sub
 
 import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystems;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystemsRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,11 +11,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SubSystemRolesRepositoryDataSource implements SubSystemRolesRepository {
+
+	private SubSystemsRepository subSystemsRepository;
+
+	// コンストラクタ
+	public SubSystemRolesRepositoryDataSource(SubSystemsRepository subSystemsRepository) {
+		this.subSystemsRepository = subSystemsRepository;
+	}
+
 	/**
-	 * ササブシステムロールの全件検索を行います。
+	 * サブシステムロールの全件検索を行います。
 	 *
 	 * @return サブシステムロール群
 	 */
 	@Override
-	public SubSystemRoles selectAll() { return SubSystemRoles.createFrom(); }
+	public SubSystemRoles selectAll() {
+		// サブシステム取得
+		SubSystems subSystems = subSystemsRepository.selectAll();
+		// サブシステムロール列挙型からサブシステムロール銀を取得
+		return SubSystemRoles.createFrom(subSystems.getValues());
+	}
 }
