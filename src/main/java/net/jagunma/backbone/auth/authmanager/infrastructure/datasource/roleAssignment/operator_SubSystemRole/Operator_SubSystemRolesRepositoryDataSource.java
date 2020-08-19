@@ -23,6 +23,7 @@ public class Operator_SubSystemRolesRepositoryDataSource implements Operator_Sub
 
 	private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
 	private final SubSystemRolesRepository subSystemRolesRepository;
+	private final Orders defaultOrders = Orders.empty().addOrder("operatorId").addOrder("subSystemRoleCode").addOrder("expirationStartDate");
 
 	// コンストラクタ
 	public Operator_SubSystemRolesRepositoryDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
@@ -36,27 +37,37 @@ public class Operator_SubSystemRolesRepositoryDataSource implements Operator_Sub
 	 * オペレーター_サブシステムロール割当の条件検索を行います。
 	 *
 	 * @param operator_SubSystemRoleCriteria オペレーター_サブシステムロール割当の検索条件
+	 * @param orders オーダー指定
+	 * @return オペレーター_サブシステムロール割当群
+	 */
+	@Override
+	public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
+		// TODO
+//		List<Operator_SubSystemRoleEntity> list = operator_SubSystemRoleEntityDao.findBy(operator_SubSystemRoleCriteria, orders);
+//		return Operator_SubSystemRoles.createFrom(list);
+		return Operator_SubSystemRoles.createFrom(newArrayList());
+	}
+	/**
+	 * オペレーター_サブシステムロール割当の条件検索を行います。
+	 *
+	 * @param operator_SubSystemRoleCriteria オペレーター_サブシステムロール割当の検索条件
 	 * @return オペレーター_サブシステムロール割当群
 	 */
 	@Override
 	public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria) {
-		// TODO
-		return Operator_SubSystemRoles.createFrom(newArrayList());
+		return selectBy(operator_SubSystemRoleCriteria, defaultOrders);
 	}
 
 	/**
 	 * オペレーター_ブシステムロール割当群を全件検索します。
 	 *
+	 * @param orders オーダー指定
 	 * @return オペレーター_ブシステムロール割当群
 	 */
 	@Override
-	public Operator_SubSystemRoles selectAll() {
+	public Operator_SubSystemRoles selectAll(Orders orders) {
 
 		// オペレーター_サブシステムロール割当検索
-		Orders orders = Orders.empty()
-			.addOrder("operatorId")
-			.addOrder("subSystemRoleCode")
-			.addOrder("expirationStartDate");
 		List<Operator_SubSystemRoleEntity> entities = operator_SubSystemRoleEntityDao.findAll(orders);
 
 		// サブシステムロール検索
@@ -71,5 +82,14 @@ public class Operator_SubSystemRolesRepositoryDataSource implements Operator_Sub
 		});
 
 		return Operator_SubSystemRoles.createFrom(list);
+	}
+	/**
+	 * オペレーター_ブシステムロール割当群を全件検索します。
+	 *
+	 * @return オペレーター_ブシステムロール割当群
+	 */
+	@Override
+	public Operator_SubSystemRoles selectAll() {
+		return selectAll(defaultOrders);
 	}
 }

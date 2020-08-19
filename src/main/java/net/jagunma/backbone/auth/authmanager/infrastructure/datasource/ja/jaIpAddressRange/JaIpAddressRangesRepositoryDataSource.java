@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class JaIpAddressRangesRepositoryDataSource implements JaIpAddressRangesRepository {
 
 	private final JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao;
+	private final Orders defaultOrders = Orders.empty().addOrder("jaCode").addOrder("ipAddressRange").addOrder("expirationStartDate");
 
 	// コンストラクタ
 	JaIpAddressRangesRepositoryDataSource(JaIpAddressRangeEntityDao jaIpAddressRangeEntityDao) {
@@ -26,18 +27,35 @@ public class JaIpAddressRangesRepositoryDataSource implements JaIpAddressRangesR
 	 * JA割当IPアドレス範囲の条件検索を行います。
 	 *
 	 * @param jaIpAddressRangeCriteria JA割当IPアドレス範囲の検索条件
+	 * @param orders オーダー指定
+	 * @return JA割当IPアドレス範囲群
+	 */
+	@Override
+	public JaIpAddressRanges selectBy(JaIpAddressRangeCriteria jaIpAddressRangeCriteria, Orders orders) {
+		List<JaIpAddressRangeEntity> list = jaIpAddressRangeEntityDao.findBy(jaIpAddressRangeCriteria, orders);
+		return JaIpAddressRanges.createFrom(list);
+	}
+	/**
+	 * JA割当IPアドレス範囲の条件検索を行います。
+	 *
+	 * @param jaIpAddressRangeCriteria JA割当IPアドレス範囲の検索条件
 	 * @return JA割当IPアドレス範囲群
 	 */
 	@Override
 	public JaIpAddressRanges selectBy(JaIpAddressRangeCriteria jaIpAddressRangeCriteria) {
-		Orders orders = Orders.empty()
-			.addOrder("jaCode")
-			.addOrder("ipAddressRange")
-			.addOrder("expirationStartDate");
-		List<JaIpAddressRangeEntity> list = jaIpAddressRangeEntityDao.findBy(jaIpAddressRangeCriteria, orders);
-		return JaIpAddressRanges.createFrom(list);
+		return selectBy(jaIpAddressRangeCriteria, defaultOrders);
 	}
 
+	/**
+	 * JA割当IPアドレス範囲の全件検索を行います。
+	 *
+	 * @param orders オーダー指定
+	 * @return JA割当IPアドレス範囲群
+	 */
+	@Override
+	public JaIpAddressRanges selectAll(Orders orders) {
+		return JaIpAddressRanges.createFrom(jaIpAddressRangeEntityDao.findAll(orders));
+	}
 	/**
 	 * JA割当IPアドレス範囲の全件検索を行います。
 	 *
@@ -45,11 +63,6 @@ public class JaIpAddressRangesRepositoryDataSource implements JaIpAddressRangesR
 	 */
 	@Override
 	public JaIpAddressRanges selectAll() {
-		Orders orders = Orders.empty()
-			.addOrder("jaCode")
-			.addOrder("ipAddressRange")
-			.addOrder("expirationStartDate");
-		return JaIpAddressRanges.createFrom(jaIpAddressRangeEntityDao.findAll(orders));
+		return selectAll(defaultOrders);
 	}
-
 }

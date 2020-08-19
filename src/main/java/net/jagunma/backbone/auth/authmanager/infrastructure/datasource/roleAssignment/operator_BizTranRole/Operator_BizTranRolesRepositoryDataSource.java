@@ -23,6 +23,7 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 
 	private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
 	private final BizTranRolesRepository bizTranRolesRepository;
+	private final Orders defaultOrders = Orders.empty().addOrder("operatorId").addOrder("bizTranRoleId").addOrder("expirationStartDate");
 
 	// コンストラクタ
 	public Operator_BizTranRolesRepositoryDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
@@ -36,27 +37,37 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 	 * オペレーター_取引ロール割当の条件検索を行います。
 	 *
 	 * @param operator_BizTranRoleCriteria オペレーター_取引ロール割当の検索条件
+	 * @param orders オーダー指定
+	 * @return オペレーター_取引ロール割当群
+	 */
+	@Override
+	public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
+		// TODO
+//		List<Operator_BizTranRoleEntity> list = operator_BizTranRoleEntityDao.findBy(operator_BizTranRoleCriteria, orders);
+//		return Operator_BizTranRoles.createFrom(list);
+		return Operator_BizTranRoles.createFrom(newArrayList());
+	}
+	/**
+	 * オペレーター_取引ロール割当の条件検索を行います。
+	 *
+	 * @param operator_BizTranRoleCriteria オペレーター_取引ロール割当の検索条件
 	 * @return オペレーター_取引ロール割当群
 	 */
 	@Override
 	public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria) {
-		// TODO
-		return Operator_BizTranRoles.createFrom(newArrayList());
+		return selectBy(operator_BizTranRoleCriteria, defaultOrders);
 	}
 
 	/**
 	 * オペレーター_取引ロール割当群を全件検索します。
 	 *
+	 * @param orders オーダー指定
 	 * @return オペレーター_取引ロール割当群
 	 */
 	@Override
-	public Operator_BizTranRoles selectAll() {
+	public Operator_BizTranRoles selectAll(Orders orders) {
 
 		// オペレーター_取引ロール割当
-		Orders orders = Orders.empty()
-			.addOrder("operatorId")
-			.addOrder("bizTranRoleId")
-			.addOrder("expirationStartDate");
 		List<Operator_BizTranRoleEntity> entityList = operator_BizTranRoleEntityDao.findAll(orders);
 
 		// 取引ロール
@@ -74,5 +85,14 @@ public class Operator_BizTranRolesRepositoryDataSource implements Operator_BizTr
 		});
 
 		return Operator_BizTranRoles.createFrom(operator_BizTranRolesList);
+	}
+	/**
+	 * オペレーター_取引ロール割当群を全件検索します。
+	 *
+	 * @return オペレーター_取引ロール割当群
+	 */
+	@Override
+	public Operator_BizTranRoles selectAll() {
+		return selectAll(defaultOrders);
 	}
 }
