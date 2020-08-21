@@ -105,7 +105,7 @@ public class OperatorReferenceService {
 		Orders orders = Orders.empty()
 			.addOrder("tempoCode")
 			.addOrder("operatorCode");
-		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(request.genOperatorEntityCriteria(request), orders);
+		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(request.genOperatorEntityCriteria(), orders);
 
 		// オペレーター_サブシステムロール割当検索
 		Operator_SubSystemRoles operatorSubSystemRoles = operator_SubSystemRolesRepository.selectAll();

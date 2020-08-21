@@ -323,9 +323,10 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	/**
 	 * オペレーターの検索条件を生成します。
 	 *
-	 * @return オペレーターの検索条件
+	 * @return オペレーター検索条件
 	 */
-	public OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request) {
+	public OperatorEntityCriteria genOperatorEntityCriteria() {
+
 		OperatorEntityCriteria criteria = new OperatorEntityCriteria();
 
 		criteria.getJaIdCriteria().setEqualTo(arg.getJaId());

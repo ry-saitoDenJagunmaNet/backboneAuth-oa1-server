@@ -15,11 +15,6 @@ public class Oa11010Vo extends BaseOfResponseVo {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * チェックボックスのチェックtrue状態値
-	 */
-	public static final Short CHECKBOX_TRUE  = 1;
-
-	/**
 	 * ＪＡ
 	 */
 	private String ja;

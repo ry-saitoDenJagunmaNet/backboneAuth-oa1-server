@@ -29,7 +29,13 @@ public class Calendars {
 		List<Calendar> calendars = new ArrayList<>();
 
 		calendarList.forEach(d -> {
-			Calendar calendar = Calendar.of(d);
+			Calendar calendar = Calendar.createFrom(d.getCalendarId(),
+				d.getCalendarType(),
+				d.getDate(),
+				d.getIsHoliday(),
+				d.getIsManualChange(),
+				d.getIsRelease(),
+				d.getRecordVersion());
 			calendars.add(calendar);
 		});
 		return new Calendars(calendars);

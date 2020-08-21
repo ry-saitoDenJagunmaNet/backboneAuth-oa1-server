@@ -11,4 +11,11 @@ public interface CalendarRepository {
 	 * @return カレンダー
 	 */
 	Calendar findOneBy(CalendarCriteria calendarCriteria);
+//	/**
+//	 * カレンダーの条件検索を行います。
+//	 *
+//	 * @param calendarCriteria カレンダーの検索条件
+//	 * @return カレンダー
+//	 */
+//	Calendar findOneBy(CalendarCriteria calendarCriteria);
 }

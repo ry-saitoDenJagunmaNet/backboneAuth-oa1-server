@@ -224,8 +224,6 @@ public interface OperatorSearchRequest {
 
 	/**
 	 * オペレーターの検索条件を生成します。
-	 *
-	 * @return オペレーターの検索条件
 	 */
-	OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request);
+	OperatorEntityCriteria genOperatorEntityCriteria();
 }
