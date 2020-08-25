@@ -1,7 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060;
 
+import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060EntryService;
 import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060InitService;
 import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060SearchService;
+import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060EntryResponseVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060Vo;
@@ -45,18 +47,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ServiceInfo(id = "OA12060", name = "OA12060サービス")
 @Controller
 @RequestMapping(path = "oa12060")
-public class Oa12060Controller {
+public class Oa12060Controller extends BaseOfController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Oa12060Controller.class);
 	private final Oa12060InitService oa12060InitService;
 	private final Oa12060SearchService oa12060SearchService;
+	private final Oa12060EntryService oa12060EntryService;
 
 	// コンストラクタ
-	public Oa12060Controller(Oa12060InitService oa12060InitService,
-		Oa12060SearchService oa12060SearchService) {
+	public Oa12060Controller(
+		Oa12060InitService oa12060InitService,
+		Oa12060SearchService oa12060SearchService,
+		Oa12060EntryService oa12060EntryServic) {
 
 		this.oa12060InitService = oa12060InitService;
 		this.oa12060SearchService = oa12060SearchService;
+		this.oa12060EntryService = oa12060EntryServic;
 	}
 
 	/**
@@ -69,14 +75,13 @@ public class Oa12060Controller {
 	private String get(Model model) {
 
 		Oa12060Vo vo = new Oa12060Vo();
+		Oa12060SearchResponseVo responseVo = new Oa12060SearchResponseVo();
 		try {
 			// 画面を初期化
 			oa12060InitService.init(vo);
 
-			Oa12060SearchResponseVo responseVo = new Oa12060SearchResponseVo();
 			// カレンダー検索
 			oa12060SearchService.search(vo, responseVo);
-			vo.setSearchResponse(responseVo);
 
 			model.addAttribute("form", vo);
 			return "oa12060";
@@ -130,12 +135,18 @@ public class Oa12060Controller {
 	@RequestMapping(value = "/entry", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<Oa12060EntryResponseVo> entry(Oa12060Vo vo) {
+		//TODO: パラメータでサインインオペレーターの情報を取得する
+		setAuthInf();
 
 		Oa12060EntryResponseVo responseVo = new Oa12060EntryResponseVo();
 		try {
 			// カレンダー登録
-			//oa12060SearchService.search(vo, responseVo);
+			oa12060EntryService.entry(vo, responseVo);
 
+			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+		} catch (org.seasar.doma.jdbc.OptimisticLockException ole) {
+			//楽観的ロック
+			responseVo.setExceptionMessage(ole);
 			return new ResponseEntity<>(responseVo, HttpStatus.OK);
 		} catch (GunmaRuntimeException gre) {
 			// 業務例外が発生した場合

@@ -5,14 +5,15 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.Calendars;
+import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
-import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 
 /**
  * OA12060 カレンダーメンテナンス 登録 Converter
  */
-class Oa12060EntryConverter {
+class Oa12060EntryConverter implements CalendarEntryRequest {
 
 	/**
 	 * OA12060 View Object
@@ -38,30 +39,39 @@ class Oa12060EntryConverter {
 	 * カレンダー群のＧｅｔ
 	 * @return カレンダー群
 	 */
-	public Calendars getCalenders() {
+	public Calendars getCalendars() {
 		List<CalendarEntity> calendarEntityList = newArrayList();
 		arg.getCalendarList().forEach(c -> {
 			CalendarEntity entity = new CalendarEntity();
 			entity.setCalendarId(c.getCalendarId1());
-			entity.setIsHoliday(Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()));
+			entity.setCalendarType(CalendarType.Economy.getCode());
+			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()));
+			entity.setIsManualChange(true);
+			entity.setRecordVersion(c.getRecordVersion1());
 			calendarEntityList.add(entity);
 
 			entity = new CalendarEntity();
 			entity.setCalendarId(c.getCalendarId2());
-			entity.setIsHoliday(Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()));
+			entity.setCalendarType(CalendarType.Credit.getCode());
+			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()));
+			entity.setIsManualChange(true);
+			entity.setRecordVersion(c.getRecordVersion2());
 			calendarEntityList.add(entity);
 
 			entity = new CalendarEntity();
 			entity.setCalendarId(c.getCalendarId3());
-			entity.setIsHoliday(Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()));
+			entity.setCalendarType(CalendarType.WideAreaLogistics.getCode());
+			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()));
+			entity.setIsManualChange(true);
+			entity.setRecordVersion(c.getRecordVersion3());
 			calendarEntityList.add(entity);
 		});
 		return Calendars.createFrom(calendarEntityList);
 	}
 
-	public CalendarEntityCriteria genCalendarEntityCriteria() {
-		CalendarEntityCriteria calendarEntityCriteria = new CalendarEntityCriteria();
-		return calendarEntityCriteria;
-	}
+//	public CalendarEntityCriteria genCalendarEntityCriteria() {
+//		CalendarEntityCriteria calendarEntityCriteria = new CalendarEntityCriteria();
+//		return calendarEntityCriteria;
+//	}
 
 }

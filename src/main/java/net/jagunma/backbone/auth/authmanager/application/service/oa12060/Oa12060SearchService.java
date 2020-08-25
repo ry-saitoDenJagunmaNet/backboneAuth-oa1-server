@@ -30,6 +30,7 @@ public class Oa12060SearchService {
 	 */
 	public void search(Oa12060Vo vo, Oa12060SearchResponseVo responseVo) {
 
+		// YearMonth（LoaclDate型のプロパティ）にはPostされないのでString型のYearMonthToStringで年月を受け取りここでYearMonthに設定する
 		vo.setYearMonth(LocalDate.parse( vo.getYearMonthToString() + "/01", DateTimeFormatter.ofPattern("yyyy/MM/dd")));
 		Oa12060SearchConverter converter = Oa12060SearchConverter.with(vo);
 		Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
@@ -38,5 +39,6 @@ public class Oa12060SearchService {
 		calendarReferenceService.getCalendars(converter, presenter);
 
 		presenter.bindTo(responseVo);
+		presenter.bindTo(responseVo, vo);
 	}
 }

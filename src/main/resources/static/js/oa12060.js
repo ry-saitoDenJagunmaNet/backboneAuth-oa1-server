@@ -1,5 +1,8 @@
 /** Thymeleaf で起動時のみ実行 **/
 
+/**
+ * 画面Loadイベントです。
+ */
 function oaex_th_onload() {
 	_isThymeleaf = true;
 
@@ -13,6 +16,8 @@ function oaex_th_onload() {
 	day.setDate(1);
 	oa_setDatepickerValue("year_month", day);
 
+	// カレンダーチェックボックスの表示／非表示切替
+	oaex_filterCalendar();
 
 	// input-field の初期化
 	oa_initInputField()
@@ -24,6 +29,19 @@ function oaex_th_chegeMonth() {
 
 	let result = JSON.parse(xhr.responseText);
 	document.getElementById("calendar_table").innerHTML = result.calendarTable;
+
+	let calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check1");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck1disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check2");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck2disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check3");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck3disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+
+	// カレンダーチェックボックスの表示／非表示切替
+	oaex_filterCalendar();
 }
 
 /**
@@ -114,6 +132,11 @@ function oaex_year_month_onChange() {
 	// datepicker の更新を反映
 	let objDatepicker = document.getElementById("year_month");
 	oa_updateDatepicker(objDatepicker);
+
+	if (_isThymeleaf) {
+		oaex_th_chegeMonth();
+		return;
+	}
 
 	// カレンダー表示
 	oaex_viewCalendar();

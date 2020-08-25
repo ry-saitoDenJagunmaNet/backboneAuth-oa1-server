@@ -27,17 +27,20 @@ public class Calendars {
 	 */
 	public static Calendars createFrom(List<CalendarEntity> calendarList) {
 		List<Calendar> calendars = new ArrayList<>();
+		for (CalendarEntity entity : calendarList) {
+			if (entity.getCalendarId() != null) {
+				Calendar calendar = Calendar.createFrom(
+					entity.getCalendarId(),
+					entity.getCalendarType(),
+					entity.getDate(),
+					entity.getIsHoliday(),
+					entity.getIsManualChange(),
+					entity.getIsRelease(),
+					entity.getRecordVersion());
+				calendars.add(calendar);
+			}
+		}
 
-		calendarList.forEach(d -> {
-			Calendar calendar = Calendar.createFrom(d.getCalendarId(),
-				d.getCalendarType(),
-				d.getDate(),
-				d.getIsHoliday(),
-				d.getIsManualChange(),
-				d.getIsRelease(),
-				d.getRecordVersion());
-			calendars.add(calendar);
-		});
 		return new Calendars(calendars);
 	}
 

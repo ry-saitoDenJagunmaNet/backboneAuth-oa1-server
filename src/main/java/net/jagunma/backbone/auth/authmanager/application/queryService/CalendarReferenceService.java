@@ -27,7 +27,6 @@ public class CalendarReferenceService {
 	 * @param response 検索結果
 	 */
 	public void getCalendars(CalendarSearchRequest request, CalendarSearchResponse response) {
-
 		// カレンダー検索
 		response.setCalendars(calendarsRepository.selectBy(request.genCalendarCriteria()));
 	}

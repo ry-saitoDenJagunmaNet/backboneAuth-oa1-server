@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.model.domain.calendar;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
 import net.jagunma.common.util.objects2.Objects2;
 
 /**
@@ -8,26 +9,19 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class Calendar {
 
-	private final Long calendarId;
-	private final Short calendarType;
-	private final LocalDate date;
-	private final Boolean isHoliday;
-	private final Boolean isManualChange;
-	private final Boolean isRelease;
-	private final Integer recordVersion;
+	private Long calendarId = null;
+	private CalendarType calendarType = null;
+	private LocalDate date = null;
+	private Boolean isHoliday = null;
+	private Boolean isManualChange = null;
+	private Boolean isRelease = null;
+	private Integer recordVersion = null;
 
 	// コンストラクタ
-	Calendar() {
-		this.calendarId = null;
-		this.calendarType = null;
-		this.date = null;
-		this.isHoliday = null;
-		this.isManualChange = null;;
-		this.isRelease = null;
-		this.recordVersion = null;
-	}
-	Calendar(Long calendarId,
-		Short calendarType,
+	Calendar() {}
+	Calendar(
+		Long calendarId,
+		short calendarType,
 		LocalDate date,
 		Boolean isHoliday,
 		Boolean isManualChange,
@@ -35,7 +29,7 @@ public class Calendar {
 		Integer recordVersion) {
 
 		this.calendarId = calendarId;
-		this.calendarType = calendarType;
+		this.calendarType = CalendarType.codeOf(calendarType);
 		this.date = date;
 		this.isHoliday = isHoliday;
 		this.isManualChange = isManualChange;
@@ -43,15 +37,17 @@ public class Calendar {
 		this.recordVersion = recordVersion;
 	}
 	// ファクトリーメソッド
-	public static Calendar createFrom(Long calendarId,
-		Short calendarType,
+	public static Calendar createFrom(
+		Long calendarId,
+		short calendarType,
 		LocalDate date,
 		Boolean isHoliday,
 		Boolean isManualChange,
 		Boolean isRelease,
 		Integer recordVersion) {
 
-		return new Calendar(calendarId,
+		return new Calendar(
+			calendarId,
 			calendarType,
 			date,
 			isHoliday,
@@ -75,7 +71,7 @@ public class Calendar {
 	public Long getCalendarId() {
 		return this.calendarId;
 	}
-	public Short getCalendarType() {
+	public CalendarType getCalendarType() {
 		return this.calendarType;
 	}
 	public LocalDate getDate() {
@@ -90,7 +86,9 @@ public class Calendar {
 	public Boolean getIsRelease() {
 		return this.isRelease;
 	}
-	public Integer getRecordVersion() { return this.recordVersion; }
+	public Integer getRecordVersion() {
+		return this.recordVersion;
+	}
 
 	/**
 	 * オブジェクトの比較を行います。

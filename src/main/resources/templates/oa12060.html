@@ -57,22 +57,28 @@
 					<div>
 						<label>
 							<input type="checkbox" id="calendar_type_filter_check1" name="calendarTypeFilterCheck1" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
-								   th:checked="${form.calendarTypeFilterCheck1 == 1}"></input>
+								   th:checked="${form.calendarTypeFilterCheck1 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck1disabled}"></input>
 							<span>経済システム稼働カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck1Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck1disabled}"/>-->
 						</label>
 					</div>
 					<div>
 						<label>
 							<input type="checkbox" id="calendar_type_filter_check2" name="calendarTypeFilterCheck2" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
-								   th:checked="${form.calendarTypeFilterCheck2 == 1}"></input>
+								   th:checked="${form.calendarTypeFilterCheck2 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck2disabled}"></input>
 							<span>信用カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck2Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck2disabled}"/>-->
 						</label>
 					</div>
 					<div>
 						<label>
 							<input type="checkbox" id="calendar_type_filter_check3" name="calendarTypeFilterCheck3" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
-								   th:checked="${form.calendarTypeFilterCheck3 == 1}"></input>
+								   th:checked="${form.calendarTypeFilterCheck3 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck3disabled}"></input>
 							<span>広域物流カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck3Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck3disabled}"/>-->
 						</label>
 					</div>
 				</div>

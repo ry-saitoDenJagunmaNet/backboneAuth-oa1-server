@@ -29,7 +29,8 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
 	@Override
 	public Calendar findOneBy(CalendarCriteria calendarCriteria) {
 		CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
-		return Calendar.createFrom(calendarEntity.getCalendarId(),
+		return Calendar.createFrom(
+			calendarEntity.getCalendarId(),
 			calendarEntity.getCalendarType(),
 			calendarEntity.getDate(),
 			calendarEntity.getIsHoliday(),
@@ -37,16 +38,4 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
 			calendarEntity.getIsRelease(),
 			calendarEntity.getRecordVersion());
 	}
-
-//	/**
-//	 * カレンダーの条件検索を行います。
-//	 *
-//	 * @param calendarCriteria カレンダーの検索条件
-//	 * @return カレンダー
-//	 */
-//	@Override
-//	public Calendar findOneBy(CalendarCriteria calendarCriteria) {
-//		CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
-//		return Calendar.of(calendarEntity);
-//	}
 }

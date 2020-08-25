@@ -27,7 +27,7 @@ function oa_th_sendFormData(url, formObj) {
 		//if (typeof result.message !== "undefined" && result.message != null && result.message.length > 0) {
 		if (result.message != null && result.message.length > 0) {
 			oa_showAlert(result.message);
-			return null;
+			return xhr;
 		}
 		return xhr;
 

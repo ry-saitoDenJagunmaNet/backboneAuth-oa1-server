@@ -12,7 +12,7 @@ import net.jagunma.common.util.dateProvider.DateProvider;
 //@Controller
 public class BaseOfController {
 
-	public BaseOfController() {
+	public void setAuthInf() {
 		System.out.println("### BaseOfController");
 		//TODO: パラメータでサインインオペレーターの情報を取得する
 		AuthInf authInf = new AuthInf().createFrom("006", "001", 18l, "yu001009", "145.254.211.73");
