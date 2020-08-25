@@ -15,59 +15,69 @@ import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
  */
 class Oa12060EntryConverter implements CalendarEntryRequest {
 
-	/**
-	 * OA12060 View Object
-	 */
-	private final Oa12060Vo arg;
+    /**
+     * OA12060 View Object
+     */
+    private final Oa12060Vo arg;
 
-	// コンストラクタ
-	Oa12060EntryConverter(Oa12060Vo oa12060Vo)  {
-		arg = oa12060Vo;
-	}
-	// ファクトリーメソッド
-	public static Oa12060EntryConverter with(Oa12060Vo oa12060Vo) {
-		return new Oa12060EntryConverter(oa12060Vo);
-	}
+    // コンストラクタ
+    Oa12060EntryConverter(Oa12060Vo oa12060Vo) {
+        arg = oa12060Vo;
+    }
 
-	/**
-	 * 年月のＧｅｔ
-	 * @return 年月
-	 */
-	public LocalDate getYearMonth() { return arg.getYearMonth(); }
+    // ファクトリーメソッド
+    public static Oa12060EntryConverter with(Oa12060Vo oa12060Vo) {
+        return new Oa12060EntryConverter(oa12060Vo);
+    }
 
-	/**
-	 * カレンダー群のＧｅｔ
-	 * @return カレンダー群
-	 */
-	public Calendars getCalendars() {
-		List<CalendarEntity> calendarEntityList = newArrayList();
-		arg.getCalendarList().forEach(c -> {
-			CalendarEntity entity = new CalendarEntity();
-			entity.setCalendarId(c.getCalendarId1());
-			entity.setCalendarType(CalendarType.Economy.getCode());
-			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()));
-			entity.setIsManualChange(true);
-			entity.setRecordVersion(c.getRecordVersion1());
-			calendarEntityList.add(entity);
+    /**
+     * 年月のＧｅｔ
+     *
+     * @return 年月
+     */
+    public LocalDate getYearMonth() {
+        return arg.getYearMonth();
+    }
 
-			entity = new CalendarEntity();
-			entity.setCalendarId(c.getCalendarId2());
-			entity.setCalendarType(CalendarType.Credit.getCode());
-			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()));
-			entity.setIsManualChange(true);
-			entity.setRecordVersion(c.getRecordVersion2());
-			calendarEntityList.add(entity);
+    /**
+     * カレンダー群のＧｅｔ
+     *
+     * @return カレンダー群
+     */
+    public Calendars getCalendars() {
 
-			entity = new CalendarEntity();
-			entity.setCalendarId(c.getCalendarId3());
-			entity.setCalendarType(CalendarType.WideAreaLogistics.getCode());
-			entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()));
-			entity.setIsManualChange(true);
-			entity.setRecordVersion(c.getRecordVersion3());
-			calendarEntityList.add(entity);
-		});
-		return Calendars.createFrom(calendarEntityList);
-	}
+//        Calenders calenders = carelderReposity.selectBy(YearMonth);
+//        Calenders newClenders = Carenders.createFrom(arg.getCalendarList());
+//        carenderRerpository.store(newClenders.getDeleteRecs);
+
+        List<CalendarEntity> calendarEntityList = newArrayList();
+        arg.getCalendarList().forEach(c -> {
+            CalendarEntity entity = new CalendarEntity();
+            entity.setCalendarId(c.getCalendarId1());
+            entity.setCalendarType(CalendarType.Economy.getCode());
+            entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()));
+            entity.setIsManualChange(true);
+            entity.setRecordVersion(c.getRecordVersion1());
+            calendarEntityList.add(entity);
+
+            entity = new CalendarEntity();
+            entity.setCalendarId(c.getCalendarId2());
+            entity.setCalendarType(CalendarType.Credit.getCode());
+            entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()));
+            entity.setIsManualChange(true);
+            entity.setRecordVersion(c.getRecordVersion2());
+            calendarEntityList.add(entity);
+
+            entity = new CalendarEntity();
+            entity.setCalendarId(c.getCalendarId3());
+            entity.setCalendarType(CalendarType.WideAreaLogistics.getCode());
+            entity.setIsHoliday(!Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()));
+            entity.setIsManualChange(true);
+            entity.setRecordVersion(c.getRecordVersion3());
+            calendarEntityList.add(entity);
+        });
+        return Calendars.createFrom(calendarEntityList);
+    }
 
 //	public CalendarEntityCriteria genCalendarEntityCriteria() {
 //		CalendarEntityCriteria calendarEntityCriteria = new CalendarEntityCriteria();
