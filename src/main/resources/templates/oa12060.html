@@ -1,25 +1,31 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>カレンダーメンテナンス | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa12060.css"/>
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa12060.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+	<link rel="stylesheet" href="../static/css/oa12060.css" th:href="@{/css/oa12060.css}"/>
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa12060.js" th:src="@{/js/oa12060.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_th_onload();">
+<form>
+
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<div th:replace="include/messageDialog :: messageDialog"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa12060");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa12060", "カレンダーメンテナンス");</script>
+		<script th:remove="all">oa_getHeader("oa12060", "カレンダーメンテナンス");</script>
+		<div th:replace="include/header :: header (id='oa12060', title='カレンダーメンテナンス')"></div>
 	</header>
 
 	<!-- main定義 -->
@@ -35,7 +41,8 @@
 						<a class="btn-small waves-effect waves-light" href="javascript:oaex_lastMonthBtn_onClick();">◀</a>
 					</div>
 					<div class="input-field oaex_inline">
-						<input type="text" id="year_month" class="validate datepicker" onchange="oaex_year_month_onChange()"></input>
+						<input type="text" id="year_month" name="yearMonthToString" class="validate datepicker" onchange="oaex_year_month_onChange()"
+							th:value="${form.yearMonth}"></input>
 						<label for="year_month"></label>
 					</div>
 					<div class="input-field oaex_inline">
@@ -49,30 +56,40 @@
 					</div>
 					<div>
 						<label>
-							<input type="checkbox" id="calendar_type_check1" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<input type="checkbox" id="calendar_type_filter_check1" name="calendarTypeFilterCheck1" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
+								   th:checked="${form.calendarTypeFilterCheck1 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck1disabled}"></input>
 							<span>経済システム稼働カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck1Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck1disabled}"/>-->
 						</label>
 					</div>
 					<div>
 						<label>
-							<input type="checkbox" id="calendar_type_check2" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<input type="checkbox" id="calendar_type_filter_check2" name="calendarTypeFilterCheck2" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
+								   th:checked="${form.calendarTypeFilterCheck2 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck2disabled}"></input>
 							<span>信用カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck2Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck2disabled}"/>-->
 						</label>
 					</div>
 					<div>
 						<label>
-							<input type="checkbox" id="calendar_type_check3" class="filled-in" checked="checked" onchange="oaex_filterCalendar()"></input>
+							<input type="checkbox" id="calendar_type_filter_check3" name="calendarTypeFilterCheck3" class="filled-in" checked="checked" onchange="oaex_filterCalendar()" value="1"
+								   th:checked="${form.calendarTypeFilterCheck3 == 1}"
+								   th:disabled="${form.searchResponse.calendarTypeFilterCheck3disabled}"></input>
 							<span>広域物流カレンダー</span>
+<!--							<input type="hidden" id="calendarTypeFilterCheck3Disabled" th:value="${form.searchResponse.calendarTypeFilterCheck3disabled}"/>-->
 						</label>
 					</div>
 				</div>
 				<!-- 稼働・休日 -->
 				<div class="col s3">
 					<div class="input-field">
-						<select id="workingday_or_holiday" class="validate" onchange="oaex_filterCalendar()">
-							<option value=""></option>
-							<option value="1">稼働のみ</option>
-							<option value="2">休日のみ</option>
+						<select id="workingday_or_holiday" name="workingdayOrHolidaySelect" class="validate" onchange="oaex_filterCalendar()"
+								th:value="${form.workingdayOrHolidaySelect}">
+							<option value="" th:selected="${form.workingdayOrHolidaySelect == ''}"></option>
+							<option value="1" th:selected="${form.workingdayOrHolidaySelect == '1'}">稼働のみ</option>
+							<option value="2" th:selected="${form.workingdayOrHolidaySelect == '2'}">休日のみ</option>
 						</select>
 						<label>稼働・休日</label>
 					</div>	
@@ -84,7 +101,7 @@
 			<!-- カレンダー -->
 			<div class="row">
 				<div class="col s12">
-					<div id="calendar_list"></div>
+					<div id="calendar_table" th:utext="${form.searchResponse.calendarTable}"></div>
 				</div>
 			</div>
 		</section>
@@ -104,5 +121,6 @@
 			</div>
 		</div>
 	</footer>
+</form>
 </body>
 </html>

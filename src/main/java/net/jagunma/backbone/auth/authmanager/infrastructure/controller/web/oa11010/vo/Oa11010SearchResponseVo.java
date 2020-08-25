@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo;
 
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
-import net.jagunma.common.util.exception.GunmaRuntimeException;
 
 /**
  * OA11010検索レスポンス

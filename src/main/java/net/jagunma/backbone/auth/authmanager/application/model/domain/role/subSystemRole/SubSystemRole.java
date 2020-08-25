@@ -21,7 +21,6 @@ public class SubSystemRole {
 		this.subSystemRoleName = subSystemRoleName;
 		this.subSystemList = subSystemList;
 	}
-
 	// ファクトリーメソッド
 	public static SubSystemRole createOf(String subSystemRoleCode, String subSystemRoleName, List<SubSystem> subSystemList) {
 		return new SubSystemRole(subSystemRoleCode, subSystemRoleName, subSystemList);
@@ -30,7 +29,6 @@ public class SubSystemRole {
 	public static SubSystemRole empty() {
 		return new SubSystemRole("", "", newArrayList());
 	}
-
 	// Getter
 	public String getSubSystemRoleCode() { return subSystemRoleCode; }
 	public String getSubSystemRoleName() { return subSystemRoleName; }
@@ -38,6 +36,7 @@ public class SubSystemRole {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

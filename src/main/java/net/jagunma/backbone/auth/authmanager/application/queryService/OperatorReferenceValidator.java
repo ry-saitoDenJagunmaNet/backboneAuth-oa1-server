@@ -12,13 +12,11 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 class OperatorReferenceValidator {
 	private OperatorSearchRequest request;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	OperatorReferenceValidator(OperatorSearchRequest request) {
 		this.request = request;
 	}
-
+	// ファクトリーメソッド
 	public static OperatorReferenceValidator with(OperatorSearchRequest request) {
 		return new OperatorReferenceValidator(request);
 	}

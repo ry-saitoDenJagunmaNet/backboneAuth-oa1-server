@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class SubSystemsRepositoryDataSource implements SubSystemsRepository {
 	/**
 	 * サブシステムの全件検索を行います。
+	 *
 	 * @return サブシステム群
 	 */
 	@Override

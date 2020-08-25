@@ -1,12 +1,15 @@
 package net.jagunma.backbone.auth.authmanager.application.model.domain.calendar;
 
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
+import net.jagunma.common.ddd.model.criterias.Criteria;
+import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
  * カレンダーの検索条件
  */
 public class CalendarCriteria extends CalendarEntityCriteria {
+	LongCriteria item = new LongCriteria();
 	public boolean test(Calendar aValue) {
-		return super.test(aValue.getCalendarEntityForRepository());
+		return item.test(aValue.getCalendarId());
 	}
 }

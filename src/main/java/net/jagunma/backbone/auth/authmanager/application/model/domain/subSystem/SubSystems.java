@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.application.model.types.SubSystemTy
  * サブシステム群
  */
 public class SubSystems {
+
 	private final ArrayList<SubSystem> list = newArrayList();
 
 	// コンストラクタ
@@ -19,7 +20,7 @@ public class SubSystems {
 	}
 
 	/**
-	 * サブシステム列挙型から作成
+	 * サブシステム列挙型から作成します。
 	 *
 	 * @return サブシステム群
 	 */
@@ -37,6 +38,7 @@ public class SubSystems {
 
 	/**
 	 * サブシステムリストを取得します。
+	 *
 	 * @return サブシステムリスト
 	 */
 	public List<SubSystem> getValues() {

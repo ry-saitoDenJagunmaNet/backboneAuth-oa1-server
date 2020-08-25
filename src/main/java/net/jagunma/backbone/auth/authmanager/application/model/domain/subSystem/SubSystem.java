@@ -15,20 +15,21 @@ public class SubSystem {
 		this.subSystemCode = subSystemCode;
 		this.subSystemName = subSystemName;
 	}
-
 	// ファクトリーメソッド
 	public static SubSystem createOf(String subSystemCode, String subSystemName) {
 		return new SubSystem(subSystemCode, subSystemName);
 	}
 	// 空生成メソッド
-	public static SubSystem empty() { return new SubSystem("", ""); }
-
+	public static SubSystem empty() {
+		return new SubSystem("", "");
+	}
 	// Getter
 	public String getSubSystemCode() { return this.subSystemCode; }
 	public String getSubSystemName() { return this.subSystemName; }
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
  * カレンダー群
  */
 public class Calendars {
+
 	private final ArrayList<Calendar> list = newArrayList();
 
 	// コンストラクタ
@@ -19,24 +20,34 @@ public class Calendars {
 	}
 
 	/**
-	 * カレンダーリストから作成
+	 * カレンダーリストから作成します。
 	 *
 	 * @param calendarList カレンダーリスト
 	 * @return カレンダー群
 	 */
 	public static Calendars createFrom(List<CalendarEntity> calendarList) {
 		List<Calendar> calendars = new ArrayList<>();
+		for (CalendarEntity entity : calendarList) {
+			if (entity.getCalendarId() != null) {
+				Calendar calendar = Calendar.createFrom(
+					entity.getCalendarId(),
+					entity.getCalendarType(),
+					entity.getDate(),
+					entity.getIsHoliday(),
+					entity.getIsManualChange(),
+					entity.getIsRelease(),
+					entity.getRecordVersion());
+				calendars.add(calendar);
+			}
+		}
 
-		calendarList.forEach(d -> {
-			Calendar calendar = Calendar.of(d);
-			calendars.add(calendar);
-		});
 		return new Calendars(calendars);
 	}
 
 	/**
-	 * 取引ロールリストを取得します。
-	 * @return 取引ロールリスト
+	 * カレンダーリストを取得します。
+	 *
+	 * @return カレンダーリスト
 	 */
 	public List<Calendar> getValues() {
 		return list;
@@ -44,6 +55,7 @@ public class Calendars {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */
@@ -61,4 +73,3 @@ public class Calendars {
 		return false;
 	}
 }
-

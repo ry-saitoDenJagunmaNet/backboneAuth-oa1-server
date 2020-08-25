@@ -50,9 +50,7 @@ public class Oa11010Controller {
 	private final Oa11010InitService oa11010InitService;
 	private final Oa11010SearchService oa11010SearchService;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public Oa11010Controller(Oa11010InitService oa11010InitService,
 		Oa11010SearchService oa11010SearchService) {
 		this.oa11010InitService = oa11010InitService;

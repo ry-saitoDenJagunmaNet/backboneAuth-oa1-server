@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
@@ -25,9 +25,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	 */
 	private final int PAGE_SIZE = 10;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	Oa11010SearchPresenter() {}
 
 	/**
@@ -47,6 +45,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * オペレーターテーブルHtmlを生成します。
+	 *
 	 * @param pageNo 対象ページ
 	 */
 	public void genOperatorTableHtml(int pageNo) {
@@ -190,6 +189,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * 該当ページのオペレーター一覧を取得します。
+	 *
 	 * @param pageNo 対象ページ
 	 * @return 該当ページのオペレーター一覧
 	 */
@@ -200,6 +200,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * 取引ロール定義Htmlを生成します。
+	 *
 	 * @param list オペレーター取引ロールリスト
 	 * @param operatorCode オペレーターコード
 	 * @param subSystemCode サブシステムコード
@@ -255,6 +256,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * オペレーターの未設定Htmlを生成します。
+	 *
 	 * @return オペレーターの未設定Html
 	 */
 	private String genOperatorBlankHtml(String operatorCode) {
@@ -280,6 +282,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * オペレーターサブシステムロールの未設定Htmlを生成します。
+	 *
 	 * @return オペレーターサブシステムロールの未設定Html
 	 */
 	private String genOperatorSubSystemRoleBlankHtml() {
@@ -294,6 +297,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * 取引ロールの未設定Htmlを生成します。
+	 *
 	 * @return 取引ロールの未設定Html
 	 */
 	private String genOperatorBizTranRoleBlankHtml() {
@@ -310,6 +314,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * Pagination Htmlを生成します。
+	 *
 	 * @param pageNo 表示ページ番号
 	 */
 	public void genPaginationHtml(int pageNo) {
@@ -341,7 +346,8 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 	}
 
 	/**
-	 * オペレーター一覧の最終ページを取得します、
+	 * オペレーター一覧の最終ページを取得します。
+	 *
 	 * @return オペレーター一覧の最終ページ
 	 */
 	private int getMaxPage() {
@@ -350,6 +356,7 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
 
 	/**
 	 * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+	 *
 	 * @param localDt フォーマット対象の日付
 	 * @return フォ－マットした日付
 	 */

@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.bizTranRole;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.role.bizTranRole;
 
 import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRoleCriteria;
@@ -15,15 +15,14 @@ public class BizTranRoleRepositoryDataSource implements BizTranRoleRepository {
 
 	private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public BizTranRoleRepositoryDataSource(BizTranRoleEntityDao bizTranRoleEntityDao) {
 		this.bizTranRoleEntityDao = bizTranRoleEntityDao;
 	}
 
 	/**
 	 * 取引ロールの条件検索を行います。
+	 *
 	 * @param bizTranRoleCriteria 取引ロールの検索条件
 	 * @return 取引ロール
 	 */

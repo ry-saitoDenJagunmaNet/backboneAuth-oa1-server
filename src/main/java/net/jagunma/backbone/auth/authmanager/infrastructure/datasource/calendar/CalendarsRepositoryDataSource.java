@@ -16,33 +16,53 @@ import org.springframework.stereotype.Component;
 public class CalendarsRepositoryDataSource implements CalendarsRepository {
 
 	private final CalendarEntityDao calendarEntityDao;
+	private final Orders defaultOrders = Orders.empty().addOrder("calendarType").addOrder("date");
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	CalendarsRepositoryDataSource(CalendarEntityDao calendarEntityDao) {
 		this.calendarEntityDao = calendarEntityDao;
 	}
 
 	/**
 	 * カレンダーの条件検索を行います。
+	 *
+	 * @param calendarCriteria カレンダーの検索条件
+	 * @param orders オーダー指定
+	 * @return カレンダー群
+	 */
+	@Override
+	public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
+		List<CalendarEntity> list = calendarEntityDao.findBy(calendarCriteria, orders);
+		return Calendars.createFrom(list);
+	}
+	/**
+	 * カレンダーの条件検索を行います。
+	 *
 	 * @param calendarCriteria カレンダーの検索条件
 	 * @return カレンダー群
 	 */
 	@Override
 	public Calendars selectBy(CalendarCriteria calendarCriteria) {
-		Orders orders = Orders.empty().addOrder("CalendarType").addOrder("Date");
-		List<CalendarEntity> list = calendarEntityDao.findBy(calendarCriteria, orders);
-		return Calendars.createFrom(list);
+		return selectBy(calendarCriteria, defaultOrders);
 	}
 
 	/**
 	 * カレンダーの全件検索を行います。
+	 *
+	 * @param orders オーダー指定
+	 * @return カレンダー群
+	 */
+	@Override
+	public Calendars selectAll(Orders orders) {
+		return Calendars.createFrom(calendarEntityDao.findAll(orders));
+	}
+	/**
+	 * カレンダーの全件検索を行います。
+	 *
 	 * @return カレンダー群
 	 */
 	@Override
 	public Calendars selectAll() {
-		Orders orders = Orders.empty().addOrder("CalendarType").addOrder("Date");
-		return Calendars.createFrom(calendarEntityDao.findAll(orders));
+		return selectAll(defaultOrders);
 	}
 }

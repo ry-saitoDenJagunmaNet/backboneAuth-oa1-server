@@ -1,8 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.model.domain.calendar;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
+import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
 import net.jagunma.common.util.objects2.Objects2;
 
 /**
@@ -10,53 +9,90 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class Calendar {
 
-	private final CalendarEntity calendarEntity;
+	private Long calendarId = null;
+	private CalendarType calendarType = null;
+	private LocalDate date = null;
+	private Boolean isHoliday = null;
+	private Boolean isManualChange = null;
+	private Boolean isRelease = null;
+	private Integer recordVersion = null;
 
 	// コンストラクタ
-	Calendar(CalendarEntity calendarEntity) {
-		this.calendarEntity = calendarEntity;
-	}
+	Calendar() {}
+	Calendar(
+		Long calendarId,
+		short calendarType,
+		LocalDate date,
+		Boolean isHoliday,
+		Boolean isManualChange,
+		Boolean isRelease,
+		Integer recordVersion) {
 
+		this.calendarId = calendarId;
+		this.calendarType = CalendarType.codeOf(calendarType);
+		this.date = date;
+		this.isHoliday = isHoliday;
+		this.isManualChange = isManualChange;
+		this.isRelease = isRelease;
+		this.recordVersion = recordVersion;
+	}
 	// ファクトリーメソッド
-	public static Calendar of(CalendarEntity calendarEntity) {
-		return new Calendar(calendarEntity);
+	public static Calendar createFrom(
+		Long calendarId,
+		short calendarType,
+		LocalDate date,
+		Boolean isHoliday,
+		Boolean isManualChange,
+		Boolean isRelease,
+		Integer recordVersion) {
+
+		return new Calendar(
+			calendarId,
+			calendarType,
+			date,
+			isHoliday,
+			isManualChange,
+			isRelease,
+			recordVersion);
 	}
 	// 空生成メソッド
-	public static Calendar empty() {
-		return new Calendar(new CalendarEntity());
-	}
+	public static Calendar empty() { return new Calendar(); }
 	// 空判定メソッド
 	public boolean isEmpty() {
-		return calendarEntity == null || calendarEntity.sameValueAs(new CalendarEntity());
+		return calendarId == null &&
+			calendarType == null &&
+			date == null &&
+			isHoliday == null &&
+			isManualChange == null &&
+			isRelease == null &&
+			recordVersion == null;
 	}
-
 	// Getter
-	public Long getCalendarId() { return this.calendarEntity.getCalendarId(); }
-	public Short getCalendarType() { return this.calendarEntity.getCalendarType(); }
-	public LocalDate getDate() { return this.calendarEntity.getDate(); }
-	public Boolean getIsHoliday() { return this.calendarEntity.getIsHoliday(); }
-	public Boolean getIsManualChange() { return this.calendarEntity.getIsManualChange(); }
-	public Boolean getIsRelease() { return this.calendarEntity.getIsRelease(); }
-	public Long getCreatedBy() { return this.calendarEntity.getCreatedBy(); }
-	public LocalDateTime getCreatedAt() { return this.calendarEntity.getCreatedAt(); }
-	public String getCreatedIpAddress() { return this.calendarEntity.getCreatedIpAddress(); }
-	public Long getUpdatedBy() { return this.calendarEntity.getUpdatedBy(); }
-	public LocalDateTime getUpdatedAt() { return this.calendarEntity.getUpdatedAt(); }
-	public String getUpdatedIpAddress() { return this.calendarEntity.getUpdatedIpAddress(); }
-	public Integer getRecordVersion() { return this.calendarEntity.getRecordVersion(); }
-
-	/**
-	 * リポジトリ用のEntityGetterです
-	 *
-	 * @return リポジトリ間で使用するDBEntity
-	 * @implNote 項目を取得する目的では使用しないでください
-	 */
-	public CalendarEntity getCalendarEntityForRepository() {
-		return calendarEntity;
+	public Long getCalendarId() {
+		return this.calendarId;
+	}
+	public CalendarType getCalendarType() {
+		return this.calendarType;
+	}
+	public LocalDate getDate() {
+		return this.date;
+	}
+	public Boolean getIsHoliday() {
+		return this.isHoliday;
+	}
+	public Boolean getIsManualChange() {
+		return this.isManualChange;
+	}
+	public Boolean getIsRelease() {
+		return this.isRelease;
+	}
+	public Integer getRecordVersion() {
+		return this.recordVersion;
 	}
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */
@@ -65,22 +101,15 @@ public class Calendar {
 			return true;
 		} else if (o != null && this.getClass() == o.getClass()) {
 			Calendar that = (Calendar) o;
-			return Objects2.equal(this.calendarEntity.getCalendarId(), that.getCalendarId()) &&
-				Objects2.equal(this.calendarEntity.getCalendarType(), that.getCalendarType()) &&
-				Objects2.equal(this.calendarEntity.getDate(), that.getDate()) &&
-				Objects2.equal(this.calendarEntity.getIsHoliday(), that.getIsHoliday()) &&
-				Objects2.equal(this.calendarEntity.getIsManualChange(), that.getIsManualChange()) &&
-				Objects2.equal(this.calendarEntity.getIsRelease(), that.getIsRelease()) &&
-				Objects2.equal(this.calendarEntity.getCreatedBy(), that.getCreatedBy()) &&
-				Objects2.equal(this.calendarEntity.getCreatedAt(), that.getCreatedAt()) &&
-				Objects2.equal(this.calendarEntity.getCreatedIpAddress(), that.getCreatedIpAddress()) &&
-				Objects2.equal(this.calendarEntity.getUpdatedBy(), that.getUpdatedBy()) &&
-				Objects2.equal(this.calendarEntity.getUpdatedAt(), that.getUpdatedAt()) &&
-				Objects2.equal(this.calendarEntity.getUpdatedIpAddress(), that.getUpdatedIpAddress()) &&
-				Objects2.equal(this.calendarEntity.getRecordVersion(), that.getRecordVersion());
+			return Objects2.equal(this.getCalendarId(), that.getCalendarId()) &&
+				Objects2.equal(this.getCalendarType(), that.getCalendarType()) &&
+				Objects2.equal(this.getDate(), that.getDate()) &&
+				Objects2.equal(this.getIsHoliday(), that.getIsHoliday()) &&
+				Objects2.equal(this.getIsManualChange(), that.getIsManualChange()) &&
+				Objects2.equal(this.getIsRelease(), that.getIsRelease()) &&
+				Objects2.equal(this.getRecordVersion(), that.getRecordVersion());
 		} else {
 			return false;
 		}
 	}
-
 }

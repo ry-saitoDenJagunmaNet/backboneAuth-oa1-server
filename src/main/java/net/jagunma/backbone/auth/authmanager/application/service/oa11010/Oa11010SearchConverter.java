@@ -11,8 +11,6 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
-//import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemReferenceDto;
-
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Converter
  */
@@ -32,10 +30,11 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	 */
 	private final Oa11010Vo arg;
 
+	// コンストラクタ
 	Oa11010SearchConverter(Oa11010Vo oa11010Vo)  {
 		arg = oa11010Vo;
 	}
-
+	// ファクトリーメソッド
 	public static Oa11010SearchConverter with(Oa11010Vo oa11010Vo) {
 		return new Oa11010SearchConverter(oa11010Vo);
 	}
@@ -322,10 +321,12 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 	public int getPageNo() { return arg.getPageNo(); }
 
 	/**
-	 * オペレーターの検索条件を生成
-	 * @return オペレーターの検索条件
+	 * オペレーターの検索条件を生成します。
+	 *
+	 * @return オペレーター検索条件
 	 */
-	public OperatorEntityCriteria genOperatorEntityCriteria(OperatorSearchRequest request) {
+	public OperatorEntityCriteria genOperatorEntityCriteria() {
+
 		OperatorEntityCriteria criteria = new OperatorEntityCriteria();
 
 		criteria.getJaIdCriteria().setEqualTo(arg.getJaId());
@@ -371,10 +372,24 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
 		return criteria;
 	}
 
+	/**
+	 * Nullまたは空文字を判定します。
+	 *
+	 * @param str 対象文字列
+	 * @return true:Nullまたは空文字
+	 */
 	private boolean isNullOrEmpty(String str) {
 		// strがnullもしくは空文字であればtrueを返す
 		return (str == null || str.length() == 0);
 	}
+
+	/**
+	 * Nullの場合に引数の文字列を返します。
+	 *
+	 * @param val 対象文字列
+	 * @param changeVal Nullの場合に返却する文字列
+	 * @return 文字列
+	 */
 	private Short nvl(Short val, Short changeVal) {
 		if (val == null) {return  changeVal;}
 		return val;

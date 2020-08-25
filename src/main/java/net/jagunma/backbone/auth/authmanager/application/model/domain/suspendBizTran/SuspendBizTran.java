@@ -10,7 +10,7 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class SuspendBizTran {
 
-	private SuspendBizTranEntity suspendBizTranEntity;
+	private final SuspendBizTranEntity suspendBizTranEntity;
 
 	// コンストラクタ
 	SuspendBizTran(SuspendBizTranEntity suspendBizTranEntity) {
@@ -47,18 +47,18 @@ public class SuspendBizTran {
 	public Integer getRecordVersion() { return this.suspendBizTranEntity.getRecordVersion(); }
 
 	/**
-	 * リポジトリ用のEntityGetterです
-	 * <strong>
+	 * リポジトリ用のEntityGetterです。
 	 *
 	 * @return リポジトリ間で使用するDBEntity
-	 * @implNote 項目を取得する目的では使用しないでください <strong/>
+	 * @implNote 項目を取得する目的では使用しないでください
 	 */
-	public SuspendBizTranEntity getOperatorHistoryEntityForRepository() {
+	public SuspendBizTranEntity getSuspendBizTranEntityForRepository() {
 		return suspendBizTranEntity;
 	}
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

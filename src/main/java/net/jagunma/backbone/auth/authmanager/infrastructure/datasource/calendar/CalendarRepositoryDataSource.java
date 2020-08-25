@@ -15,21 +15,27 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
 
 	private final CalendarEntityDao calendarEntityDao;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	public CalendarRepositoryDataSource(CalendarEntityDao calendarEntityDao) {
 		this.calendarEntityDao = calendarEntityDao;
 	}
 
 	/**
 	 * カレンダーの条件検索を行います。
+	 *
 	 * @param calendarCriteria カレンダーの検索条件
 	 * @return カレンダー
 	 */
 	@Override
 	public Calendar findOneBy(CalendarCriteria calendarCriteria) {
 		CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
-		return Calendar.of(calendarEntity);
+		return Calendar.createFrom(
+			calendarEntity.getCalendarId(),
+			calendarEntity.getCalendarType(),
+			calendarEntity.getDate(),
+			calendarEntity.getIsHoliday(),
+			calendarEntity.getIsManualChange(),
+			calendarEntity.getIsRelease(),
+			calendarEntity.getRecordVersion());
 	}
 }

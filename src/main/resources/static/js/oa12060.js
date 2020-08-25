@@ -1,3 +1,65 @@
+/** Thymeleaf で起動時のみ実行 **/
+
+/**
+ * 画面Loadイベントです。
+ */
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	// 年月のフォーマット変更
+	let objDatepicker = document.getElementById("year_month");
+	let yeraMonth = objDatepicker.value;
+	objDatepicker.M_Datepicker.options.format = "yyyy/mm";
+
+	// 年月初期値設定（systemdate）
+	let day = new Date(yeraMonth);
+	day.setDate(1);
+	oa_setDatepickerValue("year_month", day);
+
+	// カレンダーチェックボックスの表示／非表示切替
+	oaex_filterCalendar();
+
+	// input-field の初期化
+	oa_initInputField()
+}
+
+function oaex_th_chegeMonth() {
+	let xhr = oa_th_sendFormData("search", document.forms[0]);
+	if (xhr == null) {return;}
+
+	let result = JSON.parse(xhr.responseText);
+	document.getElementById("calendar_table").innerHTML = result.calendarTable;
+
+	let calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check1");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck1disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check2");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck2disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check3");
+	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck3disabled;
+	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
+
+	// カレンダーチェックボックスの表示／非表示切替
+	oaex_filterCalendar();
+}
+
+/**
+ * 適用ボタンクリックイベントです。
+ */
+function oaex_th_applyBtn_onClick() {
+	let xhr = oa_th_sendFormData("entry", document.forms[0]);
+	if (xhr == null) {return;}
+
+	oa_showAlert("適用しました。");
+
+
+//	let result = JSON.parse(xhr.responseText);
+//	document.getElementById("calendar_table").innerHTML = result.calendarTable;
+}
+
+
+/** Thymeleafとモックで共用 **/
 /**
  * 画面Loadイベントです。
  */
@@ -54,6 +116,11 @@ function oaex_chegeMonth(moveMonth) {
 	// 年月コントロールに加減算後の値を設定
 	oa_setDatepickerValue("year_month", pickerdate);
 
+	if (_isThymeleaf) {
+		oaex_th_chegeMonth();
+		return;
+	}
+
 	// カレンダー表示
 	oaex_viewCalendar();
 }
@@ -65,6 +132,11 @@ function oaex_year_month_onChange() {
 	// datepicker の更新を反映
 	let objDatepicker = document.getElementById("year_month");
 	oa_updateDatepicker(objDatepicker);
+
+	if (_isThymeleaf) {
+		oaex_th_chegeMonth();
+		return;
+	}
 
 	// カレンダー表示
 	oaex_viewCalendar();
@@ -91,6 +163,11 @@ function oaex_closeBtn_onClick_confirmReturn(rtn) {
  * 適用ボタンクリックイベントです。
  */
 function oaex_applyBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_applyBtn_onClick();
+		return;
+	}
+
 	oa_showAlert("適用しました。");
 }
 
@@ -99,7 +176,7 @@ function oaex_applyBtn_onClick() {
  */
 function oaex_filterCalendar() {
 	// 経済システム稼働カレンダー表示
-	if (!document.getElementById("calendar_type_check1").checked) {
+	if (!document.getElementById("calendar_type_filter_check1").checked) {
 		for(let node of document.getElementsByClassName("oaex_calendarcell_check1")) {
 			node.classList.add("oaex_calendar_type_check_hidden");
 		}
@@ -110,7 +187,7 @@ function oaex_filterCalendar() {
 		}
 	}
 	// 信用カレンダー表示
-	if (!document.getElementById("calendar_type_check2").checked) {
+	if (!document.getElementById("calendar_type_filter_check2").checked) {
 		for(let node of document.getElementsByClassName("oaex_calendarcell_check2")) {
 			node.classList.add("oaex_calendar_type_check_hidden");
 		}
@@ -121,7 +198,7 @@ function oaex_filterCalendar() {
 		}
 	}
 	// 広域物流カレンダー表示
-	if (!document.getElementById("calendar_type_check3").checked) {
+	if (!document.getElementById("calendar_type_filter_check3").checked) {
 		for(let node of document.getElementsByClassName("oaex_calendarcell_check3")) {
 			node.classList.add("oaex_calendar_type_check_hidden");
 		}
@@ -157,7 +234,7 @@ function oaex_filterWorkingdayOrHoliday(checkboxParentNode) {
 function oaex_viewCalendar() {
 	let year_month = document.getElementById("year_month");
 	if (year_month.value.length == 0) {
-		document.getElementById("calendar_list").innerHTML = "";
+		document.getElementById("calendar_table").innerHTML = "";
 		return;
 	}
 
@@ -217,7 +294,7 @@ function oaex_viewCalendar() {
 	html = html + '	</tbody>';
 	html = html + '</table>';
 
-	document.getElementById("calendar_list").innerHTML = html.replace(/\t/g, "");
+	document.getElementById("calendar_table").innerHTML = html.replace(/\t/g, "");
 	// カレンダーチェックボックスの表示／非表示切替
 	oaex_filterCalendar();
 }

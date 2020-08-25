@@ -9,7 +9,7 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class BizTranGrp_BizTran {
 
-	private BizTranGrp_BizTranEntity bizTranGrp_BizTranEntity;
+	private final BizTranGrp_BizTranEntity bizTranGrp_BizTranEntity;
 
 	// コンストラクタ
 	BizTranGrp_BizTran(BizTranGrp_BizTranEntity bizTranGrp_BizTranEntity) {
@@ -41,11 +41,10 @@ public class BizTranGrp_BizTran {
 	public Integer getRecordVersion() { return this.bizTranGrp_BizTranEntity.getRecordVersion(); }
 
 	/**
-	 * リポジトリ用のEntityGetterです
-	 * <strong>
+	 * リポジトリ用のEntityGetterです。
 	 *
 	 * @return リポジトリ間で使用するDBEntity
-	 * @implNote 項目を取得する目的では使用しないでください <strong/>
+	 * @implNote 項目を取得する目的では使用しないでください
 	 */
 	public BizTranGrp_BizTranEntity getBizTranGrp_BizTranEntityForRepository() {
 		return bizTranGrp_BizTranEntity;
@@ -53,6 +52,7 @@ public class BizTranGrp_BizTran {
 
 	/**
 	 * オブジェクトの比較を行います。
+	 *
 	 * @param o 比較するオブジェクト
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */

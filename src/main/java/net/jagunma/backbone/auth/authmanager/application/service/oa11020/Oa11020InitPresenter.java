@@ -23,9 +23,7 @@ class Oa11020InitPresenter {
 //	private LocalDate expirationEndDate;
 //	private String changeCause;
 
-	/**
-	 * コンストラクタ
-	 */
+	// コンストラクタ
 	Oa11020InitPresenter() {}
 
 	/**
@@ -96,7 +94,8 @@ class Oa11020InitPresenter {
 //	public void setChangeCause(String changeCause) { this.changeCause = changeCause; }
 
 	/**
-	 * voに変換
+	 * voに変換に変換します。
+	 *
 	 * @param vo
 	 */
 	public void bindTo(Oa11020Vo vo) {
