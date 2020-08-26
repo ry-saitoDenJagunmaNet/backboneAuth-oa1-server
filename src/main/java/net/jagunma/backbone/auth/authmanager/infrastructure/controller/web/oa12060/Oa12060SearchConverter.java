@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.service.oa12060;
+package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarCriteria;
@@ -30,18 +30,18 @@ class Oa12060SearchConverter implements CalendarSearchRequest {
 	 */
 	public LocalDate getYearMonth() { return arg.getYearMonth(); }
 
-	/**
-	 * カレンダーの検索条件を生成します。
-	 *
-	 * @return カレンダー検索条件
-	 */
-	public CalendarCriteria genCalendarCriteria() {
-
-		CalendarCriteria criteria = new CalendarCriteria();
-
-		criteria.getDateCriteria().setMoreOrEqual(arg.getYearMonth().withDayOfMonth(1));
-		criteria.getDateCriteria().setLessThan(arg.getYearMonth().withDayOfMonth(1).plusMonths(1));
-
-		return criteria;
-	}
+//	/**
+//	 * カレンダーの検索条件を生成します。
+//	 *
+//	 * @return カレンダー検索条件
+//	 */
+//	public CalendarCriteria genCalendarCriteria() {
+//
+//		CalendarCriteria criteria = new CalendarCriteria();
+//
+//		criteria.getDateCriteria().setMoreOrEqual(arg.getYearMonth().withDayOfMonth(1));
+//		criteria.getDateCriteria().setLessThan(arg.getYearMonth().withDayOfMonth(1).plusMonths(1));
+//
+//		return criteria;
+//	}
 }
