@@ -5,16 +5,16 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand
 /**
  * カレンダー コマンドサービス Validator
  */
-class CalendarCommandValidator {
+class StoreingCalendarValidator {
 	private CalendarEntryRequest request;
 
 	// コンストラクタ
-	CalendarCommandValidator(CalendarEntryRequest request) {
+	StoreingCalendarValidator(CalendarEntryRequest request) {
 		this.request = request;
 	}
 	// ファクトリーメソッド
-	public static CalendarCommandValidator with(CalendarEntryRequest request) {
-		return new CalendarCommandValidator(request);
+	public static StoreingCalendarValidator with(CalendarEntryRequest request) {
+		return new StoreingCalendarValidator(request);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
+import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarsRepository;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
@@ -11,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class CalendarReferenceService {
+public class CalendarQueryService {
 
 	private final CalendarsRepository calendarsRepository;
 
 	// コンストラクタ
-	public CalendarReferenceService(CalendarsRepository calendarsRepository) {
+	public CalendarQueryService(CalendarsRepository calendarsRepository) {
 		this.calendarsRepository = calendarsRepository;
 	}
 
@@ -27,7 +28,27 @@ public class CalendarReferenceService {
 	 * @param response 検索結果
 	 */
 	public void getCalendars(CalendarSearchRequest request, CalendarSearchResponse response) {
+
+		// パラメーターの検証
+		CalendarQueryValidator.with(request).validate();
+
 		// カレンダー検索
-		response.setCalendars(calendarsRepository.selectBy(request.genCalendarCriteria()));
+		response.setCalendars(calendarsRepository.selectBy(genCalendarCriteria(request)));
 	}
+
+	/**
+	 * カレンダーの検索条件を生成します。
+	 *
+	 * @return カレンダー検索条件
+	 */
+	private CalendarCriteria genCalendarCriteria(CalendarSearchRequest request) {
+
+		CalendarCriteria criteria = new CalendarCriteria();
+
+		criteria.getDateCriteria().setMoreOrEqual(request.getYearMonth().withDayOfMonth(1));
+		criteria.getDateCriteria().setLessThan(request.getYearMonth().withDayOfMonth(1).plusMonths(1));
+
+		return criteria;
+	}
+
 }

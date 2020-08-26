@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.calendar
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
 		CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
 		return Calendar.createFrom(
 			calendarEntity.getCalendarId(),
-			calendarEntity.getCalendarType(),
+			CalendarType.codeOf(calendarEntity.getCalendarType()),
 			calendarEntity.getDate(),
 			calendarEntity.getIsHoliday(),
 			calendarEntity.getIsManualChange(),

@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.service.oa12060;
+package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -15,9 +15,6 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 
 	private LocalDate yearMonth;
 	private Calendars calendars;
-	private boolean calendarTypeFilterCheck1disabled = false;
-	private boolean calendarTypeFilterCheck2disabled = false;
-	private boolean calendarTypeFilterCheck3disabled = false;
 
 	/**
 	 * 年月のＳｅｔ
@@ -33,44 +30,42 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 	/**
 	 * responseに変換
 	 *
-	 * @param vo カレンダーテーブル検索結果
+	 * @param searchResponseVo カレンダーテーブル検索結果
+	 * @param oa12060Vo カレンダーメンテナンスView Object
 	 */
-	public void bindTo(Oa12060SearchResponseVo vo) {
+	public void bindTo(Oa12060SearchResponseVo searchResponseVo, Oa12060Vo oa12060Vo) {
 
-		calendarTypeFilterCheck1disabled = isCalendarTypeFilterCheckDisabled("Economy");
-		calendarTypeFilterCheck2disabled = isCalendarTypeFilterCheckDisabled("Credit");
-		calendarTypeFilterCheck3disabled = isCalendarTypeFilterCheckDisabled("WideAreaLogistics");
+		boolean calendarTypeFilterCheck1disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Economy);
+		boolean calendarTypeFilterCheck2disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Credit);
+		boolean calendarTypeFilterCheck3disabled = isCalendarTypeFilterCheckDisabled(CalendarType.WideAreaLogistics);
 
 		// 表示対象経済選択無効
-		vo.setCalendarTypeFilterCheck1disabled(calendarTypeFilterCheck1disabled);
+		searchResponseVo.setCalendarTypeFilterCheck1disabled(calendarTypeFilterCheck1disabled);
 		// 表示対象信用選択無効
-		vo.setCalendarTypeFilterCheck2disabled(calendarTypeFilterCheck2disabled);
+		searchResponseVo.setCalendarTypeFilterCheck2disabled(calendarTypeFilterCheck2disabled);
 		// 表示対象広域物流選択無効
-		vo.setCalendarTypeFilterCheck3disabled(calendarTypeFilterCheck3disabled);
+		searchResponseVo.setCalendarTypeFilterCheck3disabled(calendarTypeFilterCheck3disabled);
 		if (calendarTypeFilterCheck1disabled && calendarTypeFilterCheck2disabled && calendarTypeFilterCheck3disabled) {
-			vo.setMessage("対象のカレンダーが登録されていません。");
+			oa12060Vo.setMessage("対象のカレンダーが登録されていません。");
 		}
 
 		// カレンターテーブルHtmlを生成
-		vo.setCalendarTable(genCalendarTableHtml());
-	}
+		searchResponseVo.setCalendarTable(genCalendarTableHtml());
 
-	/**
-	 * responseに変換
-	 *
-	 * @param vo カレンダーテーブル検索結果
-	 * @param oa12060Vo カレンダーメンテナンスView Object
-	 */
-	public void bindTo(Oa12060SearchResponseVo vo, Oa12060Vo oa12060Vo) {
-		oa12060Vo.setMessage(vo.getMessage());
-		oa12060Vo.setSearchResponse(vo);
-		oa12060Vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1disabled? (short)0 : (short)1);
+		oa12060Vo.setSearchResponse(searchResponseVo);
+		oa12060Vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1disabled ? (short)0 : (short)1);
 		oa12060Vo.setCalendarTypeFilterCheck2(calendarTypeFilterCheck2disabled? (short)0 : (short)1);
 		oa12060Vo.setCalendarTypeFilterCheck3(calendarTypeFilterCheck3disabled? (short)0 : (short)1);
 	}
 
-	private boolean isCalendarTypeFilterCheckDisabled(String calendarTypeString) {
-		if (calendars.getValues().stream().filter(c->CalendarType.valueOf(calendarTypeString).equals(c.getCalendarType())).count()
+	/**
+	 * 表示対象フィルターチェックが無効か判定します。
+	 *
+	 * @param calendarType カレンダータイプ
+	 * @return true:表示対象フィルターチェックが無効
+	 */
+	private boolean isCalendarTypeFilterCheckDisabled(CalendarType calendarType) {
+		if (calendars.getValues().stream().filter(c-> calendarType.equals(c.getCalendarType())).count()
 			== yearMonth.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth()) {
 			return false;
 		}
@@ -186,27 +181,6 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 				calendarId[2] = calendar.getCalendarId().toString();
 				recordVersion[2] = calendar.getRecordVersion();
 			}
-
-//			// 経済
-//			if (CalendarType.Economy.equals(calendar.getCalendarType())) {
-//				if (calendar.getIsHoliday()) {checked[0] = "";}
-//				calendarId[0] = calendar.getCalendarId().toString();
-//				recordVersion[0] = calendar.getRecordVersion();
-//				continue;
-//			}
-//			// 信用
-//			if (CalendarType.Credit.equals(calendar.getCalendarType())) {
-//				if (calendar.getIsHoliday()) {checked[1] = "";}
-//				calendarId[1] = calendar.getCalendarId().toString();
-//				recordVersion[1] = calendar.getRecordVersion();
-//				continue;
-//			}
-//			// 広域物流
-//			if (CalendarType.WideAreaLogistics.equals(calendar.getCalendarType())) {
-//				if (calendar.getIsHoliday()) {checked[2] = "";}
-//				calendarId[2] = calendar.getCalendarId().toString();
-//				recordVersion[2] = calendar.getRecordVersion();
-//			}
 		}
 
 		StringBuilder html = new StringBuilder();
@@ -215,27 +189,32 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 		html.append("   <td class=\"").append(classids).append("\">").append(day).append("</td>");
 		// 右セル　チェックボックス３つ
 		html.append("   <td class=\"oaex_calendarcell_right\">");
-		html.append("    <div><label class=\"oaex_calendarcell_check1\">");
-		html.append(String.format("     <input type=\"checkbox\" id=\"calendar_type_check1[%d]\" name=\"CalendarList[%d].isWorkingDay1\" value=\"1\"%s></input>", index, index, checked[0]));
-		html.append("     <span>経済</span>");
+		html.append("    <div>");
+		html.append("     <label class=\"oaex_calendarcell_check1\">");
+		html.append(String.format("      <input type=\"checkbox\" id=\"calendar_type_check1[%d]\" name=\"CalendarList[%d].isWorkingDay1\" value=\"1\"%s></input>", index, index, checked[0]));
+		html.append("      <span>経済</span>");
+		html.append("     </label>");
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].calendarId1\" value=\"%s\"></input>", index, calendarId[0]));
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].recordVersion1\" value=\"%d\"></input>", index, recordVersion[0]));
-		html.append("    </label></div>");
+		html.append("    </div>");
 
-		html.append("    <div><label class=\"oaex_calendarcell_check2\">");
-		html.append(String.format("     <input type=\"checkbox\" id=\"calendar_type_check2[%d]\" name=\"CalendarList[%d].isWorkingDay2\" value=\"1\"%s></input>", index, index, checked[1]));
-		html.append("     <span>信用</span>");
+		html.append("    <div>");
+		html.append("     <label class=\"oaex_calendarcell_check2\">");
+		html.append(String.format("      <input type=\"checkbox\" id=\"calendar_type_check2[%d]\" name=\"CalendarList[%d].isWorkingDay2\" value=\"1\"%s></input>", index, index, checked[1]));
+		html.append("      <span>信用</span>");
+		html.append("     </label>");
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].calendarId2\" value=\"%s\"></input>", index, calendarId[1]));
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].recordVersion2\" value=\"%d\"></input>", index, recordVersion[1]));
-		html.append("    </label></div>");
+		html.append("    </div>");
 
-		html.append("    <div><label class=\"oaex_calendarcell_check3\">");
-		html.append(String.format("     <input type=\"checkbox\" id=\"calendar_type_check3[%d]\" name=\"CalendarList[%d].isWorkingDay3\" value=\"1\"%s></input>", index, index, checked[2]));
-		html.append("     <span>広域物流</span>");
+		html.append("    <div>");
+		html.append("     <label class=\"oaex_calendarcell_check3\">");
+		html.append(String.format("      <input type=\"checkbox\" id=\"calendar_type_check3[%d]\" name=\"CalendarList[%d].isWorkingDay3\" value=\"1\"%s></input>", index, index, checked[2]));
+		html.append("      <span>広域物流</span>");
+		html.append("     </label>");
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].calendarId3\" value=\"%s\"></input>", index, calendarId[2]));
 		html.append(String.format("     <input type=\"hidden\" name=\"CalendarList[%d].recordVersion3\" value=\"%d\"></input>", index, recordVersion[2]));
-		html.append("    </label></div>");
-		html.append("   </td>");
+		html.append("    </div>");
 
 		return html.toString();
 	}

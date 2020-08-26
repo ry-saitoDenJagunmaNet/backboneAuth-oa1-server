@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.vo.BaseOfResponseVo;
 
@@ -9,6 +10,22 @@ import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.
  */
 public class Oa12060Vo extends BaseOfResponseVo {
 	private static final long serialVersionUID = 1L;
+
+	// コンストラクタ
+	public Oa12060Vo() {}
+	public void createFrom(
+		String yearMonth,
+		Short calendarTypeFilterCheck1,
+		Short calendarTypeFilterCheck2,
+		Short calendarTypeFilterCheck3,
+		String workingdayOrHolidaySelect) {
+
+		this.yearMonth = LocalDate.parse( yearMonth + "/01", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+		this.calendarTypeFilterCheck1 = calendarTypeFilterCheck1;
+		this.calendarTypeFilterCheck2 = calendarTypeFilterCheck2;
+		this.calendarTypeFilterCheck3 = calendarTypeFilterCheck3;
+		this.workingdayOrHolidaySelect = workingdayOrHolidaySelect;
+	}
 
 	/**
 	 * 年月

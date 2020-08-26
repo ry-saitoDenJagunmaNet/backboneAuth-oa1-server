@@ -13,8 +13,8 @@ public interface CalendarSearchRequest {
 	 */
 	LocalDate getYearMonth();
 
-	/**
-	 * カレンダーの検索条件を生成します。
-	 */
-	CalendarCriteria genCalendarCriteria();
+//	/**
+//	 * カレンダーの検索条件を生成します。
+//	 */
+//	CalendarCriteria genCalendarCriteria();
 }
