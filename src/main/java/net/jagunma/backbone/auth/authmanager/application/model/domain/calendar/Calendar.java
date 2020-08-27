@@ -21,7 +21,7 @@ public class Calendar {
 	Calendar() {}
 	Calendar(
 		Long calendarId,
-		short calendarType,
+		CalendarType calendarType,
 		LocalDate date,
 		Boolean isHoliday,
 		Boolean isManualChange,
@@ -29,7 +29,7 @@ public class Calendar {
 		Integer recordVersion) {
 
 		this.calendarId = calendarId;
-		this.calendarType = CalendarType.codeOf(calendarType);
+		this.calendarType = calendarType;
 		this.date = date;
 		this.isHoliday = isHoliday;
 		this.isManualChange = isManualChange;
@@ -39,7 +39,7 @@ public class Calendar {
 	// ファクトリーメソッド
 	public static Calendar createFrom(
 		Long calendarId,
-		short calendarType,
+		CalendarType calendarType,
 		LocalDate date,
 		Boolean isHoliday,
 		Boolean isManualChange,

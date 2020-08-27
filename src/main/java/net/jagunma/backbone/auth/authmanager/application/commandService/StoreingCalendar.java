@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class CalendarCommandService {
+public class StoreingCalendar {
 
 	private final CalendarRepositoryForStore calendarRepositoryForStore;
 
 	// コンストラクタ
-	public CalendarCommandService(CalendarRepositoryForStore calendarRepositoryForStore) {
+	public StoreingCalendar(CalendarRepositoryForStore calendarRepositoryForStore) {
 		this.calendarRepositoryForStore = calendarRepositoryForStore;
 	}
 
@@ -25,7 +25,10 @@ public class CalendarCommandService {
 	 *
 	 * @param request 登録するカレンダー情報
 	 */
-	public void entry(CalendarEntryRequest request) {
+	public void execute(CalendarEntryRequest request) {
+
+
+
 		for (Calendar calendar : request.getCalendars().getValues()) {
 			calendarRepositoryForStore.store(calendar);
 		}

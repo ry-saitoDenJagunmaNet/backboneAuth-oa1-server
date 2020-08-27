@@ -1,8 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060;
 
-import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060EntryService;
-import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060InitService;
-import net.jagunma.backbone.auth.authmanager.application.service.oa12060.Oa12060SearchService;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreingCalendar;
+import net.jagunma.backbone.auth.authmanager.application.queryService.CalendarQueryService;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060EntryResponseVo;
 import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa12060.vo.Oa12060SearchResponseVo;
@@ -19,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,19 +48,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Oa12060Controller extends BaseOfController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Oa12060Controller.class);
-	private final Oa12060InitService oa12060InitService;
-	private final Oa12060SearchService oa12060SearchService;
-	private final Oa12060EntryService oa12060EntryService;
+	private final CalendarQueryService calendarQueryService;
+	private final StoreingCalendar storeingCalendar;
 
 	// コンストラクタ
 	public Oa12060Controller(
-		Oa12060InitService oa12060InitService,
-		Oa12060SearchService oa12060SearchService,
-		Oa12060EntryService oa12060EntryServic) {
+		CalendarQueryService calendarQueryService,
+		StoreingCalendar storeingCalendar) {
 
-		this.oa12060InitService = oa12060InitService;
-		this.oa12060SearchService = oa12060SearchService;
-		this.oa12060EntryService = oa12060EntryServic;
+		this.calendarQueryService = calendarQueryService;
+		this.storeingCalendar = storeingCalendar;
 	}
 
 	/**
@@ -71,20 +66,22 @@ public class Oa12060Controller extends BaseOfController {
 	 * @param model モデル
 	 * @return view名
 	 */
-	@GetMapping(path = "/get")
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	private String get(Model model) {
-
 		Oa12060Vo vo = new Oa12060Vo();
-		Oa12060SearchResponseVo responseVo = new Oa12060SearchResponseVo();
+		Oa12060InitPresenter presenter = new Oa12060InitPresenter();
 		try {
 			// 画面を初期化
-			oa12060InitService.init(vo);
+			presenter.bindTo(vo);
+			model.addAttribute("form", vo);
 
 			// カレンダー検索
-			oa12060SearchService.search(vo, responseVo);
-
-			model.addAttribute("form", vo);
-			return "oa12060";
+			return search(model,
+				vo.getYearMonthToString(),
+				vo.getCalendarTypeFilterCheck1().toString(),
+				vo.getCalendarTypeFilterCheck2().toString(),
+				vo.getCalendarTypeFilterCheck3().toString(),
+				vo.getWorkingdayOrHolidaySelect());
 		} catch (
 		GunmaRuntimeException gre) {
 			// 業務例外が発生した場合
@@ -101,28 +98,53 @@ public class Oa12060Controller extends BaseOfController {
 
 	/**
 	 * カレンダー検索処理を行います。
-	 *
-	 * @param vo 検索条件（form json）
-	 * @return カレンダー検索結果
+	 * @param model モデル
+	 * @param ym 年月
+	 * @param ct1 表示対象経済システム稼働
+	 * @param ct2 表示対象信用
+	 * @param ct3 表示対象広域物流
+	 * @param wh 稼働・休日選択
+	 * @return view名
 	 */
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<Oa12060SearchResponseVo> search(Oa12060Vo vo) {
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String search(
+		Model model,
+		String ym,
+		String ct1,
+		String ct2,
+		String ct3,
+		String wh) {
 
+		Oa12060Vo vo = new Oa12060Vo();
 		Oa12060SearchResponseVo responseVo = new Oa12060SearchResponseVo();
-		try {
-			// カレンダー検索
-			oa12060SearchService.search(vo, responseVo);
 
-			return new ResponseEntity<>(responseVo, HttpStatus.OK);
-		} catch (GunmaRuntimeException gre) {
+		try {
+			// リクエストパラーメータの設定
+			vo.createFrom(ym, Short.parseShort(ct1), Short.parseShort(ct2), Short.parseShort(ct3), wh);
+//			vo.createFrom("2020/08", (short)1, (short)1, (short)1, "");
+
+			Oa12060SearchConverter converter = Oa12060SearchConverter.with(vo);
+			Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
+
+			presenter.setYearMonth(converter.getYearMonth());
+
+			// カレンダー検索
+			calendarQueryService.getCalendars(converter, presenter);
+
+			presenter.bindTo(responseVo, vo);
+			model.addAttribute("form", vo);
+			return "oa12060";
+		} catch (
+			GunmaRuntimeException gre) {
 			// 業務例外が発生した場合
-			responseVo.setExceptionMessage(gre);
-			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+			vo.setExceptionMessage(gre);
+			model.addAttribute("form", vo);
+			return "oa12060";
 		} catch (RuntimeException re) {
 			// その他予期せぬ例外が発生した場合
-			responseVo.setExceptionMessage(re);
-			return new ResponseEntity<>(responseVo, HttpStatus.OK);
+			model.addAttribute("form", vo);
+			vo.setExceptionMessage(re);
+			return "oa12060";
 		}
 	}
 
@@ -141,7 +163,8 @@ public class Oa12060Controller extends BaseOfController {
 		Oa12060EntryResponseVo responseVo = new Oa12060EntryResponseVo();
 		try {
 			// カレンダー登録
-			oa12060EntryService.entry(vo, responseVo);
+			Oa12060EntryConverter converter = Oa12060EntryConverter.with(vo);
+			storeingCalendar.execute(converter);
 
 			return new ResponseEntity<>(responseVo, HttpStatus.OK);
 		} catch (org.seasar.doma.jdbc.OptimisticLockException ole) {

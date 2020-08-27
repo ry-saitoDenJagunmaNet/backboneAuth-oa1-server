@@ -5,7 +5,7 @@ import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.base.
 /**
  * OA12060検索レスポンス
  */
-public class Oa12060SearchResponseVo extends BaseOfResponseVo {
+public class Oa12060SearchResponseVo {
 	private static final long serialVersionUID = 1L;
 
 	/**
