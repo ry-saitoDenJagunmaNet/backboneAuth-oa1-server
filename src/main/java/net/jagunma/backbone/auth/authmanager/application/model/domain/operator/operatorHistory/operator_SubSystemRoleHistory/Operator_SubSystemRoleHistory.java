@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory;
+package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

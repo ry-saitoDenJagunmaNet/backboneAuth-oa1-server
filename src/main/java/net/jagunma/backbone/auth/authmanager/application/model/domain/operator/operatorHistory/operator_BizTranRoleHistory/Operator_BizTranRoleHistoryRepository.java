@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory;
+package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory;
 
 /**
  * オペレーター_取引ロール割当履歴検索

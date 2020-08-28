@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operatorHistory;
+package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistory;
 
 /**
  * オペレーター履歴検索
