@@ -1,8 +1,8 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistoryPack.operator_BizTranRoleHistory;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistory.operator_BizTranRoleHistory;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistory;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistory;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryRepository;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityDao;
 import org.springframework.stereotype.Component;

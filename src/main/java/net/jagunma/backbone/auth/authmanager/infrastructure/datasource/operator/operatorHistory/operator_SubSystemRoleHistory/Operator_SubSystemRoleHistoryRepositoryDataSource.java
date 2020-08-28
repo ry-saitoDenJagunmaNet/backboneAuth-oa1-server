@@ -1,8 +1,8 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistoryPack.operator_SubSystemRoleHistory;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistory.operator_SubSystemRoleHistory;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistory;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistory;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryRepository;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
 import org.springframework.stereotype.Component;

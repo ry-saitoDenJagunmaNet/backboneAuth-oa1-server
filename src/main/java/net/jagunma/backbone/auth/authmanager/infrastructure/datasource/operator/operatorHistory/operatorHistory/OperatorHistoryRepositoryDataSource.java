@@ -1,8 +1,8 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistoryPack.operatorHistory;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistory.operatorHistory;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operatorHistory.OperatorHistory;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operatorHistory.OperatorHistoryCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operatorHistory.OperatorHistoryRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistory.OperatorHistory;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistory.OperatorHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistory.OperatorHistoryRepository;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityDao;
 import org.springframework.stereotype.Component;

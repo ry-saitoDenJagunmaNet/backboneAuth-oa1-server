@@ -1,9 +1,9 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistoryPack.operator_SubSystemRoleHistory;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistory.operator_SubSystemRoleHistory;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistories;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoriesRepository;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistories;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryCriteria;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

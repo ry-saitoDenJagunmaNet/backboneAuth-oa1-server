@@ -1,9 +1,9 @@
-package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistoryPack.operator_BizTranRoleHistory;
+package net.jagunma.backbone.auth.authmanager.infrastructure.datasource.operator.operatorHistory.operator_BizTranRoleHistory;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistories;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistoriesRepository;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistoryPack.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistories;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryCriteria;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
