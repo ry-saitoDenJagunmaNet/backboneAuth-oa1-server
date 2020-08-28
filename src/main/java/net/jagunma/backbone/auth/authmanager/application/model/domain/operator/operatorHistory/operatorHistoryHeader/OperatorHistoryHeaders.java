@@ -8,7 +8,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
 
 /**
- * オペレーター履歴パックヘッダー群
+ * オペレーター履歴ヘッダー群
  */
 public class OperatorHistoryHeaders {
 
@@ -20,10 +20,10 @@ public class OperatorHistoryHeaders {
 	}
 
 	/**
-	 * オペレーター履歴パックヘッダーリストから作成します。
+	 * オペレーター履歴ヘッダーリストから作成します。
 	 *
-	 * @param operatorHistoryHeaderList オペレーター履歴パックヘッダーリスト
-	 * @return オペレーター履歴パックヘッダー群
+	 * @param operatorHistoryHeaderList オペレーター履歴ヘッダーリスト
+	 * @return オペレーター履歴ヘッダー群
 	 */
 	public static OperatorHistoryHeaders createFrom(List<OperatorHistoryHeaderEntity> operatorHistoryHeaderList) {
 		List<OperatorHistoryHeader> operatorHistoryHeaders = new ArrayList<>();
@@ -36,9 +36,9 @@ public class OperatorHistoryHeaders {
 	}
 
 	/**
-	 * オペレーター履歴パックヘッダーリストを取得します。
+	 * オペレーター履歴ヘッダーリストを取得します。
 	 *
-	 * @return オペレーター履歴パックヘッダーリスト
+	 * @return オペレーター履歴ヘッダーリスト
 	 */
 	public List<OperatorHistoryHeader> getValues() {
 		return list;
