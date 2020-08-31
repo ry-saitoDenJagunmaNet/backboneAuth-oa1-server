@@ -2,18 +2,18 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11020;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
-import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa11020.vo.Oa11020Vo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 
 /**
  * OA11020 オペレーター登録 初期表示サービス Presenter
  */
 class Oa11020InitPresenter {
 
-	private String jaCode;
-	private String jaName;
-	private long jaId;
-	private List<TempoReferenceDto> tempoList;
-	private String operatorCodePrefix;
+    private String jaCode;
+    private String jaName;
+    private long jaId;
+    private List<TempoReferenceDto> tempoList;
+    private String operatorCodePrefix;
 
 //	private String tempoCode;
 //	private String operatorCode;
@@ -23,39 +23,54 @@ class Oa11020InitPresenter {
 //	private LocalDate expirationEndDate;
 //	private String changeCause;
 
-	// コンストラクタ
-	Oa11020InitPresenter() {}
+    // コンストラクタ
+    Oa11020InitPresenter() {
+    }
 
-	/**
-	 * ＪＡコードのＳｅｔ
-	 * @param jaCode
-	 */
-	public void setJaCode(String jaCode) { this.jaCode = jaCode; }
-	/**
-	 * ＪＡ名のＳｅｔ
-	 * @param jaName
-	 */
-	public void setJaName(String jaName) {
-		this.jaName = jaName;
-	}
-	/**
-	 * ＪＡIDのＳｅｔ
-	 * @param jaId
-	 */
-	public void setJaId(long jaId) {
-		this.jaId = jaId;
-	}
-	/**
-	 * 店舗コンボボックスリストのＳｅｔ
-	 * @param tempoList
-	 */
-	public void setTempoList(List<TempoReferenceDto> tempoList) { this.tempoList = tempoList; }
-	/**
-	 * 識別（オペレーターコードプレフィックス）のＳｅｔ
-	 * @param operatorCodePrefix
-	 */
-	public void setOperatorCodePrefix(String operatorCodePrefix) { this.operatorCodePrefix = operatorCodePrefix; }
+    /**
+     * ＪＡコードのＳｅｔ
+     *
+     * @param jaCode
+     */
+    public void setJaCode(String jaCode) {
+        this.jaCode = jaCode;
+    }
 
+    /**
+     * ＪＡ名のＳｅｔ
+     *
+     * @param jaName
+     */
+    public void setJaName(String jaName) {
+        this.jaName = jaName;
+    }
+
+    /**
+     * ＪＡIDのＳｅｔ
+     *
+     * @param jaId
+     */
+    public void setJaId(long jaId) {
+        this.jaId = jaId;
+    }
+
+    /**
+     * 店舗コンボボックスリストのＳｅｔ
+     *
+     * @param tempoList
+     */
+    public void setTempoList(List<TempoReferenceDto> tempoList) {
+        this.tempoList = tempoList;
+    }
+
+    /**
+     * 識別（オペレーターコードプレフィックス）のＳｅｔ
+     *
+     * @param operatorCodePrefix
+     */
+    public void setOperatorCodePrefix(String operatorCodePrefix) {
+        this.operatorCodePrefix = operatorCodePrefix;
+    }
 
 //	/**
 //	 * 店舗コードのＳｅｔ
@@ -93,17 +108,17 @@ class Oa11020InitPresenter {
 //	 */
 //	public void setChangeCause(String changeCause) { this.changeCause = changeCause; }
 
-	/**
-	 * voに変換に変換します。
-	 *
-	 * @param vo
-	 */
-	public void bindTo(Oa11020Vo vo) {
-		vo.setJa(jaCode + " " + jaName);
-		vo.setJaId(jaId);
+    /**
+     * voに変換に変換します。
+     *
+     * @param vo
+     */
+    public void bindTo(Oa11020Vo vo) {
+        vo.setJa(jaCode + " " + jaName);
+        vo.setJaId(jaId);
 
-		vo.setTempoList(tempoList);
-		vo.setOperatorCodePrefix(operatorCodePrefix);
+        vo.setTempoList(tempoList);
+        vo.setOperatorCodePrefix(operatorCodePrefix);
 
 //		vo.setTempoCode(tempoCode);
 //		vo.setOperatorCode(operatorCode);
@@ -112,5 +127,5 @@ class Oa11020InitPresenter {
 //		vo.setExpirationStartDate(expirationStartDate);
 //		vo.setExpirationEndDate(expirationEndDate);
 //		vo.setChangeCause(changeCause);
-	}
+    }
 }

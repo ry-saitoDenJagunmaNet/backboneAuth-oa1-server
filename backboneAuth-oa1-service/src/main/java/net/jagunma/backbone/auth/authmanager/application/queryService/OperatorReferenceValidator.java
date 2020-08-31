@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
-import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa11010.vo.Oa11010Vo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;

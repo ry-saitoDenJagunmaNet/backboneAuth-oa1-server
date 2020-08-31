@@ -12,7 +12,7 @@ import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa11010.vo.Oa11010Vo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRolesRepository;

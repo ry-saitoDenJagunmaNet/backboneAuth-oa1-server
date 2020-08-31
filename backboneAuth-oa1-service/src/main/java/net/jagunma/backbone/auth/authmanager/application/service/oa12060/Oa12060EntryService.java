@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.service.oa12060;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.CalendarCommandService;
-import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa12060.vo.Oa12060EntryResponseVo;
-import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa12060.vo.Oa12060Vo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060EntryResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
