@@ -16,7 +16,7 @@ buildscript {
         commonCommonVersion = '20.1.6'
         commonValuesVersion = '20.1.1'
         commonUtilsVersion = '20.1.60'
-        domaCoreVersion = '2.38.0'
+        domaVersion = '2.41.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'
         commonTestsVersion = '20.0.9'
@@ -99,7 +99,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.seasar.doma.boot:doma-spring-boot-autoconfigure:${domaSpringBootStarterVersion}"
-    implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
+//    implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
+    implementation "org.seasar.doma:doma-core:${domaVersion}"
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
@@ -115,6 +116,7 @@ dependencies {
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
 
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+    annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
 }
 
 spotbugs {
