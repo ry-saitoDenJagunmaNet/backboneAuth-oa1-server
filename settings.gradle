@@ -1,4 +1,7 @@
-include 'backboneAuth-oa1-model-server'
-include 'backboneAuth-oa1-model-server'
-include 'backboneAuth-oa1-model-server'
-
+rootProject.name = 'backboneAuth-oa1-server'
+include 'backboneAuth-model'
+include 'backboneAuth-oa1-application'
+include 'backboneAuth-oa1-application-local'
+include 'backboneAuth-oa1-service'
+include 'backboneAuth-oa1-infrastructure'
+include 'backboneAuth-oa1-remoting-mock'

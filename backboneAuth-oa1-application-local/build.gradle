@@ -1,0 +1,35 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE")
+    }
+}
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'idea'
+    id 'jacoco'
+}
+
+
+group 'net.jagunma.backbone.auth'
+version '20.0.1-SNAPSHOT'
+
+
+dependencies {
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    implementation "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+    implementation "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    implementation project(':backboneAuth-oa1-service')
+    implementation project(':backboneAuth-oa1-infrastructure')
+    testImplementation project(':backboneAuth-oa1-remoting-mock')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
