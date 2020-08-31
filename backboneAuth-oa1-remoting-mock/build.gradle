@@ -8,6 +8,13 @@ version '20.0.1-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
 
 dependencies {
     implementation "net.jagunma.backbone.shared:shared-data-stub:${sharedDataStubVersion}"

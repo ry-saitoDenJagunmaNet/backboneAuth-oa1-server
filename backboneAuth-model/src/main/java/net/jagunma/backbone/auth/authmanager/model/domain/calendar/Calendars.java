@@ -5,6 +5,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 
 /**
@@ -18,6 +19,7 @@ public class Calendars {
 	Calendars(Collection<Calendar> collection) {
 		this.list.addAll(collection);
 	}
+	Calendars() {}
 
 	/**
 	 * カレンダーリストから作成します。
@@ -31,7 +33,7 @@ public class Calendars {
 			if (entity.getCalendarId() != null) {
 				Calendar calendar = Calendar.createFrom(
 					entity.getCalendarId(),
-					entity.getCalendarType(),
+					CalendarType.codeOf(entity.getCalendarType()),
 					entity.getDate(),
 					entity.getIsHoliday(),
 					entity.getIsManualChange(),
@@ -40,8 +42,17 @@ public class Calendars {
 				calendars.add(calendar);
 			}
 		}
-
 		return new Calendars(calendars);
+	}
+
+	/**
+	 * カレンダーリストから作成します。
+	 *
+	 * @param calendarList カレンダーリスト
+	 * @return カレンダー群
+	 */
+	public static Calendars createFrom(Collection<Calendar> calendarList) {
+		return new Calendars(calendarList);
 	}
 
 	/**

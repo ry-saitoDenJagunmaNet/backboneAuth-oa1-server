@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTr
 import net.jagunma.backbone.auth.authmanager.model.domain.role.subSystemRole.SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemReferenceService;
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
-import net.jagunma.backbone.auth.authmanager.infrastructure.controller.web.oa11010.vo.Oa11010Vo;
+import net.jagunma.backbone.auth.authmanager.infrastructure.web.oa11010.vo.Oa11010Vo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

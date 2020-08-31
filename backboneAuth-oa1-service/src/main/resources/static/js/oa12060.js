@@ -23,25 +23,21 @@ function oaex_th_onload() {
 	oa_initInputField()
 }
 
+/**
+ * 年月の変更時処理です。
+ */
 function oaex_th_chegeMonth() {
-	let xhr = oa_th_sendFormData("search", document.forms[0]);
-	if (xhr == null) {return;}
+	let param = "?ym="+document.getElementById("year_month").value;
+	param = param+"&ct1="+(document.getElementById("calendar_type_filter_check1").checked? "1" : "0");
+	param = param+"&ct2="+(document.getElementById("calendar_type_filter_check2").checked? "1" : "0");
+	param = param+"&ct3="+(document.getElementById("calendar_type_filter_check3").checked? "1" : "0");
+	param = param+"&wh="+document.getElementById("workingday_or_holiday").value;
+	// サーバにリクエスト（カレンダー検索）
+	window.location.href = "search" + param;
 
-	let result = JSON.parse(xhr.responseText);
-	document.getElementById("calendar_table").innerHTML = result.calendarTable;
-
-	let calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check1");
-	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck1disabled;
-	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
-	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check2");
-	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck2disabled;
-	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
-	calendarTypeFilterCheck = document.getElementById("calendar_type_filter_check3");
-	calendarTypeFilterCheck.checked = !result.calendarTypeFilterCheck3disabled;
-	oa_setDisabledForObject(calendarTypeFilterCheck, !calendarTypeFilterCheck.checked);
-
-	// カレンダーチェックボックスの表示／非表示切替
-	oaex_filterCalendar();
+//	document.forms[0].action = "/search";
+//	document.forms[0].method = "GET";
+//	document.forms[0].submit();
 }
 
 /**

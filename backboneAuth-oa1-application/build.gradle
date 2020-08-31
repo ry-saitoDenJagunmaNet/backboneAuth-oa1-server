@@ -21,7 +21,7 @@ dependencies {
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
     implementation project(':backboneAuth-oa1-service')
-    implementation project(':backboneAuth-oa1-infrastructure')
+    implementation project(':backboneAuth-oa1-infra')
     implementation project(':backboneAuth-oa1-remoting-mock')
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
