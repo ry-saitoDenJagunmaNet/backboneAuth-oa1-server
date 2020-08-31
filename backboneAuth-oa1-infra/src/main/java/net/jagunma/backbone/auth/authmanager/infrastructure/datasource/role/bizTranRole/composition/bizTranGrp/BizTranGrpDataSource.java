@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
  * 取引グループ検索 DataSource
  */
 @Component
-public class BizTranGrpRepositoryDataSource implements BizTranGrpRepository {
+public class BizTranGrpDataSource implements BizTranGrpRepository {
 
-	private final BizTranGrpEntityDao bizTranGrpEntityDao;
+    private final BizTranGrpEntityDao bizTranGrpEntityDao;
 
-	// コンストラクタ
-	public BizTranGrpRepositoryDataSource(BizTranGrpEntityDao bizTranGrpEntityDao) {
-		this.bizTranGrpEntityDao = bizTranGrpEntityDao;
-	}
+    // コンストラクタ
+    public BizTranGrpDataSource(BizTranGrpEntityDao bizTranGrpEntityDao) {
+        this.bizTranGrpEntityDao = bizTranGrpEntityDao;
+    }
 
-	/**
-	 * 取引グループの条件検索を行います。
-	 *
-	 * @param bizTranGrpCriteria 取引グループの検索条件
-	 * @return 取引グループ
-	 */
-	@Override
-	public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
-		BizTranGrpEntity bizTranGrpEntity = bizTranGrpEntityDao.findOneBy(bizTranGrpCriteria);
-		return BizTranGrp.of(bizTranGrpEntity);
-	}
+    /**
+     * 取引グループの条件検索を行います。
+     *
+     * @param bizTranGrpCriteria 取引グループの検索条件
+     * @return 取引グループ
+     */
+    @Override
+    public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+        BizTranGrpEntity bizTranGrpEntity = bizTranGrpEntityDao.findOneBy(bizTranGrpCriteria);
+        return BizTranGrp.of(bizTranGrpEntity);
+    }
 }

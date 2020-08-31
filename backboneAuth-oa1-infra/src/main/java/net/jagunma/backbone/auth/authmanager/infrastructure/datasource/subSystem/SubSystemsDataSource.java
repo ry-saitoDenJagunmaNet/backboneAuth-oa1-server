@@ -8,14 +8,15 @@ import org.springframework.stereotype.Component;
  * サブシステム検索 DataSource
  */
 @Component
-public class SubSystemsRepositoryDataSource implements SubSystemsRepository {
-	/**
-	 * サブシステムの全件検索を行います。
-	 *
-	 * @return サブシステム群
-	 */
-	@Override
-	public SubSystems selectAll() {
-		return SubSystems.createFrom();
-	}
+public class SubSystemsDataSource implements SubSystemsRepository {
+
+    /**
+     * サブシステムの全件検索を行います。
+     *
+     * @return サブシステム群
+     */
+    @Override
+    public SubSystems selectAll() {
+        return SubSystems.createFrom();
+    }
 }

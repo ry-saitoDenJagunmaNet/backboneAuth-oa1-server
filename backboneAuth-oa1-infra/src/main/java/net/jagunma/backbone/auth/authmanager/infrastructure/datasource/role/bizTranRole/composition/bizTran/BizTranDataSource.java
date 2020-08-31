@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
  * 取引検索 DataSource
  */
 @Component
-public class BizTranRepositoryDataSource implements BizTranRepository {
+public class BizTranDataSource implements BizTranRepository {
 
-	private final BizTranEntityDao bizTranEntityDao;
+    private final BizTranEntityDao bizTranEntityDao;
 
-	// コンストラクタ
-	public BizTranRepositoryDataSource(BizTranEntityDao bizTranEntityDao) {
-		this.bizTranEntityDao = bizTranEntityDao;
-	}
+    // コンストラクタ
+    public BizTranDataSource(BizTranEntityDao bizTranEntityDao) {
+        this.bizTranEntityDao = bizTranEntityDao;
+    }
 
-	/**
-	 * 取引の条件検索を行います。
-	 *
-	 * @param bizTranCriteria 取引の検索条件
-	 * @return 取引
-	 */
-	@Override
-	public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
-		BizTranEntity bizTranEntity = bizTranEntityDao.findOneBy(bizTranCriteria);
-		return BizTran.of(bizTranEntity);
-	}
+    /**
+     * 取引の条件検索を行います。
+     *
+     * @param bizTranCriteria 取引の検索条件
+     * @return 取引
+     */
+    @Override
+    public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
+        BizTranEntity bizTranEntity = bizTranEntityDao.findOneBy(bizTranCriteria);
+        return BizTran.of(bizTranEntity);
+    }
 }
