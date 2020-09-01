@@ -20,7 +20,10 @@ jar {
 
 dependencies {
     implementation project(':backboneAuth-model')
+    implementation project(':backboneAuth-oa1-infra')
     testImplementation project(':backboneAuth-oa1-remoting-mock')
+
+    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
     implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     implementation "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
     implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
