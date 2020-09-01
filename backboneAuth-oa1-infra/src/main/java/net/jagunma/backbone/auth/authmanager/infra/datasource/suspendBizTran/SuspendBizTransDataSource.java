@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.suspendBizTran;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTrans;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTransRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntity;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

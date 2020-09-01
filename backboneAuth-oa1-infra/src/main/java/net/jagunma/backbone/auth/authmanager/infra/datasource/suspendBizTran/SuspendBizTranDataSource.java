@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.suspendBizTran;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTran;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.suspendBizTran.SuspendBizTranRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntity;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityDao;
 import org.springframework.stereotype.Component;

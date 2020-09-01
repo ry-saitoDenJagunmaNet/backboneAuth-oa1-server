@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.signTrace.signInTrace;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signInTrace.SignInTrace;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signInTrace.SignInTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signInTrace.SignInTraceRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signInTrace.SignInTrace;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signInTrace.SignInTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityDao;
 import org.springframework.stereotype.Component;

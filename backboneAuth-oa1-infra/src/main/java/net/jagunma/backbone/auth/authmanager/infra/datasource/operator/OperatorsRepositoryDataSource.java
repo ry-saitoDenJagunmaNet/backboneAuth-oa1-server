@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.OperatorCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

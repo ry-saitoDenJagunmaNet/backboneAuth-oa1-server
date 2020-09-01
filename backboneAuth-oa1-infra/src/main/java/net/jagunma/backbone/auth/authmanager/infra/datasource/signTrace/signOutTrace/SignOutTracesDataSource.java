@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.signTrace.signOutTrace;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signOutTrace.SignOutTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signOutTrace.SignOutTraces;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.signTrace.signOutTrace.SignOutTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signOutTrace.SignOutTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signOutTrace.SignOutTraces;
+import net.jagunma.backbone.auth.authmanager.model.domain.signTrace.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

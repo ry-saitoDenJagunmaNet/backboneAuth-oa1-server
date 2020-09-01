@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.ja.jaIpAddressRange;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRangeCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRanges;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRangesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRangeCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRanges;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRangesRepository;
 import net.jagunma.backbone.auth.model.dao.jaIpAddressRange.JaIpAddressRangeEntity;
 import net.jagunma.backbone.auth.model.dao.jaIpAddressRange.JaIpAddressRangeEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

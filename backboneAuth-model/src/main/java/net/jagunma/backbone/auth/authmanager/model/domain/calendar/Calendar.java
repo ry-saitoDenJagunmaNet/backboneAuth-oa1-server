@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.common.util.objects2.Objects2;
 
 /**
@@ -9,34 +10,16 @@ import net.jagunma.common.util.objects2.Objects2;
  */
 public class Calendar {
 
-	private Long calendarId = null;
-	private CalendarType calendarType = null;
-	private LocalDate date = null;
-	private Boolean isHoliday = null;
-	private Boolean isManualChange = null;
-	private Boolean isRelease = null;
-	private Integer recordVersion = null;
+	private final CalendarEntity calendarEntity;
 
 	// コンストラクタ
-	Calendar() {}
-	Calendar(
-		Long calendarId,
-		CalendarType calendarType,
-		LocalDate date,
-		Boolean isHoliday,
-		Boolean isManualChange,
-		Boolean isRelease,
-		Integer recordVersion) {
-
-		this.calendarId = calendarId;
-		this.calendarType = calendarType;
-		this.date = date;
-		this.isHoliday = isHoliday;
-		this.isManualChange = isManualChange;
-		this.isRelease = isRelease;
-		this.recordVersion = recordVersion;
+	Calendar(CalendarEntity calendarEntity) {
+		this.calendarEntity = calendarEntity;
 	}
 	// ファクトリーメソッド
+	public static Calendar of(CalendarEntity calendarEntity) {
+		return new Calendar(calendarEntity);
+	}
 	public static Calendar createFrom(
 		Long calendarId,
 		CalendarType calendarType,
@@ -46,49 +29,31 @@ public class Calendar {
 		Boolean isRelease,
 		Integer recordVersion) {
 
-		return new Calendar(
-			calendarId,
-			calendarType,
-			date,
-			isHoliday,
-			isManualChange,
-			isRelease,
-			recordVersion);
+		CalendarEntity entity = new CalendarEntity();
+		entity.setCalendarId(calendarId);
+		entity.setCalendarType(calendarType.getCode());
+		entity.setDate(date);
+		entity.setIsHoliday(isHoliday);
+		entity.setIsManualChange(isManualChange);
+		entity.setIsRelease(isRelease);
+		entity.setRecordVersion(recordVersion);
+
+		return new Calendar(entity);
 	}
 	// 空生成メソッド
-	public static Calendar empty() { return new Calendar(); }
+	public static Calendar empty() { return new Calendar(new CalendarEntity()); }
 	// 空判定メソッド
 	public boolean isEmpty() {
-		return calendarId == null &&
-			calendarType == null &&
-			date == null &&
-			isHoliday == null &&
-			isManualChange == null &&
-			isRelease == null &&
-			recordVersion == null;
+		return calendarEntity == null || calendarEntity.sameValueAs(new CalendarEntity());
 	}
 	// Getter
-	public Long getCalendarId() {
-		return this.calendarId;
-	}
-	public CalendarType getCalendarType() {
-		return this.calendarType;
-	}
-	public LocalDate getDate() {
-		return this.date;
-	}
-	public Boolean getIsHoliday() {
-		return this.isHoliday;
-	}
-	public Boolean getIsManualChange() {
-		return this.isManualChange;
-	}
-	public Boolean getIsRelease() {
-		return this.isRelease;
-	}
-	public Integer getRecordVersion() {
-		return this.recordVersion;
-	}
+	public Long getCalendarId()	{ return calendarEntity.getCalendarId(); }
+	public CalendarType getCalendarType() { return CalendarType.codeOf(calendarEntity.getCalendarType()); }
+	public LocalDate getDate() { return calendarEntity.getDate(); }
+	public Boolean getIsHoliday() { return calendarEntity.getIsHoliday(); }
+	public Boolean getIsManualChange() { return calendarEntity.getIsManualChange(); }
+	public Boolean getIsRelease() { return calendarEntity.getIsRelease(); }
+	public Integer getRecordVersion() { return calendarEntity.getRecordVersion(); }
 
 	/**
 	 * オブジェクトの比較を行います。

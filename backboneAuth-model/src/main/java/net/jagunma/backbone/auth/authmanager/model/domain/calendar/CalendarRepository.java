@@ -5,6 +5,13 @@ package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
  */
 public interface CalendarRepository {
 	/**
+	 * カレンダーのカレンダーIDによる検索を行います。
+	 *
+	 * @param calendarId カレンダーID
+	 * @return カレンダー
+	 */
+	Calendar findOneById(Long  calendarId);
+	/**
 	 * カレンダーの条件検索を行います。
 	 *
 	 * @param calendarCriteria カレンダーの検索条件

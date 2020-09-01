@@ -20,16 +20,16 @@ public enum CalendarType {
 	}
 
 	/**
-	* コードのＧｅｔ
-	* @return コード
-	*/
+	 * コードのＧｅｔ
+	 * @return コード
+	 */
 	public short getCode() {
 		return code;
 	}
 	/**
-	* 名称のＧｅｔ
-	* @return 名称
-	*/
+	 * 名称のＧｅｔ
+	 * @return 名称
+	 */
 	public String getName() {
 		return name;
 	}
@@ -49,20 +49,32 @@ public enum CalendarType {
 		return CalendarType.UnKnown;
 	}
 
+	/**
+	 * 天文台カレンダーかを判定します。
+	 * @return true:天文台カレンダー
+	 */
 	public boolean isObservatory() {
-		if (this.equals(Observatory)) {return true;}
-		return false;
+		return this.equals(Observatory);
 	}
+	/**
+	 * 経済システム稼働カレンダーかを判定します。
+	 * @return true:経済システム稼働カレンダー
+	 */
 	public boolean isEconomy() {
-		if (this.equals(Economy)) {return true;}
-		return false;
+		return this.equals(Economy);
 	}
+	/**
+	 * 信用カレンダーかを判定します。
+	 * @return true:信用カレンダー
+	 */
 	public boolean isCredit() {
-		if (this.equals(Credit)) {return true;}
-		return false;
+		return this.equals(Credit);
 	}
+	/**
+	 * 広域物流カレンダーかを判定します。
+	 * @return true:広域物流カレンダー
+	 */
 	public boolean isWideAreaLogistics() {
-		if (this.equals(WideAreaLogistics)) {return true;}
-		return false;
+		return this.equals(WideAreaLogistics);
 	}
 }

@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.role.bizTranRole.composition.bizTranRole_BizTranGrp;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpsRepository;
 import net.jagunma.backbone.auth.model.dao.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

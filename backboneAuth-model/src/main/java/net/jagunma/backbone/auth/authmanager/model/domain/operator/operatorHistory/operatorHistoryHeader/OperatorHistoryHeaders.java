@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistoryHeader;
+package net.jagunma.backbone.auth.authmanager.model.domain.operator.operatorHistory.operatorHistoryHeader;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
@@ -28,8 +28,7 @@ public class OperatorHistoryHeaders {
 	public static OperatorHistoryHeaders createFrom(List<OperatorHistoryHeaderEntity> operatorHistoryHeaderList) {
 		List<OperatorHistoryHeader> operatorHistoryHeaders = new ArrayList<>();
 
-		operatorHistoryHeaderList.forEach(d -> {
-			OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.of(d);
+		operatorHistoryHeaderList.forEach(d -> {OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.of(d);
 			operatorHistoryHeaders.add(operatorHistoryHeader);
 		});
 		return new OperatorHistoryHeaders(operatorHistoryHeaders);

@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.ja.jaIpAddressRange;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRange;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRangeCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.ja.jaIpAddressRange.JaIpAddressRangeRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRange;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRangeCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.ja.jaIpAddressRange.JaIpAddressRangeRepository;
 import net.jagunma.backbone.auth.model.dao.jaIpAddressRange.JaIpAddressRangeEntity;
 import net.jagunma.backbone.auth.model.dao.jaIpAddressRange.JaIpAddressRangeEntityDao;
 import org.springframework.stereotype.Component;

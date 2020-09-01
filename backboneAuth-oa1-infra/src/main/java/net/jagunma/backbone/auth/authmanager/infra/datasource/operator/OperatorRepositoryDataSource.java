@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.Operator;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.OperatorCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.operator.OperatorRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import org.springframework.stereotype.Component;

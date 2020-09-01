@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.calendarRefere
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 
+
 /**
  * カレンダー参照サービス Request
  */
@@ -13,8 +14,8 @@ public interface CalendarSearchRequest {
 	 */
 	LocalDate getYearMonth();
 
-	/**
-	 * カレンダーの検索条件を生成します。
-	 */
-	CalendarCriteria genCalendarCriteria();
+//	/**
+//	 * カレンダーの検索条件を生成します。
+//	 */
+//	CalendarCriteria genCalendarCriteria();
 }

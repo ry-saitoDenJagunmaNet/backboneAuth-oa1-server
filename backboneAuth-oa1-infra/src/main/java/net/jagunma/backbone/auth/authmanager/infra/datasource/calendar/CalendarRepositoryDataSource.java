@@ -1,9 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.calendar;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.Calendar;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarRepository;
-import net.jagunma.backbone.auth.authmanager.application.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import org.springframework.stereotype.Component;
@@ -22,6 +21,19 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
     }
 
     /**
+     * カレンダーのカレンダーIDによる検索を行います。
+     *
+     * @param calendarId カレンダーID
+     * @return カレンダー
+     */
+    public Calendar findOneById(Long  calendarId) {
+        CalendarCriteria calendarCriteria = new CalendarCriteria();
+        calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
+        CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
+        return Calendar.of(calendarEntity);
+    }
+
+    /**
      * カレンダーの条件検索を行います。
      *
      * @param calendarCriteria カレンダーの検索条件
@@ -30,13 +42,6 @@ public class CalendarRepositoryDataSource implements CalendarRepository {
     @Override
     public Calendar findOneBy(CalendarCriteria calendarCriteria) {
         CalendarEntity calendarEntity = calendarEntityDao.findOneBy(calendarCriteria);
-        return Calendar.createFrom(
-            calendarEntity.getCalendarId(),
-            CalendarType.codeOf(calendarEntity.getCalendarType()),
-            calendarEntity.getDate(),
-            calendarEntity.getIsHoliday(),
-            calendarEntity.getIsManualChange(),
-            calendarEntity.getIsRelease(),
-            calendarEntity.getRecordVersion());
+        return Calendar.of(calendarEntity);
     }
 }

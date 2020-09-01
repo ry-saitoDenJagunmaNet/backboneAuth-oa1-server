@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.subSystem;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystems;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystemsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystems;
+import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystemsRepository;
 import org.springframework.stereotype.Component;
 
 /**

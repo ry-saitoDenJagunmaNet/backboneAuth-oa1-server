@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.calendar;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.Calendar;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.calendar.CalendarRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import org.springframework.stereotype.Component;
@@ -20,15 +20,14 @@ public class CalendarRepositoryForStoreDataSource implements CalendarRepositoryF
     }
 
     /**
-     * カレンダー登録を行います。
+     * カレンダー更新を行います。
      *
      * @param calendar カレンダー
      */
-    public Calendar store(Calendar calendar) {
+    public Calendar update(Calendar calendar) {
         calendarEntityDao.updateExcludeNull(createEntity(calendar));
         return calendar;
     }
-
 
     /**
      * カレンダー情報を作成します。

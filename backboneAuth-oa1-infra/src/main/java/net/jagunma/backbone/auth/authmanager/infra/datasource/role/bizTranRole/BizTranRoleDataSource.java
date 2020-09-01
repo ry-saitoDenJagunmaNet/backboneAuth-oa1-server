@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.role.bizTranRole;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityDao;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.systemAvailableTimeZone;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZones;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZonesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZones;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZonesRepository;
 import net.jagunma.backbone.auth.model.dao.systemAvailableTimeZone.SystemAvailableTimeZoneEntity;
 import net.jagunma.backbone.auth.model.dao.systemAvailableTimeZone.SystemAvailableTimeZoneEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

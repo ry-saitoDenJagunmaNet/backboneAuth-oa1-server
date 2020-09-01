@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.accountLock;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLockCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLocksRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

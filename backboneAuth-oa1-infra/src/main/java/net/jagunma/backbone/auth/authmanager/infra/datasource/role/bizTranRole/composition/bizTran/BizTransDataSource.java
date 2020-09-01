@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.role.bizTranRole.composition.bizTran;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTran.BizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTran.BizTrans;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.bizTranRole.composition.bizTran.BizTransRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTran.BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTran.BizTrans;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.composition.bizTran.BizTransRepository;
 import net.jagunma.backbone.auth.model.dao.bizTran.BizTranEntity;
 import net.jagunma.backbone.auth.model.dao.bizTran.BizTranEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;

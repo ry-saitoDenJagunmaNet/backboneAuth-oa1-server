@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.accountLock;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLock;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLockCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.accountLock.AccountLockRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.role.subSystemRole;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.role.subSystemRole.SubSystemRolesRepository;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystems;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.subSystem.SubSystemsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.subSystemRole.SubSystemRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.role.subSystemRole.SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystems;
+import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystemsRepository;
 import org.springframework.stereotype.Component;
 
 /**

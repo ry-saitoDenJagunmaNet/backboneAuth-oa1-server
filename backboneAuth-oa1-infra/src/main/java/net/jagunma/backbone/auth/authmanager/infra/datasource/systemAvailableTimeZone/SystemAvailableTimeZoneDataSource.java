@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.systemAvailableTimeZone;
 
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZone;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneCriteria;
-import net.jagunma.backbone.auth.authmanager.application.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZone;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.systemAvailableTimeZone.SystemAvailableTimeZoneRepository;
 import net.jagunma.backbone.auth.model.dao.systemAvailableTimeZone.SystemAvailableTimeZoneEntity;
 import net.jagunma.backbone.auth.model.dao.systemAvailableTimeZone.SystemAvailableTimeZoneEntityDao;
 import org.springframework.stereotype.Component;

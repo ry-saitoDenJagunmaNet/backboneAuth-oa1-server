@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.model.domain.operator.operatorHistory.operatorHistoryHeader;
+package net.jagunma.backbone.auth.authmanager.model.domain.operator.operatorHistory.operatorHistoryHeader;
 
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
 

@@ -27,7 +27,6 @@ buildscript {
         backboneStubVersion = '20.1.1'
         sharedDataInterfaceVersion = '20.1.12'
         backboneInterfaceVersion = '20.1.1'
-
     }
 }
 
@@ -153,6 +152,7 @@ subprojects {
     dependencies {
         implementation("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
         implementation("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
+        implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
         implementation("org.springframework.boot:spring-boot-starter-aop")
         testImplementation('org.springframework.boot:spring-boot-starter-test')
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
