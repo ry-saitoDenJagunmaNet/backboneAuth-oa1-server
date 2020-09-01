@@ -107,7 +107,9 @@ subprojects {
                 }
             }
         }
-
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE")
+        }
     }
     apply plugin: 'java'
     apply plugin: 'idea'

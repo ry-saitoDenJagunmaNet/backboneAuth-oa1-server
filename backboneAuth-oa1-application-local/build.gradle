@@ -1,13 +1,10 @@
-buildscript {
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE")
-    }
-}
 plugins {
     id 'java'
     id 'maven-publish'
     id 'idea'
     id 'jacoco'
+    id 'org.springframework.boot'
+    id "io.spring.dependency-management"
 }
 
 
