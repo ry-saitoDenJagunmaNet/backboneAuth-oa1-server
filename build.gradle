@@ -22,7 +22,7 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
         mssqlJdbcVersion = '8.3.1.jre11-preview'
-        backboneAuthDaoVersion = '20.0.10'
+        backboneAuthDaoVersion = '20.0.14'
         sharedDataStubVersion = '20.1.6'
         backboneStubVersion = '20.1.1'
         sharedDataInterfaceVersion = '20.1.12'
@@ -153,6 +153,7 @@ subprojects {
     dependencies {
         implementation("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
         implementation("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
+        implementation("org.springframework.boot:spring-boot-starter-aop")
         testImplementation('org.springframework.boot:spring-boot-starter-test')
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
         testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"

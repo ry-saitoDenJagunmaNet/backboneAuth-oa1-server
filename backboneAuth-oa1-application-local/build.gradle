@@ -22,11 +22,9 @@ dependencies {
     implementation project(':backboneAuth-oa1-infra')
     testImplementation project(':backboneAuth-oa1-remoting-mock')
 
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.boot:spring-boot-devtools"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
