@@ -8,8 +8,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTran
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.role.subSystemRole.SubSystemRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystem;
 
 /**
  * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
@@ -24,7 +22,7 @@ class Oa11010InitPresenter {
     private Integer subSystemRoleConditionsSelect;
     private List<Oa11010SubSystemRoleVo> subSystemRoleList;
     private Integer bizTranRoleConditionsSelect;
-    private List<SubSystem> bizTranRoleSubSystemList;
+//    private List<SubSystem> bizTranRoleSubSystemList;
     private List<Oa11010BizTranRoleVo> bizTranRoleList;
 
     // コンストラクタ
@@ -99,9 +97,9 @@ class Oa11010InitPresenter {
      *
      * @param bizTranRoleSubSystemList 取引ロールサブシステムコンボボックスリスト
      */
-    public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) {
-        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
-    }
+//    public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) {
+//        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
+//    }
 
     /**
      * voに変換に変換します。
@@ -117,7 +115,7 @@ class Oa11010InitPresenter {
         vo.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         vo.setSubSystemRoleList(subSystemRoleList);
         vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
-        vo.setBizTranRoleSubSystemList(bizTranRoleSubSystemList);
+//        vo.setBizTranRoleSubSystemList(bizTranRoleSubSystemList);
         vo.setBizTranRoleList(bizTranRoleList);
     }
 
@@ -126,26 +124,26 @@ class Oa11010InitPresenter {
      *
      * @param subSystemRoles サブシステムロールＤｔｏリスト
      */
-    public void getSubsystemRoleList(List<SubSystemRole> subSystemRoles) {
-
-        List<Oa11010SubSystemRoleVo> list = newArrayList();
-        for (SubSystemRole subSystemRole : subSystemRoles) {
-            Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
-            item.setSubSystemRoleSelected((short) 0);
-            item.setSubSystemRoleId(0);
-            item.setSubSystemRoleCode(subSystemRole.getSubSystemRoleCode());
-            item.setSubSystemRoleName(subSystemRole.getSubSystemRoleName());
-            item.setExpirationSelect(0);
-            item.setExpirationStatusDate(null);
-            item.setExpirationStartDateFrom(null);
-            item.setExpirationStartDateTo(null);
-            item.setExpirationEndDateFrom(null);
-            item.setExpirationEndDateTo(null);
-
-            list.add(item);
-        }
-        subSystemRoleList = list;
-    }
+//    public void getSubsystemRoleList(List<SubSystemRole> subSystemRoles) {
+//
+//        List<Oa11010SubSystemRoleVo> list = newArrayList();
+//        for (SubSystemRole subSystemRole : subSystemRoles) {
+//            Oa11010SubSystemRoleVo item = new Oa11010SubSystemRoleVo();
+//            item.setSubSystemRoleSelected((short) 0);
+//            item.setSubSystemRoleId(0);
+//            item.setSubSystemRoleCode(subSystemRole.getSubSystemRoleCode());
+//            item.setSubSystemRoleName(subSystemRole.getSubSystemRoleName());
+//            item.setExpirationSelect(0);
+//            item.setExpirationStatusDate(null);
+//            item.setExpirationStartDateFrom(null);
+//            item.setExpirationStartDateTo(null);
+//            item.setExpirationEndDateFrom(null);
+//            item.setExpirationEndDateTo(null);
+//
+//            list.add(item);
+//        }
+//        subSystemRoleList = list;
+//    }
 
     /**
      * 取引ロールリストを取得します。

@@ -72,7 +72,7 @@ public class Oa11010Controller {
         try {
 
             // 画面を初期化
-            oa11010InitService.init(vo);
+//            oa11010InitService.init(vo);
 
             model.addAttribute("form", vo);
             return "oa11010";

@@ -7,7 +7,6 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
@@ -249,9 +248,9 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
      *
      * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
      */
-    public List<SubSystem> getBizTranRoleSubSystemList() {
-        return arg.getBizTranRoleSubSystemList();
-    }
+//    public List<SubSystem> getBizTranRoleSubSystemList() {
+//        return arg.getBizTranRoleSubSystemList();
+//    }
 
     /**
      * 取引ロール一覧のＧｅｔ
@@ -506,18 +505,18 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
         criteria.getAvailableStatusCriteria().getIncludes()
             .addAll(arg.getAvailableStatusIncludesList());
 
-        // OPTION検索条件 有効期限
-        if (ConditionsExpirationSelect.状態指定日.equals(arg.getExpirationSelect())) {
-            criteria.getExpirationStartDateCriteria().setLessOrEqual(arg.getExpirationStatusDate());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationStatusDate());
-        } else if (ConditionsExpirationSelect.条件指定.equals(arg.getExpirationSelect())) {
-            criteria.getExpirationStartDateCriteria()
-                .setMoreOrEqual(arg.getExpirationStartDateFrom());
-            criteria.getExpirationStartDateCriteria()
-                .setLessOrEqual(arg.getExpirationStartDateTo());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationEndDateFrom());
-            criteria.getExpirationEndDateCriteria().setLessOrEqual(arg.getExpirationEndDateTo());
-        }
+//        // OPTION検索条件 有効期限
+//        if (ConditionsExpirationSelect.状態指定日.equals(arg.getExpirationSelect())) {
+//            criteria.getExpirationStartDateCriteria().setLessOrEqual(arg.getExpirationStatusDate());
+//            criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationStatusDate());
+//        } else if (ConditionsExpirationSelect.条件指定.equals(arg.getExpirationSelect())) {
+//            criteria.getExpirationStartDateCriteria()
+//                .setMoreOrEqual(arg.getExpirationStartDateFrom());
+//            criteria.getExpirationStartDateCriteria()
+//                .setLessOrEqual(arg.getExpirationStartDateTo());
+//            criteria.getExpirationEndDateCriteria().setMoreOrEqual(arg.getExpirationEndDateFrom());
+//            criteria.getExpirationEndDateCriteria().setLessOrEqual(arg.getExpirationEndDateTo());
+//        }
 
         // OPTION検索条件 その他　機器認証
         if (!nvl(arg.getDeviceAuthUse(), (short) 0)

@@ -10,7 +10,6 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.dto.Operat
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystem;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Presenter
@@ -57,148 +56,148 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
     public void genOperatorTableHtml(int pageNo) {
         List<OperatorReferenceDto> list = getPageList(pageNo);
 
-        StringBuffer html = new StringBuffer();
-
-        // オペレーターページリスト取得
-        list.forEach(o -> {
-            html.append("<tr class=\"oaex_operator_table_operator_").append(o.getOperatorCode())
-                .append(
-                    " oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\">");
-            // 利用可否
-            if (o.getAvailableStatus() == 0) {
-                html.append(
-                    "<td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td>");
-            } else {
-                html.append(
-                    "<td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_inpossible\"></div></td>");
-            }
-            // ロック
-            if (o.getLockStatus() == 1) {
-                html.append(
-                    "<td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td>");
-            } else {
-                html.append(
-                    "<td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td>");
-            }
-            // 店舗
-            if (list.indexOf(o) == 0 || !o.getTempoCode()
-                .equals(list.get(list.indexOf(o) - 1).getTempoCode())) {
-                // 店舗コードが変わったら表示
-                html.append("<td class=\"oaex_operator_tempo_code\">").append(o.getTempoCode())
-                    .append("</td>");
-                html.append("<td class=\"oaex_operator_tempo_name\">").append(o.getTempoName())
-                    .append("</td>");
-            } else {
-                html.append("<td class=\"oaex_operator_tempo_code\"></td>");
-                html.append("<td class=\"oaex_operator_tempo_name\"></td>");
-            }
-            // オペレーター
-            html.append("<td class=\"oaex_operator_operator_code\">").append(o.getOperatorCode())
-                .append("<input type=\"hidden\" value=\"").append(o.getTempoId()).append("\"/>")
-                .append("</td>");
-            html.append("<td class=\"oaex_operator_operator_name\">").append(o.getOperatorName())
-                .append("</td>");
-            // オペレーター有効期限
-            html.append("<td class=\"oaex_operator_expiration_date\">")
-                .append(o.getExpirationStartDateToStringFormat())
-                .append("～")
-                .append(o.getExpirationEndDateToStringFormat())
-                .append("</td>");
-
-            // サブシステムロール、取引ロール
-            if (o.getOperatorSubSystemRoleList().size() == 0
-                && o.getOperatorBizTranRoleList().size() == 0) {
-                // サブシステムロール未設定
-                html.append(genOperatorSubSystemRoleBlankHtml());
-                // 取引ロール未設定
-                html.append(genOperatorBizTranRoleBlankHtml());
-            } else {
-                // オペレーターに紐付くサブシステムロール、取引ロールを設定
-                int is = 0;
-                for (int i = 0; true; i++) {
-                    if (o.getOperatorSubSystemRoleList().size() <= is
-                        && o.getOperatorBizTranRoleList().size() == 0) {
-                        // オペレーターに紐付くサブシステムロール、取引ロールが無くなったら終了
-                        break;
-                    }
-                    if (i > 0) {
-                        // 店舗、オペレーターに空セル（td）を設定
-                        html.append("<tr class=\"oaex_operator_table_operator_")
-                            .append(o.getOperatorCode())
-                            .append("\" onclick=\"oaex_operator_table_onClick(this);\">");
-
-                        // 利用可否
-                        html.append("<td class=\"oaex_operator_available_status\"></td>");
-                        // ロック
-                        html.append("<td class=\"oaex_operator_account_lock\"></td>");
-                        // 店舗
-                        html.append("<td class=\"oaex_operator_tempo_code\"></td>");
-                        html.append("<td class=\"oaex_operator_tempo_name\"></td>");
-                        // オペレーター
-                        html.append("<td class=\"oaex_operator_operator_code\"></td>");
-                        html.append("<td class=\"oaex_operator_operator_name\"></td>");
-                        // オペレーター有効期限
-                        html.append("<td class=\"oaex_operator_expiration_date\"></td>");
-                    }
-
-                    if (o.getOperatorSubSystemRoleList().size() > is) {
-                        // サブシステムロール
-                        html.append("<td class=\"oaex_operator_subsystem_role\">")
-                            .append(o.getOperatorSubSystemRoleList().get(is).getSubSystemRole()
-                                .getSubSystemRoleName())
-                            .append("</td>");
-                        // サブシステムロール有効期限
-                        html.append("<td class=\"oaex_operator_subsystem_role_expiration_date\">")
-                            .append(formatLocalDate(
-                                o.getOperatorSubSystemRoleList().get(is).getExpirationStartDate()))
-                            .append("～")
-                            .append(formatLocalDate(
-                                o.getOperatorSubSystemRoleList().get(is).getExpirationEndDate()))
-                            .append("</td>");
-
-                        if (o.getOperatorBizTranRoleList().size() == 0) {
-                            // 取引ロール未設定
-                            html.append(genOperatorBizTranRoleBlankHtml());
-                        } else {
-                            boolean ssfirst = true;
-                            // サブシステムロールに紐付く取引ロール定義Htmlを生成
-                            for (SubSystem ss : o.getOperatorSubSystemRoleList().get(is)
-                                .getSubSystemRole().getSubSystemList()) {
-                                // サブシステムロールに紐付く取引ロール定義Htmlを生成
-                                String BizTranRoleHtml = genOperatorBizTranRoleHtml(
-                                    o.getOperatorBizTranRoleList()
-                                    , o.getOperatorCode()
-                                    , ss.getSubSystemCode()
-                                    , ssfirst);
-                                if (BizTranRoleHtml.length() > 0) {
-                                    html.append(BizTranRoleHtml);
-                                    ssfirst = false;
-                                }
-                            }
-                            if (ssfirst) {
-                                // サブシステムロールに紐付く取引ロールが１件も無い場合、
-                                // 取引ロール未設定
-                                html.append(genOperatorBizTranRoleBlankHtml());
-                            }
-                        }
-                        is++;
-                    } else {
-                        // サブシステムロール未設定
-                        html.append(genOperatorSubSystemRoleBlankHtml());
-                        if (o.getOperatorBizTranRoleList().size() > 0) {
-                            boolean ssfirst = true;
-                            // サブシステムロールに紐付かない取引ロール定義Htmlを生成
-                            html.append(genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
-                                , o.getOperatorCode()
-                                , ""
-                                , ssfirst));
-                        }
-                    }
-                    html.append("</tr>");
-                }
-            }
-        });
-        operatorTable = html.toString();
+//        StringBuffer html = new StringBuffer();
+//
+//        // オペレーターページリスト取得
+//        list.forEach(o -> {
+//            html.append("<tr class=\"oaex_operator_table_operator_").append(o.getOperatorCode())
+//                .append(
+//                    " oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\">");
+//            // 利用可否
+//            if (o.getAvailableStatus() == 0) {
+//                html.append(
+//                    "<td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td>");
+//            } else {
+//                html.append(
+//                    "<td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_inpossible\"></div></td>");
+//            }
+//            // ロック
+//            if (o.getLockStatus() == 1) {
+//                html.append(
+//                    "<td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td>");
+//            } else {
+//                html.append(
+//                    "<td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td>");
+//            }
+//            // 店舗
+//            if (list.indexOf(o) == 0 || !o.getTempoCode()
+//                .equals(list.get(list.indexOf(o) - 1).getTempoCode())) {
+//                // 店舗コードが変わったら表示
+//                html.append("<td class=\"oaex_operator_tempo_code\">").append(o.getTempoCode())
+//                    .append("</td>");
+//                html.append("<td class=\"oaex_operator_tempo_name\">").append(o.getTempoName())
+//                    .append("</td>");
+//            } else {
+//                html.append("<td class=\"oaex_operator_tempo_code\"></td>");
+//                html.append("<td class=\"oaex_operator_tempo_name\"></td>");
+//            }
+//            // オペレーター
+//            html.append("<td class=\"oaex_operator_operator_code\">").append(o.getOperatorCode())
+//                .append("<input type=\"hidden\" value=\"").append(o.getTempoId()).append("\"/>")
+//                .append("</td>");
+//            html.append("<td class=\"oaex_operator_operator_name\">").append(o.getOperatorName())
+//                .append("</td>");
+//            // オペレーター有効期限
+//            html.append("<td class=\"oaex_operator_expiration_date\">")
+//                .append(o.getExpirationStartDateToStringFormat())
+//                .append("～")
+//                .append(o.getExpirationEndDateToStringFormat())
+//                .append("</td>");
+//
+//            // サブシステムロール、取引ロール
+//            if (o.getOperatorSubSystemRoleList().size() == 0
+//                && o.getOperatorBizTranRoleList().size() == 0) {
+//                // サブシステムロール未設定
+//                html.append(genOperatorSubSystemRoleBlankHtml());
+//                // 取引ロール未設定
+//                html.append(genOperatorBizTranRoleBlankHtml());
+//            } else {
+//                // オペレーターに紐付くサブシステムロール、取引ロールを設定
+//                int is = 0;
+//                for (int i = 0; true; i++) {
+//                    if (o.getOperatorSubSystemRoleList().size() <= is
+//                        && o.getOperatorBizTranRoleList().size() == 0) {
+//                        // オペレーターに紐付くサブシステムロール、取引ロールが無くなったら終了
+//                        break;
+//                    }
+//                    if (i > 0) {
+//                        // 店舗、オペレーターに空セル（td）を設定
+//                        html.append("<tr class=\"oaex_operator_table_operator_")
+//                            .append(o.getOperatorCode())
+//                            .append("\" onclick=\"oaex_operator_table_onClick(this);\">");
+//
+//                        // 利用可否
+//                        html.append("<td class=\"oaex_operator_available_status\"></td>");
+//                        // ロック
+//                        html.append("<td class=\"oaex_operator_account_lock\"></td>");
+//                        // 店舗
+//                        html.append("<td class=\"oaex_operator_tempo_code\"></td>");
+//                        html.append("<td class=\"oaex_operator_tempo_name\"></td>");
+//                        // オペレーター
+//                        html.append("<td class=\"oaex_operator_operator_code\"></td>");
+//                        html.append("<td class=\"oaex_operator_operator_name\"></td>");
+//                        // オペレーター有効期限
+//                        html.append("<td class=\"oaex_operator_expiration_date\"></td>");
+//                    }
+//
+//                    if (o.getOperatorSubSystemRoleList().size() > is) {
+//                        // サブシステムロール
+//                        html.append("<td class=\"oaex_operator_subsystem_role\">")
+//                            .append(o.getOperatorSubSystemRoleList().get(is).getSubSystemRole()
+//                                .getSubSystemRoleName())
+//                            .append("</td>");
+//                        // サブシステムロール有効期限
+//                        html.append("<td class=\"oaex_operator_subsystem_role_expiration_date\">")
+//                            .append(formatLocalDate(
+//                                o.getOperatorSubSystemRoleList().get(is).getExpirationStartDate()))
+//                            .append("～")
+//                            .append(formatLocalDate(
+//                                o.getOperatorSubSystemRoleList().get(is).getExpirationEndDate()))
+//                            .append("</td>");
+//
+//                        if (o.getOperatorBizTranRoleList().size() == 0) {
+//                            // 取引ロール未設定
+//                            html.append(genOperatorBizTranRoleBlankHtml());
+//                        } else {
+//                            boolean ssfirst = true;
+//                            // サブシステムロールに紐付く取引ロール定義Htmlを生成
+//                            for (SubSystem ss : o.getOperatorSubSystemRoleList().get(is)
+//                                .getSubSystemRole().getSubSystemList()) {
+//                                // サブシステムロールに紐付く取引ロール定義Htmlを生成
+//                                String BizTranRoleHtml = genOperatorBizTranRoleHtml(
+//                                    o.getOperatorBizTranRoleList()
+//                                    , o.getOperatorCode()
+//                                    , ss.getSubSystemCode()
+//                                    , ssfirst);
+//                                if (BizTranRoleHtml.length() > 0) {
+//                                    html.append(BizTranRoleHtml);
+//                                    ssfirst = false;
+//                                }
+//                            }
+//                            if (ssfirst) {
+//                                // サブシステムロールに紐付く取引ロールが１件も無い場合、
+//                                // 取引ロール未設定
+//                                html.append(genOperatorBizTranRoleBlankHtml());
+//                            }
+//                        }
+//                        is++;
+//                    } else {
+//                        // サブシステムロール未設定
+//                        html.append(genOperatorSubSystemRoleBlankHtml());
+//                        if (o.getOperatorBizTranRoleList().size() > 0) {
+//                            boolean ssfirst = true;
+//                            // サブシステムロールに紐付かない取引ロール定義Htmlを生成
+//                            html.append(genOperatorBizTranRoleHtml(o.getOperatorBizTranRoleList()
+//                                , o.getOperatorCode()
+//                                , ""
+//                                , ssfirst));
+//                        }
+//                    }
+//                    html.append("</tr>");
+//                }
+//            }
+//        });
+//        operatorTable = html.toString();
     }
 
     /**

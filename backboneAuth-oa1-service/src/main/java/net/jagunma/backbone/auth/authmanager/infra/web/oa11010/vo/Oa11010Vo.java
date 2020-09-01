@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
-import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystem;
 
 /**
  * OA11010 View Object
@@ -96,7 +95,7 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
      */
-    private List<SubSystem> bizTranRoleSubSystemList;
+//    private List<SubSystem> bizTranRoleSubSystemList;
     /**
      * 取引ロール一覧
      */
@@ -336,13 +335,13 @@ public class Oa11010Vo extends BaseOfResponseVo {
         this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode;
     }
 
-    public List<SubSystem> getBizTranRoleSubSystemList() {
-        return bizTranRoleSubSystemList;
-    }
+//    public List<SubSystem> getBizTranRoleSubSystemList() {
+//        return bizTranRoleSubSystemList;
+//    }
 
-    public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) {
-        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
-    }
+//    public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) {
+//        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
+//    }
 
     public List<Oa11010BizTranRoleVo> getBizTranRoleList() {
         return bizTranRoleList;

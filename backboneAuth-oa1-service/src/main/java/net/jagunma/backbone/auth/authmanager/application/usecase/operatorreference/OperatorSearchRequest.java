@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorRefere
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.subSystem.SubSystem;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorBizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchConverterOperatorSubSystemRole;
@@ -113,7 +112,7 @@ public interface OperatorSearchRequest {
 	 * 取引ロール一覧フィルター用サブシステムコンボボックスリストのＧｅｔ
 	 * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
 	 */
-	List<SubSystem> getBizTranRoleSubSystemList();
+//	List<SubSystem> getBizTranRoleSubSystemList();
 	/**
 	 * 取引ロール一覧のＧｅｔ
 	 * @return 取引ロール一覧

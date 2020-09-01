@@ -44,16 +44,16 @@ public class Operator_SubSystemRoles {
 	 * @return true：比較結果は同じ　false：比較結果は差異がある
 	 */
 	public boolean sameValueAs(Object o) {
-		if (this == o) {
-			return true;
-		} else if (o != null && this.getClass() == o.getClass()) {
-			if (list.isEmpty() && ((Operator_SubSystemRoles) o).list.isEmpty()) {
-				return true;
-			}
-			return list.stream().anyMatch(s ->
-				((Operator_SubSystemRoles) o).getValues().stream()
-					.anyMatch(s::sameValueAs));
-		}
+//		if (this == o) {
+//			return true;
+//		} else if (o != null && this.getClass() == o.getClass()) {
+//			if (list.isEmpty() && ((Operator_SubSystemRoles) o).list.isEmpty()) {
+//				return true;
+//			}
+//			return list.stream().anyMatch(s ->
+//				((Operator_SubSystemRoles) o).getValues().stream()
+//					.anyMatch(s::sameValueAs));
+//		}
 		return false;
 	}
 }
