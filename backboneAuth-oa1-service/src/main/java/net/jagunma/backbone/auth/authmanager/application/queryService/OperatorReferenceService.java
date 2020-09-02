@@ -13,12 +13,12 @@ import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRolesRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRoles;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRolesRepository;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRoles;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
@@ -42,34 +42,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OperatorReferenceService {
 
-    private final OperatorEntityDao operatorEntityDao;
-    private final AccountLockEntityDao accountLockEntityDao;
-    private final PasswordHistoryEntityDao passwordHistoryEntityDao;
-    private final SignInTraceEntityDao signInTraceEntityDao;
-    private final SignOutTraceEntityDao signOutTraceEntityDao;
-    private final TempoReferenceService tempoReferenceService;
-    private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
-    private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
+//    private final OperatorEntityDao operatorEntityDao;
+//    private final AccountLockEntityDao accountLockEntityDao;
+//    private final PasswordHistoryEntityDao passwordHistoryEntityDao;
+//    private final SignInTraceEntityDao signInTraceEntityDao;
+//    private final SignOutTraceEntityDao signOutTraceEntityDao;
+//    private final TempoReferenceService tempoReferenceService;
+//    private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
+//    private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
 
-    // コンストラクタ
-    public OperatorReferenceService(OperatorEntityDao operatorEntityDao,
-        AccountLockEntityDao accountLockEntityDao,
-        PasswordHistoryEntityDao passwordHistoryEntityDao,
-        SignInTraceEntityDao signInTraceEntityDao,
-        SignOutTraceEntityDao signOutTraceEntityDao,
-        TempoReferenceService tempoReferenceService,
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository) {
-
-        this.operatorEntityDao = operatorEntityDao;
-        this.accountLockEntityDao = accountLockEntityDao;
-        this.passwordHistoryEntityDao = passwordHistoryEntityDao;
-        this.signInTraceEntityDao = signInTraceEntityDao;
-        this.signOutTraceEntityDao = signOutTraceEntityDao;
-        this.tempoReferenceService = tempoReferenceService;
-        this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
-        this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
-    }
+//    // コンストラクタ
+//    public OperatorReferenceService(OperatorEntityDao operatorEntityDao,
+//        AccountLockEntityDao accountLockEntityDao,
+//        PasswordHistoryEntityDao passwordHistoryEntityDao,
+//        SignInTraceEntityDao signInTraceEntityDao,
+//        SignOutTraceEntityDao signOutTraceEntityDao,
+//        TempoReferenceService tempoReferenceService,
+//        Operator_BizTranRolesRepository operator_BizTranRolesRepository,
+//        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository) {
+//
+//        this.operatorEntityDao = operatorEntityDao;
+//        this.accountLockEntityDao = accountLockEntityDao;
+//        this.passwordHistoryEntityDao = passwordHistoryEntityDao;
+//        this.signInTraceEntityDao = signInTraceEntityDao;
+//        this.signOutTraceEntityDao = signOutTraceEntityDao;
+//        this.tempoReferenceService = tempoReferenceService;
+//        this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
+//        this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
+//    }
 
     /**
      * オペレーターリストを取得します。
@@ -98,48 +98,48 @@ public class OperatorReferenceService {
         // パラメーターの検証
         OperatorReferenceValidator.with(request).validate();
 
-        // オペレーター検索
-        Orders orders = Orders.empty()
-            .addOrder("tempoCode")
-            .addOrder("operatorCode");
-        List<OperatorEntity> operatorEntities = operatorEntityDao
-            .findBy(request.genOperatorEntityCriteria(), orders);
-
-        // オペレーター_サブシステムロール割当検索
-        Operator_SubSystemRoles operatorSubSystemRoles = operator_SubSystemRolesRepository
-            .selectAll();
-        // オペレーター_取引ロール割当リスト
-        Operator_BizTranRoles operatorBizTranRoles = operator_BizTranRolesRepository.selectAll();
-        // 店舗リスト
-        List<TempoReferenceDto> tempos = tempoReferenceService.getTempoList(request.getJaId());
-        // アカウントロック検索
-        orders = Orders.empty()
-            .addOrder("operatorId")
-            .addOrder("occurredDateTime", Order.ASC);
-        List<AccountLockEntity> accountLockEntities = accountLockEntityDao.findAll(orders);
-        // パスワード履歴検索
-        orders = Orders.empty()
-            .addOrder("operatorId")
-            .addOrder("changeDateTime", Order.ASC);
-        List<PasswordHistoryEntity> passwordHistoryEntities = passwordHistoryEntityDao
-            .findAll(orders);
-        // サインイン証跡検索
-        orders = Orders.empty()
-            .addOrder("operatorCode")
-            .addOrder("tryDateTime", Order.ASC);
-        List<SignInTraceEntity> signInTraceEntities = signInTraceEntityDao.findAll(orders);
-        // サインアウト証跡検索
-        orders = Orders.empty()
-            .addOrder("operatorId")
-            .addOrder("signOutDateTime", Order.ASC);
-        List<SignOutTraceEntity> signOutTraceEntities = signOutTraceEntityDao.findAll(orders);
-
+//        // オペレーター検索
+//        Orders orders = Orders.empty()
+//            .addOrder("tempoCode")
+//            .addOrder("operatorCode");
+//        List<OperatorEntity> operatorEntities = operatorEntityDao
+//            .findBy(request.genOperatorEntityCriteria(), orders);
+//
+//        // オペレーター_サブシステムロール割当検索
+//        Operator_SubSystemRoles operatorSubSystemRoles = operator_SubSystemRolesRepository
+//            .selectAll();
+//        // オペレーター_取引ロール割当リスト
+//        Operator_BizTranRoles operatorBizTranRoles = operator_BizTranRolesRepository.selectAll();
+//        // 店舗リスト
+//        List<TempoReferenceDto> tempos = tempoReferenceService.getTempoList(request.getJaId());
+//        // アカウントロック検索
+//        orders = Orders.empty()
+//            .addOrder("operatorId")
+//            .addOrder("occurredDateTime", Order.ASC);
+//        List<AccountLockEntity> accountLockEntities = accountLockEntityDao.findAll(orders);
+//        // パスワード履歴検索
+//        orders = Orders.empty()
+//            .addOrder("operatorId")
+//            .addOrder("changeDateTime", Order.ASC);
+//        List<PasswordHistoryEntity> passwordHistoryEntities = passwordHistoryEntityDao
+//            .findAll(orders);
+//        // サインイン証跡検索
+//        orders = Orders.empty()
+//            .addOrder("operatorCode")
+//            .addOrder("tryDateTime", Order.ASC);
+//        List<SignInTraceEntity> signInTraceEntities = signInTraceEntityDao.findAll(orders);
+//        // サインアウト証跡検索
+//        orders = Orders.empty()
+//            .addOrder("operatorId")
+//            .addOrder("signOutDateTime", Order.ASC);
+//        List<SignOutTraceEntity> signOutTraceEntities = signOutTraceEntityDao.findAll(orders);
+//
         List<OperatorReferenceDto> operatorList = newArrayList();
-
-        for (OperatorEntity operatorEntity : operatorEntities) {
-            OperatorReferenceDto dto = new OperatorReferenceDto();
-
-            // オペレーター_サブシステムロール割当の項目設定および条件判定
+//
+//        for (OperatorEntity operatorEntity : operatorEntities) {
+//            OperatorReferenceDto dto = new OperatorReferenceDto();
+//
+//            // オペレーター_サブシステムロール割当の項目設定および条件判定
 //            if (!setOperatorSubSystemRoleInfo(dto, request, operatorEntity,
 //                operatorSubSystemRoles.getValues())) {
 //                continue;
@@ -165,55 +165,55 @@ public class OperatorReferenceService {
 //            if (!setSignOutTraceInfo(dto, request, operatorEntity, signOutTraceEntities)) {
 //                continue;
 //            }
-
-            // オペレーターID
-            dto.setOperatorId(operatorEntity.getOperatorId());
-            // オペレーターコード
-            dto.setOperatorCode(operatorEntity.getOperatorCode());
-            // オペレーター名
-            dto.setOperatorName(operatorEntity.getOperatorName());
-            // メールアドレス
-            dto.setMailAddress(operatorEntity.getMailAddress());
-            // 有効期限開始日
-            dto.setExpirationStartDate(operatorEntity.getExpirationStartDate());
-            // 有効期限終了日
-            dto.setExpirationEndDate(operatorEntity.getExpirationEndDate());
-            // 機器認証
-            dto.setIsDeviceAuth(operatorEntity.getIsDeviceAuth());
-            // JAID
-            dto.setJaId(operatorEntity.getJaId());
-            // JAコード
-            dto.setJaCode(operatorEntity.getJaCode());
-            // 店舗ID
-            dto.setTempoId(operatorEntity.getTempoId());
-            // 店舗コード
-            dto.setTempoCode(operatorEntity.getTempoCode());
-            // 利用可否状態
-            dto.setAvailableStatus(operatorEntity.getAvailableStatus());
-            // 登録者ID
-            dto.setCreatedBy(operatorEntity.getCreatedBy());
-            // 登録日時
-            dto.setCreatedAt(operatorEntity.getCreatedAt());
-            // 登録元IPアドレス
-            dto.setCreatedIpAddress(operatorEntity.getCreatedIpAddress());
-            // 更新者ID
-            dto.setUpdatedBy(operatorEntity.getUpdatedBy());
-            // 更新日時
-            dto.setUpdatedAt(operatorEntity.getUpdatedAt());
-            // 更新元IPアドレス
-            dto.setUpdatedIpAddress(operatorEntity.getUpdatedIpAddress());
-            // レコードバージョン
-            dto.setRecordVersion(operatorEntity.getRecordVersion());
-            // 店舗名
-            List<TempoReferenceDto> tempoReferenceDto = tempos.stream()
-                .filter(t -> t.getTempoCode().equals(operatorEntity.getTempoCode()))
-                .collect(Collectors.toList());
-            if (tempoReferenceDto.size() > 0) {
-                dto.setTempoName(tempoReferenceDto.get(0).getTempoName());
-            }
-
-            operatorList.add(dto);
-        }
+//
+//            // オペレーターID
+//            dto.setOperatorId(operatorEntity.getOperatorId());
+//            // オペレーターコード
+//            dto.setOperatorCode(operatorEntity.getOperatorCode());
+//            // オペレーター名
+//            dto.setOperatorName(operatorEntity.getOperatorName());
+//            // メールアドレス
+//            dto.setMailAddress(operatorEntity.getMailAddress());
+//            // 有効期限開始日
+//            dto.setExpirationStartDate(operatorEntity.getExpirationStartDate());
+//            // 有効期限終了日
+//            dto.setExpirationEndDate(operatorEntity.getExpirationEndDate());
+//            // 機器認証
+//            dto.setIsDeviceAuth(operatorEntity.getIsDeviceAuth());
+//            // JAID
+//            dto.setJaId(operatorEntity.getJaId());
+//            // JAコード
+//            dto.setJaCode(operatorEntity.getJaCode());
+//            // 店舗ID
+//            dto.setTempoId(operatorEntity.getTempoId());
+//            // 店舗コード
+//            dto.setTempoCode(operatorEntity.getTempoCode());
+//            // 利用可否状態
+//            dto.setAvailableStatus(operatorEntity.getAvailableStatus());
+//            // 登録者ID
+//            dto.setCreatedBy(operatorEntity.getCreatedBy());
+//            // 登録日時
+//            dto.setCreatedAt(operatorEntity.getCreatedAt());
+//            // 登録元IPアドレス
+//            dto.setCreatedIpAddress(operatorEntity.getCreatedIpAddress());
+//            // 更新者ID
+//            dto.setUpdatedBy(operatorEntity.getUpdatedBy());
+//            // 更新日時
+//            dto.setUpdatedAt(operatorEntity.getUpdatedAt());
+//            // 更新元IPアドレス
+//            dto.setUpdatedIpAddress(operatorEntity.getUpdatedIpAddress());
+//            // レコードバージョン
+//            dto.setRecordVersion(operatorEntity.getRecordVersion());
+//            // 店舗名
+//            List<TempoReferenceDto> tempoReferenceDto = tempos.stream()
+//                .filter(t -> t.getTempoCode().equals(operatorEntity.getTempoCode()))
+//                .collect(Collectors.toList());
+//            if (tempoReferenceDto.size() > 0) {
+//                dto.setTempoName(tempoReferenceDto.get(0).getTempoName());
+//            }
+//
+//            operatorList.add(dto);
+//        }
         return operatorList;
     }
 

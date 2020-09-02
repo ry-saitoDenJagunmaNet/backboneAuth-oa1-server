@@ -4,34 +4,34 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
- * カレンダー参照サービス
+ * カレンダー検索サービス
  */
-@Component
-public class CalendarQueryService {
+@Service
+public class SearchCalendar {
 
 	private final CalendarsRepository calendarsRepository;
 
 	// コンストラクタ
-	public CalendarQueryService(CalendarsRepository calendarsRepository) {
+	public SearchCalendar(CalendarsRepository calendarsRepository) {
 		this.calendarsRepository = calendarsRepository;
 	}
 
 	/**
-	 * カレンダー群を取得します。
+	 * カレンダー群を検索します。
 	 *
 	 * @param request 条件
 	 * @param response 検索結果
 	 */
-	public void getCalendars(CalendarSearchRequest request, CalendarSearchResponse response) {
+	public void execute(CalendarSearchRequest request, CalendarSearchResponse response) {
 
 		// パラメーターの検証
-		CalendarQueryValidator.with(request).validate();
+		SearchCalendarValidator.with(request).validate();
 
 		// カレンダー検索
-		response.setCalendars(calendarsRepository.selectBy(genCalendarCriteria(request)));
+		response.setCalendars(calendarsRepository.selectBy(genCriteria(request)));
 		response.setYearMonth(request.getYearMonth());
 	}
 
@@ -40,7 +40,7 @@ public class CalendarQueryService {
 	 *
 	 * @return カレンダー検索条件
 	 */
-	private CalendarCriteria genCalendarCriteria(CalendarSearchRequest request) {
+	private CalendarCriteria genCriteria(CalendarSearchRequest request) {
 
 		CalendarCriteria criteria = new CalendarCriteria();
 

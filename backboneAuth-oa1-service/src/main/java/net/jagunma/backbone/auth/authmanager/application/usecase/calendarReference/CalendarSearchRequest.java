@@ -13,9 +13,4 @@ public interface CalendarSearchRequest {
 	 * @return 年月
 	 */
 	LocalDate getYearMonth();
-
-//	/**
-//	 * カレンダーの検索条件を生成します。
-//	 */
-//	CalendarCriteria genCalendarCriteria();
 }

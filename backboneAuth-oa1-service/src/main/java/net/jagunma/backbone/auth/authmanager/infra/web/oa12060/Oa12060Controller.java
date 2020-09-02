@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 
-import net.jagunma.backbone.auth.authmanager.application.commandService.StoreingCalendar;
-import net.jagunma.backbone.auth.authmanager.application.queryService.CalendarQueryService;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreCalendar;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchCalendar;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
@@ -45,16 +45,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class Oa12060Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12060Controller.class);
-    private final CalendarQueryService calendarQueryService;
-    private final StoreingCalendar storeingCalendar;
+    private final SearchCalendar searchCalendar;
+    private final StoreCalendar storeCalendar;
 
     // コンストラクタ
     public Oa12060Controller(
-        CalendarQueryService calendarQueryService,
-        StoreingCalendar storeingCalendar) {
+        SearchCalendar searchCalendar,
+        StoreCalendar storeCalendar) {
 
-        this.calendarQueryService = calendarQueryService;
-        this.storeingCalendar = storeingCalendar;
+        this.searchCalendar = searchCalendar;
+        this.storeCalendar = storeCalendar;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Oa12060Controller extends BaseOfController {
             Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
 
             // カレンダー検索
-            calendarQueryService.getCalendars(converter, presenter);
+            searchCalendar.execute(converter, presenter);
 
             presenter.bindTo(responseVo, vo);
             model.addAttribute("form", vo);
@@ -141,25 +141,25 @@ public class Oa12060Controller extends BaseOfController {
     }
 
     /**
-     * カレンダー登録処理を行います。
+     * カレンダー適用処理を行います。
      *
      * @param model モデル
      * @param vo カレンダー稼働日登録（form json）
      * @return view名
      */
-    @RequestMapping(value = "/entry", method = RequestMethod.POST)
-    public String entry(Model model, Oa12060Vo vo) {
+    @RequestMapping(value = "/store", method = RequestMethod.POST)
+    public String store(Model model, Oa12060Vo vo) {
         //TODO: パラメータでサインインオペレーターの情報を取得する
         setAuthInf();
 
         System.out.println("### YearMonth="+vo.getYearMonthToString());
 
         try {
-            Oa12060EntryConverter converter = Oa12060EntryConverter.with(vo);
+            Oa12060StoreConverter converter = Oa12060StoreConverter.with(vo);
             Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
 
-            // カレンダー登録
-            storeingCalendar.execute(converter);
+            // カレンダー適用
+            storeCalendar.execute(converter);
 
             // カレンダー検索
             search(model,

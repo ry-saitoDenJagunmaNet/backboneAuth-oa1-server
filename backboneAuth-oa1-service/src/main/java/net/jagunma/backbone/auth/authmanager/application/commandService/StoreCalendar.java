@@ -1,24 +1,24 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * カレンダー登録サービス
+ * カレンダー適用サービス
  */
-@Component
+@Service
 @Transactional
-public class StoreingCalendar {
+public class StoreCalendar {
 
 	private final CalendarRepositoryForStore calendarRepositoryForStore;
 	private final CalendarRepository calendarRepository;
 
 	// コンストラクタ
-	public StoreingCalendar(
+	public StoreCalendar(
 		CalendarRepositoryForStore calendarRepositoryForStore,
 		CalendarRepository calendarRepository) {
 
@@ -27,14 +27,14 @@ public class StoreingCalendar {
 	}
 
 	/**
-	 * 稼働日または休日を登録します。
+	 * 稼働日または休日を適用します。
 	 *
-	 * @param request 登録するカレンダー情報
+	 * @param request 適用するカレンダー情報
 	 */
-	public int execute(CalendarEntryRequest request) {
+	public int execute(CalendarStoreRequest request) {
 
 		// パラメーターの検証
-		StoreingCalendarValidator.with(request).validate();
+		StoreCalendarValidator.with(request).validate();
 
 		int reflected = 0;
 		for (Calendar calendar : request.getCalendars().getValues()) {

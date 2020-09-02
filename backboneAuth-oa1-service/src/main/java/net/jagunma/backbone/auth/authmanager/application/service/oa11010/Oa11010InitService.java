@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.service.oa11010;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SubSystemReferenceService;
 import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRolesRepository;
+//import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRolesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +32,13 @@ public class Oa11010InitService {
 //        this.bizTranRolesRepository = bizTranRolesRepository;
 //    }
 //
-//    /**
-//     * Formの初期化処理です。
-//     *
-//     * @param vo オペレーター＜一覧＞View Object
-//     */
-//    public void init(Oa11010Vo vo) {
-//
+    /**
+     * Formの初期化処理です。
+     *
+     * @param vo オペレーター＜一覧＞View Object
+     */
+    public void init(Oa11010Vo vo) {
+
 //        Oa11010InitPresenter presenter = new Oa11010InitPresenter();
 //
 //        // TODO: サインインオペレーターのJA
@@ -64,5 +64,5 @@ public class Oa11010InitService {
 //        presenter.bindTo(vo);
 //
 //        //throw new GunmaRuntimeException("EOA10002", "最終パスワード変更日の変更有無");
-//    }
+    }
 }

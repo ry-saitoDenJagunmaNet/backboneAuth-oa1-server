@@ -5,16 +5,16 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
-import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarEntryRequest;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 
 /**
  * OA12060 カレンダーメンテナンス 登録 Converter
  */
-class Oa12060EntryConverter implements CalendarEntryRequest {
+class Oa12060StoreConverter implements CalendarStoreRequest {
 
 	/**
 	 * OA12060 View Object
@@ -22,12 +22,12 @@ class Oa12060EntryConverter implements CalendarEntryRequest {
 	private final Oa12060Vo arg;
 
 	// コンストラクタ
-	Oa12060EntryConverter(Oa12060Vo oa12060Vo) {
+	Oa12060StoreConverter(Oa12060Vo oa12060Vo) {
 		arg = oa12060Vo;
 	}
 	// ファクトリーメソッド
-	public static Oa12060EntryConverter with(Oa12060Vo oa12060Vo) {
-		return new Oa12060EntryConverter(oa12060Vo);
+	public static Oa12060StoreConverter with(Oa12060Vo oa12060Vo) {
+		return new Oa12060StoreConverter(oa12060Vo);
 	}
 
 	/**

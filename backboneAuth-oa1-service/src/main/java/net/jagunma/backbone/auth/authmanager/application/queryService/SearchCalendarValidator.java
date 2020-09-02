@@ -5,18 +5,18 @@ import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
 /**
- * カレンダー参照サービス Validator
+ * カレンダー検索サービス Validator
  */
-class CalendarQueryValidator {
+class SearchCalendarValidator {
 	private final CalendarSearchRequest request;
 
 	// コンストラクタ
-	CalendarQueryValidator(CalendarSearchRequest request) {
+	SearchCalendarValidator(CalendarSearchRequest request) {
 		this.request = request;
 	}
 	// ファクトリーメソッド
-	public static CalendarQueryValidator with(CalendarSearchRequest request) {
-		return new CalendarQueryValidator(request);
+	public static SearchCalendarValidator with(CalendarSearchRequest request) {
+		return new SearchCalendarValidator(request);
 	}
 
 	/**

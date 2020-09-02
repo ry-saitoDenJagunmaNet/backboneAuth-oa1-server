@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
 
 /**
  * OA11010 オペレーター＜一覧＞ 検索 Presenter
@@ -211,64 +211,64 @@ public class Oa11010SearchPresenter implements OperatorSearchResponse {
         return OperatorReferenceDtos.stream().skip(skip).limit(10).collect(Collectors.toList());
     }
 
-    /**
-     * 取引ロール定義Htmlを生成します。
-     *
-     * @param list          オペレーター取引ロールリスト
-     * @param operatorCode  オペレーターコード
-     * @param subSystemCode サブシステムコード
-     * @param isFirst       対象オペレーターで最初の定義（falseの時、空のオペレーター情報、サブシステムロール情報を表示）
-     * @return 取引ロール定義Html
-     */
-    private String genOperatorBizTranRoleHtml(List<Operator_BizTranRole> list,
-        String operatorCode,
-        String subSystemCode,
-        boolean isFirst) {
-
-        StringBuffer html = new StringBuffer();
-
-        if (list != null && list.size() > 0) {
-            boolean isFirstlocal = isFirst;
-            List<Operator_BizTranRole> tempList = newArrayList();
-            if ("".equals(subSystemCode)) {
-                tempList.addAll(list);
-            } else {
-                list.stream()
-                    .filter(obtr -> obtr.getBizTranRole().getSubSystemCode().equals(subSystemCode))
-                    .forEach(
-                        tempList::add);
-            }
-            for (Operator_BizTranRole obtr : tempList) {
-                if (!isFirstlocal) {
-                    html.append("</tr>");
-                    // オペレーター情報未設定
-                    html.append(genOperatorBlankHtml(operatorCode));
-                    // サブシステムロール未設定
-                    html.append(genOperatorSubSystemRoleBlankHtml());
-                }
-                // 取引ロール
-                html.append("<td class=\"oaex_operator_biztran_role_code\">")
-                    .append(obtr.getBizTranRole().getBizTranRoleCode())
-                    .append("</td>");
-                html.append("<td class=\"oaex_operator_biztran_role_name\">")
-                    .append(obtr.getBizTranRole().getBizTranRoleName())
-                    .append("</td>");
-                // 取引ロール有効期限
-                html.append("<td class=\"oaex_operator_biztran_role_expiration_date\">")
-                    .append(formatLocalDate(obtr.getExpirationStartDate()))
-                    .append("～")
-                    .append(formatLocalDate(obtr.getExpirationEndDate()))
-                    .append("</td>");
-                isFirstlocal = false;
-
-                // 表示した取引ロールを削除
-                list.remove(obtr);
-            }
-            ;
-        }
-
-        return html.toString();
-    }
+//    /**
+//     * 取引ロール定義Htmlを生成します。
+//     *
+//     * @param list          オペレーター取引ロールリスト
+//     * @param operatorCode  オペレーターコード
+//     * @param subSystemCode サブシステムコード
+//     * @param isFirst       対象オペレーターで最初の定義（falseの時、空のオペレーター情報、サブシステムロール情報を表示）
+//     * @return 取引ロール定義Html
+//     */
+//    private String genOperatorBizTranRoleHtml(List<Operator_BizTranRole> list,
+//        String operatorCode,
+//        String subSystemCode,
+//        boolean isFirst) {
+//
+//        StringBuffer html = new StringBuffer();
+//
+//        if (list != null && list.size() > 0) {
+//            boolean isFirstlocal = isFirst;
+//            List<Operator_BizTranRole> tempList = newArrayList();
+//            if ("".equals(subSystemCode)) {
+//                tempList.addAll(list);
+//            } else {
+//                list.stream()
+//                    .filter(obtr -> obtr.getBizTranRole().getSubSystemCode().equals(subSystemCode))
+//                    .forEach(
+//                        tempList::add);
+//            }
+//            for (Operator_BizTranRole obtr : tempList) {
+//                if (!isFirstlocal) {
+//                    html.append("</tr>");
+//                    // オペレーター情報未設定
+//                    html.append(genOperatorBlankHtml(operatorCode));
+//                    // サブシステムロール未設定
+//                    html.append(genOperatorSubSystemRoleBlankHtml());
+//                }
+//                // 取引ロール
+//                html.append("<td class=\"oaex_operator_biztran_role_code\">")
+//                    .append(obtr.getBizTranRole().getBizTranRoleCode())
+//                    .append("</td>");
+//                html.append("<td class=\"oaex_operator_biztran_role_name\">")
+//                    .append(obtr.getBizTranRole().getBizTranRoleName())
+//                    .append("</td>");
+//                // 取引ロール有効期限
+//                html.append("<td class=\"oaex_operator_biztran_role_expiration_date\">")
+//                    .append(formatLocalDate(obtr.getExpirationStartDate()))
+//                    .append("～")
+//                    .append(formatLocalDate(obtr.getExpirationEndDate()))
+//                    .append("</td>");
+//                isFirstlocal = false;
+//
+//                // 表示した取引ロールを削除
+//                list.remove(obtr);
+//            }
+//            ;
+//        }
+//
+//        return html.toString();
+//    }
 
     /**
      * オペレーターの未設定Htmlを生成します。

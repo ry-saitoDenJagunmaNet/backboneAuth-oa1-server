@@ -8,11 +8,12 @@ function oaex_th_onload() {
 
 	// 年月のフォーマット変更
 	let objDatepicker = document.getElementById("year_month");
-	let yeraMonth = objDatepicker.value;
+	//let yeraMonth = objDatepicker.value;
 	objDatepicker.M_Datepicker.options.format = "yyyy/mm";
 
 	// 年月初期値設定（systemdate）
-	let day = new Date(yeraMonth);
+	//let day = new Date(yeraMonth);
+	let day = new Date(document.getElementById("year_month_hidden").value);
 	day.setDate(1);
 	oa_setDatepickerValue("year_month", day);
 
@@ -35,7 +36,7 @@ function oaex_th_chegeMonth() {
 	// サーバにリクエスト（カレンダー検索）
 	window.location.href = "search" + param;
 
-//	document.forms[0].action = "/search";
+//	document.forms[0].action = "search";
 //	document.forms[0].method = "GET";
 //	document.forms[0].submit();
 }
@@ -44,14 +45,26 @@ function oaex_th_chegeMonth() {
  * 適用ボタンクリックイベントです。
  */
 function oaex_th_applyBtn_onClick() {
-	let xhr = oa_th_sendFormData("entry", document.forms[0]);
-	if (xhr == null) {return;}
+	document.forms[0].action = "store";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
 
-	oa_showAlert("適用しました。");
 
 
+//	let xhr = oa_th_sendFormData("store", document.forms[0]);
+//	if (xhr == null) {return;}
+//
 //	let result = JSON.parse(xhr.responseText);
-//	document.getElementById("calendar_table").innerHTML = result.calendarTable;
+//	if (result.message != null && result.message.length >0) {
+//		oa_showAlert(result.message);
+//		return;
+//	}
+//	oa_showAlert("適用しました。");
+//	return;
+//
+//
+////	let result = JSON.parse(xhr.responseText);
+////	document.getElementById("calendar_table").innerHTML = result.calendarTable;
 }
 
 

@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoR
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.role.bizTranRole.BizTranRole;
 
 /**
  * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
@@ -145,29 +145,29 @@ class Oa11010InitPresenter {
 //        subSystemRoleList = list;
 //    }
 
-    /**
-     * 取引ロールリストを取得します。
-     *
-     * @param bizTranRoles 取引ロールＤｔｏリスト
-     */
-    public void getBizTranRoleList(List<BizTranRole> bizTranRoles) {
-
-        List<Oa11010BizTranRoleVo> list = newArrayList();
-        for (BizTranRole bizTranRole : bizTranRoles) {
-            Oa11010BizTranRoleVo item = new Oa11010BizTranRoleVo();
-            item.setBizTranRoleSelected((short) 0);
-            item.setBizTranRoleId(0);
-            item.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
-            item.setBizTranRoleName(bizTranRole.getBizTranRoleName());
-            item.setSubSystemCode(bizTranRole.getSubSystemCode());
-            item.setExpirationSelect(0);
-            item.setExpirationStatusDate(null);
-            item.setExpirationStartDateFrom(null);
-            item.setExpirationStartDateTo(null);
-            item.setExpirationEndDateFrom(null);
-            item.setExpirationEndDateTo(null);
-            list.add(item);
-        }
-        bizTranRoleList = list;
-    }
+//    /**
+//     * 取引ロールリストを取得します。
+//     *
+//     * @param bizTranRoles 取引ロールＤｔｏリスト
+//     */
+//    public void getBizTranRoleList(List<BizTranRole> bizTranRoles) {
+//
+//        List<Oa11010BizTranRoleVo> list = newArrayList();
+//        for (BizTranRole bizTranRole : bizTranRoles) {
+//            Oa11010BizTranRoleVo item = new Oa11010BizTranRoleVo();
+//            item.setBizTranRoleSelected((short) 0);
+//            item.setBizTranRoleId(0);
+//            item.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
+//            item.setBizTranRoleName(bizTranRole.getBizTranRoleName());
+//            item.setSubSystemCode(bizTranRole.getSubSystemCode());
+//            item.setExpirationSelect(0);
+//            item.setExpirationStatusDate(null);
+//            item.setExpirationStartDateFrom(null);
+//            item.setExpirationStartDateTo(null);
+//            item.setExpirationEndDateFrom(null);
+//            item.setExpirationEndDateTo(null);
+//            list.add(item);
+//        }
+//        bizTranRoleList = list;
+//    }
 }

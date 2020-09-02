@@ -6,8 +6,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_BizTranRole.Operator_BizTranRole;
+//import net.jagunma.backbone.auth.authmanager.model.domain.roleAssignment.operator_SubSystemRole.Operator_SubSystemRole;
 
 /**
  * オペレーター参照Ｄｔｏ
@@ -49,9 +49,9 @@ public class OperatorReferenceDto {
 		this.signInResult = null;
 		this.signOutTraceId = null;
 //		this.operatorSubSystemRoleReferenceDtoList = newArrayList();
-		this.operatorSubSystemRoleList= newArrayList();
+//		this.operatorSubSystemRoleList= newArrayList();
 //		this.operatorBizTranRoleReferenceDtoList = newArrayList();
-		this.operatorBizTranRoleList = newArrayList();
+//		this.operatorBizTranRoleList = newArrayList();
 	}
 
 	/**
@@ -191,14 +191,14 @@ public class OperatorReferenceDto {
 	 */
 	private String signOutIpAddress;
 
-	/**
-	 * オペレーターサブシステムロール割当リスト
-	 */
-	private List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
-	/**
-	 * オペレーター取引ロール割当リスト
-	 */
-	private List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
+//	/**
+//	 * オペレーターサブシステムロール割当リスト
+//	 */
+//	private List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
+//	/**
+//	 * オペレーター取引ロール割当リスト
+//	 */
+//	private List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
 
 	public long getOperatorId() { return operatorId; }
 	public void setOperatorId(long operatorId) { this.operatorId = operatorId; }
@@ -269,10 +269,10 @@ public class OperatorReferenceDto {
 	public String getSignOutIpAddress() { return signOutIpAddress; }
 	public void setSignOutIpAddress(String signOutIpAddress) { this.signOutIpAddress = signOutIpAddress; }
 
-	public List<Operator_SubSystemRole> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
-	public void setOperatorSubSystemRoleList(List<Operator_SubSystemRole> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
-	public List<Operator_BizTranRole> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
-	public void setOperatorBizTranRoleList(List<Operator_BizTranRole> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
+//	public List<Operator_SubSystemRole> getOperatorSubSystemRoleList() { return operatorSubSystemRoleList; }
+//	public void setOperatorSubSystemRoleList(List<Operator_SubSystemRole> operatorSubSystemRoleList) { this.operatorSubSystemRoleList = operatorSubSystemRoleList; }
+//	public List<Operator_BizTranRole> getOperatorBizTranRoleList() { return operatorBizTranRoleList; }
+//	public void setOperatorBizTranRoleList(List<Operator_BizTranRole> operatorBizTranRoleList) { this.operatorBizTranRoleList = operatorBizTranRoleList; }
 
 	/**
 	 * 有効期限開始日をフォーマットして取得します。

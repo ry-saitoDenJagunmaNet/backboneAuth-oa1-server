@@ -41,9 +41,9 @@
 						<a class="btn-small waves-effect waves-light" href="javascript:oaex_lastMonthBtn_onClick();">◀</a>
 					</div>
 					<div class="input-field oaex_inline">
-						<input type="text" id="year_month" name="yearMonthToString" class="validate datepicker" onchange="oaex_year_month_onChange()"
-							th:value="${form.yearMonth}"></input>
+						<input type="text" id="year_month" name="yearMonthToString" class="validate datepicker" onchange="oaex_year_month_onChange()"></input>
 						<label for="year_month"></label>
+						<input type="hidden" id="year_month_hidden" th:value="${form.yearMonth}"/>
 					</div>
 					<div class="input-field oaex_inline">
 						<a class="btn-small waves-effect waves-light" href="javascript:oaex_nextMonthBtn_onClick();">▶</a>
