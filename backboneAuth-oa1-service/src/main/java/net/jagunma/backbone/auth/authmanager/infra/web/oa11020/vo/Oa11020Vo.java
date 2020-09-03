@@ -17,17 +17,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
      */
     private String ja;
     /**
-     * ＪＡID
+     * 店舗ID
      */
-    private long jaId;
-    /**
-     * 店舗
-     */
-    private String tempoCode;
-    /**
-     * 店舗コンボボックスリスト
-     */
-    private List<TempoReferenceDto> tempoList;
+    private Long tempoId;
     /**
      * 識別（オペレーターコードプレフィックス）
      */
@@ -57,91 +49,83 @@ public class Oa11020Vo extends BaseOfResponseVo {
      */
     private String changeCause;
 
+    /**
+     * 店舗コンボボックスリスト
+     */
+    private List<TempoReferenceDto> tempoList;
+
+    /**
+     * パスワード
+     */
+    private String password;
+
+    // Getter
     public String getJa() {
         return ja;
     }
-
-    public void setJa(String ja) {
-        this.ja = ja;
+    public Long getTempoId() {
+        return tempoId;
     }
-
-    public long getJaId() {
-        return jaId;
-    }
-
-    public void setJaId(long jaId) {
-        this.jaId = jaId;
-    }
-
-    public String getTempoCode() {
-        return tempoCode;
-    }
-
-    public void setTempoCode(String tempoCode) {
-        this.tempoCode = tempoCode;
-    }
-
     public List<TempoReferenceDto> getTempoList() {
         return tempoList;
     }
-
-    public void setTempoList(List<TempoReferenceDto> tempoList) {
-        this.tempoList = tempoList;
-    }
-
     public String getOperatorCodePrefix() {
         return operatorCodePrefix;
     }
-
-    public void setOperatorCodePrefix(String operatorCodePrefix) {
-        this.operatorCodePrefix = operatorCodePrefix;
-    }
-
     public String getOperatorCode6() {
         return operatorCode6;
     }
-
-    public void setOperatorCode6(String operatorCode6) {
-        this.operatorCode6 = operatorCode6;
-    }
-
     public String getOperatorName() {
         return operatorName;
     }
-
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
-    }
-
     public String getMailAddress() {
         return mailAddress;
     }
-
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
-    }
-
     public LocalDate getExpirationStartDate() {
         return expirationStartDate;
     }
-
-    public void setExpirationStartDate(LocalDate expirationStartDate) {
-        this.expirationStartDate = expirationStartDate;
-    }
-
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
     }
-
-    public void setExpirationEndDate(LocalDate expirationEndDate) {
-        this.expirationEndDate = expirationEndDate;
-    }
-
     public String getChangeCause() {
         return changeCause;
     }
+    public String getPassword() {
+        return password;
+    }
 
+    // Setter
+    public void setJa(String ja) {
+        this.ja = ja;
+    }
+    public void setTempoId(Long tempoId) {
+        this.tempoId = tempoId;
+    }
+    public void setTempoList(List<TempoReferenceDto> tempoList) {
+        this.tempoList = tempoList;
+    }
+    public void setOperatorCodePrefix(String operatorCodePrefix) {
+        this.operatorCodePrefix = operatorCodePrefix;
+    }
+    public void setOperatorCode6(String operatorCode6) {
+        this.operatorCode6 = operatorCode6;
+    }
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
+    }
+    public void setMailAddress(String mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+    public void setExpirationStartDate(LocalDate expirationStartDate) {
+        this.expirationStartDate = expirationStartDate;
+    }
+    public void setExpirationEndDate(LocalDate expirationEndDate) {
+        this.expirationEndDate = expirationEndDate;
+    }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

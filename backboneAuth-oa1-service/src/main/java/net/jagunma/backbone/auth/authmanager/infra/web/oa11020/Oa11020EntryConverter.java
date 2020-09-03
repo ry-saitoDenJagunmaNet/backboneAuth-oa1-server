@@ -1,12 +1,12 @@
-package net.jagunma.backbone.auth.authmanager.application.service.oa11020;
+package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 
 /**
- * OA11020 オペレーター登録 登録サービス Converter
+ * OA11020 オペレーター登録サービス Request Converter
  */
 class Oa11020EntryConverter implements OperatorEntryRequest {
 
@@ -91,62 +91,41 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
 //	 * 機器認証のＧｅｔ
 //	 * @return 機器認証
 //	 */
-//	public boolean getIsDeviceAuth() { return arg.get.getIsDeviceAuth(); }
+//	public boolean getIsDeviceAuth() { return vo.getIsDeviceAuth(); }
 //	/**
 //	 * ＪＡIDのＧｅｔ
 //	 * @return ＪＡID
 //	 */
-//	public long getJaId() {return arg.getJaId(); }
+//	public long getJaId() {return vo.getJaId(); }
 //	/**
 //	 * JAコードのＧｅｔ
 //	 * @return ＪＡコード
 //	 */
-//	public String getJaCode() {return arg.getjaCode(); }
-//	/**
-//	 * 店舗IDのＧｅｔ
-//	 * @return 店舗ID
-//	 */
-//	public long getTempoId() {return arg.getTempoId(); }
-
+//	public String getJaCode() {return vo.getJaCode(); }
+	/**
+	 * 店舗IDのＧｅｔ
+	 * @return 店舗ID
+	 */
+	public Long getTempoId() {return vo.getTempoId(); }
+//    /**
+//     * 店舗コードのＧｅｔ
+//     *
+//     * @return 店舗コード
+//     */
+//    public String getTempoCode() {
+//        return vo.getTempoCode();
+//    }
+//
     /**
-     * 店舗コードのＧｅｔ
-     *
-     * @return 店舗コード
+     * 変更事由のＧｅｔ
+     * @return 変更事由
      */
-    public String getTempoCode() {
-        return vo.getTempoCode();
+    public String getChangeCause() {
+        return vo.getChangeCause();
     }
-//	/**
-//	 * パスワードのＧｅｔ
-//	 * @return パスワード
-//	 */
-//	public String getPassword() {return arg.getPassword(); }
-
-    /**
-     * オペレータの検索条件生成
-     *
-     * @return オペレータの検索条件
-     */
-    public OperatorEntityCriteria genOperatorEntityCriteria(OperatorEntryRequest request) {
-        OperatorEntityCriteria criteria = new OperatorEntityCriteria();
-
-        // オペレーターコード
-        if (!isNullOrEmpty(vo.getOperatorCode6())) {
-            criteria.getOperatorCodeCriteria().setEqualTo(vo.getOperatorCode6());
-        }
-
-        return criteria;
-    }
-
-    private boolean isNullOrEmpty(String str) {
-        // strがnullもしくは空文字であればtrueを返す
-        return (str == null || str.length() == 0);
-    }
-
-    private Integer nvl(Integer val, Integer changeVal) {
-        if (val == null) {
-            return changeVal;
-        }
-        return val;
-    }
+	/**
+	 * パスワードのＧｅｔ
+	 * @return パスワード
+	 */
+	public String getPassword() {return vo.getPassword(); }
 }

@@ -1,17 +1,13 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
 /**
- * オペレーター 登録サービス Request
+ * オペレーター登録サービス Request
  */
 public interface OperatorEntryRequest {
-//	/**
-//	 * オペレーターIDのＧｅｔ
-//	 * @return オペレーターID
-//	 */
-//	long getOperatorId();
 	/**
 	 * 識別（オペレーターコードプレフィックス）のＧｅｔ
 	 * @return 識別（オペレーターコードプレフィックス）
@@ -62,25 +58,24 @@ public interface OperatorEntryRequest {
 //	 * @return ＪＡコード
 //	 */
 //	String getJaCode();
-//	/**
-//	 * 店舗IDのＧｅｔ
-//	 * @return 店舗ID
-//	 */
-//	long getTempoId();
 	/**
-	 * 店舗コードのＧｅｔ
-	 * @return 店舗コード
+	 * 店舗IDのＧｅｔ
+	 * @return 店舗ID
 	 */
-	String getTempoCode();
+	Long getTempoId();
 //	/**
-//	 * パスワードのＧｅｔ
-//	 * @return パスワード
+//	 * 店舗コードのＧｅｔ
+//	 * @return 店舗コード
 //	 */
-//	String getPassword();
-
+//	String getTempoCode();
 	/**
-	 * オペレータの検索条件生成
-	 * @return オペレータの検索条件
+	 * 変更事由のＧｅｔ
+	 * @return 変更事由
 	 */
-	OperatorEntityCriteria genOperatorEntityCriteria(OperatorEntryRequest request);
+	String getChangeCause();
+	/**
+	 * パスワードのＧｅｔ
+	 * @return パスワード
+	 */
+	String getPassword();
 }
