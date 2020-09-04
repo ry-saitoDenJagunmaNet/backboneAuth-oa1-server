@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.calendar;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.util.Base64;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
@@ -9,8 +10,15 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
+import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
+import net.jagunma.common.ddd.model.criterias.DateCriteria;
+import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
+import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.util.DateTypeUtils;
+import net.jagunma.common.util.beans.Beans;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +44,13 @@ public class CalendarsDataSource implements CalendarsRepository {
 	 */
 	@Override
 	public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
-		List<CalendarEntity> list = calendarEntityDao.findBy(calendarCriteria, orders);
+
+		CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
+		entityCriteria.getDateCriteria().setFrom(calendarCriteria.getDateCriteria().getFrom());
+		entityCriteria.getDateCriteria().setTo(calendarCriteria.getDateCriteria().getTo());
+		entityCriteria.getDateCriteria().setEqualTo(calendarCriteria.getDateCriteria().getEqualTo());
+
+		List<CalendarEntity> list = calendarEntityDao.findBy(entityCriteria, orders);
 		return createCalendars(list);
 	}
 

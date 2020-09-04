@@ -5,14 +5,14 @@ import java.time.format.DateTimeFormatter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 
 /**
- * OA12060 カレンダーメンテナンス 画面初期表示 Presenter
+ * OA12060 初期表示 Presenter
  */
 class Oa12060InitPresenter {
 
 	/**
 	 * responseに変換
 	 *
-	 * @param vo カレンダーメンテナンスView Object
+	 * @param vo ViewObject
 	 */
 	public void bindTo(Oa12060Vo vo) {
 		LocalDate ld = LocalDate.now();

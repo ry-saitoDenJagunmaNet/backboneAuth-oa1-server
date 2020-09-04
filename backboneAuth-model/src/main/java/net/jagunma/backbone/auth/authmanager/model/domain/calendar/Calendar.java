@@ -35,6 +35,7 @@ public class Calendar {
 		this.isRelease = isRelease;
 		this.recordVersion = recordVersion;
 	}
+
 	// ファクトリーメソッド
 	public static Calendar createFrom(
 		Long calendarId,
@@ -54,8 +55,10 @@ public class Calendar {
 			isRelease,
 			recordVersion);
 	}
+
 	// 空生成メソッド
 	public static Calendar empty() { return new Calendar(); }
+
 	// 空判定メソッド
 	public boolean isEmpty() {
 		return calendarId == null &&
@@ -66,6 +69,7 @@ public class Calendar {
 			isRelease == null &&
 			recordVersion == null;
 	}
+
 	// Getter
 	public Long getCalendarId() { return calendarId; }
 	public CalendarType getCalendarType() { return calendarType; }

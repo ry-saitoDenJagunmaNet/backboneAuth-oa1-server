@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
 
 /**
- * カレンダー登録
+ * カレンダー更新
  */
 public interface CalendarRepositoryForStore {
 	/**

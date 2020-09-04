@@ -11,6 +11,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
 
+/**
+ * OA12060 検索 Presenter
+ */
 class Oa12060SearchPresenter implements CalendarSearchResponse {
 
 	private LocalDate yearMonth;
@@ -18,11 +21,13 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 
 	/**
 	 * 年月のＳｅｔ
+	 *
 	 * @param yearMonth 年月
 	 */
 	public void setYearMonth(LocalDate yearMonth) { this.yearMonth = yearMonth; }
 	/**
 	 * カレンダー群のＳｅｔ
+	 *
 	 * @param calendars カレンダー群
 	 */
 	public void setCalendars(Calendars calendars) { this.calendars = calendars; }
@@ -30,16 +35,16 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 	/**
 	 * responseに変換
 	 *
-	 * @param searchResponseVo カレンダーテーブル検索結果
-	 * @param oa12060Vo カレンダーメンテナンスView Object
+	 * @param vo ViewObject
 	 */
-	public void bindTo(Oa12060SearchResponseVo searchResponseVo, Oa12060Vo oa12060Vo) {
+	public void bindTo(Oa12060Vo vo) {
 
 		// 表示対象フィルターチェックdisabledの判定
 		boolean calendarTypeFilterCheck1disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Economy);
 		boolean calendarTypeFilterCheck2disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Credit);
 		boolean calendarTypeFilterCheck3disabled = isCalendarTypeFilterCheckDisabled(CalendarType.WideAreaLogistics);
 
+		Oa12060SearchResponseVo searchResponseVo = new Oa12060SearchResponseVo();
 		// 表示対象経済選択無効
 		searchResponseVo.setCalendarTypeFilterCheck1disabled(calendarTypeFilterCheck1disabled);
 		// 表示対象信用選択無効
@@ -47,17 +52,17 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 		// 表示対象広域物流選択無効
 		searchResponseVo.setCalendarTypeFilterCheck3disabled(calendarTypeFilterCheck3disabled);
 		if (calendarTypeFilterCheck1disabled && calendarTypeFilterCheck2disabled && calendarTypeFilterCheck3disabled) {
-			oa12060Vo.setMessage("対象のカレンダーが登録されていません。");
+			vo.setMessage("対象のカレンダーが登録されていません。");
 		}
 
 		// カレンターテーブルHtmlを生成
 		searchResponseVo.setCalendarTable(genCalendarTableHtml());
 
-		oa12060Vo.setSearchResponse(searchResponseVo);
+		vo.setSearchResponse(searchResponseVo);
 		// 表示対象フィルターチェックの設定
-		oa12060Vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1disabled ? (short)0 : (short)1);
-		oa12060Vo.setCalendarTypeFilterCheck2(calendarTypeFilterCheck2disabled? (short)0 : (short)1);
-		oa12060Vo.setCalendarTypeFilterCheck3(calendarTypeFilterCheck3disabled? (short)0 : (short)1);
+		vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1disabled ? (short)0 : (short)1);
+		vo.setCalendarTypeFilterCheck2(calendarTypeFilterCheck2disabled? (short)0 : (short)1);
+		vo.setCalendarTypeFilterCheck3(calendarTypeFilterCheck3disabled? (short)0 : (short)1);
 	}
 
 	/**

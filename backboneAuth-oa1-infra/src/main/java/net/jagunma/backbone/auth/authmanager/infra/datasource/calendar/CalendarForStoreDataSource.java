@@ -20,23 +20,13 @@ public class CalendarForStoreDataSource implements CalendarRepositoryForStore {
 	}
 
 	/**
-	 * カレンダー更新を行います。
+	 * カレンダーを更新します。
 	 *
 	 * @param calendar カレンダー
 	 */
 	@Override
 	public Calendar update(Calendar calendar) {
-		calendarEntityDao.updateExcludeNull(createEntity(calendar));
-		return calendar;
-	}
 
-	/**
-	 * カレンダー情報を作成します。
-	 *
-	 * @param calendar カレンダー
-	 * @return カレンダー情報
-	 */
-	private CalendarEntity createEntity(Calendar calendar) {
 		CalendarEntity entity = new CalendarEntity();
 		entity.setCalendarId(calendar.getCalendarId());
 		entity.setCalendarType(calendar.getCalendarType().getCode());
@@ -45,6 +35,9 @@ public class CalendarForStoreDataSource implements CalendarRepositoryForStore {
 		entity.setIsManualChange(calendar.getIsManualChange());
 		entity.setIsRelease(calendar.getIsRelease());
 		entity.setRecordVersion(calendar.getRecordVersion());
-		return entity;
+
+		calendarEntityDao.updateExcludeNull(entity);
+
+		return calendar;
 	}
 }

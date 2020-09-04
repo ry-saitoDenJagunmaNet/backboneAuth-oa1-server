@@ -1,10 +1,11 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
+import java.util.List;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.Oa12060StoreDetailsConverter;
 
 /**
- * カレンダー 登録サービス Request
+ * カレンダーメンテナンス反映サービス Request
  */
 public interface CalendarStoreRequest {
 	/**
@@ -13,8 +14,8 @@ public interface CalendarStoreRequest {
 	 */
 	LocalDate getYearMonth();
 	/**
-	 * カレンダー群のＧｅｔ
-	 * @return カレンダー群
+	 * カレンダーリストを作成します。
+	 * @return カレンダーリスト
 	 */
-	Calendars getCalendars();
+	List<Oa12060StoreDetailsConverter> createCalendarList();
 }
