@@ -49,7 +49,7 @@ public class BaseOfResponseVo implements Serializable {
      * @param gre GunmaRuntimeException
      */
     public void setExceptionMessage(GunmaRuntimeException gre) {
-        errorMessage = gre.getMessage();
+        message = gre.getMessage();
     }
 
     /**

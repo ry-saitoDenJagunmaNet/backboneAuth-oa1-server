@@ -82,7 +82,7 @@ public class Oa12060Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
@@ -129,7 +129,7 @@ public class Oa12060Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
@@ -181,7 +181,7 @@ public class Oa12060Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
