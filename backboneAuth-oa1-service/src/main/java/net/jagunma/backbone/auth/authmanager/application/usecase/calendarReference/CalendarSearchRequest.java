@@ -1,11 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
-
 
 /**
- * カレンダー参照サービス Request
+ * カレンダーメンテナンス検索サービス Request
  */
 public interface CalendarSearchRequest {
 	/**

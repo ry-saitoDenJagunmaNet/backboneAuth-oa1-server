@@ -11,11 +11,4 @@ public interface CalendarRepository {
 	 * @return カレンダー
 	 */
 	Calendar findOneBy(CalendarCriteria calendarCriteria);
-	/**
-	 * カレンダーのカレンダーIDによる検索を行います。
-	 *
-	 * @param calendarId カレンダーID
-	 * @return カレンダー
-	 */
-	Calendar findOneById(Long  calendarId);
 }

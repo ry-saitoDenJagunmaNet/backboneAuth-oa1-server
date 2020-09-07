@@ -9,12 +9,13 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
+import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Component;
 
 /**
- * カレンダー検索 DataSource
+ * カレンダー検索
  */
 @Component
 public class CalendarsDataSource implements CalendarsRepository {
@@ -36,7 +37,13 @@ public class CalendarsDataSource implements CalendarsRepository {
 	 */
 	@Override
 	public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
-		List<CalendarEntity> list = calendarEntityDao.findBy(calendarCriteria, orders);
+
+		CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
+		entityCriteria.getDateCriteria().setFrom(calendarCriteria.getDateCriteria().getFrom());
+		entityCriteria.getDateCriteria().setTo(calendarCriteria.getDateCriteria().getTo());
+		entityCriteria.getDateCriteria().setEqualTo(calendarCriteria.getDateCriteria().getEqualTo());
+
+		List<CalendarEntity> list = calendarEntityDao.findBy(entityCriteria, orders);
 		return createCalendars(list);
 	}
 

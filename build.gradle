@@ -154,6 +154,7 @@ subprojects {
         implementation("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
         implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
         implementation("org.springframework.boot:spring-boot-starter-aop")
+        implementation "org.slf4j:slf4j-api:${sf4jApiVersion}"
         testImplementation('org.springframework.boot:spring-boot-starter-test')
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
         testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"

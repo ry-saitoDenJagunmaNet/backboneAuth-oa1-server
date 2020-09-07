@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 
 /**
- * カレンダー参照サービス Response
+ * カレンダーメンテナンス検索サービス Response
  */
 public interface CalendarSearchResponse {
 	/**

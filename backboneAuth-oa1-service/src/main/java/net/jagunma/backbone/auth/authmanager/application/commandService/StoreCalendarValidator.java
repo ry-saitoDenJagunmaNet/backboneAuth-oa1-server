@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
 
 /**
- * カレンダー コマンドサービス Validator
+ * カレンダー適用サービス Validator
  */
 class StoreCalendarValidator {
 	private CalendarStoreRequest request;

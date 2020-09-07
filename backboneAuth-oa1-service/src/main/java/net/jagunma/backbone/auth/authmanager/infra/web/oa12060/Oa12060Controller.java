@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 import net.jagunma.backbone.auth.authmanager.application.commandService.StoreCalendar;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchCalendar;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
@@ -83,7 +82,7 @@ public class Oa12060Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
@@ -94,6 +93,7 @@ public class Oa12060Controller extends BaseOfController {
 
     /**
      * カレンダー検索処理を行います。
+     *
      * @param model モデル
      * @param ym 年月
      * @param ct1 表示対象経済システム稼働
@@ -112,8 +112,6 @@ public class Oa12060Controller extends BaseOfController {
         String wh) {
 
         Oa12060Vo vo = new Oa12060Vo();
-        Oa12060SearchResponseVo responseVo = new Oa12060SearchResponseVo();
-
         try {
             // リクエストパラーメータの設定
             vo.createFrom(ym, Short.parseShort(ct1), Short.parseShort(ct2), Short.parseShort(ct3), wh);
@@ -124,14 +122,14 @@ public class Oa12060Controller extends BaseOfController {
             // カレンダー検索
             searchCalendar.execute(converter, presenter);
 
-            presenter.bindTo(responseVo, vo);
+            presenter.bindTo(vo);
             model.addAttribute("form", vo);
             return "oa12060";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
@@ -144,7 +142,7 @@ public class Oa12060Controller extends BaseOfController {
      * カレンダー適用処理を行います。
      *
      * @param model モデル
-     * @param vo カレンダー稼働日登録（form json）
+     * @param vo ViewObject
      * @return view名
      */
     @RequestMapping(value = "/store", method = RequestMethod.POST)
@@ -183,7 +181,7 @@ public class Oa12060Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa12060";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);

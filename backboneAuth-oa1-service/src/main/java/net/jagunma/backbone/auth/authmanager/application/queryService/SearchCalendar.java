@@ -22,7 +22,7 @@ public class SearchCalendar {
 	/**
 	 * カレンダー群を検索します。
 	 *
-	 * @param request 条件
+	 * @param request カレンダーメンテナンス検索サービス Request
 	 * @param response 検索結果
 	 */
 	public void execute(CalendarSearchRequest request, CalendarSearchResponse response) {
@@ -31,16 +31,17 @@ public class SearchCalendar {
 		SearchCalendarValidator.with(request).validate();
 
 		// カレンダー検索
-		response.setCalendars(calendarsRepository.selectBy(genCriteria(request)));
+		response.setCalendars(calendarsRepository.selectBy(createCriteria(request)));
 		response.setYearMonth(request.getYearMonth());
 	}
 
 	/**
-	 * カレンダーの検索条件を生成します。
+	 * カレンダーの検索条件を作成します。
 	 *
+	 * @param request カレンダーメンテナンス検索サービス Request
 	 * @return カレンダー検索条件
 	 */
-	private CalendarCriteria genCriteria(CalendarSearchRequest request) {
+	private CalendarCriteria createCriteria(CalendarSearchRequest request) {
 
 		CalendarCriteria criteria = new CalendarCriteria();
 
