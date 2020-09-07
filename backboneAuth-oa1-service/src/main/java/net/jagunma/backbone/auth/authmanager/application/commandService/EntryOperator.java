@@ -45,8 +45,8 @@ public class EntryOperator {
 	 * オペレーターエントリーパックの生成を行います。
 	 *
 	 * @param request オペレーター登録サービス Request
-	 * @param JaAtMoment JaAtMoment
-	 * @param TempoAtMoment TempoAtMoment
+	 * @param jaAtMoment JaAtMoment
+	 * @param tempoAtMoment TempoAtMoment
 	 * @return オペレーターエントリーパック
 	 */
 	private OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request) {
@@ -58,11 +58,12 @@ public class EntryOperator {
 			request.getMailAddress(),
 			request.getExpirationStartDate(),
 			request.getExpirationEndDate(),
-			null,
-			null,
+			6l,
+			"006",
 			request.getTempoId(),
-			null,
+			"001",
 			request.getChangeCause(),
-			request.getPassword());
+			request.getPassword(),
+			request.getConfirmPassword());
 	}
 }

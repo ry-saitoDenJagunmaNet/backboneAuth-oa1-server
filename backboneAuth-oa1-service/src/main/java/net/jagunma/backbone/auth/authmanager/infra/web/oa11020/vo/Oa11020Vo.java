@@ -58,6 +58,10 @@ public class Oa11020Vo extends BaseOfResponseVo {
      * パスワード
      */
     private String password;
+    /**
+     * パスワードの確認入力
+     */
+    private String confirmPassword;
 
     // Getter
     public String getJa() {
@@ -93,6 +97,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public String getPassword() {
         return password;
     }
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
 
     // Setter
     public void setJa(String ja) {
@@ -127,5 +134,8 @@ public class Oa11020Vo extends BaseOfResponseVo {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

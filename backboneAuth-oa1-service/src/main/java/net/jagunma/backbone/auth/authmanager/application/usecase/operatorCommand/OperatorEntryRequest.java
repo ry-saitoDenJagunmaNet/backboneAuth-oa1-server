@@ -1,8 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 
 /**
  * オペレーター登録サービス Request
@@ -78,4 +76,9 @@ public interface OperatorEntryRequest {
 	 * @return パスワード
 	 */
 	String getPassword();
+	/**
+	 * パスワードの確認入力のＧｅｔ
+	 * @return パスワードの確認入力
+	 */
+	String getConfirmPassword();
 }

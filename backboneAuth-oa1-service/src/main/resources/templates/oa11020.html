@@ -38,19 +38,19 @@
 						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
-					<input type="hidden" name="jaId" th:value="${form.jaId}">
+<!--					<input type="hidden" name="jaId" th:value="${form.jaId}">-->
 				</div>
 			</div>
 			<!-- 店舗 -->
 			<div class="row oa_required">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" name="tempoCode" class="validate"
-								th:value="${form.tempoCode}">
+						<select id="tempo" name="tempoId" class="validate"
+								th:value="${form.tempoId}">
 							<option th:each="item  : ${form.tempoList}"
 									th:value="${item.tempoCode}"
 									th:text="${item.tempoName}"
-									th:selected="${form.tempoCode == item.tempoCode}"></option>
+									th:selected="${form.tempoId == item.tempoCode}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -74,7 +74,7 @@
 				<!-- オペレーターコード（下6桁） -->		
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="operater_code" name="operatorCode" class="validate" th:value="${form.operatorCode}"></input>
+						<input type="text" id="operater_code" name="operatorCode6" class="validate" th:value="${form.operatorCode6}"></input>
 						<label for="operater_code">オペレーターコード（下6桁）</label>
 					</div>
 				</div>

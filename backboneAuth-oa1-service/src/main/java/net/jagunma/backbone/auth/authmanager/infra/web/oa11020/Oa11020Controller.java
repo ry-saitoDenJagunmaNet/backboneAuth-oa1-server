@@ -75,7 +75,8 @@ public class Oa11020Controller extends BaseOfController {
             Oa11020InitPresenter presenter = new Oa11020InitPresenter();
 
             presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
-            presenter.setJaName("JA前橋");    // Todo: JA名の取得
+            presenter.setJaName("JA前橋");            // ToDo: JA名の取得
+            presenter.setOperatorCodePrefix("yu");   // ToDo: 識別（オペレーターコードプレフィックス）の保持の仕方
             presenter.setTempoList(tempoReferenceService.getComboBoxList(AuditInfoHolder.getJa().getIdentifier()));
 
             presenter.bindTo(vo);
@@ -104,7 +105,9 @@ public class Oa11020Controller extends BaseOfController {
      */
     @RequestMapping(value = "/entry", method = RequestMethod.POST)
     public String entry(Model model, Oa11020Vo vo) {
-
+        // Todo:
+        vo.setPassword("abc");
+        vo.setConfirmPassword("abc");
         try {
             Oa11020EntryConverter converter = Oa11020EntryConverter.with(vo);
 
@@ -117,7 +120,7 @@ public class Oa11020Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa19999";//ToDo: oa11020
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);

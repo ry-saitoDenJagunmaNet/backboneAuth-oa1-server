@@ -18,6 +18,7 @@ public class OperatorEntryPack {
 	private String tempoCode;
 	private String changeCause;
 	private String password;
+	private String confirmPassword;
 
 	// コンストラクタ
 	OperatorEntryPack() {
@@ -33,7 +34,8 @@ public class OperatorEntryPack {
 		Long tempoId,
 		String tempoCode,
 		String changeCause,
-		String password) {
+		String password,
+		String confirmPassword) {
 
 		this.operatorCode = operatorCode;
 		this.operatorName = operatorName;
@@ -46,6 +48,7 @@ public class OperatorEntryPack {
 		this.tempoCode = tempoCode;
 		this.changeCause = changeCause;
 		this.password = password;
+		this.confirmPassword = confirmPassword;
 	}
 	// ファクトリーメソッド
 	public static OperatorEntryPack createFrom(
@@ -59,7 +62,8 @@ public class OperatorEntryPack {
 		Long tempoId,
 		String tempoCode,
 		String changeCause,
-		String password) {
+		String password,
+		String confirmPassword) {
 
 		return new OperatorEntryPack(
 			operatorCode,
@@ -72,7 +76,8 @@ public class OperatorEntryPack {
 			tempoId,
 			tempoCode,
 			changeCause,
-			password);
+			password,
+			confirmPassword);
 	}
 	// 空生成メソッド
 	public static OperatorEntryPack empty() {
@@ -90,7 +95,8 @@ public class OperatorEntryPack {
 			tempoId == null &&
 			tempoCode == null &&
 			changeCause == null &&
-			password == null;
+			password == null &&
+			confirmPassword == null;
 	}
 	// Getter
 	public String getOperatorCode() {
@@ -125,5 +131,8 @@ public class OperatorEntryPack {
 	}
 	public String getPassword() {
 		return password;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 }

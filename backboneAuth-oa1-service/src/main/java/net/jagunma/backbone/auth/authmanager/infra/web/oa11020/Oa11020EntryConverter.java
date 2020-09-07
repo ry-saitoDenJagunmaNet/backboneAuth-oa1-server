@@ -128,4 +128,9 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
 	 * @return パスワード
 	 */
 	public String getPassword() {return vo.getPassword(); }
+    /**
+     * パスワードの確認入力のＧｅｔ
+     * @return パスワードの確認入力
+     */
+    public String getConfirmPassword() {return vo.getConfirmPassword(); }
 }

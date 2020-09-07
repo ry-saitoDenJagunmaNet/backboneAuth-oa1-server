@@ -14,7 +14,7 @@ import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistory
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityDao;
 import net.jagunma.common.util.beans.Beans;
-import net.jagunma.common.values.model.operator.OperatorCriteria;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,8 +49,8 @@ public class OperatorEntryPackForStoreDataSource implements
 	 */
 	public void insert(OperatorEntryPack operatorEntryPack) {
 
-		// オペレーター（コード）の重複チェック
-		if (isDuplicate(operatorEntryPack.getOperatorCode())) { return; }
+		// オペレーター（コード）がすでに存在しているかのチェックを行います
+		checkAlreadyExists(operatorEntryPack.getOperatorCode());
 
 		// オペレーターをインサートします
 		OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
@@ -66,19 +66,18 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * オペレーター（コード）の重複チェックを行います。
+	 * オペレーター（コード）がすでに存在しているかのチェックを行います。
 	 *
 	 * @param operatorCode オペレーターコード
-	 * @return true: 重複あり / false: 重複なし
 	 */
-	private boolean isDuplicate(String operatorCode) {
+	private void checkAlreadyExists(String operatorCode) {
 		OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
 
 		operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
 
-		int cnt = operatorEntityDao.countBy(operatorEntityCriteria);
-
-		return cnt != 0;
+		if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
+			throw new GunmaRuntimeException("EOA11001", "オペレーターコード");
+		}
 	}
 
 	/**
