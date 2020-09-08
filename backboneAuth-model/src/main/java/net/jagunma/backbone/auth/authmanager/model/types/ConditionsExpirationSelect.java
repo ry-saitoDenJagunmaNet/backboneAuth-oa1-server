@@ -4,9 +4,9 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * 有効期限検索条件選択の列挙型
  */
 public enum ConditionsExpirationSelect {
-	None(0, "指定なし"),
-	StateSpecifiedDate(1, "状態指定日"),
-	ConditionSpecification(2, "条件指定"),
+	指定なし(0, "指定なし"),
+	状態指定日(1, "状態指定日"),
+	条件指定(2, "条件指定"),
 	UnKnown(-1, "未定義");
 
 	private final int code;

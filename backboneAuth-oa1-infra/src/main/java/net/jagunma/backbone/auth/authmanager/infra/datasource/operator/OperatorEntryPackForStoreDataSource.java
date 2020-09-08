@@ -99,7 +99,7 @@ public class OperatorEntryPackForStoreDataSource implements
 		operatorEntity.setJaCode(operatorEntryPack.getJaCode());
 		operatorEntity.setTempoId(operatorEntryPack.getTempoId());
 		operatorEntity.setTempoCode(operatorEntryPack.getTempoCode());
-		operatorEntity.setAvailableStatus(AvailableStatus.Available.getCode());
+		operatorEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
 
 		operatorEntityDao.insert(operatorEntity);
 
@@ -152,7 +152,7 @@ public class OperatorEntryPackForStoreDataSource implements
 		passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
 		passwordHistoryEntity.setChangeDateTime(operatorEntity.getCreatedAt());
 		passwordHistoryEntity.setPassword(operatorEntryPack.getPassword());
-		passwordHistoryEntity.setChangeType(PasswordChangeType.Initial.getCode());
+		passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
 
 		passwordHistoryEntityDao.insert(passwordHistoryEntity);
 	}

@@ -4,8 +4,8 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * サインイン起因の列挙型
  */
 public enum SignInCause {
-	SignIn((short) 1, "サインイン"),
-	Continue((short) 2, "継続サインイン"),
+	サインイン((short) 1, "サインイン"),
+	継続サインイン((short) 2, "継続サインイン"),
 	UnKnown((short) -1, "未定義");
 
 	private final short code;

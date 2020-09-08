@@ -4,9 +4,9 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * 検索条件選択の列挙型
  */
 public enum ConditionsSelect {
-	None(0, "指定なし"),
-	And(1, "AND"),
-	Or(2, "OR"),
+	指定なし(0, "指定なし"),
+	AND(1, "AND"),
+	OR(2, "OR"),
 	UnKnown(-1, "未定義");
 
 	private final int code;

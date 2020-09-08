@@ -4,8 +4,8 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * アカウントロック状態の列挙型
  */
 public enum AccountLockStatus {
-	UnLocked((short) 0, "アンロック"),
-	Locked((short) 1, "ロック"),
+	アンロック((short) 0, "アンロック"),
+	ロック((short) 1, "ロック"),
 	UnKnown((short) -1, "未定義");
 
 	private final short code;

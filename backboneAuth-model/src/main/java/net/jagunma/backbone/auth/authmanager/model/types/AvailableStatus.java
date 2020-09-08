@@ -4,8 +4,8 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * 利用可否状態の列挙型
  */
 public enum AvailableStatus {
-	Available((short) 0, "利用可能"),
-	UnAvailable((short) 1, "利用不可"),
+	利用可能((short) 0, "利用可能"),
+	利用不可((short) 1, "利用不可"),
 	UnKnown((short) -1, "未定義");
 
 	private final short code;

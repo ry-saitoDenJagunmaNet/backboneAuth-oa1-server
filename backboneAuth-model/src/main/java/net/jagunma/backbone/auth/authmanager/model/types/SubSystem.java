@@ -4,12 +4,12 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * サブシステムの列挙型
  */
 public enum SubSystem {
-	KB("KB", "購買"),
-	YS("YS", "販売・青果"),
-	YF("YF", "販売・花卉"),
-	HK("HK", "販売・米"),
-	HM("HM", "販売・麦"),
-	AN("AN", "販売・畜産"),
+	購買("KB", "購買"),
+	販売_青果("YS", "販売・青果"),
+	販売_花卉("YF", "販売・花卉"),
+	販売_米("HK", "販売・米"),
+	販売_麦("HM", "販売・麦"),
+	販売_畜産("AN", "販売・畜産"),
 	UnKnown("", "未定義");
 
 	private final String code;
