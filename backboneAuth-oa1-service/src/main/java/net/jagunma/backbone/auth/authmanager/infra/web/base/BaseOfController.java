@@ -22,7 +22,8 @@ public class BaseOfController {
      * 認証情報を設定します。（ＰＧ用暫定）
      */
     public void setAuthInf() {
-        System.out.println("### BaseOfController");
+//        System.out.println("### BaseOfController");
+
         //TODO: パラメータでサインインオペレーターの情報を取得する
 //        AuthInf authInf = new AuthInf().createFrom("006", "001", 18l, "yu001009", "145.254.211.73");
 //        AuditInfoHolder.set(authInf, DateProvider.currentLocalDateTime(),
@@ -34,7 +35,7 @@ public class BaseOfController {
             .withJaAttribute(JaAttribute
                 .builder()
                 .withJaCode(JaCode.of("006"))
-                .withName("")
+                .withName("JA前橋市")
                 .withFormalName("")
                 .withAbbreviatedName("")
                 .build())

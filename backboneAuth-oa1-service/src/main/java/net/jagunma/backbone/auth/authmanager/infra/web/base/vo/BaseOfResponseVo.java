@@ -57,7 +57,7 @@ public class BaseOfResponseVo implements Serializable {
      * @param ole OptimisticLockingFailureException
      */
     public void setExceptionMessage(OptimisticLockingFailureException ole) {
-        errorMessage = MessageFormatter.getSimpleMessage("EOA10004");
+        errorMessage = MessageFormatter.getSimpleMessage("EOA10002");
 
         if (ole.getMessage() != null) {errorDetailsMessage = ole.getMessage() + "\r\n";}
 

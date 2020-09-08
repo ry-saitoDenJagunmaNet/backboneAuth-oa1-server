@@ -51,21 +51,21 @@ class Oa12060StoreConverter implements CalendarStoreRequest {
 			if (c.getCalendarId1() != null) {
 				list.add(Oa12060StoreDetailsConverter.with(
 					c.getCalendarId1(),
-					CalendarType.Economy,
+					CalendarType.経済システム稼働カレンダー,
 					Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()),
 					c.getRecordVersion1()));
 			}
 			if (c.getCalendarId2() != null) {
 				list.add(Oa12060StoreDetailsConverter.with(
 					c.getCalendarId2(),
-					CalendarType.Credit,
+					CalendarType.信用カレンダー,
 					Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()),
 					c.getRecordVersion2()));
 			}
 			if (c.getCalendarId3() != null) {
 				list.add(Oa12060StoreDetailsConverter.with(
 					c.getCalendarId3(),
-					CalendarType.WideAreaLogistics,
+					CalendarType.広域物流カレンダー,
 					Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()),
 					c.getRecordVersion3()));
 			}

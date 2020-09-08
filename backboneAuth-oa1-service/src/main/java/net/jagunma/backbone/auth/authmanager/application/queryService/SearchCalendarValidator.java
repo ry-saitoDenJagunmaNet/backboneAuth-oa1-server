@@ -24,7 +24,8 @@ class SearchCalendarValidator {
 	 */
 	public void validate() {
 		// 未入力チェック
-		Preconditions.checkNotNull(request.getYearMonth(), () -> new GunmaRuntimeException("EOA10002", "年月"));
+		Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
+		Preconditions.checkNotNull(request.getYearMonth(), () -> new GunmaRuntimeException("EOA13001", "年月"));
 	}
 }
 

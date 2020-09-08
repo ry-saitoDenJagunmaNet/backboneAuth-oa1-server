@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -10,6 +12,8 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.common.util.objects2.Objects2;
+import org.apache.commons.math3.stat.inference.OneWayAnova;
 
 /**
  * OA12060 検索 Presenter
@@ -40,9 +44,9 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 	public void bindTo(Oa12060Vo vo) {
 
 		// 表示対象フィルターチェックdisabledの判定
-		boolean calendarTypeFilterCheck1disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Economy);
-		boolean calendarTypeFilterCheck2disabled = isCalendarTypeFilterCheckDisabled(CalendarType.Credit);
-		boolean calendarTypeFilterCheck3disabled = isCalendarTypeFilterCheckDisabled(CalendarType.WideAreaLogistics);
+		boolean calendarTypeFilterCheck1disabled = isCalendarTypeFilterCheckDisabled(CalendarType.経済システム稼働カレンダー);
+		boolean calendarTypeFilterCheck2disabled = isCalendarTypeFilterCheckDisabled(CalendarType.信用カレンダー);
+		boolean calendarTypeFilterCheck3disabled = isCalendarTypeFilterCheckDisabled(CalendarType.広域物流カレンダー);
 
 		Oa12060SearchResponseVo searchResponseVo = new Oa12060SearchResponseVo();
 		// 表示対象経済選択無効
@@ -72,6 +76,9 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 	 * @return true:表示対象フィルターチェックが無効
 	 */
 	private boolean isCalendarTypeFilterCheckDisabled(CalendarType calendarType) {
+
+		if (Objects2.isNull(calendars)) {return true;}
+
 		// カレンダータイプのデータがその月分全て登録済かチェック（日数分の件数でチェック）
 		if (calendars.getValues().stream().filter(c-> calendarType.equals(c.getCalendarType())).count()
 			== yearMonth.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth()) {
@@ -114,7 +121,10 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 		// 明細
 		boolean firstRow = true;
 		int currentWeek = startWeek;
-		List<Calendar> list = calendars.getValues();
+		List<Calendar> list = newArrayList();
+		if (!Objects2.isNull(calendars)) {
+			list = calendars.getValues();
+		}
 
 		html.append(" <tbody>");
 		html.append("  <tr>");
@@ -168,21 +178,21 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
 		int recordVersion[] = {0, 0, 0};
 		for (Calendar calendar : calendarList) {
 			// 経済
-			if (calendar.getCalendarType().isEconomy()) {
+			if (calendar.getCalendarType().is経済システム稼働カレンダー()) {
 				if (calendar.getIsHoliday()) {checked[0] = "";}
 				calendarId[0] = calendar.getCalendarId().toString();
 				recordVersion[0] = calendar.getRecordVersion();
 				continue;
 			}
 			// 信用
-			if (calendar.getCalendarType().isCredit()) {
+			if (calendar.getCalendarType().is信用カレンダー()) {
 				if (calendar.getIsHoliday()) {checked[1] = "";}
 				calendarId[1] = calendar.getCalendarId().toString();
 				recordVersion[1] = calendar.getRecordVersion();
 				continue;
 			}
 			// 広域物流
-			if (calendar.getCalendarType().isWideAreaLogistics()) {
+			if (calendar.getCalendarType().is広域物流カレンダー()) {
 				if (calendar.getIsHoliday()) {checked[2] = "";}
 				calendarId[2] = calendar.getCalendarId().toString();
 				recordVersion[2] = calendar.getRecordVersion();

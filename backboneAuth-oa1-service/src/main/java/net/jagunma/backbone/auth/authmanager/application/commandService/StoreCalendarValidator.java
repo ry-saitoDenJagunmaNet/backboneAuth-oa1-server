@@ -1,6 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
+import net.jagunma.common.util.base.Preconditions;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 
 /**
  * カレンダー適用サービス Validator
@@ -21,7 +23,8 @@ class StoreCalendarValidator {
 	 * リクエストのチェックを行います。
 	 */
 	public void validate() {
-
+		// 未入力チェック
+		Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
 	}
 }
 
