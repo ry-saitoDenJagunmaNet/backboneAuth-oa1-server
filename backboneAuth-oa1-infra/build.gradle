@@ -23,6 +23,7 @@ dependencies {
     implementation project(':backboneAuth-model')
     implementation("net.jagunma.common2020:jagunma-common-fao:$commonFaoVersion")
     implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
+    implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     implementation "org.seasar.doma:doma-core:${domaVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
 }

@@ -11,7 +11,6 @@ import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.server.aop.AuditInfoHolder;
-import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +75,7 @@ public class Oa11020Controller extends BaseOfController {
             Oa11020InitPresenter presenter = new Oa11020InitPresenter();
 
             presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
-            presenter.setJaName("JA前橋");            // ToDo: JA名の取得→AuditInfoHolderに保持される予定なのでそこから取得
+            presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
             presenter.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
             presenter.setTempoList(tempoReferenceService.getComboBoxList(AuditInfoHolder.getJa().getIdentifier()));
 

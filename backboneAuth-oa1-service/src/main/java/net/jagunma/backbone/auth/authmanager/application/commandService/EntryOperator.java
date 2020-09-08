@@ -3,6 +3,11 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
+import net.jagunma.common.server.aop.AuditInfoHolder;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class EntryOperator {
 
 	private final OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore;
+	private final BranchAtMomentRepository branchAtMomentRepository;
 
-	public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore) {
+	public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore,
+		BranchAtMomentRepository branchAtMomentRepository) {
 
 		this.operatorEntryPackRepositoryForStore = operatorEntryPackRepositoryForStore;
+		this.branchAtMomentRepository = branchAtMomentRepository;
 	}
 
 	/**
@@ -30,38 +38,72 @@ public class EntryOperator {
 		// パラメーターの検証
 		EntryOperatorValidator.with(request).validate();
 
-		// ToDo: JAの取得
-		// ToDo: 店舗の取得
-		// ToDo: JAに属する店舗かのチェック
+		// 店舗の取得を行います
+		BranchAtMoment branchAtMoment = getBranchAtMoment(request.getTempoId());
 
-		// オペレーターエントリーパック生成
-		OperatorEntryPack operatorEntryPack = createOperatorEntryPack(request);
+		// 店舗が当JAに属するかのチェックを行います
+		checkBranchBelongJa(branchAtMoment);
 
-		// オペレーターエントリーパック登録
+		// オペレーターエントリーパックの生成を行います
+		OperatorEntryPack operatorEntryPack = createOperatorEntryPack(request,
+			AuditInfoHolder.getJa().getIdentifier(),
+			AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
+			branchAtMoment.getBranchAttribute().getBranchCode().getValue());
+
+		// オペレーターエントリーパックをインサートします
 		operatorEntryPackRepositoryForStore.insert(operatorEntryPack);
+	}
+
+	/**
+	 * 店舗の取得を行います。
+	 *
+	 * @param tempoId 店舗ID
+	 * @return branchAtMoment 店舗
+	 */
+	private BranchAtMoment getBranchAtMoment(Long tempoId) {
+		BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
+
+		criteria.getIdentifierCriteria().setEqualTo(tempoId);
+
+		return branchAtMomentRepository.findOneBy(criteria);
+	}
+
+	/**
+	 * 店舗が当JAに属するかのチェックを行います。
+	 *
+	 * @param branchAtMoment 店舗
+	 */
+	private void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
+		if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(
+			AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
+			throw new GunmaRuntimeException("EOA13102");
+		}
 	}
 
 	/**
 	 * オペレーターエントリーパックの生成を行います。
 	 *
 	 * @param request オペレーター登録サービス Request
-	 * @param jaAtMoment JaAtMoment
-	 * @param tempoAtMoment TempoAtMoment
+	 * @param jaId ＪＡID
+	 * @param jaCode ＪＡコード
+	 * @param tempoCode 店舗コード
 	 * @return オペレーターエントリーパック
 	 */
-	private OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request) {
+	private OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request,
+		Long jaId,
+		String jaCode,
+		String tempoCode) {
 
-		// ToDo: JA、店舗の受け取り
 		return OperatorEntryPack.createFrom(
 			request.getOperatorCode(),
 			request.getOperatorName(),
 			request.getMailAddress(),
 			request.getExpirationStartDate(),
 			request.getExpirationEndDate(),
-			6l,
-			"006",
+			jaId,
+			jaCode,
 			request.getTempoId(),
-			"001",
+			tempoCode,
 			request.getChangeCause(),
 			request.getPassword(),
 			request.getConfirmPassword());
