@@ -43,7 +43,7 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * オペレーターエントリーパックをインサートします
+	 * オペレーターエントリーパックのインサートを行います。
 	 *
 	 * @param operatorEntryPack オペレーターエントリーパック
 	 */
@@ -52,16 +52,16 @@ public class OperatorEntryPackForStoreDataSource implements
 		// オペレーター（コード）がすでに存在しているかのチェックを行います
 		checkAlreadyExists(operatorEntryPack.getOperatorCode());
 
-		// オペレーターをインサートします
+		// オペレーターのインサートを行います
 		OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
 
-		// オペレーター履歴ヘッダーをインサートします
+		// オペレーター履歴ヘッダーのインサートを行います
 		OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
 
-		// オペレーター履歴をインサートします
+		// オペレーター履歴のインサートを行います
 		insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
 
-		// パスワード履歴をインサートします
+		// パスワード履歴のインサートを行います
 		insertPasswordHistory(operatorEntryPack, operatorEntity);
 	}
 
@@ -81,7 +81,7 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * オペレーターをインサートします
+	 * オペレーターのインサートを行います。
 	 *
 	 * @param operatorEntryPack オペレーターエントリーパック
 	 * @return オペレーターエンティティ
@@ -107,7 +107,7 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * オペレーター履歴ヘッダーをインサートします
+	 * オペレーター履歴ヘッダーのインサートを行います。
 	 *
 	 * @param operatorEntryPack オペレーターエントリーパック
 	 * @param operatorEntity オペレーターエンティティ
@@ -126,7 +126,7 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * オペレーター履歴をインサートします
+	 * オペレーター履歴のインサートを行います。
 	 *
 	 * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
 	 * @param operatorEntity オペレーターエンティティ
@@ -141,7 +141,7 @@ public class OperatorEntryPackForStoreDataSource implements
 	}
 
 	/**
-	 * パスワード履歴をインサートします
+	 * パスワード履歴のインサートを行います。
 	 *
 	 * @param operatorEntryPack オペレーターエントリーパック
 	 * @param operatorEntity オペレーターエンティティ
