@@ -76,7 +76,7 @@ public class EntryOperator {
 	private void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
 		if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(
 			AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
-			throw new GunmaRuntimeException("EOA13102");
+			throw new GunmaRuntimeException("EOA12001");
 		}
 	}
 
