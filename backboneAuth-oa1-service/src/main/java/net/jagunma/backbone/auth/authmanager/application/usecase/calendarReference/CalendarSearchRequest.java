@@ -6,9 +6,9 @@ import java.time.LocalDate;
  * カレンダーメンテナンス検索サービス Request
  */
 public interface CalendarSearchRequest {
-	/**
-	 * 年月のＧｅｔ
-	 * @return 年月
-	 */
-	LocalDate getYearMonth();
+    /**
+     * 年月のＧｅｔ
+     * @return 年月
+     */
+    LocalDate getYearMonth();
 }

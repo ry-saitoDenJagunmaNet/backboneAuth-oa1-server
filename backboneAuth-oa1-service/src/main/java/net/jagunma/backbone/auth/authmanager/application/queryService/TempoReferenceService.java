@@ -17,67 +17,67 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TempoReferenceService {
-	private final OperatorEntityDao operatorEntityDao;
+    private final OperatorEntityDao operatorEntityDao;
 
-	// コンストラクタ
-	public TempoReferenceService(OperatorEntityDao operatorEntityDao) {
-		this.operatorEntityDao = operatorEntityDao;
-	}
+    // コンストラクタ
+    public TempoReferenceService(OperatorEntityDao operatorEntityDao) {
+        this.operatorEntityDao = operatorEntityDao;
+    }
 
-	/***
-	 * コンボボックス用のリストを取得します。
-	 *
-	 * @param jaid ＪＡID
-	 * @return コンボボックス用のリスト
-	 */
-	public List<TempoReferenceDto> getComboBoxList(long jaid) {
+    /***
+     * コンボボックス用のリストを取得します。
+     *
+     * @param jaid ＪＡID
+     * @return コンボボックス用のリスト
+     */
+    public List<TempoReferenceDto> getComboBoxList(long jaid) {
 
-		// TODO: 店舗情報はCMSよりAPIで取得
-//		List<TempoDto> list = newArrayList();
-//		list.add(new TempoDto("", ""));
-//		list.add(new TempoDto("001", "本所"));
-//		list.add(new TempoDto("002", "○○○支所"));
-//		list.add(new TempoDto("003", "△△センター"));
-//		list.add(new TempoDto("004", "□□□□店"));
-//		list.add(new TempoDto("005", "××××館"));
-//		return list;
-		List<TempoReferenceDto> list = getTempoList(jaid);
-		list.add(0, new TempoReferenceDto("", ""));
-		return list;
-	}
+        // TODO: 店舗情報はCMSよりAPIで取得
+//        List<TempoDto> list = newArrayList();
+//        list.add(new TempoDto("", ""));
+//        list.add(new TempoDto("001", "本所"));
+//        list.add(new TempoDto("002", "○○○支所"));
+//        list.add(new TempoDto("003", "△△センター"));
+//        list.add(new TempoDto("004", "□□□□店"));
+//        list.add(new TempoDto("005", "××××館"));
+//        return list;
+        List<TempoReferenceDto> list = getTempoList(jaid);
+        list.add(0, new TempoReferenceDto("", ""));
+        return list;
+    }
 
-	/**
-	 * コンボボックス用のリストを取得します。
-	 *
-	 * @param jaid ＪＡID
-	 * @return コンボボックス用のリスト
-	 */
-	public List<TempoReferenceDto> getTempoList(long jaid) {
-		List<TempoReferenceDto> list = newArrayList();
+    /**
+     * コンボボックス用のリストを取得します。
+     *
+     * @param jaid ＪＡID
+     * @return コンボボックス用のリスト
+     */
+    public List<TempoReferenceDto> getTempoList(long jaid) {
+        List<TempoReferenceDto> list = newArrayList();
 
-		// TODO: 店舗情報はCMSよりAPIで取得
-		// TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
-		OperatorEntityCriteria criteria = new OperatorEntityCriteria();
-		criteria.getJaIdCriteria().setEqualTo(jaid);
+        // TODO: 店舗情報はCMSよりAPIで取得
+        // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
+        OperatorEntityCriteria criteria = new OperatorEntityCriteria();
+        criteria.getJaIdCriteria().setEqualTo(jaid);
 
-		Orders orders = Orders.empty()
-			.addOrder("jaId")
-			.addOrder("tempoId");
+        Orders orders = Orders.empty()
+            .addOrder("jaId")
+            .addOrder("tempoId");
 
-		List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
-		List<String> tempos = newArrayList();
-		operatorEntities.forEach(o -> {
-			tempos.add(o.getTempoCode());
-		});
+        List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
+        List<String> tempos = newArrayList();
+        operatorEntities.forEach(o -> {
+            tempos.add(o.getTempoCode());
+        });
 
-		// 重複削除
-		tempos.stream().distinct().forEach(t -> {
-			TempoReferenceDto tempoReferenceDto = new TempoReferenceDto();
-			tempoReferenceDto.setTempoCode(t);
-			tempoReferenceDto.setTempoName(t+"店舗");
-			list.add(tempoReferenceDto);
-		});
+        // 重複削除
+        tempos.stream().distinct().forEach(t -> {
+            TempoReferenceDto tempoReferenceDto = new TempoReferenceDto();
+            tempoReferenceDto.setTempoCode(t);
+            tempoReferenceDto.setTempoName(t+"店舗");
+            list.add(tempoReferenceDto);
+        });
 
-		return list;
-	}
+        return list;
+    }
 }

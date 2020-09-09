@@ -13,31 +13,31 @@ import org.junit.jupiter.api.Test;
 
 class Oa12060SearchPresenterTest {
 
-	/**
-	 * {@link Oa12060SearchPresenter}のテスト
-	 *
-	 * ・ レスポンスの値が正常にセットできることを確認する。
-	 */
-	@Test
-	@Tag(TestSize.SMALL)
-	void Presenterの全メソッドの実行確認() {
+    /**
+     * {@link Oa12060SearchPresenter}のテスト
+     *
+     * ・ レスポンスの値が正常にセットできることを確認する。
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void Presenterの全メソッドの実行確認() {
 
-		// 事前準備
-		LocalDate yearMonth = LocalDate.now();
-		Calendars calendars = Calendars.createFrom(new ArrayList<Calendar>());
-		Oa12060Vo vo = new Oa12060Vo();
+        // 事前準備
+        LocalDate yearMonth = LocalDate.now();
+        Calendars calendars = Calendars.createFrom(new ArrayList<Calendar>());
+        Oa12060Vo vo = new Oa12060Vo();
 
-		// 実行
-		Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
-		presenter.setYearMonth(yearMonth);
-		presenter.bindTo(vo);
+        // 実行
+        Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
+        presenter.setYearMonth(yearMonth);
+        presenter.bindTo(vo);
 
 
-		//　結果確認
-		assertThat(vo).isNotNull();
-		assertThat(vo.getSearchResponse()).isNotNull();
-		assertThat(vo.getCalendarTypeFilterCheck1()).isNotNull();
-		assertThat(vo.getCalendarTypeFilterCheck2()).isNotNull();
-		assertThat(vo.getCalendarTypeFilterCheck3()).isNotNull();
-	}
+        //　結果確認
+        assertThat(vo).isNotNull();
+        assertThat(vo.getSearchResponse()).isNotNull();
+        assertThat(vo.getCalendarTypeFilterCheck1()).isNotNull();
+        assertThat(vo.getCalendarTypeFilterCheck2()).isNotNull();
+        assertThat(vo.getCalendarTypeFilterCheck3()).isNotNull();
+    }
 }

@@ -12,32 +12,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalendarForStoreDataSource implements CalendarRepositoryForStore {
 
-	private final CalendarEntityDao calendarEntityDao;
+    private final CalendarEntityDao calendarEntityDao;
 
-	// コンストラクタ
-	public CalendarForStoreDataSource(CalendarEntityDao calendarEntityDao) {
-		this.calendarEntityDao = calendarEntityDao;
-	}
+    // コンストラクタ
+    public CalendarForStoreDataSource(CalendarEntityDao calendarEntityDao) {
+        this.calendarEntityDao = calendarEntityDao;
+    }
 
-	/**
-	 * カレンダーを更新します。
-	 *
-	 * @param calendar カレンダー
-	 */
-	@Override
-	public Calendar update(Calendar calendar) {
+    /**
+     * カレンダーを更新します。
+     *
+     * @param calendar カレンダー
+     */
+    @Override
+    public Calendar update(Calendar calendar) {
 
-		CalendarEntity entity = new CalendarEntity();
-		entity.setCalendarId(calendar.getCalendarId());
-		entity.setCalendarType(calendar.getCalendarType().getCode());
-		entity.setDate(calendar.getDate());
-		entity.setIsHoliday(calendar.getIsHoliday());
-		entity.setIsManualChange(calendar.getIsManualChange());
-		entity.setIsRelease(calendar.getIsRelease());
-		entity.setRecordVersion(calendar.getRecordVersion());
+        CalendarEntity entity = new CalendarEntity();
+        entity.setCalendarId(calendar.getCalendarId());
+        entity.setCalendarType(calendar.getCalendarType().getCode());
+        entity.setDate(calendar.getDate());
+        entity.setIsHoliday(calendar.getIsHoliday());
+        entity.setIsManualChange(calendar.getIsManualChange());
+        entity.setIsRelease(calendar.getIsRelease());
+        entity.setRecordVersion(calendar.getRecordVersion());
 
-		calendarEntityDao.updateExcludeNull(entity);
+        calendarEntityDao.updateExcludeNull(entity);
 
-		return calendar;
-	}
+        return calendar;
+    }
 }

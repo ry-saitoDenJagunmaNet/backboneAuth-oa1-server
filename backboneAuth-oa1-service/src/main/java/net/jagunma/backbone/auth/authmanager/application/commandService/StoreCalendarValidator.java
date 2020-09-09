@@ -8,23 +8,23 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
  * カレンダー適用サービス Validator
  */
 class StoreCalendarValidator {
-	private CalendarStoreRequest request;
+    private CalendarStoreRequest request;
 
-	// コンストラクタ
-	StoreCalendarValidator(CalendarStoreRequest request) {
-		this.request = request;
-	}
-	// ファクトリーメソッド
-	public static StoreCalendarValidator with(CalendarStoreRequest request) {
-		return new StoreCalendarValidator(request);
-	}
+    // コンストラクタ
+    StoreCalendarValidator(CalendarStoreRequest request) {
+        this.request = request;
+    }
+    // ファクトリーメソッド
+    public static StoreCalendarValidator with(CalendarStoreRequest request) {
+        return new StoreCalendarValidator(request);
+    }
 
-	/**
-	 * リクエストのチェックを行います。
-	 */
-	public void validate() {
-		// 未入力チェック
-		Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
-	}
+    /**
+     * リクエストのチェックを行います。
+     */
+    public void validate() {
+        // 未入力チェック
+        Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
+    }
 }
 

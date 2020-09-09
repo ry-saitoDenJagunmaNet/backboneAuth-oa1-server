@@ -18,81 +18,81 @@ import org.junit.jupiter.api.Test;
 
 class StoreCalendarTest {
 
-	/**
-	 * {@link StoreCalendar#execute(CalendarStoreRequest)}のテスト
-	 *
-	 * ・ カレンダーリポジトリのupdateを呼び出していること、呼び出しの引数が正常にセットできることも確認する。
-	 */
-	@Test
-	@Tag(TestSize.SMALL)
-	void 実行検証() {
-		StoreCalendar target = new StoreCalendar(new CalendarRepositoryForStore() {
-			@Override
-			public Calendar update(Calendar calendar) {
-				// 更新対象データを確認
-				assertThat(calendar).isEqualToComparingFieldByField(Calendar.createFrom(1l, CalendarType.経済システム稼働カレンダー, null, false, true, null, 1));
-				return calendar;
-			}
-		}, new CalendarRepository() {
-			@Override
-			public Calendar findOneBy(CalendarCriteria calendarCriteria) {
-				return Calendar.createFrom(1l, CalendarType.経済システム稼働カレンダー, null, true, false, null, 1);
-			}
-		});
+    /**
+     * {@link StoreCalendar#execute(CalendarStoreRequest)}のテスト
+     *
+     * ・ カレンダーリポジトリのupdateを呼び出していること、呼び出しの引数が正常にセットできることも確認する。
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void 実行検証() {
+        StoreCalendar target = new StoreCalendar(new CalendarRepositoryForStore() {
+            @Override
+            public Calendar update(Calendar calendar) {
+                // 更新対象データを確認
+                assertThat(calendar).isEqualToComparingFieldByField(Calendar.createFrom(1l, CalendarType.経済システム稼働カレンダー, null, false, true, null, 1));
+                return calendar;
+            }
+        }, new CalendarRepository() {
+            @Override
+            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+                return Calendar.createFrom(1l, CalendarType.経済システム稼働カレンダー, null, true, false, null, 1);
+            }
+        });
 
-		// 実行
-		int result = target.execute(new CalendarStoreRequest() {
-			@Override
-			public LocalDate getYearMonth() {
-				return null;
-			}
-			@Override
-			public List<Oa12060StoreDetailsConverter> createCalendarList() {
-				List<Oa12060StoreDetailsConverter> list = newArrayList();
-				list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,true,1));
-				return list;
-			}
-		});
+        // 実行
+        int result = target.execute(new CalendarStoreRequest() {
+            @Override
+            public LocalDate getYearMonth() {
+                return null;
+            }
+            @Override
+            public List<Oa12060StoreDetailsConverter> createCalendarList() {
+                List<Oa12060StoreDetailsConverter> list = newArrayList();
+                list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,true,1));
+                return list;
+            }
+        });
 
-		// 更新結果が1件の場合OK
-		assertThat(result).isEqualTo(1);
-	}
+        // 更新結果が1件の場合OK
+        assertThat(result).isEqualTo(1);
+    }
 
-	/**
-	 * {@link StoreCalendar#execute(CalendarStoreRequest)}のテスト
-	 *
-	 * ・ カレンダーリポジトリのupdateを呼び出していないこと、更新対象が0件であることも確認する。
-	 */
-	@Test
-	@Tag(TestSize.SMALL)
-	void 更新対象なしの場合() {
-		StoreCalendar target = new StoreCalendar(new CalendarRepositoryForStore() {
-			@Override
-			public Calendar update(Calendar calendar) {
-				// こっちが呼び出されたらエラー
-				assertThat("updateが呼び出されました").isNull();
-				return null;
-			}
-		}, new CalendarRepository() {
-			@Override
-			public Calendar findOneBy(CalendarCriteria calendarCriteria) {
-				return null;
-			}
-		});
+    /**
+     * {@link StoreCalendar#execute(CalendarStoreRequest)}のテスト
+     *
+     * ・ カレンダーリポジトリのupdateを呼び出していないこと、更新対象が0件であることも確認する。
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void 更新対象なしの場合() {
+        StoreCalendar target = new StoreCalendar(new CalendarRepositoryForStore() {
+            @Override
+            public Calendar update(Calendar calendar) {
+                // こっちが呼び出されたらエラー
+                assertThat("updateが呼び出されました").isNull();
+                return null;
+            }
+        }, new CalendarRepository() {
+            @Override
+            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+                return null;
+            }
+        });
 
-		// 実行
-		int result = target.execute(new CalendarStoreRequest() {
-			@Override
-			public LocalDate getYearMonth() {
-				return null;
-			}
-			@Override
-			public List<Oa12060StoreDetailsConverter> createCalendarList() {
-				return newArrayList();
-			}
-		});
+        // 実行
+        int result = target.execute(new CalendarStoreRequest() {
+            @Override
+            public LocalDate getYearMonth() {
+                return null;
+            }
+            @Override
+            public List<Oa12060StoreDetailsConverter> createCalendarList() {
+                return newArrayList();
+            }
+        });
 
-		// 更新結果が0件の場合OK
-		assertThat(result).isEqualTo(0);
-	}
+        // 更新結果が0件の場合OK
+        assertThat(result).isEqualTo(0);
+    }
 }

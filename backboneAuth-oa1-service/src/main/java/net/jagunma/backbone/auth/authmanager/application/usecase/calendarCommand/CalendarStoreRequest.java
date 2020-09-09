@@ -8,14 +8,14 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.Oa12060StoreDetai
  * カレンダーメンテナンス反映サービス Request
  */
 public interface CalendarStoreRequest {
-	/**
-	 * 年月のＧｅｔ
-	 * @return 年月
-	 */
-	LocalDate getYearMonth();
-	/**
-	 * カレンダーリストを作成します。
-	 * @return カレンダーリスト
-	 */
-	List<Oa12060StoreDetailsConverter> createCalendarList();
+    /**
+     * 年月のＧｅｔ
+     * @return 年月
+     */
+    LocalDate getYearMonth();
+    /**
+     * カレンダーリストを作成します。
+     * @return カレンダーリスト
+     */
+    List<Oa12060StoreDetailsConverter> createCalendarList();
 }

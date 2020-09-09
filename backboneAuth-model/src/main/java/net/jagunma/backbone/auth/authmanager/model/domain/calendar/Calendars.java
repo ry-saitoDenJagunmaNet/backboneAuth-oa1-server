@@ -11,30 +11,30 @@ import java.util.List;
  */
 public class Calendars {
 
-	private final ArrayList<Calendar> list = newArrayList();
+    private final ArrayList<Calendar> list = newArrayList();
 
-	// コンストラクタ
-	Calendars() {}
-	Calendars(Collection<Calendar> collection) {
-		this.list.addAll(collection);
-	}
+    // コンストラクタ
+    Calendars() {}
+    Calendars(Collection<Calendar> collection) {
+        this.list.addAll(collection);
+    }
 
-	/**
-	 * カレンダーリストから作成します。
-	 *
-	 * @param calendarList カレンダーリスト
-	 * @return カレンダー群
-	 */
-	public static Calendars createFrom(Collection<Calendar> calendarList) {
-		return new Calendars(calendarList);
-	}
+    /**
+     * カレンダーリストから作成します。
+     *
+     * @param calendarList カレンダーリスト
+     * @return カレンダー群
+     */
+    public static Calendars createFrom(Collection<Calendar> calendarList) {
+        return new Calendars(calendarList);
+    }
 
-	/**
-	 * カレンダーリストを取得します。
-	 *
-	 * @return カレンダーリスト
-	 */
-	public List<Calendar> getValues() {
-		return list;
-	}
+    /**
+     * カレンダーリストを取得します。
+     *
+     * @return カレンダーリスト
+     */
+    public List<Calendar> getValues() {
+        return list;
+    }
 }

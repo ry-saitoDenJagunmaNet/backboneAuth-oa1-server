@@ -15,33 +15,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class CalendarDataSource implements CalendarRepository {
 
-	private final CalendarEntityDao calendarEntityDao;
+    private final CalendarEntityDao calendarEntityDao;
 
-	// コンストラクタ
-	public CalendarDataSource(CalendarEntityDao calendarEntityDao) {
-		this.calendarEntityDao = calendarEntityDao;
-	}
+    // コンストラクタ
+    public CalendarDataSource(CalendarEntityDao calendarEntityDao) {
+        this.calendarEntityDao = calendarEntityDao;
+    }
 
-	/**
-	 * カレンダーの条件検索を行います。
-	 *
-	 * @param calendarCriteria カレンダーの検索条件
-	 * @return カレンダー
-	 */
-	@Override
-	public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+    /**
+     * カレンダーの条件検索を行います。
+     *
+     * @param calendarCriteria カレンダーの検索条件
+     * @return カレンダー
+     */
+    @Override
+    public Calendar findOneBy(CalendarCriteria calendarCriteria) {
 
-		CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
-		entityCriteria.getCalendarIdCriteria().setEqualTo(calendarCriteria.getCalendarIdCriteria().getEqualTo());
+        CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
+        entityCriteria.getCalendarIdCriteria().setEqualTo(calendarCriteria.getCalendarIdCriteria().getEqualTo());
 
-		CalendarEntity calendarEntity = calendarEntityDao.findOneBy(entityCriteria);
-		return Calendar.createFrom(
-			calendarEntity.getCalendarId(),
-			CalendarType.codeOf(calendarEntity.getCalendarType()),
-			calendarEntity.getDate(),
-			calendarEntity.getIsHoliday(),
-			calendarEntity.getIsManualChange(),
-			calendarEntity.getIsRelease(),
-			calendarEntity.getRecordVersion());
-	}
+        CalendarEntity calendarEntity = calendarEntityDao.findOneBy(entityCriteria);
+        return Calendar.createFrom(
+            calendarEntity.getCalendarId(),
+            CalendarType.codeOf(calendarEntity.getCalendarType()),
+            calendarEntity.getDate(),
+            calendarEntity.getIsHoliday(),
+            calendarEntity.getIsManualChange(),
+            calendarEntity.getIsRelease(),
+            calendarEntity.getRecordVersion());
+    }
 }
