@@ -6,79 +6,58 @@ import java.time.LocalDate;
  * オペレーター登録サービス Request
  */
 public interface OperatorEntryRequest {
-	/**
-	 * 識別（オペレーターコードプレフィックス）のＧｅｔ
-	 * @return 識別（オペレーターコードプレフィックス）
-	 */
-	String getOperatorCodePrefix();
-	/**
-	 * オペレーターコード（下6桁）のＧｅｔ
-	 * @return オペレーターコード（下6桁）
-	 */
-	String getOperatorCode6();
-	/**
-	 * オペレーターコードのＧｅｔ
-	 * @return オペレーターコード
-	 */
-	String getOperatorCode();
-	/**
-	 * オペレーター名のＧｅｔ
-	 * @return オペレーター名
-	 */
-	String getOperatorName();
-	/**
-	 * メールアドレスのＧｅｔ
-	 * @return メールアドレス
-	 */
-	String getMailAddress();
-	/**
-	 * 有効期限開始日のＧｅｔ
-	 * @return 有効期限開始日
-	 */
-	LocalDate getExpirationStartDate();
-	/**
-	 * 有効期限終了日のＧｅｔ
-	 * @return 有効期限終了日
-	 */
-	LocalDate getExpirationEndDate();
-//	/**
-//	 * 機器認証のＧｅｔ
-//	 * @return 機器認証
-//	 */
-//	boolean getIsDeviceAuth();
-//	/**
-//	 * ＪＡIDのＧｅｔ
-//	 * @return ＪＡID
-//	 */
-//	long getJaId();
-//	/**
-//	 * JAコードのＧｅｔ
-//	 * @return ＪＡコード
-//	 */
-//	String getJaCode();
-	/**
-	 * 店舗IDのＧｅｔ
-	 * @return 店舗ID
-	 */
-	Long getTempoId();
-//	/**
-//	 * 店舗コードのＧｅｔ
-//	 * @return 店舗コード
-//	 */
-//	String getTempoCode();
-	/**
-	 * 変更事由のＧｅｔ
-	 * @return 変更事由
-	 */
-	String getChangeCause();
-	/**
-	 * パスワードのＧｅｔ
-	 * @return パスワード
-	 */
-	String getPassword();
-	/**
-	 * パスワードの確認入力のＧｅｔ
-	 * @return パスワードの確認入力
-	 */
-	String getConfirmPassword();
+    /**
+     * オペレーターコード（下6桁）のＧｅｔ
+     *
+     * @return オペレーターコード（下6桁）
+     */
+    String getOperatorCode6();
+    /**
+     * オペレーター名のＧｅｔ
+     *
+     * @return オペレーター名
+     */
+    String getOperatorName();
+    /**
+     * メールアドレスのＧｅｔ
+     *
+     * @return メールアドレス
+     */
+    String getMailAddress();
+    /**
+     * 有効期限開始日のＧｅｔ
+     *
+     * @return 有効期限開始日
+     */
+    LocalDate getExpirationStartDate();
+    /**
+     * 有効期限終了日のＧｅｔ
+     *
+     * @return 有効期限終了日
+     */
+    LocalDate getExpirationEndDate();
+    /**
+     * 店舗IDのＧｅｔ
+     *
+     * @return 店舗ID
+     */
+    Long getTempoId();
+    /**
+     * 変更事由のＧｅｔ
+     *
+     * @return 変更事由
+     */
+    String getChangeCause();
+    /**
+     * パスワードのＧｅｔ
+     *
+     * @return パスワード
+     */
+    String getPassword();
+    /**
+     * パスワードの確認入力のＧｅｔ
+     *
+     * @return パスワードの確認入力
+     */
+    String getConfirmPassword();
 }

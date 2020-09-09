@@ -26,15 +26,6 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     }
 
     /**
-     * 識別（オペレーターコードプレフィックス）のＧｅｔ
-     *
-     * @return 識別（オペレーターコードプレフィックス）
-     */
-    public String getOperatorCodePrefix() {
-        return vo.getOperatorCodePrefix();
-    }
-
-    /**
      * オペレーターコード（下6桁）のＧｅｔ
      *
      * @return オペレーターコード（下6桁）
@@ -42,16 +33,6 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     public String getOperatorCode6() {
         return vo.getOperatorCode6();
     }
-
-    /**
-     * オペレーターコードのＧｅｔ
-     *
-     * @return オペレーターコード
-     */
-    public String getOperatorCode() {
-        return vo.getOperatorCodePrefix() + vo.getOperatorCode6();
-    }
-
     /**
      * オペレーター名のＧｅｔ
      *
@@ -60,7 +41,6 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     public String getOperatorName() {
         return vo.getOperatorName();
     }
-
     /**
      * メールアドレスのＧｅｔ
      *
@@ -69,7 +49,6 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     public String getMailAddress() {
         return vo.getMailAddress();
     }
-
     /**
      * 有効期限開始日のＧｅｔ
      *
@@ -78,7 +57,6 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     public LocalDate getExpirationStartDate() {
         return vo.getExpirationStartDate();
     }
-
     /**
      * 有効期限終了日のＧｅｔ
      *
@@ -87,50 +65,36 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     public LocalDate getExpirationEndDate() {
         return vo.getExpirationEndDate();
     }
-//	/**
-//	 * 機器認証のＧｅｔ
-//	 * @return 機器認証
-//	 */
-//	public boolean getIsDeviceAuth() { return vo.getIsDeviceAuth(); }
-//	/**
-//	 * ＪＡIDのＧｅｔ
-//	 * @return ＪＡID
-//	 */
-//	public long getJaId() {return vo.getJaId(); }
-//	/**
-//	 * JAコードのＧｅｔ
-//	 * @return ＪＡコード
-//	 */
-//	public String getJaCode() {return vo.getJaCode(); }
-	/**
-	 * 店舗IDのＧｅｔ
-	 * @return 店舗ID
-	 */
-	public Long getTempoId() {return vo.getTempoId(); }
-//    /**
-//     * 店舗コードのＧｅｔ
-//     *
-//     * @return 店舗コード
-//     */
-//    public String getTempoCode() {
-//        return vo.getTempoCode();
-//    }
-//
+    /**
+     * 店舗IDのＧｅｔ
+     *
+     * @return 店舗ID
+     */
+    public Long getTempoId() {
+        return vo.getTempoId();
+    }
     /**
      * 変更事由のＧｅｔ
+     *
      * @return 変更事由
      */
     public String getChangeCause() {
         return vo.getChangeCause();
     }
-	/**
-	 * パスワードのＧｅｔ
-	 * @return パスワード
-	 */
-	public String getPassword() {return vo.getPassword(); }
+    /**
+     * パスワードのＧｅｔ
+     *
+     * @return パスワード
+     */
+    public String getPassword() {
+        return vo.getPassword();
+    }
     /**
      * パスワードの確認入力のＧｅｔ
+     *
      * @return パスワードの確認入力
      */
-    public String getConfirmPassword() {return vo.getConfirmPassword(); }
+    public String getConfirmPassword() {
+        return vo.getConfirmPassword();
+    }
 }

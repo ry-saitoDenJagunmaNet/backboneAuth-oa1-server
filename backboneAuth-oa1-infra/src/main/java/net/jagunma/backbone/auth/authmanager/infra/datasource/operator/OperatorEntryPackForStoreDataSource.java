@@ -22,138 +22,138 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class OperatorEntryPackForStoreDataSource implements
-	OperatorEntryPackRepositoryForStore {
+    OperatorEntryPackRepositoryForStore {
 
-	private final OperatorEntityDao operatorEntityDao;
-	private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
-	private final OperatorHistoryEntityDao operatorHistoryEntityDao;
-	private final PasswordHistoryEntityDao passwordHistoryEntityDao;
+    private final OperatorEntityDao operatorEntityDao;
+    private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
+    private final OperatorHistoryEntityDao operatorHistoryEntityDao;
+    private final PasswordHistoryEntityDao passwordHistoryEntityDao;
 
-	// コンストラクタ
-	public OperatorEntryPackForStoreDataSource(
-		OperatorEntityDao operatorEntityDao,
-		OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
-		OperatorHistoryEntityDao operatorHistoryEntityDao,
-		PasswordHistoryEntityDao passwordHistoryEntityDao) {
+    // コンストラクタ
+    public OperatorEntryPackForStoreDataSource(
+        OperatorEntityDao operatorEntityDao,
+        OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
+        OperatorHistoryEntityDao operatorHistoryEntityDao,
+        PasswordHistoryEntityDao passwordHistoryEntityDao) {
 
-		this.operatorEntityDao = operatorEntityDao;
-		this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
-		this.operatorHistoryEntityDao = operatorHistoryEntityDao;
-		this.passwordHistoryEntityDao = passwordHistoryEntityDao;
-	}
+        this.operatorEntityDao = operatorEntityDao;
+        this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
+        this.operatorHistoryEntityDao = operatorHistoryEntityDao;
+        this.passwordHistoryEntityDao = passwordHistoryEntityDao;
+    }
 
-	/**
-	 * オペレーターエントリーパックのインサートを行います。
-	 *
-	 * @param operatorEntryPack オペレーターエントリーパック
-	 */
-	public void insert(OperatorEntryPack operatorEntryPack) {
+    /**
+     * オペレーターエントリーパックのインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     */
+    public void insert(OperatorEntryPack operatorEntryPack) {
 
-		// オペレーター（コード）がすでに存在しているかのチェックを行います
-		checkAlreadyExists(operatorEntryPack.getOperatorCode());
+        // オペレーター（コード）がすでに存在しているかのチェックを行います
+        checkAlreadyExists(operatorEntryPack.getOperatorCode());
 
-		// オペレーターのインサートを行います
-		OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
+        // オペレーターのインサートを行います
+        OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
 
-		// オペレーター履歴ヘッダーのインサートを行います
-		OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
+        // オペレーター履歴ヘッダーのインサートを行います
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
 
-		// オペレーター履歴のインサートを行います
-		insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
+        // オペレーター履歴のインサートを行います
+        insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
 
-		// パスワード履歴のインサートを行います
-		insertPasswordHistory(operatorEntryPack, operatorEntity);
-	}
+        // パスワード履歴のインサートを行います
+        insertPasswordHistory(operatorEntryPack, operatorEntity);
+    }
 
-	/**
-	 * オペレーター（コード）がすでに存在しているかのチェックを行います。
-	 *
-	 * @param operatorCode オペレーターコード
-	 */
-	private void checkAlreadyExists(String operatorCode) {
-		OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+    /**
+     * オペレーター（コード）がすでに存在しているかのチェックを行います。
+     *
+     * @param operatorCode オペレーターコード
+     */
+    private void checkAlreadyExists(String operatorCode) {
+        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
 
-		operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
+        operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
 
-		if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
-			throw new GunmaRuntimeException("EOA11001", "オペレーターコード");
-		}
-	}
+        if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
+            throw new GunmaRuntimeException("EOA11001", "オペレーターコード");
+        }
+    }
 
-	/**
-	 * オペレーターのインサートを行います。
-	 *
-	 * @param operatorEntryPack オペレーターエントリーパック
-	 * @return オペレーターエンティティ
-	 */
-	private OperatorEntity insertOperator(OperatorEntryPack operatorEntryPack) {
-		OperatorEntity operatorEntity = new OperatorEntity();
+    /**
+     * オペレーターのインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     * @return オペレーターエンティティ
+     */
+    private OperatorEntity insertOperator(OperatorEntryPack operatorEntryPack) {
+        OperatorEntity operatorEntity = new OperatorEntity();
 
-		operatorEntity.setOperatorCode(operatorEntryPack.getOperatorCode());
-		operatorEntity.setOperatorName(operatorEntryPack.getOperatorName());
-		operatorEntity.setMailAddress(operatorEntryPack.getMailAddress());
-		operatorEntity.setExpirationStartDate(operatorEntryPack.getExpirationStartDate());
-		operatorEntity.setExpirationEndDate(operatorEntryPack.getExpirationEndDate());
-		operatorEntity.setIsDeviceAuth(false);
-		operatorEntity.setJaId(operatorEntryPack.getJaId());
-		operatorEntity.setJaCode(operatorEntryPack.getJaCode());
-		operatorEntity.setTempoId(operatorEntryPack.getTempoId());
-		operatorEntity.setTempoCode(operatorEntryPack.getTempoCode());
-		operatorEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
+        operatorEntity.setOperatorCode(operatorEntryPack.getOperatorCode());
+        operatorEntity.setOperatorName(operatorEntryPack.getOperatorName());
+        operatorEntity.setMailAddress(operatorEntryPack.getMailAddress());
+        operatorEntity.setExpirationStartDate(operatorEntryPack.getExpirationStartDate());
+        operatorEntity.setExpirationEndDate(operatorEntryPack.getExpirationEndDate());
+        operatorEntity.setIsDeviceAuth(false);
+        operatorEntity.setJaId(operatorEntryPack.getJaId());
+        operatorEntity.setJaCode(operatorEntryPack.getJaCode());
+        operatorEntity.setTempoId(operatorEntryPack.getTempoId());
+        operatorEntity.setTempoCode(operatorEntryPack.getTempoCode());
+        operatorEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
 
-		operatorEntityDao.insert(operatorEntity);
+        operatorEntityDao.insert(operatorEntity);
 
-		return operatorEntity;
-	}
+        return operatorEntity;
+    }
 
-	/**
-	 * オペレーター履歴ヘッダーのインサートを行います。
-	 *
-	 * @param operatorEntryPack オペレーターエントリーパック
-	 * @param operatorEntity オペレーターエンティティ
-	 * @return オペレーター履歴ヘッダーエンティティ
-	 */
-	private OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
-		OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = new OperatorHistoryHeaderEntity();
+    /**
+     * オペレーター履歴ヘッダーのインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     * @param operatorEntity オペレーターエンティティ
+     * @return オペレーター履歴ヘッダーエンティティ
+     */
+    private OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = new OperatorHistoryHeaderEntity();
 
-		operatorHistoryHeaderEntity.setOperatorId(operatorEntity.getOperatorId());
-		operatorHistoryHeaderEntity.setChangeDateTime(operatorEntity.getCreatedAt());
-		operatorHistoryHeaderEntity.setChangeCause(operatorEntryPack.getChangeCause());
+        operatorHistoryHeaderEntity.setOperatorId(operatorEntity.getOperatorId());
+        operatorHistoryHeaderEntity.setChangeDateTime(operatorEntity.getCreatedAt());
+        operatorHistoryHeaderEntity.setChangeCause(operatorEntryPack.getChangeCause());
 
-		operatorHistoryHeaderEntityDao.insert(operatorHistoryHeaderEntity);
+        operatorHistoryHeaderEntityDao.insert(operatorHistoryHeaderEntity);
 
-		return operatorHistoryHeaderEntity;
-	}
+        return operatorHistoryHeaderEntity;
+    }
 
-	/**
-	 * オペレーター履歴のインサートを行います。
-	 *
-	 * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
-	 * @param operatorEntity オペレーターエンティティ
-	 */
-	private void insertOperatorHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity, OperatorEntity operatorEntity) {
+    /**
+     * オペレーター履歴のインサートを行います。
+     *
+     * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
+     * @param operatorEntity オペレーターエンティティ
+     */
+    private void insertOperatorHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity, OperatorEntity operatorEntity) {
 
-		OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
+        OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
 
-		operatorHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
+        operatorHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
 
-		operatorHistoryEntityDao.insert(operatorHistoryEntity);
-	}
+        operatorHistoryEntityDao.insert(operatorHistoryEntity);
+    }
 
-	/**
-	 * パスワード履歴のインサートを行います。
-	 *
-	 * @param operatorEntryPack オペレーターエントリーパック
-	 * @param operatorEntity オペレーターエンティティ
-	 */
-	private void insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
-		PasswordHistoryEntity passwordHistoryEntity = new PasswordHistoryEntity();
+    /**
+     * パスワード履歴のインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     * @param operatorEntity オペレーターエンティティ
+     */
+    private void insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+        PasswordHistoryEntity passwordHistoryEntity = new PasswordHistoryEntity();
 
-		passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
-		passwordHistoryEntity.setChangeDateTime(operatorEntity.getCreatedAt());
-		passwordHistoryEntity.setPassword(operatorEntryPack.getPassword());
-		passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
+        passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
+        passwordHistoryEntity.setChangeDateTime(operatorEntity.getCreatedAt());
+        passwordHistoryEntity.setPassword(operatorEntryPack.getPassword());
+        passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
 
-		passwordHistoryEntityDao.insert(passwordHistoryEntity);
-	}
+        passwordHistoryEntityDao.insert(passwordHistoryEntity);
+    }
 }

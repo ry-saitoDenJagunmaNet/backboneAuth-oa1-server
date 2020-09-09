@@ -5,11 +5,11 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator;
  */
 public interface OperatorEntryPackRepositoryForStore {
 
-	/**
-	 * オペレーターエントリーパックのインサートを行います。
-	 *
-	 * @param operatorEntryPack オペレーターエントリーパック
-	 */
-	void insert(OperatorEntryPack operatorEntryPack);
+    /**
+     * オペレーターエントリーパックのインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     */
+    void insert(OperatorEntryPack operatorEntryPack);
 
 }
