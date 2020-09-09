@@ -59,9 +59,7 @@ class Oa11020InitPresenterTest {
         // 実行
         presenter.bindTo(vo);
 
-
         // 結果確認
         assertThat(vo).isEqualToComparingFieldByField(expectedVo);
-
     }
 }
