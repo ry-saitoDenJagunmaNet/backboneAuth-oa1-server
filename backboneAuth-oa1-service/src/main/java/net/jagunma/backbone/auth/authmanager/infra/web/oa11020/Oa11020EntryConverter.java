@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 
 /**
  * OA11020 オペレーター登録サービス Request Converter
