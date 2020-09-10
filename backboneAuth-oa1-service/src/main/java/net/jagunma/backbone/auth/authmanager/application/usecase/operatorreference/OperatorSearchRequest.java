@@ -112,7 +112,7 @@ public interface OperatorSearchRequest {
      * 取引ロール一覧フィルター用サブシステムコンボボックスリストのＧｅｔ
      * @return 取引ロール一覧フィルター用サブシステムコンボボックスリスト
      */
-//	List<SubSystem> getBizTranRoleSubSystemList();
+//    List<SubSystem> getBizTranRoleSubSystemList();
     /**
      * 取引ロール一覧のＧｅｔ
      * @return 取引ロール一覧

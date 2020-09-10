@@ -13,9 +13,9 @@ public class Oa12060Vo extends BaseOfResponseVo {
     private static final long serialVersionUID = 1L;
 
     // コンストラクタ
-    public Oa12060Vo() {
-    }
+    public Oa12060Vo() {}
 
+    // ファクトリーメソッド
     public void createFrom(
         String yearMonth,
         Short calendarTypeFilterCheck1,
@@ -23,8 +23,7 @@ public class Oa12060Vo extends BaseOfResponseVo {
         Short calendarTypeFilterCheck3,
         String workingdayOrHolidaySelect) {
 
-        this.yearMonth = LocalDate
-            .parse(yearMonth + "/01", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        this.yearMonth = LocalDate.parse(yearMonth + "/01", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
         this.calendarTypeFilterCheck1 = calendarTypeFilterCheck1;
         this.calendarTypeFilterCheck2 = calendarTypeFilterCheck2;
         this.calendarTypeFilterCheck3 = calendarTypeFilterCheck3;
@@ -56,9 +55,21 @@ public class Oa12060Vo extends BaseOfResponseVo {
      */
     private String workingdayOrHolidaySelect;
     /**
-     * カレンダー検索結果レスポンス（カレンダーテーブルHtml）
+     * カレンダーテーブルHtml
      */
-    private Oa12060SearchResponseVo searchResponse = new Oa12060SearchResponseVo();
+    private String calendarTable;
+    /**
+     * 表示対象経済選択無効
+     */
+    private boolean calendarTypeFilterCheck1disabled;
+    /**
+     * 表示対象信用選択無効
+     */
+    private boolean calendarTypeFilterCheck2disabled;
+    /**
+     * 表示対象広域物流選択無効
+     */
+    private boolean calendarTypeFilterCheck3disabled;
     /**
      * カレンダーリスト
      */
@@ -67,63 +78,66 @@ public class Oa12060Vo extends BaseOfResponseVo {
     public LocalDate getYearMonth() {
         return yearMonth;
     }
-
     public void setYearMonth(LocalDate yearMonth) {
         this.yearMonth = yearMonth;
     }
-
     public String getYearMonthToString() {
         return yearMonthToString;
     }
-
     public void setYearMonthToString(String yearMonthToString) {
         this.yearMonthToString = yearMonthToString;
     }
-
     public Short getCalendarTypeFilterCheck1() {
         return calendarTypeFilterCheck1;
     }
-
     public void setCalendarTypeFilterCheck1(Short calendarTypeFilterCheck1) {
         this.calendarTypeFilterCheck1 = calendarTypeFilterCheck1;
     }
-
     public Short getCalendarTypeFilterCheck2() {
         return calendarTypeFilterCheck2;
     }
-
     public void setCalendarTypeFilterCheck2(Short calendarTypeFilterCheck2) {
         this.calendarTypeFilterCheck2 = calendarTypeFilterCheck2;
     }
-
     public Short getCalendarTypeFilterCheck3() {
         return calendarTypeFilterCheck3;
     }
-
     public void setCalendarTypeFilterCheck3(Short calendarTypeFilterCheck3) {
         this.calendarTypeFilterCheck3 = calendarTypeFilterCheck3;
     }
-
     public String getWorkingdayOrHolidaySelect() {
         return workingdayOrHolidaySelect;
     }
-
     public void setWorkingdayOrHolidaySelect(String workingdayOrHolidaySelect) {
         this.workingdayOrHolidaySelect = workingdayOrHolidaySelect;
     }
-
-    public Oa12060SearchResponseVo getSearchResponse() {
-        return searchResponse;
+    public String getCalendarTable() {
+        return calendarTable;
     }
-
-    public void setSearchResponse(Oa12060SearchResponseVo searchResponse) {
-        this.searchResponse = searchResponse;
+    public void setCalendarTable(String calendarTable) {
+        this.calendarTable = calendarTable;
     }
-
+    public boolean getCalendarTypeFilterCheck1disabled() {
+        return calendarTypeFilterCheck1disabled;
+    }
+    public void setCalendarTypeFilterCheck1disabled(boolean calendarTypeFilterCheck1disabled) {
+        this.calendarTypeFilterCheck1disabled = calendarTypeFilterCheck1disabled;
+    }
+    public boolean getCalendarTypeFilterCheck2disabled() {
+        return calendarTypeFilterCheck2disabled;
+    }
+    public void setCalendarTypeFilterCheck2disabled(boolean calendarTypeFilterCheck2disabled) {
+        this.calendarTypeFilterCheck2disabled = calendarTypeFilterCheck2disabled;
+    }
+    public boolean getCalendarTypeFilterCheck3disabled() {
+        return calendarTypeFilterCheck3disabled;
+    }
+    public void setCalendarTypeFilterCheck3disabled(boolean calendarTypeFilterCheck3disabled) {
+        this.calendarTypeFilterCheck3disabled = calendarTypeFilterCheck3disabled;
+    }
     public List<Oa12060CalendarVo> getCalendarList() {
         return CalendarList;
     }
-
     public void setCalendarList(List<Oa12060CalendarVo> CalendarList) {
         this.CalendarList = CalendarList;
     }

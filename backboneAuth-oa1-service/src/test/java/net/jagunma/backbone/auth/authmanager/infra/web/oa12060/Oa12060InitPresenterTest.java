@@ -13,27 +13,41 @@ class Oa12060InitPresenterTest {
 
     /**
      * {@link Oa12060InitPresenter}のテスト
+     *  ●パターン
+     *    通常
      *
-     * ・ レスポンスの値が正常にセットできることを確認する。
+     *  ●検証事項
+     *  ・ Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
-    void 実行検証() {
+    void bindTo_test1() {
+
         // 事前準備
         Oa12060Vo vo = new Oa12060Vo();
 
-        // 実行
+        // 実行値
         Oa12060InitPresenter presenter = new Oa12060InitPresenter();
+
+        // 期待値
+        Oa12060Vo expectedVo = new Oa12060Vo();
+        expectedVo.setYearMonth(LocalDate.now());
+        expectedVo.setYearMonthToString(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM")));
+        expectedVo.setCalendarTypeFilterCheck1((short) 1);
+        expectedVo.setCalendarTypeFilterCheck2((short) 1);
+        expectedVo.setCalendarTypeFilterCheck3((short) 1);
+        expectedVo.setWorkingdayOrHolidaySelect("");
+        expectedVo.setCalendarTable(null);
+        expectedVo.setCalendarTypeFilterCheck1disabled(false);
+        expectedVo.setCalendarTypeFilterCheck2disabled(false);
+        expectedVo.setCalendarTypeFilterCheck3disabled(false);
+        expectedVo.setCalendarList(null);
+        expectedVo.setMessage(null);
+
+        // 実行
         presenter.bindTo(vo);
 
-        //　結果確認
-        assertThat(vo).isNotNull();
-        assertThat(vo.getYearMonth().compareTo(LocalDate.now())).isEqualTo(0);
-        assertThat(vo.getYearMonthToString()).isEqualTo(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM")));
-        assertThat(vo.getCalendarTypeFilterCheck1()).isEqualTo((short) 1);
-        assertThat(vo.getCalendarTypeFilterCheck2()).isEqualTo((short) 1);
-        assertThat(vo.getCalendarTypeFilterCheck3()).isEqualTo((short) 1);
-        assertThat(vo.getWorkingdayOrHolidaySelect().length()).isEqualTo(0);
-
+        // 結果検証
+        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
     }
 }

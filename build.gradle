@@ -15,7 +15,7 @@ buildscript {
         commonServerVersion = '20.2.1'
         commonCommonVersion = '20.1.15'
         commonFaoVersion = '20.0.113'
-        commonUtilsVersion = '20.1.60'
+        commonUtilsVersion = '20.2.7'
         domaVersion = '2.41.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'

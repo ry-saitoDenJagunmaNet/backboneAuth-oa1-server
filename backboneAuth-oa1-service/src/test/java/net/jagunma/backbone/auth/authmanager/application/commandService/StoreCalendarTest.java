@@ -43,10 +43,6 @@ class StoreCalendarTest {
         // 実行
         int result = target.execute(new CalendarStoreRequest() {
             @Override
-            public LocalDate getYearMonth() {
-                return null;
-            }
-            @Override
             public List<Oa12060StoreDetailsConverter> createCalendarList() {
                 List<Oa12060StoreDetailsConverter> list = newArrayList();
                 list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,true,1));
@@ -82,10 +78,6 @@ class StoreCalendarTest {
 
         // 実行
         int result = target.execute(new CalendarStoreRequest() {
-            @Override
-            public LocalDate getYearMonth() {
-                return null;
-            }
             @Override
             public List<Oa12060StoreDetailsConverter> createCalendarList() {
                 return newArrayList();

@@ -10,6 +10,7 @@ import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.util.objects2.Objects2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -162,9 +163,9 @@ public class Oa12060Controller extends BaseOfController {
             // カレンダー検索
             search(model,
                 vo.getYearMonthToString(),
-                vo.getCalendarTypeFilterCheck1().toString(),
-                vo.getCalendarTypeFilterCheck2().toString(),
-                vo.getCalendarTypeFilterCheck3().toString(),
+                Objects2.isNull(vo.getCalendarTypeFilterCheck1())? "0" : vo.getCalendarTypeFilterCheck1().toString() ,
+                Objects2.isNull(vo.getCalendarTypeFilterCheck2())? "0" : vo.getCalendarTypeFilterCheck2().toString() ,
+                Objects2.isNull(vo.getCalendarTypeFilterCheck3())? "0" :vo.getCalendarTypeFilterCheck3().toString(),
                 vo.getWorkingdayOrHolidaySelect());
 
             vo = (Oa12060Vo)model.getAttribute("form");

@@ -2,8 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
@@ -27,16 +25,6 @@ class Oa12060StoreConverter implements CalendarStoreRequest {
     // ファクトリーメソッド
     public static Oa12060StoreConverter with(Oa12060Vo oa12060Vo) {
         return new Oa12060StoreConverter(oa12060Vo);
-    }
-
-    /**
-     * 年月のＧｅｔ
-     *
-     * @return 年月
-     */
-    public LocalDate getYearMonth() {
-        return LocalDate.parse( vo.getYearMonthToString() + "/01", DateTimeFormatter
-            .ofPattern("yyyy/MM/dd"));
     }
 
     /**

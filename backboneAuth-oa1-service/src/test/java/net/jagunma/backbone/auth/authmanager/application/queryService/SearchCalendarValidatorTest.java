@@ -26,7 +26,7 @@ class SearchCalendarValidatorTest {
             }
         };
 
-        //　実行
+        // 実行
         SearchCalendarValidator.with(request).validate();
     }
 
@@ -39,7 +39,7 @@ class SearchCalendarValidatorTest {
     @Tag(TestSize.SMALL)
     void Requestが未設定の場合の確認() {
         try {
-            //　実行
+            // 実行
             SearchCalendarValidator.with(null).validate();
         } catch (GunmaRuntimeException e) {
             // 結果確認
@@ -65,7 +65,7 @@ class SearchCalendarValidatorTest {
         };
 
         try {
-            //　実行
+            // 実行
             SearchCalendarValidator.with(request).validate();
         } catch (GunmaRuntimeException e) {
             // 結果確認

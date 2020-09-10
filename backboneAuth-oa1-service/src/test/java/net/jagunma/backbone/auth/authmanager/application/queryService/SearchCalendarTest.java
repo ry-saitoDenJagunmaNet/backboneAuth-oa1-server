@@ -65,7 +65,7 @@ class SearchCalendarTest {
             }
         });
 
-        // 結果確認なし　処理が通ればOK
+        // 結果確認なし 処理が通ればOK
     }
 
 

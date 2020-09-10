@@ -14,6 +14,7 @@ class StoreCalendarValidator {
     StoreCalendarValidator(CalendarStoreRequest request) {
         this.request = request;
     }
+
     // ファクトリーメソッド
     public static StoreCalendarValidator with(CalendarStoreRequest request) {
         return new StoreCalendarValidator(request);
@@ -24,7 +25,7 @@ class StoreCalendarValidator {
      */
     public void validate() {
         // 未入力チェック
-        Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
+        Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13001"));
     }
 }
 
