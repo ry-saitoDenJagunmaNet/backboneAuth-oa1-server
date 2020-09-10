@@ -14,15 +14,15 @@ class Oa11020EntryConverterTest {
     /**
      * {@link Oa11020EntryConverter#with(Oa11020Vo)}テスト
      *  ●パターン
-     *    通常
+     *    正常
      *
-     *  ●確認事項
-     *  ・ Converterへのセット
+     *  ●検証事項
+     *  ・Converterへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void with_test1() {
+    void with_test0() {
         // 事前準備
         String operatorCode6 = "123456";
         String operatorName = "オペレーター名";
@@ -49,7 +49,7 @@ class Oa11020EntryConverterTest {
         // 実行
         Oa11020EntryConverter converter = Oa11020EntryConverter.with(vo);
 
-        // 結果確認
+        // 結果検証
         assertTrue(converter instanceof Oa11020EntryConverter);
         assertThat(converter.getOperatorCode6()).isEqualTo(operatorCode6);
         assertThat(converter.getOperatorName()).isEqualTo(operatorName);

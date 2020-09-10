@@ -15,15 +15,15 @@ class Oa11020InitPresenterTest {
     /**
      * {@link Oa11020InitPresenter#bindTo(Oa11020Vo)}テスト
      *  ●パターン
-     *    通常
+     *    正常
      *
-     *  ●確認事項
-     *  ・ Voへのセット
+     *  ●検証事項
+     *  ・Voへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void bindTo_test1() {
+    void bindTo_test0() {
         // 事前準備
         String jaCode = "001";
         String jaName = "テストＪＡ";
@@ -59,7 +59,7 @@ class Oa11020InitPresenterTest {
         // 実行
         presenter.bindTo(vo);
 
-        // 結果確認
+        // 結果検証
         assertThat(vo).isEqualToComparingFieldByField(expectedVo);
     }
 }
