@@ -14,6 +14,7 @@ class SearchCalendarValidator {
     SearchCalendarValidator(CalendarSearchRequest request) {
         this.request = request;
     }
+
     // ファクトリーメソッド
     public static SearchCalendarValidator with(CalendarSearchRequest request) {
         return new SearchCalendarValidator(request);
@@ -24,8 +25,8 @@ class SearchCalendarValidator {
      */
     public void validate() {
         // 未入力チェック
-        Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13004"));
-        Preconditions.checkNotNull(request.getYearMonth(), () -> new GunmaRuntimeException("EOA13001", "年月"));
+        Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13001"));
+        Preconditions.checkNotNull(request.getYearMonth(), () -> new GunmaRuntimeException("EOA13002", "年月"));
     }
 }
 
