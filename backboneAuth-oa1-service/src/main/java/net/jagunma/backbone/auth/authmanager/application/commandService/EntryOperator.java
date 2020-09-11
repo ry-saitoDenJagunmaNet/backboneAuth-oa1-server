@@ -20,13 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class EntryOperator {
 
     private final OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore;
-//    private final BranchAtMomentRepository branchAtMomentRepository;
+    private final BranchAtMomentRepository branchAtMomentRepository;
 
-    public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore) {
-//        BranchAtMomentRepository branchAtMomentRepository) {
+    public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore,
+        BranchAtMomentRepository branchAtMomentRepository) {
 
         this.operatorEntryPackRepositoryForStore = operatorEntryPackRepositoryForStore;
-//        this.branchAtMomentRepository = branchAtMomentRepository;
+        this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
     /**
@@ -67,8 +67,7 @@ public class EntryOperator {
 
         criteria.getIdentifierCriteria().setEqualTo(tempoId);
 
-//        return branchAtMomentRepository.findOneBy(criteria);
-        return new BranchAtMoment();
+        return branchAtMomentRepository.findOneBy(criteria);
     }
 
     /**
