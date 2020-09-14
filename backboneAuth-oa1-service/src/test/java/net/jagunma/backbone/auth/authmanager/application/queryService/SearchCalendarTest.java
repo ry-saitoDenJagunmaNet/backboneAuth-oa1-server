@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchRequest;
@@ -16,6 +17,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
 
 class SearchCalendarTest {
 
@@ -33,47 +35,16 @@ class SearchCalendarTest {
         }
         return Calendars.createFrom(calendaerList);
     }
-    private CalendarSearchRequest createCalendarSearchRequest(LocalDate yearMonth) {
-        // CalendarSearchRequestオブジェクトの作成
-        CalendarSearchRequest request = new CalendarSearchRequest() {
-            @Override
-            public LocalDate getYearMonth() {
-                return yearMonth;
-            }
-        };
-        return request;
-    }
-
-    /**
-      * {@link SearchCalendar#execute(CalendarSearchRequest, CalendarSearchResponse)}のテスト
-      *  ●パターン
-      *    正常
-      *
-      *  ●検証事項
-      *  ・ CalendarsRepository.selectByの引数（検索条件：日付範囲）がセットされていること
-      */
-    @Test
-    @Tag(TestSize.SMALL)
-    void execute_test0() {
-
-        // 期待値
-        CalendarCriteria expectedCriteria = new CalendarCriteria();
-        expectedCriteria.getDateCriteria().setFrom(yearMonth.withDayOfMonth(1));
-        expectedCriteria.getDateCriteria().setTo(yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1));
-
-        // 実行スタブ
-        SearchCalendar target = new SearchCalendar(new CalendarsRepository() {
+    private CalendarsRepository createCalendarsRepository(Calendars calendars) {
+        // CalendarsRepositoryオブジェクトの作成
+        return new CalendarsRepository() {
             @Override
             public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
                 return null;
             }
             @Override
             public Calendars selectBy(CalendarCriteria calendarCriteria) {
-                // 結果検証
-//                assertThat(calendarCriteria).isEqualToComparingFieldByField(expectedCriteria);
-                assertThat(calendarCriteria.getDateCriteria().getFrom()).isEqualTo(yearMonth.withDayOfMonth(1));
-                assertThat(calendarCriteria.getDateCriteria().getTo()).isEqualTo(yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1));
-                return null;
+                return calendars;
             }
             @Override
             public Calendars selectAll(Orders orders) {
@@ -83,17 +54,16 @@ class SearchCalendarTest {
             public Calendars selectAll() {
                 return null;
             }
-        });
-
-        // 実行
-        target.execute(createCalendarSearchRequest(yearMonth)
-            , new CalendarSearchResponse() {
-                @Override
-                public void setYearMonth(LocalDate thisYearMonth) {}
-                @Override
-                public void setCalendars(Calendars thisCalendars) {}
+        };
+    }
+    private CalendarSearchRequest createCalendarSearchRequest(LocalDate yearMonth) {
+        // CalendarSearchRequestオブジェクトの作成
+        return new CalendarSearchRequest() {
+            @Override
+            public LocalDate getYearMonth() {
+                return yearMonth;
             }
-        );
+        };
     }
 
     /**
@@ -106,33 +76,16 @@ class SearchCalendarTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void execute_test1() {
+    void execute_test0() {
 
         // 期待値
         Calendars expectedCalendars = createCalendars();
 
-        // 実行スタブ
-        SearchCalendar target = new SearchCalendar(new CalendarsRepository() {
-            @Override
-            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public Calendars selectBy(CalendarCriteria calendarCriteria) {
-                return createCalendars();
-            }
-            @Override
-            public Calendars selectAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public Calendars selectAll() {
-                return null;
-            }
-        });
+        // テスト対象クラス生成
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(createCalendars()));
 
         // 実行
-        target.execute(createCalendarSearchRequest(yearMonth)
+        searchCalendar.execute(createCalendarSearchRequest(yearMonth)
             , new CalendarSearchResponse() {
                 @Override
                 public void setYearMonth(LocalDate thisYearMonth) {
@@ -162,33 +115,16 @@ class SearchCalendarTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void execute_test2() {
+    void execute_test1() {
 
         // 期待値
         Calendars expectedCalendars = Calendars.createFrom(newArrayList());
 
-        // 実行スタブ
-        SearchCalendar target = new SearchCalendar(new CalendarsRepository() {
-            @Override
-            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public Calendars selectBy(CalendarCriteria calendarCriteria) {
-                return Calendars.createFrom(newArrayList());
-            }
-            @Override
-            public Calendars selectAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public Calendars selectAll() {
-                return null;
-            }
-        });
+        // テスト対象クラス生成
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(Calendars.createFrom(newArrayList())));
 
         // 実行
-        target.execute(createCalendarSearchRequest(yearMonth)
+        searchCalendar.execute(createCalendarSearchRequest(yearMonth)
             , new CalendarSearchResponse() {
                 @Override
                 public void setYearMonth(LocalDate thisYearMonth) {
@@ -202,5 +138,36 @@ class SearchCalendarTest {
                 }
             }
         );
+    }
+
+    /**
+     * {@link SearchCalendar createCriteria()}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・ 正常終了
+     *  ・ CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void createCriteria_test0()
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        // 期待値
+        CalendarCriteria expectedCriteria = new CalendarCriteria();
+        expectedCriteria.getDateCriteria().setFrom(yearMonth.withDayOfMonth(1));
+        expectedCriteria.getDateCriteria().setTo(yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1));
+
+        // テスト対象クラス生成
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(null));
+
+        // 実行
+        CalendarCriteria actual = searchCalendar.createCriteria(createCalendarSearchRequest(yearMonth));
+
+        // 結果検証
+//        assertThat(calendarCriteria).isEqualToComparingFieldByField(expectedCriteria);
+        assertThat(actual.getDateCriteria().getFrom()).isEqualTo(expectedCriteria.getDateCriteria().getFrom());
+        assertThat(actual.getDateCriteria().getTo()).isEqualTo(expectedCriteria.getDateCriteria().getTo());
     }
 }

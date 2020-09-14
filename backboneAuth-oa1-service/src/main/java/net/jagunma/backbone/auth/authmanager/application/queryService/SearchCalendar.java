@@ -41,10 +41,9 @@ public class SearchCalendar {
      * @param request カレンダーメンテナンス検索サービス Request
      * @return カレンダー検索条件
      */
-    private CalendarCriteria createCriteria(CalendarSearchRequest request) {
+    CalendarCriteria createCriteria(CalendarSearchRequest request) {
 
         CalendarCriteria criteria = new CalendarCriteria();
-
         criteria.getDateCriteria().setFrom(request.getYearMonth().withDayOfMonth(1));
         criteria.getDateCriteria().setTo(request.getYearMonth().withDayOfMonth(1).plusMonths(1).minusDays(1));
 

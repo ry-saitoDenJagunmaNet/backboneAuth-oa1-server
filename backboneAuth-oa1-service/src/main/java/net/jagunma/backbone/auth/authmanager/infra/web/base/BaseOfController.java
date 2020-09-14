@@ -47,7 +47,7 @@ public class BaseOfController {
                 .withBranchType(BranchType.一般)
                 .withName("")
                 .build())
-            .build();;
+            .build();
         AuditInfoHolder.set(AuthInf.createFrom("006", "001", 18L, "yu001009", "001.001.001.001"),
             DateProvider.currentLocalDateTime(),
             Route.createFrom("", ""),
