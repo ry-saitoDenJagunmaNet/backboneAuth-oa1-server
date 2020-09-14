@@ -1,6 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchRequest;
@@ -12,66 +14,88 @@ import org.junit.jupiter.api.Test;
 class SearchCalendarValidatorTest {
 
     /**
-     * {@link SearchCalendarValidator}のテスト
+     * {@link SearchCalendarValidator#validate()}のテスト
+     *  ●パターン
+     *    正常
      *
-     * ・ リクエストの年月が正常にセットできることを確認する。
+     *  ●検証事項
+     *  ・ 正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
-    void エラーなしの場合の確認() {
+    void validate_test0() {
+
+        // 事前準備
+        LocalDate yearMonth = LocalDate.now();
+
+        // 実行値
         CalendarSearchRequest request = new CalendarSearchRequest() {
             @Override
             public LocalDate getYearMonth() {
-                return LocalDate.now();
+                return yearMonth;
             }
         };
 
-        // 実行
-        SearchCalendarValidator.with(request).validate();
-    }
-
-    /**
-     * {@link SearchCalendarValidator}のテスト
-     *
-     * ・ リクエストが未設定の場合、例外が発生することを確認する。
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void Requestが未設定の場合の確認() {
-        try {
+        assertThatCode(()->
             // 実行
-            SearchCalendarValidator.with(null).validate();
-        } catch (GunmaRuntimeException e) {
-            // 結果確認
-            assertThat(e.getMessageCode()).isEqualTo("EOA13004");
-            assertThat(e.getSimpleMessage()).isEqualTo("リクエストが不正です。");
-            return;
-        }
+            SearchCalendarValidator.with(request).validate())
+            .doesNotThrowAnyException();
     }
 
     /**
-     * {@link SearchCalendarValidator}のテスト
+     * {@link SearchCalendarValidator#validate()}のテスト
+     *  ●パターン
+     *    リクエストの年月がnullのテスト
      *
-     * ・ リクエストの年月が未設定の場合、例外が発生することを確認する。
+     *  ●検証事項
+     *  ・ エラー発生
      */
     @Test
     @Tag(TestSize.SMALL)
-    void Requestの年月が未設定の場合の確認() {
+    void validate_test1() {
+
+        // 事前準備
+        LocalDate yearMonth = null;
+
+        // 実行値
         CalendarSearchRequest request = new CalendarSearchRequest() {
             @Override
             public LocalDate getYearMonth() {
-                return null;
+                return yearMonth;
             }
         };
 
-        try {
+        assertThatThrownBy(()->
             // 実行
-            SearchCalendarValidator.with(request).validate();
-        } catch (GunmaRuntimeException e) {
-            // 結果確認
-            assertThat(e.getMessageCode()).isEqualTo("EOA13001");
-            assertThat(e.getSimpleMessage()).isEqualTo("年月が入力されていません。年月を入力してください。");
-            return;
-        }
+            SearchCalendarValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
+                assertThat(e.getArgs()).containsSequence("年月");
+            });
+    }
+
+    /**
+     * {@link SearchCalendarValidator#validate()}のテスト
+     *  ●パターン
+     *    リクエストがnullのテスト
+     *
+     *  ●検証事項
+     *  ・ エラー発生
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_test2() {
+
+        // 事前準備
+        CalendarSearchRequest request = null;
+
+        assertThatThrownBy(()->
+            // 実行
+            SearchCalendarValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13001");
+            });
     }
 }
