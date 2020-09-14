@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
@@ -94,7 +93,7 @@ class EntryOperatorValidatorTest {
      *    リクエスト不正
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -118,7 +117,7 @@ class EntryOperatorValidatorTest {
      *    未セット  オペレーターコード（下6桁）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -144,7 +143,7 @@ class EntryOperatorValidatorTest {
      *    未セット  オペレーター名
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -170,7 +169,7 @@ class EntryOperatorValidatorTest {
      *    未セット  有効期限（開始日）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -196,7 +195,7 @@ class EntryOperatorValidatorTest {
      *    未セット  有効期限（終了日）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -222,7 +221,7 @@ class EntryOperatorValidatorTest {
      *    未セット  店舗ID
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -248,7 +247,7 @@ class EntryOperatorValidatorTest {
      *    未セット  変更事由
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -274,7 +273,7 @@ class EntryOperatorValidatorTest {
      *    未セット  パスワード
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -300,7 +299,7 @@ class EntryOperatorValidatorTest {
      *    未セット  パスワードの確認入力
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -326,7 +325,7 @@ class EntryOperatorValidatorTest {
      *    桁数チェック  オペレーターコード（下6桁）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -352,7 +351,7 @@ class EntryOperatorValidatorTest {
      *    桁数チェック  オペレーター名
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -378,7 +377,7 @@ class EntryOperatorValidatorTest {
      *    桁数チェック  メールアドレス
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -404,7 +403,7 @@ class EntryOperatorValidatorTest {
      *    桁数チェック  変更事由
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -430,7 +429,7 @@ class EntryOperatorValidatorTest {
      *    桁数チェック  パスワード
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -456,7 +455,7 @@ class EntryOperatorValidatorTest {
      *    全角混入チェック  オペレーターコード（下6桁）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -483,7 +482,7 @@ class EntryOperatorValidatorTest {
      *    全角混入チェック  メールアドレス
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -509,7 +508,7 @@ class EntryOperatorValidatorTest {
      *    全角混入チェック  パスワード
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -535,7 +534,7 @@ class EntryOperatorValidatorTest {
      *    数値チェック  オペレーターコード（下6桁）
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -561,7 +560,7 @@ class EntryOperatorValidatorTest {
      *    範囲指定不正チェック  有効期限
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
@@ -587,7 +586,7 @@ class EntryOperatorValidatorTest {
      *    パスワード不一致
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      *
      */
     @Test
