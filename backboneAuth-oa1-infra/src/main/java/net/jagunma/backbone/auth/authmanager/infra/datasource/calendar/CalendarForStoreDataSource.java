@@ -27,6 +27,8 @@ public class CalendarForStoreDataSource implements CalendarRepositoryForStore {
     @Override
     public Calendar update(Calendar calendar) {
 
+        if (calendar == null) {return null;}
+
         CalendarEntity entity = new CalendarEntity();
         entity.setCalendarId(calendar.getCalendarId());
         entity.setCalendarType(calendar.getCalendarType().getCode());

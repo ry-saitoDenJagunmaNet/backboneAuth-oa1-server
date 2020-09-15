@@ -15,7 +15,7 @@ class TestAuditInfoHolderTest {
     void testSetAuthInf(){
 
         TestAuditInfoHolder.setAuthInf();
-        System.out.println("デフォル");
+        System.out.println("デフォルト");
         System.out.println("## JA ID="+AuditInfoHolder.getJa().getIdentifier()+
             ", CODE="+AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue()+
             ", NAME="+AuditInfoHolder.getJa().getJaAttribute().getName());
