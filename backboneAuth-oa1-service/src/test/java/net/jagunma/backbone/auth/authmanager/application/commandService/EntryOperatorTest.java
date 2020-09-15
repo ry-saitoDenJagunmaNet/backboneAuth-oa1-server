@@ -19,10 +19,12 @@ import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
+import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,21 +38,51 @@ class EntryOperatorTest {
     private String authInfJaCode = "001";            // ＪＡコード
     private void setAuthInf() {
         JaAtMoment jaAtMoment = JaAtMoment.builder()
+            .withIdentifier(6l)
             .withJaAttribute(JaAttribute
                 .builder()
-                .withJaCode(JaCode.of(authInfJaCode))
+                .withJaCode(JaCode.of("006"))
+                .withName("JA前橋市")
+                .withFormalName("")
+                .withAbbreviatedName("")
                 .build())
             .build();
         BranchAtMoment branchAtMoment = BranchAtMoment.builder()
+            .withIdentifier(1l)
             .withJaAtMoment(jaAtMoment)
-            .build();
-
-        AuditInfoHolder.set(AuthInf.createFrom(authInfJaCode, null, null, "xx000000", null),
+            .withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般)
+                .withName("")
+                .build())
+            .build();;
+        AuditInfoHolder.set(AuthInf.createFrom("006", "001", 18L, "yu001009", "001.001.001.001"),
             DateProvider.currentLocalDateTime(),
             Route.createFrom("", ""),
             jaAtMoment,
             branchAtMoment,
-            new SimpleOperator(null, null, null, null, branchAtMoment ));
+            new SimpleOperator(18l, new OperatorCode("yu001009"), "ｙｕ００１００９", 33l, branchAtMoment ));
+//        JaAtMoment jaAtMoment = JaAtMoment.builder()
+//            .withIdentifier(1L)
+//            .withJaAttribute(JaAttribute
+//                .builder()
+//                .withJaCode(JaCode.of(authInfJaCode))
+//                .build())
+//            .build();
+//        BranchAtMoment branchAtMoment = BranchAtMoment.builder()
+//            .withIdentifier(branchAtMomentTempoId)
+//            .withJaAtMoment(jaAtMoment)
+//            .withBranchAttribute(BranchAttribute.builder()
+//                .withBranchType(BranchType.一般)
+//                .withName("")
+//                .build())
+//            .build();
+//
+//        AuditInfoHolder.set(AuthInf.createFrom(null, null, 1L, null, null),
+//            DateProvider.currentLocalDateTime(),
+//            Route.createFrom("", ""),
+//            jaAtMoment,
+//            branchAtMoment,
+//            new SimpleOperator(1L, null, null, branchAtMomentTempoId, branchAtMoment ));
     }
 
     // テスト対象クラス生成
@@ -139,7 +171,7 @@ class EntryOperatorTest {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
-        assertThatThrownBy( () ->
+        assertThatThrownBy(() ->
             // 実行
             entryOperator.getBranchAtMoment(testBranchAtMomentTempoId))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -171,7 +203,7 @@ class EntryOperatorTest {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
-        assertThatThrownBy( () ->
+        assertThatThrownBy(() ->
             // 実行
             entryOperator.checkBranchBelongJa(branchAtMoment))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {

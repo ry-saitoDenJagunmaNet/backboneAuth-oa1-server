@@ -81,7 +81,7 @@ class EntryOperatorValidatorTest {
         // 実行値
         OperatorEntryRequest request = createRequest();
 
-        assertThatCode(()->
+        assertThatCode(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .doesNotThrowAnyException();
@@ -102,7 +102,7 @@ class EntryOperatorValidatorTest {
         // 実行値
         OperatorEntryRequest request = null;
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -127,7 +127,7 @@ class EntryOperatorValidatorTest {
         operatorCode6 = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -153,7 +153,7 @@ class EntryOperatorValidatorTest {
         operatorName = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -179,7 +179,7 @@ class EntryOperatorValidatorTest {
         expirationStartDate = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -205,7 +205,7 @@ class EntryOperatorValidatorTest {
         expirationEndDate = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -231,7 +231,7 @@ class EntryOperatorValidatorTest {
         tempoId = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -257,7 +257,7 @@ class EntryOperatorValidatorTest {
         changeCause = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -283,7 +283,7 @@ class EntryOperatorValidatorTest {
         password = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -309,7 +309,7 @@ class EntryOperatorValidatorTest {
         confirmPassword = null;
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -335,7 +335,7 @@ class EntryOperatorValidatorTest {
         operatorCode6 = Strings2.repeat("*", 7);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -361,7 +361,7 @@ class EntryOperatorValidatorTest {
         operatorName = Strings2.repeat("*", 256);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -387,7 +387,7 @@ class EntryOperatorValidatorTest {
         mailAddress = Strings2.repeat("*", 256);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -413,7 +413,7 @@ class EntryOperatorValidatorTest {
         changeCause = Strings2.repeat("*", 256);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -439,7 +439,7 @@ class EntryOperatorValidatorTest {
         password = Strings2.repeat("*", 11);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -466,7 +466,7 @@ class EntryOperatorValidatorTest {
         operatorCode6 = "１２３";
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -492,7 +492,7 @@ class EntryOperatorValidatorTest {
         mailAddress = "te全st@den.jagunma.net";
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -518,7 +518,7 @@ class EntryOperatorValidatorTest {
         password = "PaSs全WoRd";
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -544,7 +544,7 @@ class EntryOperatorValidatorTest {
         operatorCode6 = "1.3-aB";
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -570,7 +570,7 @@ class EntryOperatorValidatorTest {
         expirationEndDate = LocalDate.of(2020, 8, 31);
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
@@ -595,7 +595,7 @@ class EntryOperatorValidatorTest {
         confirmPassword = "pAsSwOrD";
         OperatorEntryRequest request = createRequest();
 
-        assertThatThrownBy(()->
+        assertThatThrownBy(() ->
             // 実行
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
