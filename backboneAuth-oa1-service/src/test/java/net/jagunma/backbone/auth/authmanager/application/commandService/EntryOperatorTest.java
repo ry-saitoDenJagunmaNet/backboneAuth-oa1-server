@@ -1,10 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
@@ -21,12 +19,10 @@ import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
-import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
-import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -68,7 +64,7 @@ class EntryOperatorTest {
             @Override
             public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
 
-                BranchAtMoment branchAtMoment = createBranchAtMoment(branchAtMomentJaCode);
+                BranchAtMoment branchAtMoment = createBranchAtMoment(branchAtMomentJaCode, branchAtMomentTempoId, branchAtMomentBranchCode);
 
                 return branchAtMoment;
             }
@@ -82,16 +78,21 @@ class EntryOperatorTest {
     }
 
     // 店舗AtMoment
-    private BranchAtMoment createBranchAtMoment(String jaCode) {
+    private BranchAtMoment createBranchAtMoment(String jaCode, Long tempoId, String tempoCode) {
+
+        if (jaCode == null || tempoId == null || tempoCode == null) {
+            return BranchAtMoment.empty();
+        }
+
         BranchAtMoment branchAtMoment = BranchAtMoment.builder()
-            .withIdentifier(branchAtMomentTempoId)
+            .withIdentifier(tempoId)
             .withJaAtMoment(JaAtMoment.builder()
                 .withJaAttribute(JaAttribute.builder()
                     .withJaCode(JaCode.of(jaCode))
                     .build())
                 .build())
             .withBranchAttribute(BranchAttribute.builder()
-                .withBranchCode(BranchCode.of(branchAtMomentBranchCode))
+                .withBranchCode(BranchCode.of(tempoCode))
                 .build())
             .build();
 
@@ -119,31 +120,33 @@ class EntryOperatorTest {
     /**
      * {@link EntryOperator getBranchAtMoment(tempoId)}テスト
      *  ●パターン
-     *    正常
+     *    店舗未存在
      *
      *  ●検証事項
-     *  ・正常終了
+     *  ・エラー発生
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test0() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void getBranchAtMoment_test1() {
 
-        // 期待値
-        String expectedBranchCode = "105";
+        // 実行値
+        branchAtMomentJaCode = null;
+        branchAtMomentTempoId = null;
+        branchAtMomentBranchCode = null;
+        Long testBranchAtMomentTempoId = 105L;
 
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
-        // テスト対象メソッド（取得＆アクセス制限解除）
-        Method method = EntryOperator.class.getDeclaredMethod("getBranchAtMoment", Long.class);
-        method.setAccessible(true);
-
-        // 実行
-        BranchAtMoment branchAtMoment = (BranchAtMoment) method.invoke(entryOperator, branchAtMomentTempoId);
-
-        // 結果検証
-        assertThat(branchAtMoment.getBranchAttribute().getBranchCode().getValue()).isEqualTo(expectedBranchCode);
+        assertThatThrownBy( () ->
+            // 実行
+            entryOperator.getBranchAtMoment(testBranchAtMomentTempoId))
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA12001");
+                assertThat(e.getArgs()).containsSequence(testBranchAtMomentTempoId);
+            });
     }
 
     /**
@@ -157,31 +160,25 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void checkBranchBelongJa_test0() throws NoSuchMethodException {
+    void checkBranchBelongJa_test1() {
 
         // 認証情報
         setAuthInf();
 
         // 実行値
-        String jaCode = "009";
-
-        // 店舗AtMoment
-        BranchAtMoment branchAtMoment = createBranchAtMoment(jaCode);
+        BranchAtMoment branchAtMoment = createBranchAtMoment("009", branchAtMomentTempoId, branchAtMomentBranchCode);
 
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
-        // テスト対象メソッド（取得＆アクセス制限解除）
-        Method method = EntryOperator.class.getDeclaredMethod("checkBranchBelongJa", BranchAtMoment.class);
-        method.setAccessible(true);
-
-        assertThatThrownBy(() -> {
+        assertThatThrownBy( () ->
             // 実行
-            Object result = method.invoke(entryOperator, branchAtMoment);
-            })
+            entryOperator.checkBranchBelongJa(branchAtMoment))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-            // 結果検証
-            assertThat(e.getMessageCode()).isEqualTo("店舗所属JA不一致");
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA12002");
+                assertThat(e.getArgs()).containsSequence(AuditInfoHolder.getJa().getJaAttribute().getJaCode());
+                assertThat(e.getArgs()).containsSequence(branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
             });
     }
 }

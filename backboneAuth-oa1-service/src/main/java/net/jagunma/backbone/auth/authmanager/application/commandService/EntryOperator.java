@@ -62,12 +62,17 @@ public class EntryOperator {
      * @param tempoId 店舗ID
      * @return branchAtMoment 店舗
      */
-    private BranchAtMoment getBranchAtMoment(Long tempoId) {
+    BranchAtMoment getBranchAtMoment(Long tempoId) {
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
 
         criteria.getIdentifierCriteria().setEqualTo(tempoId);
 
-        return branchAtMomentRepository.findOneBy(criteria);
+        BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(criteria);
+        if (branchAtMoment.isEmpty()) {
+            throw new GunmaRuntimeException("EOA12001", tempoId);
+        }
+
+        return branchAtMoment;
     }
 
     /**
@@ -75,10 +80,10 @@ public class EntryOperator {
      *
      * @param branchAtMoment 店舗
      */
-    private void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
+    void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
         if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(
             AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
-            throw new GunmaRuntimeException("EOA12001");
+            throw new GunmaRuntimeException("EOA12002", AuditInfoHolder.getJa().getJaAttribute().getJaCode(), branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
         }
     }
 
@@ -92,7 +97,7 @@ public class EntryOperator {
      * @param tempoCode 店舗コード
      * @return オペレーターエントリーパック
      */
-    private OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request,
+    OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request,
         String operatorCodePrefix,
         Long jaId,
         String jaCode,
