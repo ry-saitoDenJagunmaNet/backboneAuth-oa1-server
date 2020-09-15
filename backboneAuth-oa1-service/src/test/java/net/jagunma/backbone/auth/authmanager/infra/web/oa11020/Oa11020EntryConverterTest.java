@@ -29,7 +29,7 @@ class Oa11020EntryConverterTest {
         String mailAddress = "test@den.jagunma.net";
         LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
         LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-        Long tempoId = 101L;
+        Long tempoId = 1L;
         String changeCause = "新職員の入組による登録";
         String password = "PaSsWoRd";
         String confirmPassword = "pAsSwOrD";

@@ -25,13 +25,13 @@ class Oa11020InitPresenterTest {
     @Tag(TestSize.SMALL)
     void bindTo_test0() {
         // 事前準備
-        String jaCode = "001";
-        String jaName = "テストＪＡ";
-        String prefix = "zz";
+        String jaCode = "006";
+        String jaName = "JA前橋市";
+        String prefix = "yu";
         List<TempoReferenceDto> tempoList = newArrayList();
         TempoReferenceDto tempoReferenceDto = new TempoReferenceDto();
         tempoReferenceDto.setTempoCode("001");
-        tempoReferenceDto.setTempoName("テスト店舗001");
+        tempoReferenceDto.setTempoName("本店");
         tempoList.add(tempoReferenceDto);
         tempoReferenceDto.setTempoCode("002");
         tempoReferenceDto.setTempoName("テスト店舗002");

@@ -46,7 +46,8 @@ public class EntryOperator {
         checkBranchBelongJa(branchAtMoment);
 
         // オペレーターエントリーパックの生成を行います
-        OperatorEntryPack operatorEntryPack = createOperatorEntryPack(request,
+        OperatorEntryPack operatorEntryPack = createOperatorEntryPack(
+            request,
             OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix(),
             AuditInfoHolder.getJa().getIdentifier(),
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
@@ -97,7 +98,8 @@ public class EntryOperator {
      * @param tempoCode 店舗コード
      * @return オペレーターエントリーパック
      */
-    OperatorEntryPack createOperatorEntryPack(OperatorEntryRequest request,
+    OperatorEntryPack createOperatorEntryPack(
+        OperatorEntryRequest request,
         String operatorCodePrefix,
         Long jaId,
         String jaCode,
