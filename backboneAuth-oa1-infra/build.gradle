@@ -26,6 +26,7 @@ dependencies {
         exclude group:'com.microsoft.sqlserver', module:'mssql-jdbc'
     }
     implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
+    testImplementation project(":backboneAuth-oa1-remoting-mock")
     implementation "org.seasar.doma:doma-core:${domaVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
     annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
