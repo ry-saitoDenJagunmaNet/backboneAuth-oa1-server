@@ -24,7 +24,8 @@ class Oa11020InitPresenterTest {
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test0() {
-        // 事前準備
+
+        // 実行既定値
         String jaCode = "006";
         String jaName = "JA前橋市";
         String prefix = "yu";

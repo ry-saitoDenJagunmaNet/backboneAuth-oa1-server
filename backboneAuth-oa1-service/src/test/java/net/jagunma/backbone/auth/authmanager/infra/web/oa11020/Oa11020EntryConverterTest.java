@@ -23,7 +23,8 @@ class Oa11020EntryConverterTest {
     @Test
     @Tag(TestSize.SMALL)
     void with_test0() {
-        // 事前準備
+
+        // 実行既定値
         String operatorCode6 = "123456";
         String operatorName = "オペレーター名";
         String mailAddress = "test@den.jagunma.net";

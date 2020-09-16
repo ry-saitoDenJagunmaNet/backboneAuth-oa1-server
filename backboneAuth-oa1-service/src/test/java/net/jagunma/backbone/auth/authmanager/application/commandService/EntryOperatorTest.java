@@ -40,7 +40,7 @@ class EntryOperatorTest {
     private String mailAddress = "test@den.jagunma.net";
     private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-    private Long tempoId = 101L;
+    private Long tempoId = 1L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
@@ -85,7 +85,6 @@ class EntryOperatorTest {
         };
     }
 
-    // スタブ
     // 店舗AtMoment
     private BranchAtMoment createBranchAtMoment() {
         return createBranchAtMoment(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
@@ -147,14 +146,12 @@ class EntryOperatorTest {
     @Test
     @Tag(TestSize.SMALL)
     void execute_test0() {
-        // 認証情報
-        TestAuditInfoHolder.setAuthInf();
-
-        // 実行値
-        OperatorEntryRequest request = createRequest();
 
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
+
+        // 実行値
+        OperatorEntryRequest request = createRequest();
 
         assertThatCode(() ->
             // 実行
@@ -175,11 +172,11 @@ class EntryOperatorTest {
     @Tag(TestSize.SMALL)
     void getBranchAtMoment_test1() {
 
-        // 実行値
-        Long testBranchAtMomentTempoId = 999L;
-
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
+
+        // 実行値
+        Long testBranchAtMomentTempoId = 999L;
 
         assertThatThrownBy(() ->
             // 実行
@@ -204,11 +201,11 @@ class EntryOperatorTest {
     @Tag(TestSize.SMALL)
     void checkBranchBelongJa_test1() {
 
-        // 実行値
-        BranchAtMoment branchAtMoment = createBranchAtMoment("999");
-
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
+
+        // 実行値
+        BranchAtMoment branchAtMoment = createBranchAtMoment("999");
 
         assertThatThrownBy(() ->
             // 実行
@@ -242,9 +239,9 @@ class EntryOperatorTest {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
-        // 事前準備
-        BranchAtMoment branchAtMoment = createBranchAtMoment();
+        // 実行値
         OperatorEntryRequest request = createRequest();
+        BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行
         OperatorEntryPack operatorEntryPack = entryOperator.createOperatorEntryPack(
@@ -260,6 +257,7 @@ class EntryOperatorTest {
         assertThat(operatorEntryPack.getOperatorName()).isEqualTo(request.getOperatorName());
         assertThat(operatorEntryPack.getMailAddress()).isEqualTo(request.getMailAddress());
         assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(request.getExpirationStartDate());
+        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(request.getExpirationEndDate());
         assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
         assertThat(operatorEntryPack.getTempoId()).isEqualTo(request.getTempoId());
