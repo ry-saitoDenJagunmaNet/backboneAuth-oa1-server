@@ -22,8 +22,25 @@ jar {
 dependencies {
     implementation project(':backboneAuth-model')
     implementation("net.jagunma.common2020:jagunma-common-fao:$commonFaoVersion")
-    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
+    implementation("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
+        exclude group:'com.microsoft.sqlserver', module:'mssql-jdbc'
+    }
     implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     implementation "org.seasar.doma:doma-core:${domaVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
+    annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
 }
+
+task copyDomaResources(type: Copy, dependsOn: processResources) {
+    from processResources.destinationDir
+    into compileJava.destinationDir
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+compileJava.dependsOn copyDomaResources

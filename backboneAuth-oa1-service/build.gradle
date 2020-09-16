@@ -22,16 +22,32 @@ dependencies {
     implementation project(':backboneAuth-model')
     implementation project(':backboneAuth-oa1-infra')
     testImplementation project(':backboneAuth-oa1-remoting-mock')
+    testImplementation project(':backboneAuth-oa1-mock')
 
-    implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
-    implementation "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
-    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
-    implementation "org.seasar.doma:doma-core:${domaVersion}"
-
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.springframework.boot:spring-boot-devtools"
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    api "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
+    api "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
+    api "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
+    api "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
+    api "org.seasar.doma:doma-core:${domaVersion}"
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    api 'org.springframework.boot:spring-boot-starter-jdbc'
+    api 'org.springframework.boot:spring-boot-starter-web'
+    api "org.springframework.boot:spring-boot-devtools"
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+    api 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
 
 }
+
+task copyDomaResources(type: Copy, dependsOn: processResources) {
+    from processResources.destinationDir
+    into compileJava.destinationDir
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+compileJava.dependsOn copyDomaResources
+

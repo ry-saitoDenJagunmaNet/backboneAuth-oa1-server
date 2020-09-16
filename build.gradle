@@ -12,23 +12,25 @@ buildscript {
         assertjVersion = '3.16.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.2.1'
-        commonCommonVersion = '20.1.24'
-        commonFaoVersion = '20.0.113'
-        commonUtilsVersion = '20.2.8'
         domaVersion = '2.41.0'
         sf4jApiVersion = '1.7.30'
         springBootVersion = '2.2.4.RELEASE'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
-        mssqlJdbcVersion = '8.3.1.jre11-preview'
-        backboneAuthDaoVersion = '20.0.14'
-        sharedDataStubVersion = '20.1.5'
-        backboneStubVersion = '20.1.1'
-        sharedDataInterfaceVersion = '20.1.12'
-        backboneInterfaceVersion = '20.1.1'
         junitJupiterApiVersion = '5.6.2'
         junitJupiterEngineVersion = '5.6.2'
+        jacsonDatabindVersion = '2.11.2'
+        mssqlJdbcVersion = '8.3.1.jre11-preview'
+
+        commonServerVersion = '20.2.1'
+        commonCommonVersion = '20.1.24'
+        commonFaoVersion = '20.0.113'
+        commonUtilsVersion = '20.2.8'
+        backboneAuthDaoVersion = '20.0.14'
+        sharedDataStubVersion = '20.1.6'
+        backboneStubVersion = '20.1.4'
+        sharedDataInterfaceVersion = '20.1.12'
+        backboneInterfaceVersion = '20.2.3'
     }
 }
 
@@ -44,6 +46,7 @@ plugins {
     id "com.github.spotbugs" version "4.5.0"
 }
 apply plugin: 'com.github.ben-manes.versions'
+
 
 repositories {
     maven {
@@ -118,6 +121,15 @@ subprojects {
     apply plugin: 'jacoco'
     apply plugin: 'com.github.ben-manes.versions'
     apply plugin: 'se.patrikerdes.use-latest-versions'
+    apply plugin: 'java-library'
+
+    bootJar {
+        enabled = false
+    }
+    jar {
+        enabled = true
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -152,12 +164,9 @@ subprojects {
         }
     }
     dependencies {
-        implementation("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
-        implementation("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
-        implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
-        implementation("org.springframework.boot:spring-boot-starter-aop")
-        implementation "org.slf4j:slf4j-api:${sf4jApiVersion}"
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        api("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
+        api("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
+        api "org.slf4j:slf4j-api:${sf4jApiVersion}"
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
         testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
         testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
