@@ -12,6 +12,7 @@ import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
 import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
+import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
 
 /**
  * Controllerの基底クラス
@@ -29,7 +30,6 @@ public class BaseOfController {
 //        AuditInfoHolder.set(authInf, DateProvider.currentLocalDateTime(),
 //            Route.createFrom("", ""), DefaultAuditTempo.empty());
 
-
         JaAtMoment jaAtMoment = JaAtMoment.builder()
             .withIdentifier(6l)
             .withJaAttribute(JaAttribute
@@ -40,6 +40,7 @@ public class BaseOfController {
                 .withAbbreviatedName("")
                 .build())
             .build();
+        
         BranchAtMoment branchAtMoment = BranchAtMoment.builder()
             .withIdentifier(1l)
             .withJaAtMoment(jaAtMoment)
@@ -48,11 +49,20 @@ public class BaseOfController {
                 .withName("")
                 .build())
             .build();
+
+        SimpleOperator operator = new SimpleOperatorBuilder()
+            .withIdentifier(18l)
+            .withOperatorCode(OperatorCode.of("yu001009"))
+            .withOperatorName("ｙｕ００１００９")
+            .withBranchIdentifier(branchAtMoment.getIdentifier())
+            .withBranch(branchAtMoment)
+            .build();
+
         AuditInfoHolder.set(AuthInf.createFrom("006", "001", 18L, "yu001009", "001.001.001.001"),
             DateProvider.currentLocalDateTime(),
             Route.createFrom("", ""),
-            jaAtMoment,
+            branchAtMoment.getJaAtMoment(),
             branchAtMoment,
-            new SimpleOperator(18l, new OperatorCode("yu001009"), "ｙｕ００１００９", 33l, branchAtMoment ));
+            operator);
     }
 }

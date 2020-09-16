@@ -84,6 +84,7 @@ public class TestAuditInfoHolder {
             .withOperatorCode(OperatorCode.of(defaultOperatorCode))
             .withOperatorName(defaultOperatorName)
             .withBranchIdentifier(defaultBranchId)
+            .withBranch(branchAtMoment)
             .build();
 
         AuditInfoHolder.set(AuthInf.createFrom(ja.getJaAttribute().getJaCode().getValue(),

@@ -19,8 +19,8 @@ jar {
 }
 
 dependencies {
-    implementation "net.jagunma.backbone.shared:shared-data-stub:${sharedDataStubVersion}"
     implementation "net.jagunma.backbone.run:backbone-stub:${backboneStubVersion}"
+    implementation "net.jagunma.backbone.shared:shared-data-stub:${sharedDataStubVersion}"
     implementation project(':backboneAuth-model')
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
