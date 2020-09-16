@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>一時取引抑止登録 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa12030.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa12030.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa12030");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa12030", "一時取引抑止登録");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_optional">
+				<div class="col s1">
+					<label>
+						<input type="checkbox" id="ja_check" onchange="oaex_ja_check_onChange()"></input>
+						<span></span>
+					</label>
+				</div>
+				<div class="col s6">
+					<div class="input-field">
+						<select id="ja" class="validate" onchange="oaex_ja_onChange()">
+							<option value=""></option>
+							<option value="002">ＪＡ赤城たちばな</option>
+							<option value="006">ＪＡ前橋市</option>
+							<option value="070">ＪＡたかさき</option>
+							<option value="074">ＪＡはぐくみ</option>
+							<option value="160">ＪＡ北群渋川</option>
+							<option value="210">ＪＡたのふじ</option>
+							<option value="280">ＪＡ甘楽富岡</option>
+							<option value="350">ＪＡ碓氷安中</option>
+							<option value="415">ＪＡあがつま</option>
+							<option value="470">ＪＡ利根沼田</option>
+							<option value="550">ＪＡ佐波伊勢崎</option>
+							<option value="617">ＪＡにったみどり</option>
+							<option value="618">ＪＡ太田市</option>
+							<option value="744">ＪＡ邑楽館林</option>
+							<option value="990">ＪＡ群馬電算センター</option>
+						</select>
+						<label>ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s1">
+					<label>
+						<input type="checkbox" id="tempo_check" onchange="oaex_tempo_check_onChange()"></input>
+						<span></span>
+					</label>
+				</div>
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate" onchange="oaex_tempo_onChange()">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>	
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="row">
+				<!-- サブシステム -->
+				<div class="col s3 oa_optional">
+					<label>
+						<input type="checkbox" id="subsystem_check" onchange="oaex_subsystem_check_onChange()"></input>
+						<span>サブシステム</span>
+					</label>
+					<select id="subsystem" class="validate" onchange="oaex_subsystem_onChange()">
+						<option value=""></option>
+						<option value="KB">購買</option>
+						<option value="YS">販売・青果</option>
+						<option value="YF">販売・花卉</option>
+						<option value="HK">販売・米</option>
+						<option value="HM">販売・麦</option>
+						<option value="AN">販売・畜産</option>
+					</select>
+				</div>
+				<!-- 取引グループ -->
+				<div class="col s4 oa_optional">
+					<label>
+						<input type="checkbox" id="biztran_grp_check" onchange="oaex_biztran_grp_check_onChange()"></input>
+						<span>取引グループ</span>
+					</label>
+					<div class="oaex_biztran_grp_table">
+						<table id="biztran_grp_table" class="highlight">
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td colspan="2">指定なし</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG01</td><td class="oaex_biztran_grp_name">購買メニュー</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG03</td><td class="oaex_biztran_grp_name">共通入力支援</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG06</td><td class="oaex_biztran_grp_name">未払金照会メニュー</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG09</td><td class="oaex_biztran_grp_name">予約受注明細入力メニュー</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG10</td><td class="oaex_biztran_grp_name">予約受注帳票出力メニュー</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YSTG01</td><td class="oaex_biztran_grp_name">荷受取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YSTG02</td><td class="oaex_biztran_grp_name">送り状取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YSTG03</td><td class="oaex_biztran_grp_name">市況取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YSTG04</td><td class="oaex_biztran_grp_name">仕切取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YSTG05</td><td class="oaex_biztran_grp_name">単価・精算取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YFTG01</td><td class="oaex_biztran_grp_name">荷受取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YFTG02</td><td class="oaex_biztran_grp_name">送り状取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YFTG03</td><td class="oaex_biztran_grp_name">市況取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YFTG04</td><td class="oaex_biztran_grp_name">仕切取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">YFTG05</td><td class="oaex_biztran_grp_name">単価・精算取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HKTG10</td><td class="oaex_biztran_grp_name">米ＪＡ取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HKTG15</td><td class="oaex_biztran_grp_name">米ＪＡ取引（振込以外取引）グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HKTG99</td><td class="oaex_biztran_grp_name">米センター取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HMTG20</td><td class="oaex_biztran_grp_name">麦ＪＡ取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HMTG25</td><td class="oaex_biztran_grp_name">麦ＪＡ取引（振込以外取引）グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">HMTG99</td><td class="oaex_biztran_grp_name">麦センター取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">ANTG01</td><td class="oaex_biztran_grp_name">データ入力取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">ANTG02</td><td class="oaex_biztran_grp_name">精算取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">ANTG03</td><td class="oaex_biztran_grp_name">マスタ取引グループ</td></tr>
+							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">ANTG10</td><td class="oaex_biztran_grp_name">センター維持管理グループ</td></tr>
+						</table>
+					</div>
+				</div>
+				<!-- 取引 -->
+				<div class="col s5 oa_optional">
+					<label>
+						<input type="checkbox" id="biztran_check" onchange="oaex_biztran_check_onChange()"></input>
+						<span>取引</span>
+					</label>
+					<div class="oaex_biztran_table">
+						<table id="biztran_table" class="highlight">
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0000</td><td class="oaex_biztran_name">購買メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0020</td><td class="oaex_biztran_name">購買支所用メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0021</td><td class="oaex_biztran_name">窓口入金支所用メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0022</td><td class="oaex_biztran_name">日締支所用メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0023</td><td class="oaex_biztran_name">マスタ支所メニュー１</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG03</td><td class="oaex_biztran_code">KB0001</td><td class="oaex_biztran_name">支所検索</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG03</td><td class="oaex_biztran_code">KB0002</td><td class="oaex_biztran_name">顧客検索</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG03</td><td class="oaex_biztran_code">KB0003</td><td class="oaex_biztran_name">仕入先検索</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG03</td><td class="oaex_biztran_code">KB0004</td><td class="oaex_biztran_name">仕入先部門検索</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG03</td><td class="oaex_biztran_code">KB0005</td><td class="oaex_biztran_name">担当者検索</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG06</td><td class="oaex_biztran_code">KB2502</td><td class="oaex_biztran_name">未払明細照会</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG06</td><td class="oaex_biztran_code">KB2503</td><td class="oaex_biztran_name">未払照合結果照会</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG09</td><td class="oaex_biztran_code">KB4022</td><td class="oaex_biztran_name">予約受注らくらく入力_登録</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG09</td><td class="oaex_biztran_code">KB4023</td><td class="oaex_biztran_name">予約受注入力_登録</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG09</td><td class="oaex_biztran_code">KB4024</td><td class="oaex_biztran_name">予約受注入力_修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG09</td><td class="oaex_biztran_code">KB4025</td><td class="oaex_biztran_name">予約受注入力_削除</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG10</td><td class="oaex_biztran_code">KB4026</td><td class="oaex_biztran_name">予約受注明細リスト出力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG10</td><td class="oaex_biztran_code">KB4027</td><td class="oaex_biztran_name">予約受注集計リスト出力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG10</td><td class="oaex_biztran_code">KB4028</td><td class="oaex_biztran_name">予約発注検討表出力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG10</td><td class="oaex_biztran_code">KB4046</td><td class="oaex_biztran_name">予約受注注文書一覧表出力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG01</td><td class="oaex_biztran_code">YS0000</td><td class="oaex_biztran_name">野菜メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG01</td><td class="oaex_biztran_code">YS1000</td><td class="oaex_biztran_name">荷受業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG01</td><td class="oaex_biztran_code">YS1301</td><td class="oaex_biztran_name">等階級制荷受入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG01</td><td class="oaex_biztran_code">YS1302</td><td class="oaex_biztran_name">等階級制荷受参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG01</td><td class="oaex_biztran_code">YS1303</td><td class="oaex_biztran_name">等階級制荷受修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG02</td><td class="oaex_biztran_code">YS0000</td><td class="oaex_biztran_name">野菜メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG02</td><td class="oaex_biztran_code">YS2000</td><td class="oaex_biztran_name">市場発送業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG02</td><td class="oaex_biztran_code">YS2402</td><td class="oaex_biztran_name">等階級制送り状入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG02</td><td class="oaex_biztran_code">YS2406</td><td class="oaex_biztran_name">等階級制送り状修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG02</td><td class="oaex_biztran_code">YS2501</td><td class="oaex_biztran_name">送り状連動エラー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG03</td><td class="oaex_biztran_code">YS0000</td><td class="oaex_biztran_name">野菜メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG03</td><td class="oaex_biztran_code">YS3200</td><td class="oaex_biztran_name">市況業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG03</td><td class="oaex_biztran_code">YS3201</td><td class="oaex_biztran_name">市況入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG03</td><td class="oaex_biztran_code">YS3202</td><td class="oaex_biztran_name">市況修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG03</td><td class="oaex_biztran_code">YS3203</td><td class="oaex_biztran_name">市況参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG04</td><td class="oaex_biztran_code">YS0000</td><td class="oaex_biztran_name">野菜メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG04</td><td class="oaex_biztran_code">YS3300</td><td class="oaex_biztran_name">仕切業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG04</td><td class="oaex_biztran_code">YS3301</td><td class="oaex_biztran_name">仕切入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG04</td><td class="oaex_biztran_code">YS3302</td><td class="oaex_biztran_name">仕切修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG04</td><td class="oaex_biztran_code">YS3303</td><td class="oaex_biztran_name">仕切参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG05</td><td class="oaex_biztran_code">YS0000</td><td class="oaex_biztran_name">野菜メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG05</td><td class="oaex_biztran_code">YS4000</td><td class="oaex_biztran_name">単価・精算・振込業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG05</td><td class="oaex_biztran_code">YS4101</td><td class="oaex_biztran_name">単価計算要求</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG05</td><td class="oaex_biztran_code">YS4102</td><td class="oaex_biztran_name">単価設定</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YSTG05</td><td class="oaex_biztran_code">YS4103</td><td class="oaex_biztran_name">格付制単価修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG01</td><td class="oaex_biztran_code">YF0000</td><td class="oaex_biztran_name">花卉メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG01</td><td class="oaex_biztran_code">YF1000</td><td class="oaex_biztran_name">荷受業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG01</td><td class="oaex_biztran_code">YF1307</td><td class="oaex_biztran_name">等階級制荷受入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG01</td><td class="oaex_biztran_code">YF1308</td><td class="oaex_biztran_name">等階級制荷受参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG01</td><td class="oaex_biztran_code">YF1309</td><td class="oaex_biztran_name">等階級制荷受修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG02</td><td class="oaex_biztran_code">YF0000</td><td class="oaex_biztran_name">花卉メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG02</td><td class="oaex_biztran_code">YF2000</td><td class="oaex_biztran_name">市場発送業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG02</td><td class="oaex_biztran_code">YF2402</td><td class="oaex_biztran_name">等階級制送り状入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG02</td><td class="oaex_biztran_code">YF2406</td><td class="oaex_biztran_name">等階級制送り状修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG02</td><td class="oaex_biztran_code">YF2501</td><td class="oaex_biztran_name">送り状連動エラー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG03</td><td class="oaex_biztran_code">YF0000</td><td class="oaex_biztran_name">花卉メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG03</td><td class="oaex_biztran_code">YF3200</td><td class="oaex_biztran_name">市況業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG03</td><td class="oaex_biztran_code">YF3201</td><td class="oaex_biztran_name">市況入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG03</td><td class="oaex_biztran_code">YF3202</td><td class="oaex_biztran_name">市況修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG03</td><td class="oaex_biztran_code">YF3203</td><td class="oaex_biztran_name">市況参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG04</td><td class="oaex_biztran_code">YF0000</td><td class="oaex_biztran_name">花卉メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG04</td><td class="oaex_biztran_code">YF3300</td><td class="oaex_biztran_name">仕切業務メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG04</td><td class="oaex_biztran_code">YF3301</td><td class="oaex_biztran_name">仕切入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG04</td><td class="oaex_biztran_code">YF3302</td><td class="oaex_biztran_name">仕切修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG04</td><td class="oaex_biztran_code">YF3303</td><td class="oaex_biztran_name">仕切参照</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG05</td><td class="oaex_biztran_code">YF0000</td><td class="oaex_biztran_name">花卉メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG05</td><td class="oaex_biztran_code">YF4101</td><td class="oaex_biztran_name">単価計算要求</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG05</td><td class="oaex_biztran_code">YF4104</td><td class="oaex_biztran_name">単価修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG05</td><td class="oaex_biztran_code">YF4107</td><td class="oaex_biztran_name">個選単価参照削除</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">YFTG05</td><td class="oaex_biztran_code">YF4201</td><td class="oaex_biztran_name">精算要求</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HKTG10</td><td class="oaex_biztran_code">HK1000</td><td class="oaex_biztran_name">米ＪＡ取引</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HKTG15</td><td class="oaex_biztran_code">HK1500</td><td class="oaex_biztran_name">米ＪＡ取引（振り込み以外）</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HKTG99</td><td class="oaex_biztran_code">HK9999</td><td class="oaex_biztran_name">米センター取引</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HMTG20</td><td class="oaex_biztran_code">HM2000</td><td class="oaex_biztran_name">麦ＪＡ取引</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HMTG25</td><td class="oaex_biztran_code">HM2500</td><td class="oaex_biztran_name">麦ＪＡ取引（振り込み以外）</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">HMTG99</td><td class="oaex_biztran_code">HM9999</td><td class="oaex_biztran_name">麦センター取引</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG01</td><td class="oaex_biztran_code">AN0001</td><td class="oaex_biztran_name">畜産メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG01</td><td class="oaex_biztran_code">AN1110</td><td class="oaex_biztran_name">前日処理照会</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG01</td><td class="oaex_biztran_code">AN1210</td><td class="oaex_biztran_name">仕切入力</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG01</td><td class="oaex_biztran_code">AN1211</td><td class="oaex_biztran_name">牛乳仕切一括取込</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG01</td><td class="oaex_biztran_code">AN1310</td><td class="oaex_biztran_name">仕切修正</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG02</td><td class="oaex_biztran_code">AN0001</td><td class="oaex_biztran_name">畜産メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG02</td><td class="oaex_biztran_code">AN1510</td><td class="oaex_biztran_name">精算取消</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG02</td><td class="oaex_biztran_code">AN1610</td><td class="oaex_biztran_name">振込処理</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG02</td><td class="oaex_biztran_code">AN1611</td><td class="oaex_biztran_name">振込要求照会</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG02</td><td class="oaex_biztran_code">AN1650</td><td class="oaex_biztran_name">リスト出力要求</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG03</td><td class="oaex_biztran_code">AN0001</td><td class="oaex_biztran_name">畜産メインメニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG03</td><td class="oaex_biztran_code">AN3500</td><td class="oaex_biztran_name">データ提供メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG03</td><td class="oaex_biztran_code">AN3502</td><td class="oaex_biztran_name">実績データダウンロード</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG03</td><td class="oaex_biztran_code">AN8000</td><td class="oaex_biztran_name">畜産マスタ設定処理メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG03</td><td class="oaex_biztran_code">AN8107</td><td class="oaex_biztran_name">団体登録</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG10</td><td class="oaex_biztran_code">AN0002</td><td class="oaex_biztran_name">畜産業務（センター）メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG10</td><td class="oaex_biztran_code">AN3500</td><td class="oaex_biztran_name">データ提供メニュー</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG10</td><td class="oaex_biztran_code">AN3501</td><td class="oaex_biztran_name">マスタダウンロード</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG10</td><td class="oaex_biztran_code">AN3502</td><td class="oaex_biztran_name">実績データダウンロード</td></tr>
+							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">ANTG10</td><td class="oaex_biztran_code">AN3801</td><td class="oaex_biztran_name">畜産月次帳票予約登録</td></tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s5 offset-s7">
+					<p>※取引を指定した場合、取引グループを問わず抑止されます</p>
+				</div>
+			</div>
+		</section>
+		<!-- 有効期限 -->
+		<section>
+			<div class="row oa_required">
+				<div class="row">
+					<div class="col s3">
+						<label class="oa_content_label">有効期限</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="expiration_start_date" class="validate datepicker"></input>
+							<label for="expiration_start_date">（開始日）</label>
+						</div>
+					</div>
+					<div class="col s1">
+						<p>～</p>
+					</div>
+					<div class="col s4">
+						<div class="input-field">
+							<input type="text" id="expiration_end_date" class="validate datepicker"></input>
+							<label for="expiration_end_date">（終了日）</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 抑止理由 -->
+		<section>
+			<div class="row oa_required">
+				<div class="col s7">
+					<div class="input-field">
+						<input type="text" id="suspend_reason" class="validate" value=""></input>
+						<label for="suspend_reason">抑止理由</label>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<br>
+		<br>
+
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+			<div class="col s5 offset-s4">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_deleteBtn_onClick();">削除</a>
+				&nbsp;&nbsp;&nbsp;
+				<a class="btn waves-effect waves-light" href="javascript:oaex_entryBtn_onClick();">登録</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

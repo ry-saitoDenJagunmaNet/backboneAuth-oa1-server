@@ -12,18 +12,23 @@ buildscript {
         assertjVersion = '3.16.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.1.45'
-        commonCommonVersion = '20.0.107'
-        commonValuesVersion = '20.0.65'
-        commonUtilsVersion = '20.1.60'
-        domaCoreVersion = '2.38.0'
+        commonServerVersion = '20.2.1'
+        commonCommonVersion = '20.1.24'
+        commonFaoVersion = '20.0.113'
+        commonUtilsVersion = '20.2.8'
+        domaVersion = '2.41.0'
         sf4jApiVersion = '1.7.30'
-        commonTestsVersion = '20.0.9'
+        springBootVersion = '2.2.4.RELEASE'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.1'
         mssqlJdbcVersion = '8.3.1.jre11-preview'
-        backboneAuthDaoVersion = '20.0.10'
-
+        backboneAuthDaoVersion = '20.0.14'
+        sharedDataStubVersion = '20.1.5'
+        backboneStubVersion = '20.1.1'
+        sharedDataInterfaceVersion = '20.1.12'
+        backboneInterfaceVersion = '20.1.1'
+        junitJupiterApiVersion = '5.6.2'
+        junitJupiterEngineVersion = '5.6.2'
     }
 }
 
@@ -36,9 +41,9 @@ plugins {
     id 'idea'
     id "com.github.ben-manes.versions" version '0.29.0'
     id 'se.patrikerdes.use-latest-versions' version '0.2.14'
-    id "com.github.spotbugs" version "4.4.4"
-    id 'jacoco'
+    id "com.github.spotbugs" version "4.5.0"
 }
+apply plugin: 'com.github.ben-manes.versions'
 
 repositories {
     maven {
@@ -65,6 +70,7 @@ targetCompatibility = JavaVersion.VERSION_11
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:unchecked'
 }
 
 afterReleaseBuild.dependsOn publish
@@ -83,89 +89,216 @@ idea {
     }
 }
 
-dependencies {
-    implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
-//    implementation "net.jagunma.common2020:jagunma-common-values:${commonValuesVersion}"
-//    implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
-//    implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
-    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
+ant.lifecycleLogLevel = "INFO"
 
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.seasar.doma.boot:doma-spring-boot-autoconfigure:${domaSpringBootStarterVersion}"
-    implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
-    runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
-    runtimeOnly "org.springframework.boot:spring-boot-devtools"
-    runtimeOnly 'org.springframework.boot:spring-boot-starter-actuator'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation "org.assertj:assertj-core:${assertjVersion}"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
-    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
-    testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
-
-    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
-}
-
-spotbugs {
-    toolVersion = '4.0.0'
-    excludeFilter = file("$rootProject.projectDir/src/config/spotbugs/excludeFilter.xml")
-    ignoreFailures = true
-//        sourceSets = [sourceSets.main]
-    maxHeapSize = '1024m'
-}
-
-test {
-    // 失敗しても後続の処理を継続させる
-    ignoreFailures = true
-    useJUnitPlatform {
-        includeTags 'SMALL'
-        excludeTags('MEDIUM', 'LARGE')
-    }
-    reports {
-        junitXml.enabled = true
-    }
-}
-
-task testSlow(type: Test) {
-    ignoreFailures = true
-    useJUnitPlatform {
-        includeTags('SMALL', 'MEDIUM', 'LARGE')
-        excludeTags()
-    }
-    reports {
-        junitXml.enabled = true
-    }
-}
-task testReport(type: TestReport) {
-    reportOn project.tasks.test.binResultsDir
-    fileTree(dir: it, exclude: ['**/*Test.class', '**/**test/*.class'])
-}
-
-jacoco {
-    toolVersion = "0.8.5"
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-    }
-    afterEvaluate {
-        classDirectories.from(
-                files(classDirectories.files.collect {
-                    fileTree(dir: it, exclude: ['**/*Test.class', '**/**test/*.class'])
-                }))
-    }
-}
 def isNonStable = { String version ->
     def stableKeyword = ['RELEASE', 'FINAL', 'GA', 'JRE11'].any { it -> version.toUpperCase().contains(it) }
     def regex = /^[0-9,.v-]+(-r)?$/
     return !stableKeyword && !(version ==~ regex)
 }
+subprojects {
+    buildscript {
+        repositories {
+            maven {
+                url mavenRepo_pluginRelease
+                credentials {
+                    username mavenRepo_userName
+                    password mavenRepo_password
+                }
+            }
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.0.RELEASE")
+        }
+    }
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.github.spotbugs'
+    apply plugin: 'jacoco'
+    apply plugin: 'com.github.ben-manes.versions'
+    apply plugin: 'se.patrikerdes.use-latest-versions'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    repositories {
+        maven {
+            url mavenRepo_libsRelease
+            credentials {
+                username mavenRepo_userName
+                password mavenRepo_password
+            }
+        }
+        maven {
+            url mavenRepo_pluginRelease
+            credentials {
+                username mavenRepo_userName
+                password mavenRepo_password
+            }
+        }
+        maven {
+            url mavenRepo_libsSnapshot
+            credentials {
+                username mavenRepo_userName
+                password mavenRepo_password
+            }
+        }
+    }
+    idea {
+        module {
+            outputDir file('build/classes/main')
+            testOutputDir file('build/classes/test')
+        }
+    }
+    dependencies {
+        implementation("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
+        implementation("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
+        implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
+        implementation("org.springframework.boot:spring-boot-starter-aop")
+        implementation "org.slf4j:slf4j-api:${sf4jApiVersion}"
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation "org.assertj:assertj-core:${assertjVersion}"
+        testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+        testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
+        spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+    }
+
+    spotbugs {
+        toolVersion = '4.0.0'
+        excludeFilter = file("$rootProject.projectDir/src/config/spotbugs/excludeFilter.xml")
+        ignoreFailures = true
+//        sourceSets = [sourceSets.main]
+        maxHeapSize = '1024m'
+    }
+
+    spotbugsMain {
+        reports {
+            html {
+                enabled = true
+                destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+                stylesheet = 'fancy-hist.xsl'
+            }
+        }
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    test {
+        // 失敗しても後続の処理を継続させる
+        ignoreFailures = true
+        useJUnitPlatform {
+            includeTags 'SMALL'
+            excludeTags('MEDIUM', 'LARGE')
+        }
+        reports {
+            junitXml.enabled = true
+        }
+    }
+
+    task testSlow(type: Test) {
+        ignoreFailures = true
+        useJUnitPlatform {
+            includeTags('SMALL', 'MEDIUM', 'LARGE')
+            excludeTags()
+        }
+        reports {
+            junitXml.enabled = true
+        }
+    }
+    task testReport(type: TestReport) {
+        reportOn subprojects.tasks.test.binResultsDir
+        fileTree(dir: it, exclude: ['**/*Test.class', '**/**test/*.class'])
+    }
+
+    jacoco {
+        toolVersion = "0.8.5"
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+        afterEvaluate {
+            classDirectories.from(
+                    files(classDirectories.files.collect {
+                        fileTree(dir: it, exclude: ['**/*Test.class', '**/**test/*.class'])
+                    }))
+        }
+    }
+
+    task jacocoMerge(type: JacocoMerge) {
+        // ルートプロジェクトの評価時にはまだサブプロジェクトは存在しないので、
+        // 各プロジェクトの評価完了時に中の処理が走るように。
+        gradle.afterProject { p, state ->
+            // ルートプロジェクトと `jacoco` プラグインが適用されていないプロジェクトは除く。
+            if (p.rootProject != p && p.plugins.hasPlugin('jacoco')) {
+                executionData p.tasks.test.jacoco.destinationFile
+                dependsOn(p.tasks.test)
+            }
+        }
+    }
+
+    task jacocoMergedReport(type: JacocoReport, dependsOn: [tasks.jacocoMerge]) {
+        executionData jacocoMerge.destinationFile
+
+        sourceDirectories.from(files())
+        classDirectories.from(files())
+        gradle.afterProject { p, state ->
+            if (p.rootProject != p && p.plugins.hasPlugin('java')) {
+                sourceDirectories.from(sourceDirectories + files([p.sourceSets.main.allJava.srcDirs]))
+                classDirectories.from(classDirectories + files([p.sourceSets.main.output]))
+            }
+        }
+
+        reports {
+            xml.enabled = true
+            xml.destination file("${buildDir}/reports/jacoco/report.xml")
+            html.destination file("${buildDir}/reports/jacoco/html")
+        }
+    }
+
+    dependencyUpdates {
+        // checkForGradleUpdate = true
+        // reject all non stable versions
+        rejectVersionIf {
+            isNonStable(it.candidate.version)
+        }
+
+    }
+
+}
+/**
+ dependencies {implementation "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
+ implementation "net.jagunma.common2020:jagunma-common-common:${commonCommonVersion}"
+ implementation "net.jagunma.common2020:jagunma-common-utils:${commonUtilsVersion}"
+ implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
+
+ implementation 'org.springframework:spring-beans:5.2.8.RELEASE'
+ implementation 'org.springframework:spring-jdbc:5.2.8.RELEASE'
+ implementation "org.springframework:spring-context"
+ implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+ implementation 'org.springframework.boot:spring-boot-starter-web'
+ implementation "org.seasar.doma.boot:doma-spring-boot-autoconfigure:${domaSpringBootStarterVersion}"
+ implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
+ implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationVersion}"
+ implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+ runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
+ runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
+ implementation "org.springframework.boot:spring-boot-devtools"
+ implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+ testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ testImplementation "org.assertj:assertj-core:${assertjVersion}"
+ testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+ testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+ testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
+ testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
+
+ spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'}`*/
+
 dependencyUpdates {
     // checkForGradleUpdate = true
     // reject all non stable versions

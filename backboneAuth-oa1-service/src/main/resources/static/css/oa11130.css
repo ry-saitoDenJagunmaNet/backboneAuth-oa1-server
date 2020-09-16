@@ -1,0 +1,50 @@
+/**
+ * OA12070 サービス呼出証跡照会
+ */
+
+/* 入力項目右の説明 */
+.oaex_explanation {padding-top: 20px !important;}
+
+/**
+ * サービス呼出証跡テーブル
+ */
+ #servicecall_trace_table {visibility: collapse;}
+ #servicecall_trace_pagination {visibility: collapse;}
+  
+.oaex_servicecall_trace_table {
+    overflow-x: auto;
+    /* overflow-y: auto; */
+    height:360px;
+}
+/* リクエスト日時 */
+.oaex_request_date_th {min-width: 150px; width: 8%;}
+.oaex_request_date {min-width: 150px; width: 8%;}
+/* リクエスト元IPアドレス */
+.oaex_Request_source_ipaddress_th {min-width: 120px; width: 6%;}
+.oaex_Request_source_ipaddress {min-width: 120px; width: 6%;}
+/* サブシステム */
+.oaex_subsystem_th {min-width: 120px; width: 6%;}
+.oaex_subsystem {min-width: 120px; width: 6%;}
+/* リクエスト画面ID */
+.oaex_request_viewid_th {min-width: 90px; width: 5%;}
+.oaex_request_viewid {min-width: 90px; width: 5%;}
+/* 店舗 */
+.oaex_tempo_th {min-width:160px; width: 8%;}
+.oaex_tempo_code {min-width:40px; width: 2%;}
+.oaex_tempo_name {min-width:120px; width: 6%;}
+/* オペレーター */
+.oaex_operator_th {min-width: 180px; width: 9%;}
+.oaex_operator_code {min-width: 60px; width: 3%;}
+.oaex_operator_name {min-width: 120px; width: 6%;}
+/* サービス機能名 */
+.oaex_service_feature_name_th {min-width: 280px; width: 14%;}
+.oaex_service_feature_name {min-width: 280px; width: 14%;}
+/* サービス名 */
+.oaex_service_name_th {min-width: 280px; width: 14%;}
+.oaex_service_name {min-width: 280px; width: 14%;}
+/* サービスメソッド名 */
+.oaex_service_method_name_th {min-width: 180px; width: 9%;}
+.oaex_service_method_name {min-width: 180px; width: 9%;}
+/* リクエスト結果 */
+.oaex_request_result_th {min-width: 420px; width: 21%;}
+.oaex_request_result {min-width: 420px; width: 21%;}
