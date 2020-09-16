@@ -13,7 +13,7 @@ buildscript {
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
         commonServerVersion = '20.2.1'
-        commonCommonVersion = '20.1.15'
+        commonCommonVersion = '20.1.23'
         commonFaoVersion = '20.0.113'
         commonUtilsVersion = '20.2.8'
         domaVersion = '2.41.0'
@@ -27,6 +27,8 @@ buildscript {
         backboneStubVersion = '20.1.1'
         sharedDataInterfaceVersion = '20.1.12'
         backboneInterfaceVersion = '20.1.1'
+        junitJupiterApiVersion = '5.6.2'
+        junitJupiterEngineVersion = '5.6.2'
     }
 }
 

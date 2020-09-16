@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
-//    implementation "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
     implementation "org.seasar.doma:doma-core:${domaVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
+
 }

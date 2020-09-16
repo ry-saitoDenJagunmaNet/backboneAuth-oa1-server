@@ -13,6 +13,7 @@ import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
 import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
+import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
 
 public class TestAuditInfoHolder {
 
@@ -31,8 +32,9 @@ public class TestAuditInfoHolder {
 
 
     public static void setAuthInf() {
-        setAuthInf(null,null,null,null,null);
+        setAuthInf(null, null, null, null, null);
     }
+
     public static void setAuthInf(
         Long operatorId,
         String operatorCode,
@@ -43,11 +45,21 @@ public class TestAuditInfoHolder {
         JaAtMoment ja = createJaAtMoment();
         BranchAtMoment branch = createBranchAtMoment();
 
-        if (operatorId != null) { defaultOperatorId = operatorId; }
-        if (operatorCode != null) { defaultOperatorCode = operatorCode; }
-        if (operatorName != null) { defaultOperatorName = operatorName; }
-        if (jaAtMoment != null) {ja = jaAtMoment;}
-        if (branchAtMoment != null) {branch = branchAtMoment;}
+        if (operatorId != null) {
+            defaultOperatorId = operatorId;
+        }
+        if (operatorCode != null) {
+            defaultOperatorCode = operatorCode;
+        }
+        if (operatorName != null) {
+            defaultOperatorName = operatorName;
+        }
+        if (jaAtMoment != null) {
+            ja = jaAtMoment;
+        }
+        if (branchAtMoment != null) {
+            branch = branchAtMoment;
+        }
 
 //        JaAtMoment jaAtMoment = JaAtMoment.builder()
 //            .withIdentifier(6l)
@@ -67,24 +79,37 @@ public class TestAuditInfoHolder {
 //                .withName("")
 //                .build())
 //            .build();
-        AuditInfoHolder.set(AuthInf.createFrom(ja.getJaAttribute().getJaCode().getValue(), branch.getBranchAttribute().getBranchCode().getValue(),
+        SimpleOperator operator = new SimpleOperatorBuilder()
+            .withIdentifier(defaultOperatorId)
+            .withOperatorCode(OperatorCode.of(defaultOperatorCode))
+            .withOperatorName(defaultOperatorName)
+            .withBranchIdentifier(defaultBranchId)
+            .build();
+
+        AuditInfoHolder.set(AuthInf.createFrom(ja.getJaAttribute().getJaCode().getValue(),
+            branch.getBranchAttribute().getBranchCode().getValue(),
             defaultOperatorId, defaultOperatorName, defaultOperatorIp),
             DateProvider.currentLocalDateTime(),
             Route.createFrom("", ""),
             ja,
-            branch,
-            new SimpleOperator(defaultOperatorId, new OperatorCode(defaultOperatorCode),
-                defaultOperatorName, branch.getIdentifier(), branch ));
+            branch, operator);
     }
 
     public static JaAtMoment createJaAtMoment() {
         return createJaAtMoment(null, null, null);
     }
+
     public static JaAtMoment createJaAtMoment(Long jaId, String jaCode, String jaName) {
 
-        if (jaId != null) { defaultJaId = jaId; }
-        if (jaCode != null) { defaultJaCode = jaCode; }
-        if (jaName != null) { defaultJaName = jaName; }
+        if (jaId != null) {
+            defaultJaId = jaId;
+        }
+        if (jaCode != null) {
+            defaultJaCode = jaCode;
+        }
+        if (jaName != null) {
+            defaultJaName = jaName;
+        }
 
         return JaAtMoment.builder()
             .withIdentifier(defaultJaId)
@@ -97,15 +122,26 @@ public class TestAuditInfoHolder {
                 .build())
             .build();
     }
+
     public static BranchAtMoment createBranchAtMoment() {
-        return createBranchAtMoment(null,null,null,null);
+        return createBranchAtMoment(null, null, null, null);
     }
-    public static BranchAtMoment createBranchAtMoment(Long branchId, String branchCode, String branchName, JaAtMoment jaAtMoment) {
+
+    public static BranchAtMoment createBranchAtMoment(Long branchId, String branchCode,
+        String branchName, JaAtMoment jaAtMoment) {
         JaAtMoment ajAtMoment = createJaAtMoment(null, null, null);
-        if (branchId != null) { defaultBranchId = branchId; }
-        if (branchCode != null) { defaultBranchCode = branchCode; }
-        if (branchName != null) { defaultBranchName = branchName; }
-        if (jaAtMoment != null) { ajAtMoment = jaAtMoment; }
+        if (branchId != null) {
+            defaultBranchId = branchId;
+        }
+        if (branchCode != null) {
+            defaultBranchCode = branchCode;
+        }
+        if (branchName != null) {
+            defaultBranchName = branchName;
+        }
+        if (jaAtMoment != null) {
+            ajAtMoment = jaAtMoment;
+        }
 
         return BranchAtMoment.builder()
             .withIdentifier(defaultBranchId)
@@ -117,7 +153,6 @@ public class TestAuditInfoHolder {
                 .build())
             .build();
     }
-
 
 //    public static void setAuthInf() {
 //        JaAtMoment jaAtMoment = JaAtMoment.builder()
