@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +25,6 @@ class EntryOperatorValidatorTest {
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
-
     private OperatorEntryRequest createRequest() {
         return new OperatorEntryRequest() {
             @Override
@@ -77,7 +77,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test0() {
+    void validate_Test() {
         // 実行値
         OperatorEntryRequest request = createRequest();
 
@@ -98,7 +98,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test1() {
+    void validate_Test01() {
         // 実行値
         OperatorEntryRequest request = null;
 
@@ -122,7 +122,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test2() {
+    void validate_Test02() {
         // 実行値
         operatorCode6 = null;
         OperatorEntryRequest request = createRequest();
@@ -148,7 +148,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test3() {
+    void validate_Test03() {
         // 実行値
         operatorName = null;
         OperatorEntryRequest request = createRequest();
@@ -174,7 +174,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test4() {
+    void validate_Test04() {
         // 実行値
         expirationStartDate = null;
         OperatorEntryRequest request = createRequest();
@@ -200,7 +200,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test5() {
+    void validate_Test05() {
         // 実行値
         expirationEndDate = null;
         OperatorEntryRequest request = createRequest();
@@ -226,7 +226,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test6() {
+    void validate_Test06() {
         // 実行値
         tempoId = null;
         OperatorEntryRequest request = createRequest();
@@ -252,7 +252,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test7() {
+    void validate_Test07() {
         // 実行値
         changeCause = null;
         OperatorEntryRequest request = createRequest();
@@ -278,7 +278,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test8() {
+    void validate_Test08() {
         // 実行値
         password = null;
         OperatorEntryRequest request = createRequest();
@@ -304,7 +304,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test9() {
+    void validate_Test09() {
         // 実行値
         confirmPassword = null;
         OperatorEntryRequest request = createRequest();
@@ -458,12 +458,12 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
+    @Disabled
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test15() {
-        // 実行値  ToDo:
-        operatorCode6 = "123全6";
-        operatorCode6 = "１２３";
+        // 実行値
+        operatorCode6 = "123全56";
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -485,10 +485,11 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
+    @Disabled
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test16() {
-        // 実行値  ToDo:
+        // 実行値
         mailAddress = "te全st@den.jagunma.net";
         OperatorEntryRequest request = createRequest();
 
@@ -511,10 +512,11 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
+    @Disabled
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test17() {
-        // 実行値  ToDo:
+        // 実行値
         password = "PaSs全WoRd";
         OperatorEntryRequest request = createRequest();
 

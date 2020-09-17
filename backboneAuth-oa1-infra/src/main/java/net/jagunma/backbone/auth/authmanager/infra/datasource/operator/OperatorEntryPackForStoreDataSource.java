@@ -70,13 +70,13 @@ public class OperatorEntryPackForStoreDataSource implements
      *
      * @param operatorCode オペレーターコード
      */
-    private void checkAlreadyExists(String operatorCode) {
+    void checkAlreadyExists(String operatorCode) {
         OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
 
         operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
 
         if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
-            throw new GunmaRuntimeException("EOA11001", "オペレーターコード");
+            throw new GunmaRuntimeException("EOA11001", "オペレーターコード", operatorCode);
         }
     }
 
@@ -86,7 +86,7 @@ public class OperatorEntryPackForStoreDataSource implements
      * @param operatorEntryPack オペレーターエントリーパック
      * @return オペレーターエンティティ
      */
-    private OperatorEntity insertOperator(OperatorEntryPack operatorEntryPack) {
+    OperatorEntity insertOperator(OperatorEntryPack operatorEntryPack) {
         OperatorEntity operatorEntity = new OperatorEntity();
 
         operatorEntity.setOperatorCode(operatorEntryPack.getOperatorCode());
@@ -113,7 +113,7 @@ public class OperatorEntryPackForStoreDataSource implements
      * @param operatorEntity オペレーターエンティティ
      * @return オペレーター履歴ヘッダーエンティティ
      */
-    private OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+    OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = new OperatorHistoryHeaderEntity();
 
         operatorHistoryHeaderEntity.setOperatorId(operatorEntity.getOperatorId());
@@ -130,14 +130,17 @@ public class OperatorEntryPackForStoreDataSource implements
      *
      * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
      * @param operatorEntity オペレーターエンティティ
+     * @return オペレーター履歴エンティティ
      */
-    private void insertOperatorHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity, OperatorEntity operatorEntity) {
+    OperatorHistoryEntity insertOperatorHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity, OperatorEntity operatorEntity) {
 
         OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
 
         operatorHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
 
         operatorHistoryEntityDao.insert(operatorHistoryEntity);
+
+        return operatorHistoryEntity;
     }
 
     /**
@@ -145,8 +148,9 @@ public class OperatorEntryPackForStoreDataSource implements
      *
      * @param operatorEntryPack オペレーターエントリーパック
      * @param operatorEntity オペレーターエンティティ
+     * @return パスワード履歴エンティティ
      */
-    private void insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+    PasswordHistoryEntity insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
         PasswordHistoryEntity passwordHistoryEntity = new PasswordHistoryEntity();
 
         passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
@@ -155,5 +159,7 @@ public class OperatorEntryPackForStoreDataSource implements
         passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
 
         passwordHistoryEntityDao.insert(passwordHistoryEntity);
+
+        return passwordHistoryEntity;
     }
 }

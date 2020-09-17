@@ -23,8 +23,7 @@ class Oa11020InitPresenterTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void bindTo_test0() {
-
+    void bindTo_test() {
         // 実行既定値
         String jaCode = "006";
         String jaName = "JA前橋市";

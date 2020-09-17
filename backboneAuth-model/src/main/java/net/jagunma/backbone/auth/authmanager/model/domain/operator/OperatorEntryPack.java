@@ -7,22 +7,20 @@ import java.time.LocalDate;
  */
 public class OperatorEntryPack {
 
-    private String operatorCode;
-    private String operatorName;
-    private String mailAddress;
-    private LocalDate expirationStartDate;
-    private LocalDate expirationEndDate;
-    private Long jaId;
-    private String jaCode;
-    private Long tempoId;
-    private String tempoCode;
-    private String changeCause;
-    private String password;
-    private String confirmPassword;
+    private final String operatorCode;
+    private final String operatorName;
+    private final String mailAddress;
+    private final LocalDate expirationStartDate;
+    private final LocalDate expirationEndDate;
+    private final Long jaId;
+    private final String jaCode;
+    private final Long tempoId;
+    private final String tempoCode;
+    private final String changeCause;
+    private final String password;
+    private final String confirmPassword;
 
     // コンストラクタ
-    OperatorEntryPack() {
-    }
     OperatorEntryPack(
         String operatorCode,
         String operatorName,
@@ -79,25 +77,7 @@ public class OperatorEntryPack {
             password,
             confirmPassword);
     }
-    // 空生成メソッド
-    public static OperatorEntryPack empty() {
-        return new OperatorEntryPack();
-    }
-    // 空判定メソッド
-    public boolean isEmpty() {
-        return operatorCode == null &&
-            operatorName == null &&
-            mailAddress == null &&
-            expirationStartDate == null &&
-            expirationEndDate == null &&
-            jaId == null &&
-            jaCode == null &&
-            tempoId == null &&
-            tempoCode == null &&
-            changeCause == null &&
-            password == null &&
-            confirmPassword == null;
-    }
+
     // Getter
     public String getOperatorCode() {
         return operatorCode;

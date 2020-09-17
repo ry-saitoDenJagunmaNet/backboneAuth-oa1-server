@@ -22,8 +22,7 @@ class Oa11020EntryConverterTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void with_test0() {
-
+    void with_test() {
         // 実行既定値
         String operatorCode6 = "123456";
         String operatorName = "オペレーター名";

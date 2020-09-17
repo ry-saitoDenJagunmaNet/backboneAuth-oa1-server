@@ -29,11 +29,6 @@ import org.junit.jupiter.api.Test;
 
 class EntryOperatorTest {
 
-    EntryOperatorTest () {
-        // 認証情報
-        TestAuditInfoHolder.setAuthInf();
-    }
-
     // 実行既定値
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
@@ -44,7 +39,7 @@ class EntryOperatorTest {
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
-    private OperatorEntryRequest createRequest() {
+    private OperatorEntryRequest createOperatorEntryRequest() {
         return new OperatorEntryRequest() {
             @Override
             public String getOperatorCode6() {
@@ -85,26 +80,6 @@ class EntryOperatorTest {
         };
     }
 
-    // 店舗AtMoment
-    private BranchAtMoment createBranchAtMoment() {
-        return createBranchAtMoment(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-    }
-    private BranchAtMoment createBranchAtMoment(String jaCode) {
-        BranchAtMoment branchAtMoment = BranchAtMoment.builder()
-            .withIdentifier(AuditInfoHolder.getBranch().getIdentifier())
-            .withJaAtMoment(JaAtMoment.builder()
-                .withJaAttribute(JaAttribute.builder()
-                    .withJaCode(JaCode.of(jaCode))
-                    .build())
-                .build())
-            .withBranchAttribute(BranchAttribute.builder()
-                .withBranchCode(BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
-                .build())
-            .build();
-
-        return branchAtMoment;
-    }
-
     // テスト対象クラス生成
     private EntryOperator createEntryOperator() {
         OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
@@ -134,6 +109,31 @@ class EntryOperatorTest {
         return new EntryOperator(operatorEntryPackRepositoryForStore, branchAtMomentRepository);
     }
 
+    // 店舗AtMoment
+    private BranchAtMoment createBranchAtMoment() {
+        return createBranchAtMoment(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
+    }
+    private BranchAtMoment createBranchAtMoment(String jaCode) {
+        BranchAtMoment branchAtMoment = BranchAtMoment.builder()
+            .withIdentifier(AuditInfoHolder.getBranch().getIdentifier())
+            .withJaAtMoment(JaAtMoment.builder()
+                .withJaAttribute(JaAttribute.builder()
+                    .withJaCode(JaCode.of(jaCode))
+                    .build())
+                .build())
+            .withBranchAttribute(BranchAttribute.builder()
+                .withBranchCode(BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
+                .build())
+            .build();
+
+        return branchAtMoment;
+    }
+
+    EntryOperatorTest () {
+        // 認証情報
+        TestAuditInfoHolder.setAuthInf();
+    }
+
     /**
      * {@link EntryOperator#execute(OperatorEntryRequest)}テスト
      *  ●パターン
@@ -145,22 +145,21 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void execute_test0() {
-
+    void execute_test() {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest request = createRequest();
+        OperatorEntryRequest operatorEntryRequest = createOperatorEntryRequest();
 
         assertThatCode(() ->
             // 実行
-            entryOperator.execute(request))
+            entryOperator.execute(operatorEntryRequest))
             .doesNotThrowAnyException();
     }
 
     /**
-     * {@link EntryOperator getBranchAtMoment(tempoId)}テスト
+     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
      *  ●パターン
      *    店舗未存在
      *
@@ -170,8 +169,7 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test1() {
-
+    void getBranchAtMoment_test() {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
@@ -189,7 +187,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator checkBranchBelongJa(branchAtMoment)}テスト
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
      *  ●パターン
      *    店舗所属JA不一致
      *
@@ -199,8 +197,7 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void checkBranchBelongJa_test1() {
-
+    void checkBranchBelongJa_test() {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
@@ -219,12 +216,12 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator createOperatorEntryPack(
-     *      request,
-     *      operatorCodePrefix,
-     *      jaId,
-     *      jaCode,
-     *      tempoCode)}テスト
+     * {@link EntryOperator#createOperatorEntryPack(
+     *      OperatorEntryRequest,
+     *      String,
+     *      Long,
+     *      String,
+     *      String)}テスト
      *  ●パターン
      *    正常
      *
@@ -234,18 +231,17 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void createOperatorEntryPack_test0() {
-
+    void createOperatorEntryPack_test() {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest request = createRequest();
+        OperatorEntryRequest operatorEntryRequest = createOperatorEntryRequest();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行
         OperatorEntryPack operatorEntryPack = entryOperator.createOperatorEntryPack(
-            request,
+            operatorEntryRequest,
             OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix(),
             AuditInfoHolder.getJa().getIdentifier(),
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
@@ -253,17 +249,17 @@ class EntryOperatorTest {
 
         // 結果検証
         assertTrue(operatorEntryPack instanceof OperatorEntryPack);
-        assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + request.getOperatorCode6());
-        assertThat(operatorEntryPack.getOperatorName()).isEqualTo(request.getOperatorName());
-        assertThat(operatorEntryPack.getMailAddress()).isEqualTo(request.getMailAddress());
-        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(request.getExpirationStartDate());
-        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(request.getExpirationEndDate());
+        assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + operatorEntryRequest.getOperatorCode6());
+        assertThat(operatorEntryPack.getOperatorName()).isEqualTo(operatorEntryRequest.getOperatorName());
+        assertThat(operatorEntryPack.getMailAddress()).isEqualTo(operatorEntryRequest.getMailAddress());
+        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(operatorEntryRequest.getExpirationStartDate());
+        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(operatorEntryRequest.getExpirationEndDate());
         assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-        assertThat(operatorEntryPack.getTempoId()).isEqualTo(request.getTempoId());
+        assertThat(operatorEntryPack.getTempoId()).isEqualTo(operatorEntryRequest.getTempoId());
         assertThat(operatorEntryPack.getTempoCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
-        assertThat(operatorEntryPack.getChangeCause()).isEqualTo(request.getChangeCause());
-        assertThat(operatorEntryPack.getPassword()).isEqualTo(request.getPassword());
-        assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(request.getConfirmPassword());
+        assertThat(operatorEntryPack.getChangeCause()).isEqualTo(operatorEntryRequest.getChangeCause());
+        assertThat(operatorEntryPack.getPassword()).isEqualTo(operatorEntryRequest.getPassword());
+        assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(operatorEntryRequest.getConfirmPassword());
     }
 }

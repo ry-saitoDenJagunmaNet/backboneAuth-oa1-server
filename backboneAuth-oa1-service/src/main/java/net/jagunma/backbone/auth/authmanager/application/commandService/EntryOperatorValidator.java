@@ -54,7 +54,7 @@ class EntryOperatorValidator {
         //  throw new GunmaRuntimeException("EOA13004", "パスワード");
 
         // 数値チェック
-        if (!Strings2.isNumeric(request.getOperatorCode6())) {
+        if (!Strings2.isDigit(request.getOperatorCode6())) {
             throw new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）");
         }
 
