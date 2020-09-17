@@ -16,7 +16,6 @@ public class Calendar {
     private Integer recordVersion;
 
     // コンストラクタ
-    Calendar() {}
     Calendar(
         Long calendarId,
         CalendarType calendarType,
@@ -53,20 +52,6 @@ public class Calendar {
             isManualChange,
             isRelease,
             recordVersion);
-    }
-
-    // 空生成メソッド
-    public static Calendar empty() { return new Calendar(); }
-
-    // 空判定メソッド
-    public boolean isEmpty() {
-        return calendarId == null &&
-            calendarType == null &&
-            date == null &&
-            isHoliday == null &&
-            isManualChange == null &&
-            isRelease == null &&
-            recordVersion == null;
     }
 
     // Getter

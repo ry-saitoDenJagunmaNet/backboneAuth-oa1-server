@@ -14,7 +14,6 @@ public class Calendars {
     private final ArrayList<Calendar> list = newArrayList();
 
     // コンストラクタ
-    Calendars() {}
     Calendars(Collection<Calendar> collection) {
         this.list.addAll(collection);
     }
