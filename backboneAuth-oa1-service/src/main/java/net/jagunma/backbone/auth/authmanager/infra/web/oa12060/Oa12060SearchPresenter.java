@@ -10,7 +10,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReferen
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
-import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
 /**
  * OA12060 検索 Presenter

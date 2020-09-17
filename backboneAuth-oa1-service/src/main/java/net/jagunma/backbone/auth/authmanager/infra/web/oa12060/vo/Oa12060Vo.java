@@ -73,7 +73,7 @@ public class Oa12060Vo extends BaseOfResponseVo {
     /**
      * カレンダーリスト
      */
-    private List<Oa12060CalendarVo> CalendarList;
+    private List<Oa12060CalendarVo> calendarList;
 
     public LocalDate getYearMonth() {
         return yearMonth;
@@ -136,9 +136,9 @@ public class Oa12060Vo extends BaseOfResponseVo {
         this.calendarTypeFilterCheck3disabled = calendarTypeFilterCheck3disabled;
     }
     public List<Oa12060CalendarVo> getCalendarList() {
-        return CalendarList;
+        return calendarList;
     }
-    public void setCalendarList(List<Oa12060CalendarVo> CalendarList) {
-        this.CalendarList = CalendarList;
+    public void setCalendarList(List<Oa12060CalendarVo> calendarList) {
+        this.calendarList = calendarList;
     }
 }

@@ -3,6 +3,10 @@ package net.jagunma.backbone.auth.authmanager.infra.web.base.vo;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.message.MessageFormatter;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -18,6 +22,14 @@ public class BaseOfResponseVo implements Serializable {
      */
     public static final Short CHECKBOX_TRUE  = 1;
 
+    /**
+     * メッセージコード
+     */
+    private String messageCode;
+    /**
+     * メッセージコード
+     */
+    private List<String> messageArgs;
     /**
      * メッセージ
      */
@@ -35,6 +47,10 @@ public class BaseOfResponseVo implements Serializable {
      */
     private String stackTrace;
 
+    public String getMessageCode() { return messageCode; }
+    public void setMessageCode(String messageCode) { this.messageCode = messageCode; }
+    public List<String> getMessageArgs() { return messageArgs; }
+    public void setMessageArgs(List<String> messageArgs) { this.messageArgs = messageArgs; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
     public String getErrorMessage() { return errorMessage; }
@@ -49,8 +65,11 @@ public class BaseOfResponseVo implements Serializable {
      * @param gre GunmaRuntimeException
      */
     public void setExceptionMessage(GunmaRuntimeException gre) {
+        messageCode = gre.getMessageCode();
+        messageArgs = (List<String>)((List<?>) Arrays.asList(gre.getArgs()));
         message = gre.getMessage();
     }
+
 
     /**
      * 楽観的ロックのメッセージをセットします。

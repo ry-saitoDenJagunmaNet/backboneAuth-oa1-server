@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreDetailsRequest;
-import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
 /**
  * OA12060 カレンダーメンテナンス反映サービス カレンダー詳細 Request Converter

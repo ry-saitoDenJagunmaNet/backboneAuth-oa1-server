@@ -10,7 +10,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
-import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

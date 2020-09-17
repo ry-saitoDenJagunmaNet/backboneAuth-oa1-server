@@ -64,7 +64,7 @@ public class Oa12060Controller extends BaseOfController {
      * @return view名
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    private String get(Model model) {
+    public String get(Model model) {
         Oa12060Vo vo = new Oa12060Vo();
         Oa12060InitPresenter presenter = new Oa12060InitPresenter();
         try {
@@ -151,7 +151,7 @@ public class Oa12060Controller extends BaseOfController {
         //TODO: パラメータでサインインオペレーターの情報を取得する
         setAuthInf();
 
-        System.out.println("### YearMonth="+vo.getYearMonthToString());
+        //System.out.println("### YearMonth="+vo.getYearMonthToString());
 
         try {
             Oa12060StoreConverter converter = Oa12060StoreConverter.with(vo);
@@ -165,7 +165,7 @@ public class Oa12060Controller extends BaseOfController {
                 vo.getYearMonthToString(),
                 Objects2.isNull(vo.getCalendarTypeFilterCheck1())? "0" : vo.getCalendarTypeFilterCheck1().toString() ,
                 Objects2.isNull(vo.getCalendarTypeFilterCheck2())? "0" : vo.getCalendarTypeFilterCheck2().toString() ,
-                Objects2.isNull(vo.getCalendarTypeFilterCheck3())? "0" :vo.getCalendarTypeFilterCheck3().toString(),
+                Objects2.isNull(vo.getCalendarTypeFilterCheck3())? "0" : vo.getCalendarTypeFilterCheck3().toString(),
                 vo.getWorkingdayOrHolidaySelect());
 
             vo = (Oa12060Vo)model.getAttribute("form");

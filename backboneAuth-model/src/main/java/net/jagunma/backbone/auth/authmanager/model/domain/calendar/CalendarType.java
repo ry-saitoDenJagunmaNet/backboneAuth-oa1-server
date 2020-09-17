@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.model.types;
+package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
 
 /**
  * カレンダー種類の列挙型

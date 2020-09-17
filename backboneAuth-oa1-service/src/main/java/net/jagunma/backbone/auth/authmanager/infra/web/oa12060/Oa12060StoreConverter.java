@@ -5,7 +5,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
-import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
 /**
  * OA12060 カレンダーメンテナンス反映サービス Request Converter

@@ -24,7 +24,6 @@ class Oa12060InitPresenterTest {
     void bindTo_test1() {
 
         // 事前準備
-        Oa12060Vo vo = new Oa12060Vo();
 
         // 実行値
         Oa12060InitPresenter presenter = new Oa12060InitPresenter();
@@ -43,6 +42,9 @@ class Oa12060InitPresenterTest {
         expectedVo.setCalendarTypeFilterCheck3disabled(false);
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
+
+        // 検証対象
+        Oa12060Vo vo = new Oa12060Vo();
 
         // 実行
         presenter.bindTo(vo);

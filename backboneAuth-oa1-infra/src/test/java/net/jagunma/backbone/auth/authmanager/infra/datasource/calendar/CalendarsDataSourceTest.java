@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
-import net.jagunma.backbone.auth.authmanager.model.types.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
