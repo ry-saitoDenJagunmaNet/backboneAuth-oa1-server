@@ -29,18 +29,22 @@ class Oa11020InitPresenterTest {
         String jaName = "JA前橋市";
         String prefix = "yu";
         List<TempoReferenceDto> tempoList = newArrayList();
-        TempoReferenceDto tempoReferenceDto = new TempoReferenceDto();
+        TempoReferenceDto tempoReferenceDto;
+        tempoReferenceDto = new TempoReferenceDto();
         tempoReferenceDto.setTempoCode("001");
         tempoReferenceDto.setTempoName("本店");
         tempoList.add(tempoReferenceDto);
+        tempoReferenceDto = new TempoReferenceDto();
         tempoReferenceDto.setTempoCode("002");
         tempoReferenceDto.setTempoName("テスト店舗002");
         tempoList.add(tempoReferenceDto);
+        tempoReferenceDto = new TempoReferenceDto();
         tempoReferenceDto.setTempoCode("003");
         tempoReferenceDto.setTempoName("テスト店舗003");
         tempoList.add(tempoReferenceDto);
 
         // 実行値
+        Oa11020Vo vo = new Oa11020Vo();
         Oa11020InitPresenter presenter = new Oa11020InitPresenter();
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
@@ -51,10 +55,16 @@ class Oa11020InitPresenterTest {
         Oa11020Vo expectedVo = new Oa11020Vo();
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setOperatorCodePrefix(prefix);
+        expectedVo.setOperatorCode6(null);
+        expectedVo.setOperatorName(null);
+        expectedVo.setMailAddress(null);
+        expectedVo.setExpirationStartDate(null);
+        expectedVo.setExpirationEndDate(null);
+        expectedVo.setChangeCause(null);
         expectedVo.setTempoList(tempoList);
-
-        // 検証対象
-        Oa11020Vo vo = new Oa11020Vo();
+        // ToDo:
+        expectedVo.setPassword(null);
+        expectedVo.setConfirmPassword(null);
 
         // 実行
         presenter.bindTo(vo);

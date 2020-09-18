@@ -85,7 +85,7 @@ class EntryOperatorTest {
         OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
             @Override
             public void insert(OperatorEntryPack operatorEntryPack) {
-                return;
+
             }
         };
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
@@ -96,9 +96,7 @@ class EntryOperatorTest {
                     return BranchAtMoment.empty();
                 }
 
-                BranchAtMoment branchAtMoment = createBranchAtMoment();
-
-                return branchAtMoment;
+                return createBranchAtMoment();
             }
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
@@ -114,7 +112,7 @@ class EntryOperatorTest {
         return createBranchAtMoment(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
     }
     private BranchAtMoment createBranchAtMoment(String jaCode) {
-        BranchAtMoment branchAtMoment = BranchAtMoment.builder()
+        return BranchAtMoment.builder()
             .withIdentifier(AuditInfoHolder.getBranch().getIdentifier())
             .withJaAtMoment(JaAtMoment.builder()
                 .withJaAttribute(JaAttribute.builder()
@@ -125,8 +123,6 @@ class EntryOperatorTest {
                 .withBranchCode(BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
                 .build())
             .build();
-
-        return branchAtMoment;
     }
 
     EntryOperatorTest () {
