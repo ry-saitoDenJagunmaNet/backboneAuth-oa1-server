@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12060;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.shouldHaveThrown;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +24,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -48,7 +48,7 @@ class Oa12060ControllerTest {
     // CalendarsのselectByテストデータ
     private Calendars createCalendars(String yearMonthString) {
         LocalDate yearMonth = LocalDate.parse(yearMonthString + "/01", DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成

@@ -14,6 +14,7 @@ import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ class CalendarDataSourceTest {
         // カレンダーデータを作成
         List<CalendarEntity> list = newArrayList();
         long id = 1;
-        for (int i = 1; i <= ymd.withDayOfMonth(1).plusMonths(1).minusDays(1).getDayOfMonth(); i++) {
+        for (int i = 1; i <= LocalDates.getLastDate(ymd).getDayOfMonth(); i++) {
             list.add(createCalendarEntity(id++, CalendarType.経済システム稼働カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));
             list.add(createCalendarEntity(id++, CalendarType.信用カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));
             list.add(createCalendarEntity(id++, CalendarType.広域物流カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));

@@ -4,6 +4,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,8 +45,8 @@ public class SearchCalendar {
     CalendarCriteria createCriteria(CalendarSearchRequest request) {
 
         CalendarCriteria criteria = new CalendarCriteria();
-        criteria.getDateCriteria().setFrom(request.getYearMonth().withDayOfMonth(1));
-        criteria.getDateCriteria().setTo(request.getYearMonth().withDayOfMonth(1).plusMonths(1).minusDays(1));
+        criteria.getDateCriteria().setFrom(LocalDates.getFirstDate(request.getYearMonth()));
+        criteria.getDateCriteria().setTo(LocalDates.getLastDate(request.getYearMonth()));
 
         return criteria;
     }

@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
+import net.jagunma.common.util.primitives.LocalDates;
 
 /**
  * OA12060 検索 Presenter
@@ -86,9 +87,9 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
     private String genCalendarTableHtml() {
 
         // 月初日
-        LocalDate startDate = yearMonth.withDayOfMonth(1);
+        LocalDate startDate = LocalDates.getFirstDate(yearMonth);
         // 月末日
-        int lastDay = startDate.plusMonths(1).minusDays(1).getDayOfMonth();
+        int lastDay = LocalDates.getLastDate(startDate).getDayOfMonth();
         // 月初日の曜日
         int startWeek = startDate.getDayOfWeek().getValue();
         if (startWeek == 7) {startWeek = 0; }

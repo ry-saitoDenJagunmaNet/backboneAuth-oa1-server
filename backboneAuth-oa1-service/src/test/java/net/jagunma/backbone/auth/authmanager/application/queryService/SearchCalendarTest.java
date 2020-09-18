@@ -15,6 +15,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepo
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class SearchCalendarTest {
 
     // 実行既定値
     private final LocalDate yearMonth = LocalDate.now();
-    private final LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+    private final LocalDate ym = LocalDates.getLastDate(yearMonth);
     private Calendars createCalendars() {
         // 対象月のカレンダーデータを作成
         List<Calendar> calendaerList = newArrayList();
@@ -156,8 +157,8 @@ class SearchCalendarTest {
 
         // 期待値
         CalendarCriteria expectedCriteria = new CalendarCriteria();
-        expectedCriteria.getDateCriteria().setFrom(yearMonth.withDayOfMonth(1));
-        expectedCriteria.getDateCriteria().setTo(yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1));
+        expectedCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(yearMonth));
+        expectedCriteria.getDateCriteria().setTo(LocalDates.getLastDate(yearMonth));
 
         // テスト対象クラス生成
         SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(null));

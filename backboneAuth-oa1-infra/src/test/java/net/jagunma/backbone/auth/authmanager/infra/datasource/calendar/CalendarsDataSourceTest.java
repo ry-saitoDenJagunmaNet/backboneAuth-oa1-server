@@ -16,6 +16,7 @@ import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +30,8 @@ class CalendarsDataSourceTest {
         List<CalendarEntity> list = newArrayList();
         long id = 1;
         // ３か月分のデータ作成
-        LocalDate startDay = ymd.withDayOfMonth(1).minusMonths(1);
-        LocalDate lastDay = ymd.withDayOfMonth(1).plusMonths(2).minusDays(1);
+        LocalDate startDay = LocalDates.getFirstDate(ymd);
+        LocalDate lastDay = LocalDates.getLastDate(ymd);
         for (LocalDate date = startDay; date.isBefore(lastDay.plusDays(1)); date = date.plusDays(1)) {
             list.add(createCalendarEntity(id++, CalendarType.信用カレンダー.getCode(), date, false, false, true));
         }
@@ -131,14 +132,14 @@ class CalendarsDataSourceTest {
 
         // 実行値
         CalendarCriteria calendarCriteria = new CalendarCriteria();
-        calendarCriteria.getDateCriteria().setFrom(criteriaDate.withDayOfMonth(1));
-        calendarCriteria.getDateCriteria().setTo(criteriaDate.withDayOfMonth(1).plusMonths(1).minusDays(1));
+        calendarCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(criteriaDate));
+        calendarCriteria.getDateCriteria().setTo(LocalDates.getLastDate(criteriaDate));
         CalendarsDataSource calendarsDataSource = new CalendarsDataSource(createCalendarEntityDao());
 
         // 期待値
         List<CalendarEntity> expectedlist = createCalendarEntityList().stream().filter(c->
-            c.getDate().compareTo(criteriaDate.withDayOfMonth(1)) >= 0 &&
-            c.getDate().compareTo(criteriaDate.withDayOfMonth(1).plusMonths(1).minusDays(1)) <= 0).collect(Collectors.toList());
+            c.getDate().compareTo(LocalDates.getFirstDate(criteriaDate)) >= 0 &&
+            c.getDate().compareTo(LocalDates.getLastDate(criteriaDate)) <= 0).collect(Collectors.toList());
         List<Calendar> expectedCalendarlist = newArrayList();
         for(CalendarEntity entity : expectedlist) {
             expectedCalendarlist.add(Calendar.createFrom(

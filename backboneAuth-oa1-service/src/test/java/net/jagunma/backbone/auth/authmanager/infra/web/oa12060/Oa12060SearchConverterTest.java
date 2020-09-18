@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class Oa12060SearchConverterTest {
     void with_test1() {
 
         // 事前準備
-        LocalDate yearMonth = LocalDate.now().withDayOfMonth(1);
+        LocalDate yearMonth = LocalDates.getFirstDate(LocalDate.now());
         Short calendarTypeFilterCheck1 = null;
         Short calendarTypeFilterCheck2 = null;
         Short calendarTypeFilterCheck3 = null;

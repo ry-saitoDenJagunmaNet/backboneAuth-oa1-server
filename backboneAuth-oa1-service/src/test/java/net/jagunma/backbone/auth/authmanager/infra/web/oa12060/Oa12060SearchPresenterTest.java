@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.primitives.LocalDates;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -93,7 +94,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 3, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
@@ -165,7 +166,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 2, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
@@ -240,7 +241,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
@@ -316,7 +317,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
@@ -392,7 +393,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
@@ -468,7 +469,7 @@ class Oa12060SearchPresenterTest {
 
         // 事前準備
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
-        LocalDate ym = yearMonth.withDayOfMonth(1).plusMonths(1).minusDays(1);
+        LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
         long id = 0;
         //対象月のカレンダーデータを作成
