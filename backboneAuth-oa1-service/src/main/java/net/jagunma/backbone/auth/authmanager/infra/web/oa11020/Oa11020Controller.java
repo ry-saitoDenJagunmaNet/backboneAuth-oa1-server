@@ -101,7 +101,7 @@ public class Oa11020Controller extends BaseOfController {
      *
      * @param model モデル
      * @param vo ViewObject
-     * @return
+     * @return view名
      */
     @RequestMapping(value = "/entry", method = RequestMethod.POST)
     public String entry(Model model, Oa11020Vo vo) {
@@ -117,8 +117,7 @@ public class Oa11020Controller extends BaseOfController {
 
             entryOperator.execute(converter);
 
-            model.addAttribute("form", vo);
-            return "oa11020";
+            return get(model);
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合

@@ -57,10 +57,17 @@ class Oa11020InitPresenter {
      * @param vo
      */
     public void bindTo(Oa11020Vo vo) {
-
         vo.setJa(jaCode + " " + jaName);
         vo.setOperatorCodePrefix(operatorCodePrefix);
+        vo.setOperatorCode6(null);
+        vo.setOperatorName(null);
+        vo.setMailAddress(null);
+        vo.setExpirationStartDate(null);
+        vo.setExpirationEndDate(null);
+        vo.setChangeCause(null);
         vo.setTempoList(tempoList);
-
+        // ToDo:
+        vo.setPassword(null);
+        vo.setConfirmPassword(null);
     }
 }
