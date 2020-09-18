@@ -7,13 +7,13 @@ import java.time.LocalDate;
  */
 public class Calendar {
 
-    private Long calendarId;
-    private CalendarType calendarType;
-    private LocalDate date;
-    private Boolean isHoliday;
-    private Boolean isManualChange;
-    private Boolean isRelease;
-    private Integer recordVersion;
+    private final Long calendarId;
+    private final CalendarType calendarType;
+    private final LocalDate date;
+    private final Boolean isHoliday;
+    private final Boolean isManualChange;
+    private final Boolean isRelease;
+    private final Integer recordVersion;
 
     // コンストラクタ
     Calendar(
