@@ -201,19 +201,17 @@ pipeline {
     post {
         always {
             script {
-                if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') {
-                    if (currentBuild.result != 'NOT_BUILT') {
-                        def finalResult = currentBuild.currentResult
-                        def colorCode = "#00ff7f"
-                        if (finalResult == "FAILURE") {
-                            colorCode = "#ff0000"
-                        } else if (finalResult == "UNSTABLE") {
-                            colorCode = "#ffd900"
-                        } else if (finalResult == "ABORTED") {
-                            colorCode = "#797979"
-                        }
-                        slackSend channel: "#jenkins-build", color: colorCode, message: "Build ${finalResult} - ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", tokenCredentialId: 'slack-integration-token'
+                if (currentBuild.result != 'NOT_BUILT') {
+                    def finalResult = currentBuild.currentResult
+                    def colorCode = "#00ff7f"
+                    if (finalResult == "FAILURE") {
+                        colorCode = "#ff0000"
+                    } else if (finalResult == "UNSTABLE") {
+                        colorCode = "#ffd900"
+                    } else if (finalResult == "ABORTED") {
+                        colorCode = "#797979"
                     }
+                    slackSend channel: "#jenkins-build", color: colorCode, message: "Build ${finalResult} - ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", tokenCredentialId: 'slack-integration-token'
                 }
             }
         }
@@ -225,9 +223,9 @@ pipeline {
 // Gradlewコマンドを実行する
 def gradlew(command) {
     if (isUnix()) {
-        sh "./gradlew ${command} --stacktrace --daemon --warning-mode all"
+        sh "./gradlew ${command} --stacktrace --daemon --warning-mode all --refresh-dependencies "
     } else {
-        bat "./gradlew.bat ${command} --stacktrace --daemon --warning-mode all"
+        bat "./gradlew.bat ${command} --stacktrace --daemon --warning-mode all --refresh-dependencies "
     }
 }
 

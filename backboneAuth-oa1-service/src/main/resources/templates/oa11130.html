@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>サービス呼出証跡照会 | 基幹系認証管理システム</title>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
+	<link rel="stylesheet" href="../static/css/common.css"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css"/>
+	<link rel="stylesheet" href="../static/css/oa11130.css"/>
+	<script src="../static/materialize/js/materialize.min.js"></script>
+	<script src="../static/js/common.js"></script>
+	<script src="../static/js/sidenav.js"></script>
+	<script src="../static/js/oa11130.js"></script>
+</head>
+<body>
+	<!-- モーダルダイアログ用定義 -->
+	<script>oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script>oa_getSidenav("oa11130");</script>
+	<!-- header定義 -->
+	<header>
+		<script>oa_getHeader("oa11130", "サービス呼出証跡照会");</script>
+	</header>
+
+	<!-- main定義 -->
+	<main>
+		<section>
+			<!-- ＪＡ -->
+			<div class="row oa_readonly">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<label for="ja">ＪＡ</label>
+					</div>
+				</div>
+			</div>
+			<!-- 店舗 -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="tempo" class="validate">
+							<option value=""></option>
+							<option value="001">本所</option>
+							<option value="002">○○○支所</option>
+							<option value="003">△△センター</option>
+							<option value="004">□□□□店</option>
+							<option value="005">××××館</option>
+						</select>
+						<label>店舗</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーターコード -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<input type="text" id="operater_code" class="validate" value=""></input>
+						<label for="operater_code">オペレーターコード</label>
+					</div>
+				</div>
+			</div>
+			<!-- オペレーター名 -->
+			<div class="row oa_optional">
+				<div class="col s8">
+					<div class="input-field">
+						<input type="text" id="operater_name" class="validate" value=""></input>
+						<label for="operater_name">オペレーター名</label>
+					</div>
+				</div>
+			</div>
+			<!-- リクエスト日 -->
+			<div class="row oa_optional">
+				<div class="col s12">
+					<div class="row">
+						<div class="col s12">
+							<label class="oa_content_label">リクエスト日</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="request_date_from" class="validate datepicker"></input>
+								<label for="request_date_from">（開始日）</label>
+							</div>
+						</div>
+						<div class="col s1"><div class="center-align"><p>～</p></div></div>
+						<div class="col s5">
+							<div class="input-field">
+								<input type="text" id="request_date_to" class="validate datepicker"></input>
+								<label for="request_date_to">（終了日）</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- サブシステム -->
+			<div class="row oa_optional">
+				<div class="col s6">
+					<div class="input-field">
+						<select id="subsystem" class="validate">
+							<option value=""></option>
+							<option value="KB">購買</option>
+							<option value="YS">販売・青果</option>
+							<option value="YF">販売・花卉</option>
+							<option value="HK">販売・米</option>
+							<option value="HM">販売・麦</option>
+							<option value="AN">販売・畜産</option>
+						</select>
+						<label>サブシステム</label>
+					</div>
+				</div>
+			</div>
+			<!-- サービス機能名 -->
+			<div class="row oa_optional">
+				<div class="col s12">
+					<div class="input-field">
+						<input type="text" id="service_feature_name" class="validate" value=""></input>
+						<label for="service_feature_name">サービス機能名</label>
+					</div>
+				</div>
+			</div>
+			<!-- リクエスト結果 -->
+			<div class="row oa_optional">
+				<div class="col s12">
+					<div class="input-field">
+						<select multiple id="request_cause" class="validate">
+							<option value="0">業務処理成功(200)</option>
+							<option value="1">失敗-認証情報が特定できない(401)</option>
+							<option value="2">失敗-認証情報は特定できたが処理を認可できない(402)</option>
+							<option value="3">失敗-対象URLが存在しない(403)</option>
+							<option value="4">☑ 失敗-内部エラー(500)</option>
+						</select>
+						<label>リクエスト結果</label>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 検索ボタン -->
+		<section>
+			<div class="row">
+				<div class="col s3 offset-s9">
+					<a class="btn waves-effect waves-light" href="javascript:oaex_searchBtn_onClick();">検索</a>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="row">
+				<div class="col s12">
+					<div class="oaex_servicecall_trace_table">
+						<table class="highlight" style="width: auto;">
+							<thead>
+								<tr>
+									<th class="oaex_request_date_th">リクエスト日時</th>
+									<th class="oaex_Request_source_ipaddress_th">リクエスト元IPアドレス</th>
+									<th class="oaex_subsystem_th">サブシステム</th>
+									<th class="oaex_request_viewid_th">リクエスト画面ID</th>
+									<th class="oaex_tempo_th" colspan="2">店舗</th>
+									<th class="oaex_operator_th" colspan="2">オペレーター</th>
+									<th class="oaex_service_feature_name_th">サービス機能名</th>
+									<th class="oaex_service_name_th">サービス名</th>
+									<th class="oaex_service_method_name_th">サービスメソッド名</th>
+									<th class="oaex_request_result_th">リクエスト結果</th>
+								</tr>
+							</thead>
+							<tbody id="servicecall_trace_table">
+								<tr>
+									<td class="oaex_request_date"></td>
+									<td class="oaex_Request_source_ipaddress">145.254.216.111</td>
+									<td class="oaex_subsystem">販売・青果</td>
+									<td class="oaex_request_viewid">YS33010</td>
+									<td class="oaex_tempo_code">000</td>
+									<td class="oaex_tempo_name">本所</td>
+									<td class="oaex_operator_code">OP101</td>
+									<td class="oaex_operator_name">前橋太郎</td>
+									<td class="oaex_service_feature_name">立替入金照合＜一覧＞</td>
+									<td class="oaex_service_name">YS330101初期サービス</td>
+									<td class="oaex_service_method_name">実行</td>
+									<td class="oaex_request_result">業務処理成功(200)</td>
+								</tr>
+								<tr><td></td><td>145.254.216.112</td><td>購買</td><td>KB20100</td><td>000</td><td>本所</td><td>OP102</td><td>前橋次郎</td><td>当用受注登録</td><td>KB410101顧客電話番号入力サービス</td><td>実行</td><td>業務処理成功(200)</td></tr>
+								<tr><td></td><td>145.254.216.111</td><td>販売・青果</td><td>YS43010</td><td>000</td><td>本所</td><td>OP103</td><td>前橋三郎</td><td>振込要求</td><td>YS430102検索サービス</td><td>実行</td><td>失敗-認証情報は特定できたが処理を認可できない(402)</td></tr>
+								<tr><td></td><td>145.254.216.116</td><td>販売・畜産</td><td>AN11010</td><td>000</td><td>本所</td><td>OP106</td><td>前橋六郎</td><td>仕切入力（豚屠体）＜一覧＞</td><td>AN110101検索サービス</td><td>実行</td><td>業務処理成功(200)</td></tr>
+								<tr><td></td><td>145.254.216.113</td><td>販売・花卉</td><td>YF13010</td><td>000</td><td>本所</td><td>OP102</td><td>前橋三郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>実行</td><td>業務処理成功(200)</td></tr>
+								<tr><td></td><td>145.254.216.114</td><td>販売・米</td><td>HK21010</td><td>000</td><td>本所</td><td>OP104</td><td>前橋四郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>実行</td><td>業務処理成功(200)</td></tr>
+								<tr><td></td><td>145.254.216.115</td><td>販売・麦</td><td>HM68010</td><td>000</td><td>本所</td><td>OP105</td><td>前橋五郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>実行</td><td>業務処理成功(200))</td></tr>
+								<tr><td></td><td>145.254.216.114</td><td>販売・米</td><td>HK51010</td><td>000</td><td>本所</td><td>OP104</td><td>前橋四郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>□□□□</td><td>ＸＸＸＸＸＸ(999)</td></tr>
+								<tr><td></td><td>145.254.216.115</td><td>販売・麦</td><td>HM69010</td><td>000</td><td>本所</td><td>OP105</td><td>前橋五郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>□□□□</td><td>ＸＸＸＸＸＸ(999)</td></tr>
+								<tr><td></td><td>145.254.216.112</td><td>購買</td><td>KB30100</td><td>000</td><td>本所</td><td>OP102</td><td>前橋次郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>□□□□</td><td>ＸＸＸＸＸＸ(999)</td></tr>
+								<tr><td></td><td>145.254.216.116</td><td>販売・畜産</td><td>AN35010</td><td>000</td><td>本所</td><td>OP106</td><td>前橋六郎</td><td>○○○○○○○○○○○○○</td><td>XX999999△△サービス</td><td>□□□□</td><td>ＸＸＸＸＸＸ(999)</td></tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- pagination -->
+			<div class="row">
+				<div class="col s12">
+					<ul id="servicecall_trace_pagination" class="pagination">
+						<li class="disabled"><a href="#!">&lt;</a></li>
+						<li class="active"><a href="#!">1</a></li>
+						<li class="waves-effect"><a href="#!">2</a></li>
+						<li class="waves-effect"><a href="#!">3</a></li>
+						<li class="waves-effect"><a href="#!">4</a></li>
+						<li class="waves-effect"><a href="#!">5</a></li>
+						<li class="waves-effect"><a href="#!">&gt;</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- <br> -->
+
+	</main>
+
+	<!-- footer定義 -->
+	<footer>
+		<div class="row">
+			<div class="col s3">
+				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
