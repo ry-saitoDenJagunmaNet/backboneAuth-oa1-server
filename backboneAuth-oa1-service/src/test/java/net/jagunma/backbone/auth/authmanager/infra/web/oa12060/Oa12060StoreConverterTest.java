@@ -21,13 +21,13 @@ class Oa12060StoreConverterTest {
      *    対象のカレンダーデータが無い場合のテスト
      *
      *  ●検証事項
-     *  ・ Converterへのセット
+     *  ・Converterへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void with_test1() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = null;
         String yearMonthToString = null;
         Short calendarTypeFilterCheck1 = null;
@@ -39,8 +39,6 @@ class Oa12060StoreConverterTest {
         boolean calendarTypeFilterCheck2disabled = false;
         boolean calendarTypeFilterCheck3disabled = false;
         List<Oa12060CalendarVo> calendarList = newArrayList();
-
-        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonth(yearMonth);
         vo.setYearMonthToString(yearMonthToString);
@@ -69,13 +67,13 @@ class Oa12060StoreConverterTest {
      *    カレンダー詳細リストを作成のテスト
      *
      *  ●検証事項
-     *  ・ Converterへのセット
+     *  ・Converterへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void createCalendarList_test1() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = null;
         String yearMonthToString = null;
         Short calendarTypeFilterCheck1 = null;
@@ -90,8 +88,6 @@ class Oa12060StoreConverterTest {
         Oa12060CalendarVo calendarVo = new Oa12060CalendarVo();
         calendarList.add(cretaeOa12060CalendarVo(1l, (short) 1, 2l, (short) 0, 3l, (short) 1));
         calendarList.add(cretaeOa12060CalendarVo(null, (short) 1, null, (short) 0, null, (short) 1));
-
-        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonth(yearMonth);
         vo.setYearMonthToString(yearMonthToString);

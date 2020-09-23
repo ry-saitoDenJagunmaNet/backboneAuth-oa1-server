@@ -73,7 +73,7 @@ class SearchCalendarTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -112,7 +112,7 @@ class SearchCalendarTest {
      *    カレンダーの検索結果が0件のテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -147,8 +147,8 @@ class SearchCalendarTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
-     *  ・ CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
+     *  ・正常終了
+     *  ・CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
      */
     @Test
     @Tag(TestSize.SMALL)

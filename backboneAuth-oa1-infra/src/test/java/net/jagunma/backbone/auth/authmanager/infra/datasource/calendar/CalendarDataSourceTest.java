@@ -118,13 +118,13 @@ class CalendarDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void findOneBy_test0() {
 
-        // 事前準備
+        // 実行値
         Long calendarId = 4L;
         CalendarType calendarType = CalendarType.経済システム稼働カレンダー;
         LocalDate date = ymd.withDayOfMonth(2);
@@ -132,8 +132,6 @@ class CalendarDataSourceTest {
         Boolean isManualChange = false;
         Boolean isRelease = true;
         Integer recordVersion = 1;
-
-        // 実行値
         CalendarCriteria calendarCriteria = new CalendarCriteria();
         calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
@@ -154,22 +152,21 @@ class CalendarDataSourceTest {
         // 結果検証
         assertThat(calendar).isEqualToComparingFieldByField(expectedCalendar);
     }
+
     /**
      * {@link CalendarDataSource#findOneBy(CalendarCriteria)}のテスト
      *  ●パターン
      *    対象データ無し
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void findOneBy_test1() {
 
-        // 事前準備
-        Long calendarId = 99999999L;
-
         // 実行値
+        Long calendarId = 99999999L;
         CalendarCriteria calendarCriteria = new CalendarCriteria();
         calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());

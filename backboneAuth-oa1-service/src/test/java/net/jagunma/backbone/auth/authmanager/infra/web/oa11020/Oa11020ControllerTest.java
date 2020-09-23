@@ -125,10 +125,10 @@ class Oa11020ControllerTest {
             @Override
             public void execute(OperatorEntryRequest request) {
                 // request.getTempoId() = 11 の場合：GunmaRuntimeException を発生させる
-                // request.getTempoId() = 12 の場合：RuntimeException を発生させる
                 if(request.getTempoId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
                 }
+                // request.getTempoId() = 12 の場合：RuntimeException を発生させる
                 if(request.getTempoId().equals(12L)) {
                     throw new RuntimeException();
                 }

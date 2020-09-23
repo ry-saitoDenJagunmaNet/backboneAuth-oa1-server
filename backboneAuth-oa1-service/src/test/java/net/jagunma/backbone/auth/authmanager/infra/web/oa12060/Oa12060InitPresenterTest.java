@@ -17,15 +17,14 @@ class Oa12060InitPresenterTest {
      *    通常
      *
      *  ●検証事項
-     *  ・ Voへのセット
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test1() {
 
-        // 事前準備
-
         // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
         Oa12060InitPresenter presenter = new Oa12060InitPresenter();
 
         // 期待値
@@ -42,9 +41,6 @@ class Oa12060InitPresenterTest {
         expectedVo.setCalendarTypeFilterCheck3disabled(false);
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
-
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
 
         // 実行
         presenter.bindTo(vo);

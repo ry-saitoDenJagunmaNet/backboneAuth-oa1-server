@@ -18,21 +18,19 @@ class Oa12060SearchConverterTest {
      *    通常
      *
      *  ●検証事項
-     *  ・ Converterへのセット
+     *  ・Converterへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
     void with_test1() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDates.getFirstDate(LocalDate.now());
         Short calendarTypeFilterCheck1 = null;
         Short calendarTypeFilterCheck2 = null;
         Short calendarTypeFilterCheck3 = null;
         String workingdayOrHolidaySelect = null;
-
-        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonth(yearMonth);
         vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1);

@@ -121,16 +121,14 @@ class CalendarsDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void selectBy_test0() {
 
-        // 事前準備
-        LocalDate criteriaDate = ymd;
-
         // 実行値
+        LocalDate criteriaDate = ymd;
         CalendarCriteria calendarCriteria = new CalendarCriteria();
         calendarCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(criteriaDate));
         calendarCriteria.getDateCriteria().setTo(LocalDates.getLastDate(criteriaDate));
@@ -169,16 +167,14 @@ class CalendarsDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void selectBy_test1() {
 
-        // 事前準備
-        LocalDate criteriaDate = ymd;
-
         // 実行値
+        LocalDate criteriaDate = ymd;
         CalendarsDataSource calendarsDataSource = new CalendarsDataSource(createCalendarEntityDao());
 
         // 期待値

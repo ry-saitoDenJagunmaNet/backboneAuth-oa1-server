@@ -19,16 +19,14 @@ class SearchCalendarValidatorTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test0() {
 
-        // 事前準備
-        LocalDate yearMonth = LocalDate.now();
-
         // 実行値
+        LocalDate yearMonth = LocalDate.now();
         CalendarSearchRequest request = new CalendarSearchRequest() {
             @Override
             public LocalDate getYearMonth() {
@@ -48,16 +46,14 @@ class SearchCalendarValidatorTest {
      *    リクエストの年月がnullのテスト
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test1() {
 
-        // 事前準備
-        LocalDate yearMonth = null;
-
         // 実行値
+        LocalDate yearMonth = null;
         CalendarSearchRequest request = new CalendarSearchRequest() {
             @Override
             public LocalDate getYearMonth() {
@@ -81,13 +77,13 @@ class SearchCalendarValidatorTest {
      *    リクエストがnullのテスト
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test2() {
 
-        // 事前準備
+        // 実行値
         CalendarSearchRequest request = null;
 
         assertThatThrownBy(()->

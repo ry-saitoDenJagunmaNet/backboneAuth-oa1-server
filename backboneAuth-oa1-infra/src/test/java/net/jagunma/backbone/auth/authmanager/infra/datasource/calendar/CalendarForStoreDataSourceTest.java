@@ -105,7 +105,7 @@ class CalendarForStoreDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -135,7 +135,7 @@ class CalendarForStoreDataSourceTest {
      *    対象データ無し（null）
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
