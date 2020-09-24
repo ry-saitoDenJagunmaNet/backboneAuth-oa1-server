@@ -26,7 +26,6 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.beans.Beans;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import net.jagunma.common.util.objects2.Objects2;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -372,7 +371,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
 
         // 結果検証
-        assertThat(Objects2.toStringHelper(operatorEntity).defaultConfig().toString()).isEqualTo(Objects2.toStringHelper(expectedEntity).defaultConfig().toString());
+        assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -405,7 +404,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorEntryPackForStoreDataSource.insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
 
         // 結果検証
-        assertThat(Objects2.toStringHelper(operatorHistoryHeaderEntity).defaultConfig().toString()).isEqualTo(Objects2.toStringHelper(expectedEntity).defaultConfig().toString());
+        assertThat(operatorHistoryHeaderEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -436,7 +435,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorHistoryEntity operatorHistoryEntity = operatorEntryPackForStoreDataSource.insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
 
         // 結果検証
-        assertThat(Objects2.toStringHelper(operatorHistoryEntity).defaultConfig().toString()).isEqualTo(Objects2.toStringHelper(expectedEntity).defaultConfig().toString());
+        assertThat(operatorHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -470,6 +469,6 @@ class OperatorEntryPackForStoreDataSourceTest {
         PasswordHistoryEntity passwordHistoryEntity = operatorEntryPackForStoreDataSource.insertPasswordHistory(operatorEntryPack, operatorEntity);
 
         // 結果検証
-        assertThat(Objects2.toStringHelper(passwordHistoryEntity).defaultConfig().toString()).isEqualTo(Objects2.toStringHelper(expectedEntity).defaultConfig().toString());
+        assertThat(passwordHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 }

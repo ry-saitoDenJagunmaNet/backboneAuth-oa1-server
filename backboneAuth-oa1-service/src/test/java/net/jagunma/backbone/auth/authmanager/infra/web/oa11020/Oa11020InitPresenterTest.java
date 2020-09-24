@@ -7,7 +7,6 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.objects2.Objects2;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -71,6 +70,6 @@ class Oa11020InitPresenterTest {
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(Objects2.toStringHelper(vo).defaultConfig().toString()).isEqualTo(Objects2.toStringHelper(expectedVo).defaultConfig().toString());
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 }
