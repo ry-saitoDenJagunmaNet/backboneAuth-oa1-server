@@ -91,7 +91,7 @@ pipeline {
         stage('Static code analyze') {
             steps {
                 // 並列処理の場合はparallelメソッドを使う
-                gradlew 'check -x test'
+                gradlew 'check -x test -x classes -x testClasses'
 
             }
             post {
@@ -169,7 +169,7 @@ pipeline {
             }
             steps {
                 //バージョン読み取り(gradle.properties読み取り)
-                script{
+                script {
                     oa1ServerProps = readProperties file: "gradle.properties"
                 }
 
@@ -186,7 +186,7 @@ pipeline {
                 sh "git config credential.helper ''"
                 sh "echo '' > ~/.git-credentials"
 
-                slackSend channel: "#jenkins-build", color: "#2196F3", message: "Release backboneAuth-oa1-server - ${oa1ServerProps.version.replace('-SNAPSHOT','')} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", tokenCredentialId: 'slack-integration-token'
+                slackSend channel: "#jenkins-build", color: "#2196F3", message: "Release backboneAuth-oa1-server - ${oa1ServerProps.version.replace('-SNAPSHOT', '')} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", tokenCredentialId: 'slack-integration-token'
             }
         }
         stage('kick job depended on') {
