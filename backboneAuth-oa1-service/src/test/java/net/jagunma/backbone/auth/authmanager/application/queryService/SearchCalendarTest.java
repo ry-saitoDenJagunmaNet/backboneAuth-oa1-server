@@ -99,7 +99,7 @@ class SearchCalendarTest {
                     //assertThat(thisCalendars).isEqualToComparingFieldByField(expectedCalendars);
                     for(int i = 0; i < thisCalendars.getValues().size(); i++) {
                         assertThat(thisCalendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                            .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                            .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
                     }
                 }
             }
@@ -135,7 +135,7 @@ class SearchCalendarTest {
                 @Override
                 public void setCalendars(Calendars thisCalendars) {
                     // 結果検証
-                    assertThat(thisCalendars).isEqualToComparingFieldByField(expectedCalendars);
+                    assertThat(thisCalendars).usingRecursiveComparison().isEqualTo(expectedCalendars);
                 }
             }
         );

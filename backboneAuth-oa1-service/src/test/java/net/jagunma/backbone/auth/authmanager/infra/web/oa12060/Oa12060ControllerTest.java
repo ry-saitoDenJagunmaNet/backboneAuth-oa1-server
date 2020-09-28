@@ -204,7 +204,7 @@ class Oa12060ControllerTest {
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -261,7 +261,7 @@ class Oa12060ControllerTest {
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -367,7 +367,7 @@ class Oa12060ControllerTest {
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -407,7 +407,7 @@ class Oa12060ControllerTest {
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**

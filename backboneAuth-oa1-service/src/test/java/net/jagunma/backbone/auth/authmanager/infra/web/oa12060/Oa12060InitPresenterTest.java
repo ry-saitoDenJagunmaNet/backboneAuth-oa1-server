@@ -46,6 +46,6 @@ class Oa12060InitPresenterTest {
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 }

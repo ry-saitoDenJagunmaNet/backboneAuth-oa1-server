@@ -115,7 +115,7 @@ class Oa12060StoreConverterTest {
         assertTrue(converter instanceof Oa12060StoreConverter);
         for (int i = 0; i < actual.size(); i++) {
             assertThat(actual.get(i)).as(i + 1 + "レコード目でエラー")
-                .isEqualToComparingFieldByField(expected.get(i));
+                .usingRecursiveComparison().isEqualTo(expected.get(i));
         }
     }
 

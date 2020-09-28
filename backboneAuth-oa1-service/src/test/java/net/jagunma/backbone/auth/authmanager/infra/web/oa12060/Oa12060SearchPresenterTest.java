@@ -70,7 +70,7 @@ class Oa12060SearchPresenterTest {
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -138,7 +138,7 @@ class Oa12060SearchPresenterTest {
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -207,7 +207,7 @@ class Oa12060SearchPresenterTest {
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -279,7 +279,7 @@ class Oa12060SearchPresenterTest {
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -351,7 +351,7 @@ class Oa12060SearchPresenterTest {
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -423,7 +423,7 @@ class Oa12060SearchPresenterTest {
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -495,6 +495,6 @@ class Oa12060SearchPresenterTest {
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 }

@@ -54,7 +54,7 @@ class CalendarForStoreDataSourceTest {
             @Override
             public int updateExcludeNull(CalendarEntity entity) {
                 // 結果検証
-                assertThat(entity).isEqualToComparingFieldByField(createExpectedEntity());
+                assertThat(entity).usingRecursiveComparison().isEqualTo(createExpectedEntity());
                 return 0;
             }
             @Override
@@ -126,7 +126,7 @@ class CalendarForStoreDataSourceTest {
         Calendar resultCalendar = calendarForStoreDataSource.update(calendar);
 
         // 結果検証
-        assertThat(resultCalendar).isEqualToComparingFieldByField(calendar);
+        assertThat(resultCalendar).usingRecursiveComparison().isEqualTo(calendar);
     }
 
     /**

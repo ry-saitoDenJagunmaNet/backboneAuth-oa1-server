@@ -150,7 +150,7 @@ class CalendarDataSourceTest {
         Calendar calendar = calendarDataSource.findOneBy(calendarCriteria);
 
         // 結果検証
-        assertThat(calendar).isEqualToComparingFieldByField(expectedCalendar);
+        assertThat(calendar).usingRecursiveComparison().isEqualTo(expectedCalendar);
     }
 
     /**

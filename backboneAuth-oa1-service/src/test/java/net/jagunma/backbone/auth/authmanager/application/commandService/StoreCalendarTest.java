@@ -64,8 +64,8 @@ class StoreCalendarTest {
             @Override
             public Calendar update(Calendar calendar) {
                 // 結果検証
-                assertThat(calendar).isEqualToComparingFieldByField(
-                    expectedList.stream().filter(c->c.getCalendarId() == calendar.getCalendarId()).findFirst().orElse(null));
+                assertThat(calendar).usingRecursiveComparison()
+                    .isEqualTo(expectedList.stream().filter(c->c.getCalendarId() == calendar.getCalendarId()).findFirst().orElse(null));
                 return calendar;
             }
         }, createCalendarsRepository());

@@ -157,7 +157,7 @@ class CalendarsDataSourceTest {
         // 結果検証
         for(int i = 0; i < calendars.getValues().size(); i++) {
             assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
         }
     }
 
@@ -198,7 +198,7 @@ class CalendarsDataSourceTest {
         // 結果検証
         for(int i = 0; i < calendars.getValues().size(); i++) {
             assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
         }
     }
 }
