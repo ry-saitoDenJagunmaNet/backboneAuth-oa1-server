@@ -12,7 +12,7 @@ buildscript {
         assertjVersion = '3.17.2'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.2.3'
+        commonServerVersion = '20.2.4'
         commonCommonVersion = '20.1.26'
         commonUtilsVersion = '20.2.12'
         jacsonDatabindVersion = '2.11.2'
