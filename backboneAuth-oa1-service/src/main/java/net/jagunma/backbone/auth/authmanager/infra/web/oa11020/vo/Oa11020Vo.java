@@ -6,7 +6,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoR
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 
 /**
- * OA11020 View Object
+ * OA11020 ViewObject
  */
 public class Oa11020Vo extends BaseOfResponseVo {
 

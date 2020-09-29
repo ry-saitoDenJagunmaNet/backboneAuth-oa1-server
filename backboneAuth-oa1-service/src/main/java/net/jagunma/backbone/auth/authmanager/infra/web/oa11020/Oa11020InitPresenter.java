@@ -66,7 +66,6 @@ class Oa11020InitPresenter {
         vo.setExpirationEndDate(null);
         vo.setChangeCause(null);
         vo.setTempoList(tempoList);
-        // ToDo:
         vo.setPassword(null);
         vo.setConfirmPassword(null);
     }

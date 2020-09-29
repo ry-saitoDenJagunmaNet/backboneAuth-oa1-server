@@ -23,7 +23,6 @@ function oaex_entryBtn_onClick() {
 
 	oa_showAlert("登録しました。");
 }
-
 function oaex_th_entryBtn_onClick() {
 	document.forms[0].action = "entry";
 	document.forms[0].method = "POST";

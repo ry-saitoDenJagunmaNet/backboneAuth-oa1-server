@@ -1,13 +1,40 @@
 /**
- * 画面Loadイベント
+ * 画面Loadイベントです。
+ */
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	let displayAtMockupRow = document.getElementById("display_at_mockup_row");
+	displayAtMockupRow.style.display = "none";
+
+	let a = oaex_mode_onChange();
+}
+/**
+ * 画面Loadイベント（モック時）です。
  */
 window.onload = function() {
-	// ★モック状態操作用★
 	let a = oaex_mode_onChange();
 }
 
 /**
- * ★モック状態操作用★
+ * →ボタンクリックイベントです。
+ */
+function oaex_arrowBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_arrowBtn_onClick();
+		return;
+	}
+
+	oa_showAlert("登録しました。");
+}
+function oaex_th_arrowBtn_onClick() {
+	document.forms[0].action = "save";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+/**
+ * モード変更時のイベントです。
  */
 function oaex_mode_onChange() {
 	let modeArray = document.getElementsByName("mode");
@@ -18,21 +45,18 @@ function oaex_mode_onChange() {
 	for (let mode of modeArray) {
 		if (mode.checked) {
 			switch (mode.value) {
-			case "0":
+			case "Initial":
 				modeTitle.innerText = "初期パスワードの入力"
-				// passwordOldRow.style.visibility = "visible";
 				passwordOldRow.style.display = "none";
 				passwordNewLabel.innerText = "パスワード"
 				break;
-			case "1":
+			case "Reset":
 				modeTitle.innerText = "パスワードのリセット"
-				// passwordOldRow.style.visibility = "hidden";
 				passwordOldRow.style.display = "none";
 				passwordNewLabel.innerText = "パスワード"
 				break;
-			case "2":
+			case "Change":
 				modeTitle.innerText = "パスワードの変更"
-				// passwordOldRow.style.visibility = "hidden";
 				passwordOldRow.style.display = "block";
 				passwordNewLabel.innerText = "新しいパスワード"
 				break;

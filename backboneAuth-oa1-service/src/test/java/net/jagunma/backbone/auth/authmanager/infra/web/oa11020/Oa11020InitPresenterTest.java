@@ -62,7 +62,6 @@ class Oa11020InitPresenterTest {
         expectedVo.setExpirationEndDate(null);
         expectedVo.setChangeCause(null);
         expectedVo.setTempoList(tempoList);
-        // ToDo:
         expectedVo.setPassword(null);
         expectedVo.setConfirmPassword(null);
 

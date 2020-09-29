@@ -13,7 +13,7 @@
 	<script src="../static/js/oa11020.js" th:src="@{/js/oa11020.js}"></script>
 </head>
 <body th:onLoad="oaex_th_onload();">
-<form method="post" action="search">
+<form>
 
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
@@ -35,10 +35,9 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
+						<input type="text" id="ja" name="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
-<!--					<input type="hidden" name="jaId" th:value="${form.jaId}">-->
 				</div>
 			</div>
 			<!-- 店舗 -->
@@ -62,16 +61,16 @@
 					</div>
 				</div>
 			</div>
-			<!-- オペレーターコード -->		
+			<!-- オペレーターコード -->
 			<div class="row oa_required">
-				<!-- 識別 -->			
+				<!-- 識別 -->
 				<div class="col s2">
 					<div class="input-field">
 						<input type="text" id="operater_code_prefix" name="operatorCodePrefix" readonly="readonly" value="xx" th:value="${form.operatorCodePrefix}"></input>
 						<label for="operater_code_prefix">識別</label>
 					</div>
 				</div>
-				<!-- オペレーターコード（下6桁） -->		
+				<!-- オペレーターコード（下6桁） -->
 				<div class="col s6">
 					<div class="input-field">
 						<input type="text" id="operater_code" name="operatorCode6" class="validate" th:value="${form.operatorCode6}"></input>
@@ -134,7 +133,7 @@
 					</div>
 				</div>
 			</div>
-		</section>		
+		</section>
 		<br>
 	</main>
 

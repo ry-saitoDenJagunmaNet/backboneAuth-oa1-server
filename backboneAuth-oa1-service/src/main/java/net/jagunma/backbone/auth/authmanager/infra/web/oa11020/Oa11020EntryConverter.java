@@ -10,7 +10,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 class Oa11020EntryConverter implements OperatorEntryRequest {
 
     /**
-     * OA11020 View Object
+     * OA11020 ViewObject
      */
     private final Oa11020Vo vo;
 
