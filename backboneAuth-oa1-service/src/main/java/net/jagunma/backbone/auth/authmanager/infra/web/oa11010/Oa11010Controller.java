@@ -1,14 +1,20 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11010;
 
-import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010InitService;
-import net.jagunma.backbone.auth.authmanager.application.service.oa11010.Oa11010SearchService;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
+import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.queryService.BizTranRoleReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
+import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,17 +50,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ServiceInfo(id = "OA11010", name = "OA11010サービス")
 @Controller
 @RequestMapping(path = "oa11010")
-public class Oa11010Controller {
+public class Oa11010Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11010Controller.class);
-    private final Oa11010InitService oa11010InitService;
-    private final Oa11010SearchService oa11010SearchService;
+
+    private final SearchOperator searchOperator;
+    private final BizTranRoleReference bizTranRoleReference;
 
     // コンストラクタ
-    public Oa11010Controller(Oa11010InitService oa11010InitService,
-        Oa11010SearchService oa11010SearchService) {
-        this.oa11010InitService = oa11010InitService;
-        this.oa11010SearchService = oa11010SearchService;
+    public Oa11010Controller(SearchOperator searchOperator,
+        BizTranRoleReference bizTranRoleReference) {
+
+        this.searchOperator = searchOperator;
+        this.bizTranRoleReference = bizTranRoleReference;
     }
 
     /**
@@ -65,15 +73,16 @@ public class Oa11010Controller {
      */
     @GetMapping(path = "/get")
     private String get(Model model) {
-        //TODO: パラメータでサインインオペレーターの情報を取得する
-        //AuditInfoHolder
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
 
         Oa11010Vo vo = new Oa11010Vo();
         try {
 
-            // 画面を初期化
-//            oa11010InitService.init(vo);
+            // InitPresenterの初期化
+            Oa11010InitPresenter presenter = createInitPresenter();
 
+            presenter.bindTo(vo);
             model.addAttribute("form", vo);
             return "oa11010";
 
@@ -86,7 +95,7 @@ public class Oa11010Controller {
             // その他予期せぬ例外が発生した場合
             model.addAttribute("form", vo);
             vo.setExceptionMessage(re);
-            return "oa11010";
+            return "oa19999";
         }
     }
 
@@ -103,9 +112,13 @@ public class Oa11010Controller {
         Oa11010SearchResponseVo responseVo = new Oa11010SearchResponseVo();
         try {
 
-            //オぺレーター検索してオぺレーターテーブルHtmlを作成
-            oa11010SearchService.search(vo, responseVo);
+            Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
+            Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
+            // オぺレーター検索
+            searchOperator.execute(converter, presenter);
+
+            presenter.bindTo(responseVo);
             return new ResponseEntity<>(responseVo, HttpStatus.OK);
 
         } catch (GunmaRuntimeException gre) {
@@ -117,5 +130,31 @@ public class Oa11010Controller {
             responseVo.setExceptionMessage(re);
             return new ResponseEntity<>(responseVo, HttpStatus.OK);
         }
+    }
+
+    /**
+     * InitPresenterの初期化を行います。
+     *
+     * @return InitPresenter
+     */
+    Oa11010InitPresenter createInitPresenter() {
+
+        Oa11010InitPresenter presenter = new Oa11010InitPresenter();
+        // ＪＡ
+        presenter.setJaId(AuditInfoHolder.getJa().getIdentifier());
+        presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
+        presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
+        // 有効期限選択
+        presenter.setExpirationSelect(0);
+        // サブシステムロール初期選択
+        presenter.setSubSystemRoleConditionsSelect(1);
+        // サブシステムロールリスト
+        List<Oa11010SubSystemRoleVo> subSystemRoleList = newArrayList();
+        // 取引ロール初期選択
+        presenter.setBizTranRoleConditionsSelect(1);
+        // 取引ロール群
+        presenter.setBizTranRoles(bizTranRoleReference.getBizTranRoles());
+
+        return presenter;
     }
 }

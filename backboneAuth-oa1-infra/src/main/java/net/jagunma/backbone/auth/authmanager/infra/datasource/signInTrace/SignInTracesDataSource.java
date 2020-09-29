@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.datasource.signInTraces;
+package net.jagunma.backbone.auth.authmanager.infra.datasource.signInTrace;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityDao;
@@ -19,13 +20,13 @@ import org.springframework.stereotype.Component;
  * サインイン証跡群検索
  */
 @Component
-public class SignInTraceDataSource {
+public class SignInTracesDataSource implements SignInTracesRepository {
 
     private final SignInTraceEntityDao signInTraceEntityDao;
     private final OperatorsDataSource operatorsDataSource;
 
     // コンストラクタ
-    SignInTraceDataSource(SignInTraceEntityDao signInTraceEntityDao,
+    SignInTracesDataSource(SignInTraceEntityDao signInTraceEntityDao,
         OperatorsDataSource operatorsDataSource) {
 
         this.signInTraceEntityDao = signInTraceEntityDao;
@@ -46,7 +47,7 @@ public class SignInTraceDataSource {
         operatorCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // パスワード履歴検索
+        // サインイン証跡検索
         SignInTraceEntityCriteria entityCriteria = new SignInTraceEntityCriteria();
         entityCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
 
@@ -59,8 +60,9 @@ public class SignInTraceDataSource {
                 entity.getOperatorCode(),
                 entity.getSignInCause(),
                 entity.getSignInResult(),
+                entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
-                    o.getOperatorCode() == entity.getOperatorCode()).findFirst().orElse(null)
+                    o.getOperatorCode().equals(entity.getOperatorCode())).findFirst().orElse(null)
             ));
         }
 

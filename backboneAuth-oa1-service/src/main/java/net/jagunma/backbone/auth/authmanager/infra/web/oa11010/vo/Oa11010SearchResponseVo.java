@@ -18,18 +18,16 @@ public class Oa11010SearchResponseVo extends BaseOfResponseVo {
      */
     private String pagination;
 
+    // Getter／Setter
     public String getOperatorTable() {
         return operatorTable;
     }
-
     public void setOperatorTable(String operatorTable) {
         this.operatorTable = operatorTable;
     }
-
     public String getPagination() {
         return pagination;
     }
-
     public void setPagination(String pagination) {
         this.pagination = pagination;
     }

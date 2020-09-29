@@ -21,6 +21,10 @@ public class BaseOfResponseVo implements Serializable {
      * チェックボックスのチェックtrue状態値
      */
     public static final Short CHECKBOX_TRUE  = 1;
+    /**
+     * チェックボックスのチェックfalse状態値
+     */
+    public static final Short CHECKBOX_FALSE  = 0;
 
     /**
      * メッセージコード

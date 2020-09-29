@@ -29,6 +29,10 @@ function oa_th_sendFormData(url, formObj) {
 			oa_showAlert(result.message);
 			return xhr;
 		}
+		if (result.errorMessage != null && result.errorMessage.length > 0) {
+			oa_showAlert(result.errorMessage+result.stackTrace);
+			return xhr;
+		}
 		return xhr;
 
 	} else {

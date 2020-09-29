@@ -1,27 +1,63 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.OperatorReferenceDto;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 
 /**
- * オペレーター参照サービス Response
+ * オペレーターリスト参照サービス Response
  */
 public interface OperatorSearchResponse {
     /**
-     * オペレーター参照ＤｔｏのＳｅｔ
-     * @param operatorReferenceDtos オペレーター参照Ｄｔｏ
-     */
-    void setOperatorReferenceDtos(List<OperatorReferenceDto> operatorReferenceDtos);
-    /**
-     * オペレーターテーブルHtmlを生成します。
+     * オペレーター一覧表示ページのＳｅｔ
      *
-     * @param pageNo 対象ページ
+     * @param pageNo オペレーター一覧表示ページ
      */
-    void genOperatorTableHtml(int pageNo);
+    void setPageNo(int pageNo);
     /**
-     * Pagination Htmlを生成します。
+     * オペレーター群のＳｅｔ
      *
-     * @param pageNo 表示ページ番号
+     * @param operators オペレーター群
      */
-    void genPaginationHtml(int pageNo);
+    void setOperators(Operators operators);
+    /**
+     * アカウントロック群のＳｅｔ
+     *
+     * @param accountLocks アカウントロック群
+     */
+    void setAccountLocks(AccountLocks accountLocks);
+    /**
+     * パスワード履歴群のＳｅｔ
+     *
+     * @param passwordHistories パスワード履歴群
+     */
+    void setPasswordHistories(PasswordHistories passwordHistories);
+    /**
+     * サインイン証跡群のＳｅｔ
+     *
+     * @param signInTraces サインイン証跡群
+     */
+    void setSignInTraces(SignInTraces signInTraces);
+    /**
+     * サインアウト証跡群のＳｅｔ
+     *
+     * @param signOutTraces サインアウト証跡群
+     */
+    void setSignOutTraces(SignOutTraces signOutTraces);
+    /**
+     * オペレーター_サブシステムロール割当群のＳｅｔ
+     *
+     * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
+     */
+    void setOperator_SubSystemRoles(Operator_SubSystemRoles operator_SubSystemRoles);
+    /**
+     * オペレーター_取引ロール割当群のＳｅｔ
+     *
+     * @param operator_BizTranRoles オペレーター_取引ロール割当群
+     */
+    void setOperator_BizTranRoles(Operator_BizTranRoles operator_BizTranRoles);
 }

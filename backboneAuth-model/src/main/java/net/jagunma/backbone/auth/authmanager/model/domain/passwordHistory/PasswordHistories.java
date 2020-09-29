@@ -32,7 +32,7 @@ public class PasswordHistories {
      *
      * @return パスワード履歴リスト
      */
-    public ArrayList<PasswordHistory> getList() {
+    public ArrayList<PasswordHistory> getValues() {
         return list;
     }
 }

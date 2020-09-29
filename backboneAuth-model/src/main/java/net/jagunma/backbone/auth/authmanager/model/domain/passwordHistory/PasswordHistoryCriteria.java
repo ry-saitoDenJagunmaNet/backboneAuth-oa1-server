@@ -7,9 +7,13 @@ import net.jagunma.common.ddd.model.criterias.LongCriteria;
  */
 public class PasswordHistoryCriteria {
 
+    private LongCriteria passwordHistoryIdCriteria = new LongCriteria();
     private LongCriteria operatorIdCriteria = new LongCriteria();
 
     // Getter
+    public LongCriteria getPasswordHistoryIdCriteria() {
+        return passwordHistoryIdCriteria;
+    }
     public LongCriteria getOperatorIdCriteria() {
         return operatorIdCriteria;
     }

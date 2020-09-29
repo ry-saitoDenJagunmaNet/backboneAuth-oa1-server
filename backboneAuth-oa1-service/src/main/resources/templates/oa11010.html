@@ -636,9 +636,9 @@
 									<select id="subsystem_filter" name="subSystemRoleSubSystemCode" class="validate"
 											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
 										<option th:each="item  : ${form.bizTranRoleSubSystemList}"
-												th:value="${item.subSystemCode}"
-												th:text="${item.subSystemName}"
-												th:selected="${form.bizTranRoleSubSystemCode == item.subSystemCode}"></option>
+												th:value="${item.code}"
+												th:text="${item.name}"
+												th:selected="${form.bizTranRoleSubSystemCode == item.code}"></option>
 										<option value="" th:remove="all"></option>
 										<option value="KB" th:remove="all">購買</option>
 										<option value="YS" th:remove="all">販売・青果</option>
@@ -685,6 +685,8 @@
 														<span></span>
 													</label>
 													<!-- POST用にコード、名称を定義 -->
+													<input type="hidden"
+														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].bizTranRoleId}"></input>
 													<input type="hidden"
 														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].bizTranRoleCode}"></input>
 													<input type="hidden"

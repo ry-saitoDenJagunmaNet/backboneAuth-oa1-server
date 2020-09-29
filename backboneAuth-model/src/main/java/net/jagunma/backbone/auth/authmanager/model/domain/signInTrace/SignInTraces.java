@@ -28,11 +28,11 @@ public class SignInTraces {
     }
 
     /**
-     * アサインイン証跡リストを取得します。
+     * サインイン証跡リストを取得します。
      *
      * @return サインイン証跡リスト
      */
-    public ArrayList<SignInTrace> getList() {
+    public ArrayList<SignInTrace> getValues() {
         return list;
     }
 }

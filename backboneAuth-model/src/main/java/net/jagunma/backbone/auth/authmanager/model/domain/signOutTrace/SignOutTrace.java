@@ -8,55 +8,62 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
  */
 public class SignOutTrace {
 
-    private final Long SignOutTraceId;
-    private final LocalDateTime SignOutDateTime;
-    private final String SignOutIpAddress;
-    private final Long OperatorId;
+    private final Long signOutTraceId;
+    private final LocalDateTime signOutDateTime;
+    private final String signOutIpAddress;
+    private final Long operatorId;
+    private final Integer recordVersion;
     private final Operator operator;
 
     // コンストラクタ
     SignOutTrace(
-        Long SignOutTraceId,
-        LocalDateTime SignOutDateTime,
-        String SignOutIpAddress,
-        Long OperatorId,
+        Long signOutTraceId,
+        LocalDateTime signOutDateTime,
+        String signOutIpAddress,
+        Long operatorId,
+        Integer recordVersion,
         Operator operator) {
 
-        this.SignOutTraceId = SignOutTraceId;
-        this.SignOutDateTime = SignOutDateTime;
-        this.SignOutIpAddress = SignOutIpAddress;
-        this.OperatorId = OperatorId;
+        this.signOutTraceId = signOutTraceId;
+        this.signOutDateTime = signOutDateTime;
+        this.signOutIpAddress = signOutIpAddress;
+        this.operatorId = operatorId;
+        this.recordVersion = recordVersion;
         this.operator = operator;
     }
-
     // ファクトリーメソッド
     public static SignOutTrace createFrom(
-        Long SignOutTraceId,
-        LocalDateTime SignOutDateTime,
-        String SignOutIpAddress,
-        Long OperatorId,
+        Long signOutTraceId,
+        LocalDateTime signOutDateTime,
+        String signOutIpAddress,
+        Long operatorId,
+        Integer recordVersion,
         Operator operator) {
 
         return new SignOutTrace(
-            SignOutTraceId,
-            SignOutDateTime,
-            SignOutIpAddress,
-            OperatorId,
+            signOutTraceId,
+            signOutDateTime,
+            signOutIpAddress,
+            operatorId,
+            recordVersion,
             operator);
     }
 
     // Getter
     public Long getSignOutTraceId() {
-        return SignOutTraceId;
+        return signOutTraceId;
     }
     public LocalDateTime getSignOutDateTime() {
-        return SignOutDateTime;
+        return signOutDateTime;
     }
     public String getSignOutIpAddress() {
-        return SignOutIpAddress;
+        return signOutIpAddress;
     }
     public Long getOperatorId() {
-        return OperatorId;
+        return operatorId;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
     public Operator getOperator() {
         return operator;
