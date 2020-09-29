@@ -15,6 +15,7 @@ version '20.0.1-SNAPSHOT'
 dependencies {
     implementation project(':backboneAuth-oa1-service')
     implementation project(':backboneAuth-oa1-infra')
+    implementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
