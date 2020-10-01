@@ -88,7 +88,7 @@ public class SearchOperator {
     /**
      * オペレーター群を検索します。
      *
-     * @param request オペレーターリスト参照サービス Request
+     * @param request  オペレーターリスト参照サービス Request
      * @param response オペレーターリスト参照サービス Response
      */
     public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
@@ -275,7 +275,7 @@ public class SearchOperator {
             //取引ロールロールでの検索条件設定あり（無しの場合は全件対象）
 
             //対象オペレーターにオペレーター_取引ロール割当無し
-            if (bizTranRoleRequestList.size() == 0) { return false; }
+            if (operatorBizTranRoleList.size() == 0) { return false; }
 
             // 取引ロール条件選択による振り分け
             if (request.getBizTranRoleConditionsSelect().equals(ConditionsSelect.AND.getCode())) {
@@ -534,9 +534,9 @@ public class SearchOperator {
         OperatorCriteria criteria = new OperatorCriteria();
         // ＪＡID
         criteria.getJaIdCriteria().setEqualTo(request.getJaId());
-        // 店舗コード
-        if (!Strings2.isEmpty(request.getTempoCode())) {
-            criteria.getTempoCodeCriteria().setEqualTo(request.getTempoCode());
+        // 店舗ID
+        if (request.getTempoId() != null) {
+            criteria.getTempoIdCriteria().setEqualTo(request.getTempoId());
         }
         // オペレーターコード
         if (!Strings2.isEmpty(request.getOperatorCode())) {
@@ -553,6 +553,16 @@ public class SearchOperator {
         // 利用可否状態
         criteria.getAvailableStatusCriteria().getIncludes()
             .addAll(request.getAvailableStatusIncludesList());
+        // OPTION検索条件 有効期限
+        if (request.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStatusDate());
+            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationStatusDate());
+        } else if (request.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+            criteria.getExpirationStartDateCriteria().setMoreOrEqual(request.getExpirationStartDateFrom());
+            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStartDateTo());
+            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationEndDateFrom());
+            criteria.getExpirationEndDateCriteria().setLessOrEqual(request.getExpirationEndDateTo());
+        }
         // OPTION検索条件 その他　機器認証
         criteria.getIsDeviceAuthCriteria().setEqualTo(request.getDeviceAuthUse());
 

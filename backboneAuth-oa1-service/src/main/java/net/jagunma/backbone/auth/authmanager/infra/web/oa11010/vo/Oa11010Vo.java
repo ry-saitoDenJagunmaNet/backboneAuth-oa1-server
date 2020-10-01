@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.vo.SelectOptionVo;
 
@@ -20,15 +19,15 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * ＪＡID
      */
-    private long jaId;
+    private Long jaId;
     /**
-     * 店舗コード
+     * 店舗ID
      */
-    private String tempoCode;
+    private Long tempoId;
     /**
      * 店舗コンボボックスリスト
      */
-    private List<TempoReferenceDto> tempoReferenceDtoList;
+    private List<SelectOptionVo> tempoList;
     /**
      * オペレーターコード
      */
@@ -189,23 +188,23 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setJa(String ja) {
         this.ja = ja;
     }
-    public long getJaId() {
+    public Long getJaId() {
         return jaId;
     }
-    public void setJaId(long jaId) {
+    public void setJaId(Long jaId) {
         this.jaId = jaId;
     }
-    public String getTempoCode() {
-        return tempoCode;
+    public Long getTempoId() {
+        return tempoId;
     }
-    public void setTempoCode(String tempoCode) {
-        this.tempoCode = tempoCode;
+    public void setTempoId(Long tempoId) {
+        this.tempoId = tempoId;
     }
-    public List<TempoReferenceDto> getTempoReferenceDtoList() {
-        return tempoReferenceDtoList;
+    public List<SelectOptionVo> getTempoList() {
+        return tempoList;
     }
-    public void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList) {
-        this.tempoReferenceDtoList = tempoReferenceDtoList;
+    public void setTempoList(List<SelectOptionVo> tempoList) {
+        this.tempoList = tempoList;
     }
     public String getOperatorCode() {
         return operatorCode;

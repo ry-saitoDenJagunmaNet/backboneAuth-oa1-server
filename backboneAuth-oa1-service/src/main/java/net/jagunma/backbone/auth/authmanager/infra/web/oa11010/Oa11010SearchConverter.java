@@ -35,20 +35,20 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
      *
      * @return ＪＡID
      */
-    public long getJaId() {
+    public Long getJaId() {
         return vo.getJaId();
     }
     /**
-     * 店舗コードのＧｅｔ
+     * 店舗IDのＧｅｔ
      *
      * @return 店舗コード
      */
-    public String getTempoCode() {
-        return vo.getTempoCode();
+    public Long getTempoId() {
+        return vo.getTempoId();
     }
     /**
      * オペレーターコードのＧｅｔ
-     *
+     *Id
      * @return オペレーターコード
      */
     public String getOperatorCode() {

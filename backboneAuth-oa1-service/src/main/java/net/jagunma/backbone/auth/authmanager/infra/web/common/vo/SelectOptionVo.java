@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.common.vo;
 
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+
 /**
  * 共通 コンボボックス選択子 View Object
  */
@@ -20,9 +22,13 @@ public class SelectOptionVo {
 
     // コンストラクタ
     public SelectOptionVo() {}
-    public SelectOptionVo(Long id, String code, String name) {}
+    public SelectOptionVo(Long id, String code, String name) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+    }
 
-    // ファクトリーメソッド
+    // 空生成メソッド
     public static SelectOptionVo empty() {
         return new SelectOptionVo(null, "","");
     }

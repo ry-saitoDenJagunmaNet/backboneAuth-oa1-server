@@ -45,12 +45,12 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" name="tempoCode" class="validate"
-								th:value="${form.tempoCode}">
-							<option th:each="item  : ${form.tempoReferenceDtoList}"
-									th:value="${item.tempoCode}"
-									th:text="${item.tempoName}"
-									th:selected="${form.tempoCode == item.tempoCode}"></option>
+						<select id="tempo" name="tempoId" class="validate"
+								th:value="${form.tempoId}">
+							<option th:each="item : ${form.tempoList}"
+									th:value="${item.id}"
+									th:text="${item.name}"
+									th:selected="${form.tempoId == item.id}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -59,6 +59,11 @@
 							<option value="005" th:remove="all">××××館</option>
 						</select>
 						<label>店舗</label>
+					</div>
+					<div th:each="item, itemStat : ${form.tempoList}">
+						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].id'" th:value="${item.id}"/>
+						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].code'" th:value="${item.code}"/>
+						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].name'" th:value="${item.name}"/>
 					</div>
 				</div>
 			</div>
@@ -648,6 +653,11 @@
 										<option value="AN" th:remove="all">販売・畜産</option>
 									</select>
 									<label></label>
+								</div>
+								<div th:each="item, itemStat : ${form.bizTranRoleSubSystemList}">
+									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].id'" th:value="${item.id}"/>
+									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].code'" th:value="${item.code}"/>
+									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].name'" th:value="${item.name}"/>
 								</div>
 							</div>
 						</div>

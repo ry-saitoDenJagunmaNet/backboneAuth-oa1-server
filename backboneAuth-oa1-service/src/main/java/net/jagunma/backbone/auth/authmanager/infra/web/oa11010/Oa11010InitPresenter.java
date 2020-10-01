@@ -3,15 +3,14 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.vo.SelectOptionVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.vo.SelectOptionVos;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
@@ -21,7 +20,7 @@ class Oa11010InitPresenter {
     private long jaId;
     private String jaCode;
     private String jaName;
-    private List<TempoReferenceDto> tempoReferenceDtoList;
+    private BranchesAtMoment tempos;
     private Integer expirationSelect;
     private Integer subSystemRoleConditionsSelect;
     private Integer bizTranRoleConditionsSelect;
@@ -55,12 +54,12 @@ class Oa11010InitPresenter {
         this.jaName = jaName;
     }
     /**
-     * 店舗リストのＳｅｔ
+     * 店舗群のＳｅｔ
      *
-     * @param tempoReferenceDtoList 店舗リスト
+     * @param tempos 店舗群
      */
-    public void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList) {
-        this.tempoReferenceDtoList = tempoReferenceDtoList;
+    public void setTempos(BranchesAtMoment tempos) {
+        this.tempos = tempos;
     }
     /**
      * 有効期限選択のＳｅｔ
@@ -105,8 +104,8 @@ class Oa11010InitPresenter {
         // ＪＡ
         vo.setJa(jaCode + " " + jaName);
         vo.setJaId(jaId);
-        // 店舗
-        vo.setTempoReferenceDtoList(tempoReferenceDtoList);
+        // 店舗リスト
+        vo.setTempoList(SelectOptionVos.createFrom(tempos).getValue());
         // 有効期限選択
         vo.setExpirationSelect(expirationSelect);
         // サブシステムロール条件選択
@@ -125,16 +124,7 @@ class Oa11010InitPresenter {
         // 取引ロール条件選択
         vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         // 取引ロールサブシステムリスト
-        List<SelectOptionVo> selectOptionVoList = newArrayList();
-        selectOptionVoList.add(SelectOptionVo.empty());
-        for (SubSystem subSystem : SubSystem.values()) {
-            if (subSystem.getCode().length() == 0) { continue; }
-            SelectOptionVo selectOptionVo = new SelectOptionVo();
-            selectOptionVo.setCode(subSystem.getCode());
-            selectOptionVo.setName(subSystem.getName());
-            selectOptionVoList.add(selectOptionVo);
-        }
-        vo.setBizTranRoleSubSystemList(selectOptionVoList);
+        vo.setBizTranRoleSubSystemList(SelectOptionVos.createFromSubSystem().getValue());
         // 取引ロールリスト
         List<Oa11010BizTranRoleVo> bizTranRoleVoList = newArrayList();
         for (BizTranRole bizTranRole :  bizTranRoles.getValues()) {
