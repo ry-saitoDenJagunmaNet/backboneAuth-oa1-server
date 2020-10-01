@@ -4,9 +4,14 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchAttribute;
+import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
+import net.jagunma.common.values.model.ja.JaAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -28,20 +33,19 @@ class Oa11020InitPresenterTest {
         String jaCode = "006";
         String jaName = "JA前橋市";
         String prefix = "yu";
-        List<TempoReferenceDto> tempoList = newArrayList();
-        TempoReferenceDto tempoReferenceDto;
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("001");
-        tempoReferenceDto.setTempoName("本店");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("002");
-        tempoReferenceDto.setTempoName("テスト店舗002");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("003");
-        tempoReferenceDto.setTempoName("テスト店舗003");
-        tempoList.add(tempoReferenceDto);
+        List<BranchAtMoment> tempoList = newArrayList();
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
+            .build());
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
+            .build());
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
+            .build());
 
         // 実行値
         Oa11020Vo vo = new Oa11020Vo();
@@ -49,7 +53,7 @@ class Oa11020InitPresenterTest {
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
         presenter.setOperatorCodePrefix(prefix);
-        presenter.setTempoList(tempoList);
+        presenter.setTempoList(BranchesAtMoment.of(tempoList));
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
@@ -62,7 +66,7 @@ class Oa11020InitPresenterTest {
         expectedVo.setExpirationStartDate(null);
         expectedVo.setExpirationEndDate(null);
         expectedVo.setChangeCause(null);
-        expectedVo.setTempoList(tempoList);
+        expectedVo.setTempoList(BranchesAtMoment.of(tempoList));
         expectedVo.setPassword(null);
         expectedVo.setConfirmPassword(null);
 

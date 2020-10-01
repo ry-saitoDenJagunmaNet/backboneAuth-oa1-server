@@ -1,9 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo;
 
 import java.time.LocalDate;
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11020 ViewObject
@@ -52,7 +51,7 @@ public class Oa11020Vo extends BaseOfResponseVo {
     /**
      * 店舗コンボボックスリスト
      */
-    private List<TempoReferenceDto> tempoList;
+    private BranchesAtMoment tempoList;
 
     /**
      * パスワード
@@ -70,7 +69,7 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public Long getTempoId() {
         return tempoId;
     }
-    public List<TempoReferenceDto> getTempoList() {
+    public BranchesAtMoment getTempoList() {
         return tempoList;
     }
     public String getOperatorCodePrefix() {
@@ -108,7 +107,7 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public void setTempoId(Long tempoId) {
         this.tempoId = tempoId;
     }
-    public void setTempoList(List<TempoReferenceDto> tempoList) {
+    public void setTempoList(BranchesAtMoment tempoList) {
         this.tempoList = tempoList;
     }
     public void setOperatorCodePrefix(String operatorCodePrefix) {

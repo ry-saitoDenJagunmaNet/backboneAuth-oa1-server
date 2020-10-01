@@ -1,8 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11020 初期表示 Presenter
@@ -12,7 +11,7 @@ class Oa11020InitPresenter {
     private String jaCode;
     private String jaName;
     private String operatorCodePrefix;
-    private List<TempoReferenceDto> tempoList;
+    private BranchesAtMoment tempoList;
 
     // コンストラクタ
     Oa11020InitPresenter() {
@@ -47,7 +46,7 @@ class Oa11020InitPresenter {
      *
      * @param tempoList
      */
-    public void setTempoList(List<TempoReferenceDto> tempoList) {
+    public void setTempoList(BranchesAtMoment tempoList) {
         this.tempoList = tempoList;
     }
 

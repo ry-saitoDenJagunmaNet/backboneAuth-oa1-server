@@ -6,8 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReferenceService;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReference;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
@@ -26,7 +25,11 @@ import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
+import net.jagunma.common.values.model.branch.BranchAttribute;
+import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
+import net.jagunma.common.values.model.ja.JaAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
@@ -117,9 +120,8 @@ class Oa11020ControllerTest {
                 return null;
             }
         };
-
-        TempoReferenceService tempoReferenceService = new TempoReferenceService(operatorEntityDao) {
-            public List<TempoReferenceDto> getComboBoxList(long jaid) {
+        TempoReference tempoReference = new TempoReference(branchAtMomentRepository, operatorEntityDao) {
+            public BranchesAtMoment getTempos(long jaid) {
                 return createTempoList();
             }
         };
@@ -137,7 +139,7 @@ class Oa11020ControllerTest {
             }
         };
 
-        return new Oa11020Controller(tempoReferenceService, entryOperator);
+        return new Oa11020Controller(tempoReference, entryOperator);
     }
 
     // Oa11020Vo作成
@@ -161,23 +163,24 @@ class Oa11020ControllerTest {
     }
 
     // 店舗リスト作成
-    private List<TempoReferenceDto> createTempoList() {
-        List<TempoReferenceDto> tempoList = newArrayList();
-        TempoReferenceDto tempoReferenceDto;
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("001");
-        tempoReferenceDto.setTempoName("本店");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("002");
-        tempoReferenceDto.setTempoName("テスト店舗002");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("003");
-        tempoReferenceDto.setTempoName("テスト店舗003");
-        tempoList.add(tempoReferenceDto);
+    private BranchesAtMoment createTempoList() {
 
-        return tempoList;
+        List<BranchAtMoment> tempoList = newArrayList();
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(
+                BranchAttribute.builder()
+                    .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
+            .build());
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
+            .build());
+        tempoList.add(BranchAtMoment.builder()
+            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
+            .build());
+
+        return BranchesAtMoment.of(tempoList);
     }
 
     Oa11020ControllerTest () {

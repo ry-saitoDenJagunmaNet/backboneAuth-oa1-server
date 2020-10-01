@@ -2,9 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.io.StringBufferInputStream;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;

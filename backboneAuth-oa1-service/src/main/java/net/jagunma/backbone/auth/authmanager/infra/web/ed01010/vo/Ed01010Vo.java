@@ -1,8 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo;
 
-import java.time.LocalDate;
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 
 /**
