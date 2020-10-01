@@ -54,6 +54,7 @@ class Oa11020InitPresenterTest {
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
         expectedVo.setJa(jaCode + " " + jaName);
+        expectedVo.setTempoId(null);
         expectedVo.setOperatorCodePrefix(prefix);
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);

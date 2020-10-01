@@ -58,6 +58,7 @@ class Oa11020InitPresenter {
      */
     public void bindTo(Oa11020Vo vo) {
         vo.setJa(jaCode + " " + jaName);
+        vo.setTempoId(null);
         vo.setOperatorCodePrefix(operatorCodePrefix);
         vo.setOperatorCode6(null);
         vo.setOperatorName(null);

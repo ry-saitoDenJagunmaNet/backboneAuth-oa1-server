@@ -157,10 +157,10 @@ class EntryOperatorTest {
     /**
      * {@link EntryOperator#getBranchAtMoment(Long)}テスト
      *  ●パターン
-     *    店舗未存在
+     *    正常
      *
      *  ●検証事項
-     *  ・エラー発生
+     *  ・正常終了
      *
      */
     @Test
@@ -170,16 +170,64 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        Long testBranchAtMomentTempoId = 999L;
+        Long branchAtMomentTempoId = AuditInfoHolder.getBranch().getIdentifier();
+
+        assertThatCode(() ->
+            // 実行
+            entryOperator.getBranchAtMoment(branchAtMomentTempoId))
+            .doesNotThrowAnyException();
+    }
+
+    /**
+     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
+     *  ●パターン
+     *    店舗未存在
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getBranchAtMoment_test1() {
+        // テスト対象クラス生成
+        EntryOperator entryOperator = createEntryOperator();
+
+        // 実行値
+        Long branchAtMomentTempoId = 999L;
 
         assertThatThrownBy(() ->
             // 実行
-            entryOperator.getBranchAtMoment(testBranchAtMomentTempoId))
+            entryOperator.getBranchAtMoment(branchAtMomentTempoId))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA12001");
-                assertThat(e.getArgs()).containsSequence(testBranchAtMomentTempoId);
+                assertThat(e.getArgs()).containsSequence(branchAtMomentTempoId);
             });
+    }
+
+    /**
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void checkBranchBelongJa_test() {
+        // テスト対象クラス生成
+        EntryOperator entryOperator = createEntryOperator();
+
+        // 実行値
+        BranchAtMoment branchAtMoment = createBranchAtMoment();
+
+        assertThatCode(() ->
+            // 実行
+            entryOperator.checkBranchBelongJa(branchAtMoment))
+            .doesNotThrowAnyException();
     }
 
     /**
@@ -193,7 +241,7 @@ class EntryOperatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void checkBranchBelongJa_test() {
+    void checkBranchBelongJa_test1() {
         // テスト対象クラス生成
         EntryOperator entryOperator = createEntryOperator();
 
