@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.web.common.vo;
+package net.jagunma.backbone.auth.authmanager.infra.web.common;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
@@ -12,12 +12,12 @@ import net.jagunma.common.values.model.branch.BranchesAtMoment;
 /**
  * 共通 コンボボックス選択子群 View Object
  */
-public class SelectOptionVos {
+public class SelectOptionItemsSource {
 
-    private final ArrayList<SelectOptionVo> list = newArrayList();
+    private final ArrayList<SelectOptionItemSource> list = newArrayList();
 
     // コンストラクタ
-    SelectOptionVos(Collection<SelectOptionVo> collection) {
+    SelectOptionItemsSource(Collection<SelectOptionItemSource> collection) {
         this.list.addAll(collection);
     }
 
@@ -27,17 +27,17 @@ public class SelectOptionVos {
      * @param branchesAtMoment 店舗群
      * @return 店舗コンボボックス選択子群
      */
-    public static SelectOptionVos createFrom(BranchesAtMoment branchesAtMoment) {
-        List<SelectOptionVo> list = newArrayList();
-        list.add(SelectOptionVo.empty());
+    public static SelectOptionItemsSource createFrom(BranchesAtMoment branchesAtMoment) {
+        List<SelectOptionItemSource> list = newArrayList();
+        list.add(SelectOptionItemSource.empty());
         for (BranchAtMoment branchAtMoment : branchesAtMoment.getValue()) {
-            list.add(new SelectOptionVo(
+            list.add(new SelectOptionItemSource(
                 branchAtMoment.getIdentifier()
                 , branchAtMoment.getBranchAttribute().getBranchCode().getValue()
                 , branchAtMoment.getBranchAttribute().getName()
             ));
         }
-        return new SelectOptionVos(list);
+        return new SelectOptionItemsSource(list);
     }
 
     /**
@@ -45,19 +45,19 @@ public class SelectOptionVos {
      *
      * @return サブシステムコンボボックス選択子群
      */
-    public static SelectOptionVos createFromSubSystem() {
-        List<SelectOptionVo> list = newArrayList();
-        list.add(SelectOptionVo.empty());
+    public static SelectOptionItemsSource createFromSubSystem() {
+        List<SelectOptionItemSource> list = newArrayList();
+        list.add(SelectOptionItemSource.empty());
         for (SubSystem subSystem : SubSystem.values()) {
             if (subSystem.getCode().length() == 0) { continue; }
-            list.add(new SelectOptionVo(
+            list.add(new SelectOptionItemSource(
                 null
                 , subSystem.getCode()
                 , subSystem.getName()
             ));
 
         }
-        return new SelectOptionVos(list);
+        return new SelectOptionItemsSource(list);
     }
 
     /**
@@ -65,7 +65,7 @@ public class SelectOptionVos {
      *
      * @return 共通 コンボボックス選択子リスト
      */
-    public ArrayList<SelectOptionVo> getValue() {
+    public ArrayList<SelectOptionItemSource> getValue() {
         return list;
     }
 }

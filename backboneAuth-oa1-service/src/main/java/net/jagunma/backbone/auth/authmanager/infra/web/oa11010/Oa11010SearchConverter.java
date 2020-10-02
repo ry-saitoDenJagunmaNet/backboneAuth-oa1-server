@@ -338,12 +338,16 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
      *
      * @return 最終サインオペレーションサインイン結果
      */
-    public Short[] getSignintraceSignInResult() { return vo.getSignintraceSignInResult(); }
+    public Short[] getSignintraceSignInResult() {
+        return vo.getSignintraceSignInResult();
+    }
     /**
      * オペレーター一覧表示ページのＧｅｔ
      * @return オペレーター一覧表示ページ
      */
-    public int getPageNo() { return vo.getPageNo(); }
+    public int getPageNo() {
+        return vo.getPageNo();
+    }
 
     /**
      * 利用可否状態IncludesListを取得します。
@@ -372,5 +376,4 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
         }
         return false;
     }
-
 }

@@ -43,9 +43,12 @@ import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsSelect;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
+import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.util.strings2.Strings2;
+import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -66,6 +69,8 @@ public class SearchOperator {
     private final SignOutTracesRepository signOutTracesRepository;
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
+    private final BranchAtMomentRepository branchAtMomentRepository;
+    private final TempoReference tempoReference;
 
     // コンストラクタ
     public SearchOperator(OperatorsRepository operatorsRepository,
@@ -74,7 +79,9 @@ public class SearchOperator {
         SignInTracesRepository signInTracesRepository,
         SignOutTracesRepository signOutTracesRepository,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository) {
+        Operator_BizTranRolesRepository operator_BizTranRolesRepository,
+        TempoReference tempoReference,
+        BranchAtMomentRepository branchAtMomentRepository) {
 
         this.operatorsRepository = operatorsRepository;
         this.accountLocksRepository = accountLocksRepository;
@@ -83,6 +90,8 @@ public class SearchOperator {
         this.signOutTracesRepository = signOutTracesRepository;
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
         this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
+        this.branchAtMomentRepository = branchAtMomentRepository;
+        this.tempoReference = tempoReference;
     }
 
     /**
@@ -108,6 +117,13 @@ public class SearchOperator {
         // オペレーターIDおよびオペレーターコードのリストを設定
         setOperatorIdAndCodeList(operators);
 
+        // 店舗群検索
+        // TODO: 店舗の取得は BranchAtMomentで取得
+        // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
+//        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(createBranchAtMomentCriteria(request),
+//            Orders.empty().addOrder("branchAttribute.BranchCode.value"));
+        BranchesAtMoment branchesAtMoment = tempoReference.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
+        response.setBranchesAtMoment(branchesAtMoment);
         // オペレーター_サブシステムロール割当検索
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));
@@ -577,6 +593,18 @@ public class SearchOperator {
     void setOperatorIdAndCodeList(Operators operators) {
         operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
         operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
+    }
+
+    /**
+     * 店舗（BranchAtMoment）検索条件を作成します。
+     *
+     * @param request オペレーター群
+     * @return 店舗（BranchAtMoment）検索条件
+     */
+    BranchAtMomentCriteria createBranchAtMomentCriteria(OperatorSearchRequest request) {
+        BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
+        criteria.getJaIdentifierCriteria().setEqualTo(request.getJaId());
+        return criteria;
     }
 
     /**

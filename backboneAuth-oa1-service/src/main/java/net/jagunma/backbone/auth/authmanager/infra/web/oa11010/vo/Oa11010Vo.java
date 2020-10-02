@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.vo.SelectOptionVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
  * OA11010 View Object
@@ -27,7 +27,7 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 店舗コンボボックスリスト
      */
-    private List<SelectOptionVo> tempoList;
+    private List<SelectOptionItemSource> tempoList;
     /**
      * オペレーターコード
      */
@@ -93,7 +93,7 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
      */
-    private List<SelectOptionVo> bizTranRoleSubSystemList;
+    private List<SelectOptionItemSource> bizTranRoleSubSystemList;
     /**
      * 取引ロール一覧
      */
@@ -200,10 +200,10 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setTempoId(Long tempoId) {
         this.tempoId = tempoId;
     }
-    public List<SelectOptionVo> getTempoList() {
+    public List<SelectOptionItemSource> getTempoList() {
         return tempoList;
     }
-    public void setTempoList(List<SelectOptionVo> tempoList) {
+    public void setTempoList(List<SelectOptionItemSource> tempoList) {
         this.tempoList = tempoList;
     }
     public String getOperatorCode() {
@@ -296,10 +296,10 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) {
         this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode;
     }
-    public List<SelectOptionVo> getBizTranRoleSubSystemList() {
+    public List<SelectOptionItemSource> getBizTranRoleSubSystemList() {
         return bizTranRoleSubSystemList;
     }
-    public void setBizTranRoleSubSystemList(List<SelectOptionVo> bizTranRoleSubSystemList) {
+    public void setBizTranRoleSubSystemList(List<SelectOptionItemSource> bizTranRoleSubSystemList) {
         this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
     }
     public List<Oa11010BizTranRoleVo> getBizTranRoleList() {
@@ -428,36 +428,4 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
     }
-
-//    /**
-//     * 利用可否状態IncludesListを取得します。
-//     *
-//     * @return 利用可否状態IncludesList
-//     */
-//    public List<Short> getAvailableStatusIncludesList() {
-//        List<Short> result = newArrayList();
-//        if (CHECKBOX_TRUE.equals(availableStatus0)) {
-//            result.add((short) 0);
-//        }
-//        if (CHECKBOX_TRUE.equals(availableStatus1)) {
-//            result.add((short) 1);
-//        }
-//        return result;
-//    }
-
-//    /**
-//     * アカウントロック状態IncludesListを取得します。
-//     *
-//     * @return アカウントロック状態IncludesList
-//     */
-//    public List<Integer> getAccountLockStatusIncludesList() {
-//        List<Integer> result = newArrayList();
-//        if (CHECKBOX_TRUE.equals(accountLockStatusLock)) {
-//            result.add(0);
-//        }
-//        if (CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {
-//            result.add(1);
-//        }
-//        return result;
-//    }
 }

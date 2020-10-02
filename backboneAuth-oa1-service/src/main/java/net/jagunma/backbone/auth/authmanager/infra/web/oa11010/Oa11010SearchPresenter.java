@@ -20,6 +20,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.Passwo
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11010 オペレーター＜一覧＞検索サービス Response Presenter
@@ -33,6 +35,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
 
     private int pageNo;
     private Operators operators;
+    private BranchesAtMoment branchesAtMoment;
     private AccountLocks accountLocks;
     private PasswordHistories passwordHistories;
     private SignInTraces signInTraces;
@@ -58,6 +61,14 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
      */
     public void setOperators(Operators operators) {
         this.operators = operators;
+    }
+    /**
+     * ある時点Branch群のＳｅｔ
+     *
+     * @param branchesAtMoment ある時点Branch群
+     */
+    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
+        branchesAtMoment = branchesAtMoment;
     }
     /**
      * アカウントロック群のＳｅｔ
@@ -126,9 +137,21 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     private String genOperatorTableHtml() {
         StringBuilder html = new StringBuilder();
         List<Operator> list = getOperatorPageList();
-        list.forEach(o -> {
-            html.append(genOperatorTableRowHtml(o));
-        });
+        String tempoCode = "";
+        for (Operator operator : list) {
+            BranchAtMoment branchAtMoment = branchesAtMoment.getValue().stream().filter(
+                b->b.getBranchAttribute().getBranchCode().getValue().equals(operator.getTempoCode())).findFirst().orElse(null);
+            if (tempoCode.equals(branchAtMoment.getBranchAttribute().getBranchCode().getValue())) {
+                branchAtMoment = null;
+            } else {
+                tempoCode = branchAtMoment.getBranchAttribute().getBranchCode().getValue();
+            }
+            html.append(genOperatorTableRowHtml(operator, branchAtMoment));
+        }
+
+//        list.forEach(o -> {
+//            html.append(genOperatorTableRowHtml(o));
+//        });
         return html.toString();
     }
 
@@ -136,16 +159,15 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
      * オペレーターテーブル行Htmlを生成します。
      *
      * @param operator オペレーター
+     * @param branchAtMoment ある時点の店舗
      * @return オペレーターテーブル行Html
      */
-    private String genOperatorTableRowHtml(Operator operator) {
+    private String genOperatorTableRowHtml(Operator operator, BranchAtMoment branchAtMoment) {
 
-        AccountLock accountLock = accountLocks.getValues().stream().filter(s->s.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-//        PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(s->s.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-//        SignInTrace signInTrace = signInTraces.getValues().stream().filter(s->s.getOperatorCode().equals(operator.getOperatorCode())).findFirst().orElse(null);
-//        SignOutTrace signOutTrace = signOutTraces.getValues().stream().filter(s->s.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-        List<Operator_SubSystemRole> operatorSubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(s->s.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
-        List<Operator_BizTranRole> operatorBizTranRoleList = operator_BizTranRoles.getValues().stream().filter(s->s.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+        AccountLock accountLock = accountLocks.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
+        List<Operator_SubSystemRole> operatorSubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(o->o.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+        List<Operator_BizTranRole> operatorBizTranRoleList = operator_BizTranRoles.getValues().stream().filter(o->o.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+
 
         StringBuilder html = new StringBuilder();
 
@@ -159,19 +181,28 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
         String lockStatus = (accountLock!=null && accountLock.getLockStatus()==1)? "oaex_account_lock":"oaex_account_unlock";
         html.append(String.format("<td class=\"oaex_operator_account_lock\"><div class=\"%s\"></div></td>", lockStatus));
         // 店舗
-//            if (list.indexOf(o) == 0 || !o.getTempoCode()
-//                .equals(list.get(list.indexOf(o) - 1).getTempoCode())) {
-//                // 店舗コードが変わったら表示
-//                html.append("<td class=\"oaex_operator_tempo_code\">").append(o.getTempoCode())
-//                    .append("</td>");
-//                html.append("<td class=\"oaex_operator_tempo_name\">").append(o.getTempoName())
-//                    .append("</td>");
-//            } else {
-//                html.append("<td class=\"oaex_operator_tempo_code\"></td>");
-//                html.append("<td class=\"oaex_operator_tempo_name\"></td>");
-//            }
-        html.append("<td class=\"oaex_operator_tempo_code\"></td>");
-        html.append("<td class=\"oaex_operator_tempo_name\"></td>");
+        if (branchAtMoment == null) {
+            html.append("<td class=\"oaex_operator_tempo_code\"></td>");
+            html.append("<td class=\"oaex_operator_tempo_name\"></td>");
+        } else {
+            html.append("<td class=\"oaex_operator_tempo_code\">").append(branchAtMoment.getBranchAttribute().getBranchCode().getValue())
+                .append("</td>");
+            html.append("<td class=\"oaex_operator_tempo_name\">").append(branchAtMoment.getBranchAttribute().getName())
+                .append("</td>");
+        }
+//        if (list.indexOf(o) == 0 || !o.getTempoCode()
+//            .equals(list.get(list.indexOf(o) - 1).getTempoCode())) {
+//            // 店舗コードが変わったら表示
+//            html.append("<td class=\"oaex_operator_tempo_code\">").append(o.getTempoCode())
+//                .append("</td>");
+//            html.append("<td class=\"oaex_operator_tempo_name\">").append(o.getTempoName())
+//                .append("</td>");
+//        } else {
+//            html.append("<td class=\"oaex_operator_tempo_code\"></td>");
+//            html.append("<td class=\"oaex_operator_tempo_name\"></td>");
+//        }
+//        html.append("<td class=\"oaex_operator_tempo_code\"></td>");
+//        html.append("<td class=\"oaex_operator_tempo_name\"></td>");
         // オペレーター
         html.append(String.format("<td class=\"oaex_operator_operator_code\">%s<input type=\"hidden\" value=\"%d\"/></td>",
             operator.getOperatorCode(),operator.getTempoId()));

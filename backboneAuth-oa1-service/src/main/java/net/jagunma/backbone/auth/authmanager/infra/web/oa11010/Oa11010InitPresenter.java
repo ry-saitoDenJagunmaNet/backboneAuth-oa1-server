@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.vo.SelectOptionVos;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
@@ -105,7 +105,7 @@ class Oa11010InitPresenter {
         vo.setJa(jaCode + " " + jaName);
         vo.setJaId(jaId);
         // 店舗リスト
-        vo.setTempoList(SelectOptionVos.createFrom(tempos).getValue());
+        vo.setTempoList(SelectOptionItemsSource.createFrom(tempos).getValue());
         // 有効期限選択
         vo.setExpirationSelect(expirationSelect);
         // サブシステムロール条件選択
@@ -124,7 +124,7 @@ class Oa11010InitPresenter {
         // 取引ロール条件選択
         vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         // 取引ロールサブシステムリスト
-        vo.setBizTranRoleSubSystemList(SelectOptionVos.createFromSubSystem().getValue());
+        vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFromSubSystem().getValue());
         // 取引ロールリスト
         List<Oa11010BizTranRoleVo> bizTranRoleVoList = newArrayList();
         for (BizTranRole bizTranRole :  bizTranRoles.getValues()) {
