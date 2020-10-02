@@ -1,8 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo;
 
 import java.time.LocalDate;
+import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
  * OA11020 ViewObject
@@ -18,7 +19,7 @@ public class Oa11020Vo extends BaseOfResponseVo {
     /**
      * 店舗ID
      */
-    private Long tempoId;
+    private Long branchId;
     /**
      * 識別（オペレーターコードプレフィックス）
      */
@@ -49,9 +50,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
     private String changeCause;
 
     /**
-     * 店舗コンボボックスリスト
+     * 店舗コンボボックスItemsSource
      */
-    private BranchesAtMoment tempoList;
+    private List<SelectOptionItemSource> branchItemsSource;
 
     /**
      * パスワード
@@ -66,11 +67,11 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public String getJa() {
         return ja;
     }
-    public Long getTempoId() {
-        return tempoId;
+    public Long getBranchId() {
+        return branchId;
     }
-    public BranchesAtMoment getTempoList() {
-        return tempoList;
+    public List<SelectOptionItemSource> getBranchItemsSource() {
+        return branchItemsSource;
     }
     public String getOperatorCodePrefix() {
         return operatorCodePrefix;
@@ -104,11 +105,11 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public void setJa(String ja) {
         this.ja = ja;
     }
-    public void setTempoId(Long tempoId) {
-        this.tempoId = tempoId;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
-    public void setTempoList(BranchesAtMoment tempoList) {
-        this.tempoList = tempoList;
+    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
+        this.branchItemsSource = branchItemsSource;
     }
     public void setOperatorCodePrefix(String operatorCodePrefix) {
         this.operatorCodePrefix = operatorCodePrefix;

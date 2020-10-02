@@ -40,7 +40,7 @@ public class EntryOperator {
         EntryOperatorValidator.with(request).validate();
 
         // 店舗の取得を行います
-        BranchAtMoment branchAtMoment = getBranchAtMoment(request.getTempoId());
+        BranchAtMoment branchAtMoment = getBranchAtMoment(request.getBranchId());
 
         // 店舗が当JAに属するかのチェックを行います
         checkBranchBelongJa(branchAtMoment);
@@ -60,17 +60,17 @@ public class EntryOperator {
     /**
      * 店舗の取得を行います。
      *
-     * @param tempoId 店舗ID
-     * @return branchAtMoment 店舗
+     * @param branchId 店舗ID
+     * @return branchAtMoment 店舗AtMoment
      */
-    BranchAtMoment getBranchAtMoment(Long tempoId) {
+    BranchAtMoment getBranchAtMoment(Long branchId) {
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
 
-        criteria.getIdentifierCriteria().setEqualTo(tempoId);
+        criteria.getIdentifierCriteria().setEqualTo(branchId);
 
         BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(criteria);
         if (branchAtMoment.isEmpty()) {
-            throw new GunmaRuntimeException("EOA12001", tempoId);
+            throw new GunmaRuntimeException("EOA12001", branchId);
         }
 
         return branchAtMoment;
@@ -95,7 +95,7 @@ public class EntryOperator {
      * @param operatorCodePrefix 識別（オペレーターコードプレフィックス）
      * @param jaId ＪＡID
      * @param jaCode ＪＡコード
-     * @param tempoCode 店舗コード
+     * @param branchCode 店舗コード
      * @return オペレーターエントリーパック
      */
     OperatorEntryPack createOperatorEntryPack(
@@ -103,7 +103,7 @@ public class EntryOperator {
         String operatorCodePrefix,
         Long jaId,
         String jaCode,
-        String tempoCode) {
+        String branchCode) {
 
         return OperatorEntryPack.createFrom(
             operatorCodePrefix + request.getOperatorCode6(),
@@ -113,8 +113,8 @@ public class EntryOperator {
             request.getExpirationEndDate(),
             jaId,
             jaCode,
-            request.getTempoId(),
-            tempoCode,
+            request.getBranchId(),
+            branchCode,
             request.getChangeCause(),
             request.getPassword(),
             request.getConfirmPassword());

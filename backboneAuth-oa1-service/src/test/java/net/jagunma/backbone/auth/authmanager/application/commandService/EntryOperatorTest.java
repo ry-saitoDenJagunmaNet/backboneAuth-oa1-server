@@ -35,7 +35,7 @@ class EntryOperatorTest {
     private String mailAddress = "test@den.jagunma.net";
     private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-    private Long tempoId = 1L;
+    private Long branchId = 1L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
@@ -62,8 +62,8 @@ class EntryOperatorTest {
                 return expirationEndDate;
             }
             @Override
-            public Long getTempoId() {
-                return tempoId;
+            public Long getBranchId() {
+                return branchId;
             }
             @Override
             public String getChangeCause() {
@@ -170,11 +170,11 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        Long branchAtMomentTempoId = AuditInfoHolder.getBranch().getIdentifier();
+        branchId = AuditInfoHolder.getBranch().getIdentifier();
 
         assertThatCode(() ->
             // 実行
-            entryOperator.getBranchAtMoment(branchAtMomentTempoId))
+            entryOperator.getBranchAtMoment(branchId))
             .doesNotThrowAnyException();
     }
 
@@ -194,15 +194,15 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        Long branchAtMomentTempoId = 999L;
+        branchId = 999L;
 
         assertThatThrownBy(() ->
             // 実行
-            entryOperator.getBranchAtMoment(branchAtMomentTempoId))
+            entryOperator.getBranchAtMoment(branchId))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA12001");
-                assertThat(e.getArgs()).containsSequence(branchAtMomentTempoId);
+                assertThat(e.getArgs()).containsSequence(branchId);
             });
     }
 
@@ -300,8 +300,8 @@ class EntryOperatorTest {
         assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(operatorEntryRequest.getExpirationEndDate());
         assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-        assertThat(operatorEntryPack.getTempoId()).isEqualTo(operatorEntryRequest.getTempoId());
-        assertThat(operatorEntryPack.getTempoCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
+        assertThat(operatorEntryPack.getBranchId()).isEqualTo(operatorEntryRequest.getBranchId());
+        assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
         assertThat(operatorEntryPack.getChangeCause()).isEqualTo(operatorEntryRequest.getChangeCause());
         assertThat(operatorEntryPack.getPassword()).isEqualTo(operatorEntryRequest.getPassword());
         assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(operatorEntryRequest.getConfirmPassword());

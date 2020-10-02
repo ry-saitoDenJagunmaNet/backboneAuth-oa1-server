@@ -39,25 +39,25 @@ class OperatorEntryPackForStoreDataSourceTest {
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
     private Long jaId = 6L;
     private String jaCode = "006";
-    private Long tempoId = 1L;
-    private String tempoCode = "001";
+    private Long branchId = 1L;
+    private String branchCode = "001";
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
     private OperatorEntryPack createOperatorEntryPack() {
         return OperatorEntryPack.createFrom(
-        operatorCode,
-        operatorName,
-        mailAddress,
-        expirationStartDate,
-        expirationEndDate,
-        jaId,
-        jaCode,
-        tempoId,
-        tempoCode,
-        changeCause,
-        password,
-        confirmPassword);
+            operatorCode,
+            operatorName,
+            mailAddress,
+            expirationStartDate,
+            expirationEndDate,
+            jaId,
+            jaCode,
+            branchId,
+            branchCode,
+            changeCause,
+            password,
+            confirmPassword);
     }
     Long operatorId = 123456L;
     LocalDateTime createdAt = LocalDateTime.of(2020, 10, 31,1,2,3);
@@ -362,8 +362,8 @@ class OperatorEntryPackForStoreDataSourceTest {
         expectedEntity.setIsDeviceAuth(false);
         expectedEntity.setJaId(jaId);
         expectedEntity.setJaCode(jaCode);
-        expectedEntity.setTempoId(tempoId);
-        expectedEntity.setTempoCode(tempoCode);
+        expectedEntity.setBranchId(branchId);
+        expectedEntity.setBranchCode(branchCode);
         expectedEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
         expectedEntity.setCreatedAt(createdAt);
 

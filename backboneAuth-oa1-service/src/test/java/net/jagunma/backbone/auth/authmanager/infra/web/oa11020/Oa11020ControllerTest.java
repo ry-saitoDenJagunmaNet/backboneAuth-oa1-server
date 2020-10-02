@@ -6,8 +6,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
@@ -39,7 +40,7 @@ class Oa11020ControllerTest {
 
     // 実行 ＆ 期待 既定値
     private String ja = null;                   //コンストラクタでセット
-    private Long tempoId = 1L;
+    private Long branchId = 1L;
     private String operatorCodePrefix = null;   //コンストラクタでセット
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
@@ -120,26 +121,26 @@ class Oa11020ControllerTest {
                 return null;
             }
         };
-        TempoReference tempoReference = new TempoReference(branchAtMomentRepository, operatorEntityDao) {
-            public BranchesAtMoment getTempos(long jaid) {
-                return createTempoList();
+        BranchReference branchReference = new BranchReference(branchAtMomentRepository, operatorEntityDao) {
+            public BranchesAtMoment getBranchesAtMoment(long jaId) {
+                return createBranchesAtMoment();
             }
         };
         EntryOperator entryOperator = new EntryOperator(operatorEntryPackRepositoryForStore, branchAtMomentRepository) {
             @Override
             public void execute(OperatorEntryRequest request) {
-                // request.getTempoId() = 11 の場合：GunmaRuntimeException を発生させる
-                if(request.getTempoId().equals(11L)) {
+                // request.getBranchId() = 11 の場合：GunmaRuntimeException を発生させる
+                if(request.getBranchId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
                 }
-                // request.getTempoId() = 12 の場合：RuntimeException を発生させる
-                if(request.getTempoId().equals(12L)) {
+                // request.getBranchId() = 12 の場合：RuntimeException を発生させる
+                if(request.getBranchId().equals(12L)) {
                     throw new RuntimeException();
                 }
             }
         };
 
-        return new Oa11020Controller(tempoReference, entryOperator);
+        return new Oa11020Controller(branchReference, entryOperator);
     }
 
     // Oa11020Vo作成
@@ -147,7 +148,7 @@ class Oa11020ControllerTest {
         Oa11020Vo oa11020Vo = new Oa11020Vo();
 
         oa11020Vo.setJa(ja);
-        oa11020Vo.setTempoId(tempoId);
+        oa11020Vo.setBranchId(branchId);
         oa11020Vo.setOperatorCodePrefix(operatorCodePrefix);
         oa11020Vo.setOperatorCode6(operatorCode6);
         oa11020Vo.setOperatorName(operatorName);
@@ -155,32 +156,30 @@ class Oa11020ControllerTest {
         oa11020Vo.setExpirationStartDate(expirationStartDate);
         oa11020Vo.setExpirationEndDate(expirationEndDate);
         oa11020Vo.setChangeCause(changeCause);
-        oa11020Vo.setTempoList(createTempoList());
+        oa11020Vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
         oa11020Vo.setPassword(password);
         oa11020Vo.setConfirmPassword(confirmPassword);
 
         return oa11020Vo;
     }
 
-    // 店舗リスト作成
-    private BranchesAtMoment createTempoList() {
-
-        List<BranchAtMoment> tempoList = newArrayList();
-        tempoList.add(BranchAtMoment.builder()
-            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(
-                BranchAttribute.builder()
-                    .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
+    // 店舗群AtMoment作成
+    private BranchesAtMoment createBranchesAtMoment() {
+        List<BranchAtMoment> branchAtMomentList = newArrayList();
+        branchAtMomentList.add(BranchAtMoment.builder()
+            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
             .build());
-        tempoList.add(BranchAtMoment.builder()
+        branchAtMomentList.add(BranchAtMoment.builder()
             .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
             .build());
-        tempoList.add(BranchAtMoment.builder()
+        branchAtMomentList.add(BranchAtMoment.builder()
             .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
             .build());
 
-        return BranchesAtMoment.of(tempoList);
+        return BranchesAtMoment.of(branchAtMomentList);
     }
 
     Oa11020ControllerTest () {
@@ -211,7 +210,7 @@ class Oa11020ControllerTest {
 
         // 期待値
         String expectedViewName = "oa11020";
-        tempoId = null;
+        branchId = null;
         operatorCode6 = null;
         operatorName = null;
         mailAddress = null;
@@ -299,7 +298,7 @@ class Oa11020ControllerTest {
 
         // 期待値
         String expectedViewName = "oa11020";
-        tempoId = null;
+        branchId = null;
         operatorCode6 = null;
         operatorName = null;
         mailAddress = null;
@@ -368,7 +367,7 @@ class Oa11020ControllerTest {
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        tempoId = null;
+        branchId = null;
         Oa11020Vo vo = createOa11020Vo();
 
         // 期待値
@@ -420,7 +419,7 @@ class Oa11020ControllerTest {
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        tempoId = 11L;
+        branchId = 11L;
         Oa11020Vo oa11020Vo = createOa11020Vo();
         Ed01010Vo ed01010Vo = new Ed01010Vo();
 
@@ -457,7 +456,7 @@ class Oa11020ControllerTest {
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        tempoId = 12L;
+        branchId = 12L;
         Oa11020Vo oa11020Vo = createOa11020Vo();
         Ed01010Vo ed01010Vo = new Ed01010Vo();
 

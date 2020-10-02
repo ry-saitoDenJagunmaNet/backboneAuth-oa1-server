@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class Oa11020EntryValidatorTest {
 
     // 実行既定値
-    private Long tempoId = 1L;
+    private Long branchId = 1L;
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
@@ -28,7 +28,7 @@ class Oa11020EntryValidatorTest {
     private Oa11020Vo createOa11020Vo() {
         Oa11020Vo oa11020Vo = new Oa11020Vo();
 
-        oa11020Vo.setTempoId(tempoId);
+        oa11020Vo.setBranchId(branchId);
         oa11020Vo.setOperatorCode6(operatorCode6);
         oa11020Vo.setOperatorName(operatorName);
         oa11020Vo.setMailAddress(mailAddress);
@@ -97,7 +97,7 @@ class Oa11020EntryValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test02() {
         // 実行値
-        tempoId = null;
+        branchId = null;
         Oa11020Vo vo = createOa11020Vo();
 
         assertThatThrownBy(() ->

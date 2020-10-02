@@ -32,7 +32,7 @@ class Oa11020EntryValidator {
         Preconditions.checkNotNull(vo, () -> new GunmaRuntimeException("EOA14001"));
 
         // 未セットチェック
-        Preconditions.checkNotNull(vo.getTempoId(), () -> new GunmaRuntimeException("EOA14002", "店舗", "選択"));
+        Preconditions.checkNotNull(vo.getBranchId(), () -> new GunmaRuntimeException("EOA14002", "店舗", "選択"));
         Preconditions.checkNotEmpty(vo.getOperatorCode6(), () -> new GunmaRuntimeException("EOA14002", "オペレーターコード（下6桁）", "入力"));
         Preconditions.checkNotEmpty(vo.getOperatorName(), () -> new GunmaRuntimeException("EOA14002", "オペレーター名", "入力"));
         Preconditions.checkNotNull(vo.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA14002", "有効期限（開始日）", "入力"));

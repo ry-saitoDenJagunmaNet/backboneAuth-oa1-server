@@ -97,8 +97,8 @@ public class OperatorEntryPackForStoreDataSource implements
         operatorEntity.setIsDeviceAuth(false);
         operatorEntity.setJaId(operatorEntryPack.getJaId());
         operatorEntity.setJaCode(operatorEntryPack.getJaCode());
-        operatorEntity.setTempoId(operatorEntryPack.getTempoId());
-        operatorEntity.setTempoCode(operatorEntryPack.getTempoCode());
+        operatorEntity.setBranchId(operatorEntryPack.getBranchId());
+        operatorEntity.setBranchCode(operatorEntryPack.getBranchCode());
         operatorEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
 
         operatorEntityDao.insert(operatorEntity);

@@ -69,8 +69,8 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
      *
      * @return 店舗ID
      */
-    public Long getTempoId() {
-        return vo.getTempoId();
+    public Long getBranchId() {
+        return vo.getBranchId();
     }
     /**
      * 変更事由のＧｅｔ
