@@ -26,6 +26,8 @@ buildscript {
         backboneAuthDaoVersion = '20.0.17'
         sharedDataInterfaceVersion = '20.1.12'
         sharedDataStubVersion = '20.1.7'
+        backboneInterfaceVersion = '20.1.1'
+        backboneStubVersion = '20.1.11'
         backboneAuthDaoVersion = '20.0.17'
         junitJupiterVersion = '5.7.0'
 
@@ -164,6 +166,8 @@ subprojects {
         api("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
         api "org.slf4j:slf4j-api:${sf4jApiVersion}"
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
+        testImplementation(platform("org.junit:junit-bom:${junitJupiterVersion}"))
+        testImplementation "org.junit.jupiter:junit-jupiter"
         testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
         testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
         spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
