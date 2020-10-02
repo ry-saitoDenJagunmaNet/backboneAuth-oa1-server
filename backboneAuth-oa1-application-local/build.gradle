@@ -15,6 +15,7 @@ version '20.0.1-SNAPSHOT'
 dependencies {
     implementation project(':backboneAuth-oa1-service')
     implementation project(':backboneAuth-oa1-infra')
+    implementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation project(':backboneAuth-oa1-remoting-mock')
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'

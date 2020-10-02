@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11020 初期表示 Presenter
@@ -12,7 +12,7 @@ class Oa11020InitPresenter {
     private String jaCode;
     private String jaName;
     private String operatorCodePrefix;
-    private List<TempoReferenceDto> tempoList;
+    private BranchesAtMoment branchesAtMoment;
 
     // コンストラクタ
     Oa11020InitPresenter() {
@@ -43,12 +43,12 @@ class Oa11020InitPresenter {
         this.operatorCodePrefix = operatorCodePrefix;
     }
     /**
-     * 店舗コンボボックスリストのＳｅｔ
+     * 店舗群AtMomentのＳｅｔ
      *
-     * @param tempoList
+     * @param branchesAtMoment
      */
-    public void setTempoList(List<TempoReferenceDto> tempoList) {
-        this.tempoList = tempoList;
+    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
+        this.branchesAtMoment = branchesAtMoment;
     }
 
     /**
@@ -58,6 +58,7 @@ class Oa11020InitPresenter {
      */
     public void bindTo(Oa11020Vo vo) {
         vo.setJa(jaCode + " " + jaName);
+        vo.setBranchId(null);
         vo.setOperatorCodePrefix(operatorCodePrefix);
         vo.setOperatorCode6(null);
         vo.setOperatorName(null);
@@ -65,8 +66,7 @@ class Oa11020InitPresenter {
         vo.setExpirationStartDate(null);
         vo.setExpirationEndDate(null);
         vo.setChangeCause(null);
-        vo.setTempoList(tempoList);
-        // ToDo:
+        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         vo.setPassword(null);
         vo.setConfirmPassword(null);
     }

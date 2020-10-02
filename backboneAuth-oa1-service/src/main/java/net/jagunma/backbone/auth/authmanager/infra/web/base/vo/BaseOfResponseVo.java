@@ -6,7 +6,9 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.message.MessageFormatter;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -21,6 +23,10 @@ public class BaseOfResponseVo implements Serializable {
      * チェックボックスのチェックtrue状態値
      */
     public static final Short CHECKBOX_TRUE  = 1;
+    /**
+     * チェックボックスのチェックfalse状態値
+     */
+    public static final Short CHECKBOX_FALSE  = 0;
 
     /**
      * メッセージコード
@@ -66,10 +72,9 @@ public class BaseOfResponseVo implements Serializable {
      */
     public void setExceptionMessage(GunmaRuntimeException gre) {
         messageCode = gre.getMessageCode();
-        messageArgs = (List<String>)((List<?>) Arrays.asList(gre.getArgs()));
+        messageArgs = Arrays.stream(gre.getArgs()).map(o -> (String) o).collect(Collectors.toList());
         message = gre.getMessage();
     }
-
 
     /**
      * 楽観的ロックのメッセージをセットします。

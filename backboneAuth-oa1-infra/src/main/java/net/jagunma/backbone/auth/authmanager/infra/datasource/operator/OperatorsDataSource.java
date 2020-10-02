@@ -46,7 +46,7 @@ public class OperatorsDataSource implements OperatorsRepository {
         entityCriteria.getExpirationEndDateCriteria().setMoreOrEqual(operatorCriteria.getExpirationEndDateCriteria().getMoreOrEqual());
         entityCriteria.getIsDeviceAuthCriteria().setEqualTo(operatorCriteria.getIsDeviceAuthCriteria().getEqualTo());
         entityCriteria.getJaIdCriteria().setEqualTo(operatorCriteria.getJaIdCriteria().getEqualTo());
-		entityCriteria.getTempoIdCriteria().setEqualTo(operatorCriteria.getTempoIdCriteria().getEqualTo());
+		entityCriteria.getBranchIdCriteria().setEqualTo(operatorCriteria.getBranchIdCriteria().getEqualTo());
         entityCriteria.getAvailableStatusCriteria().getIncludes().addAll(operatorCriteria.getAvailableStatusCriteria().getIncludes());
 
         // オペレーター検索
@@ -62,8 +62,8 @@ public class OperatorsDataSource implements OperatorsRepository {
                 entity.getIsDeviceAuth(),
                 entity.getJaId(),
                 entity.getJaCode(),
-                entity.getTempoId(),
-                entity.getTempoCode(),
+                entity.getBranchId(),
+                entity.getBranchCode(),
                 entity.getAvailableStatus(),
                 entity.getRecordVersion()));
         }

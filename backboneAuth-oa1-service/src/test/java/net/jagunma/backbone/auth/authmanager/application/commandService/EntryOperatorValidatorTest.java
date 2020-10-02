@@ -21,7 +21,7 @@ class EntryOperatorValidatorTest {
     private String mailAddress = "test@den.jagunma.net";
     private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-    private Long tempoId = 101L;
+    private Long branchId = 101L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
@@ -48,8 +48,8 @@ class EntryOperatorValidatorTest {
                 return expirationEndDate;
             }
             @Override
-            public Long getTempoId() {
-                return tempoId;
+            public Long getBranchId() {
+                return branchId;
             }
             @Override
             public String getChangeCause() {
@@ -228,7 +228,7 @@ class EntryOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test06() {
         // 実行値
-        tempoId = null;
+        branchId = null;
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -484,7 +484,7 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled
+    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test16() {
@@ -511,7 +511,7 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled
+    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test17() {

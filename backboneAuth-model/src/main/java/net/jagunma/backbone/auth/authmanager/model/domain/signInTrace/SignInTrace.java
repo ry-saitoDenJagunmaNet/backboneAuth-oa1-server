@@ -8,71 +8,79 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
  */
 public class SignInTrace {
 
-    private final Long SignInTraceId;
-    private final LocalDateTime TryDateTime;
-    private final String TryIpAddress;
-    private final String OperatorCode;
-    private final Short SignInCause;
-    private final Short SignInResult;
+    private final Long signInTraceId;
+    private final LocalDateTime tryDateTime;
+    private final String tryIpAddress;
+    private final String operatorCode;
+    private final Short signInCause;
+    private final Short signInResult;
+    private final Integer recordVersion;
     private final Operator operator;
 
     // コンストラクタ
     SignInTrace(
-        Long SignInTraceId,
-        LocalDateTime TryDateTime,
-        String TryIpAddress,
-        String OperatorCode,
-        Short SignInCause,
-        Short SignInResult,
+        Long signInTraceId,
+        LocalDateTime tryDateTime,
+        String tryIpAddress,
+        String operatorCode,
+        Short signInCause,
+        Short signInResult,
+        Integer recordVersion,
         Operator operator) {
 
-        this.SignInTraceId = SignInTraceId;
-        this.TryDateTime = TryDateTime;
-        this.TryIpAddress = TryIpAddress;
-        this.OperatorCode = OperatorCode;
-        this.SignInCause = SignInCause;
-        this.SignInResult = SignInResult;
+        this.signInTraceId = signInTraceId;
+        this.tryDateTime = tryDateTime;
+        this.tryIpAddress = tryIpAddress;
+        this.operatorCode = operatorCode;
+        this.signInCause = signInCause;
+        this.signInResult = signInResult;
+        this.recordVersion = recordVersion;
         this.operator = operator;
     }
 
     // ファクトリーメソッド
     public static SignInTrace createFrom(
-        Long SignInTraceId,
-        LocalDateTime TryDateTime,
-        String TryIpAddress,
-        String OperatorCode,
-        Short SignInCause,
-        Short SignInResult,
+        Long signInTraceId,
+        LocalDateTime tryDateTime,
+        String tryIpAddress,
+        String operatorCode,
+        Short signInCause,
+        Short signInResult,
+        Integer recordVersion,
         Operator operator) {
 
         return new SignInTrace(
-            SignInTraceId,
-            TryDateTime,
-            TryIpAddress,
-            OperatorCode,
-            SignInCause,
-            SignInResult,
+            signInTraceId,
+            tryDateTime,
+            tryIpAddress,
+            operatorCode,
+            signInCause,
+            signInResult,
+            recordVersion,
             operator);
     }
 
     // Getter
     public Long getSignInTraceId() {
-        return SignInTraceId;
+        return signInTraceId;
     }
     public LocalDateTime getTryDateTime() {
-        return TryDateTime;
+        return tryDateTime;
     }
     public String getTryIpAddress() {
-        return TryIpAddress;
+        return tryIpAddress;
     }
     public String getOperatorCode() {
-        return OperatorCode;
+        return operatorCode;
     }
     public Short getSignInCause() {
-        return SignInCause;
+        return signInCause;
     }
     public Short getSignInResult() {
-        return SignInResult;
+        return signInResult;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
     public Operator getOperator() {
         return operator;

@@ -10,7 +10,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 class Oa11020EntryConverter implements OperatorEntryRequest {
 
     /**
-     * OA11020 View Object
+     * OA11020 ViewObject
      */
     private final Oa11020Vo vo;
 
@@ -69,8 +69,8 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
      *
      * @return 店舗ID
      */
-    public Long getTempoId() {
-        return vo.getTempoId();
+    public Long getBranchId() {
+        return vo.getBranchId();
     }
     /**
      * 変更事由のＧｅｔ

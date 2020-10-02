@@ -13,7 +13,7 @@
 	<script src="../static/js/oa11020.js" th:src="@{/js/oa11020.js}"></script>
 </head>
 <body th:onLoad="oaex_th_onload();">
-<form method="post" action="search">
+<form>
 
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
@@ -35,22 +35,21 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
+						<input type="text" id="ja" name="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
-<!--					<input type="hidden" name="jaId" th:value="${form.jaId}">-->
 				</div>
 			</div>
 			<!-- 店舗 -->
 			<div class="row oa_required">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" name="tempoId" class="validate"
-								th:value="${form.tempoId}">
-							<option th:each="item  : ${form.tempoList}"
-									th:value="${item.tempoCode}"
-									th:text="${item.tempoName}"
-									th:selected="${form.tempoId == item.tempoCode}"></option>
+						<select id="branch" name="branchId" class="validate"
+								th:value="${form.branchId}">
+							<option th:each="item : ${form.branchItemsSource}"
+									th:value="${item.code}"
+									th:text="${item.name}"
+									th:selected="${form.branchId == item.id}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -60,18 +59,23 @@
 						</select>
 						<label>店舗</label>
 					</div>
+					<div th:each="item, itemStat : ${form.branchItemsSource}">
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].id'" th:value="${item.id}"/>
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].code'" th:value="${item.code}"/>
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].name'" th:value="${item.name}"/>
+					</div>
 				</div>
 			</div>
-			<!-- オペレーターコード -->		
+			<!-- オペレーターコード -->
 			<div class="row oa_required">
-				<!-- 識別 -->			
+				<!-- 識別 -->
 				<div class="col s2">
 					<div class="input-field">
 						<input type="text" id="operater_code_prefix" name="operatorCodePrefix" readonly="readonly" value="xx" th:value="${form.operatorCodePrefix}"></input>
 						<label for="operater_code_prefix">識別</label>
 					</div>
 				</div>
-				<!-- オペレーターコード（下6桁） -->		
+				<!-- オペレーターコード（下6桁） -->
 				<div class="col s6">
 					<div class="input-field">
 						<input type="text" id="operater_code" name="operatorCode6" class="validate" th:value="${form.operatorCode6}"></input>
@@ -134,7 +138,7 @@
 					</div>
 				</div>
 			</div>
-		</section>		
+		</section>
 		<br>
 	</main>
 

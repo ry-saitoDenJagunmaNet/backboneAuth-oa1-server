@@ -32,7 +32,7 @@ public class SignOutTraces {
      *
      * @return サインアウト証跡リスト
      */
-    public ArrayList<SignOutTrace> getList() {
+    public ArrayList<SignOutTrace> getValues() {
         return list;
     }
 }

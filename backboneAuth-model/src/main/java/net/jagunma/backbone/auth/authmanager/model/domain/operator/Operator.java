@@ -16,8 +16,8 @@ public class Operator {
     private final Boolean isDeviceAuth;
     private final Long jaId;
     private final String jaCode;
-    private final Long tempoId;
-    private final String tempoCode;
+    private final Long branchId;
+    private final String branchCode;
     private final Short availableStatus;
     private final Integer recordVersion;
 
@@ -32,8 +32,8 @@ public class Operator {
         Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
-        Long tempoId,
-        String tempoCode,
+        Long branchId,
+        String branchCode,
         Short availableStatus,
         Integer recordVersion) {
 
@@ -46,8 +46,8 @@ public class Operator {
         this.isDeviceAuth = isDeviceAuth;
         this.jaId = jaId;
         this.jaCode = jaCode;
-        this.tempoId = tempoId;
-        this.tempoCode = tempoCode;
+        this.branchId = branchId;
+        this.branchCode = branchCode;
         this.availableStatus = availableStatus;
         this.recordVersion = recordVersion;
     }
@@ -63,8 +63,8 @@ public class Operator {
         Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
-        Long tempoId,
-        String tempoCode,
+        Long branchId,
+        String branchCode,
         Short availableStatus,
         Integer recordVersion) {
 
@@ -78,8 +78,8 @@ public class Operator {
             isDeviceAuth,
             jaId,
             jaCode,
-            tempoId,
-            tempoCode,
+            branchId,
+            branchCode,
             availableStatus,
             recordVersion);
     }
@@ -112,11 +112,11 @@ public class Operator {
     public String getJaCode() {
         return jaCode;
     }
-    public Long getTempoId() {
-        return tempoId;
+    public Long getBranchId() {
+        return branchId;
     }
-    public String getTempoCode() {
-        return tempoCode;
+    public String getBranchCode() {
+        return branchCode;
     }
     public Short getAvailableStatus() {
         return availableStatus;

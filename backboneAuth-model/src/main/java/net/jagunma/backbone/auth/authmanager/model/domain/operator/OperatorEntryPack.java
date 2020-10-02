@@ -14,8 +14,8 @@ public class OperatorEntryPack {
     private final LocalDate expirationEndDate;
     private final Long jaId;
     private final String jaCode;
-    private final Long tempoId;
-    private final String tempoCode;
+    private final Long branchId;
+    private final String branchCode;
     private final String changeCause;
     private final String password;
     private final String confirmPassword;
@@ -29,8 +29,8 @@ public class OperatorEntryPack {
         LocalDate expirationEndDate,
         Long jaId,
         String jaCode,
-        Long tempoId,
-        String tempoCode,
+        Long branchId,
+        String branchCode,
         String changeCause,
         String password,
         String confirmPassword) {
@@ -42,8 +42,8 @@ public class OperatorEntryPack {
         this.expirationEndDate = expirationEndDate;
         this.jaId = jaId;
         this.jaCode = jaCode;
-        this.tempoId = tempoId;
-        this.tempoCode = tempoCode;
+        this.branchId = branchId;
+        this.branchCode = branchCode;
         this.changeCause = changeCause;
         this.password = password;
         this.confirmPassword = confirmPassword;
@@ -57,8 +57,8 @@ public class OperatorEntryPack {
         LocalDate expirationEndDate,
         Long jaId,
         String jaCode,
-        Long tempoId,
-        String tempoCode,
+        Long branchId,
+        String branchCode,
         String changeCause,
         String password,
         String confirmPassword) {
@@ -71,8 +71,8 @@ public class OperatorEntryPack {
             expirationEndDate,
             jaId,
             jaCode,
-            tempoId,
-            tempoCode,
+            branchId,
+            branchCode,
             changeCause,
             password,
             confirmPassword);
@@ -100,11 +100,11 @@ public class OperatorEntryPack {
     public String getJaCode() {
         return jaCode;
     }
-    public Long getTempoId() {
-        return tempoId;
+    public Long getBranchId() {
+        return branchId;
     }
-    public String getTempoCode() {
-        return tempoCode;
+    public String getBranchCode() {
+        return branchCode;
     }
     public String getChangeCause() {
         return changeCause;

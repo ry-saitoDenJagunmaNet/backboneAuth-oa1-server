@@ -15,10 +15,6 @@ public class Oa11010SubSystemRoleVo implements Serializable {
      */
     private Short subSystemRoleSelected;
     /**
-     * サブシステムロールID
-     */
-    private long subSystemRoleId;
-    /**
      * サブシステムロールコード
      */
     private String subSystemRoleCode;
@@ -51,82 +47,58 @@ public class Oa11010SubSystemRoleVo implements Serializable {
      */
     private LocalDate expirationEndDateTo;
 
+    // Getter／Setter
     public Short getSubSystemRoleSelected() {
         return subSystemRoleSelected;
     }
-
     public void setSubSystemRoleSelected(Short subSystemRoleSelected) {
         this.subSystemRoleSelected = subSystemRoleSelected;
     }
-
-    public long getSubSystemRoleId() {
-        return subSystemRoleId;
-    }
-
-    public void setSubSystemRoleId(long subSystemRoleId) {
-        this.subSystemRoleId = subSystemRoleId;
-    }
-
     public String getSubSystemRoleCode() {
         return subSystemRoleCode;
     }
-
     public void setSubSystemRoleCode(String subSystemRoleCode) {
         this.subSystemRoleCode = subSystemRoleCode;
     }
-
     public String getSubSystemRoleName() {
         return subSystemRoleName;
     }
-
     public void setSubSystemRoleName(String subSystemRoleName) {
         this.subSystemRoleName = subSystemRoleName;
     }
-
     public Integer getExpirationSelect() {
         return expirationSelect;
     }
-
     public void setExpirationSelect(Integer expirationSelect) {
         this.expirationSelect = expirationSelect;
     }
-
     public LocalDate getExpirationStatusDate() {
         return expirationStatusDate;
     }
-
     public void setExpirationStatusDate(LocalDate expirationStatusDate) {
         this.expirationStatusDate = expirationStatusDate;
     }
-
     public LocalDate getExpirationStartDateFrom() {
         return expirationStartDateFrom;
     }
-
     public void setExpirationStartDateFrom(LocalDate expirationStartDateFrom) {
         this.expirationStartDateFrom = expirationStartDateFrom;
     }
-
     public LocalDate getExpirationStartDateTo() {
         return expirationStartDateTo;
     }
-
     public void setExpirationStartDateTo(LocalDate expirationStartDateTo) {
         this.expirationStartDateTo = expirationStartDateTo;
     }
-
     public LocalDate getExpirationEndDateFrom() {
         return expirationEndDateFrom;
     }
-
     public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) {
         this.expirationEndDateFrom = expirationEndDateFrom;
     }
-
     public LocalDate getExpirationEndDateTo() {
         return expirationEndDateTo;
     }
-
     public void setExpirationEndDateTo(LocalDate expirationEndDateTo) {
         this.expirationEndDateTo = expirationEndDateTo;
     }

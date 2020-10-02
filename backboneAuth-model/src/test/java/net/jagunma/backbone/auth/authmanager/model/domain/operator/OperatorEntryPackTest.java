@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import net.jagunma.common.tests.constants.TestSize;
@@ -42,8 +42,8 @@ class OperatorEntryPackTest {
         LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
         Long jaId = 6L;
         String jaCode = "006";
-        Long tempoId = 1L;
-        String tempoCode = "001";
+        Long branchId = 1L;
+        String branchCode = "001";
         String changeCause = "新職員の入組による登録";
         String password = "PaSsWoRd";
         String confirmPassword = "PaSsWoRd";
@@ -57,8 +57,8 @@ class OperatorEntryPackTest {
             expirationEndDate,
             jaId,
             jaCode,
-            tempoId,
-            tempoCode,
+            branchId,
+            branchCode,
             changeCause,
             password,
             confirmPassword);
@@ -72,8 +72,8 @@ class OperatorEntryPackTest {
         assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(expirationEndDate);
         assertThat(operatorEntryPack.getJaId()).isEqualTo(jaId);
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(jaCode);
-        assertThat(operatorEntryPack.getTempoId()).isEqualTo(tempoId);
-        assertThat(operatorEntryPack.getTempoCode()).isEqualTo(tempoCode);
+        assertThat(operatorEntryPack.getBranchId()).isEqualTo(branchId);
+        assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchCode);
         assertThat(operatorEntryPack.getChangeCause()).isEqualTo(changeCause);
         assertThat(operatorEntryPack.getPassword()).isEqualTo(password);
         assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(confirmPassword);

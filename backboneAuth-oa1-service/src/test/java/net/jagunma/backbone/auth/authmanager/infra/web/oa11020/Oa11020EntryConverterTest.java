@@ -11,6 +11,17 @@ import org.junit.jupiter.api.Test;
 
 class Oa11020EntryConverterTest {
 
+    // 実行既定値
+    String operatorCode6 = "123456";
+    String operatorName = "オペレーター名";
+    String mailAddress = "test@den.jagunma.net";
+    LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
+    LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    Long branchId = 1L;
+    String changeCause = "新職員の入組による登録";
+    String password = "PaSsWoRd";
+    String confirmPassword = "pAsSwOrD";
+
     /**
      * {@link Oa11020EntryConverter#with(Oa11020Vo)}テスト
      *  ●パターン
@@ -23,17 +34,6 @@ class Oa11020EntryConverterTest {
     @Test
     @Tag(TestSize.SMALL)
     void with_test() {
-        // 実行既定値
-        String operatorCode6 = "123456";
-        String operatorName = "オペレーター名";
-        String mailAddress = "test@den.jagunma.net";
-        LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-        LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-        Long tempoId = 1L;
-        String changeCause = "新職員の入組による登録";
-        String password = "PaSsWoRd";
-        String confirmPassword = "pAsSwOrD";
-
         // 実行値
         Oa11020Vo vo = new Oa11020Vo();
         vo.setOperatorCode6(operatorCode6);
@@ -41,7 +41,7 @@ class Oa11020EntryConverterTest {
         vo.setMailAddress(mailAddress);
         vo.setExpirationStartDate(expirationStartDate);
         vo.setExpirationEndDate(expirationEndDate);
-        vo.setTempoId(tempoId);
+        vo.setBranchId(branchId);
         vo.setChangeCause(changeCause);
         vo.setPassword(password);
         vo.setConfirmPassword(confirmPassword);
@@ -56,7 +56,7 @@ class Oa11020EntryConverterTest {
         assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
         assertThat(converter.getExpirationStartDate()).isEqualTo(expirationStartDate);
         assertThat(converter.getExpirationEndDate()).isEqualTo(expirationEndDate);
-        assertThat(converter.getTempoId()).isEqualTo(tempoId);
+        assertThat(converter.getBranchId()).isEqualTo(branchId);
         assertThat(converter.getChangeCause()).isEqualTo(changeCause);
         assertThat(converter.getPassword()).isEqualTo(password);
         assertThat(converter.getConfirmPassword()).isEqualTo(confirmPassword);

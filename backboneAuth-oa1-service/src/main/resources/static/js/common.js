@@ -29,6 +29,10 @@ function oa_th_sendFormData(url, formObj) {
 			oa_showAlert(result.message);
 			return xhr;
 		}
+		if (result.errorMessage != null && result.errorMessage.length > 0) {
+			oa_showAlert(result.errorMessage+result.stackTrace);
+			return xhr;
+		}
 		return xhr;
 
 	} else {
@@ -160,7 +164,13 @@ function oa_initDatepicker() {
     }
 
     let elems = document.querySelectorAll('.datepicker');
-    let instances = M.Datepicker.init(elems, options); 
+    let instances = M.Datepicker.init(elems, options);
+    // サーバーからLocalDate型で値を設定すると、"yyyy-mm-dd"フォーマットになるため"yyyy/mm/dd"に変換
+    for (let elem of elems) {
+        if (elem.length != 0) {
+            elem.value = elem.value.replace(/-/g, '/');
+        }
+    }
 }
 
 /**

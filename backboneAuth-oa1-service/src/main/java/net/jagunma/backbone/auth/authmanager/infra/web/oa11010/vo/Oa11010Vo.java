@@ -1,11 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
-
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
  * OA11010 View Object
@@ -21,15 +19,15 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * ＪＡID
      */
-    private long jaId;
+    private Long jaId;
     /**
-     * 店舗
+     * 店舗ID
      */
-    private String tempoCode;
+    private Long branchId;
     /**
-     * 店舗コンボボックスリスト
+     * 店舗コンボボックスItemsSource
      */
-    private List<TempoReferenceDto> tempoReferenceDtoList;
+    private List<SelectOptionItemSource> branchItemsSource;
     /**
      * オペレーターコード
      */
@@ -95,7 +93,7 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 取引ロール一覧フィルター用サブシステムコンボボックスリスト
      */
-//    private List<SubSystem> bizTranRoleSubSystemList;
+    private List<SelectOptionItemSource> bizTranRoleSubSystemList;
     /**
      * 取引ロール一覧
      */
@@ -183,363 +181,251 @@ public class Oa11010Vo extends BaseOfResponseVo {
      */
     private int pageNo;
 
+    // Getter／Setter
     public String getJa() {
         return ja;
     }
-
     public void setJa(String ja) {
         this.ja = ja;
     }
-
-    public long getJaId() {
+    public Long getJaId() {
         return jaId;
     }
-
-    public void setJaId(long jaId) {
+    public void setJaId(Long jaId) {
         this.jaId = jaId;
     }
-
-    public String getTempoCode() {
-        return tempoCode;
+    public Long getBranchId() {
+        return branchId;
     }
-
-    public void setTempoCode(String tempoCode) {
-        this.tempoCode = tempoCode;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
-
-    public List<TempoReferenceDto> getTempoReferenceDtoList() {
-        return tempoReferenceDtoList;
+    public List<SelectOptionItemSource> getBranchItemsSource() {
+        return branchItemsSource;
     }
-
-    public void setTempoReferenceDtoList(List<TempoReferenceDto> tempoReferenceDtoList) {
-        this.tempoReferenceDtoList = tempoReferenceDtoList;
+    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
+        this.branchItemsSource = branchItemsSource;
     }
-
     public String getOperatorCode() {
         return operatorCode;
     }
-
     public void setOperatorCode(String operatorCode) {
         this.operatorCode = operatorCode;
     }
-
     public String getOperatorName() {
         return operatorName;
     }
-
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
     }
-
     public String getMailAddress() {
         return mailAddress;
     }
-
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
-
     public Short getAvailableStatus0() {
         return availableStatus0;
     }
-
     public void setAvailableStatus0(Short availableStatus0) {
         this.availableStatus0 = availableStatus0;
     }
-
     public Short getAvailableStatus1() {
         return availableStatus1;
     }
-
     public void setAvailableStatus1(Short availableStatus1) {
         this.availableStatus1 = availableStatus1;
     }
-
     public Integer getExpirationSelect() {
         return expirationSelect;
     }
-
     public void setExpirationSelect(Integer expirationSelect) {
         this.expirationSelect = expirationSelect;
     }
-
     public LocalDate getExpirationStatusDate() {
         return expirationStatusDate;
     }
-
     public void setExpirationStatusDate(LocalDate expirationStatusDate) {
         this.expirationStatusDate = expirationStatusDate;
     }
-
     public LocalDate getExpirationStartDateFrom() {
         return expirationStartDateFrom;
     }
-
     public void setExpirationStartDateFrom(LocalDate expirationStartDateFrom) {
         this.expirationStartDateFrom = expirationStartDateFrom;
     }
-
     public LocalDate getExpirationStartDateTo() {
         return expirationStartDateTo;
     }
-
     public void setExpirationStartDateTo(LocalDate expirationStartDateTo) {
         this.expirationStartDateTo = expirationStartDateTo;
     }
-
     public LocalDate getExpirationEndDateFrom() {
         return expirationEndDateFrom;
     }
-
     public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) {
         this.expirationEndDateFrom = expirationEndDateFrom;
     }
-
     public LocalDate getExpirationEndDateTo() {
         return expirationEndDateTo;
     }
-
     public void setExpirationEndDateTo(LocalDate expirationEndDateTo) {
         this.expirationEndDateTo = expirationEndDateTo;
     }
-
     public Integer getSubSystemRoleConditionsSelect() {
         return subSystemRoleConditionsSelect;
     }
-
     public void setSubSystemRoleConditionsSelect(Integer subSystemRoleConditionsSelect) {
         this.subSystemRoleConditionsSelect = subSystemRoleConditionsSelect;
     }
-
     public List<Oa11010SubSystemRoleVo> getSubSystemRoleList() {
         return subSystemRoleList;
     }
-
     public void setSubSystemRoleList(List<Oa11010SubSystemRoleVo> subSystemRoleList) {
         this.subSystemRoleList = subSystemRoleList;
     }
-
     public Integer getBizTranRoleConditionsSelect() {
         return bizTranRoleConditionsSelect;
     }
-
     public void setBizTranRoleConditionsSelect(Integer bizTranRoleConditionsSelect) {
         this.bizTranRoleConditionsSelect = bizTranRoleConditionsSelect;
     }
-
     public String getBizTranRoleSubSystemCode() {
         return bizTranRoleSubSystemCode;
     }
-
     public void setBizTranRoleSubSystemCode(String bizTranRoleSubSystemCode) {
         this.bizTranRoleSubSystemCode = bizTranRoleSubSystemCode;
     }
-
-//    public List<SubSystem> getBizTranRoleSubSystemList() {
-//        return bizTranRoleSubSystemList;
-//    }
-
-//    public void setBizTranRoleSubSystemList(List<SubSystem> bizTranRoleSubSystemList) {
-//        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
-//    }
-
+    public List<SelectOptionItemSource> getBizTranRoleSubSystemList() {
+        return bizTranRoleSubSystemList;
+    }
+    public void setBizTranRoleSubSystemList(List<SelectOptionItemSource> bizTranRoleSubSystemList) {
+        this.bizTranRoleSubSystemList = bizTranRoleSubSystemList;
+    }
     public List<Oa11010BizTranRoleVo> getBizTranRoleList() {
         return bizTranRoleList;
     }
-
     public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) {
         this.bizTranRoleList = bizTranRoleList;
     }
-
     public Short getDeviceAuthUse() {
         return deviceAuthUse;
     }
-
     public void setDeviceAuthUse(Short deviceAuthUse) {
         this.deviceAuthUse = deviceAuthUse;
     }
-
     public Short getDeviceAuthUnuse() {
         return deviceAuthUnuse;
     }
-
     public void setDeviceAuthUnuse(Short deviceAuthUnuse) {
         this.deviceAuthUnuse = deviceAuthUnuse;
     }
-
     public LocalDate getAccountLockOccurredDateFrom() {
         return accountLockOccurredDateFrom;
     }
-
     public void setAccountLockOccurredDateFrom(LocalDate accountLockOccurredDateFrom) {
         this.accountLockOccurredDateFrom = accountLockOccurredDateFrom;
     }
-
     public LocalDate getAccountLockOccurredDateTo() {
         return accountLockOccurredDateTo;
     }
-
     public void setAccountLockOccurredDateTo(LocalDate accountLockOccurredDateTo) {
         this.accountLockOccurredDateTo = accountLockOccurredDateTo;
     }
-
     public Short getAccountLockStatusLock() {
         return accountLockStatusLock;
     }
-
     public void setAccountLockStatusLock(Short accountLockStatusLock) {
         this.accountLockStatusLock = accountLockStatusLock;
     }
-
     public Short getAccountLockStatusUnlock() {
         return accountLockStatusUnlock;
     }
-
     public void setAccountLockStatusUnlock(Short accountLockStatusUnlock) {
         this.accountLockStatusUnlock = accountLockStatusUnlock;
     }
-
     public Short getPasswordHistoryCheck() {
         return passwordHistoryCheck;
     }
-
     public void setPasswordHistoryCheck(Short passwordHistoryCheck) {
         this.passwordHistoryCheck = passwordHistoryCheck;
     }
-
     public Integer getPasswordHistoryLastChangeDate() {
         return passwordHistoryLastChangeDate;
     }
-
     public void setPasswordHistoryLastChangeDate(Integer passwordHistoryLastChangeDate) {
         this.passwordHistoryLastChangeDate = passwordHistoryLastChangeDate;
     }
-
     public String getPasswordHistoryLastChangeDateStatus() {
         return passwordHistoryLastChangeDateStatus;
     }
-
     public void setPasswordHistoryLastChangeDateStatus(String passwordHistoryLastChangeDateStatus) {
         this.passwordHistoryLastChangeDateStatus = passwordHistoryLastChangeDateStatus;
     }
-
     public Short getPasswordHistoryChangeType0() {
         return passwordHistoryChangeType0;
     }
-
     public void setPasswordHistoryChangeType0(Short passwordHistoryChangeType0) {
         this.passwordHistoryChangeType0 = passwordHistoryChangeType0;
     }
-
     public Short getPasswordHistoryChangeType1() {
         return passwordHistoryChangeType1;
     }
-
     public void setPasswordHistoryChangeType1(Short passwordHistoryChangeType1) {
         this.passwordHistoryChangeType1 = passwordHistoryChangeType1;
     }
-
     public Short getPasswordHistoryChangeType2() {
         return passwordHistoryChangeType2;
     }
-
     public void setPasswordHistoryChangeType2(Short passwordHistoryChangeType2) {
         this.passwordHistoryChangeType2 = passwordHistoryChangeType2;
     }
-
     public Short getPasswordHistoryChangeType3() {
         return passwordHistoryChangeType3;
     }
-
     public void setPasswordHistoryChangeType3(Short passwordHistoryChangeType3) {
         this.passwordHistoryChangeType3 = passwordHistoryChangeType3;
     }
-
     public LocalDate getSignintraceTrydateFrom() {
         return signintraceTrydateFrom;
     }
-
     public void setSignintraceTrydateFrom(LocalDate signintraceTrydateFrom) {
         this.signintraceTrydateFrom = signintraceTrydateFrom;
     }
-
     public LocalDate getSignintraceTrydateTo() {
         return signintraceTrydateTo;
     }
-
     public void setSignintraceTrydateTo(LocalDate signintraceTrydateTo) {
         this.signintraceTrydateTo = signintraceTrydateTo;
     }
-
     public String getSignintraceTryIpAddress() {
         return signintraceTryIpAddress;
     }
-
     public void setSignintraceTryIpAddress(String signintraceTryIpAddress) {
         this.signintraceTryIpAddress = signintraceTryIpAddress;
     }
-
     public Short getSignintraceSignIn() {
         return signintraceSignIn;
     }
-
     public void setSignintraceSignIn(Short signintraceSignIn) {
         this.signintraceSignIn = signintraceSignIn;
     }
-
     public Short getSignintraceSignOut() {
         return signintraceSignOut;
     }
-
     public void setSignintraceSignOut(Short signintraceSignOut) {
         this.signintraceSignOut = signintraceSignOut;
     }
-
     public Short[] getSignintraceSignInResult() {
         return signintraceSignInResult;
     }
-
     public void setSignintraceSignInResult(Short[] signintraceSignInResult) {
         this.signintraceSignInResult = signintraceSignInResult;
     }
-
     public int getPageNo() {
         return pageNo;
     }
-
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
-    }
-
-    /**
-     * 利用可否状態IncludesListを取得します。
-     *
-     * @return 利用可否状態IncludesList
-     */
-    public List<Short> getAvailableStatusIncludesList() {
-        List<Short> result = newArrayList();
-        if (CHECKBOX_TRUE.equals(availableStatus0)) {
-            result.add((short) 0);
-        }
-        if (CHECKBOX_TRUE.equals(availableStatus1)) {
-            result.add((short) 1);
-        }
-        return result;
-    }
-
-    /**
-     * アカウントロック状態IncludesListを取得します。
-     *
-     * @return アカウントロック状態IncludesList
-     */
-    public List<Integer> getAccountLockStatusIncludesList() {
-        List<Integer> result = newArrayList();
-        if (CHECKBOX_TRUE.equals(accountLockStatusLock)) {
-            result.add(0);
-        }
-        if (CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {
-            result.add(1);
-        }
-        return result;
     }
 }

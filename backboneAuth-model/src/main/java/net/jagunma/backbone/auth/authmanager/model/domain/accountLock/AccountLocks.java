@@ -32,7 +32,7 @@ public class AccountLocks {
      *
      * @return アカウントロックリスト
      */
-    public ArrayList<AccountLock> getList() {
+    public ArrayList<AccountLock> getValues() {
         return list;
     }
 }

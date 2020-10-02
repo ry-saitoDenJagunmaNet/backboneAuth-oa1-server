@@ -60,7 +60,7 @@ public class AccountLocksDataSource implements AccountLocksRepository {
                 entity.getLockStatus(),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
-                    o.getOperatorId() == entity.getOperatorId()).findFirst().orElse(null)
+                    o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null)
             ));
         }
 

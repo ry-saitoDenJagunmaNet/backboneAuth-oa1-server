@@ -4,13 +4,43 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.dto.TempoReferenceDto;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchAttribute;
+import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
+import net.jagunma.common.values.model.branch.BranchesAtMoment;
+import net.jagunma.common.values.model.ja.JaAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class Oa11020InitPresenterTest {
+
+    // 実行既定値
+    String jaCode = "006";
+    String jaName = "JA前橋市";
+    String prefix = "yu";
+
+    // 店舗群AtMoment作成
+    private BranchesAtMoment createBranchesAtMoment() {
+        List<BranchAtMoment> branchAtMomentList = newArrayList();
+        branchAtMomentList.add(BranchAtMoment.builder()
+            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
+            .build());
+        branchAtMomentList.add(BranchAtMoment.builder()
+            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
+            .build());
+        branchAtMomentList.add(BranchAtMoment.builder()
+            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
+            .build());
+
+        return BranchesAtMoment.of(branchAtMomentList);
+    }
 
     /**
      * {@link Oa11020InitPresenter#bindTo(Oa11020Vo)}テスト
@@ -24,36 +54,18 @@ class Oa11020InitPresenterTest {
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test() {
-        // 実行既定値
-        String jaCode = "006";
-        String jaName = "JA前橋市";
-        String prefix = "yu";
-        List<TempoReferenceDto> tempoList = newArrayList();
-        TempoReferenceDto tempoReferenceDto;
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("001");
-        tempoReferenceDto.setTempoName("本店");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("002");
-        tempoReferenceDto.setTempoName("テスト店舗002");
-        tempoList.add(tempoReferenceDto);
-        tempoReferenceDto = new TempoReferenceDto();
-        tempoReferenceDto.setTempoCode("003");
-        tempoReferenceDto.setTempoName("テスト店舗003");
-        tempoList.add(tempoReferenceDto);
-
         // 実行値
         Oa11020Vo vo = new Oa11020Vo();
         Oa11020InitPresenter presenter = new Oa11020InitPresenter();
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
         presenter.setOperatorCodePrefix(prefix);
-        presenter.setTempoList(tempoList);
+        presenter.setBranchesAtMoment(createBranchesAtMoment());
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
         expectedVo.setJa(jaCode + " " + jaName);
+        expectedVo.setBranchId(null);
         expectedVo.setOperatorCodePrefix(prefix);
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);
@@ -61,8 +73,7 @@ class Oa11020InitPresenterTest {
         expectedVo.setExpirationStartDate(null);
         expectedVo.setExpirationEndDate(null);
         expectedVo.setChangeCause(null);
-        expectedVo.setTempoList(tempoList);
-        // ToDo:
+        expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
         expectedVo.setPassword(null);
         expectedVo.setConfirmPassword(null);
 
