@@ -20,7 +20,5 @@ jar {
 
 dependencies {
     api project(':backboneAuth-model')
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterEngineVersion}"
 
 }

@@ -23,7 +23,8 @@ dependencies {
     implementation project(':backboneAuth-model')
     implementation("net.jagunma.common2020:jagunma-common-fao:$commonFaoVersion")
     implementation("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
-        exclude group:'com.microsoft.sqlserver', module:'mssql-jdbc'
+        exclude group: "net.jagunma.common2020"
+        exclude group: "com.microsoft.sqlserver"
     }
     implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     testImplementation project(":backboneAuth-oa1-remoting-mock")

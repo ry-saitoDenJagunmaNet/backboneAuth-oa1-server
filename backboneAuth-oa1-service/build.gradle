@@ -26,8 +26,13 @@ dependencies {
 
     api "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     api "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
-    api "net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"
-    api "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"
+    api("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
+        exclude group: "net.jagunma.common2020"
+        exclude group: "com.microsoft.sqlserver"
+    }
+    api( "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"){
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
+    }
     api "org.seasar.doma:doma-core:${domaVersion}"
     implementation("org.springframework.boot:spring-boot-starter-aop")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
