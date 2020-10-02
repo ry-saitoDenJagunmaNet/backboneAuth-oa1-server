@@ -197,7 +197,7 @@ class Oa12060ControllerTest {
         // 期待値
         String expected = "oa12060";
         Oa12060Vo expectedVo = createExpectedVo();
-        expectedVo.setYearMonth(LocalDate.now());
+        expectedVo.setYearMonth(LocalDate.now().withDayOfMonth(1));
 
         // 実行
         String result = oa12060Controller.get(model);

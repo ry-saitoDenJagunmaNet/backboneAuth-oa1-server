@@ -45,12 +45,12 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="tempo" name="tempoId" class="validate"
-								th:value="${form.tempoId}">
-							<option th:each="item : ${form.tempoList}"
+						<select id="branch" name="branchId" class="validate"
+								th:value="${form.branchId}">
+							<option th:each="item : ${form.branchItemsSource}"
 									th:value="${item.id}"
 									th:text="${item.name}"
-									th:selected="${form.tempoId == item.id}"></option>
+									th:selected="${form.branchId == item.id}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -60,10 +60,10 @@
 						</select>
 						<label>店舗</label>
 					</div>
-					<div th:each="item, itemStat : ${form.tempoList}">
-						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].id'" th:value="${item.id}"/>
-						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].code'" th:value="${item.code}"/>
-						<input type="hidden" th:name="'tempoList['+${itemStat.index}+'].name'" th:value="${item.name}"/>
+					<div th:each="item, itemStat : ${form.branchItemsSource}">
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].id'" th:value="${item.id}"/>
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].code'" th:value="${item.code}"/>
+						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].name'" th:value="${item.name}"/>
 					</div>
 				</div>
 			</div>
@@ -1265,7 +1265,7 @@
 								<tr class="oaex_operator_table_row">
 									<th class="oaex_operator_available_status_th">利用<br/>可否</th>
 									<th class="oaex_operator_account_lock_th">ﾛｯｸ</th>
-									<th class="oaex_operator_tempo_th" colspan="2">店舗</th>
+									<th class="oaex_operator_branch_th" colspan="2">店舗</th>
 									<th class="oaex_operator_operator_th" colspan="2">オペレーター</th>
 									<th class="oaex_operator_expiration_date_th">オペレーター有効期限</th>
 									<th class="oaex_operator_subsystem_role_th">サブシステムロール</th>
@@ -1278,8 +1278,8 @@
 								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this);" th:remove="all">
 									<td class="oaex_operator_available_status"><div class="oaex_available_status_possible"></div></td>
 									<td class="oaex_operator_account_lock"><div class="oaex_account_unlock"></div></td>
-									<td class="oaex_operator_tempo_code">000</td>
-									<td class="oaex_operator_tempo_name">本所</td>
+									<td class="oaex_operator_branch_code">000</td>
+									<td class="oaex_operator_branch_name">本所</td>
 									<td class="oaex_operator_operator_code">OP101001</td>
 									<td class="oaex_operator_operator_name">前橋太郎</td>
 									<td class="oaex_operator_expiration_date">2019/04/01～9999/12/31</td>

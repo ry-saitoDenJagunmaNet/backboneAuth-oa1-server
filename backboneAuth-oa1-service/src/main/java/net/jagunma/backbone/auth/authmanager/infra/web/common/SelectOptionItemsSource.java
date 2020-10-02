@@ -25,7 +25,7 @@ public class SelectOptionItemsSource {
      * 店舗群（BranchesAtMoment）から作成します。
      *
      * @param branchesAtMoment 店舗群
-     * @return 店舗コンボボックス選択子群
+     * @return 店舗コンボボックス選択肢群
      */
     public static SelectOptionItemsSource createFrom(BranchesAtMoment branchesAtMoment) {
         List<SelectOptionItemSource> list = newArrayList();
@@ -42,20 +42,24 @@ public class SelectOptionItemsSource {
 
     /**
      * サブシステム（enum）から作成します。
+     * <pre>
+     * 記述例
+     *   SelectOptionItemsSource.createFrom(SubSystem.values())
+     * </pre>
      *
-     * @return サブシステムコンボボックス選択子群
+     * @param subSystems サブシステム（enum）配列
+     * @return サブシステムコンボボックス選択肢群
      */
-    public static SelectOptionItemsSource createFromSubSystem() {
+    public static SelectOptionItemsSource createFrom(SubSystem[] subSystems) {
         List<SelectOptionItemSource> list = newArrayList();
         list.add(SelectOptionItemSource.empty());
-        for (SubSystem subSystem : SubSystem.values()) {
+        for (SubSystem subSystem : subSystems) {
             if (subSystem.getCode().length() == 0) { continue; }
             list.add(new SelectOptionItemSource(
                 null
                 , subSystem.getCode()
                 , subSystem.getName()
             ));
-
         }
         return new SelectOptionItemsSource(list);
     }

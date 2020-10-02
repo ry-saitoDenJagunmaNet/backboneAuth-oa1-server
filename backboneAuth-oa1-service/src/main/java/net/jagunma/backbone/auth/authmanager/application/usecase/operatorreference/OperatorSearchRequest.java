@@ -11,7 +11,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchSubS
 public interface OperatorSearchRequest {
 
     Long getJaId();
-    Long getTempoId();
+    Long getBranchId();
     String getOperatorCode();
     String getOperatorName();
     String getMailAddress();

@@ -38,24 +38,6 @@ public interface OperatorSearchResponse {
      */
     void setAccountLocks(AccountLocks accountLocks);
     /**
-     * パスワード履歴群のＳｅｔ
-     *
-     * @param passwordHistories パスワード履歴群
-     */
-    void setPasswordHistories(PasswordHistories passwordHistories);
-    /**
-     * サインイン証跡群のＳｅｔ
-     *
-     * @param signInTraces サインイン証跡群
-     */
-    void setSignInTraces(SignInTraces signInTraces);
-    /**
-     * サインアウト証跡群のＳｅｔ
-     *
-     * @param signOutTraces サインアウト証跡群
-     */
-    void setSignOutTraces(SignOutTraces signOutTraces);
-    /**
      * オペレーター_サブシステムロール割当群のＳｅｔ
      *
      * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群

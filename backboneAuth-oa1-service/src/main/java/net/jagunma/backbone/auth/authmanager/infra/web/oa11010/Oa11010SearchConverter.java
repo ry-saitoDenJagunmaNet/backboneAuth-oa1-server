@@ -43,8 +43,8 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
      *
      * @return 店舗コード
      */
-    public Long getTempoId() {
-        return vo.getTempoId();
+    public Long getBranchId() {
+        return vo.getBranchId();
     }
     /**
      * オペレーターコードのＧｅｔ
@@ -202,8 +202,6 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
         }
         return list;
     }
-//    public Short getDeviceAuthUse() { return vo.getDeviceAuthUse(); }
-//    public Short getDeviceAuthUnuse() { return vo.getDeviceAuthUnuse(); }
     /**
      * 最終ロック・アンロック発生日（開始日）のＧｅｔ
      *

@@ -41,7 +41,7 @@ public interface OperatorEntryRequest {
      *
      * @return 店舗ID
      */
-    Long getTempoId();
+    Long getBranchId();
     /**
      * 変更事由のＧｅｔ
      *

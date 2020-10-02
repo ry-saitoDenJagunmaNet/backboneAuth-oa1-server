@@ -23,11 +23,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 店舗ID
      */
-    private Long tempoId;
+    private Long branchId;
     /**
-     * 店舗コンボボックスリスト
+     * 店舗コンボボックスItemsSource
      */
-    private List<SelectOptionItemSource> tempoList;
+    private List<SelectOptionItemSource> branchItemsSource;
     /**
      * オペレーターコード
      */
@@ -194,17 +194,17 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setJaId(Long jaId) {
         this.jaId = jaId;
     }
-    public Long getTempoId() {
-        return tempoId;
+    public Long getBranchId() {
+        return branchId;
     }
-    public void setTempoId(Long tempoId) {
-        this.tempoId = tempoId;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
-    public List<SelectOptionItemSource> getTempoList() {
-        return tempoList;
+    public List<SelectOptionItemSource> getBranchItemsSource() {
+        return branchItemsSource;
     }
-    public void setTempoList(List<SelectOptionItemSource> tempoList) {
-        this.tempoList = tempoList;
+    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
+        this.branchItemsSource = branchItemsSource;
     }
     public String getOperatorCode() {
         return operatorCode;

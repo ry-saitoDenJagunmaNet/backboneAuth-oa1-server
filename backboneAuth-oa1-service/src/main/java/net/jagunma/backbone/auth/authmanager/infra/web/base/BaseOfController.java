@@ -141,47 +141,4 @@ public class BaseOfController {
                 .build())
             .build();
     }
-
-//    public void setAuthInf() {
-////        System.out.println("### BaseOfController");
-//
-//        //TODO: パラメータでサインインオペレーターの情報を取得する
-////        AuthInf authInf = new AuthInf().createFrom("006", "001", 18l, "yu001009", "145.254.211.73");
-////        AuditInfoHolder.set(authInf, DateProvider.currentLocalDateTime(),
-////            Route.createFrom("", ""), DefaultAuditTempo.empty());
-//
-//
-////        JaAtMoment jaAtMoment = JaAtMoment.builder()
-////            .withIdentifier(6l)
-////            .withJaAttribute(JaAttribute
-////                .builder()
-////                .withJaCode(JaCode.of("006"))
-////                .withName("JA前橋市")
-////                .withFormalName("")
-////                .withAbbreviatedName("")
-////                .build())
-////            .build();
-////        BranchAtMoment branchAtMoment = BranchAtMoment.builder()
-////            .withIdentifier(1l)
-////            .withJaAtMoment(jaAtMoment)
-////            .withBranchAttribute(BranchAttribute.builder()
-////                .withBranchType(BranchType.一般)
-////                .withName("")
-////                .build())
-////            .build();
-////        SimpleOperator operator = new SimpleOperatorBuilder()
-////            .withIdentifier(18l)
-////            .withOperatorCode(OperatorCode.of("yu001009"))
-////            .withOperatorName("ｙｕ００１００９")
-////            .withBranchIdentifier(33l)
-////            .build();
-////
-////        AuditInfoHolder.set(AuthInf.createFrom("006", "001", 18L, "yu001009", "001.001.001.001"),
-////            DateProvider.currentLocalDateTime(),
-////            Route.createFrom("", ""),
-////            jaAtMoment,
-////            branchAtMoment,
-////            operator);
-//////            new SimpleOperator(18l, new OperatorCode("yu001009"), "ｙｕ００１００９", 33l, branchAtMoment ));
-//    }
 }

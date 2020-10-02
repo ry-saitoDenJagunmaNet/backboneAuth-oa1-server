@@ -70,7 +70,7 @@ public class SearchOperator {
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
     private final BranchAtMomentRepository branchAtMomentRepository;
-    private final TempoReference tempoReference;
+    private final BranchReference branchReference;
 
     // コンストラクタ
     public SearchOperator(OperatorsRepository operatorsRepository,
@@ -80,7 +80,7 @@ public class SearchOperator {
         SignOutTracesRepository signOutTracesRepository,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
         Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        TempoReference tempoReference,
+        BranchReference branchReference,
         BranchAtMomentRepository branchAtMomentRepository) {
 
         this.operatorsRepository = operatorsRepository;
@@ -91,7 +91,7 @@ public class SearchOperator {
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
         this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
         this.branchAtMomentRepository = branchAtMomentRepository;
-        this.tempoReference = tempoReference;
+        this.branchReference = branchReference;
     }
 
     /**
@@ -110,9 +110,8 @@ public class SearchOperator {
         System.out.println("### PageNo="+request.getPageNo());
 
         // オペレーター検索
-        Orders orders = Orders.empty().addOrder("tempoCode").addOrder("operatorCode");
+        Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
         Operators operators = operatorsRepository.selectBy(createOperatorCriteria(request), orders);
-        response.setOperators(operators);
 
         // オペレーターIDおよびオペレーターコードのリストを設定
         setOperatorIdAndCodeList(operators);
@@ -122,32 +121,25 @@ public class SearchOperator {
         // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
 //        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(createBranchAtMomentCriteria(request),
 //            Orders.empty().addOrder("branchAttribute.BranchCode.value"));
-        BranchesAtMoment branchesAtMoment = tempoReference.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
-        response.setBranchesAtMoment(branchesAtMoment);
+        BranchesAtMoment branchesAtMoment = branchReference.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
         // オペレーター_サブシステムロール割当検索
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));
-        response.setOperator_SubSystemRoles(operator_SubSystemRoles);
         // オペレーター_取引ロール割当検索
         Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(createOperator_BizTranRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));
-        response.setOperator_BizTranRoles(operator_BizTranRoles);
         // アカウントロック検索
         AccountLocks AccountLocks = accountLocksRepository.selectBy(createAccountLockCriteria(),
             Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
-        response.setAccountLocks(AccountLocks);
         // パスワード履歴検索
         PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(createPasswordHistoryCriteria(),
             Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
-        response.setPasswordHistories(passwordHistories);
         // サインイン証跡検索
         SignInTraces signInTraces =  signInTracesRepository.selectBy(createSignInTraceCriteria(),
             Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
-        response.setSignInTraces(signInTraces);
         // サインアウト証跡
         SignOutTraces signOutTraces = signOutTracesRepository.selectBy(createSignOutTraceCriteria(),
             Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
-        response.setSignOutTraces(signOutTraces);
 
         List<Operator> removeOperator = newArrayList();
         for (Operator operator : operators.getValues()) {
@@ -195,6 +187,12 @@ public class SearchOperator {
         }
         // 対象から削除
         operators.getValues().removeAll(removeOperator);
+
+        response.setOperators(operators);
+        response.setBranchesAtMoment(branchesAtMoment);
+        response.setOperator_SubSystemRoles(operator_SubSystemRoles);
+        response.setOperator_BizTranRoles(operator_BizTranRoles);
+        response.setAccountLocks(AccountLocks);
     }
 
     /**
@@ -551,8 +549,8 @@ public class SearchOperator {
         // ＪＡID
         criteria.getJaIdCriteria().setEqualTo(request.getJaId());
         // 店舗ID
-        if (request.getTempoId() != null) {
-            criteria.getTempoIdCriteria().setEqualTo(request.getTempoId());
+        if (request.getBranchId() != null) {
+            criteria.getBranchIdCriteria().setEqualTo(request.getBranchId());
         }
         // オペレーターコード
         if (!Strings2.isEmpty(request.getOperatorCode())) {

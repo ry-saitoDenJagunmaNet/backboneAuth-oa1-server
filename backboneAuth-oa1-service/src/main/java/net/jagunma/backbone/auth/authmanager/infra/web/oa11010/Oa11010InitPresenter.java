@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSyst
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
@@ -20,7 +21,7 @@ class Oa11010InitPresenter {
     private long jaId;
     private String jaCode;
     private String jaName;
-    private BranchesAtMoment tempos;
+    private BranchesAtMoment branchesAtMoment;
     private Integer expirationSelect;
     private Integer subSystemRoleConditionsSelect;
     private Integer bizTranRoleConditionsSelect;
@@ -54,12 +55,12 @@ class Oa11010InitPresenter {
         this.jaName = jaName;
     }
     /**
-     * 店舗群のＳｅｔ
+     * 店舗群AtMomentのＳｅｔ
      *
-     * @param tempos 店舗群
+     * @param branchesAtMoment 店舗群AtMoment
      */
-    public void setTempos(BranchesAtMoment tempos) {
-        this.tempos = tempos;
+    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
+        this.branchesAtMoment = branchesAtMoment;
     }
     /**
      * 有効期限選択のＳｅｔ
@@ -105,7 +106,7 @@ class Oa11010InitPresenter {
         vo.setJa(jaCode + " " + jaName);
         vo.setJaId(jaId);
         // 店舗リスト
-        vo.setTempoList(SelectOptionItemsSource.createFrom(tempos).getValue());
+        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         // 有効期限選択
         vo.setExpirationSelect(expirationSelect);
         // サブシステムロール条件選択
@@ -124,7 +125,7 @@ class Oa11010InitPresenter {
         // 取引ロール条件選択
         vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         // 取引ロールサブシステムリスト
-        vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFromSubSystem().getValue());
+        vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
         // 取引ロールリスト
         List<Oa11010BizTranRoleVo> bizTranRoleVoList = newArrayList();
         for (BizTranRole bizTranRole :  bizTranRoles.getValues()) {

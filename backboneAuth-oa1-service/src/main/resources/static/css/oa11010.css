@@ -137,9 +137,9 @@ tr.oaex_th_operator_table_row {
 .oaex_operator_account_lock_th {min-width: 40px; width: 3%;}
 .oaex_operator_account_lock {min-width: 40px; width: 3%;}
 /* 店舗 */
-.oaex_operator_tempo_th {min-width: 160px; width: 13%;}
-.oaex_operator_tempo_code {min-width: 40px; width: 8%;}
-.oaex_operator_tempo_name {min-width: 120px; width: 5%;}
+.oaex_operator_branch_th {min-width: 160px; width: 13%;}
+.oaex_operator_branch_code {min-width: 40px; width: 8%;}
+.oaex_operator_branch_name {min-width: 120px; width: 5%;}
 /* オペレーター */
 .oaex_operator_operator_th {min-width: 200px; width: 13%;}
 .oaex_operator_operator_code {min-width: 80px; width: 5%;}

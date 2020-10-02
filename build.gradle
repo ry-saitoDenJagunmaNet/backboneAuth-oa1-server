@@ -25,7 +25,7 @@ buildscript {
         junitJupiterApiVersion = '5.6.2'
         junitJupiterEngineVersion = '5.6.2'
         mssqlJdbcVersion = '8.4.1.jre11'
-        backboneAuthDaoVersion = '20.0.15'
+        backboneAuthDaoVersion = '20.0.17'
         sharedDataInterfaceVersion = '20.1.16'
         sharedDataStubVersion = '20.1.11'
         backboneInterfaceVersion = '20.2.3'

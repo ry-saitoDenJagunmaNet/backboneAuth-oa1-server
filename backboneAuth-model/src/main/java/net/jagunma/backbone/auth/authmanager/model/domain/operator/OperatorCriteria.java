@@ -20,8 +20,8 @@ public class OperatorCriteria {
     private BooleanCriteria isDeviceAuthCriteria = new BooleanCriteria();
     private LongCriteria jaIdCriteria = new LongCriteria();
     private StringCriteria jaCodeCriteria = new StringCriteria();
-    private LongCriteria tempoIdCriteria = new LongCriteria();
-    private StringCriteria tempoCodeCriteria = new StringCriteria();
+    private LongCriteria branchIdCriteria = new LongCriteria();
+    private StringCriteria branchCodeCriteria = new StringCriteria();
     private ShortCriteria availableStatusCriteria = new ShortCriteria();
 
     // Getter
@@ -52,11 +52,11 @@ public class OperatorCriteria {
     public StringCriteria getJaCodeCriteria() {
         return jaCodeCriteria;
     }
-    public LongCriteria getTempoIdCriteria() {
-        return tempoIdCriteria;
+    public LongCriteria getBranchIdCriteria() {
+        return branchIdCriteria;
     }
-    public StringCriteria getTempoCodeCriteria() {
-        return tempoCodeCriteria;
+    public StringCriteria getBranchCodeCriteria() {
+        return branchCodeCriteria;
     }
     public ShortCriteria getAvailableStatusCriteria() {
         return availableStatusCriteria;

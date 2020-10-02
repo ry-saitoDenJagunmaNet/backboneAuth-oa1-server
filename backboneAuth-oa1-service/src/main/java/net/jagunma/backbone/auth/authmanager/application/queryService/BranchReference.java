@@ -21,13 +21,13 @@ import net.jagunma.common.values.model.ja.JaCode;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TempoReference {
+public class BranchReference {
 
     private final BranchAtMomentRepository branchAtMomentRepository;
     private final OperatorEntityDao operatorEntityDao;
 
     // コンストラクタ
-    public TempoReference(BranchAtMomentRepository branchAtMomentRepository,
+    public BranchReference(BranchAtMomentRepository branchAtMomentRepository,
         OperatorEntityDao operatorEntityDao) {
 
         this.branchAtMomentRepository = branchAtMomentRepository;
@@ -36,14 +36,14 @@ public class TempoReference {
 
 
     /**
-     * 店舗群を取得します、
-     * @param jaid ＪＡID
-     * @return 店舗群
+     * 店舗群AtMomentを取得します、
+     * @param jaId ＪＡID
+     * @return 店舗群AtMoment
      */
-    public BranchesAtMoment getTempos(long jaid) {
+    public BranchesAtMoment getBranchesAtMoment(long jaId) {
 
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-        criteria.getJaIdentifierCriteria().setEqualTo(jaid);
+        criteria.getJaIdentifierCriteria().setEqualTo(jaId);
         //return branchAtMomentRepository.selectBy(criteria, Orders.empty());
         // TODO: 店舗の取得は BranchAtMomentで取得
         // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
@@ -58,19 +58,19 @@ public class TempoReference {
 
         OperatorEntityCriteria criteria = new OperatorEntityCriteria();
         criteria.getJaIdCriteria().setEqualTo(jaId);
-        Orders orders = Orders.empty().addOrder("jaId").addOrder("tempoId");
+        Orders orders = Orders.empty().addOrder("jaId").addOrder("branchId");
 
         List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
-        List<String> tempoList = newArrayList();
+        List<String> branchList = newArrayList();
         operatorEntities.forEach(o -> {
-            tempoList.add(o.getTempoCode());
+            branchList.add(o.getBranchCode());
         });
 
         List<BranchAtMoment> list = newArrayList();
         // 重複削除
-        tempoList.stream().distinct().forEach(t -> {
+        branchList.stream().distinct().forEach(t -> {
             list.add(BranchAtMoment.builder()
-                .withIdentifier(operatorEntities.stream().filter(o->o.getTempoCode().equals(t)).findFirst().orElse(null).getTempoId())
+                .withIdentifier(operatorEntities.stream().filter(o->o.getBranchCode().equals(t)).findFirst().orElse(null).getBranchId())
                 .withJaAtMoment(createJaAtMoment(jaId, jaCode, jaCode))
                 .withBranchAttribute(BranchAttribute.builder()
                     .withBranchType(BranchType.一般)

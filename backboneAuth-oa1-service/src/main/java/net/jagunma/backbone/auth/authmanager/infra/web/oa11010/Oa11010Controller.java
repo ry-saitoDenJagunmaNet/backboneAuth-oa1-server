@@ -5,7 +5,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.BizTranRoleReference;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.TempoReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -57,16 +57,16 @@ public class Oa11010Controller extends BaseOfController {
 
     private final SearchOperator searchOperator;
     private final BizTranRoleReference bizTranRoleReference;
-    private final TempoReference tempoReference;
+    private final BranchReference branchReference;
 
     // コンストラクタ
     public Oa11010Controller(SearchOperator searchOperator,
         BizTranRoleReference bizTranRoleReference,
-        TempoReference tempoReference) {
+        BranchReference branchReference) {
 
         this.searchOperator = searchOperator;
         this.bizTranRoleReference = bizTranRoleReference;
-        this.tempoReference = tempoReference;
+        this.branchReference = branchReference;
     }
 
     /**
@@ -149,7 +149,7 @@ public class Oa11010Controller extends BaseOfController {
         presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
         presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
         // 店舗リスト
-        presenter.setTempos(tempoReference.getTempos(AuditInfoHolder.getJa().getIdentifier()));
+        presenter.setBranchesAtMoment(branchReference.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
         // 有効期限選択
         presenter.setExpirationSelect(0);
         // サブシステムロール初期選択
