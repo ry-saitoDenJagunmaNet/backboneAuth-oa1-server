@@ -22,19 +22,17 @@ class StoreCalendarValidatorTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test0() {
 
-        // 事前準備
+        // 実行値
         List<Oa12060StoreDetailsConverter> list = newArrayList();
         list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,true,1));
         list.add(Oa12060StoreDetailsConverter.with(2l, CalendarType.信用カレンダー,false,1));
         list.add(Oa12060StoreDetailsConverter.with(3l, CalendarType.広域物流カレンダー,true,1));
-
-        // 実行値
         CalendarStoreRequest request = new CalendarStoreRequest() {
             @Override
             public List<Oa12060StoreDetailsConverter> createCalendarList() {
@@ -54,16 +52,14 @@ class StoreCalendarValidatorTest {
      *    リクエストのカレンダー詳細が0件のテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test1() {
 
-        // 事前準備
-        List<Oa12060StoreDetailsConverter> list = newArrayList();
-
         // 実行値
+        List<Oa12060StoreDetailsConverter> list = newArrayList();
         CalendarStoreRequest request = new CalendarStoreRequest() {
             @Override
             public List<Oa12060StoreDetailsConverter> createCalendarList() {
@@ -83,16 +79,14 @@ class StoreCalendarValidatorTest {
      *    リクエストのカレンダー詳細がnullのテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test2() {
 
-        // 事前準備
-        List<Oa12060StoreDetailsConverter> list = null;
-
         // 実行値
+        List<Oa12060StoreDetailsConverter> list = null;
         CalendarStoreRequest request = new CalendarStoreRequest() {
             @Override
             public List<Oa12060StoreDetailsConverter> createCalendarList() {
@@ -112,13 +106,13 @@ class StoreCalendarValidatorTest {
      *    リクエストがnullのテスト
      *
      *  ●検証事項
-     *  ・ エラー発生
+     *  ・エラー発生
      */
     @Test
     @Tag(TestSize.SMALL)
     void validate_test3() {
 
-        // 事前準備
+        // 実行値
         CalendarStoreRequest request = null;
 
         assertThatThrownBy(()->

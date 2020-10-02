@@ -436,7 +436,7 @@ class EntryOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test14() {
         // 実行値
-        password = Strings2.repeat("*", 11);
+        password = Strings2.repeat("*", 7);
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -444,8 +444,34 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13003");
-                assertThat(e.getArgs()).containsSequence("パスワード", "10", "以下");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getArgs()).containsSequence("パスワード", "8", "以上", "255", "以下");
+            });
+    }
+
+    /**
+     * {@link EntryOperatorValidator#validate()}テスト
+     *  ●パターン
+     *    桁数チェック  パスワード
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test15() {
+        // 実行値
+        password = Strings2.repeat("*", 256);
+        OperatorEntryRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            EntryOperatorValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getArgs()).containsSequence("パスワード", "8", "以上", "255", "以下");
             });
     }
 
@@ -461,7 +487,7 @@ class EntryOperatorValidatorTest {
     @Disabled
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test15() {
+    void validate_Test16() {
         // 実行値
         operatorCode6 = "123全56";
         OperatorEntryRequest request = createRequest();
@@ -471,7 +497,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）");
             });
     }
@@ -488,7 +514,7 @@ class EntryOperatorValidatorTest {
     @Disabled
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test16() {
+    void validate_Test17() {
         // 実行値
         mailAddress = "te全st@den.jagunma.net";
         OperatorEntryRequest request = createRequest();
@@ -498,7 +524,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
                 assertThat(e.getArgs()).containsSequence("メールアドレス");
             });
     }
@@ -515,7 +541,7 @@ class EntryOperatorValidatorTest {
     @Disabled
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test17() {
+    void validate_Test18() {
         // 実行値
         password = "PaSs全WoRd";
         OperatorEntryRequest request = createRequest();
@@ -525,7 +551,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
                 assertThat(e.getArgs()).containsSequence("パスワード");
             });
     }
@@ -541,7 +567,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test18() {
+    void validate_Test19() {
         // 実行値
         operatorCode6 = "1.3-aB";
         OperatorEntryRequest request = createRequest();
@@ -551,7 +577,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13006");
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）");
             });
     }
@@ -567,7 +593,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test19() {
+    void validate_Test20() {
         // 実行値
         expirationEndDate = LocalDate.of(2020, 8, 31);
         OperatorEntryRequest request = createRequest();
@@ -577,7 +603,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13006");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13007");
                 assertThat(e.getArgs()).containsSequence("有効期限");
             });
     }
@@ -593,7 +619,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test20() {
+    void validate_Test21() {
         confirmPassword = "pAsSwOrD";
         OperatorEntryRequest request = createRequest();
 

@@ -371,7 +371,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
 
         // 結果検証
-        assertThat(operatorEntity).isEqualToComparingFieldByField(expectedEntity);
+        assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -404,7 +404,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorEntryPackForStoreDataSource.insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
 
         // 結果検証
-        assertThat(operatorHistoryHeaderEntity).isEqualToComparingFieldByField(expectedEntity);
+        assertThat(operatorHistoryHeaderEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -435,7 +435,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         OperatorHistoryEntity operatorHistoryEntity = operatorEntryPackForStoreDataSource.insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
 
         // 結果検証
-        assertThat(operatorHistoryEntity).isEqualToComparingFieldByField(expectedEntity);
+        assertThat(operatorHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -469,6 +469,6 @@ class OperatorEntryPackForStoreDataSourceTest {
         PasswordHistoryEntity passwordHistoryEntity = operatorEntryPackForStoreDataSource.insertPasswordHistory(operatorEntryPack, operatorEntity);
 
         // 結果検証
-        assertThat(passwordHistoryEntity).isEqualToComparingFieldByField(expectedEntity);
+        assertThat(passwordHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 }

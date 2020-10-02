@@ -73,7 +73,7 @@ class SearchCalendarTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -99,7 +99,7 @@ class SearchCalendarTest {
                     //assertThat(thisCalendars).isEqualToComparingFieldByField(expectedCalendars);
                     for(int i = 0; i < thisCalendars.getValues().size(); i++) {
                         assertThat(thisCalendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                            .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                            .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
                     }
                 }
             }
@@ -112,7 +112,7 @@ class SearchCalendarTest {
      *    カレンダーの検索結果が0件のテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -135,7 +135,7 @@ class SearchCalendarTest {
                 @Override
                 public void setCalendars(Calendars thisCalendars) {
                     // 結果検証
-                    assertThat(thisCalendars).isEqualToComparingFieldByField(expectedCalendars);
+                    assertThat(thisCalendars).usingRecursiveComparison().isEqualTo(expectedCalendars);
                 }
             }
         );
@@ -147,8 +147,8 @@ class SearchCalendarTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
-     *  ・ CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
+     *  ・正常終了
+     *  ・CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
      */
     @Test
     @Tag(TestSize.SMALL)

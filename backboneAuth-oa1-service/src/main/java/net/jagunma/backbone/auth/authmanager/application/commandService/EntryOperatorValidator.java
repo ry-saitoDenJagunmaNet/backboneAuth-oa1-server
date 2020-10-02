@@ -46,20 +46,20 @@ class EntryOperatorValidator {
         Preconditions.checkSize(0, 255, request.getOperatorName(), () -> new GunmaRuntimeException("EOA13003", "オペレーター名", "255", "以下"));
         Preconditions.checkSize(0, 255, request.getMailAddress(), () -> new GunmaRuntimeException("EOA13003", "メールアドレス", "255", "以下"));
         Preconditions.checkSize(0, 255, request.getChangeCause(), () -> new GunmaRuntimeException("EOA13003", "変更事由", "255", "以下"));
-        Preconditions.checkSize(0, 10, request.getPassword(), () -> new GunmaRuntimeException("EOA13003", "パスワード", "10", "以下"));
+        Preconditions.checkSize(8, 255, request.getPassword(), () -> new GunmaRuntimeException("EOA13004", "パスワード", "8", "以上", "255", "以下"));
 
         // ToDo: 全角混入チェック
-        //  throw new GunmaRuntimeException("EOA13004", "オペレーターコード（下6桁）");
-        //  throw new GunmaRuntimeException("EOA13004", "メールアドレス"); ←どこまでチェックするか？ライブラリ提供あるかも
-        //  throw new GunmaRuntimeException("EOA13004", "パスワード");
+        //  throw new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）");
+        //  throw new GunmaRuntimeException("EOA13005", "メールアドレス"); ←どこまでチェックするか？ライブラリ提供あるかも
+        //  throw new GunmaRuntimeException("EOA13005", "パスワード");
 
         // 数値チェック
         if (!Strings2.isDigit(request.getOperatorCode6())) {
-            throw new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）");
+            throw new GunmaRuntimeException("EOA13006", "オペレーターコード（下6桁）");
         }
 
         // 範囲指定不正チェック 有効期限
-        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13006", "有効期限"));
+        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13007", "有効期限"));
 
         // パスワード不一致チェック
         if (!request.getPassword().equals(request.getConfirmPassword())) {

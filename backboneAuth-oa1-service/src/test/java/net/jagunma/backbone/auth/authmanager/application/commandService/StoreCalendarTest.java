@@ -39,13 +39,13 @@ class StoreCalendarTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void execute_test0() {
 
-        // 事前準備
+        // 実行値
         // 1休日→営業日、2休日→休日（変更なし）、3営業日→休日でupdate
         List<Oa12060StoreDetailsConverter> list = newArrayList();
         list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,true,1));
@@ -64,8 +64,8 @@ class StoreCalendarTest {
             @Override
             public Calendar update(Calendar calendar) {
                 // 結果検証
-                assertThat(calendar).isEqualToComparingFieldByField(
-                    expectedList.stream().filter(c->c.getCalendarId() == calendar.getCalendarId()).findFirst().orElse(null));
+                assertThat(calendar).usingRecursiveComparison()
+                    .isEqualTo(expectedList.stream().filter(c->c.getCalendarId() == calendar.getCalendarId()).findFirst().orElse(null));
                 return calendar;
             }
         }, createCalendarsRepository());
@@ -88,13 +88,13 @@ class StoreCalendarTest {
      *    更新対象なし（変更なし）のテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void execute_test1() {
 
-        // 事前準備
+        // 実行値
         // 1休日、2休日、3営業日（全て変更なし）でupdate
         List<Oa12060StoreDetailsConverter> list = newArrayList();
         list.add(Oa12060StoreDetailsConverter.with(1l, CalendarType.経済システム稼働カレンダー,false,1));
@@ -129,13 +129,13 @@ class StoreCalendarTest {
      *    更新対象なし（0件）のテスト
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void execute_test2() {
 
-        // 事前準備
+        // 実行値
         List<Oa12060StoreDetailsConverter> list = newArrayList();
 
         // テスト対象クラス生成

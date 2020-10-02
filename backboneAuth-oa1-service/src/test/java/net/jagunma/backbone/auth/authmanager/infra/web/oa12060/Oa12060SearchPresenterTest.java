@@ -23,20 +23,20 @@ class Oa12060SearchPresenterTest {
      *    対象月の検索結果がない場合のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 表示対象フィルターチェックボックス値（全て0:off）がvoにセットされること
-     *  ・ 表示対象フィルターチェックボックスdisabled（全てtrue）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・表示対象フィルターチェックボックス値（全て0:off）がvoにセットされること
+     *  ・表示対象フィルターチェックボックスdisabled（全てtrue）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test1() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 9, 1);
         Calendars calendars = Calendars.createFrom(new ArrayList<Calendar>());
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -66,15 +66,11 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage("対象のカレンダーが登録されていません。");
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -83,16 +79,16 @@ class Oa12060SearchPresenterTest {
      *    対象月の検索結果がある場合（2020/03、1日が日曜始り）のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 表示対象フィルターチェックボックス値（全て1:on）がvoにセットされること
-     *  ・ 表示対象フィルターチェックボックスdisabled（全てfalse）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・表示対象フィルターチェックボックス値（全て1:on）がvoにセットされること
+     *  ・表示対象フィルターチェックボックスdisabled（全てfalse）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test2() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 3, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -107,8 +103,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -138,15 +134,11 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -155,16 +147,16 @@ class Oa12060SearchPresenterTest {
      *    対象月の検索結果がある場合（2020/02、末日が土曜終わり）のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 表示対象フィルターチェックボックス値（全て1:on）がvoにセットされること
-     *  ・ 表示対象フィルターチェックボックスdisabled（全てfalse）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・表示対象フィルターチェックボックス値（全て1:on）がvoにセットされること
+     *  ・表示対象フィルターチェックボックスdisabled（全てfalse）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test3() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 2, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -179,8 +171,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -211,15 +203,11 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -228,18 +216,18 @@ class Oa12060SearchPresenterTest {
      *    経済システム稼働カレンダーが対象月の日数分揃っていない場合のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 経済システム稼働カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
-     *  ・ 経済システム稼働カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
-     *  ・ 経済システム稼働カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
-     *  ・ 経済システム稼働カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・経済システム稼働カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
+     *  ・経済システム稼働カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
+     *  ・経済システム稼働カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
+     *  ・経済システム稼働カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test4() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -254,8 +242,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -285,17 +273,13 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -304,18 +288,18 @@ class Oa12060SearchPresenterTest {
      *    信用カレンダーが対象月の日数分揃っていない場合のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 信用カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
-     *  ・ 信用カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
-     *  ・ 信用カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
-     *  ・ 信用カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・信用カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
+     *  ・信用カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
+     *  ・信用カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
+     *  ・信用カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test5() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -330,8 +314,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -361,17 +345,13 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -380,18 +360,18 @@ class Oa12060SearchPresenterTest {
      *    広域物流カレンダーが対象月の日数分揃っていない場合のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 広域物流カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
-     *  ・ 広域物流カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
-     *  ・ 広域物流カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
-     *  ・ 広域物流カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・広域物流カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
+     *  ・広域物流カレンダー以外のフィルターチェックボックス値（1:on）がvoにセットされること
+     *  ・広域物流カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
+     *  ・広域物流カレンダー以外のフィルターチェックボックスdisabled（全てfalse）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test6() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -406,8 +386,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -437,17 +417,13 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -456,18 +432,18 @@ class Oa12060SearchPresenterTest {
      *    経済システム稼働カレンダーと信用カレンダーが対象月の日数分揃っていない場合のテスト
      *
      *  ●検証事項
-     *  ・ Voへのセット
-     *  ・ 経済システム稼働カレンダー、信用カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
-     *  ・ 広域物流カレンダーのフィルターチェックボックス値（1:on）がvoにセットされること
-     *  ・ 経済システム稼働カレンダー、信用カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
-     *  ・ 広域物流カレンダーのフィルターチェックボックスdisabled（false）がvoにセットされること
-     *  ・ 検索結果で生成されるHTMLがvoに正常にセットされること
+     *  ・Voへのセット
+     *  ・経済システム稼働カレンダー、信用カレンダーフィルターチェックボックス値（0:off）がvoにセットされること
+     *  ・広域物流カレンダーのフィルターチェックボックス値（1:on）がvoにセットされること
+     *  ・経済システム稼働カレンダー、信用カレンダーのフィルターチェックボックスのdisabled（true）がvoにセットされること
+     *  ・広域物流カレンダーのフィルターチェックボックスdisabled（false）がvoにセットされること
+     *  ・検索結果で生成されるHTMLがvoに正常にセットされること
      */
     @Test
     @Tag(TestSize.SMALL)
     void bindTo_test7() {
 
-        // 事前準備
+        // 実行値
         LocalDate yearMonth = LocalDate.of(2020, 6, 1);
         LocalDate ym = LocalDates.getLastDate(yearMonth);
         List<Calendar> calendaerList = newArrayList();
@@ -482,8 +458,8 @@ class Oa12060SearchPresenterTest {
             isHoliday = false;
         }
         Calendars calendars = Calendars.createFrom(calendaerList);
-
-        // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
+        vo.setYearMonth(yearMonth);
         Oa12060SearchPresenter presenter = new Oa12060SearchPresenter();
         presenter.setYearMonth(yearMonth);
         presenter.setCalendars(calendars);
@@ -513,16 +489,12 @@ class Oa12060SearchPresenterTest {
         expectedVo.setCalendarList(null);
         expectedVo.setMessage(null);
 
-        // 検証対象
-        Oa12060Vo vo = new Oa12060Vo();
-        vo.setYearMonth(yearMonth);
-
         // 実行
         presenter.bindTo(vo);
 
         // 結果検証
 //        vo.setCalendarTable(null);
 //        expectedVo.setCalendarTable(null);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 }

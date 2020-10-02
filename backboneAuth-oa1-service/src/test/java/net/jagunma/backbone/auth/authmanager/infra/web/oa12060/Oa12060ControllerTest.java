@@ -89,8 +89,11 @@ class Oa12060ControllerTest {
         // カレンダー検索サービスのスタブ
         SearchCalendar searchCalendar = new SearchCalendar(calendarsRepository) {
             public void execute(CalendarSearchRequest request, CalendarSearchResponse response) {
-                //yearMonthString==nullならRuntimeException
-                //yearMonthString==EmptyならGunmaRuntimeExceptioが発生
+                // yearMonthString = null の場合：RuntimeException を発生させる
+                if (yearMonthString == null) {
+                    throw new RuntimeException();
+                }
+                // yearMonthString.length() = 0 の場合：GunmaRuntimeException を発生させる
                 if (yearMonthString.length() == 0) {
                     Preconditions.checkNotEmpty(yearMonthString, () -> new GunmaRuntimeException(GunmaRuntimeExceptionMessageCode, GunmaRuntimeExceptionMessageArg));
                 }
@@ -115,8 +118,11 @@ class Oa12060ControllerTest {
         // カレンダー適用サービスのスタブ
         StoreCalendar storeCalendar = new StoreCalendar(calendarRepositoryForStore, calendarRepository) {
             public int execute(CalendarStoreRequest request) {
-                //yearMonthString==nullならRuntimeException
-                //yearMonthString==EmptyならGunmaRuntimeExceptioが発生
+                // yearMonthString = null の場合：RuntimeException を発生させる
+                if (yearMonthString == null) {
+                    throw new RuntimeException();
+                }
+                // yearMonthString.length() = 0 の場合：GunmaRuntimeException を発生させる
                 if (yearMonthString.length() == 0) {
                     Preconditions.checkNotEmpty(yearMonthString, () -> new GunmaRuntimeException(GunmaRuntimeExceptionMessageCode, GunmaRuntimeExceptionMessageArg));
                 }
@@ -178,8 +184,8 @@ class Oa12060ControllerTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ Voへのセット
+     *  ・戻り値
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -194,13 +200,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.get(model);
-
-        // 検証対象
         Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -220,7 +224,7 @@ class Oa12060ControllerTest {
     /**
      * {@link Oa12060Controller#get(Model)}のテスト
      *  ●パターン
-     *    例外（RuntimeException ）発生
+     *    例外（RuntimeException）発生
      *
      *  ●検証事項
      */
@@ -237,8 +241,8 @@ class Oa12060ControllerTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ Voへのセット
+     *  ・戻り値
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -253,13 +257,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-
-        // 検証対象
         Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -268,14 +270,14 @@ class Oa12060ControllerTest {
      *    例外（GunmaRuntimeException）発生
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ エラーメッセージのセット
+     *  ・戻り値
+     *  ・エラーメッセージのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void search_test1() {
 
-        // 事前準備
+        // 実行値
         String ymEmpty = "";
 
         // テスト対象クラス生成
@@ -286,8 +288,6 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-
-        // 検証対象
         Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
@@ -302,14 +302,14 @@ class Oa12060ControllerTest {
      *    例外（RuntimeException）発生
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ エラーメッセージのセット
+     *  ・戻り値
+     *  ・エラーメッセージのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void search_test2() {
 
-        // 事前準備
+        // 実行値
         String ymNull = null;
 
         // テスト対象クラス生成
@@ -321,8 +321,6 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-
-        // 検証対象
         Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
@@ -336,17 +334,15 @@ class Oa12060ControllerTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ Voへのセット
+     *  ・戻り値
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void store_test0() {
 
-        // 事前準備
-        Oa12060Vo vo = new Oa12060Vo();
-
         // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonthToString(ym);
         vo.setCalendarTypeFilterCheck1(Short.parseShort(ct1));
         vo.setCalendarTypeFilterCheck2(Short.parseShort(ct2));
@@ -367,13 +363,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.store(model, vo);
-
-        // 検証対象
         Oa12060Vo oa12060Vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -383,17 +377,15 @@ class Oa12060ControllerTest {
      *    (表示対象フラグがNullの場合）
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ Voへのセット
+     *  ・戻り値
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void store_test1() {
 
-        // 事前準備
-        Oa12060Vo vo = new Oa12060Vo();
-
         // 実行値
+        Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonthToString(ym);
         vo.setWorkingdayOrHolidaySelect("");
         List<Oa12060CalendarVo> calendarList = newArrayList();
@@ -411,29 +403,27 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.store(model, vo);
-
-        // 検証対象
         Oa12060Vo oa12060Vo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).isEqualToComparingFieldByField(expectedVo);
+        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
      * {@link Oa12060Controller#store(Model, Oa12060Vo )}のテスト
      *  ●パターン
-     *    例外（OptimisticLockingFailureException ）発生
+     *    例外（OptimisticLockingFailureException）発生
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ エラーメッセージのセット
+     *  ・戻り値
+     *  ・エラーメッセージのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void store_test2() {
 
-        // 事前準備
+        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         Boolean isOptimisticLockingFailureException = true;
 
@@ -458,14 +448,14 @@ class Oa12060ControllerTest {
      *    例外（GunmaRuntimeException）発生
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ エラーメッセージのセット
+     *  ・戻り値
+     *  ・エラーメッセージのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void store_test3() {
 
-        // 事前準備
+        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         String ymEmpty = "";
 
@@ -490,14 +480,14 @@ class Oa12060ControllerTest {
      *    例外（RuntimeException）発生
      *
      *  ●検証事項
-     *  ・ 戻り値
-     *  ・ エラーメッセージのセット
+     *  ・戻り値
+     *  ・エラーメッセージのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void store_test4() {
 
-        // 事前準備
+        // 実行値
         Oa12060Vo vo = new Oa12060Vo();
         String ymNull = null;
 

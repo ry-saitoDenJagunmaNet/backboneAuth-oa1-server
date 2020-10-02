@@ -121,16 +121,14 @@ class CalendarsDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void selectBy_test0() {
 
-        // 事前準備
-        LocalDate criteriaDate = ymd;
-
         // 実行値
+        LocalDate criteriaDate = ymd;
         CalendarCriteria calendarCriteria = new CalendarCriteria();
         calendarCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(criteriaDate));
         calendarCriteria.getDateCriteria().setTo(LocalDates.getLastDate(criteriaDate));
@@ -159,7 +157,7 @@ class CalendarsDataSourceTest {
         // 結果検証
         for(int i = 0; i < calendars.getValues().size(); i++) {
             assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
         }
     }
 
@@ -169,16 +167,14 @@ class CalendarsDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・ 正常終了
+     *  ・正常終了
      */
     @Test
     @Tag(TestSize.SMALL)
     void selectBy_test1() {
 
-        // 事前準備
-        LocalDate criteriaDate = ymd;
-
         // 実行値
+        LocalDate criteriaDate = ymd;
         CalendarsDataSource calendarsDataSource = new CalendarsDataSource(createCalendarEntityDao());
 
         // 期待値
@@ -202,7 +198,7 @@ class CalendarsDataSourceTest {
         // 結果検証
         for(int i = 0; i < calendars.getValues().size(); i++) {
             assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .isEqualToComparingFieldByField(expectedCalendars.getValues().get(i));
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
         }
     }
 }
