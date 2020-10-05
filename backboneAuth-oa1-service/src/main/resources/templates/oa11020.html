@@ -44,12 +44,11 @@
 			<div class="row oa_required">
 				<div class="col s6">
 					<div class="input-field">
-						<select id="branch" name="branchId" class="validate"
-								th:value="${form.branchId}">
+						<select id="branch" name="branchId" class="validate" th:value="${form.branchId}">
 							<option th:each="item : ${form.branchItemsSource}"
-									th:value="${item.code}"
+									th:value="${item.id}"
 									th:text="${item.name}"
-									th:selected="${form.branchId == item.id}"></option>
+									th:selected="${item.id == form.branchId}"></option>
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>

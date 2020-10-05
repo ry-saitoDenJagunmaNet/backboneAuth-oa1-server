@@ -41,7 +41,7 @@
 			<div class="row">
 				<div class="col s6 offset-s3">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
+						<input type="text" id="ja" name="ja" readonly="readonly" th:value="${form.ja}" value="006 JA前橋"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 			<div class="row">
 				<div class="col s6 offset-s3">
 					<div class="input-field">
-						<input type="text" id="operator" readonly="readonly" value="OP006027 前橋小太郎" th:value="${form.operator}"></input>
+						<input type="text" id="operator" name="operator" readonly="readonly" th:value="${form.operator}" value="OP006027 前橋小太郎"></input>
 						<label for="operator">オペレーター</label>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 			<div class="row" id="password_old_row">
 				<div class="col s6 offset-s3">
 					<div class="input-field">
-						<input type="password" id="password_old" class="validate" th:value="${form.oldPassword}"></input>
+						<input type="password" id="password_old" name="oldPassword" class="validate" th:value="${form.oldPassword}"></input>
 						<label for="password_old">古いパスワード</label>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 			<div class="row">
 				<div class="col s6 offset-s3">
 					<div class="input-field">
-						<input type="password" id="password_new" class="validate" th:value="${form.newPassword}"></input>
+						<input type="password" id="password_new" name="newPassword" class="validate" th:value="${form.newPassword}"></input>
 						<label for="password_new" id="password_new_label">パスワード</label>
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 			<div class="row">
 				<div class="col s6 offset-s3">
 					<div class="input-field">
-						<input type="password" id="password_confirm" class="validate" th:value="${form.confirmPassword}"></input>
+						<input type="password" id="password_confirm" name="confirmPassword" class="validate" th:value="${form.confirmPassword}"></input>
 						<label for="password_confirm">パスワードの確認入力</label>
 					</div>
 				</div>

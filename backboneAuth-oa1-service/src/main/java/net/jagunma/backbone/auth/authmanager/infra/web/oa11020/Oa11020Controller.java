@@ -164,13 +164,19 @@ public class Oa11020Controller extends BaseOfController {
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
-            vo.setExceptionMessage(gre);
-            model.addAttribute("form", vo);
-            return "oa11020";
+            if (gre.getSimpleMessage().contains("パスワード")) {
+                vo.setExceptionMessage(gre);
+                model.addAttribute("form", vo);
+                return "ed01010";
+            } else {
+                session_vo.setExceptionMessage(gre);
+                model.addAttribute("form", session_vo);
+                return "oa11020";
+            }
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
-            vo.setExceptionMessage(re);
-            model.addAttribute("form", vo);
+            session_vo.setExceptionMessage(re);
+            model.addAttribute("form", session_vo);
             return "oa19999";
         }
     }

@@ -133,8 +133,12 @@ class Oa11020ControllerTest {
                 if(request.getBranchId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
                 }
-                // request.getBranchId() = 12 の場合：RuntimeException を発生させる
+                // request.getBranchId() = 12 の場合：GunmaRuntimeException を発生させる
                 if(request.getBranchId().equals(12L)) {
+                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
+                }
+                // request.getBranchId() = 13 の場合：RuntimeException を発生させる
+                if(request.getBranchId().equals(13L)) {
                     throw new RuntimeException();
                 }
             }
@@ -430,6 +434,43 @@ class Oa11020ControllerTest {
 
         // 実行
         String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
+        Oa11020Vo actualVo = (Oa11020Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+        assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(expectedMessageArgs0);
+    }
+
+    /**
+     * {@link Oa11020Controller#save(Oa11020Vo, Model, Ed01010Vo)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void save_test2() {
+        // テスト対象クラス生成
+        Oa11020Controller oa11020Controller = createOa11020Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        branchId = 12L;
+        Oa11020Vo oa11020Vo = createOa11020Vo();
+        Ed01010Vo ed01010Vo = new Ed01010Vo();
+
+        // 期待値
+        String expectedViewName = "ed01010";
+        String expectedMessageCode = "EOA13002";
+        String expectedMessageArgs0 = "パスワード";
+
+        // 実行
+        String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証
@@ -450,13 +491,13 @@ class Oa11020ControllerTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void save_test2() {
+    void save_test3() {
         // テスト対象クラス生成
         Oa11020Controller oa11020Controller = createOa11020Controller();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        branchId = 12L;
+        branchId = 13L;
         Oa11020Vo oa11020Vo = createOa11020Vo();
         Ed01010Vo ed01010Vo = new Ed01010Vo();
 
@@ -466,7 +507,7 @@ class Oa11020ControllerTest {
 
         // 実行
         String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
-        Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
+        Oa11020Vo actualVo = (Oa11020Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
