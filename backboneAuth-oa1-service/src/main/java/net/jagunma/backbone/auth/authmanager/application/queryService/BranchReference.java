@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
@@ -50,8 +51,15 @@ public class BranchReference {
         return branchAtMomentSelectBy(criteria);
     }
 
+    // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
     public BranchesAtMoment branchAtMomentSelectBy(BranchAtMomentCriteria branchAtMomentCriteria) {
         //BranchesAtMoment branchesAtMoment = BranchesAtMoment();
+
+        if (branchAtMomentCriteria == null ||
+            branchAtMomentCriteria.getJaIdentifierCriteria() == null ||
+            branchAtMomentCriteria.getJaIdentifierCriteria().getEqualTo() == null) {
+            return BranchesAtMoment.of(new ArrayList<BranchAtMoment>());
+        }
 
         Long jaId = branchAtMomentCriteria.getJaIdentifierCriteria().getEqualTo();
         String jaCode = Strings2.padEnd(jaId.toString(), 3, '0');
@@ -82,7 +90,7 @@ public class BranchReference {
         return BranchesAtMoment.of(list);
     }
 
-    public static JaAtMoment createJaAtMoment(Long jaId, String jaCode, String jaName) {
+    private static JaAtMoment createJaAtMoment(Long jaId, String jaCode, String jaName) {
         return JaAtMoment.builder()
             .withIdentifier(jaId)
             .withJaAttribute(JaAttribute

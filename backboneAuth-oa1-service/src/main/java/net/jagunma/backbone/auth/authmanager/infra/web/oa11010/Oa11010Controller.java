@@ -76,7 +76,7 @@ public class Oa11010Controller extends BaseOfController {
      * @return view名
      */
     @GetMapping(path = "/get")
-    private String get(Model model) {
+    public String get(Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
 

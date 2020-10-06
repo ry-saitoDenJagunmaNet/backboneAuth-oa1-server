@@ -349,7 +349,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
         if (pageNo == 1) {
             html.append("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>");
         } else {
-            html.append(String.format("<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(%d);\">&lt;</a></li>", maxPageNo-1));
+            html.append(String.format("<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(%d);\">&lt;</a></li>", pageNo-1));
         }
         for (int i = 1; i <= maxPageNo; i++) {
             if (pageNo == i) {
@@ -372,8 +372,9 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
      * @return 該当ページのオペレーター一覧
      */
     private List<Operator> getOperatorPageList() {
+        if (operators.getValues().size() == 0) { return newArrayList(); }
         int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
-        return operators.getValues().stream().skip(skip).limit(10).collect(Collectors.toList());
+        return operators.getValues().stream().skip(skip).limit(PAGE_SIZE).collect(Collectors.toList());
     }
 
     /**

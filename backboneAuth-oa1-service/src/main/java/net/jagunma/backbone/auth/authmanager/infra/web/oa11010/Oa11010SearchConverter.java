@@ -150,7 +150,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
     public List<Oa11010SearchSubSystemRoleConverter> getSubSystemRoleList() {
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
         for (Oa11010SubSystemRoleVo subSystemRoleVo : vo.getSubSystemRoleList()) {
-            list.add(new Oa11010SearchSubSystemRoleConverter(
+            list.add(Oa11010SearchSubSystemRoleConverter.with(
                 subSystemRoleVo.getSubSystemRoleSelected(),
                 subSystemRoleVo.getSubSystemRoleCode(),
                 subSystemRoleVo.getSubSystemRoleName(),
@@ -187,7 +187,7 @@ class Oa11010SearchConverter implements OperatorSearchRequest {
     public List<Oa11010SearchBizTranRoleConverter> getBizTranRoleList() {
         List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
         for (Oa11010BizTranRoleVo bizTranRoleVo : vo.getBizTranRoleList()) {
-            list.add(new Oa11010SearchBizTranRoleConverter(
+            list.add(Oa11010SearchBizTranRoleConverter.with(
                 bizTranRoleVo.getBizTranRoleSelected(),
                 bizTranRoleVo.getBizTranRoleId(),
                 bizTranRoleVo.getBizTranRoleCode(),

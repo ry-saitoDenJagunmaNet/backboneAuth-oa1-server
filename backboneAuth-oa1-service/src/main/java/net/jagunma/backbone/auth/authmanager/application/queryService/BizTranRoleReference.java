@@ -14,7 +14,7 @@ public class BizTranRoleReference {
     private final BizTranRolesRepository bizTranRolesRepository;
 
     // コンストラクタ
-    BizTranRoleReference(BizTranRolesRepository bizTranRolesRepository) {
+    public BizTranRoleReference(BizTranRolesRepository bizTranRolesRepository) {
         this.bizTranRolesRepository = bizTranRolesRepository;
     }
 
