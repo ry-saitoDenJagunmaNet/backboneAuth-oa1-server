@@ -3,8 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.ArrayList;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -13,6 +14,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
+import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
@@ -24,31 +27,35 @@ import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityDao;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
+import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntity;
+import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.util.beans.Beans;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Component;
 
 /**
- * オペレーターアップデートパック格納
+ * オペレーター格納
  */
 @Component
-public class OperatorUpdatePackForStoreDataSource implements
-    OperatorUpdatePackRepositoryForStore {
+public class OperatorForStoreDataSource implements
+    OperatorRepositoryForStore {
 
     private final OperatorEntityDao operatorEntityDao;
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
     private final OperatorHistoryEntityDao operatorHistoryEntityDao;
+    private final PasswordHistoryEntityDao passwordHistoryEntityDao;
     private final Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao;
     private final Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao;
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
 
     // コンストラクタ
-    public OperatorUpdatePackForStoreDataSource(
+    public OperatorForStoreDataSource(
         OperatorEntityDao operatorEntityDao,
         OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
         OperatorHistoryEntityDao operatorHistoryEntityDao,
+        PasswordHistoryEntityDao passwordHistoryEntityDao,
         Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao,
         Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
@@ -57,6 +64,7 @@ public class OperatorUpdatePackForStoreDataSource implements
         this.operatorEntityDao = operatorEntityDao;
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
         this.operatorHistoryEntityDao = operatorHistoryEntityDao;
+        this.passwordHistoryEntityDao = passwordHistoryEntityDao;
         this.operator_SubSystemRoleHistoryEntityDao = operator_SubSystemRoleHistoryEntityDao;
         this.operator_BizTranRoleHistoryEntityDao = operator_BizTranRoleHistoryEntityDao;
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
@@ -64,7 +72,30 @@ public class OperatorUpdatePackForStoreDataSource implements
     }
 
     /**
-     * オペレーターアップデートパックの更新を行います。
+     * オペレーターの登録を行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     */
+    public void entry(OperatorEntryPack operatorEntryPack) {
+
+        // オペレーター（コード）がすでに存在しているかのチェックを行います
+        checkAlreadyExists(operatorEntryPack.getOperatorCode());
+
+        // オペレーターのインサートを行います
+        OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
+
+        // オペレーター履歴ヘッダーのインサートを行います
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());;
+
+        // オペレーター履歴のインサートを行います
+        insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
+
+        // パスワード履歴のインサートを行います
+        insertPasswordHistory(operatorEntryPack, operatorEntity);
+    }
+
+    /**
+     * オペレーターの更新を行います。
      *
      * @param operatorUpdatePack オペレーターアップデートパック
      */
@@ -77,7 +108,7 @@ public class OperatorUpdatePackForStoreDataSource implements
         OperatorEntity operatorEntity = updateOperator(operatorUpdatePack);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorUpdatePack, operatorEntity);
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorUpdatePack.getChangeCause());;
 
         // オペレーター履歴のインサートを行います
         insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
@@ -89,6 +120,20 @@ public class OperatorUpdatePackForStoreDataSource implements
         insertOperator_BizTranRoleHistory(operatorHistoryHeaderEntity);
     }
 
+    /**
+     * オペレーター（コード）がすでに存在しているかのチェックを行います。
+     *
+     * @param operatorCode オペレーターコード
+     */
+    void checkAlreadyExists(String operatorCode) {
+        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+
+        operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
+
+        if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
+            throw new GunmaRuntimeException("EOA11001", "オペレーターコード", operatorCode);
+        }
+    }
     /**
      * オペレーターが存在しているかのチェックを行います。
      *
@@ -105,9 +150,34 @@ public class OperatorUpdatePackForStoreDataSource implements
     }
 
     /**
+     * オペレーターのインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     * @return オペレーターエンティティ
+     */
+    OperatorEntity insertOperator(OperatorEntryPack operatorEntryPack) {
+        OperatorEntity operatorEntity = new OperatorEntity();
+
+        operatorEntity.setOperatorCode(operatorEntryPack.getOperatorCode());
+        operatorEntity.setOperatorName(operatorEntryPack.getOperatorName());
+        operatorEntity.setMailAddress(operatorEntryPack.getMailAddress());
+        operatorEntity.setExpirationStartDate(operatorEntryPack.getExpirationStartDate());
+        operatorEntity.setExpirationEndDate(operatorEntryPack.getExpirationEndDate());
+        operatorEntity.setIsDeviceAuth(false);
+        operatorEntity.setJaId(operatorEntryPack.getJaId());
+        operatorEntity.setJaCode(operatorEntryPack.getJaCode());
+        operatorEntity.setBranchId(operatorEntryPack.getBranchId());
+        operatorEntity.setBranchCode(operatorEntryPack.getBranchCode());
+        operatorEntity.setAvailableStatus(AvailableStatus.利用可能.getCode());
+
+        operatorEntityDao.insert(operatorEntity);
+
+        return operatorEntity;
+    }
+    /**
      * オペレーターのアップデートを行います。
      *
-     * @param operatorUpdatePack オペレーターエントリーパック
+     * @param operatorUpdatePack オペレーターアップデートパック
      * @return オペレーターエンティティ
      */
     OperatorEntity updateOperator(OperatorUpdatePack operatorUpdatePack) {
@@ -131,16 +201,16 @@ public class OperatorUpdatePackForStoreDataSource implements
     /**
      * オペレーター履歴ヘッダーのインサートを行います。
      *
-     * @param operatorUpdatePack オペレーターアップデートパック
      * @param operatorEntity オペレーターエンティティ
+     * @param changeCause 変更事由
      * @return オペレーター履歴ヘッダーエンティティ
      */
-    OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorUpdatePack operatorUpdatePack, OperatorEntity operatorEntity) {
+    OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntity operatorEntity, String changeCause) {
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = new OperatorHistoryHeaderEntity();
 
         operatorHistoryHeaderEntity.setOperatorId(operatorEntity.getOperatorId());
         operatorHistoryHeaderEntity.setChangeDateTime(operatorEntity.getCreatedAt());
-        operatorHistoryHeaderEntity.setChangeCause(operatorUpdatePack.getChangeCause());
+        operatorHistoryHeaderEntity.setChangeCause(changeCause);
 
         operatorHistoryHeaderEntityDao.insert(operatorHistoryHeaderEntity);
 
@@ -163,6 +233,26 @@ public class OperatorUpdatePackForStoreDataSource implements
         operatorHistoryEntityDao.insert(operatorHistoryEntity);
 
         return operatorHistoryEntity;
+    }
+
+    /**
+     * パスワード履歴のインサートを行います。
+     *
+     * @param operatorEntryPack オペレーターエントリーパック
+     * @param operatorEntity オペレーターエンティティ
+     * @return パスワード履歴エンティティ
+     */
+    PasswordHistoryEntity insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+        PasswordHistoryEntity passwordHistoryEntity = new PasswordHistoryEntity();
+
+        passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
+        passwordHistoryEntity.setChangeDateTime(operatorEntity.getCreatedAt());
+        passwordHistoryEntity.setPassword(operatorEntryPack.getPassword());
+        passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
+
+        passwordHistoryEntityDao.insert(passwordHistoryEntity);
+
+        return passwordHistoryEntity;
     }
 
     /**
