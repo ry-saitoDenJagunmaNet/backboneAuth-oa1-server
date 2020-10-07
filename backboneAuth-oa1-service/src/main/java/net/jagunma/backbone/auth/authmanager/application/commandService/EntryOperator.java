@@ -53,8 +53,8 @@ public class EntryOperator {
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
             branchAtMoment.getBranchAttribute().getBranchCode().getValue());
 
-        // オペレーターエントリーパックのインサートを行います
-        operatorEntryPackRepositoryForStore.insert(operatorEntryPack);
+        // オペレーターエントリーパックの登録を行います
+        operatorEntryPackRepositoryForStore.entry(operatorEntryPack);
     }
 
     /**

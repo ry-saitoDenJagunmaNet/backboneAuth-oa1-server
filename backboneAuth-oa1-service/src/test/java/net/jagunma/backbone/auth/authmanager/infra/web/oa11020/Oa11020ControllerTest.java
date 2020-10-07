@@ -107,7 +107,7 @@ class Oa11020ControllerTest {
         };
         OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
             @Override
-            public void insert(OperatorEntryPack operatorEntryPack) {
+            public void entry(OperatorEntryPack operatorEntryPack) {
 
             }
         };

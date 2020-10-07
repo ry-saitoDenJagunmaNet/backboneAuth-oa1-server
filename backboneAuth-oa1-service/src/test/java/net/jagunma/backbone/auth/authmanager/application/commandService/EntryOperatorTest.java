@@ -84,7 +84,7 @@ class EntryOperatorTest {
     private EntryOperator createEntryOperator() {
         OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
             @Override
-            public void insert(OperatorEntryPack operatorEntryPack) {
+            public void entry(OperatorEntryPack operatorEntryPack) {
 
             }
         };

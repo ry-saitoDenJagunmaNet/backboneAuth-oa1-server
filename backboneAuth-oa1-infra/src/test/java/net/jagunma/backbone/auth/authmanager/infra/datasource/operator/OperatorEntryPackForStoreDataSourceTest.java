@@ -281,7 +281,7 @@ class OperatorEntryPackForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#insert(OperatorEntryPack)}テスト
+     * {@link OperatorEntryPackForStoreDataSource#entry(OperatorEntryPack)}テスト
      *  ●パターン
      *    正常
      *
@@ -300,7 +300,7 @@ class OperatorEntryPackForStoreDataSourceTest {
 
         assertThatCode(() ->
             // 実行
-            operatorEntryPackForStoreDataSource.insert(operatorEntryPack))
+            operatorEntryPackForStoreDataSource.entry(operatorEntryPack))
             .doesNotThrowAnyException();
     }
 

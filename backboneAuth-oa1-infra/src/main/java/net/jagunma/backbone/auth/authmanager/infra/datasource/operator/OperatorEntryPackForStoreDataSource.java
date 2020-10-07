@@ -18,7 +18,7 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Component;
 
 /**
- * オペレーターエントリーパック登録
+ * オペレーターエントリーパック格納
  */
 @Component
 public class OperatorEntryPackForStoreDataSource implements
@@ -43,11 +43,11 @@ public class OperatorEntryPackForStoreDataSource implements
     }
 
     /**
-     * オペレーターエントリーパックのインサートを行います。
+     * オペレーターエントリーパックの登録を行います。
      *
      * @param operatorEntryPack オペレーターエントリーパック
      */
-    public void insert(OperatorEntryPack operatorEntryPack) {
+    public void entry(OperatorEntryPack operatorEntryPack) {
 
         // オペレーター（コード）がすでに存在しているかのチェックを行います
         checkAlreadyExists(operatorEntryPack.getOperatorCode());
