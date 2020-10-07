@@ -5,9 +5,11 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRole.BizTranRolesDataSource;
+import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -25,13 +27,16 @@ import org.springframework.stereotype.Component;
 public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRepository {
 
     private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
+    private final OperatorsDataSource operatorsDataSource;
     private final BizTranRolesDataSource bizTranRolesDataSource;
 
     // コンストラクタ
     Operator_BizTranRolesDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
+        OperatorsDataSource operatorsDataSource,
         BizTranRolesDataSource bizTranRolesDataSource) {
 
         this.operator_BizTranRoleEntityDao = operator_BizTranRoleEntityDao;
+        this.operatorsDataSource = operatorsDataSource;
         this.bizTranRolesDataSource = bizTranRolesDataSource;
     }
 
@@ -43,6 +48,11 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
      * @return 取引ロール群
      */
     public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
+
+        // オペレーターリストの検索
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
+        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
+        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター_取引ロール割当検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
@@ -66,6 +76,8 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
                 entity.getBizTranRoleId(),
                 entity.getExpirationStartDate(),
                 entity.getExpirationEndDate(),
+                operators.getValues().stream().filter(o->
+                    o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
                 bizTranRoles.getValues().stream().filter(o->
                     o.getBizTranRoleId().equals(entity.getBizTranRoleId())).findFirst().orElse(null)
             ));

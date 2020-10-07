@@ -107,7 +107,6 @@ public class SearchOperator {
 
         // ページ
         response.setPageNo(request.getPageNo());
-        System.out.println("### PageNo="+request.getPageNo());
 
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
@@ -204,6 +203,9 @@ public class SearchOperator {
      */
     boolean conditionsOperatorSubSystemRole(OperatorSearchRequest request, List<Operator_SubSystemRole> operatorSubSystemRoleList) {
 
+        if (request.getSubSystemRoleList() == null) { return true; }
+        if (request.getSubSystemRoleConditionsSelect() == null) { return true; }
+
         // 選択チェックしたサブシステムロールを検索条件にする
         List<OparatorSearchSubSystemRoleRequest> subSystemRoleRequestList =
             request.getSubSystemRoleList().stream().filter(reqossr->
@@ -250,23 +252,22 @@ public class SearchOperator {
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode())).count() != 0;
         } else if (subSystemRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+            if (subSystemRoleRequest.getExpirationStatusDate() == null) { return true; }
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
+                    o.getExpirationStartDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) <= 0 &&
+                    o.getExpirationEndDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
         } else if (subSystemRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+            LocalDate expirationStartDateFrom = subSystemRoleRequest.getExpirationStartDateFrom()==null? LocalDate.of(0001,1,1) : subSystemRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = subSystemRoleRequest.getExpirationStartDateTo()==null? LocalDate.of(9999,12,31) : subSystemRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = subSystemRoleRequest.getExpirationEndDateFrom()==null? LocalDate.of(0001,1,1) : subSystemRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = subSystemRoleRequest.getExpirationEndDateTo()==null? LocalDate.of(9999,12,31) : subSystemRoleRequest.getExpirationEndDateTo();
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    (o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStartDateFrom()) >= 0) &&
-                    o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStartDateTo()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationEndDateFrom()) >= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationEndDateTo()) <= 0).count() != 0;
+                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
+                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
+                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
+                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
@@ -280,6 +281,9 @@ public class SearchOperator {
      * @return true:検索対象、false:検索対象外
      */
     boolean conditionsOperatorBizTranRole(OperatorSearchRequest request, List<Operator_BizTranRole> operatorBizTranRoleList) {
+
+        if (request.getBizTranRoleList() == null) { return true; }
+        if (request.getBizTranRoleConditionsSelect() == null) { return true; }
 
         // 選択チェックした取引ロールを検索条件にする
         List<OparatorSearchBizTranRoleRequest> bizTranRoleRequestList =
@@ -323,27 +327,28 @@ public class SearchOperator {
     boolean conditionsOperatorBizTranRoleRow(List<Operator_BizTranRole> operatorBizTranRoleList,
         OparatorSearchBizTranRoleRequest bizTranRoleRequest){
 
+        if (bizTranRoleRequest.getExpirationSelect() == null) { return true; }
+
         if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.指定なし.getCode())) {
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId())).count() != 0;
         } else if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+            if (bizTranRoleRequest.getExpirationStatusDate() == null) { return true; }
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
+                    o.getExpirationStartDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) <= 0 &&
+                    o.getExpirationEndDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
         } else if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+            LocalDate expirationStartDateFrom = bizTranRoleRequest.getExpirationStartDateFrom()==null? LocalDate.of(0001,1,1) : bizTranRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = bizTranRoleRequest.getExpirationStartDateTo()==null? LocalDate.of(9999,12,31) : bizTranRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = bizTranRoleRequest.getExpirationEndDateFrom()==null? LocalDate.of(0001,1,1) : bizTranRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = bizTranRoleRequest.getExpirationEndDateTo()==null? LocalDate.of(9999,12,31) : bizTranRoleRequest.getExpirationEndDateTo();
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    (o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStartDateFrom()) >= 0) &&
-                    o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStartDateTo()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationEndDateFrom()) >= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationEndDateTo()) <= 0).count() != 0;
+                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
+                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
+                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
+                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
@@ -565,17 +570,20 @@ public class SearchOperator {
             criteria.getMailAddressCriteria().setForwardMatch(request.getMailAddress());
         }
         // 利用可否状態
-        criteria.getAvailableStatusCriteria().getIncludes()
-            .addAll(request.getAvailableStatusIncludesList());
+        if (request.getAvailableStatusIncludesList() != null) {
+            criteria.getAvailableStatusCriteria().getIncludes().addAll(request.getAvailableStatusIncludesList());
+        }
         // OPTION検索条件 有効期限
-        if (request.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
-            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStatusDate());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationStatusDate());
-        } else if (request.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
-            criteria.getExpirationStartDateCriteria().setMoreOrEqual(request.getExpirationStartDateFrom());
-            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStartDateTo());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationEndDateFrom());
-            criteria.getExpirationEndDateCriteria().setLessOrEqual(request.getExpirationEndDateTo());
+        if (request.getExpirationSelect() != null) {
+            if (request.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+                criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStatusDate());
+                criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationStatusDate());
+            } else if (request.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+                criteria.getExpirationStartDateCriteria().setMoreOrEqual(request.getExpirationStartDateFrom());
+                criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStartDateTo());
+                criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationEndDateFrom());
+                criteria.getExpirationEndDateCriteria().setLessOrEqual(request.getExpirationEndDateTo());
+            }
         }
         // OPTION検索条件 その他　機器認証
         criteria.getIsDeviceAuthCriteria().setEqualTo(request.getDeviceAuthUse());
