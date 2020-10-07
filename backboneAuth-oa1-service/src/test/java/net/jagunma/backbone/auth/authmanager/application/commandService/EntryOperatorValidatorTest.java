@@ -538,7 +538,7 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled
+    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test18() {

@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
@@ -82,9 +83,13 @@ class EntryOperatorTest {
 
     // テスト対象クラス生成
     private EntryOperator createEntryOperator() {
-        OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
+        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
             @Override
             public void entry(OperatorEntryPack operatorEntryPack) {
+
+            }
+            @Override
+            public void update(OperatorUpdatePack operatorUpdatePack) {
 
             }
         };
@@ -104,7 +109,7 @@ class EntryOperatorTest {
             }
         };
 
-        return new EntryOperator(operatorEntryPackRepositoryForStore, branchAtMomentRepository);
+        return new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository);
     }
 
     // 店舗AtMoment

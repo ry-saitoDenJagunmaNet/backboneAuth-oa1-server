@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.server.aop.AuditInfoHolder;
@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * オペレーター登録サービス
+ * オペレーター格納サービス
  */
 @Service
 @Transactional
 public class EntryOperator {
 
-    private final OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore;
+    private final OperatorRepositoryForStore operatorRepositoryForStore;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
-    public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore,
+    public EntryOperator(OperatorRepositoryForStore operatorRepositoryForStore,
         BranchAtMomentRepository branchAtMomentRepository) {
 
-        this.operatorEntryPackRepositoryForStore = operatorEntryPackRepositoryForStore;
+        this.operatorRepositoryForStore = operatorRepositoryForStore;
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
@@ -53,8 +53,8 @@ public class EntryOperator {
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
             branchAtMoment.getBranchAttribute().getBranchCode().getValue());
 
-        // オペレーターエントリーパックの登録を行います
-        operatorEntryPackRepositoryForStore.entry(operatorEntryPack);
+        // オペレーターの登録を行います
+        operatorRepositoryForStore.entry(operatorEntryPack);
     }
 
     /**

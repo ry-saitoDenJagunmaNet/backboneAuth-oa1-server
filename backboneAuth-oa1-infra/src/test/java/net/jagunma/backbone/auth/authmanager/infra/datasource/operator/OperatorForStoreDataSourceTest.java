@@ -8,6 +8,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
@@ -19,6 +25,12 @@ import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntity
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
+import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntity;
+import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityCriteria;
+import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityDao;
+import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
+import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityCriteria;
+import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityDao;
@@ -29,7 +41,7 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class OperatorEntryPackForStoreDataSourceTest {
+class OperatorForStoreDataSourceTest {
 
     // 実行既定値
     private String operatorCode = "yu123456";
@@ -65,7 +77,7 @@ class OperatorEntryPackForStoreDataSourceTest {
     Long passwordHistoryId = 345678L;
 
     // テスト対象クラス生成
-    private OperatorEntryPackForStoreDataSource createOperatorEntryPackForStoreDataSource() {
+    private OperatorForStoreDataSource createOperatorForStoreDataSource() {
         OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
             @Override
             public int countBy(OperatorEntityCriteria criteria) {
@@ -121,7 +133,6 @@ class OperatorEntryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
-
         OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao = new OperatorHistoryHeaderEntityDao() {
             @Override
             public int insert(OperatorHistoryHeaderEntity entity) {
@@ -173,7 +184,6 @@ class OperatorEntryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
-
         OperatorHistoryEntityDao operatorHistoryEntityDao = new OperatorHistoryEntityDao() {
             @Override
             public int insert(OperatorHistoryEntity entity) {
@@ -224,7 +234,6 @@ class OperatorEntryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
-
         PasswordHistoryEntityDao passwordHistoryEntityDao = new PasswordHistoryEntityDao() {
             @Override
             public int insert(PasswordHistoryEntity entity) {
@@ -276,12 +285,137 @@ class OperatorEntryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
+        Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao = new Operator_SubSystemRoleHistoryEntityDao() {
+            @Override
+            public List<Operator_SubSystemRoleHistoryEntity> findAll(Orders orders) {
+                return null;
+            }
+            @Override
+            public Operator_SubSystemRoleHistoryEntity findOneBy(
+                Operator_SubSystemRoleHistoryEntityCriteria criteria) {
+                return null;
+            }
+            @Override
+            public List<Operator_SubSystemRoleHistoryEntity> findBy(
+                Operator_SubSystemRoleHistoryEntityCriteria criteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public int countBy(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(Operator_SubSystemRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int update(Operator_SubSystemRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int updateExcludeNull(Operator_SubSystemRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int delete(Operator_SubSystemRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int forceDelete(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int[] insertBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+            @Override
+            public int[] updateBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+            @Override
+            public int[] deleteBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+        };
+        Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao = new Operator_BizTranRoleHistoryEntityDao() {
+            @Override
+            public List<Operator_BizTranRoleHistoryEntity> findAll(Orders orders) {
+                return null;
+            }
+            @Override
+            public Operator_BizTranRoleHistoryEntity findOneBy(
+                Operator_BizTranRoleHistoryEntityCriteria criteria) {
+                return null;
+            }
+            @Override
+            public List<Operator_BizTranRoleHistoryEntity> findBy(
+                Operator_BizTranRoleHistoryEntityCriteria criteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public int countBy(Operator_BizTranRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(Operator_BizTranRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int update(Operator_BizTranRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int updateExcludeNull(Operator_BizTranRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int delete(Operator_BizTranRoleHistoryEntity entity) {
+                return 0;
+            }
+            @Override
+            public int forceDelete(Operator_BizTranRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int[] insertBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+            @Override
+            public int[] updateBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+            @Override
+            public int[] deleteBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
+                return new int[0];
+            }
+        };
+        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
+            @Override
+            public Operator_SubSystemRoles selectBy(
+                Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
+                return null;
+            }
+        };
+        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
+            @Override
+            public Operator_BizTranRoles selectBy(
+                Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
+                return null;
+            }
+        };
 
-        return new OperatorEntryPackForStoreDataSource(operatorEntityDao, operatorHistoryHeaderEntityDao, operatorHistoryEntityDao, passwordHistoryEntityDao);
+        return new OperatorForStoreDataSource(operatorEntityDao,
+            operatorHistoryHeaderEntityDao,
+            operatorHistoryEntityDao,
+            passwordHistoryEntityDao,
+            operator_SubSystemRoleHistoryEntityDao,
+            operator_BizTranRoleHistoryEntityDao,
+            operator_SubSystemRolesRepository,
+            operator_BizTranRolesRepository);
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#entry(OperatorEntryPack)}テスト
+     * {@link OperatorForStoreDataSource#entry(OperatorEntryPack)}テスト
      *  ●パターン
      *    正常
      *
@@ -293,19 +427,19 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insert_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         OperatorEntryPack operatorEntryPack = createOperatorEntryPack();
 
         assertThatCode(() ->
             // 実行
-            operatorEntryPackForStoreDataSource.entry(operatorEntryPack))
+            operatorForStoreDataSource.entry(operatorEntryPack))
             .doesNotThrowAnyException();
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#checkAlreadyExists(String)}テスト
+     * {@link OperatorForStoreDataSource#checkAlreadyExists(String)}テスト
      *  ●パターン
      *    同(オペレーターコード)既存データあり(オペレーターコード:yu999999)
      *
@@ -317,14 +451,14 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void checkAlreadyExists_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         String alreadyExistsOperatorCode = "yu999999";
 
         assertThatThrownBy(() ->
             // 実行
-            operatorEntryPackForStoreDataSource.checkAlreadyExists(alreadyExistsOperatorCode))
+            operatorForStoreDataSource.checkAlreadyExists(alreadyExistsOperatorCode))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA11001");
@@ -334,7 +468,7 @@ class OperatorEntryPackForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#insertOperator(OperatorEntryPack)}テスト
+     * {@link OperatorForStoreDataSource#insertOperator(OperatorEntryPack)}テスト
      *  ●パターン
      *    正常
      *
@@ -346,7 +480,7 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insertOperator_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         OperatorEntryPack operatorEntryPack = createOperatorEntryPack();
@@ -368,14 +502,14 @@ class OperatorEntryPackForStoreDataSourceTest {
         expectedEntity.setCreatedAt(createdAt);
 
         // 実行
-        OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
+        OperatorEntity operatorEntity = operatorForStoreDataSource.insertOperator(operatorEntryPack);
 
         // 結果検証
         assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#insertOperatorHistoryHeader(OperatorEntryPack, OperatorEntity)}テスト
+     * {@link OperatorForStoreDataSource#insertOperatorHistoryHeader(OperatorEntity, String)}テスト
      *  ●パターン
      *    正常
      *
@@ -387,11 +521,11 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insertOperatorHistoryHeader_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         OperatorEntryPack operatorEntryPack = createOperatorEntryPack();
-        OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
+        OperatorEntity operatorEntity = operatorForStoreDataSource.insertOperator(operatorEntryPack);
 
         // 期待値
         OperatorHistoryHeaderEntity expectedEntity = new OperatorHistoryHeaderEntity();
@@ -401,14 +535,14 @@ class OperatorEntryPackForStoreDataSourceTest {
         expectedEntity.setChangeCause(changeCause);
 
         // 実行
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorEntryPackForStoreDataSource.insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorForStoreDataSource.insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());
 
         // 結果検証
         assertThat(operatorHistoryHeaderEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#insertOperatorHistory(OperatorHistoryHeaderEntity, OperatorEntity)}テスト
+     * {@link OperatorForStoreDataSource#insertOperatorHistory(OperatorHistoryHeaderEntity, OperatorEntity)}テスト
      *  ●パターン
      *    正常
      *
@@ -420,26 +554,26 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insertOperatorHistory_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         OperatorEntryPack operatorEntryPack = createOperatorEntryPack();
-        OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorEntryPackForStoreDataSource.insertOperatorHistoryHeader(operatorEntryPack, operatorEntity);
+        OperatorEntity operatorEntity = operatorForStoreDataSource.insertOperator(operatorEntryPack);
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorForStoreDataSource.insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());
 
         // 期待値
         OperatorHistoryEntity expectedEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
         expectedEntity.setOperatorHistoryId(operatorHistoryId);
 
         // 実行
-        OperatorHistoryEntity operatorHistoryEntity = operatorEntryPackForStoreDataSource.insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
+        OperatorHistoryEntity operatorHistoryEntity = operatorForStoreDataSource.insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
 
         // 結果検証
         assertThat(operatorHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
-     * {@link OperatorEntryPackForStoreDataSource#insertPasswordHistory(OperatorEntryPack, OperatorEntity)}テスト
+     * {@link OperatorForStoreDataSource#insertPasswordHistory(OperatorEntryPack, OperatorEntity)}テスト
      *  ●パターン
      *    正常
      *
@@ -451,11 +585,11 @@ class OperatorEntryPackForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insertPasswordHistory_test() {
         // テスト対象クラス生成
-        OperatorEntryPackForStoreDataSource operatorEntryPackForStoreDataSource = createOperatorEntryPackForStoreDataSource();
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
         OperatorEntryPack operatorEntryPack = createOperatorEntryPack();
-        OperatorEntity operatorEntity = operatorEntryPackForStoreDataSource.insertOperator(operatorEntryPack);
+        OperatorEntity operatorEntity = operatorForStoreDataSource.insertOperator(operatorEntryPack);
 
         // 期待値
         PasswordHistoryEntity expectedEntity = new PasswordHistoryEntity();
@@ -466,7 +600,7 @@ class OperatorEntryPackForStoreDataSourceTest {
         expectedEntity.setChangeType(PasswordChangeType.初期.getCode());
 
         // 実行
-        PasswordHistoryEntity passwordHistoryEntity = operatorEntryPackForStoreDataSource.insertPasswordHistory(operatorEntryPack, operatorEntity);
+        PasswordHistoryEntity passwordHistoryEntity = operatorForStoreDataSource.insertPasswordHistory(operatorEntryPack, operatorEntity);
 
         // 結果検証
         assertThat(passwordHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);

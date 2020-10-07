@@ -12,7 +12,8 @@ import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsS
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
@@ -105,9 +106,12 @@ class Oa11020ControllerTest {
                 return new int[0];
             }
         };
-        OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
+        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
             @Override
             public void entry(OperatorEntryPack operatorEntryPack) {
+            }
+            @Override
+            public void update(OperatorUpdatePack operatorUpdatePack) {
 
             }
         };
@@ -126,7 +130,7 @@ class Oa11020ControllerTest {
                 return createBranchesAtMoment();
             }
         };
-        EntryOperator entryOperator = new EntryOperator(operatorEntryPackRepositoryForStore, branchAtMomentRepository) {
+        EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository) {
             @Override
             public void execute(OperatorEntryRequest request) {
                 // request.getBranchId() = 11 の場合：GunmaRuntimeException を発生させる
