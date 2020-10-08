@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
+import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
@@ -261,8 +261,8 @@ public class OperatorForStoreDataSource implements
      * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
      * @return オペレーター_サブシステムロール割当履歴エンティティリスト
      */
-    ArrayList<Operator_SubSystemRoleHistoryEntity> insertOperator_SubSystemRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
-        ArrayList<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = newArrayList();
+    List<Operator_SubSystemRoleHistoryEntity> insertOperator_SubSystemRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
+        List<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = newArrayList();
 
         // 現割当取得
         Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
@@ -290,8 +290,8 @@ public class OperatorForStoreDataSource implements
      * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
      * @return オペレーター_取引ロール割当履歴エンティティリスト
      */
-    ArrayList<Operator_BizTranRoleHistoryEntity> insertOperator_BizTranRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
-        ArrayList<Operator_BizTranRoleHistoryEntity> operator_BizTranRoleHistoryEntityList = newArrayList();
+    List<Operator_BizTranRoleHistoryEntity> insertOperator_BizTranRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
+        List<Operator_BizTranRoleHistoryEntity> operator_BizTranRoleHistoryEntityList = newArrayList();
 
         // 現割当取得
         Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();

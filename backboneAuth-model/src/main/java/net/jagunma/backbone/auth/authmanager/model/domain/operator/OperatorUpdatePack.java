@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
@@ -23,8 +23,8 @@ public class OperatorUpdatePack {
     private final String branchCode;
     private final AvailableStatus availableStatus;
     private final String changeCause;
-    private ArrayList<Operator_SubSystemRole> subSystemRoleList = newArrayList();
-    private ArrayList<Operator_BizTranRole> bizTranRoleList = newArrayList();
+    private List<Operator_SubSystemRole> subSystemRoleList = newArrayList();
+    private List<Operator_BizTranRole> bizTranRoleList = newArrayList();
 
     // コンストラクタ
     OperatorUpdatePack(
@@ -38,8 +38,8 @@ public class OperatorUpdatePack {
         String branchCode,
         AvailableStatus availableStatus,
         String changeCause,
-        ArrayList<Operator_SubSystemRole> subSystemRoleList,
-        ArrayList<Operator_BizTranRole> bizTranRoleList) {
+        List<Operator_SubSystemRole> subSystemRoleList,
+        List<Operator_BizTranRole> bizTranRoleList) {
 
         this.operatorId = operatorId;
         this.operatorName = operatorName;
@@ -66,8 +66,8 @@ public class OperatorUpdatePack {
         String branchCode,
         AvailableStatus availableStatus,
         String changeCause,
-        ArrayList<Operator_SubSystemRole> subSystemRoleList,
-        ArrayList<Operator_BizTranRole> bizTranRoleList) {
+        List<Operator_SubSystemRole> subSystemRoleList,
+        List<Operator_BizTranRole> bizTranRoleList) {
 
         return new OperatorUpdatePack(
             operatorId,
@@ -115,10 +115,10 @@ public class OperatorUpdatePack {
     public String getChangeCause() {
         return changeCause;
     }
-    public ArrayList<Operator_SubSystemRole> getSubSystemRoleList() {
+    public List<Operator_SubSystemRole> getSubSystemRoleList() {
         return subSystemRoleList;
     }
-    public ArrayList<Operator_BizTranRole> getBizTranRoleList() {
+    public List<Operator_BizTranRole> getBizTranRoleList() {
         return bizTranRoleList;
     }
 }
