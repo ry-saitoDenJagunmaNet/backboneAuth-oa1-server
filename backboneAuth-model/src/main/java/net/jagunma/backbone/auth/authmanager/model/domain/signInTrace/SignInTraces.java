@@ -2,15 +2,15 @@ package net.jagunma.backbone.auth.authmanager.model.domain.signInTrace;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * サインイン証跡群
  */
 public class SignInTraces {
 
-    private final ArrayList<SignInTrace> list = newArrayList();
+    private final List<SignInTrace> list = newArrayList();
 
     // コンストラクタ
     SignInTraces(Collection<SignInTrace> collection) {
@@ -32,7 +32,7 @@ public class SignInTraces {
      *
      * @return サインイン証跡リスト
      */
-    public ArrayList<SignInTrace> getValues() {
+    public List<SignInTrace> getValues() {
         return list;
     }
 }
