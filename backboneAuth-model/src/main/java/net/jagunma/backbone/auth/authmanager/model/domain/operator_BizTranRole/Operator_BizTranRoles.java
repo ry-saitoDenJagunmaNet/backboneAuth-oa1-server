@@ -2,15 +2,15 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * オペレーター_取引ロール割当群
  */
 public class Operator_BizTranRoles {
 
-    private final ArrayList<Operator_BizTranRole> list = newArrayList();
+    private final List<Operator_BizTranRole> list = newArrayList();
 
     // コンストラクタ
     Operator_BizTranRoles(Collection<Operator_BizTranRole> collection) {
@@ -32,7 +32,7 @@ public class Operator_BizTranRoles {
      *
      * @return オペレーター_取引ロール割当リスト
      */
-    public ArrayList<Operator_BizTranRole> getValues() {
+    public List<Operator_BizTranRole> getValues() {
         return list;
     }
 }

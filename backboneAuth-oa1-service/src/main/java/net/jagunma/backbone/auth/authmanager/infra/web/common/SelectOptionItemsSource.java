@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.common;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
@@ -14,7 +13,7 @@ import net.jagunma.common.values.model.branch.BranchesAtMoment;
  */
 public class SelectOptionItemsSource {
 
-    private final ArrayList<SelectOptionItemSource> list = newArrayList();
+    private final List<SelectOptionItemSource> list = newArrayList();
 
     // コンストラクタ
     SelectOptionItemsSource(Collection<SelectOptionItemSource> collection) {
@@ -69,7 +68,7 @@ public class SelectOptionItemsSource {
      *
      * @return 共通 コンボボックス選択子リスト
      */
-    public ArrayList<SelectOptionItemSource> getValue() {
+    public List<SelectOptionItemSource> getValue() {
         return list;
     }
 }
