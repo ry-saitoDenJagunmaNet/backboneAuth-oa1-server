@@ -268,7 +268,7 @@ class SearchOperatorTest {
     private Operator_SubSystemRoles createOperator_SubSystemRoles() {
         List<Operator_SubSystemRole> list = newArrayList();
         list.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(2L,19L,SubSystemRole.業務統括者_販売_花卉.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_販売_花卉));
+        list.add(Operator_SubSystemRole.createFrom(2L,19L,SubSystemRole.業務統括者_販売_青果.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_販売_青果));
         return Operator_SubSystemRoles.createFrom(list);
     }
     // オペレーター_取引ロール割当群作成
@@ -470,9 +470,9 @@ class SearchOperatorTest {
     // サブシステムローロール検索条件作成
     private List<Oa11010SearchSubSystemRoleConverter> createOa11010SearchSubSystemRoleConverterList() {
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,"JaAdmin","'JA管理者",1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,"KbManager","'業務統括者（購買）",1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,"YsManager","'業務統括者（販売・野菜）",1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
         return list;
     }
 

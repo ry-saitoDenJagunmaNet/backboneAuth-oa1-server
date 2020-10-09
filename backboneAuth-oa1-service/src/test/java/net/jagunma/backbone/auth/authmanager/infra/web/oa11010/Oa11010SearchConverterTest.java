@@ -10,6 +10,8 @@ import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -35,8 +37,8 @@ class Oa11010SearchConverterTest {
         List<Oa11010SubSystemRoleVo> subSystemRoleVoList = newArrayList();
         Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
         subSystemRoleVo.setSubSystemRoleSelected((short) 1);
-        subSystemRoleVo.setSubSystemRoleCode("KB");
-        subSystemRoleVo.setSubSystemRoleName("JA管理者");
+        subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.JA管理者.getCode());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.JA管理者.getName());
         subSystemRoleVo.setExpirationSelect(1);
         subSystemRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 1));
         subSystemRoleVo.setExpirationStartDateFrom(LocalDate.of(2020, 10, 2));
@@ -46,8 +48,8 @@ class Oa11010SearchConverterTest {
         subSystemRoleVoList.add(subSystemRoleVo);
         subSystemRoleVo = new Oa11010SubSystemRoleVo();
         subSystemRoleVo.setSubSystemRoleSelected((short) 1);
-        subSystemRoleVo.setSubSystemRoleCode("YS");
-        subSystemRoleVo.setSubSystemRoleName("青果管理者");
+        subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_青果.getCode());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_青果.getName());
         subSystemRoleVo.setExpirationSelect(2);
         subSystemRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 6));
         subSystemRoleVo.setExpirationStartDateFrom(LocalDate.of(2020, 10, 7));
@@ -67,7 +69,7 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo.setBizTranRoleId(1L);
         bizTranRoleVo.setBizTranRoleCode("KBXX01");
         bizTranRoleVo.setBizTranRoleName("購買管理者");
-        bizTranRoleVo.setSubSystemCode("KB");
+        bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
         bizTranRoleVo.setExpirationSelect(1);
         bizTranRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 11));
         bizTranRoleVo.setExpirationStartDateFrom(LocalDate.of(2020, 10, 12));
@@ -80,7 +82,7 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo.setBizTranRoleId(2L);
         bizTranRoleVo.setBizTranRoleCode("KBXX02");
         bizTranRoleVo.setBizTranRoleName("購買ＮＮ担当者");
-        bizTranRoleVo.setSubSystemCode("KB");
+        bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
         bizTranRoleVo.setExpirationSelect(1);
         bizTranRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 16));
         bizTranRoleVo.setExpirationStartDateFrom(LocalDate.of(2020, 10, 17));

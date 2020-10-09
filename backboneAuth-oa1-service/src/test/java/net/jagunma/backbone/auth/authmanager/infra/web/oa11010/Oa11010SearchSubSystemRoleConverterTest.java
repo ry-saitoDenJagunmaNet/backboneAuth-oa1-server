@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,8 @@ class Oa11010SearchSubSystemRoleConverterTest {
 
         // 実行既定値
         Short subSystemRoleSelected = 1;
-        String subSystemRoleCode = "JaAdmin";
-        String subSystemRoleName = "JA管理者";
+        String subSystemRoleCode = SubSystemRole.JA管理者.getCode();
+        String subSystemRoleName = SubSystemRole.JA管理者.getName();
         Integer expirationSelect = 2;
         LocalDate expirationStatusDate = LocalDate.of(2020, 10, 1);
         LocalDate expirationStartDateFrom = LocalDate.of(2020, 10, 2);

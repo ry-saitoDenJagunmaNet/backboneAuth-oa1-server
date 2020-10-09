@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class Oa11010SearchBizTranRoleConverterTest {
         long bizTranRoleId = 1L;
         String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";
-        String subSystemCode = "KB";
+        String subSystemCode = SubSystem.購買.getCode();
         Integer expirationSelect = 2;
         LocalDate expirationStatusDate = LocalDate.of(2020, 10, 1);
         LocalDate expirationStartDateFrom = LocalDate.of(2020, 10, 2);

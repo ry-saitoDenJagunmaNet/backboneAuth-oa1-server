@@ -118,16 +118,13 @@ class Oa12060ControllerTest {
         // カレンダー適用サービスのスタブ
         StoreCalendar storeCalendar = new StoreCalendar(calendarRepositoryForStore, calendarRepository) {
             public int execute(CalendarStoreRequest request) {
-                // yearMonthString = null の場合：RuntimeException を発生させる
-                if (yearMonthString == null) {
-                    throw new RuntimeException();
-                }
                 // yearMonthString.length() = 0 の場合：GunmaRuntimeException を発生させる
                 if (yearMonthString.length() == 0) {
                     Preconditions.checkNotEmpty(yearMonthString, () -> new GunmaRuntimeException(GunmaRuntimeExceptionMessageCode, GunmaRuntimeExceptionMessageArg));
                 }
+                // メソッドの引数により OptimisticLockingFailureException を発生させる
                 if (isOptimisticLockingFailureException) {
-                    throw new OptimisticLockingFailureException("aa");
+                    throw new OptimisticLockingFailureException("");
                 }
                 return 1;
             }

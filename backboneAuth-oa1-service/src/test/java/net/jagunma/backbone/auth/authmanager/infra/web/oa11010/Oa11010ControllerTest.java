@@ -410,10 +410,10 @@ class Oa11010ControllerTest {
     // 取引ロール作成
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", "YS",1, SubSystem.販売_青果));
+        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", SubSystem.購買.getCode(),1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", SubSystem.購買.getCode(),1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", SubSystem.購買.getCode(),1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", SubSystem.販売_青果.getCode(),1, SubSystem.販売_青果));
         return list.stream().filter(b->b.getBizTranRoleId().equals(id)).findFirst().orElse(null);
     }
 
