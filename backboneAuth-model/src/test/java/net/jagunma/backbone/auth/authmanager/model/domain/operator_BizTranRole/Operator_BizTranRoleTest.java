@@ -64,12 +64,14 @@ class Operator_BizTranRoleTest {
         String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";
         String subSystemCode = "KB";
+        Integer bizTranRoleRecordVersion = 1;
         SubSystem subSystem = SubSystem.購買;
         BizTranRole bizTranRole = BizTranRole.createFrom(
             bizTranRoleId,
             bizTranRoleCode,
             bizTranRoleName,
             subSystemCode,
+            bizTranRoleRecordVersion,
             subSystem);
 
         // 実行

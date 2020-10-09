@@ -53,8 +53,8 @@ class Oa11010InitPresenterTest {
         Integer subSystemRoleConditionsSelect = 1;
         Integer bizTranRoleConditionsSelect = 1;
         List<BizTranRole> bizTranRoleList = newArrayList();
-        bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX001", "購買管理者", "KB", SubSystem.購買));
-        bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX002", "購買XX担当", "KB", SubSystem.購買));
+        bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX001", "購買管理者", "KB",1, SubSystem.購買));
+        bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX002", "購買XX担当", "KB",1, SubSystem.購買));
 
         // 実行値
         Oa11010Vo vo = new Oa11010Vo();

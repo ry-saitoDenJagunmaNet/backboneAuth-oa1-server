@@ -365,8 +365,8 @@ class Oa11010ControllerTest {
     // 取引ロール群作成
     private BizTranRoles createBizTranRoles() {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KBAG01", "（購買）購買業務基本","KB", SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KBAG02", "（購買）本所業務","KB", SubSystem.購買));
+        list.add(BizTranRole.createFrom(1L, "KBAG01", "（購買）購買業務基本","KB",1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L, "KBAG02", "（購買）本所業務","KB",1, SubSystem.購買));
         return BizTranRoles.createFrom(list);
     }
 
@@ -410,10 +410,10 @@ class Oa11010ControllerTest {
     // 取引ロール作成
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", "KB", SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", "KB", SubSystem.購買));
-        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", "KB", SubSystem.購買));
-        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", "YS", SubSystem.販売_青果));
+        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", "KB",1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", "KB",1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", "KB",1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", "YS",1, SubSystem.販売_青果));
         return list.stream().filter(b->b.getBizTranRoleId().equals(id)).findFirst().orElse(null);
     }
 

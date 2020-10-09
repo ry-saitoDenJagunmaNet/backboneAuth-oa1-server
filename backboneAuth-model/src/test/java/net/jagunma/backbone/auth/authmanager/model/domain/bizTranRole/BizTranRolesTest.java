@@ -26,9 +26,9 @@ class BizTranRolesTest {
 
         // 実行値 ＆ 期待値
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L,"KBAG01","（購買）購買業務基本","KB",SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L,"KBAG02","（購買）本所業務","KB",SubSystem.購買));
-        list.add(BizTranRole.createFrom(3L,"KBAG03","（購買）本所管理業務","KB",SubSystem.購買));
+        list.add(BizTranRole.createFrom(1L,"KBAG01","（購買）購買業務基本","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L,"KBAG02","（購買）本所業務","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(3L,"KBAG03","（購買）本所管理業務","KB",1,SubSystem.購買));
 
         // 実行
         BizTranRoles bizTranRoles = BizTranRoles.createFrom(list);

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class BizTranRoleTest {
 
     /**
-     * {@link BizTranRole#createFrom(Long, String, String, String, SubSystem)}テスト
+     * {@link BizTranRole#createFrom(Long, String, String, String, Integer, SubSystem)}テスト
      *  ●パターン
      *    正常
      *
@@ -27,6 +27,7 @@ class BizTranRoleTest {
         String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";
         String subSystemCode = "KB";
+        Integer recordVersion = 1;
         SubSystem subSystem = SubSystem.購買;
 
         // 実行
@@ -35,6 +36,7 @@ class BizTranRoleTest {
             bizTranRoleCode,
             bizTranRoleName,
             subSystemCode,
+            recordVersion,
             subSystem);
 
         // 結果検証
@@ -43,6 +45,7 @@ class BizTranRoleTest {
         assertThat(bizTranRole.getBizTranRoleCode()).isEqualTo(bizTranRoleCode);
         assertThat(bizTranRole.getBizTranRoleName()).isEqualTo(bizTranRoleName);
         assertThat(bizTranRole.getSubSystemCode()).isEqualTo(subSystemCode);
+        assertThat(bizTranRole.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(bizTranRole.getSubSystem()).usingRecursiveComparison().isEqualTo(subSystem);
     }
 }

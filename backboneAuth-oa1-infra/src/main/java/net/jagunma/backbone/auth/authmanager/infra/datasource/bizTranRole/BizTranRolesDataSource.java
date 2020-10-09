@@ -47,6 +47,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
                 entity.getBizTranRoleCode(),
                 entity.getBizTranRoleName(),
                 entity.getSubSystemCode(),
+                entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())
             ));
         }
@@ -68,6 +69,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
                 entity.getBizTranRoleCode(),
                 entity.getBizTranRoleName(),
                 entity.getSubSystemCode(),
+                entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())
             ));
         }
