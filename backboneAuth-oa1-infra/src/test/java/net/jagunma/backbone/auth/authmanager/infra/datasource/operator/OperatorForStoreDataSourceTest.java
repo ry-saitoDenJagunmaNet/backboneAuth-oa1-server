@@ -97,10 +97,10 @@ class OperatorForStoreDataSourceTest {
         BizTranRole.createFrom(403L, "KB0002", "顧客検索", SubSystem.購買.getCode(), SubSystem.購買),
         BizTranRole.createFrom(404L, "YS0000", "野菜メインメニュー", SubSystem.販売_青果.getCode(), SubSystem.販売_青果));
     private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
-        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate, operator, bizTranRoleList.get(0)),
-        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate, operator, bizTranRoleList.get(1)),
-        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate, operator, bizTranRoleList.get(2)),
-        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), expirationStartDate, expirationEndDate, operator, bizTranRoleList.get(3)));
+        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate,1, operator, bizTranRoleList.get(0)),
+        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate,1,operator, bizTranRoleList.get(1)),
+        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate,1,operator, bizTranRoleList.get(2)),
+        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), expirationStartDate, expirationEndDate,1,operator, bizTranRoleList.get(3)));
     private OperatorUpdatePack createOperatorUpdatePack() {
         return OperatorUpdatePack.createFrom(
             operatorId,

@@ -424,7 +424,7 @@ public class SearchOperator {
                 if (passwordHistory == null) {
                     return false;
                 } else {
-                    if (passwordHistory.getChangeDateTime().toLocalDate().compareTo(passwodrChanheDate) < 0) {
+                    if (passwordHistory.getChangeDateTime().toLocalDate().compareTo(passwodrChanheDate) >= 0) {
                         return false;
                     }
                 }
@@ -439,21 +439,19 @@ public class SearchOperator {
         }
 
         // パスワード履歴　最終パスワード変更種別の条件
-        Short passwordHistoryChangeType0 = 0;
-        Short passwordHistoryChangeType1 = 0;
-        Short passwordHistoryChangeType2 = 0;
-        Short passwordHistoryChangeType3 = 0;
+        Short passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        Short passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        Short passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        Short passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
         if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0();}
         if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1();}
         if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2();}
-        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType2();}
+        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType3();}
         if (!passwordHistoryChangeType0.equals(passwordHistoryChangeType1) ||
             !passwordHistoryChangeType0.equals(passwordHistoryChangeType2) ||
             !passwordHistoryChangeType0.equals(passwordHistoryChangeType3)) {
 
-            if (passwordHistory == null) {
-                return false;
-            }
+            if (passwordHistory == null) { return false; }
             // 最終パスワード変更種別が全て同じでない
             if (passwordHistory.getChangeType().equals(PasswordChangeType.初期.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType0)) {
                 // 初期
@@ -467,8 +465,6 @@ public class SearchOperator {
             } else if (passwordHistory.getChangeType().equals(PasswordChangeType.機器認証パスワード.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType3)) {
                 // 機器認証パスワード
                 return true;
-            } else {
-                return false;
             }
         }
 
@@ -510,7 +506,6 @@ public class SearchOperator {
 
         // サインイン証跡　最終サインオペレーションの条件
         if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getSignintraceSignIn())) {
-
             if (signInTrace == null) { return false; }
         }
         if (request.getSignintraceSignInResult() != null && request.getSignintraceSignInResult().length > 0) {

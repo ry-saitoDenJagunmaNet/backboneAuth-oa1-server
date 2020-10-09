@@ -85,7 +85,7 @@ public class OperatorForStoreDataSource implements
         OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());;
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());
 
         // オペレーター履歴のインサートを行います
         insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
@@ -108,7 +108,7 @@ public class OperatorForStoreDataSource implements
         OperatorEntity operatorEntity = updateOperator(operatorUpdatePack);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorUpdatePack.getChangeCause());;
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorUpdatePack.getChangeCause());
 
         // オペレーター履歴のインサートを行います
         insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);

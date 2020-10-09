@@ -83,14 +83,14 @@ class Oa11010ControllerTest {
     private final String mailAddress = null;
     private final Short availableStatus0 = null;
     private final Short availableStatus1 = null;
-    private final Integer expirationSelect = 0;;
+    private final Integer expirationSelect = 0;
     private final LocalDate expirationStatusDate = null;
     private final LocalDate expirationStartDateFrom = null;
     private final LocalDate expirationStartDateTo = null;
     private final LocalDate expirationEndDateFrom = null;
     private final LocalDate expirationEndDateTo = null;
-    private Integer subSystemRoleConditionsSelect = 1;;
-    private final Integer bizTranRoleConditionsSelect = 1;;
+    private Integer subSystemRoleConditionsSelect = 1;
+    private final Integer bizTranRoleConditionsSelect = 1;
     private final String bizTranRoleSubSystemCode = null;
     private final Short deviceAuthUse = null;
     private final Short deviceAuthUnuse = null;
@@ -108,7 +108,7 @@ class Oa11010ControllerTest {
     private final LocalDate signintraceTrydateFrom = null;
     private final LocalDate signintraceTrydateTo = null;
     private final String signintraceTryIpAddress = null;
-    private final Short signintraceSignIn = null;;
+    private final Short signintraceSignIn = null;
     private final Short signintraceSignOut = null;
     private final Short[] signintraceSignInResult = null;
     private int pageNo = 0;
@@ -389,21 +389,21 @@ class Oa11010ControllerTest {
     // オペレーター_サブシステムロール割当群作成
     private Operator_SubSystemRoles createOperator_SubSystemRoles() {
         List<Operator_SubSystemRole> list = newArrayList();
-        list.add(Operator_SubSystemRole.createFrom(1L,18L,"KbManager", LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(2L,21L,"KbManager", LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(3L,21L,"KbManager", LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_販売_野菜));
+        list.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
+        list.add(Operator_SubSystemRole.createFrom(2L,21L,SubSystemRole.業務統括者_購買.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
+        list.add(Operator_SubSystemRole.createFrom(3L,21L,SubSystemRole.業務統括者_販売_青果.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_販売_青果));
         return Operator_SubSystemRoles.createFrom(list);
     }
 
     // オペレーター_取引ロール割当群作成
     private Operator_BizTranRoles createOperator_BizTranRoles() {
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(1L)));
-        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(4L)));
-        list.add(Operator_BizTranRole.createFrom(3L,20L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(2L)));
-        list.add(Operator_BizTranRole.createFrom(4L,20L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(3L)));
-        list.add(Operator_BizTranRole.createFrom(5L,21L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(3L)));
-        list.add(Operator_BizTranRole.createFrom(6L,21L,2L,LocalDate.of(2020,1,1), null,null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(1L)));
+        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(4L)));
+        list.add(Operator_BizTranRole.createFrom(3L,20L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(2L)));
+        list.add(Operator_BizTranRole.createFrom(4L,20L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(5L,21L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(6L,21L,2L,LocalDate.of(2020,1,1), null,1,null, createBizTranRole(3L)));
         return Operator_BizTranRoles.createFrom(list);
     }
 
@@ -411,7 +411,7 @@ class Oa11010ControllerTest {
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
         list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", "KB", SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KB00001", "支所検索", "KB", SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", "KB", SubSystem.購買));
         list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", "KB", SubSystem.購買));
         list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", "YS", SubSystem.販売_青果));
         return list.stream().filter(b->b.getBizTranRoleId().equals(id)).findFirst().orElse(null);

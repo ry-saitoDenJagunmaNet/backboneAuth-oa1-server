@@ -14,6 +14,7 @@ public class Operator_BizTranRole {
     private final Long bizTranRoleId;
     private final LocalDate expirationStartDate;
     private final LocalDate expirationEndDate;
+    private final Integer recordVersion;
     private final Operator operator;
     private final BizTranRole bizTranRole;
 
@@ -24,6 +25,7 @@ public class Operator_BizTranRole {
         Long bizTranRoleId,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Integer recordVersion,
         Operator operator,
         BizTranRole bizTranRole) {
 
@@ -32,6 +34,7 @@ public class Operator_BizTranRole {
         this.bizTranRoleId = bizTranRoleId;
         this.expirationStartDate = expirationStartDate;
         this.expirationEndDate = expirationEndDate;
+        this.recordVersion = recordVersion;
         this.operator = operator;
         this.bizTranRole = bizTranRole;
     }
@@ -43,6 +46,7 @@ public class Operator_BizTranRole {
         Long bizTranRoleId,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Integer recordVersion,
         Operator operator,
         BizTranRole bizTranRole) {
 
@@ -52,6 +56,7 @@ public class Operator_BizTranRole {
             bizTranRoleId,
             expirationStartDate,
             expirationEndDate,
+            recordVersion,
             operator,
             bizTranRole);
     }
@@ -71,6 +76,9 @@ public class Operator_BizTranRole {
     }
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
     public Operator getOperator() {
         return operator;

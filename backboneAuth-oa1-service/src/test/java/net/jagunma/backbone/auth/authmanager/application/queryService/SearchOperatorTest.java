@@ -2,17 +2,12 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010Controller;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchBizTranRoleConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchSubSystemRoleConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
@@ -21,7 +16,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLoc
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
@@ -46,8 +40,13 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTr
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
 import net.jagunma.backbone.auth.authmanager.model.types.ConditionsSelect;
+import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
@@ -232,9 +231,9 @@ class SearchOperatorTest {
     // オペレーター群作成
     private Operators createOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(20L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
+        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
+        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
+        list.add(Operator.createFrom(20L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
         return Operators.createFrom(list);
     }
     // アカウントロック群作成
@@ -254,8 +253,8 @@ class SearchOperatorTest {
     // サインイン証跡群作成
     private SignInTraces createSignInTraces() {
         List<SignInTrace> list = newArrayList();
-        list.add(SignInTrace.createFrom(1L,LocalDateTime.of(2020,10,2,9,0,12),"001.001.001.001","yu001009",(short) 1,(short) 0,1,null));
-        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",(short) 1,(short) 0,1,null));
+        list.add(SignInTrace.createFrom(1L,LocalDateTime.of(2020,10,2,9,0,12),"001.001.001.001","yu001009",SignInCause.サインイン.getCode(),SignInResult.失敗_存在しないオペレーター.getCode(),1,null));
+        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.成功.getCode(),1,null));
         return SignInTraces.createFrom(list);
     }
     // サインアウト証跡群作成
@@ -268,17 +267,17 @@ class SearchOperatorTest {
     // オペレーター_サブシステムロール割当群作成
     private Operator_SubSystemRoles createOperator_SubSystemRoles() {
         List<Operator_SubSystemRole> list = newArrayList();
-        list.add(Operator_SubSystemRole.createFrom(1L,18L,"KbManager",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(2L,19L,"YsManager",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_販売_花卉));
+        list.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_購買));
+        list.add(Operator_SubSystemRole.createFrom(2L,19L,SubSystemRole.業務統括者_販売_花卉.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_販売_花卉));
         return Operator_SubSystemRoles.createFrom(list);
     }
     // オペレーター_取引ロール割当群作成
     private Operator_BizTranRoles createOperator_BizTranRoles() {
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(1L)));
-        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(4L)));
-        list.add(Operator_BizTranRole.createFrom(3L,19L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(2L)));
-        list.add(Operator_BizTranRole.createFrom(4L,19L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(1L)));
+        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(4L)));
+        list.add(Operator_BizTranRole.createFrom(3L,19L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(2L)));
+        list.add(Operator_BizTranRole.createFrom(4L,19L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
         return Operator_BizTranRoles.createFrom(list);
     }
     // 取引ロール作成
@@ -485,8 +484,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test0() {
 
         // テスト対象クラス生成
@@ -563,8 +562,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test1() {
 
         // テスト対象クラス生成
@@ -576,7 +575,7 @@ class SearchOperatorTest {
         operatorName = "ｙ";
         mailAddress = "y";
         availableStatusIncludesList = newArrayList();
-        availableStatusIncludesList.add((short)1);
+        availableStatusIncludesList.add((short) 1);
         expirationSelect = ConditionsExpirationSelect.状態指定日.getCode();
         expirationStatusDate = LocalDate.of(2020, 10, 01);
         signintraceSignOut = Oa11010Vo.CHECKBOX_TRUE;
@@ -650,8 +649,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test2() {
 
         // テスト対象クラス生成
@@ -663,7 +662,7 @@ class SearchOperatorTest {
         expirationStartDateTo = LocalDate.of(2020, 10, 31);
         expirationEndDateFrom = LocalDate.of(2020, 10, 01);
         expirationEndDateTo = LocalDate.of(2020, 10, 31);
-        signintraceSignInResult = new Short[(short)1];
+        signintraceSignInResult = new Short[(short) 1];
 
         // 期待値
         Operators expectedOperators = createOperators();
@@ -728,19 +727,21 @@ class SearchOperatorTest {
      *  ●パターン
      *    正常
      *    [検索条件]
+     *    ・有効期限（指定なし）
      *    ・スワード履歴　最終パスワード変更日
      *
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test3() {
 
         // テスト対象クラス生成
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
+        expirationSelect = ConditionsExpirationSelect.指定なし.getCode();
         passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
         passwordHistoryLastChangeDateStatus = "1";
         passwordHistoryLastChangeDate = 30;
@@ -813,8 +814,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test4() {
 
         // テスト対象クラス生成
@@ -892,8 +893,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test5() {
 
         // テスト対象クラス生成
@@ -974,8 +975,8 @@ class SearchOperatorTest {
      *  ●検証事項
      *  ・正常終了
      */
-    @Tag(TestSize.SMALL)
     @Test
+    @Tag(TestSize.SMALL)
     void execute_test6() {
 
         // テスト対象クラス生成
@@ -985,7 +986,7 @@ class SearchOperatorTest {
         subSystemRoleConditionsSelect = ConditionsSelect.AND.getCode();
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
         list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),ConditionsExpirationSelect.状態指定日.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_野菜.getCode(),SubSystemRole.業務統括者_販売_野菜.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
         subSystemRoleList = list;
 
         // 期待値
@@ -1046,9 +1047,18 @@ class SearchOperatorTest {
             });
     }
 
-    //オペレーター_サブシステムロール割当の検索条件判定
-    @Tag(TestSize.SMALL)
+    /**
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_サブシステムロール割当の検索条件判定 検索条件選択=OR
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
     @Test
+    @Tag(TestSize.SMALL)
     void conditionsOperatorSubSystemRole_test0() {
 
         // テスト対象クラス生成
@@ -1057,15 +1067,16 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_野菜.getCode(),SubSystemRole.業務統括者_購買.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_野菜.getCode(),SubSystemRole.業務統括者_販売_野菜.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.指定なし.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
-        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(2L,18L,SubSystemRole.業務統括者_販売_野菜.getCode(),LocalDate.of(2020, 11, 1),LocalDate.of(9999, 12, 31),1,null,null));
-        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(3L,19L,SubSystemRole.業務統括者_販売_野菜.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
+        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(2L,18L,SubSystemRole.業務統括者_販売_青果.getCode(),LocalDate.of(2020, 11, 1),LocalDate.of(9999, 12, 31),1,null,null));
+        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(3L,19L,SubSystemRole.業務統括者_販売_青果.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
+
         // 期待値
         boolean expected = true;
 
@@ -1074,12 +1085,20 @@ class SearchOperatorTest {
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
-
     }
 
-    //オペレーター_サブシステムロール割当の検索条件判定
-    @Tag(TestSize.SMALL)
+    /**
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_サブシステムロール割当の検索条件判定 検索条件選択=OR & 指定なし
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
     @Test
+    @Tag(TestSize.SMALL)
     void conditionsOperatorSubSystemRole_test1() {
 
         // テスト対象クラス生成
@@ -1092,6 +1111,7 @@ class SearchOperatorTest {
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
+
         // 期待値
         boolean expected = true;
 
@@ -1100,6 +1120,1571 @@ class SearchOperatorTest {
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
+    }
 
+    /**
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_サブシステムロール割当の検索条件判定 検索条件選択=OR & サブシステムロール条件不一致
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsOperatorSubSystemRole_test2() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
+        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.状態指定日.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
+        subSystemRoleList = list;
+        List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
+        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_サブシステムロール割当の検索条件判定 検索条件選択=OR & 有効期限検索条=UnKnown
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsOperatorSubSystemRole_test3() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
+        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.UnKnown.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
+        subSystemRoleList = list;
+        List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
+        operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_取引ロール割当の検索条件判定 検索条件選択=OR
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsOperatorBizTranRole_test0() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
+        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.指定なし.getCode(), null, null, null, null, null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 2L, "KBAG02", "（購買）本所業務", "KB",ConditionsExpirationSelect.条件指定.getCode(), null, LocalDate.of(2020, 10, 1),LocalDate.of(2020, 10, 31), LocalDate.of(2020, 10, 1), LocalDate.of(2020, 10, 31)));
+        bizTranRoleList = list;
+        List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
+        operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_取引ロール割当の検索条件判定 検索条件選択=OR & 取引ロール条件不一致
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsOperatorBizTranRole_test1() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
+        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.状態指定日.getCode(), LocalDate.of(2020,10,1), null, null, null, null));
+        bizTranRoleList = list;
+        List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
+        operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(2020, 9, 30),1,null,null));
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・オペレーター_取引ロール割当の検索条件判定 検索条件選択=OR & 有効期限検索条=UnKnown
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsOperatorBizTranRole_test2() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
+        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.UnKnown.getCode(), null, null, null, null, null));
+        bizTranRoleList = list;
+        List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
+        operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 最終ロック・アンロック発生日開始
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test0() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockOccurredDateFrom = LocalDate.of(2020, 10, 2);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 最終ロック・アンロック発生日終了
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test1() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockOccurredDateTo = LocalDate.of(2020, 9, 30);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 アカウントロック ロック状態 ロック=true
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test2() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockStatusLock = Oa11010Vo.CHECKBOX_TRUE;
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 アカウントロック ロック状態 ロック=false
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test3() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockStatusLock = Oa11010Vo.CHECKBOX_TRUE;
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus. アンロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 アカウントロック ロック状態 アンロック=true
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test4() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockStatusUnlock = Oa11010Vo.CHECKBOX_TRUE;
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・アカウントロックの検索条件判定 アカウントロック ロック状態 アンロック=false
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsAccountLock_test5() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        accountLockStatusUnlock = Oa11010Vo.CHECKBOX_TRUE;
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator
+            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 最終パスワード変更日状態 5日以内に「変更した」= false
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test0() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDateStatus = "1";
+        passwordHistoryLastChangeDate = 5;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(5),
+            "password",
+            PasswordChangeType.初期.getCode(),
+            1,
+            null);
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 最終パスワード変更日状態 5日以内に「変更した」= true
+     *    ・最終パスワード変更種別=初期
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test01() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDateStatus = "1";
+        passwordHistoryLastChangeDate = 5;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.初期.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 最終パスワード変更日状態 5日以内に「変更していない」= false
+     *    ・最終パスワード変更種別=初期
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test02() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDateStatus = "2";
+        passwordHistoryLastChangeDate = 5;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(5),
+            "password",
+            PasswordChangeType.初期.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 最終パスワード変更日状態 5日以内に「変更していない」= true
+     *    ・最終パスワード変更種別=ユーザーによる変更
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test03() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDateStatus = "2";
+        passwordHistoryLastChangeDate = 5;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.ユーザーによる変更.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更日  「日以内に」null
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test04() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDate = null;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.ユーザーによる変更.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 最終パスワード変更日状態 5日以内に「変更していない」= true & passwordHistory=null
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test05() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDate = 5;
+        passwordHistoryLastChangeDateStatus = "2";
+        PasswordHistory passwordHistory = null;
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・パスワード履歴の検索条件判定 「変更した／変更していない」= 未設定
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test06() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryLastChangeDate = 5;
+        passwordHistoryLastChangeDateStatus = "";
+        PasswordHistory passwordHistory = null;
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別=管理者によるリセット
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test07() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.管理者によるリセット.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別=機器認証パスワード
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test08() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.機器認証パスワード.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別=全てチェｋック
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test09() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.機器認証パスワード.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別チェックあり & passwordHistory=null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test10() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = null;
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別チェック 初期=false
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test11() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.初期.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別チェック ユーザーによる変更=false
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test12() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.ユーザーによる変更.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別チェック 管理者によるリセット=false
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test13() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.管理者によるリセット.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終パスワード変更種別チェック 管理者によるリセット=false
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsPasswordHistory_test14() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryLastChangeDateStatus = null;
+        passwordHistoryLastChangeDate = null;
+        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            1L,
+            18L,
+            LocalDateTime.now().minusDays(6),
+            "password",
+            PasswordChangeType.機器認証パスワード.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日の条件 = true
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test0() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = LocalDate.of(2020,10, 2);
+        signintraceTrydateTo = LocalDate.of(2020,10, 2);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,2,8,30,12),
+            "001.001.001.001",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日の条件 = false（範囲前）
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test1() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = LocalDate.of(2020,10, 2);
+        signintraceTrydateTo = LocalDate.of(2020,10, 2);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,1,8,30,12),
+            "001.001.001.001",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日の条件 = false（範囲後）
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test2() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = LocalDate.of(2020,10, 2);
+        signintraceTrydateTo = LocalDate.of(2020,10, 2);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "001.001.001.001",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日開始=null & signInTrace=null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test3() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = null;
+        signintraceTrydateTo = LocalDate.of(2020,10, 2);
+        SignInTrace signInTrace = null;
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日開始=null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test4() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = null;
+        signintraceTrydateTo = LocalDate.of(2020,10, 2);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "001.001.001.001",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション試行日終了=null
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test5() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTrydateFrom = LocalDate.of(2020,10, 2);
+        signintraceTrydateTo = null;
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "001.001.001.001",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインイン元IPアドレスの条件 = true
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test6() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTryIpAddress = "145.254.211";
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "145.254.211.51",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインイン元IPアドレス 未入力
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test7() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTryIpAddress = "";
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "145.254.211.51",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・signInTrace = null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test8() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTryIpAddress = "145.254.211";
+        SignInTrace signInTrace = null;
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインイン元IPアドレスの条件 = false
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test9() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceTryIpAddress = "145.254.212";
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "145.254.211.51",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーションの条件 = true
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test10() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceSignIn = Oa11010Vo.CHECKBOX_TRUE;
+        List<Short> signintraceSignInResultList = newArrayList((short) 0);
+        signintraceSignInResult = signintraceSignInResultList.toArray(new Short[signintraceSignInResultList.size()]);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "145.254.211.51",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーション サインイン＝true & SignInTrace = null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test11() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        signintraceSignIn = Oa11010Vo.CHECKBOX_TRUE;
+        SignInTrace signInTrace = null;
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・最終サインオペレーションの条件 = false
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test12() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        List<Short> signintraceSignInResultList = newArrayList((short) 1);
+        signintraceSignInResult = signintraceSignInResultList.toArray(new Short[signintraceSignInResultList.size()]);
+        SignInTrace signInTrace = SignInTrace.createFrom(
+            1L,
+            LocalDateTime.of(2020,10,3,8,30,12),
+            "145.254.211.51",
+            "yu001009",
+            SignInCause.サインイン.getCode(),
+            SignInResult.成功.getCode(),
+            1,
+            null
+        );
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・サインイン結果=0件
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test13() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        List<Short> signintraceSignInResultList = newArrayList();
+        signintraceSignInResult = signintraceSignInResultList.toArray(new Short[signintraceSignInResultList.size()]);
+        SignInTrace signInTrace = null;
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /**
+     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     *  ●パターン
+     *    正常
+     *    [検索条件]
+     *    ・サインイン結果 指定 & signInTrace=null
+     *
+     *  ●検証事項
+     *  ・正常終了（return=false）
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void conditionsSignInTrace_test14() {
+
+        // テスト対象クラス生成
+        SearchOperator searchOperator = createSearchOperator();
+
+        // 実行値
+        List<Short> signintraceSignInResultList = newArrayList((short) 1);
+        signintraceSignInResult = signintraceSignInResultList.toArray(new Short[signintraceSignInResultList.size()]);
+        SignInTrace signInTrace = null;
+
+        // 期待値
+        boolean expected = false;
+
+        // 実行
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
     }
 }

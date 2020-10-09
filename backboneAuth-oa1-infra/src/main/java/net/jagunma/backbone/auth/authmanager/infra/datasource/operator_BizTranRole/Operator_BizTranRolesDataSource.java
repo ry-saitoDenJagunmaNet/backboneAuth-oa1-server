@@ -76,6 +76,7 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
                 entity.getBizTranRoleId(),
                 entity.getExpirationStartDate(),
                 entity.getExpirationEndDate(),
+                entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
                 bizTranRoles.getValues().stream().filter(o->
