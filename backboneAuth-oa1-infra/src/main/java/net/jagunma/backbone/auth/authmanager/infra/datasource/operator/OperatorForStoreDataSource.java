@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
@@ -85,13 +86,13 @@ public class OperatorForStoreDataSource implements
         OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorEntryPack.getChangeCause());
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity.getOperatorId(), operatorEntity.getCreatedAt(), operatorEntryPack.getChangeCause());
 
         // オペレーター履歴のインサートを行います
-        insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
+        insertOperatorHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorEntity);
 
         // パスワード履歴のインサートを行います
-        insertPasswordHistory(operatorEntryPack, operatorEntity);
+        insertPasswordHistory(operatorEntity.getOperatorId(), operatorEntryPack.getPassword(), operatorEntity.getCreatedAt(), PasswordChangeType.初期);
     }
 
     /**
@@ -101,23 +102,20 @@ public class OperatorForStoreDataSource implements
      */
     public void update(OperatorUpdatePack operatorUpdatePack) {
 
-        // オペレーターが存在しているかのチェックを行います
-        checkExists(operatorUpdatePack.getOperatorId());
-
         // オペレーターのアップデートを行います
         OperatorEntity operatorEntity = updateOperator(operatorUpdatePack);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity, operatorUpdatePack.getChangeCause());
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorEntity.getOperatorId(), operatorEntity.getUpdatedAt(), operatorUpdatePack.getChangeCause());
 
         // オペレーター履歴のインサートを行います
-        insertOperatorHistory(operatorHistoryHeaderEntity, operatorEntity);
+        insertOperatorHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorEntity);
 
         // オペレーター_サブシステムロール割当履歴のインサートを行います
-        insertOperator_SubSystemRoleHistory(operatorHistoryHeaderEntity);
+        insertOperator_SubSystemRoleHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorHistoryHeaderEntity.getOperatorId());
 
         // オペレーター_取引ロール割当履歴のインサートを行います
-        insertOperator_BizTranRoleHistory(operatorHistoryHeaderEntity);
+        insertOperator_BizTranRoleHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorHistoryHeaderEntity.getOperatorId());
     }
 
     /**
@@ -132,20 +130,6 @@ public class OperatorForStoreDataSource implements
 
         if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
             throw new GunmaRuntimeException("EOA11001", "オペレーターコード", operatorCode);
-        }
-    }
-    /**
-     * オペレーターが存在しているかのチェックを行います。
-     *
-     * @param operatorId オペレーターコード
-     */
-    void checkExists(Long operatorId) {
-        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
-
-        operatorEntityCriteria.getJaIdCriteria().setEqualTo(operatorId);
-
-        if (operatorEntityDao.countBy(operatorEntityCriteria) == 0 ) {
-            throw new GunmaRuntimeException("EOA11002", "オペレーターID", operatorId);
         }
     }
 
@@ -192,24 +176,29 @@ public class OperatorForStoreDataSource implements
         operatorEntity.setBranchId(operatorUpdatePack.getBranchId());
         operatorEntity.setBranchCode(operatorUpdatePack.getBranchCode());
         operatorEntity.setAvailableStatus(operatorUpdatePack.getAvailableStatus().getCode());
+        operatorEntity.setRecordVersion(operatorUpdatePack.getRecordVersion());
 
         operatorEntityDao.update(operatorEntity);
 
-        return operatorEntity;
+        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+        operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorUpdatePack.getOperatorId());
+
+        return operatorEntityDao.findOneBy(operatorEntityCriteria);
     }
 
     /**
      * オペレーター履歴ヘッダーのインサートを行います。
      *
-     * @param operatorEntity オペレーターエンティティ
+     * @param operatorId オペレーターID
+     * @param changeDateTime 変更日時
      * @param changeCause 変更事由
      * @return オペレーター履歴ヘッダーエンティティ
      */
-    OperatorHistoryHeaderEntity insertOperatorHistoryHeader(OperatorEntity operatorEntity, String changeCause) {
+    OperatorHistoryHeaderEntity insertOperatorHistoryHeader(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = new OperatorHistoryHeaderEntity();
 
-        operatorHistoryHeaderEntity.setOperatorId(operatorEntity.getOperatorId());
-        operatorHistoryHeaderEntity.setChangeDateTime(operatorEntity.getCreatedAt());
+        operatorHistoryHeaderEntity.setOperatorId(operatorId);
+        operatorHistoryHeaderEntity.setChangeDateTime(changeDateTime);
         operatorHistoryHeaderEntity.setChangeCause(changeCause);
 
         operatorHistoryHeaderEntityDao.insert(operatorHistoryHeaderEntity);
@@ -220,15 +209,21 @@ public class OperatorForStoreDataSource implements
     /**
      * オペレーター履歴のインサートを行います。
      *
-     * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
+     * @param operatorHistoryId オペレーター履歴ID
      * @param operatorEntity オペレーターエンティティ
      * @return オペレーター履歴エンティティ
      */
-    OperatorHistoryEntity insertOperatorHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity, OperatorEntity operatorEntity) {
+    OperatorHistoryEntity insertOperatorHistory(Long operatorHistoryId, OperatorEntity operatorEntity) {
 
         OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
-
-        operatorHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
+        operatorHistoryEntity.setOperatorHistoryId(operatorHistoryId);
+        operatorHistoryEntity.setCreatedBy(null);
+        operatorHistoryEntity.setCreatedAt(null);
+        operatorHistoryEntity.setCreatedIpAddress(null);
+        operatorHistoryEntity.setUpdatedBy(null);
+        operatorHistoryEntity.setUpdatedAt(null);
+        operatorHistoryEntity.setUpdatedIpAddress(null);
+        operatorHistoryEntity.setRecordVersion(null);
 
         operatorHistoryEntityDao.insert(operatorHistoryEntity);
 
@@ -238,17 +233,19 @@ public class OperatorForStoreDataSource implements
     /**
      * パスワード履歴のインサートを行います。
      *
-     * @param operatorEntryPack オペレーターエントリーパック
-     * @param operatorEntity オペレーターエンティティ
+     * @param operatorId オペレーターID
+     * @param password パスワード
+     * @param changeDateTime 変更日時
+     * @param passwordChangeType 変更種別
      * @return パスワード履歴エンティティ
      */
-    PasswordHistoryEntity insertPasswordHistory(OperatorEntryPack operatorEntryPack, OperatorEntity operatorEntity) {
+    PasswordHistoryEntity insertPasswordHistory(Long operatorId, String password, LocalDateTime changeDateTime, PasswordChangeType passwordChangeType) {
         PasswordHistoryEntity passwordHistoryEntity = new PasswordHistoryEntity();
 
-        passwordHistoryEntity.setOperatorId(operatorEntity.getOperatorId());
-        passwordHistoryEntity.setChangeDateTime(operatorEntity.getCreatedAt());
-        passwordHistoryEntity.setPassword(operatorEntryPack.getPassword());
-        passwordHistoryEntity.setChangeType(PasswordChangeType.初期.getCode());
+        passwordHistoryEntity.setOperatorId(operatorId);
+        passwordHistoryEntity.setChangeDateTime(changeDateTime);
+        passwordHistoryEntity.setPassword(password);
+        passwordHistoryEntity.setChangeType(passwordChangeType.getCode());
 
         passwordHistoryEntityDao.insert(passwordHistoryEntity);
 
@@ -258,23 +255,24 @@ public class OperatorForStoreDataSource implements
     /**
      * オペレーター_サブシステムロール割当履歴のインサートを行います。
      *
-     * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
+     * @param operatorHistoryId オペレーター履歴ID
+     * @param operatorId オペレーターID
      * @return オペレーター_サブシステムロール割当履歴エンティティリスト
      */
-    List<Operator_SubSystemRoleHistoryEntity> insertOperator_SubSystemRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
+    List<Operator_SubSystemRoleHistoryEntity> insertOperator_SubSystemRoleHistory(Long operatorHistoryId, Long operatorId) {
         List<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = newArrayList();
 
-        // 現割当取得
+        // 現在の割当を取得
         Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
-        operator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorHistoryHeaderEntity.getOperatorId());
+        operator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(operator_SubSystemRoleCriteria,
             Orders.empty().addOrder("Operator_SubSystemRoleId"));
 
         // インサート
-        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()){
+        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
 
             Operator_SubSystemRoleHistoryEntity operator_SubSystemRoleHistoryEntity = Beans.createAndCopy(Operator_SubSystemRoleHistoryEntity.class, operator_SubSystemRole).execute();
-            operator_SubSystemRoleHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
+            operator_SubSystemRoleHistoryEntity.setOperatorHistoryId(operatorHistoryId);
 
             operator_SubSystemRoleHistoryEntityDao.insert(operator_SubSystemRoleHistoryEntity);
 
@@ -287,23 +285,24 @@ public class OperatorForStoreDataSource implements
     /**
      * オペレーター_取引ロール割当履歴のインサートを行います。
      *
-     * @param operatorHistoryHeaderEntity オペレーター履歴ヘッダーエンティティ
+     * @param operatorHistoryId オペレーター履歴ID
+     * @param operatorId オペレーターID
      * @return オペレーター_取引ロール割当履歴エンティティリスト
      */
-    List<Operator_BizTranRoleHistoryEntity> insertOperator_BizTranRoleHistory(OperatorHistoryHeaderEntity operatorHistoryHeaderEntity) {
+    List<Operator_BizTranRoleHistoryEntity> insertOperator_BizTranRoleHistory(Long operatorHistoryId, Long operatorId) {
         List<Operator_BizTranRoleHistoryEntity> operator_BizTranRoleHistoryEntityList = newArrayList();
 
-        // 現割当取得
+        // 現在の割当を取得
         Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
-        operator_BizTranRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorHistoryHeaderEntity.getOperatorId());
+        operator_BizTranRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
         Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria,
             Orders.empty().addOrder("operator_BizTranRoleId"));
 
         // インサート
-        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()){
+        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
 
             Operator_BizTranRoleHistoryEntity operator_BizTranRoleHistoryEntity = Beans.createAndCopy(Operator_BizTranRoleHistoryEntity.class, operator_BizTranRole).execute();
-            operator_BizTranRoleHistoryEntity.setOperatorHistoryId(operatorHistoryHeaderEntity.getOperatorHistoryId());
+            operator_BizTranRoleHistoryEntity.setOperatorHistoryId(operatorHistoryId);
 
             operator_BizTranRoleHistoryEntityDao.insert(operator_BizTranRoleHistoryEntity);
 

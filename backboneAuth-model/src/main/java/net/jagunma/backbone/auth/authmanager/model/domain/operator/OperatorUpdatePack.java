@@ -1,11 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
-
 import java.time.LocalDate;
-import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 
 /**
@@ -23,8 +18,7 @@ public class OperatorUpdatePack {
     private final String branchCode;
     private final AvailableStatus availableStatus;
     private final String changeCause;
-    private List<Operator_SubSystemRole> subSystemRoleList = newArrayList();
-    private List<Operator_BizTranRole> bizTranRoleList = newArrayList();
+    private final Integer recordVersion;
 
     // コンストラクタ
     OperatorUpdatePack(
@@ -38,8 +32,7 @@ public class OperatorUpdatePack {
         String branchCode,
         AvailableStatus availableStatus,
         String changeCause,
-        List<Operator_SubSystemRole> subSystemRoleList,
-        List<Operator_BizTranRole> bizTranRoleList) {
+        Integer recordVersion) {
 
         this.operatorId = operatorId;
         this.operatorName = operatorName;
@@ -51,8 +44,7 @@ public class OperatorUpdatePack {
         this.branchCode = branchCode;
         this.availableStatus = availableStatus;
         this.changeCause = changeCause;
-        this.subSystemRoleList = subSystemRoleList;
-        this.bizTranRoleList = bizTranRoleList;
+        this.recordVersion = recordVersion;
     }
     // ファクトリーメソッド
     public static OperatorUpdatePack createFrom(
@@ -66,8 +58,7 @@ public class OperatorUpdatePack {
         String branchCode,
         AvailableStatus availableStatus,
         String changeCause,
-        List<Operator_SubSystemRole> subSystemRoleList,
-        List<Operator_BizTranRole> bizTranRoleList) {
+        Integer recordVersion) {
 
         return new OperatorUpdatePack(
             operatorId,
@@ -80,8 +71,7 @@ public class OperatorUpdatePack {
             branchCode,
             availableStatus,
             changeCause,
-            subSystemRoleList,
-            bizTranRoleList);
+            recordVersion);
     }
 
     // Getter
@@ -115,10 +105,7 @@ public class OperatorUpdatePack {
     public String getChangeCause() {
         return changeCause;
     }
-    public List<Operator_SubSystemRole> getSubSystemRoleList() {
-        return subSystemRoleList;
-    }
-    public List<Operator_BizTranRole> getBizTranRoleList() {
-        return bizTranRoleList;
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
 }
