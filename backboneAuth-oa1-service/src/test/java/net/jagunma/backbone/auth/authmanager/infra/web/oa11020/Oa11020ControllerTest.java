@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 class Oa11020ControllerTest {
 
@@ -56,7 +57,7 @@ class Oa11020ControllerTest {
     // テスト対象クラス生成
     private Oa11020Controller createOa11020Controller() {
 
-        OperatorEntityDao operatorEntityDao = new OperatorEntityDao(){
+        OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
             @Override
             public List<OperatorEntity> findAll(Orders orders) {
                 return null;
@@ -153,22 +154,22 @@ class Oa11020ControllerTest {
 
     // Oa11020Vo作成
     private Oa11020Vo createOa11020Vo() {
-        Oa11020Vo oa11020Vo = new Oa11020Vo();
+        Oa11020Vo vo = new Oa11020Vo();
 
-        oa11020Vo.setJa(ja);
-        oa11020Vo.setBranchId(branchId);
-        oa11020Vo.setOperatorCodePrefix(operatorCodePrefix);
-        oa11020Vo.setOperatorCode6(operatorCode6);
-        oa11020Vo.setOperatorName(operatorName);
-        oa11020Vo.setMailAddress(mailAddress);
-        oa11020Vo.setExpirationStartDate(expirationStartDate);
-        oa11020Vo.setExpirationEndDate(expirationEndDate);
-        oa11020Vo.setChangeCause(changeCause);
-        oa11020Vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
-        oa11020Vo.setPassword(password);
-        oa11020Vo.setConfirmPassword(confirmPassword);
+        vo.setJa(ja);
+        vo.setBranchId(branchId);
+        vo.setOperatorCodePrefix(operatorCodePrefix);
+        vo.setOperatorCode6(operatorCode6);
+        vo.setOperatorName(operatorName);
+        vo.setMailAddress(mailAddress);
+        vo.setExpirationStartDate(expirationStartDate);
+        vo.setExpirationEndDate(expirationEndDate);
+        vo.setChangeCause(changeCause);
+        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
+        vo.setPassword(password);
+        vo.setConfirmPassword(confirmPassword);
 
-        return oa11020Vo;
+        return vo;
     }
 
     // 店舗群AtMoment作成
@@ -199,7 +200,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#get(Model)}テスト
+     * {@link Oa11020Controller#get(Model model)}テスト
      *  ●パターン
      *    正常
      *
@@ -239,7 +240,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#entry(Model, Oa11020Vo)}テスト
+     * {@link Oa11020Controller#entry(Model model, Oa11020Vo vo)}テスト
      *  ●パターン
      *    正常
      *
@@ -279,7 +280,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#save(Oa11020Vo, Model, Ed01010Vo)}テスト
+     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
      *  ●パターン
      *    正常
      *
@@ -327,7 +328,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#get(Model)}テスト
+     * {@link Oa11020Controller#get(Model model)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -343,7 +344,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#get(Model)}テスト
+     * {@link Oa11020Controller#get(Model model)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -359,7 +360,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#entry(Model, Oa11020Vo)}テスト
+     * {@link Oa11020Controller#entry(Model model, Oa11020Vo vo)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -394,7 +395,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#entry(Model, Oa11020Vo)}テスト
+     * {@link Oa11020Controller#entry(Model model, Oa11020Vo vo)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -410,7 +411,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#save(Oa11020Vo, Model, Ed01010Vo)}テスト
+     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -447,7 +448,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#save(Oa11020Vo, Model, Ed01010Vo)}テスト
+     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -484,7 +485,7 @@ class Oa11020ControllerTest {
     }
 
     /**
-     * {@link Oa11020Controller#save(Oa11020Vo, Model, Ed01010Vo)}テスト
+     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *

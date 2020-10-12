@@ -43,7 +43,7 @@ class Oa11020InitPresenterTest {
     }
 
     /**
-     * {@link Oa11020InitPresenter#bindTo(Oa11020Vo)}テスト
+     * {@link Oa11020InitPresenter#bindTo(Oa11020Vo vo)}テスト
      *  ●パターン
      *    正常
      *

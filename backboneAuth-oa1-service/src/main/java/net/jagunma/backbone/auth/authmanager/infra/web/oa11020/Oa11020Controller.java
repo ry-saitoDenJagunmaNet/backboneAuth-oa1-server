@@ -188,7 +188,7 @@ public class Oa11020Controller extends BaseOfController {
      * @return view名
      */
     @ModelAttribute("session_vo")
-    public Oa11020Vo setSessionVo(Oa11020Vo vo){
+    public Oa11020Vo setSessionVo(Oa11020Vo vo) {
         return vo;
     }
 }

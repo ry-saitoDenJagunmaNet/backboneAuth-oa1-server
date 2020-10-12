@@ -23,7 +23,7 @@ class Oa11020EntryConverterTest {
     String confirmPassword = "pAsSwOrD";
 
     /**
-     * {@link Oa11020EntryConverter#with(Oa11020Vo)}テスト
+     * {@link Oa11020EntryConverter#with(Oa11020Vo vo)}テスト
      *  ●パターン
      *    正常
      *

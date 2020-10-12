@@ -136,7 +136,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#execute(OperatorEntryRequest)}テスト
+     * {@link EntryOperator#execute(OperatorEntryRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -160,7 +160,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
+     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
      *    正常
      *
@@ -184,7 +184,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
+     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
      *    店舗未存在
      *
@@ -212,7 +212,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
      *    正常
      *
@@ -236,7 +236,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
      *    店舗所属JA不一致
      *
@@ -266,11 +266,11 @@ class EntryOperatorTest {
 
     /**
      * {@link EntryOperator#createOperatorEntryPack(
-     *      OperatorEntryRequest,
-     *      String,
-     *      Long,
-     *      String,
-     *      String)}テスト
+     *      OperatorEntryRequest request,
+     *      String operatorCodePrefix,
+     *      Long jaId,
+     *      String jaCode,
+     *      String branchCode)}テスト
      *  ●パターン
      *    正常
      *

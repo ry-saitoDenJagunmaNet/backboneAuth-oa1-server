@@ -12,18 +12,18 @@ class OperatorEntryPackTest {
 
     /**
      * {@link OperatorEntryPack#createFrom(
-     *     String,
-     *     String,
-     *     String,
-     *     LocalDate,
-     *     LocalDate,
-     *     Long,
-     *     String,
-     *     Long,
-     *     String,
-     *     String,
-     *     String,
-     *     String)}テスト
+     *      String operatorCode,
+     *      String operatorName,
+     *      String mailAddress,
+     *      LocalDate expirationStartDate,
+     *      LocalDate expirationEndDate,
+     *      Long jaId,
+     *      String jaCode,
+     *      Long branchId,
+     *      String branchCode,
+     *      String changeCause,
+     *      String password,
+     *      String confirmPassword)}テスト
      *  ●パターン
      *    正常
      *
