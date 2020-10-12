@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * オペレーター格納サービス
+ * オペレーター登録サービス
  */
 @Service
 @Transactional
@@ -81,9 +81,8 @@ public class EntryOperator {
      *
      * @param branchAtMoment 店舗
      */
-    void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
-        if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(
-            AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
+    static void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
+        if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
             throw new GunmaRuntimeException("EOA12002", AuditInfoHolder.getJa().getJaAttribute().getJaCode(), branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
         }
     }

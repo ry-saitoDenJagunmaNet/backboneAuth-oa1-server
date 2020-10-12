@@ -132,8 +132,8 @@ class OperatorForStoreDataSourceTest {
             branchId,
             branchCode,
             availableStatus,
-            changeCause,
-            recordVersion);
+            recordVersion,
+            changeCause);
     }
 
     // テスト対象クラス生成

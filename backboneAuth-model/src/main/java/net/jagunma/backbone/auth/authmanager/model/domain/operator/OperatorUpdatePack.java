@@ -17,8 +17,8 @@ public class OperatorUpdatePack {
     private final Long branchId;
     private final String branchCode;
     private final AvailableStatus availableStatus;
-    private final String changeCause;
     private final Integer recordVersion;
+    private final String changeCause;
 
     // コンストラクタ
     OperatorUpdatePack(
@@ -31,8 +31,8 @@ public class OperatorUpdatePack {
         Long branchId,
         String branchCode,
         AvailableStatus availableStatus,
-        String changeCause,
-        Integer recordVersion) {
+        Integer recordVersion,
+        String changeCause) {
 
         this.operatorId = operatorId;
         this.operatorName = operatorName;
@@ -43,8 +43,8 @@ public class OperatorUpdatePack {
         this.branchId = branchId;
         this.branchCode = branchCode;
         this.availableStatus = availableStatus;
-        this.changeCause = changeCause;
         this.recordVersion = recordVersion;
+        this.changeCause = changeCause;
     }
     // ファクトリーメソッド
     public static OperatorUpdatePack createFrom(
@@ -57,8 +57,8 @@ public class OperatorUpdatePack {
         Long branchId,
         String branchCode,
         AvailableStatus availableStatus,
-        String changeCause,
-        Integer recordVersion) {
+        Integer recordVersion,
+        String changeCause) {
 
         return new OperatorUpdatePack(
             operatorId,
@@ -70,8 +70,8 @@ public class OperatorUpdatePack {
             branchId,
             branchCode,
             availableStatus,
-            changeCause,
-            recordVersion);
+            recordVersion,
+            changeCause);
     }
 
     // Getter
@@ -102,10 +102,10 @@ public class OperatorUpdatePack {
     public AvailableStatus getAvailableStatus() {
         return availableStatus;
     }
-    public String getChangeCause() {
-        return changeCause;
-    }
     public Integer getRecordVersion() {
         return recordVersion;
+    }
+    public String getChangeCause() {
+        return changeCause;
     }
 }
