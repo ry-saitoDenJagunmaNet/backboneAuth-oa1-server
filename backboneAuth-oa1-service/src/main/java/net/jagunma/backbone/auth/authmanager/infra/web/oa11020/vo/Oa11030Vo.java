@@ -6,9 +6,9 @@ import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
- * OA11020 ViewObject
+ * OA11030 ViewObject
  */
-public class Oa11020Vo extends BaseOfResponseVo {
+public class Oa11030Vo extends BaseOfResponseVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,13 +21,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
      */
     private Long branchId;
     /**
-     * 識別（オペレーターコードプレフィックス）
+     * オペレーターコード
      */
-    private String operatorCodePrefix;
-    /**
-     * オペレーターコード（下6桁）
-     */
-    private String operatorCode6;
+    private String operatorCode;
     /**
      * オペレーター名
      */
@@ -45,9 +41,21 @@ public class Oa11020Vo extends BaseOfResponseVo {
      */
     private LocalDate expirationEndDate;
     /**
+     * 機器認証
+     */
+    private Boolean isDeviceAuth;
+    /**
+     * 利用可否状態
+     */
+    private Short availableStatus;
+    /**
      * 変更事由
      */
     private String changeCause;
+    /**
+     * ロック状態
+     */
+    private Short lockStatus;
 
     /**
      * 店舗コンボボックスItemsSource
@@ -55,13 +63,14 @@ public class Oa11020Vo extends BaseOfResponseVo {
     private List<SelectOptionItemSource> branchItemsSource;
 
     /**
-     * パスワード
+     * サブシステムロールテーブル
      */
-    private String password;
+    private List<Oa11030SubsystemRoleTableVo> subsystemRoleTable;
+
     /**
-     * パスワードの確認入力
+     * 取引ロールテーブル
      */
-    private String confirmPassword;
+    private List<Oa11030BizTranRoleTableVo> bizTranRoleTable;
 
     // Getter
     public String getJa() {
@@ -70,11 +79,8 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public Long getBranchId() {
         return branchId;
     }
-    public String getOperatorCodePrefix() {
-        return operatorCodePrefix;
-    }
-    public String getOperatorCode6() {
-        return operatorCode6;
+    public String getOperatorCode() {
+        return operatorCode;
     }
     public String getOperatorName() {
         return operatorName;
@@ -88,17 +94,26 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
     }
+    public Boolean getDeviceAuth() {
+        return isDeviceAuth;
+    }
+    public Short getAvailableStatus() {
+        return availableStatus;
+    }
     public String getChangeCause() {
         return changeCause;
+    }
+    public Short getLockStatus() {
+        return lockStatus;
     }
     public List<SelectOptionItemSource> getBranchItemsSource() {
         return branchItemsSource;
     }
-    public String getPassword() {
-        return password;
+    public List<Oa11030SubsystemRoleTableVo> getSubsystemRoleTable() {
+        return subsystemRoleTable;
     }
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public List<Oa11030BizTranRoleTableVo> getBizTranRoleTable() {
+        return bizTranRoleTable;
     }
 
     // Setter
@@ -108,11 +123,8 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
     }
-    public void setOperatorCodePrefix(String operatorCodePrefix) {
-        this.operatorCodePrefix = operatorCodePrefix;
-    }
-    public void setOperatorCode6(String operatorCode6) {
-        this.operatorCode6 = operatorCode6;
+    public void setOperatorCode(String operatorCode) {
+        this.operatorCode = operatorCode;
     }
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
@@ -126,16 +138,42 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public void setExpirationEndDate(LocalDate expirationEndDate) {
         this.expirationEndDate = expirationEndDate;
     }
+    public void setDeviceAuth(Boolean deviceAuth) {
+        isDeviceAuth = deviceAuth;
+    }
+    public void setAvailableStatus(Short availableStatus) {
+        this.availableStatus = availableStatus;
+    }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
+    }
+    public void setLockStatus(Short lockStatus) {
+        this.lockStatus = lockStatus;
     }
     public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
         this.branchItemsSource = branchItemsSource;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSubsystemRoleTable(List<Oa11030SubsystemRoleTableVo> subsystemRoleTable) {
+        this.subsystemRoleTable = subsystemRoleTable;
     }
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
+    public void setBizTranRoleTable(List<Oa11030BizTranRoleTableVo> bizTranRoleTable) {
+        this.bizTranRoleTable = bizTranRoleTable;
     }
+}
+
+/**
+ * サブシステムロールテーブル
+ */
+class Oa11030SubsystemRoleTableVo {
+    private String roleName;
+    private String expirationDate;
+}
+
+/**
+ * 取引ロールテーブル
+ */
+class Oa11030BizTranRoleTableVo {
+    private String roleCode;
+    private String roleName;
+    private String expirationDate;
 }

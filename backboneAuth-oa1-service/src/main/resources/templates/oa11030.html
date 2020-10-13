@@ -105,36 +105,23 @@
 		</section>
 
 		<section>
-			<!-- ロック状態 -->
-			<div class="row oa_readonly">
+			<!-- 機器認証 -->
+			<div class="row oa_required">
 				<div class="row">
 					<div class="col s3">
-						<label class="oa_content_label">ロック状態</label>
+						<label class="oa_content_label">機器認証</label>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col s1">
-						<div id="lock_status_mark" class="oaex_lock_status_unlock">●</div>
-					</div>
-					<div class="col s4" style="display: inline;">
-						<div class="input-field">
-							<input type="text" id="lock_status" readonly="readonly" value="アンロック"></input>
-							<label for="lock_status"></label>
+					<div class="col s6">
+						<div class="switch">
+							<label>
+								未使用
+								<input type="checkbox"></input>
+								<span class="lever"></span>
+								使用
+							</label>
 						</div>
-					</div>
-					<div class="col s7">
-						<a class="btn waves-effect waves-light" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
-					</div>
-				</div>			
-				<!-- ★モック状態操作用★ -->
-				<div class="row">
-					<div class="switch">
-						<label>
-							★モック状態操作用★ unlock
-							<input type="checkbox" id="mockup_lock_status" onchange="oaex_mockupLockStatus_onChange()"></input>
-							<span class="lever"></span>
-							lock
-						</label>
 					</div>
 				</div>
 			</div>
@@ -158,35 +145,48 @@
 					</div>
 				</div>
 			</div>
-			<!-- 機器認証 -->
-			<div class="row oa_required">
-				<div class="row">
-					<div class="col s3">
-						<label class="oa_content_label">機器認証</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s6">
-						<div class="switch">
-							<label>
-								未使用
-								<input type="checkbox"></input>
-								<span class="lever"></span>
-								使用
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section>
 			<!-- 変更事由 -->
 			<div class="row oa_required">
 				<div class="col s8">
 					<div class="input-field">
 						<input type="text" id="change_cause" class="validate" placeholder="認証機器使用開始／退職／再就職…"></input>
 						<label for="change_cause">変更事由</label>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<!-- ロック状態 -->
+			<div class="row oa_readonly">
+				<div class="row">
+					<div class="col s3">
+						<label class="oa_content_label">ロック状態</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s1">
+						<div id="lock_status_mark" class="oaex_lock_status_unlock">●</div>
+					</div>
+					<div class="col s4" style="display: inline;">
+						<div class="input-field">
+							<input type="text" id="lock_status" readonly="readonly" value="アンロック"></input>
+							<label for="lock_status"></label>
+						</div>
+					</div>
+					<div class="col s7">
+						<a class="btn waves-effect waves-light" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
+					</div>
+				</div>
+				<!-- ★モック状態操作用★ -->
+				<div class="row">
+					<div class="switch">
+						<label>
+							★モック状態操作用★ unlock
+							<input type="checkbox" id="mockup_lock_status" onchange="oaex_mockupLockStatus_onChange()"></input>
+							<span class="lever"></span>
+							lock
+						</label>
 					</div>
 				</div>
 			</div>
