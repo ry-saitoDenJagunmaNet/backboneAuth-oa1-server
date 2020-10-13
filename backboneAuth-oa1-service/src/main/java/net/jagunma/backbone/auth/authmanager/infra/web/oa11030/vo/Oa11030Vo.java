@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo;
+package net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo;
 
 import java.time.LocalDate;
 import java.util.List;
