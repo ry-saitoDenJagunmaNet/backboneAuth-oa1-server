@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
@@ -28,23 +30,25 @@ import net.jagunma.common.values.model.ja.JaCode;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class EntryOperatorTest {
+class UpdateOperatorTest {
 
     // 実行既定値
-    private String operatorCode6 = "123456";
+    private Long operatorId = 123456L;
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
     private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
-    private String changeCause = "新職員の入組による登録";
-    private String password = "PaSsWoRd";
-    private String confirmPassword = "PaSsWoRd";
-    private OperatorEntryRequest createRequest() {
-        return new OperatorEntryRequest() {
+    private String branchCode = "001";
+    private AvailableStatus availableStatus = AvailableStatus.利用可能;
+    private Integer recordVersion = 1;
+    private String changeCause = "認証機器使用開始";
+    private OperatorUpdateRequest createRequest() {
+        return new OperatorUpdateRequest() {
             @Override
-            public String getOperatorCode6() {
-                return operatorCode6;
+            public Long getOperatorId() {
+                return operatorId;
             }
             @Override
             public String getOperatorName() {
@@ -63,26 +67,30 @@ class EntryOperatorTest {
                 return expirationEndDate;
             }
             @Override
+            public Boolean getIsDeviceAuth() {
+                return isDeviceAuth;
+            }
+            @Override
             public Long getBranchId() {
                 return branchId;
+            }
+            @Override
+            public AvailableStatus getAvailableStatus() {
+                return availableStatus;
+            }
+            @Override
+            public Integer getRecordVersion() {
+                return recordVersion;
             }
             @Override
             public String getChangeCause() {
                 return changeCause;
             }
-            @Override
-            public String getPassword() {
-                return password;
-            }
-            @Override
-            public String getConfirmPassword() {
-                return confirmPassword;
-            }
         };
     }
 
     // テスト対象クラス生成
-    private EntryOperator createEntryOperator() {
+    private UpdateOperator createUpdateOperator() {
         OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
             @Override
             public void entry(OperatorEntryPack operatorEntryPack) {
@@ -109,7 +117,7 @@ class EntryOperatorTest {
             }
         };
 
-        return new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository);
+        return new UpdateOperator(operatorRepositoryForStore, branchAtMomentRepository);
     }
 
     // 店舗AtMoment
@@ -125,18 +133,19 @@ class EntryOperatorTest {
                     .build())
                 .build())
             .withBranchAttribute(BranchAttribute.builder()
-                .withBranchCode(BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
+                .withBranchCode(
+                    BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
                 .build())
             .build();
     }
 
-    EntryOperatorTest () {
+    UpdateOperatorTest () {
         // 認証情報
         TestAuditInfoHolder.setAuthInf();
     }
 
     /**
-     * {@link EntryOperator#execute(OperatorEntryRequest request)}テスト
+     * {@link UpdateOperator#execute(OperatorUpdateRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -148,43 +157,19 @@ class EntryOperatorTest {
     @Tag(TestSize.SMALL)
     void execute_test() {
         // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
+        UpdateOperator updateOperator = createUpdateOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createRequest();
+        OperatorUpdateRequest operatorUpdateRequest = createRequest();
 
         assertThatCode(() ->
             // 実行
-            entryOperator.execute(operatorEntryRequest))
+            updateOperator.execute(operatorUpdateRequest))
             .doesNotThrowAnyException();
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test() {
-        // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
-
-        // 実行値
-        branchId = AuditInfoHolder.getBranch().getIdentifier();
-
-        assertThatCode(() ->
-            // 実行
-            entryOperator.getBranchAtMoment(branchId))
-            .doesNotThrowAnyException();
-    }
-
-    /**
-     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
+     * {@link UpdateOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
      *    店舗未存在
      *
@@ -196,14 +181,14 @@ class EntryOperatorTest {
     @Tag(TestSize.SMALL)
     void getBranchAtMoment_test1() {
         // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
+        UpdateOperator updateOperator = createUpdateOperator();
 
         // 実行値
         branchId = 999L;
 
         assertThatThrownBy(() ->
             // 実行
-            entryOperator.getBranchAtMoment(branchId))
+            updateOperator.getBranchAtMoment(branchId))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA12001");
@@ -212,103 +197,43 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void checkBranchBelongJa_test() {
-        // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
-
-        // 実行値
-        BranchAtMoment branchAtMoment = createBranchAtMoment();
-
-        assertThatCode(() ->
-            // 実行
-            entryOperator.checkBranchBelongJa(branchAtMoment))
-            .doesNotThrowAnyException();
-    }
-
-    /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
-     *  ●パターン
-     *    店舗所属JA不一致
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void checkBranchBelongJa_test1() {
-        // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
-
-        // 実行値
-        BranchAtMoment branchAtMoment = createBranchAtMoment("999");
-
-        assertThatThrownBy(() ->
-            // 実行
-            entryOperator.checkBranchBelongJa(branchAtMoment))
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA12002");
-                assertThat(e.getArgs()).containsSequence(AuditInfoHolder.getJa().getJaAttribute().getJaCode());
-                assertThat(e.getArgs()).containsSequence(branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
-            });
-    }
-
-    /**
-     * {@link EntryOperator#createOperatorEntryPack(
-     *      OperatorEntryRequest request,
-     *      String operatorCodePrefix,
-     *      Long jaId,
-     *      String jaCode,
+     * {@link UpdateOperator#createOperatorUpdatePack(
+     *      OperatorUpdateRequest request,
      *      String branchCode)}テスト
      *  ●パターン
      *    正常
      *
      *  ●検証事項
-     *  ・OperatorEntryPackへのセット
+     *  ・OperatorUpdatePackへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void createOperatorEntryPack_test() {
+    void createOperatorUpdatePack_test() {
         // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
+        UpdateOperator updateOperator = createUpdateOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createRequest();
+        OperatorUpdateRequest operatorUpdateRequest = createRequest();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行
-        OperatorEntryPack operatorEntryPack = entryOperator.createOperatorEntryPack(
-            operatorEntryRequest,
-            OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix(),
-            AuditInfoHolder.getJa().getIdentifier(),
-            AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
+        OperatorUpdatePack operatorUpdatePack = updateOperator.createOperatorUpdatePack(
+            operatorUpdateRequest,
             branchAtMoment.getBranchAttribute().getBranchCode().getValue());
 
         // 結果検証
-        assertTrue(operatorEntryPack instanceof OperatorEntryPack);
-        assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + operatorEntryRequest.getOperatorCode6());
-        assertThat(operatorEntryPack.getOperatorName()).isEqualTo(operatorEntryRequest.getOperatorName());
-        assertThat(operatorEntryPack.getMailAddress()).isEqualTo(operatorEntryRequest.getMailAddress());
-        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(operatorEntryRequest.getExpirationStartDate());
-        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(operatorEntryRequest.getExpirationEndDate());
-        assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
-        assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-        assertThat(operatorEntryPack.getBranchId()).isEqualTo(operatorEntryRequest.getBranchId());
-        assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
-        assertThat(operatorEntryPack.getChangeCause()).isEqualTo(operatorEntryRequest.getChangeCause());
-        assertThat(operatorEntryPack.getPassword()).isEqualTo(operatorEntryRequest.getPassword());
-        assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(operatorEntryRequest.getConfirmPassword());
+        assertTrue(operatorUpdatePack instanceof OperatorUpdatePack);
+        assertThat(operatorUpdatePack.getOperatorId()).isEqualTo(operatorUpdateRequest.getOperatorId());
+        assertThat(operatorUpdatePack.getOperatorName()).isEqualTo(operatorUpdateRequest.getOperatorName());
+        assertThat(operatorUpdatePack.getMailAddress()).isEqualTo(operatorUpdateRequest.getMailAddress());
+        assertThat(operatorUpdatePack.getExpirationStartDate()).isEqualTo(operatorUpdateRequest.getExpirationStartDate());
+        assertThat(operatorUpdatePack.getExpirationEndDate()).isEqualTo(operatorUpdateRequest.getExpirationEndDate());
+        assertThat(operatorUpdatePack.getIsDeviceAuth()).isEqualTo(operatorUpdateRequest.getIsDeviceAuth());
+        assertThat(operatorUpdatePack.getBranchId()).isEqualTo(operatorUpdateRequest.getBranchId());
+        assertThat(operatorUpdatePack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
+        assertThat(operatorUpdatePack.getAvailableStatus()).isEqualTo(operatorUpdateRequest.getAvailableStatus());
+        assertThat(operatorUpdatePack.getRecordVersion()).isEqualTo(operatorUpdateRequest.getRecordVersion());
+        assertThat(operatorUpdatePack.getChangeCause()).isEqualTo(operatorUpdateRequest.getChangeCause());
     }
 }
