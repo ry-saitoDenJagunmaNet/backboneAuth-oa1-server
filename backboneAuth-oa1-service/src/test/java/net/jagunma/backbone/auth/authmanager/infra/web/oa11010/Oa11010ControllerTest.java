@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BizTranRoleReference;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
@@ -221,7 +221,7 @@ class Oa11010ControllerTest {
                 return new int[0];
             }
         };
-        BranchReference branchReference = new BranchReference(branchAtMomentRepository, operatorEntityDao) {
+        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
                 return createBranchesAtMoment();
             }
@@ -234,7 +234,7 @@ class Oa11010ControllerTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            branchReference,
+            simpleSearchBranch,
             branchAtMomentRepository) {
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getPageNo() == -1 の場合：RuntimeException を発生させる
@@ -266,7 +266,7 @@ class Oa11010ControllerTest {
                 return null;
             }
         };
-        BizTranRoleReference bizTranRoleReference = new BizTranRoleReference(bizTranRolesRepository) {
+        SimpleSearchBizTranRole simpleSearchBizTranRole = new SimpleSearchBizTranRole(bizTranRolesRepository) {
             public BizTranRoles getBizTranRoles() {
                 return createBizTranRoles();
             }
@@ -274,8 +274,8 @@ class Oa11010ControllerTest {
 
         return new Oa11010Controller(
             searchOperator,
-            bizTranRoleReference,
-            branchReference);
+            simpleSearchBizTranRole,
+            simpleSearchBranch);
     }
 
     // Oa11010Vo作成

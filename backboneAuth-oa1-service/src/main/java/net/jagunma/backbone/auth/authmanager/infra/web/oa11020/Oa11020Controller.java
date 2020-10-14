@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
@@ -51,14 +51,14 @@ public class Oa11020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11020Controller.class);
 
-    private final BranchReference branchReference;
+    private final SimpleSearchBranch simpleSearchBranch;
     private final EntryOperator entryOperator;
 
     // コンストラクタ
     public Oa11020Controller(
-        BranchReference branchReference,
+        SimpleSearchBranch simpleSearchBranch,
         EntryOperator entryOperator) {
-        this.branchReference = branchReference;
+        this.simpleSearchBranch = simpleSearchBranch;
         this.entryOperator = entryOperator;
     }
 
@@ -81,7 +81,8 @@ public class Oa11020Controller extends BaseOfController {
             presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
             presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
             presenter.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
-            presenter.setBranchesAtMoment(branchReference.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
+            presenter.setBranchesAtMoment(
+                simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
 
             presenter.bindTo(vo);
 

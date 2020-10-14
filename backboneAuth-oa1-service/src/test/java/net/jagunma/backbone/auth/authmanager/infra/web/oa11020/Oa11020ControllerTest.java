@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 class Oa11020ControllerTest {
 
@@ -126,7 +125,7 @@ class Oa11020ControllerTest {
                 return null;
             }
         };
-        BranchReference branchReference = new BranchReference(branchAtMomentRepository, operatorEntityDao) {
+        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
                 return createBranchesAtMoment();
             }
@@ -149,7 +148,7 @@ class Oa11020ControllerTest {
             }
         };
 
-        return new Oa11020Controller(branchReference, entryOperator);
+        return new Oa11020Controller(simpleSearchBranch, entryOperator);
     }
 
     // Oa11020Vo作成

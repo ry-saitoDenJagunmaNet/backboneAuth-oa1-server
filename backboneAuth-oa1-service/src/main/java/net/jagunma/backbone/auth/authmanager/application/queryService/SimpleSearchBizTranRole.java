@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
  * 取引ロール検索サービス
  */
 @Service
-public class BizTranRoleReference {
+public class SimpleSearchBizTranRole {
 
     private final BizTranRolesRepository bizTranRolesRepository;
 
     // コンストラクタ
-    public BizTranRoleReference(BizTranRolesRepository bizTranRolesRepository) {
+    public SimpleSearchBizTranRole(BizTranRolesRepository bizTranRolesRepository) {
         this.bizTranRolesRepository = bizTranRolesRepository;
     }
 

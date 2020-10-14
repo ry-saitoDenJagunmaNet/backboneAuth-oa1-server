@@ -22,13 +22,13 @@ import net.jagunma.common.values.model.ja.JaCode;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BranchReference {
+public class SimpleSearchBranch {
 
     private final BranchAtMomentRepository branchAtMomentRepository;
     private final OperatorEntityDao operatorEntityDao;
 
     // コンストラクタ
-    public BranchReference(BranchAtMomentRepository branchAtMomentRepository,
+    public SimpleSearchBranch(BranchAtMomentRepository branchAtMomentRepository,
         OperatorEntityDao operatorEntityDao) {
 
         this.branchAtMomentRepository = branchAtMomentRepository;

@@ -70,7 +70,7 @@ public class SearchOperator {
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
     private final BranchAtMomentRepository branchAtMomentRepository;
-    private final BranchReference branchReference;
+    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public SearchOperator(OperatorsRepository operatorsRepository,
@@ -80,7 +80,7 @@ public class SearchOperator {
         SignOutTracesRepository signOutTracesRepository,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
         Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        BranchReference branchReference,
+        SimpleSearchBranch simpleSearchBranch,
         BranchAtMomentRepository branchAtMomentRepository) {
 
         this.operatorsRepository = operatorsRepository;
@@ -91,7 +91,7 @@ public class SearchOperator {
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
         this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
         this.branchAtMomentRepository = branchAtMomentRepository;
-        this.branchReference = branchReference;
+        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
@@ -120,7 +120,7 @@ public class SearchOperator {
         // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
 //        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(createBranchAtMomentCriteria(request),
 //            Orders.empty().addOrder("branchAttribute.BranchCode.value"));
-        BranchesAtMoment branchesAtMoment = branchReference.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
+        BranchesAtMoment branchesAtMoment = simpleSearchBranch.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
         // オペレーター_サブシステムロール割当検索
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));

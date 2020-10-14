@@ -212,7 +212,7 @@ class SearchOperatorTest {
                 return new int[0];
             }
         };
-        BranchReference branchReference = new BranchReference(branchAtMomentRepository, operatorEntityDao) {
+        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
                 return createBranchesAtMoment();
             }
@@ -224,7 +224,7 @@ class SearchOperatorTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            branchReference,
+            simpleSearchBranch,
             branchAtMomentRepository);
     }
 
