@@ -1,39 +1,26 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
+package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferenceXXX;
 
 import java.time.LocalDate;
 
-public interface OparatorSearchBizTranRoleRequest {
-
+public interface OparatorSearchSubSystemRoleRequest {
     /**
-     * 取引ロール選択のＧｅｔ
+     * サブシステムロール選択のＧｅｔ
      *
-     * @return 取引ロール選択
+     * @return サブシステムロール選択
      */
-    Short getBizTranRoleSelected();
+    Short getSubSystemRoleSelected();
     /**
-     * 取引ロールIDのＧｅｔ
+     * サブシステムロールコードのＧｅｔ
      *
-     * @return 取引ロールID
+     * @return サブシステムロールコード
      */
-    long getBizTranRoleId();
+    String getSubSystemRoleCode();
     /**
-     * 取引ロールコードのＧｅｔ
+     * サブシステムロール名のＧｅｔ
      *
-     * @return 取引ロールコード
+     * @return サブシステムロール名
      */
-    String getBizTranRoleCode();
-    /**
-     * 取引ロール名のＧｅｔ
-     *
-     * @return 取引ロール名
-     */
-    String getBizTranRoleName();
-    /**
-     * サブシステムコードのＧｅｔ
-     *
-     * @return サブシステムコード
-     */
-    String getSubSystemCode();
+    String getSubSystemRoleName();
     /**
      * 有効期限選択のＧｅｔ
      *
@@ -70,4 +57,5 @@ public interface OparatorSearchBizTranRoleRequest {
      * @return 条件指定日終了（終了日）
      */
     LocalDate getExpirationEndDateTo();
+
 }

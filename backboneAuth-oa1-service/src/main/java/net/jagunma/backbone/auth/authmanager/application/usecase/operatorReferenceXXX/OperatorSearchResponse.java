@@ -1,12 +1,9 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
+package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferenceXXX;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
