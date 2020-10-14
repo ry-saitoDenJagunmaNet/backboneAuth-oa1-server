@@ -103,7 +103,7 @@ public class SearchOperator {
     public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
 
         // パラメーターの検証
-        SeatchOperatorValidator.with(request).validate();
+        SearchOperatorValidator.with(request).validate();
 
         // ページ
         response.setPageNo(request.getPageNo());

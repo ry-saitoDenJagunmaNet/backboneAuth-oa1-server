@@ -9,18 +9,18 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 /**
  * オペレーター検索サービス Validator
  */
-public class SeatchOperatorValidator {
+public class SearchOperatorValidator {
 
     private final OperatorSearchRequest request;
 
     // コンストラクタ
-    SeatchOperatorValidator(OperatorSearchRequest request) {
+    SearchOperatorValidator(OperatorSearchRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static SeatchOperatorValidator with(OperatorSearchRequest request) {
-        return new SeatchOperatorValidator(request);
+    public static SearchOperatorValidator with(OperatorSearchRequest request) {
+        return new SearchOperatorValidator(request);
     }
 
     /**
