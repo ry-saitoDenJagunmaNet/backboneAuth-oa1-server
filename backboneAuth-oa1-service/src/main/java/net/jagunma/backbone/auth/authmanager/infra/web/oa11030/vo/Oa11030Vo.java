@@ -13,6 +13,14 @@ public class Oa11030Vo extends BaseOfResponseVo {
     private static final long serialVersionUID = 1L;
 
     /**
+     * オペレーターID
+     */
+    private Long operatorId;
+    /**
+     * レコードバージョン
+     */
+    private Integer recordVersion;
+    /**
      * ＪＡ
      */
     private String ja;
@@ -59,11 +67,11 @@ public class Oa11030Vo extends BaseOfResponseVo {
     /**
      * サブシステムロールテーブル
      */
-    private List<Oa11030SubsystemRoleTableVo> subsystemRoleTable;
+    private List<Oa11030SubsystemRoleTableVo> Oa11030SubsystemRoleTableVoList;
     /**
      * 取引ロールテーブル
      */
-    private List<Oa11030BizTranRoleTableVo> bizTranRoleTable;
+    private List<Oa11030BizTranRoleTableVo> Oa11030BizTranRoleTableVoList;
 
     /**
      * 店舗コンボボックスItemsSource
@@ -71,6 +79,12 @@ public class Oa11030Vo extends BaseOfResponseVo {
     private List<SelectOptionItemSource> branchItemsSource;
 
     // Getter
+    public Long getOperatorId() {
+        return operatorId;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
+    }
     public String getJa() {
         return ja;
     }
@@ -104,17 +118,23 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public Short getLockStatus() {
         return lockStatus;
     }
-    public List<Oa11030SubsystemRoleTableVo> getSubsystemRoleTable() {
-        return subsystemRoleTable;
+    public List<Oa11030SubsystemRoleTableVo> getOa11030SubsystemRoleTableVoList() {
+        return Oa11030SubsystemRoleTableVoList;
     }
-    public List<Oa11030BizTranRoleTableVo> getBizTranRoleTable() {
-        return bizTranRoleTable;
+    public List<Oa11030BizTranRoleTableVo> getOa11030BizTranRoleTableVoList() {
+        return Oa11030BizTranRoleTableVoList;
     }
     public List<SelectOptionItemSource> getBranchItemsSource() {
         return branchItemsSource;
     }
 
     // Setter
+    public void setOperatorId(Long operatorId) {
+        this.operatorId = operatorId;
+    }
+    public void setRecordVersion(Integer recordVersion) {
+        this.recordVersion = recordVersion;
+    }
     public void setJa(String ja) {
         this.ja = ja;
     }
@@ -148,11 +168,11 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setLockStatus(Short lockStatus) {
         this.lockStatus = lockStatus;
     }
-    public void setSubsystemRoleTable(List<Oa11030SubsystemRoleTableVo> subsystemRoleTable) {
-        this.subsystemRoleTable = subsystemRoleTable;
+    public void setOa11030SubsystemRoleTableVoList(List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList) {
+        Oa11030SubsystemRoleTableVoList = oa11030SubsystemRoleTableVoList;
     }
-    public void setBizTranRoleTable(List<Oa11030BizTranRoleTableVo> bizTranRoleTable) {
-        this.bizTranRoleTable = bizTranRoleTable;
+    public void setOa11030BizTranRoleTableVoList(List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList) {
+        Oa11030BizTranRoleTableVoList = oa11030BizTranRoleTableVoList;
     }
     public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
         this.branchItemsSource = branchItemsSource;
