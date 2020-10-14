@@ -21,7 +21,7 @@ class Oa11020InitPresenterTest {
     // 実行既定値
     private String jaCode = "006";
     private String jaName = "JA前橋市";
-    private String prefix = "yu";
+    private String operatorCodePrefix = "yu";
 
     // 店舗群AtMoment作成
     private BranchesAtMoment createBranchesAtMoment() {
@@ -59,14 +59,14 @@ class Oa11020InitPresenterTest {
         Oa11020InitPresenter presenter = new Oa11020InitPresenter();
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
-        presenter.setOperatorCodePrefix(prefix);
+        presenter.setOperatorCodePrefix(operatorCodePrefix);
         presenter.setBranchesAtMoment(createBranchesAtMoment());
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setBranchId(null);
-        expectedVo.setOperatorCodePrefix(prefix);
+        expectedVo.setOperatorCodePrefix(operatorCodePrefix);
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);
         expectedVo.setMailAddress(null);
