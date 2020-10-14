@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferenceXXX;
+package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;

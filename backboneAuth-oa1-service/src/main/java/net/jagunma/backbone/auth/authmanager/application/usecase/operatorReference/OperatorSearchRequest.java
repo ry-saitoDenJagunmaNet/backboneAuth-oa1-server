@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferenceXXX;
+package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
 import java.time.LocalDate;
 import java.util.List;
