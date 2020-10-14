@@ -12,15 +12,15 @@ import org.junit.jupiter.api.Test;
 class Oa11020EntryConverterTest {
 
     // 実行既定値
-    String operatorCode6 = "123456";
-    String operatorName = "オペレーター名";
-    String mailAddress = "test@den.jagunma.net";
-    LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-    Long branchId = 1L;
-    String changeCause = "新職員の入組による登録";
-    String password = "PaSsWoRd";
-    String confirmPassword = "pAsSwOrD";
+    private String operatorCode6 = "123456";
+    private String operatorName = "オペレーター名";
+    private String mailAddress = "test@den.jagunma.net";
+    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private Long branchId = 1L;
+    private String changeCause = "新職員の入組による登録";
+    private String password = "PaSsWoRd";
+    private String confirmPassword = "pAsSwOrD";
 
     /**
      * {@link Oa11020EntryConverter#with(Oa11020Vo vo)}テスト
