@@ -52,7 +52,7 @@ class Oa11020InitPresenter {
     }
 
     /**
-     * voに変換に変換します。
+     * voに変換します。
      *
      * @param vo
      */
