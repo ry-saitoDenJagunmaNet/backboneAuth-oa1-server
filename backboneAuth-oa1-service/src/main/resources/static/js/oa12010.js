@@ -1,3 +1,34 @@
+/** Thymeleaf で起動時のみ実行 **/
+
+function oaex_th_onload() {
+	_isThymeleaf = true;
+	oaex_mode_onChange();
+}
+
+/**
+ * 実行ボタン（インポート／エクスポート）クリックイベントです。
+ */
+function oaex_th_executeBtn_onClick() {
+	if (document.getElementById("mode_export").checked) {
+		document.forms[0].action = "export";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
+	} else if (document.getElementById("mode_import").checked) {
+//		document.forms[0].action = "import";
+//		document.forms[0].method = "POST";
+//		document.forms[0].submit();
+	}
+}
+
+/**
+ * インポートボタンクリックイベントです。
+ */
+function oaex_th_impotBtn_onClick() {
+//	document.forms[0].action = "import";
+//	document.forms[0].method = "POST";
+//	document.forms[0].submit();
+}
+
 /**
  * 画面Loadイベント
  */
@@ -37,6 +68,11 @@ function oaex_mode_onChange() {
  * 実行ボタン（インポート／エクスポート）クリックイベントです。
  */
 function oaex_executeBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_executeBtn_onClick();
+		return;
+	}
+
 	return;
 }
 
