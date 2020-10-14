@@ -19,9 +19,9 @@ import org.junit.jupiter.api.Test;
 class Oa11020InitPresenterTest {
 
     // 実行既定値
-    String jaCode = "006";
-    String jaName = "JA前橋市";
-    String prefix = "yu";
+    private String jaCode = "006";
+    private String jaName = "JA前橋市";
+    private String prefix = "yu";
 
     // 店舗群AtMoment作成
     private BranchesAtMoment createBranchesAtMoment() {

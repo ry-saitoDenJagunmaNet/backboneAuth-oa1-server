@@ -56,21 +56,19 @@ public class Oa11030Vo extends BaseOfResponseVo {
      * ロック状態
      */
     private Short lockStatus;
+    /**
+     * サブシステムロールテーブル
+     */
+    private List<Oa11030SubsystemRoleTableVo> subsystemRoleTable;
+    /**
+     * 取引ロールテーブル
+     */
+    private List<Oa11030BizTranRoleTableVo> bizTranRoleTable;
 
     /**
      * 店舗コンボボックスItemsSource
      */
     private List<SelectOptionItemSource> branchItemsSource;
-
-    /**
-     * サブシステムロールテーブル
-     */
-    private List<Oa11030SubsystemRoleTableVo> subsystemRoleTable;
-
-    /**
-     * 取引ロールテーブル
-     */
-    private List<Oa11030BizTranRoleTableVo> bizTranRoleTable;
 
     // Getter
     public String getJa() {
@@ -94,7 +92,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
     }
-    public Boolean getDeviceAuth() {
+    public Boolean getIsDeviceAuth() {
         return isDeviceAuth;
     }
     public Short getAvailableStatus() {
@@ -106,14 +104,14 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public Short getLockStatus() {
         return lockStatus;
     }
-    public List<SelectOptionItemSource> getBranchItemsSource() {
-        return branchItemsSource;
-    }
     public List<Oa11030SubsystemRoleTableVo> getSubsystemRoleTable() {
         return subsystemRoleTable;
     }
     public List<Oa11030BizTranRoleTableVo> getBizTranRoleTable() {
         return bizTranRoleTable;
+    }
+    public List<SelectOptionItemSource> getBranchItemsSource() {
+        return branchItemsSource;
     }
 
     // Setter
@@ -138,8 +136,8 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setExpirationEndDate(LocalDate expirationEndDate) {
         this.expirationEndDate = expirationEndDate;
     }
-    public void setDeviceAuth(Boolean deviceAuth) {
-        isDeviceAuth = deviceAuth;
+    public void setIsDeviceAuth(Boolean isDeviceAuth) {
+        this.isDeviceAuth = isDeviceAuth;
     }
     public void setAvailableStatus(Short availableStatus) {
         this.availableStatus = availableStatus;
@@ -150,30 +148,13 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setLockStatus(Short lockStatus) {
         this.lockStatus = lockStatus;
     }
-    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
-        this.branchItemsSource = branchItemsSource;
-    }
     public void setSubsystemRoleTable(List<Oa11030SubsystemRoleTableVo> subsystemRoleTable) {
         this.subsystemRoleTable = subsystemRoleTable;
     }
     public void setBizTranRoleTable(List<Oa11030BizTranRoleTableVo> bizTranRoleTable) {
         this.bizTranRoleTable = bizTranRoleTable;
     }
-}
-
-/**
- * サブシステムロールテーブル
- */
-class Oa11030SubsystemRoleTableVo {
-    private String roleName;
-    private String expirationDate;
-}
-
-/**
- * 取引ロールテーブル
- */
-class Oa11030BizTranRoleTableVo {
-    private String roleCode;
-    private String roleName;
-    private String expirationDate;
+    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
+        this.branchItemsSource = branchItemsSource;
+    }
 }
