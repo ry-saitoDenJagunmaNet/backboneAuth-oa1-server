@@ -20,11 +20,11 @@ public class BizTranRole_BizTranGrpsSheet {
     /**
      * 取引ロール編成リストから作成します。
      *
-     * @param bizTranRoleOrganizationList 取引ロール編成リスト
+     * @param bizTranRole_BizTranGrpSheetList 取引ロール編成リスト
      * @return 取引ロール編成群
      */
-    public static BizTranRole_BizTranGrpsSheet createFrom(Collection<BizTranRole_BizTranGrpSheet> bizTranRoleOrganizationList) {
-        return new BizTranRole_BizTranGrpsSheet(bizTranRoleOrganizationList);
+    public static BizTranRole_BizTranGrpsSheet createFrom(Collection<BizTranRole_BizTranGrpSheet> bizTranRole_BizTranGrpSheetList) {
+        return new BizTranRole_BizTranGrpsSheet(bizTranRole_BizTranGrpSheetList);
     }
 
     /**

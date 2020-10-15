@@ -1,14 +1,14 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import java.io.ByteArrayOutputStream;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleOrganizationExport.BizTranRoleOrganizationExportResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportWriteResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート エクスポート Response Presenter
+ * OA12010 取引ロール編成インポート＆エクスポート Excel Weiteサービス Response Presenter
  */
-public class Oa12010OrganizationExportPresenter implements BizTranRoleOrganizationExportResponse {
+public class Oa12010CompositionExportWritePresenter implements
+    BizTranRoleCompositionExportWriteResponse {
 
     private ExcelContainer excelContainer;
 
@@ -29,4 +29,5 @@ public class Oa12010OrganizationExportPresenter implements BizTranRoleOrganizati
     public void bindTo(Oa12010Vo vo) {
         vo.setExportExcelBook(excelContainer.getExcelOut().toByteArray());
     }
+
 }

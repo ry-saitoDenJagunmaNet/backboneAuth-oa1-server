@@ -8,11 +8,14 @@ import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -26,19 +29,14 @@ import org.springframework.stereotype.Component;
  * 取引ロール編成作成
  */
 @Component
-public class BizTranRoleCompositionBookForStore implements
-    BizTranRoleCompositionBookRepositoryForStore {
+public class BizTranRoleCompositionBookForWrite implements
+    BizTranRoleCompositionBookRepositoryForWrite {
 
-//    private final BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository;
+    private final String TemplateExcelfile = "Template取引ロール編成.xlsx";
 
     // リソースファイルを検索するクラスローダー
     @Autowired
     ResourceLoader resourceLoader;
-
-//    // コンストラクタ
-//    BizTranRoleCompositionBookForStore(BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository) {
-//        this.bizTranRole_BizTranGrpsRepository = bizTranRole_BizTranGrpsRepository;
-//    }
 
     /**
      * 取引ロール編成Excelを作成します。
@@ -50,11 +48,11 @@ public class BizTranRoleCompositionBookForStore implements
     public BizTranRoleCompositionBook create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        Resource resource = resourceLoader.getResource("classpath:TemplateBizTranRoleOrganization.xlsx");
+        Resource resource = resourceLoader.getResource("classpath:" + TemplateExcelfile);
         Workbook workbook = null;
 
+        // Templateを読む
         try {
-            // Templateを読む
             FileInputStream in = new FileInputStream(resource.getFile().toString());
             workbook = WorkbookFactory.create(in);
         } catch (IOException e) {
@@ -62,23 +60,13 @@ public class BizTranRoleCompositionBookForStore implements
             workbook = null;
             throw new GunmaRuntimeException("EOA11003", "Excel Template", e);
         }
+
         // １番目の(取引ロール＋取引グループ)シートのデータを作成
         createBizTranRole_BizTranGrpsSheet(workbook, bizTranRole_BizTranGrpsSheet);
         // ２番目の(取引グループ＋取引)シートのデータを作成
-        createBizTranRole_BizTranGrpsSheet(workbook, bizTranRole_BizTranGrpsSheet);
-//        Sheet sheet = workbook.getSheetAt(0);
-//
-//        int rowIndex = 2;
-//        for (BizTranRole_BizTranGrpSheet bizTranRoleOrganization : bizTranRole_BizTranGrpsSheet.getValues()) {
-//            Row row = sheet.createRow(rowIndex);
-//            getCell(row, 0).setCellValue(bizTranRoleOrganization.getSubSystemName());
-//            getCell(row, 1).setCellValue(bizTranRoleOrganization.getBizTranRoleCode());
-//            getCell(row, 2).setCellValue(bizTranRoleOrganization.getBizTranRoleName());
-//            getCell(row, 3).setCellValue(bizTranRoleOrganization.getBizTranGrpCode());
-//            getCell(row, 4).setCellValue(bizTranRoleOrganization.getBizTranGrpName());
-//            rowIndex++;
-//        }
+        createBizTranGrp_BizTransSheet(workbook, bizTranGrp_BizTransSheet);
 
+        // excel workbook出力
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             workbook.write(out);
@@ -107,17 +95,17 @@ public class BizTranRoleCompositionBookForStore implements
      */
     void createBizTranRole_BizTranGrpsSheet(Workbook workbook, BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet) {
 
-        // １番目のシートを取得
+        // １番目（index:0）のシートを取得
         Sheet sheet = workbook.getSheetAt(0);
 
         int rowIndex = 2;
-        for (BizTranRole_BizTranGrpSheet bizTranRoleOrganization : bizTranRole_BizTranGrpsSheet.getValues()) {
-            Row row = sheet.createRow(rowIndex);
-            getCell(row, 0).setCellValue(bizTranRoleOrganization.getSubSystemName());
-            getCell(row, 1).setCellValue(bizTranRoleOrganization.getBizTranRoleCode());
-            getCell(row, 2).setCellValue(bizTranRoleOrganization.getBizTranRoleName());
-            getCell(row, 3).setCellValue(bizTranRoleOrganization.getBizTranGrpCode());
-            getCell(row, 4).setCellValue(bizTranRoleOrganization.getBizTranGrpName());
+        for (BizTranRole_BizTranGrpSheet bizTranRole_BizTranGrpSheet : bizTranRole_BizTranGrpsSheet.getValues()) {
+            Row row = getRow(rowIndex, 2, 4, sheet);
+            getCell(row, 0).setCellValue(bizTranRole_BizTranGrpSheet.getSubSystemName());
+            getCell(row, 1).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleCode());
+            getCell(row, 2).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleName());
+            getCell(row, 3).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpCode());
+            getCell(row, 4).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpName());
             rowIndex++;
         }
     }
@@ -130,12 +118,12 @@ public class BizTranRoleCompositionBookForStore implements
      */
     void createBizTranGrp_BizTransSheet(Workbook workbook, BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        // ２番目のシートを取得
-        Sheet sheet = workbook.getSheetAt(0);
+        // ２番目（index:1）のシートを取得
+        Sheet sheet = workbook.getSheetAt(1);
 
         int rowIndex = 2;
         for (BizTranGrp_BizTranSheet bizTranGrp_BizTranSheet : bizTranGrp_BizTransSheet.getValues()) {
-            Row row = sheet.createRow(rowIndex);
+            Row row = getRow(rowIndex, 2, 7, sheet);
             getCell(row, 0).setCellValue(bizTranGrp_BizTranSheet.getSubSystemName());
             getCell(row, 1).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpCode());
             getCell(row, 2).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpName());
@@ -148,12 +136,36 @@ public class BizTranRoleCompositionBookForStore implements
         }
     }
 
+    /**
+     * 指定行から行プロパティをCopyして行を取得します。
+     *
+     * @param rowIndex      取得する行Index
+     * @param baseRowIndex  プロパティをCopyする元の行Index
+     * @param lastCellIndex プロパティをCopyする列の最終Index
+     * @param sheet         対象シート
+     * @return
+     */
     Row getRow(int rowIndex, int baseRowIndex, int lastCellIndex, Sheet sheet) {
         Row row = sheet.createRow(rowIndex);
         final Row baseRow = sheet.getRow(baseRowIndex);
         row.setHeight(baseRow.getHeight());
         for (int i = 0; i <= lastCellIndex; i++) {
-            Cell cell = row.getCell(i);
+            Cell cell = getCell(row, i);
+            Cell baseCell = baseRow.getCell(i);
+            CellStyle style = baseCell.getCellStyle();
+
+            // セルの罫線
+            style.setBorderTop(BorderStyle.THIN);
+            style.setBorderBottom(BorderStyle.THIN);
+            style.setBorderLeft(BorderStyle.THIN);
+            style.setBorderRight(BorderStyle.THIN);
+            style.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            style.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            style.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            style.setRightBorderColor(IndexedColors.BLACK.getIndex());
+
+            cell.setCellStyle(style);
+//            cell.setCellType(baseCell.getCellType());
         }
 
         return row;

@@ -105,9 +105,6 @@ public class SearchOperator {
         // パラメーターの検証
         SearchOperatorValidator.with(request).validate();
 
-        // ページ
-        response.setPageNo(request.getPageNo());
-
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
         Operators operators = operatorsRepository.selectBy(createOperatorCriteria(request), orders);
@@ -143,8 +140,8 @@ public class SearchOperator {
         List<Operator> removeOperator = newArrayList();
         for (Operator operator : operators.getValues()) {
             // オペレーター_サブシステムロール割当検索
-            List<Operator_SubSystemRole> operator_SubSystemRolesList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
-            if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRolesList)) {
+            List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+            if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRoleList)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletResponse;
+import net.jagunma.backbone.auth.authmanager.application.commandService.WriteBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -47,10 +48,14 @@ public class Oa12010Controller {
     private final String CHARSET_UTF8 = "UTF-8";
 
     private final SearchBizTranRoleComposition searchBizTranRoleComposition;
+    private final WriteBizTranRoleComposition writeBizTranRoleComposition;
 
     // コンストラクタ
-    Oa12010Controller(SearchBizTranRoleComposition searchBizTranRoleComposition) {
+    Oa12010Controller(SearchBizTranRoleComposition searchBizTranRoleComposition,
+        WriteBizTranRoleComposition writeBizTranRoleComposition) {
+
         this.searchBizTranRoleComposition = searchBizTranRoleComposition;
+        this.writeBizTranRoleComposition = writeBizTranRoleComposition;
     }
 
     /**
@@ -97,11 +102,18 @@ public class Oa12010Controller {
         System.out.println("### Oa12010Controller export START");
 
         // エクスポートExcelの作成
-        Oa12010OrganizationExportPresenter presenter = new Oa12010OrganizationExportPresenter();
         try {
-            Oa12010OrganizationExportConverter converter = Oa12010OrganizationExportConverter.with(vo);
-            searchBizTranRoleComposition.execute(converter, presenter);
-            presenter.bindTo(vo);
+            // 取引ロール編成検索
+            Oa12010CompositionExportSearchConverter searchConverter = Oa12010CompositionExportSearchConverter.with(vo);
+            Oa12010CompositionExportSearchPresenter searchPresenter = new Oa12010CompositionExportSearchPresenter();
+            searchBizTranRoleComposition.execute(searchConverter, searchPresenter);
+
+            // Excel Weite
+            Oa12010CompositionExportWriteConverter writeConverter = searchPresenter.ConverterTo();
+            Oa12010CompositionExportWritePresenter writehPresenter = new Oa12010CompositionExportWritePresenter();
+            writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
+
+            writehPresenter.bindTo(vo);
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);

@@ -2,10 +2,8 @@ package net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition
 
 /**
  * 取引ロール編成 Book 作成
- * BizTranRoleOrganizationRepository
- * BizTranRoleCompositionRepositoryForStore
  */
-public interface BizTranRoleCompositionBookRepositoryForStore {
+public interface BizTranRoleCompositionBookRepositoryForWrite {
 
     /**
      * 取引ロール編成Excelを作成します。

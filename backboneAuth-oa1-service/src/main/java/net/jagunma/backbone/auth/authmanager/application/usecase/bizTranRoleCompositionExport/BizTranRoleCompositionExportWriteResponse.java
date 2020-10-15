@@ -1,11 +1,11 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleOrganizationExport;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport;
 
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
- * 取引ロール編成エクスポートサービス Response
+ * 取引ロール編成エクスポートExcel Weiteサービス Response
  */
-public interface BizTranRoleOrganizationExportResponse {
+public interface BizTranRoleCompositionExportWriteResponse {
 
     /**
      * 取引ロール編成エクスポートExcelのＳｅｔ
@@ -13,4 +13,5 @@ public interface BizTranRoleOrganizationExportResponse {
      * @param excelContainer 取引ロール編成エクスポートExcel
      */
     void setExcelContainer(ExcelContainer excelContainer);
+
 }

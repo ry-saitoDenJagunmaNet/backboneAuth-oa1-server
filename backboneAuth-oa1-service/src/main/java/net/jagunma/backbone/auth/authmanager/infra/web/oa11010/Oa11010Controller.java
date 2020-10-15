@@ -122,6 +122,8 @@ public class Oa11010Controller extends BaseOfController {
             // オぺレーター検索
             searchOperator.execute(converter, presenter);
 
+            // ページ
+            presenter.setPageNo(vo.getPageNo());
             presenter.bindTo(responseVo);
             return new ResponseEntity<>(responseVo, HttpStatus.OK);
 
