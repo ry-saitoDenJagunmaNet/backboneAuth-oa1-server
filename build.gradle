@@ -23,7 +23,7 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.2'
         mssqlJdbcVersion = '8.4.1.jre11'
-        backboneAuthDaoVersion = '20.0.17'
+        backboneAuthDaoVersion = '20.0.20'
         sharedDataInterfaceVersion = '20.1.19'
         sharedDataStubVersion = '20.1.17'
         backboneInterfaceVersion = '20.2.9'
