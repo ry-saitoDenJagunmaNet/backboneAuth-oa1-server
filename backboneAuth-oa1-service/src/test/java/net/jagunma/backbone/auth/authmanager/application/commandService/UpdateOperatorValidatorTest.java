@@ -24,7 +24,6 @@ class UpdateOperatorValidatorTest {
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
-    private String branchCode = "001";
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
     private Integer recordVersion = 1;
     private String changeCause = "認証機器使用開始";
@@ -225,7 +224,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  店舗ID
+     *    未セット  機器認証
      *
      *  ●検証事項
      *  ・エラー発生
@@ -234,6 +233,32 @@ class UpdateOperatorValidatorTest {
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test06() {
+        // 実行値
+        isDeviceAuth = null;
+        OperatorUpdateRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            UpdateOperatorValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
+                assertThat(e.getArgs()).containsSequence("機器認証");
+            });
+    }
+
+    /**
+     * {@link UpdateOperatorValidator#validate()}テスト
+     *  ●パターン
+     *    未セット  店舗ID
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test07() {
         // 実行値
         branchId = null;
         OperatorUpdateRequest request = createRequest();
@@ -259,7 +284,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test07() {
+    void validate_Test08() {
         // 実行値
         changeCause = null;
         OperatorUpdateRequest request = createRequest();
@@ -285,7 +310,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test08() {
+    void validate_Test09() {
         // 実行値
         availableStatus = null;
         OperatorUpdateRequest request = createRequest();
@@ -311,7 +336,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test09() {
+    void validate_Test10() {
         // 実行値
         operatorName = Strings2.repeat("*", 256);
         OperatorUpdateRequest request = createRequest();
@@ -337,7 +362,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test10() {
+    void validate_Test11() {
         // 実行値
         mailAddress = Strings2.repeat("*", 256);
         OperatorUpdateRequest request = createRequest();
@@ -363,7 +388,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test11() {
+    void validate_Test12() {
         // 実行値
         changeCause = Strings2.repeat("*", 256);
         OperatorUpdateRequest request = createRequest();
@@ -390,7 +415,7 @@ class UpdateOperatorValidatorTest {
     @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test12() {
+    void validate_Test13() {
         // 実行値
         mailAddress = "te全st@den.jagunma.net";
         OperatorUpdateRequest request = createRequest();
@@ -408,6 +433,32 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
+     *    列挙型未定義チェック  利用可否状態
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test14() {
+        // 実行値
+        availableStatus = AvailableStatus.UnKnown;
+        OperatorUpdateRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            UpdateOperatorValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13007");
+                assertThat(e.getArgs()).containsSequence("利用可否状態");
+            });
+    }
+
+    /**
+     * {@link UpdateOperatorValidator#validate()}テスト
+     *  ●パターン
      *    範囲指定不正チェック  有効期限
      *
      *  ●検証事項
@@ -416,7 +467,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test13() {
+    void validate_Test15() {
         // 実行値
         expirationEndDate = LocalDate.of(2020, 8, 31);
         OperatorUpdateRequest request = createRequest();
@@ -426,7 +477,7 @@ class UpdateOperatorValidatorTest {
             UpdateOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13007");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13008");
                 assertThat(e.getArgs()).containsSequence("有効期限");
             });
     }

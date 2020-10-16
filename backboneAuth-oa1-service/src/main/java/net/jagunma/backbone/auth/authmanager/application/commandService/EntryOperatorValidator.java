@@ -58,8 +58,8 @@ class EntryOperatorValidator {
             throw new GunmaRuntimeException("EOA13006", "オペレーターコード（下6桁）");
         }
 
-        // 範囲指定不正チェック 有効期限
-        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13007", "有効期限"));
+        // 範囲指定不正チェック
+        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
 
         // パスワード不一致チェック
         if (!request.getPassword().equals(request.getConfirmPassword())) {

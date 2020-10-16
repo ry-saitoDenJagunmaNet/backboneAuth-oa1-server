@@ -136,6 +136,7 @@ class Oa11020EntryValidatorTest {
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）", "入力");
             });
     }
+
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
@@ -445,7 +446,7 @@ class Oa11020EntryValidatorTest {
             Oa11020EntryValidator.with(vo).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA14007");
+                assertThat(e.getMessageCode()).isEqualTo("EOA14008");
                 assertThat(e.getArgs()).containsSequence("有効期限");
             });
     }

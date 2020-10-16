@@ -40,7 +40,6 @@ class UpdateOperatorTest {
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
-    private String branchCode = "001";
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
     private Integer recordVersion = 1;
     private String changeCause = "認証機器使用開始";

@@ -54,7 +54,7 @@ class Oa11020EntryValidator {
             throw new GunmaRuntimeException("EOA14006", "オペレーターコード（下6桁）");
         }
 
-        // 範囲指定不正チェック 有効期限
-        Preconditions.checkMax(vo.getExpirationEndDate(), vo.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA14007", "有効期限"));
+        // 範囲指定不正チェック
+        Preconditions.checkMax(vo.getExpirationEndDate(), vo.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA14008", "有効期限"));
     }
 }
