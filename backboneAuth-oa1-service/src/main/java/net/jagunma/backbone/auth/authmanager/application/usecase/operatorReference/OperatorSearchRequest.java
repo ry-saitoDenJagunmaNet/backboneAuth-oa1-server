@@ -2,34 +2,33 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorRefere
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchBizTranRoleConverter;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchSubSystemRoleConverter;
+import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
+import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
+import net.jagunma.common.ddd.model.criterias.LongCriteria;
+import net.jagunma.common.ddd.model.criterias.ShortCriteria;
+import net.jagunma.common.ddd.model.criterias.StringCriteria;
 
 /**
  * オペレーターリスト参照サービス Request
  */
 public interface OperatorSearchRequest {
 
-    Long getJaId();
-    Long getBranchId();
-    String getOperatorCode();
-    String getOperatorName();
-    String getMailAddress();
-    Short getAvailableStatus0();
-    Short getAvailableStatus1();
-    Integer getExpirationSelect();
-    LocalDate getExpirationStatusDate();
-    LocalDate getExpirationStartDateFrom();
-    LocalDate getExpirationStartDateTo();
-    LocalDate getExpirationEndDateFrom();
-    LocalDate getExpirationEndDateTo();
+    LongCriteria getOperatorIdCriteria();
+    StringCriteria getOperatorCodeCriteria();
+    StringCriteria getOperatorNameCriteria();
+    StringCriteria getMailAddressCriteria();
+    LocalDateCriteria getExpirationStartDateCriteria();
+    LocalDateCriteria getExpirationEndDateCriteria();
+    BooleanCriteria getIsDeviceAuthCriteria();
+    LongCriteria getJaIdCriteria();
+    LongCriteria getBranchIdCriteria();
+    ShortCriteria getAvailableStatusCriteria();
+
     Integer getSubSystemRoleConditionsSelect();
-    List<Oa11010SearchSubSystemRoleConverter>  getSubSystemRoleList();
+    List<OparatorSearchSubSystemRoleRequest>  getSubSystemRoleList();
     Integer getBizTranRoleConditionsSelect();
     String getBizTranRoleSubSystemCode();
-    List<Oa11010SearchBizTranRoleConverter> getBizTranRoleList();
-//    Short getDeviceAuthUse();
-//    Short getDeviceAuthUnuse();
+    List<OparatorSearchBizTranRoleRequest> getBizTranRoleList();
     LocalDate getAccountLockOccurredDateFrom();
     LocalDate getAccountLockOccurredDateTo();
     Short getAccountLockStatusLock();
@@ -47,18 +46,4 @@ public interface OperatorSearchRequest {
     Short getSignintraceSignIn();
     Short getSignintraceSignOut();
     Short[] getSignintraceSignInResult();
-    int getPageNo();
-
-    /**
-     * 利用可否状態IncludesListを取得します。
-     *
-     * @return 利用可否状態IncludesList
-     */
-    List<Short> getAvailableStatusIncludesList();
-    /**
-     * OPTION検索条件 その他　機器認証を取得します。
-     *
-     * @return true:機器認証使用
-     */
-    Boolean getDeviceAuthUse();
 }

@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 
 import java.time.LocalDate;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 
 /**
  * オペレーター
@@ -20,6 +21,7 @@ public class Operator {
     private final String branchCode;
     private final Short availableStatus;
     private final Integer recordVersion;
+    private final BranchAtMoment branchAtMoment;
 
     // コンストラクタ
     Operator(
@@ -35,7 +37,8 @@ public class Operator {
         Long branchId,
         String branchCode,
         Short availableStatus,
-        Integer recordVersion) {
+        Integer recordVersion,
+        BranchAtMoment branchAtMoment) {
 
         this.operatorId = operatorId;
         this.operatorCode = operatorCode;
@@ -50,6 +53,7 @@ public class Operator {
         this.branchCode = branchCode;
         this.availableStatus = availableStatus;
         this.recordVersion = recordVersion;
+        this.branchAtMoment = branchAtMoment;
     }
 
     // ファクトリーメソッド
@@ -66,7 +70,8 @@ public class Operator {
         Long branchId,
         String branchCode,
         Short availableStatus,
-        Integer recordVersion) {
+        Integer recordVersion,
+        BranchAtMoment branchAtMoment) {
 
         return new Operator(
             operatorId,
@@ -81,7 +86,8 @@ public class Operator {
             branchId,
             branchCode,
             availableStatus,
-            recordVersion);
+            recordVersion,
+            branchAtMoment);
     }
 
     // Getter
@@ -123,5 +129,8 @@ public class Operator {
     }
     public Integer getRecordVersion() {
         return recordVersion;
+    }
+    public BranchAtMoment getBranchAtMoment() {
+        return branchAtMoment;
     }
 }

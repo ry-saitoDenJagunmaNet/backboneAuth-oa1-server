@@ -36,7 +36,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
      */
     public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
 
-        // 取引ロール検索
+        // 取引ロール群検索
         BizTranRoleEntityCriteria entityCriteria = new BizTranRoleEntityCriteria();
         entityCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes());
 
@@ -62,6 +62,8 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
      * @return 取引ロール群
      */
     public BizTranRoles selectAll(Orders orders) {
+
+        // 取引ロール群検索
         List<BizTranRole> list = newArrayList();
         for (BizTranRoleEntity entity : bizTranRoleEntityDao.findAll(orders)) {
             list.add(BizTranRole.createFrom(

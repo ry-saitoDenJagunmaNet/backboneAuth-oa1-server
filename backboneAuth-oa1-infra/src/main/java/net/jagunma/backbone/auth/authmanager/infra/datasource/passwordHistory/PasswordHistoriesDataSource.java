@@ -42,12 +42,12 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
      */
     public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // パスワード履歴検索
+        // パスワード履歴群検索
         PasswordHistoryEntityCriteria entityCriteria = new PasswordHistoryEntityCriteria();
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
 

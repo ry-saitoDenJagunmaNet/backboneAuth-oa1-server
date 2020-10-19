@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +47,7 @@ class Operator_BizTranRoleTest {
         String branchCode = "001";
         Short availableStatus = AvailableStatus.利用可能.getCode();
         Integer operatorRecordVersion = 1;
+        BranchAtMoment branchAtMoment = null;
         Operator operator = Operator.createFrom(
             operatorId,
             operatorCode,
@@ -59,7 +61,8 @@ class Operator_BizTranRoleTest {
             branchId,
             branchCode,
             availableStatus,
-            operatorRecordVersion);
+            operatorRecordVersion,
+            branchAtMoment);
 
         String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";

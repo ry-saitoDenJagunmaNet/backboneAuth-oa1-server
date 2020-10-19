@@ -42,12 +42,12 @@ public class SignOutTracesDataSource implements SignOutTracesRepository {
      */
     public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(signOutTraceCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // サインアウト証跡検索
+        // サインアウト証跡群検索
         SignOutTraceEntityCriteria entityCriteria = new SignOutTraceEntityCriteria();
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(signOutTraceCriteria.getOperatorIdCriteria().getIncludes());
 

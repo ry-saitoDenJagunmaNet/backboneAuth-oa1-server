@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
@@ -33,27 +34,27 @@ class Oa11010SearchPresenterTest {
     // 実行既定値
     private Operators getOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L, "yu001009", "購買業務統括者のオペレーター", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(19L, "yu001010", "サブシステムロール、取引ロールが未設定のオペレーター", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(20L, "yu001011", "サブシステムロールのオペレーター", "yu001011@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(21L, "yu001012", "サブシステムロールが複数設定のオペレーター", "yu001012@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(101L, "yu001101", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(102L, "yu001102", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(103L, "yu001103", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(104L, "yu001104", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(105L, "yu001105", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(106L, "yu001106", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(107L, "yu001107", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(108L, "yu001108", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(109L, "yu001109", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(110L, "yu001110", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(111L, "yu001111", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(112L, "yu001112", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(113L, "yu001113", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(114L, "yu001114", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(115L, "yu001115", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(116L, "yu001116", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(117L, "yu001117", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 1 ,1));
+        list.add(Operator.createFrom(18L, "yu001009", "購買業務統括者のオペレーター", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(19L, "yu001010", "サブシステムロール、取引ロールが未設定のオペレーター", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(20L, "yu001011", "サブシステムロールのオペレーター", "yu001011@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(21L, "yu001012", "サブシステムロールが複数設定のオペレーター", "yu001012@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(101L, "yu001101", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(102L, "yu001102", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(103L, "yu001103", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(104L, "yu001104", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(105L, "yu001105", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(106L, "yu001106", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(107L, "yu001107", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(108L, "yu001108", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(109L, "yu001109", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(110L, "yu001110", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(111L, "yu001111", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(112L, "yu001112", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(113L, "yu001113", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(114L, "yu001114", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(115L, "yu001115", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(116L, "yu001116", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(117L, "yu001117", "ページネーション確認オペレーター", "", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),true,6L, "006", 33L, "001", (short) 1 ,1,null));
         return Operators.createFrom(list);
     }
     private BranchesAtMoment getBranchesAtMoment() {
@@ -217,6 +218,113 @@ class Oa11010SearchPresenterTest {
                 + "<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(2);\">2</a></li>"
                 + "<li class=\"active\" th:remove=\"all\"><a href=\"#!\">3</a></li>"
                 + "<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&gt;</a></li>"
+        );
+
+        // 実行
+        presenter.bindTo(vo);
+
+        // 結果検証
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Oa11010SearchPresenter}のテスト
+     *  ●パターン
+     *    通常（店舗なし）
+     *
+     *  ●検証事項
+     *  ・Voへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void bindTo_test3() {
+
+        // 実行既定値
+        int pageNo = 3;
+        Operators operators = getOperators();
+        BranchesAtMoment branchesAtMoment = new BranchesAtMoment();
+        AccountLocks accountLocks = getAccountLocks();
+        Operator_SubSystemRoles operator_SubSystemRoles = getOperator_SubSystemRoles();
+        Operator_BizTranRoles operator_BizTranRoles = getOperator_BizTranRoles();
+
+        // 実行値
+        Oa11010SearchResponseVo vo = new Oa11010SearchResponseVo();
+        Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+        presenter.setPageNo(pageNo);
+        presenter.setOperators(operators);
+        presenter.setBranchesAtMoment(branchesAtMoment);
+        presenter.setAccountLocks(accountLocks);
+        presenter.setOperator_SubSystemRoles(operator_SubSystemRoles);
+        presenter.setOperator_BizTranRoles(operator_BizTranRoles);
+
+        // 期待値
+        Oa11010SearchResponseVo expectedVo = new Oa11010SearchResponseVo();
+        expectedVo.setOperatorTable(
+            "<tr class=\"oaex_operator_table_operator_yu001117 oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_inpossible\"></div></td>"
+                + "<td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td>"
+                + "<td class=\"oaex_operator_branch_code\"></td>"
+                + "<td class=\"oaex_operator_branch_name\"></td>"
+                + "<td class=\"oaex_operator_operator_code\">yu001117<input type=\"hidden\" value=\"33\"/></td>"
+                + "<td class=\"oaex_operator_operator_name\">ページネーション確認オペレーター</td>"
+                + "<td class=\"oaex_operator_expiration_date\">2010/08/17～9999/12/21</td>"
+                + "<td class=\"oaex_operator_subsystem_role\"></td>"
+                + "<td class=\"oaex_operator_subsystem_role_expiration_date\"></td>"
+                + "<td class=\"oaex_operator_biztran_role_code\"></td>"
+                + "<td class=\"oaex_operator_biztran_role_name\"></td>"
+                + "<td class=\"oaex_operator_biztran_role_expiration_date\"></td>"
+                + "</tr>"
+        );
+        expectedVo.setPagination(
+            "<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(2);\">&lt;</a></li>"
+                + "<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(1);\">1</a></li>"
+                + "<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(2);\">2</a></li>"
+                + "<li class=\"active\" th:remove=\"all\"><a href=\"#!\">3</a></li>"
+                + "<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&gt;</a></li>"
+        );
+
+        // 実行
+        presenter.bindTo(vo);
+
+        // 結果検証
+        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Oa11010SearchPresenter}のテスト
+     *  ●パターン
+     *    通常（該当オペレータなし）
+     *
+     *  ●検証事項
+     *  ・Voへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void bindTo_test4() {
+
+        // 実行既定値
+        int pageNo = 1;
+        Operators operators = Operators.createFrom(new ArrayList<Operator>());
+        BranchesAtMoment branchesAtMoment = new BranchesAtMoment();
+        AccountLocks accountLocks = AccountLocks.createFrom(new ArrayList<AccountLock>());
+        Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(new ArrayList<Operator_SubSystemRole>());
+        Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(new ArrayList<Operator_BizTranRole>());
+
+        // 実行値
+        Oa11010SearchResponseVo vo = new Oa11010SearchResponseVo();
+        Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
+        presenter.setPageNo(pageNo);
+        presenter.setOperators(operators);
+        presenter.setBranchesAtMoment(branchesAtMoment);
+        presenter.setAccountLocks(accountLocks);
+        presenter.setOperator_SubSystemRoles(operator_SubSystemRoles);
+        presenter.setOperator_BizTranRoles(operator_BizTranRoles);
+
+        // 期待値
+        Oa11010SearchResponseVo expectedVo = new Oa11010SearchResponseVo();
+        expectedVo.setOperatorTable("");
+        expectedVo.setPagination(
+            "<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>"
+            + "<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(2);\">&gt;</a></li>"
         );
 
         // 実行

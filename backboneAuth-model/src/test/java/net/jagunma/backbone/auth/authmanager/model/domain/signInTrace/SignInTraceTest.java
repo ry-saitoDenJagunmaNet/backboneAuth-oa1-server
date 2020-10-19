@@ -10,6 +10,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +49,7 @@ class SignInTraceTest {
         String branchCode = "001";
         Short availableStatus = AvailableStatus.利用可能.getCode();
         Integer operatorRecordVersion = 1;
-
+        BranchAtMoment branchAtMoment = null;
         Operator operator = Operator.createFrom(
             operatorId,
             operatorCode,
@@ -62,7 +63,8 @@ class SignInTraceTest {
             branchId,
             branchCode,
             availableStatus,
-            operatorRecordVersion);
+            operatorRecordVersion,
+            branchAtMoment);
 
         // 実行
         SignInTrace signInTrace = SignInTrace.createFrom(

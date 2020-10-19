@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +44,7 @@ class SignOutTraceTest {
         String branchCode = "001";
         Short availableStatus = AvailableStatus.利用可能.getCode();
         Integer operatorRecordVersion = 1;
+        BranchAtMoment branchAtMoment = null;
         Operator operator = Operator.createFrom(
             operatorId,
             operatorCode,
@@ -56,7 +58,8 @@ class SignOutTraceTest {
             branchId,
             branchCode,
             availableStatus,
-            operatorRecordVersion);
+            operatorRecordVersion,
+            branchAtMoment);
 
         // 実行
         SignOutTrace signOutTrace = SignOutTrace.createFrom(

@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchBizTranRoleConverter;
@@ -20,6 +22,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeader;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -42,8 +48,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTr
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
-import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
-import net.jagunma.backbone.auth.authmanager.model.types.ConditionsSelect;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
@@ -53,6 +57,11 @@ import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
+import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
+import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
+import net.jagunma.common.ddd.model.criterias.LongCriteria;
+import net.jagunma.common.ddd.model.criterias.ShortCriteria;
+import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
@@ -68,24 +77,22 @@ import org.junit.jupiter.api.Test;
 class SearchOperatorTest {
 
     // 実行既定値
-    private Long jaId = null;
-    private Long branchId = null;
-    private String operatorCode = null;
-    private String operatorName = null;
-    private String mailAddress = null;
-    private Short availableStatus0 = null;
-    private Short availableStatus1 = null;
-    private Integer expirationSelect = null;
-    private LocalDate expirationStatusDate = null;
-    private LocalDate expirationStartDateFrom = null;
-    private LocalDate expirationStartDateTo = null;
-    private LocalDate expirationEndDateFrom = null;
-    private LocalDate expirationEndDateTo = null;
+    private final LongCriteria operatorIdCriteria = new LongCriteria();
+    private final StringCriteria operatorCodeCriteria = new StringCriteria();
+    private final StringCriteria operatorNameCriteria = new StringCriteria();
+    private final StringCriteria mailAddressCriteria = new StringCriteria();
+    private final LocalDateCriteria expirationStartDateCriteria = new LocalDateCriteria();
+    private final LocalDateCriteria expirationEndDateCriteria = new LocalDateCriteria();
+    private final BooleanCriteria isDeviceAuthCriteria = new BooleanCriteria();
+    private final LongCriteria jaIdCriteria = new LongCriteria();
+    private final LongCriteria branchIdCriteria = new LongCriteria();
+    private final ShortCriteria availableStatusCriteria = new ShortCriteria();
+
     private Integer subSystemRoleConditionsSelect = null;
-    private List<Oa11010SearchSubSystemRoleConverter> subSystemRoleList = null;
+    private List<OparatorSearchSubSystemRoleRequest> subSystemRoleList = null;
     private Integer bizTranRoleConditionsSelect = null;
     private String bizTranRoleSubSystemCode = null;
-    private List<Oa11010SearchBizTranRoleConverter> bizTranRoleList = null;
+    private List<OparatorSearchBizTranRoleRequest> bizTranRoleList = null;
     private LocalDate accountLockOccurredDateFrom = null;
     private LocalDate accountLockOccurredDateTo = null;
     private Short accountLockStatusLock = null;
@@ -105,11 +112,9 @@ class SearchOperatorTest {
     private Short[] signintraceSignInResult = null;
     private int pageNo = 1;
     private List<Short> availableStatusIncludesList = null;
-    private Boolean deviceAuthUse = null;
 
     // テスト対象クラス生成
     private SearchOperator createSearchOperator() {
-
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operetorCriteria, Orders orders) {
@@ -150,6 +155,12 @@ class SearchOperatorTest {
             @Override
             public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 return createOperator_BizTranRoles();
+            }
+        };
+        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository = new OperatorHistoryHeadersRepository() {
+            @Override
+            public OperatorHistoryHeaders selectBy(OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
+                return createOperatorHistoryHeaders();
             }
         };
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
@@ -216,6 +227,9 @@ class SearchOperatorTest {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
                 return createBranchesAtMoment();
             }
+            public BranchesAtMoment branchAtMomentSelectBy(BranchAtMomentCriteria branchAtMomentCriteria) {
+                return createBranchesAtMoment();
+            }
         };
         return new SearchOperator(operatorsRepository,
             accountLocksRepository,
@@ -224,44 +238,47 @@ class SearchOperatorTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            simpleSearchBranch,
-            branchAtMomentRepository);
+            operatorHistoryHeadersRepository,
+            branchAtMomentRepository,
+            simpleSearchBranch);
     }
 
     // オペレーター群作成
     private Operators createOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
-        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
-        list.add(Operator.createFrom(20L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", AvailableStatus.利用可能.getCode() ,1));
+        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
+        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
+        list.add(Operator.createFrom(20L,"yu001011","ｙｕ００１０１１","yu001011@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
         return Operators.createFrom(list);
     }
     // アカウントロック群作成
     private AccountLocks createAccountLocks() {
         List<AccountLock> list = newArrayList();
-        list.add(AccountLock.createFrom(1L,18L, LocalDateTime.of(2020,10,1,8,30,12), (short) 0,0,null));
-        list.add(AccountLock.createFrom(2L,19L, LocalDateTime.of(2020,10,1,8,30,12), (short) 1,0,null));
+        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),(short) 0,0,null));
+        list.add(AccountLock.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),(short) 1,0,null));
+        list.add(AccountLock.createFrom(3L,19L,LocalDateTime.of(2020,10,1,8,30,23),(short) 1,0,null));
         return AccountLocks.createFrom(list);
     }
     // パスワード履歴群作成
     private PasswordHistories createPasswordHistories() {
         List<PasswordHistory> list = newArrayList();
-        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,30,12),"12345678",(short) 1,0,null));
-        list.add(PasswordHistory.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,34),"12345678",(short) 1,1,null));
+        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),"12345678",(short) 1,0,null));
+        list.add(PasswordHistory.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),"abcdefgh",(short) 1,1,null));
         return PasswordHistories.createFrom(list);
     }
     // サインイン証跡群作成
     private SignInTraces createSignInTraces() {
         List<SignInTrace> list = newArrayList();
         list.add(SignInTrace.createFrom(1L,LocalDateTime.of(2020,10,2,9,0,12),"001.001.001.001","yu001009",SignInCause.サインイン.getCode(),SignInResult.失敗_存在しないオペレーター.getCode(),1,null));
-        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.成功.getCode(),1,null));
+        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,1,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.成功.getCode(),1,null));
+        list.add(SignInTrace.createFrom(3L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.失敗_パスワード誤り.getCode(),1,null));
         return SignInTraces.createFrom(list);
     }
     // サインアウト証跡群作成
     private SignOutTraces createSignOutTraces() {
         List<SignOutTrace> list = newArrayList();
-        list.add(SignOutTrace.createFrom(1L,LocalDateTime.of(2020,10,3,9,0,12),"001.001.001.001",18L,1,null));
-        list.add(SignOutTrace.createFrom(2L,LocalDateTime.of(2020,10,3,9,0,12),"001.001.001.001",19L,1,null));
+        list.add(SignOutTrace.createFrom(1L,LocalDateTime.of(2020,10,3,9,0,23),"001.001.001.001",18L,1,null));
+        list.add(SignOutTrace.createFrom(2L,LocalDateTime.of(2020,10,3,9,1,45),"001.001.001.001",19L,1,null));
         return SignOutTraces.createFrom(list);
     }
     // オペレーター_サブシステムロール割当群作成
@@ -274,19 +291,26 @@ class SearchOperatorTest {
     // オペレーター_取引ロール割当群作成
     private Operator_BizTranRoles createOperator_BizTranRoles() {
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(1L)));
-        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(4L)));
-        list.add(Operator_BizTranRole.createFrom(3L,19L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(2L)));
-        list.add(Operator_BizTranRole.createFrom(4L,19L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(1L)));
+        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(2L)));
+        list.add(Operator_BizTranRole.createFrom(3L,19L,2L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(4L,19L,3L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(4L)));
         return Operator_BizTranRoles.createFrom(list);
+    }
+    // オペレーター履歴ヘッダー群作成
+    private OperatorHistoryHeaders createOperatorHistoryHeaders() {
+        List<OperatorHistoryHeader> list = newArrayList();
+        list.add(OperatorHistoryHeader.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,30,12),"変更事由１行目",1,null));
+        list.add(OperatorHistoryHeader.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,31,12),"変更事由２行目",1,null));
+        return OperatorHistoryHeaders.createFrom(list);
     }
     // 取引ロール作成
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KB00001", "支所検索", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", "KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", "YS",1, SubSystem.販売_青果));
+        list.add(BizTranRole.createFrom(1L,"KB0000","購買メインメニュー","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L,"KB00001","支所検索","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(3L,"KB0002","顧客検索","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(4L,"YS0000","野菜メインメニュー","YS",1,SubSystem.販売_青果));
         return list.stream().filter(b->b.getBizTranRoleId().equals(id)).findFirst().orElse(null);
     }
     // 店舗群AtMoment作成
@@ -312,63 +336,51 @@ class SearchOperatorTest {
     private OperatorSearchRequest createOperatorSearchRequest(){
         OperatorSearchRequest request = new OperatorSearchRequest() {
             @Override
-            public Long getJaId() {
-                return jaId;
+            public LongCriteria getOperatorIdCriteria() {
+                return operatorIdCriteria;
             }
             @Override
-            public Long getBranchId() {
-                return branchId;
+            public StringCriteria getOperatorCodeCriteria() {
+                return operatorCodeCriteria;
             }
             @Override
-            public String getOperatorCode() {
-                return operatorCode;
+            public StringCriteria getOperatorNameCriteria() {
+                return operatorNameCriteria;
             }
             @Override
-            public String getOperatorName() {
-                return operatorName;
+            public StringCriteria getMailAddressCriteria() {
+                return mailAddressCriteria;
             }
             @Override
-            public String getMailAddress() {
-                return mailAddress;
+            public LocalDateCriteria getExpirationStartDateCriteria() {
+                return expirationStartDateCriteria;
             }
             @Override
-            public Short getAvailableStatus0() {
-                return availableStatus0;
+            public LocalDateCriteria getExpirationEndDateCriteria() {
+                return expirationEndDateCriteria;
             }
             @Override
-            public Short getAvailableStatus1() {
-                return availableStatus1;
+            public BooleanCriteria getIsDeviceAuthCriteria() {
+                return isDeviceAuthCriteria;
             }
             @Override
-            public Integer getExpirationSelect() {
-                return expirationSelect;
+            public LongCriteria getJaIdCriteria() {
+                return jaIdCriteria;
             }
             @Override
-            public LocalDate getExpirationStatusDate() {
-                return expirationStatusDate;
+            public LongCriteria getBranchIdCriteria() {
+                return branchIdCriteria;
             }
             @Override
-            public LocalDate getExpirationStartDateFrom() {
-                return expirationStartDateFrom;
-            }
-            @Override
-            public LocalDate getExpirationStartDateTo() {
-                return expirationStartDateTo;
-            }
-            @Override
-            public LocalDate getExpirationEndDateFrom() {
-                return expirationEndDateFrom;
-            }
-            @Override
-            public LocalDate getExpirationEndDateTo() {
-                return expirationEndDateTo;
+            public ShortCriteria getAvailableStatusCriteria() {
+                return availableStatusCriteria;
             }
             @Override
             public Integer getSubSystemRoleConditionsSelect() {
                 return subSystemRoleConditionsSelect;
             }
             @Override
-            public List<Oa11010SearchSubSystemRoleConverter> getSubSystemRoleList() {
+            public List<OparatorSearchSubSystemRoleRequest> getSubSystemRoleList() {
                 return subSystemRoleList;
             }
             @Override
@@ -380,7 +392,7 @@ class SearchOperatorTest {
                 return bizTranRoleSubSystemCode;
             }
             @Override
-            public List<Oa11010SearchBizTranRoleConverter> getBizTranRoleList() {
+            public List<OparatorSearchBizTranRoleRequest> getBizTranRoleList() {
                 return bizTranRoleList;
             }
             @Override
@@ -451,18 +463,6 @@ class SearchOperatorTest {
             public Short[] getSignintraceSignInResult() {
                 return signintraceSignInResult;
             }
-            @Override
-            public int getPageNo() {
-                return pageNo;
-            }
-            @Override
-            public List<Short> getAvailableStatusIncludesList() {
-                return availableStatusIncludesList;
-            }
-            @Override
-            public Boolean getDeviceAuthUse() {
-                return deviceAuthUse;
-            }
         };
         return request;
     }
@@ -491,14 +491,13 @@ class SearchOperatorTest {
         // テスト対象クラス生成
         SearchOperator searchOperator = createSearchOperator();
 
-        // 実行値
-
         // 期待値
         Operators expectedOperators = createOperators();
         BranchesAtMoment expectedBranchesAtMoment = createBranchesAtMoment();
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -548,6 +547,14 @@ class SearchOperatorTest {
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
                     }
                 }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
+                    }
+                }
             });
     }
 
@@ -556,8 +563,10 @@ class SearchOperatorTest {
      *  ●パターン
      *    正常
      *    [検索条件]
-     *    ・店舗ID、オペレーターコード、オペレーター名、メールアドレス、利用可否状態、有効期限（状態指定日）
-     *    ・サインアウト証跡　最終サインオペレーション
+     *    ・オペレーターコード、オペレーター名、メールアドレス、
+     *    ・JAID、店舗ID、
+     *    ・利用可否状態、有効期限（利用可能）
+     *    ・サインアウト証跡
      *
      *  ●検証事項
      *  ・正常終了
@@ -570,15 +579,16 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        branchId = 33L;
-        operatorCode = "y";
-        operatorName = "ｙ";
-        mailAddress = "y";
+        operatorCodeCriteria.setForwardMatch("y");
+        operatorNameCriteria.setForwardMatch("ｙ");
+        mailAddressCriteria.setForwardMatch("y");
+        jaIdCriteria.setEqualTo(6L);
+        branchIdCriteria.setEqualTo(33L);
+        expirationStartDateCriteria.setLessOrEqual(LocalDate.of(2020, 10, 1));
+        expirationEndDateCriteria.setMoreOrEqual(LocalDate.of(2020, 10, 1));
         availableStatusIncludesList = newArrayList();
-        availableStatusIncludesList.add((short) 1);
-        expirationSelect = ConditionsExpirationSelect.状態指定日.getCode();
-        expirationStatusDate = LocalDate.of(2020, 10, 01);
-        signintraceSignOut = Oa11010Vo.CHECKBOX_TRUE;
+        availableStatusIncludesList.add((short) 0); //利用可能
+        signintraceSignOut = (short) 1;
 
         // 期待値
         Operators expectedOperators = createOperators();
@@ -586,6 +596,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -635,6 +646,14 @@ class SearchOperatorTest {
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
                     }
                 }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
+                    }
+                }
             });
     }
 
@@ -643,7 +662,6 @@ class SearchOperatorTest {
      *  ●パターン
      *    正常
      *    [検索条件]
-     *    ・利用可否状態、有効期限（条件指定）
      *    ・サインイン証跡　最終サインオペレーション
      *
      *  ●検証事項
@@ -657,11 +675,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        expirationSelect = ConditionsExpirationSelect.条件指定.getCode();
-        expirationStartDateFrom = LocalDate.of(2020, 10, 01);
-        expirationStartDateTo = LocalDate.of(2020, 10, 31);
-        expirationEndDateFrom = LocalDate.of(2020, 10, 01);
-        expirationEndDateTo = LocalDate.of(2020, 10, 31);
+        signintraceSignIn = (short) 1;
         signintraceSignInResult = new Short[(short) 1];
 
         // 期待値
@@ -670,6 +684,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -719,6 +734,16 @@ class SearchOperatorTest {
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
                     }
                 }
+
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
+                    }
+
+                }
             });
     }
 
@@ -727,8 +752,7 @@ class SearchOperatorTest {
      *  ●パターン
      *    正常
      *    [検索条件]
-     *    ・有効期限（指定なし）
-     *    ・スワード履歴　最終パスワード変更日
+     *    ・パスワード履歴　最終パスワード変更日
      *
      *  ●検証事項
      *  ・正常終了
@@ -741,7 +765,6 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        expirationSelect = ConditionsExpirationSelect.指定なし.getCode();
         passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
         passwordHistoryLastChangeDateStatus = "1";
         passwordHistoryLastChangeDate = 30;
@@ -752,6 +775,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -799,6 +823,14 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {
                         assertThat(actualOperator_BizTranRoles.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
+                    }
+                }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
                     }
                 }
             });
@@ -831,6 +863,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -878,6 +911,14 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {
                         assertThat(actualOperator_BizTranRoles.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
+                    }
+                }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
                     }
                 }
             });
@@ -901,10 +942,10 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        bizTranRoleConditionsSelect = ConditionsSelect.AND.getCode();
-        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,1L,"KBAG01","（購買）購買業務基本","KB",ConditionsExpirationSelect.状態指定日.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,2L,"KBAG02","（購買）本所業務","KB",ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        bizTranRoleConditionsSelect = 1;    //AND;
+        List<OparatorSearchBizTranRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,1L,"KBAG01","（購買）購買業務基本","KB",1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         bizTranRoleList = list;
 
         // 期待値
@@ -913,6 +954,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -960,6 +1002,14 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {
                         assertThat(actualOperator_BizTranRoles.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
+                    }
+                }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
                     }
                 }
             });
@@ -983,10 +1033,10 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        subSystemRoleConditionsSelect = ConditionsSelect.AND.getCode();
-        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),ConditionsExpirationSelect.状態指定日.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        subSystemRoleConditionsSelect = 1;  //AND
+        List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
         subSystemRoleList = list;
 
         // 期待値
@@ -995,6 +1045,7 @@ class SearchOperatorTest {
         AccountLocks expectedAccountLocks = createAccountLocks();
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = createOperator_SubSystemRoles();
         Operator_BizTranRoles expectedOperator_BizTranRoles = createOperator_BizTranRoles();
+        OperatorHistoryHeaders expectedOperatorHistoryHeaders = createOperatorHistoryHeaders();
 
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
@@ -1044,6 +1095,14 @@ class SearchOperatorTest {
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
                     }
                 }
+                @Override
+                public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
+                    // 結果検証
+                    for(int i = 0; i < operatorHistoryHeaders.getValues().size(); i++) {
+                        assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
+                    }
+                }
             });
     }
 
@@ -1065,11 +1124,11 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),ConditionsExpirationSelect.条件指定.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.指定なし.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        subSystemRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1105,9 +1164,9 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.指定なし.getCode(),null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        subSystemRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1140,9 +1199,9 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.状態指定日.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
+        subSystemRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1175,9 +1234,9 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        subSystemRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),ConditionsExpirationSelect.UnKnown.getCode(),LocalDate.of(2020,10,1),null,null,null,null));
+        subSystemRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1210,10 +1269,10 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.指定なし.getCode(), null, null, null, null, null));
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 2L, "KBAG02", "（購買）本所業務", "KB",ConditionsExpirationSelect.条件指定.getCode(), null, LocalDate.of(2020, 10, 1),LocalDate.of(2020, 10, 31), LocalDate.of(2020, 10, 1), LocalDate.of(2020, 10, 31)));
+        bizTranRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchBizTranRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",0, null, null, null, null, null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 2L, "KBAG02", "（購買）本所業務", "KB",2, null, LocalDate.of(2020, 10, 1),LocalDate.of(2020, 10, 31), LocalDate.of(2020, 10, 1), LocalDate.of(2020, 10, 31)));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));
@@ -1246,9 +1305,9 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.状態指定日.getCode(), LocalDate.of(2020,10,1), null, null, null, null));
+        bizTranRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchBizTranRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",1, LocalDate.of(2020,10,1), null, null, null, null));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(2020, 9, 30),1,null,null));
@@ -1281,9 +1340,9 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        bizTranRoleConditionsSelect = ConditionsSelect.OR.getCode();
-        List<Oa11010SearchBizTranRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",ConditionsExpirationSelect.UnKnown.getCode(), null, null, null, null, null));
+        bizTranRoleConditionsSelect = 2;  //OR
+        List<OparatorSearchBizTranRoleRequest> list = newArrayList();
+        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",-1, null, null, null, null, null));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));

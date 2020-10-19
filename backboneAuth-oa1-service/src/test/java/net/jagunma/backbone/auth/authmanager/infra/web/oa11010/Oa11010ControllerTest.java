@@ -29,6 +29,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -161,6 +164,13 @@ class Oa11010ControllerTest {
                 return null;
             }
         };
+        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository = new OperatorHistoryHeadersRepository() {
+            @Override
+            public OperatorHistoryHeaders selectBy(
+                OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
+                return null;
+            }
+        };
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
             @Override
             public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
@@ -234,15 +244,16 @@ class Oa11010ControllerTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            simpleSearchBranch,
-            branchAtMomentRepository) {
+            operatorHistoryHeadersRepository,
+            branchAtMomentRepository,
+            simpleSearchBranch) {
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
-                // request.getPageNo() == -1 の場合：RuntimeException を発生させる
-                if (request.getPageNo() == -1) {
+                // request.getJaIdCriteria().getEqualTo() == -1 の場合：RuntimeException を発生させる
+                if (request.getJaIdCriteria().getEqualTo() == -1) {
                     throw new RuntimeException();
                 }
-                // request.getJaId() == -1 の場合：GunmaRuntimeException を発生させる
-                if (request.getJaId() == -1) {
+                // request.getJaIdCriteria().getEqualTo() == -2 の場合：GunmaRuntimeException を発生させる
+                if (request.getJaIdCriteria().getEqualTo() == -2) {
                     Preconditions.checkNotEmpty("", () -> new GunmaRuntimeException(GunmaRuntimeExceptionMessageCode, GunmaRuntimeExceptionMessageArg1, GunmaRuntimeExceptionMessageArg2));
                 }
 
@@ -373,8 +384,8 @@ class Oa11010ControllerTest {
     // オペレーター群作成
     private Operators createOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
-        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1));
+        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1,null));
         return Operators.createFrom(list);
     }
 
@@ -492,8 +503,8 @@ class Oa11010ControllerTest {
         Oa11010Controller oa11010Controller = createOa11010Controller();
 
         // 実行値
-        Oa11010Vo oa11010Vo = createOa11010Vo();
         pageNo = 1;
+        Oa11010Vo oa11010Vo = createOa11010Vo();
 
         // 期待値
         String expectedViewName = "oa11010";
@@ -532,7 +543,7 @@ class Oa11010ControllerTest {
         Oa11010Controller oa11010Controller = createOa11010Controller();
 
         // 実行値
-        jaId = -1L;
+        jaId = -2L;
         Oa11010Vo oa11010Vo = createOa11010Vo();
 
         // 期待値
@@ -565,7 +576,7 @@ class Oa11010ControllerTest {
         Oa11010Controller oa11010Controller = createOa11010Controller();
 
         // 実行値
-        pageNo = -1;
+        jaId = -1L;
         Oa11010Vo oa11010Vo = createOa11010Vo();
         String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 

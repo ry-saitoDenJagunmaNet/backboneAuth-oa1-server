@@ -36,7 +36,7 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
      */
     public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
 
-        // 取引グループ検索
+        // 取引グループ運検索
         BizTranGrpEntityCriteria entityCriteria = new BizTranGrpEntityCriteria();
         entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrpCriteria.getSubSystemCode().getEqualTo());
 
@@ -63,7 +63,7 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
      */
     public BizTranGrps selectAll(Orders orders) {
 
-        // 取引グループ検索
+        // 取引グループ群検索
         List<BizTranGrp> list = newArrayList();
         for (BizTranGrpEntity entity : bizTranGrpEntityDao.findAll(orders)) {
             list.add(BizTranGrp.createFrom(

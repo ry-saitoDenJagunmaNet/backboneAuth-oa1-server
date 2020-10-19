@@ -68,17 +68,17 @@ public class SimpleSearchBranch {
         criteria.getJaIdCriteria().setEqualTo(jaId);
         Orders orders = Orders.empty().addOrder("jaId").addOrder("branchId");
 
-        List<OperatorEntity> operatorEntities = operatorEntityDao.findBy(criteria, orders);
+        List<OperatorEntity> operatorEntityList = operatorEntityDao.findBy(criteria, orders);
         List<String> branchList = newArrayList();
-        operatorEntities.forEach(o -> {
-            branchList.add(o.getBranchCode());
-        });
+        for (OperatorEntity entyty : operatorEntityList) {
+            branchList.add(entyty.getBranchCode());
+        }
 
         List<BranchAtMoment> list = newArrayList();
-        // 重複削除
+        // 重複を削除してBranchAtMoment Listを作成
         branchList.stream().distinct().forEach(t -> {
             list.add(BranchAtMoment.builder()
-                .withIdentifier(operatorEntities.stream().filter(o->o.getBranchCode().equals(t)).findFirst().orElse(null).getBranchId())
+                .withIdentifier(operatorEntityList.stream().filter(o->o.getBranchCode().equals(t)).findFirst().orElse(null).getBranchId())
                 .withJaAtMoment(createJaAtMoment(jaId, jaCode, jaCode))
                 .withBranchAttribute(BranchAttribute.builder()
                     .withBranchType(BranchType.一般)

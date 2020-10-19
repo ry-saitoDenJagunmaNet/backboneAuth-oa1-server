@@ -42,12 +42,12 @@ public class SignInTracesDataSource implements SignInTracesRepository {
      */
     public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // サインイン証跡検索
+        // サインイン証跡群検索
         SignInTraceEntityCriteria entityCriteria = new SignInTraceEntityCriteria();
         entityCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
 

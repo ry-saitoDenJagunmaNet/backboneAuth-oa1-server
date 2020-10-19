@@ -6,13 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 class OperatorTest {
 
     /**
-     * {@link Operator#createFrom(Long, String, String, String, LocalDate, LocalDate, Boolean, Long, String, Long, String, Short, Integer)}テスト
+     * {@link Operator#createFrom(Long, String, String, String, LocalDate, LocalDate, Boolean, Long, String, Long, String, Short, Integer, BranchAtMoment)}テスト
      *  ●パターン
      *    正常
      *
@@ -37,6 +38,8 @@ class OperatorTest {
         String branchCode = "001";
         Short availableStatus = AvailableStatus.利用可能.getCode();
         Integer recordVersion = 1;
+        //TODO: BranchAtMomentをnullにしたが、値を入れたテストをする必要がある
+        BranchAtMoment branchAtMoment = null;
 
         // 実行
         Operator operator = Operator.createFrom(
@@ -52,7 +55,8 @@ class OperatorTest {
             branchId,
             branchCode,
             availableStatus,
-            recordVersion);
+            recordVersion,
+            branchAtMoment);
 
         // 結果検証
         assertTrue(operator instanceof Operator);
@@ -69,5 +73,6 @@ class OperatorTest {
         assertThat(operator.getBranchCode()).isEqualTo(branchCode);
         assertThat(operator.getAvailableStatus()).isEqualTo(availableStatus);
         assertThat(operator.getRecordVersion()).isEqualTo(recordVersion);
+        assertThat(operator.getBranchAtMoment()).isEqualTo(branchAtMoment);
     }
 }

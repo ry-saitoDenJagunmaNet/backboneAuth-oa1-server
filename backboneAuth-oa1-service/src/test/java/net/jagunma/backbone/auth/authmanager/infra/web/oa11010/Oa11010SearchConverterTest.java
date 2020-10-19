@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -21,12 +22,12 @@ class Oa11010SearchConverterTest {
     // 実行既定値
     private final Long jaId = 6L;
     private final Long branchId = 1L;
-    private final String operatorCode = "yu001009";
-    private final String operatorName = "ｙｕ００１００９";
-    private final String mailAddress = "abcd@efgh.net";
+    private String operatorCode = "yu001009";
+    private String operatorName = "ｙｕ００１００９";
+    private String mailAddress = "abcd@efgh.net";
     private Short availableStatus0 = (short) 1;
     private Short availableStatus1 = (short) 1;
-    private final Integer expirationSelect = 1;
+    private Integer expirationSelect = 1;
     private final LocalDate expirationStatusDate = LocalDate.of(2020, 9, 1);
     private final LocalDate expirationStartDateFrom = LocalDate.of(2020, 9, 2);
     private final LocalDate expirationStartDateTo = LocalDate.of(2020, 9, 3);
@@ -56,6 +57,17 @@ class Oa11010SearchConverterTest {
         subSystemRoleVo.setExpirationStartDateTo(LocalDate.of(2020, 10, 8));
         subSystemRoleVo.setExpirationEndDateFrom(LocalDate.of(2020, 10, 9));
         subSystemRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 10));
+        subSystemRoleVoList.add(subSystemRoleVo);
+        subSystemRoleVo = new Oa11010SubSystemRoleVo();
+        subSystemRoleVo.setSubSystemRoleSelected((short) 0);
+        subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_米.getCode());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_米.getName());
+        subSystemRoleVo.setExpirationSelect(0);
+        subSystemRoleVo.setExpirationStatusDate(null);
+        subSystemRoleVo.setExpirationStartDateFrom(null);
+        subSystemRoleVo.setExpirationStartDateTo(null);
+        subSystemRoleVo.setExpirationEndDateFrom(null);
+        subSystemRoleVo.setExpirationEndDateTo(null);
         subSystemRoleVoList.add(subSystemRoleVo);
         return subSystemRoleVoList;
     }
@@ -90,10 +102,23 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo.setExpirationEndDateFrom(LocalDate.of(2020, 10, 19));
         bizTranRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 20));
         bizTranRoleVoList.add(bizTranRoleVo);
+        bizTranRoleVo = new Oa11010BizTranRoleVo();
+        bizTranRoleVo.setBizTranRoleSelected((short) 0);
+        bizTranRoleVo.setBizTranRoleId(3L);
+        bizTranRoleVo.setBizTranRoleCode("KBXX03");
+        bizTranRoleVo.setBizTranRoleName("購買ｘｘ担当者");
+        bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
+        bizTranRoleVo.setExpirationSelect(0);
+        bizTranRoleVo.setExpirationStatusDate(null);
+        bizTranRoleVo.setExpirationStartDateFrom(null);
+        bizTranRoleVo.setExpirationStartDateTo(null);
+        bizTranRoleVo.setExpirationEndDateFrom(null);
+        bizTranRoleVo.setExpirationEndDateTo(null);
+        bizTranRoleVoList.add(bizTranRoleVo);
         return bizTranRoleVoList;
     }
     private Short deviceAuthUse = (short) 0;
-    private final Short deviceAuthUnuse = (short) 1;
+    private Short deviceAuthUnuse = (short) 1;
     private final LocalDate accountLockOccurredDateFrom = LocalDate.of(2020, 9, 6);
     private final LocalDate accountLockOccurredDateTo = LocalDate.of(2020, 9, 7);
     private final Short accountLockStatusLock = (short) 0;
@@ -172,6 +197,10 @@ class Oa11010SearchConverterTest {
         Oa11010Vo vo = createOa11010Vo();
 
         // 期待値
+        List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
+            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
+            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
         if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
             availableStatusIncludesList.add((short) 0);
@@ -185,24 +214,20 @@ class Oa11010SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa11010SearchConverter);
-        assertThat(converter.getJaId()).isEqualTo(jaId);
-        assertThat(converter.getBranchId()).isEqualTo(branchId);
-        assertThat(converter.getOperatorCode()).isEqualTo(operatorCode);
-        assertThat(converter.getOperatorName()).isEqualTo(operatorName);
-        assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(converter.getAvailableStatus0()).isEqualTo(availableStatus0);
-        assertThat(converter.getAvailableStatus1()).isEqualTo(availableStatus1);
-        assertThat(converter.getExpirationSelect()).isEqualTo(expirationSelect);
-        assertThat(converter.getExpirationStatusDate()).isEqualTo(expirationStatusDate);
-        assertThat(converter.getExpirationStartDateFrom()).isEqualTo(expirationStartDateFrom);
-        assertThat(converter.getExpirationStartDateTo()).isEqualTo(expirationStartDateTo);
-        assertThat(converter.getExpirationEndDateFrom()).isEqualTo(expirationEndDateFrom);
-        assertThat(converter.getExpirationEndDateTo()).isEqualTo(expirationEndDateTo);
+        assertThat(converter.getOperatorCodeCriteria().getForwardMatch()).isEqualTo(operatorCode);
+        assertThat(converter.getOperatorNameCriteria().getForwardMatch()).isEqualTo(operatorName);
+        assertThat(converter.getMailAddressCriteria().getForwardMatch()).isEqualTo(mailAddress);
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isEqualTo(expirationStatusDate);
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isEqualTo(expirationStatusDate);
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
+        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
         assertThat(converter.getSubSystemRoleConditionsSelect()).isEqualTo(subSystemRoleConditionsSelect);
-        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(getSubSystemRoleVoList());
+        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(expectedSubSystemRoleVoList);
         assertThat(converter.getBizTranRoleConditionsSelect()).isEqualTo(bizTranRoleConditionsSelect);
         assertThat(converter.getBizTranRoleSubSystemCode()).isEqualTo(bizTranRoleSubSystemCode);
-        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(getBizTranRoleVoList());
+        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(expectedBizTranRoleVoList);
         assertThat(converter.getAccountLockOccurredDateFrom()).isEqualTo(accountLockOccurredDateFrom);
         assertThat(converter.getAccountLockOccurredDateTo()).isEqualTo(accountLockOccurredDateTo);
         assertThat(converter.getAccountLockStatusLock()).isEqualTo(accountLockStatusLock);
@@ -220,14 +245,14 @@ class Oa11010SearchConverterTest {
         assertThat(converter.getSignintraceSignIn()).isEqualTo(signintraceSignIn);
         assertThat(converter.getSignintraceSignOut()).isEqualTo(signintraceSignOut);
         assertThat(converter.getSignintraceSignInResult()).isEqualTo(signintraceSignInResult);
-        assertThat(converter.getPageNo()).isEqualTo(pageNo);
-        assertThat(converter.getAvailableStatusIncludesList()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
-        assertThat(converter.getDeviceAuthUse()).isEqualTo(BaseOfResponseVo.CHECKBOX_TRUE.equals(deviceAuthUse));
     }
     /**
      * {@link Oa11010SearchConverter}のテスト
      *  ●パターン
      *    通常
+     *    （有効期限＝条件指定、
+     *      利用可能＝false、利用不可＝false、
+     *      機器認証検＝使用）
      *
      *  ●検証事項
      *  ・Converterへのセット
@@ -237,12 +262,18 @@ class Oa11010SearchConverterTest {
     void with_test1() {
 
         // 実行値
+        expirationSelect = 2;
         availableStatus0 = (short) 0;
         availableStatus1 = (short) 0;
         deviceAuthUse = (short) 1;
+        deviceAuthUnuse = (short) 0;
         Oa11010Vo vo = createOa11010Vo();
 
         // 期待値
+        List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
+            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
+            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
         if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
             availableStatusIncludesList.add((short) 0);
@@ -256,24 +287,22 @@ class Oa11010SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa11010SearchConverter);
-        assertThat(converter.getJaId()).isEqualTo(jaId);
-        assertThat(converter.getBranchId()).isEqualTo(branchId);
-        assertThat(converter.getOperatorCode()).isEqualTo(operatorCode);
-        assertThat(converter.getOperatorName()).isEqualTo(operatorName);
-        assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(converter.getAvailableStatus0()).isEqualTo(availableStatus0);
-        assertThat(converter.getAvailableStatus1()).isEqualTo(availableStatus1);
-        assertThat(converter.getExpirationSelect()).isEqualTo(expirationSelect);
-        assertThat(converter.getExpirationStatusDate()).isEqualTo(expirationStatusDate);
-        assertThat(converter.getExpirationStartDateFrom()).isEqualTo(expirationStartDateFrom);
-        assertThat(converter.getExpirationStartDateTo()).isEqualTo(expirationStartDateTo);
-        assertThat(converter.getExpirationEndDateFrom()).isEqualTo(expirationEndDateFrom);
-        assertThat(converter.getExpirationEndDateTo()).isEqualTo(expirationEndDateTo);
+        assertThat(converter.getOperatorCodeCriteria().getForwardMatch()).isEqualTo(operatorCode);
+        assertThat(converter.getOperatorNameCriteria().getForwardMatch()).isEqualTo(operatorName);
+        assertThat(converter.getMailAddressCriteria().getForwardMatch()).isEqualTo(mailAddress);
+        assertThat(converter.getExpirationStartDateCriteria().getMoreOrEqual()).isEqualTo(expirationStartDateFrom);
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isEqualTo(expirationStartDateTo);
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isEqualTo(expirationEndDateFrom);
+        assertThat(converter.getExpirationEndDateCriteria().getLessOrEqual()).isEqualTo(expirationEndDateTo);
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
+        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
         assertThat(converter.getSubSystemRoleConditionsSelect()).isEqualTo(subSystemRoleConditionsSelect);
-        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(getSubSystemRoleVoList());
+        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(expectedSubSystemRoleVoList);
         assertThat(converter.getBizTranRoleConditionsSelect()).isEqualTo(bizTranRoleConditionsSelect);
         assertThat(converter.getBizTranRoleSubSystemCode()).isEqualTo(bizTranRoleSubSystemCode);
-        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(getBizTranRoleVoList());
+        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(expectedBizTranRoleVoList);
         assertThat(converter.getAccountLockOccurredDateFrom()).isEqualTo(accountLockOccurredDateFrom);
         assertThat(converter.getAccountLockOccurredDateTo()).isEqualTo(accountLockOccurredDateTo);
         assertThat(converter.getAccountLockStatusLock()).isEqualTo(accountLockStatusLock);
@@ -291,8 +320,161 @@ class Oa11010SearchConverterTest {
         assertThat(converter.getSignintraceSignIn()).isEqualTo(signintraceSignIn);
         assertThat(converter.getSignintraceSignOut()).isEqualTo(signintraceSignOut);
         assertThat(converter.getSignintraceSignInResult()).isEqualTo(signintraceSignInResult);
-        assertThat(converter.getPageNo()).isEqualTo(pageNo);
-        assertThat(converter.getAvailableStatusIncludesList()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
-        assertThat(converter.getDeviceAuthUse()).isEqualTo(BaseOfResponseVo.CHECKBOX_TRUE.equals(deviceAuthUse));
+    }
+
+    /**
+     * {@link Oa11010SearchConverter}のテスト
+     *  ●パターン
+     *    通常
+     *    （オペレーターコード、 オペレーター名、メールアドレス 未指定、
+     *      有効期限選択=指定なし、
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test2() {
+
+        // 実行値
+        operatorCode = "";
+        operatorName = "";
+        mailAddress = "";
+        expirationSelect = 0;
+        Oa11010Vo vo = createOa11010Vo();
+
+        // 期待値
+        List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
+            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
+            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Short> availableStatusIncludesList = newArrayList();
+        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
+            availableStatusIncludesList.add((short) 0);
+        }
+        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
+            availableStatusIncludesList.add((short) 1);
+        }
+
+        // 実行
+        Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11010SearchConverter);
+        assertThat(converter.getOperatorCodeCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getOperatorNameCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getMailAddressCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
+        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
+        assertThat(converter.getSubSystemRoleConditionsSelect()).isEqualTo(subSystemRoleConditionsSelect);
+        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(expectedSubSystemRoleVoList);
+        assertThat(converter.getBizTranRoleConditionsSelect()).isEqualTo(bizTranRoleConditionsSelect);
+        assertThat(converter.getBizTranRoleSubSystemCode()).isEqualTo(bizTranRoleSubSystemCode);
+        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(expectedBizTranRoleVoList);
+        assertThat(converter.getAccountLockOccurredDateFrom()).isEqualTo(accountLockOccurredDateFrom);
+        assertThat(converter.getAccountLockOccurredDateTo()).isEqualTo(accountLockOccurredDateTo);
+        assertThat(converter.getAccountLockStatusLock()).isEqualTo(accountLockStatusLock);
+        assertThat(converter.getAccountLockStatusUnlock()).isEqualTo(accountLockStatusUnlock);
+        assertThat(converter.getPasswordHistoryCheck()).isEqualTo(passwordHistoryCheck);
+        assertThat(converter.getPasswordHistoryLastChangeDate()).isEqualTo(passwordHistoryLastChangeDate);
+        assertThat(converter.getPasswordHistoryLastChangeDateStatus()).isEqualTo(passwordHistoryLastChangeDateStatus);
+        assertThat(converter.getPasswordHistoryChangeType0()).isEqualTo(passwordHistoryChangeType0);
+        assertThat(converter.getPasswordHistoryChangeType1()).isEqualTo(passwordHistoryChangeType1);
+        assertThat(converter.getPasswordHistoryChangeType2()).isEqualTo(passwordHistoryChangeType2);
+        assertThat(converter.getPasswordHistoryChangeType3()).isEqualTo(passwordHistoryChangeType3);
+        assertThat(converter.getSignintraceTrydateFrom()).isEqualTo(signintraceTrydateFrom);
+        assertThat(converter.getSignintraceTrydateTo()).isEqualTo(signintraceTrydateTo);
+        assertThat(converter.getSignintraceTryIpAddress()).isEqualTo(signintraceTryIpAddress);
+        assertThat(converter.getSignintraceSignIn()).isEqualTo(signintraceSignIn);
+        assertThat(converter.getSignintraceSignOut()).isEqualTo(signintraceSignOut);
+        assertThat(converter.getSignintraceSignInResult()).isEqualTo(signintraceSignInResult);
+    }
+
+    /**
+     * {@link Oa11010SearchConverter}のテスト
+     *  ●パターン
+     *    通常
+     *    （オペレーターコード、 オペレーター名、メールアドレス 未指定、
+     *      有効期限選択 未指定、
+     *      機器認証検索条件 未指定、
+     *      機器認証検＝未指定）
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test3() {
+
+        // 実行値
+        operatorCode = null;
+        operatorName = null;
+        mailAddress = null;
+        expirationSelect = null;
+        deviceAuthUse = null;
+        deviceAuthUnuse = null;
+        Oa11010Vo vo = createOa11010Vo();
+
+        // 期待値
+        List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
+            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
+            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+        List<Short> availableStatusIncludesList = newArrayList();
+        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
+            availableStatusIncludesList.add((short) 0);
+        }
+        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
+            availableStatusIncludesList.add((short) 1);
+        }
+
+        // 実行
+        Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11010SearchConverter);
+        assertThat(converter.getOperatorCodeCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getOperatorNameCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getMailAddressCriteria().getForwardMatch()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isNull();
+        assertThat(converter.getExpirationEndDateCriteria().getLessOrEqual()).isNull();
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isNull();
+        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
+        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
+        assertThat(converter.getSubSystemRoleConditionsSelect()).isEqualTo(subSystemRoleConditionsSelect);
+        assertThat(converter.getSubSystemRoleList()).usingRecursiveComparison().isEqualTo(expectedSubSystemRoleVoList);
+        assertThat(converter.getBizTranRoleConditionsSelect()).isEqualTo(bizTranRoleConditionsSelect);
+        assertThat(converter.getBizTranRoleSubSystemCode()).isEqualTo(bizTranRoleSubSystemCode);
+        assertThat(converter.getBizTranRoleList()).usingRecursiveComparison().isEqualTo(expectedBizTranRoleVoList);
+        assertThat(converter.getAccountLockOccurredDateFrom()).isEqualTo(accountLockOccurredDateFrom);
+        assertThat(converter.getAccountLockOccurredDateTo()).isEqualTo(accountLockOccurredDateTo);
+        assertThat(converter.getAccountLockStatusLock()).isEqualTo(accountLockStatusLock);
+        assertThat(converter.getAccountLockStatusUnlock()).isEqualTo(accountLockStatusUnlock);
+        assertThat(converter.getPasswordHistoryCheck()).isEqualTo(passwordHistoryCheck);
+        assertThat(converter.getPasswordHistoryLastChangeDate()).isEqualTo(passwordHistoryLastChangeDate);
+        assertThat(converter.getPasswordHistoryLastChangeDateStatus()).isEqualTo(passwordHistoryLastChangeDateStatus);
+        assertThat(converter.getPasswordHistoryChangeType0()).isEqualTo(passwordHistoryChangeType0);
+        assertThat(converter.getPasswordHistoryChangeType1()).isEqualTo(passwordHistoryChangeType1);
+        assertThat(converter.getPasswordHistoryChangeType2()).isEqualTo(passwordHistoryChangeType2);
+        assertThat(converter.getPasswordHistoryChangeType3()).isEqualTo(passwordHistoryChangeType3);
+        assertThat(converter.getSignintraceTrydateFrom()).isEqualTo(signintraceTrydateFrom);
+        assertThat(converter.getSignintraceTrydateTo()).isEqualTo(signintraceTrydateTo);
+        assertThat(converter.getSignintraceTryIpAddress()).isEqualTo(signintraceTryIpAddress);
+        assertThat(converter.getSignintraceSignIn()).isEqualTo(signintraceSignIn);
+        assertThat(converter.getSignintraceSignOut()).isEqualTo(signintraceSignOut);
+        assertThat(converter.getSignintraceSignInResult()).isEqualTo(signintraceSignInResult);
     }
 }

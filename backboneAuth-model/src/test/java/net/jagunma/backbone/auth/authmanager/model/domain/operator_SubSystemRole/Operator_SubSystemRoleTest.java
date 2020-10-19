@@ -8,6 +8,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +47,7 @@ class Operator_SubSystemRoleTest {
         String branchCode = "001";
         Short availableStatus = AvailableStatus.利用可能.getCode();
         Integer operatorRecordVersion = 1;
+        BranchAtMoment branchAtMoment = null;
         Operator operator = Operator.createFrom(
             operatorId,
             operatorCode,
@@ -59,7 +61,8 @@ class Operator_SubSystemRoleTest {
             branchId,
             branchCode,
             availableStatus,
-            operatorRecordVersion);
+            operatorRecordVersion,
+            branchAtMoment);
 
         // 実行
         Operator_SubSystemRole operator_SubSystemRole = Operator_SubSystemRole.createFrom(

@@ -49,21 +49,21 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
      */
     public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // オペレーター_取引ロール割当検索
+        // オペレーター_取引ロール割当群検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes());
+        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
         // オペレーター_取引ロール割当から取引ロールIDリストを取得
         List<Long> bizTranRoleIdList = OperatorBizTranRoleList.stream().
             map(Operator_BizTranRoleEntity::getBizTranRoleId).distinct().collect(Collectors.toList());
 
-        // 取引ロールリストの検索
+        // 取引ロール群の検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
         bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
         BizTranRoles bizTranRoles = bizTranRolesDataSource.selectBy(bizTranRoleCriteria, Orders.empty());

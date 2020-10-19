@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorRefere
 
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
@@ -46,4 +47,10 @@ public interface OperatorSearchResponse {
      * @param operator_BizTranRoles オペレーター_取引ロール割当群
      */
     void setOperator_BizTranRoles(Operator_BizTranRoles operator_BizTranRoles);
+    /**
+     * オペレーター履歴ヘッダーのＳｅｔ
+     *
+     * @param operatorHistoryHeaders オペレーター履歴ヘッダー
+     */
+    void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders);
 }

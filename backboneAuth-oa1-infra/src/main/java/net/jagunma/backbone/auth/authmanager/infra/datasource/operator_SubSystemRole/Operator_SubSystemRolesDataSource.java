@@ -44,12 +44,12 @@ public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRole
     public Operator_SubSystemRoles selectBy(
         Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_SubSystemRoleCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // オペレーター_サブシステムロール割当検索
+        // オペレーター_サブシステムロール割当群検索
         Operator_SubSystemRoleEntityCriteria entityCriteria = new Operator_SubSystemRoleEntityCriteria();
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_SubSystemRoleCriteria.getOperatorIdCriteria().getIncludes());
 
