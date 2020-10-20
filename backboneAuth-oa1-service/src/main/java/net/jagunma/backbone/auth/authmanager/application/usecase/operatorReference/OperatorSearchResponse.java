@@ -11,12 +11,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
  */
 public interface OperatorSearchResponse {
     /**
-     * オペレーター一覧表示ページのＳｅｔ
-     *
-     * @param pageNo オペレーター一覧表示ページ
-     */
-    void setPageNo(int pageNo);
-    /**
      * オペレーター群のＳｅｔ
      *
      * @param operators オペレーター群
