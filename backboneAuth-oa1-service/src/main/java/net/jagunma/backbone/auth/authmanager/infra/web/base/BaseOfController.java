@@ -23,8 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BaseOfController {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(Oa12010Controller.class);
-
     private static Long defaultJaId = 6L;
     private static String defaultJaCode = "006";
     private static String defaultJaName = "JA前橋市";

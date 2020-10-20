@@ -262,8 +262,6 @@ class Oa11010ControllerTest {
                 response.setAccountLocks(createAccountLocks());
                 response.setOperator_SubSystemRoles(createOperator_SubSystemRoles());
                 response.setOperator_BizTranRoles(createOperator_BizTranRoles());
-
-                response.setPageNo(pageNo);
                 return;
             }
         };

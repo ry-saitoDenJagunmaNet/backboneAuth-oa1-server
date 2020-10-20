@@ -117,7 +117,6 @@ public class Oa11010Controller extends BaseOfController {
         try {
 
             Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
-//            Oa11010SearchConverterXX converter = new Oa11010SearchConverterXX();
             Oa11010SearchPresenter presenter = new Oa11010SearchPresenter();
 
             // オぺレーター検索

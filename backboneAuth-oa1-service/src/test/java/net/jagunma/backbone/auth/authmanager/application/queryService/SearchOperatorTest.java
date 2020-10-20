@@ -223,14 +223,6 @@ class SearchOperatorTest {
                 return new int[0];
             }
         };
-//        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
-//            public BranchesAtMoment getBranchesAtMoment(long jaId) {
-//                return createBranchesAtMoment();
-//            }
-//            public BranchesAtMoment branchAtMomentSelectBy(BranchAtMomentCriteria branchAtMomentCriteria) {
-//                return createBranchesAtMoment();
-//            }
-//        };
         return new SearchOperator(operatorsRepository,
             accountLocksRepository,
             passwordHistoriesRepository,
@@ -501,11 +493,6 @@ class SearchOperatorTest {
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
                 @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
-                @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
@@ -592,11 +579,6 @@ class SearchOperatorTest {
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
                 @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
-                @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
@@ -671,11 +653,6 @@ class SearchOperatorTest {
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
-                @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
                 @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
@@ -755,11 +732,6 @@ class SearchOperatorTest {
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
                 @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
-                @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
@@ -834,11 +806,6 @@ class SearchOperatorTest {
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
-                @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
                 @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
@@ -918,11 +885,6 @@ class SearchOperatorTest {
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
                 @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
-                @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
@@ -1000,11 +962,6 @@ class SearchOperatorTest {
         // 実行 & 結果検証
         searchOperator.execute(createOperatorSearchRequest(),
             new OperatorSearchResponse() {
-                @Override
-                public void setPageNo(int actualPageNo) {
-                    // 結果検証
-                    assertThat(actualPageNo).isEqualTo(pageNo);
-                }
                 @Override
                 public void setOperators(Operators actualOperators) {
                     // 結果検証
