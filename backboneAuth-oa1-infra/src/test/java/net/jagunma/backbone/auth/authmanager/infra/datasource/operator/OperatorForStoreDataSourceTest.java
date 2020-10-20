@@ -72,6 +72,7 @@ class OperatorForStoreDataSourceTest {
     private LocalDateTime updatedAt = LocalDateTime.of(2020, 10, 31,4,5,6);
     private String updatedIpAddress = "200.200.200.200";
     private Integer recordVersion = 1;
+    private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, expirationStartDate, expirationEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, null);
 
     // オペレーター履歴ヘッダー系
     private Long operatorHistoryId = 234567L;
@@ -82,10 +83,8 @@ class OperatorForStoreDataSourceTest {
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
 
-    // オペレーター_サブシステムロール割当履歴系 ＆ オペレーター_取引ロール割当履歴系
-    Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, expirationStartDate, expirationEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus.getCode(), recordVersion);
     // オペレーター_サブシステムロール割当履歴系
-    List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
+    private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
         Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), expirationStartDate, expirationEndDate, 391, operator, SubSystemRole.JA管理者),
         Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), expirationStartDate, expirationEndDate, 392, operator, SubSystemRole.業務統括者_購買),
         Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), expirationStartDate, expirationEndDate, 393, operator, SubSystemRole.業務統括者_販売_青果),
@@ -93,12 +92,12 @@ class OperatorForStoreDataSourceTest {
         Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), expirationStartDate, expirationEndDate, 395, operator, SubSystemRole.業務統括者_販売_畜産));
 
     // オペレーター_取引ロール割当履歴系
-    List<BizTranRole> bizTranRoleList = newArrayList(
+    private List<BizTranRole> bizTranRoleList = newArrayList(
         BizTranRole.createFrom(401L, "KB0000", "購買メインメニュー", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
         BizTranRole.createFrom(402L, "KB0001", "支所検索", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
         BizTranRole.createFrom(403L, "KB0002", "顧客検索", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
         BizTranRole.createFrom(404L, "YS0000", "野菜メインメニュー", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果));
-    List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
+    private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
         Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(0)),
         Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(1)),
         Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(2)),
