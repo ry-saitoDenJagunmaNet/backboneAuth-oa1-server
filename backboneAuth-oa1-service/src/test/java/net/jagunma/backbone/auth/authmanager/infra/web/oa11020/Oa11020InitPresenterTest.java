@@ -60,7 +60,7 @@ class Oa11020InitPresenterTest {
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
         presenter.setOperatorCodePrefix(operatorCodePrefix);
-        presenter.setBranchesAtMoment(createBranchesAtMoment());
+        presenter.setBranchesAtMomentForBranchItemsSource(createBranchesAtMoment());
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();

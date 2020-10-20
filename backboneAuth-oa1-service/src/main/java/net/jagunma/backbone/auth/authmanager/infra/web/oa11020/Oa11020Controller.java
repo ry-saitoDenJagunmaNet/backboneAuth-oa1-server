@@ -81,9 +81,7 @@ public class Oa11020Controller extends BaseOfController {
             presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
             presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
             presenter.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
-            presenter.setBranchesAtMoment(
-                simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
-
+            presenter.setBranchesAtMomentForBranchItemsSource(simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
             presenter.bindTo(vo);
 
             model.addAttribute("form", vo);

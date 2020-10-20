@@ -12,7 +12,7 @@ class Oa11020InitPresenter {
     private String jaCode;
     private String jaName;
     private String operatorCodePrefix;
-    private BranchesAtMoment branchesAtMoment;
+    private BranchesAtMoment branchesAtMomentForBranchItemsSource;
 
     // コンストラクタ
     Oa11020InitPresenter() {
@@ -43,12 +43,12 @@ class Oa11020InitPresenter {
         this.operatorCodePrefix = operatorCodePrefix;
     }
     /**
-     * 店舗群AtMomentのＳｅｔ
+     * 店舗コンボボックスItemsSource の為の 店舗群AtMoment
      *
-     * @param branchesAtMoment
+     * @param branchesAtMomentForBranchItemsSource
      */
-    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
-        this.branchesAtMoment = branchesAtMoment;
+    public void setBranchesAtMomentForBranchItemsSource(BranchesAtMoment branchesAtMomentForBranchItemsSource) {
+        this.branchesAtMomentForBranchItemsSource = branchesAtMomentForBranchItemsSource;
     }
 
     /**
@@ -66,7 +66,7 @@ class Oa11020InitPresenter {
         vo.setExpirationStartDate(null);
         vo.setExpirationEndDate(null);
         vo.setChangeCause(null);
-        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
+        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMomentForBranchItemsSource).getValue());
         vo.setPassword(null);
         vo.setConfirmPassword(null);
     }
