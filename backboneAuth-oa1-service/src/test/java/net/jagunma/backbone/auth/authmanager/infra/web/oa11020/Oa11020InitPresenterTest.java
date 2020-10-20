@@ -22,25 +22,11 @@ class Oa11020InitPresenterTest {
     private String jaCode = "006";
     private String jaName = "JA前橋市";
     private String operatorCodePrefix = "yu";
-
-    // 店舗群AtMoment作成
-    private BranchesAtMoment createBranchesAtMoment() {
-        List<BranchAtMoment> branchAtMomentList = newArrayList();
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
-            .build());
-
-        return BranchesAtMoment.of(branchAtMomentList);
-    }
+    List<BranchAtMoment> branchAtMomentList = newArrayList(
+        BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
+        BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
+        BranchAtMoment.builder().withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build()).build());
+    private BranchesAtMoment branchesAtMoment = BranchesAtMoment.of(branchAtMomentList);
 
     /**
      * {@link Oa11020InitPresenter#bindTo(Oa11020Vo vo)}テスト
@@ -60,7 +46,7 @@ class Oa11020InitPresenterTest {
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
         presenter.setOperatorCodePrefix(operatorCodePrefix);
-        presenter.setBranchesAtMomentForBranchItemsSource(createBranchesAtMoment());
+        presenter.setBranchesAtMomentForBranchItemsSource(branchesAtMoment);
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
@@ -73,7 +59,7 @@ class Oa11020InitPresenterTest {
         expectedVo.setExpirationStartDate(null);
         expectedVo.setExpirationEndDate(null);
         expectedVo.setChangeCause(null);
-        expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
+        expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         expectedVo.setPassword(null);
         expectedVo.setConfirmPassword(null);
 

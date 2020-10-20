@@ -52,6 +52,11 @@ class Oa11020ControllerTest {
     private String password = "PaSsWoRd";
     private String confirmPassword = "pAsSwOrD";
     private String mode = "Initial";
+    List<BranchAtMoment> branchAtMomentList = newArrayList(
+        BranchAtMoment.builder().withIdentifier(branchId).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
+        BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
+        BranchAtMoment.builder().withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build()).build());
+    private BranchesAtMoment branchesAtMoment = BranchesAtMoment.of(branchAtMomentList);
 
     // テスト対象クラス生成
     private Oa11020Controller createOa11020Controller() {
@@ -127,7 +132,7 @@ class Oa11020ControllerTest {
         };
         SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
-                return createBranchesAtMoment();
+                return branchesAtMoment;
             }
         };
         EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository) {
@@ -164,30 +169,11 @@ class Oa11020ControllerTest {
         vo.setExpirationStartDate(expirationStartDate);
         vo.setExpirationEndDate(expirationEndDate);
         vo.setChangeCause(changeCause);
-        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
+        vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         vo.setPassword(password);
         vo.setConfirmPassword(confirmPassword);
 
         return vo;
-    }
-
-    // 店舗群AtMoment作成
-    private BranchesAtMoment createBranchesAtMoment() {
-        List<BranchAtMoment> branchAtMomentList = newArrayList();
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
-            .build());
-
-        return BranchesAtMoment.of(branchAtMomentList);
     }
 
     Oa11020ControllerTest () {
