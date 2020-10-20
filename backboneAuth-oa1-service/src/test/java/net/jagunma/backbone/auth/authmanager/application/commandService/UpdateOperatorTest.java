@@ -6,13 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
-import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
@@ -121,14 +119,11 @@ class UpdateOperatorTest {
 
     // 店舗AtMoment
     private BranchAtMoment createBranchAtMoment() {
-        return createBranchAtMoment(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-    }
-    private BranchAtMoment createBranchAtMoment(String jaCode) {
         return BranchAtMoment.builder()
             .withIdentifier(AuditInfoHolder.getBranch().getIdentifier())
             .withJaAtMoment(JaAtMoment.builder()
                 .withJaAttribute(JaAttribute.builder()
-                    .withJaCode(JaCode.of(jaCode))
+                    .withJaCode(JaCode.of(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue()))
                     .build())
                 .build())
             .withBranchAttribute(BranchAttribute.builder()

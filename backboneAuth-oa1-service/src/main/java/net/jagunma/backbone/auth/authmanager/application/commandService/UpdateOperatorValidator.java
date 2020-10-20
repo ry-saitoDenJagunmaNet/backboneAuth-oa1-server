@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import net.jagunma.common.util.strings2.Strings2;
 
 /**
  * オペレーター更新サービス Validator

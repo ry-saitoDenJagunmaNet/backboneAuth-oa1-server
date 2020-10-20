@@ -63,7 +63,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     /**
      * ロック状態
      */
-    private Short lockStatus;
+    private Short accountLockStatus;
     /**
      * サブシステムロールテーブル
      */
@@ -115,8 +115,8 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public String getChangeCause() {
         return changeCause;
     }
-    public Short getLockStatus() {
-        return lockStatus;
+    public Short getAccountLockStatus() {
+        return accountLockStatus;
     }
     public List<Oa11030SubsystemRoleTableVo> getOa11030SubsystemRoleTableVoList() {
         return Oa11030SubsystemRoleTableVoList;
@@ -165,8 +165,8 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
     }
-    public void setLockStatus(Short lockStatus) {
-        this.lockStatus = lockStatus;
+    public void setAccountLockStatus(Short accountLockStatus) {
+        this.accountLockStatus = accountLockStatus;
     }
     public void setOa11030SubsystemRoleTableVoList(List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList) {
         Oa11030SubsystemRoleTableVoList = oa11030SubsystemRoleTableVoList;
