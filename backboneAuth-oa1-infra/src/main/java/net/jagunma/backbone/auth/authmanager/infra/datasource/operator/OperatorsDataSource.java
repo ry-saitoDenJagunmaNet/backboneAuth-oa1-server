@@ -7,6 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
@@ -86,7 +87,7 @@ public class OperatorsDataSource implements OperatorsRepository {
                 entity.getJaCode(),
                 entity.getBranchId(),
                 entity.getBranchCode(),
-                entity.getAvailableStatus(),
+                AvailableStatus.codeOf(entity.getAvailableStatus()),
                 entity.getRecordVersion(),
 //                branchesAtMoment.getValue().stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
                 // TODO: 暫定で店舗は仮に設定 provisional

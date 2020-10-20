@@ -49,6 +49,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrac
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
@@ -66,6 +67,8 @@ import net.jagunma.common.values.model.branch.BranchCode;
 import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
+import net.jagunma.common.values.model.ja.JaAttribute;
+import net.jagunma.common.values.model.ja.JaCode;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -244,9 +247,7 @@ class Oa11010ControllerTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            operatorHistoryHeadersRepository,
-            branchAtMomentRepository,
-            simpleSearchBranch) {
+            operatorHistoryHeadersRepository) {
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getJaIdCriteria().getEqualTo() == -1 の場合：RuntimeException を発生させる
                 if (request.getJaIdCriteria().getEqualTo() == -1) {
@@ -258,7 +259,6 @@ class Oa11010ControllerTest {
                 }
 
                 response.setOperators(createOperators());
-                response.setBranchesAtMoment(createBranchesAtMoment());
                 response.setAccountLocks(createAccountLocks());
                 response.setOperator_SubSystemRoles(createOperator_SubSystemRoles());
                 response.setOperator_BizTranRoles(createOperator_BizTranRoles());
@@ -355,76 +355,93 @@ class Oa11010ControllerTest {
         return oa11010Vo;
     }
 
-    // 店舗群AtMoment作成
+    // BranchesAtMoment作成
     private BranchesAtMoment createBranchesAtMoment() {
         List<BranchAtMoment> branchAtMomentList = newArrayList();
         branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(33L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+            .withIdentifier(33L).withJaAtMoment(createJaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("店舗001").build())
             .build());
         branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(35L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+            .withIdentifier(35L).withJaAtMoment(createJaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
             .build());
         branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(36L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
+            .withIdentifier(36L).withJaAtMoment(createJaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("004")).withName("店舗004").build())
             .build());
         return BranchesAtMoment.of(branchAtMomentList);
+    }
+    private BranchAtMoment createBranchAtMoment(Long branchId) {
+        return createBranchesAtMoment().getValue().stream().filter(b->b.getIdentifier().equals(branchId)).findFirst().orElse(null);
+    }
+
+    // JaAtMoment作成
+    private JaAtMoment createJaAtMoment() {
+        return JaAtMoment.builder()
+            .withIdentifier(jaId)
+            .withJaAttribute(JaAttribute
+                .builder()
+                .withJaCode(JaCode.of(jaCode))
+                .withName(jaName)
+                .withFormalName("")
+                .withAbbreviatedName("")
+                .build())
+            .build();
     }
 
     // 取引ロール群作成
     private BizTranRoles createBizTranRoles() {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KBAG01", "（購買）購買業務基本","KB",1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KBAG02", "（購買）本所業務","KB",1, SubSystem.購買));
+        list.add(BizTranRole.createFrom(1L,"KBAG01","（購買）購買業務基本","KB",1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L,"KBAG02","（購買）本所業務","KB",1,SubSystem.購買));
         return BizTranRoles.createFrom(list);
     }
 
     // オペレーター群作成
     private Operators createOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L, "yu001009", "ｙｕ００１００９", "yu001009@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1,null));
-        list.add(Operator.createFrom(19L, "yu001010", "ｙｕ００１０１０", "yu001010@aaaa.net", LocalDate.of(2010,8,17), LocalDate.of(9999,12,21),false,6L, "006", 33L, "001", (short) 0 ,1,null));
+        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能,1,createBranchAtMoment(33L)));
+        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能,1,createBranchAtMoment(33L)));
         return Operators.createFrom(list);
     }
 
     // アカウントロック群作成
     private AccountLocks createAccountLocks() {
         List<AccountLock> list = newArrayList();
-        list.add(AccountLock.createFrom(1L,18L, LocalDateTime.of(2020,10,1,8,30,12), (short) 0,0,null));
-        list.add(AccountLock.createFrom(2L,19L, LocalDateTime.of(2020,10,1,8,30,12), (short) 1,0,null));
+        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,30,12),(short) 0,0,null));
+        list.add(AccountLock.createFrom(2L,19L,LocalDateTime.of(2020,10,1,8,30,12),(short) 1,0,null));
         return AccountLocks.createFrom(list);
     }
 
     // オペレーター_サブシステムロール割当群作成
     private Operator_SubSystemRoles createOperator_SubSystemRoles() {
         List<Operator_SubSystemRole> list = newArrayList();
-        list.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(2L,21L,SubSystemRole.業務統括者_購買.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_購買));
-        list.add(Operator_SubSystemRole.createFrom(3L,21L,SubSystemRole.業務統括者_販売_青果.getCode(), LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, SubSystemRole.業務統括者_販売_青果));
+        list.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_購買));
+        list.add(Operator_SubSystemRole.createFrom(2L,21L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_購買));
+        list.add(Operator_SubSystemRole.createFrom(3L,21L,SubSystemRole.業務統括者_販売_青果.getCode(),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,SubSystemRole.業務統括者_販売_青果));
         return Operator_SubSystemRoles.createFrom(list);
     }
 
     // オペレーター_取引ロール割当群作成
     private Operator_BizTranRoles createOperator_BizTranRoles() {
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(1L)));
-        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(4L)));
-        list.add(Operator_BizTranRole.createFrom(3L,20L,2L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(2L)));
-        list.add(Operator_BizTranRole.createFrom(4L,20L,3L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
-        list.add(Operator_BizTranRole.createFrom(5L,21L,1L,LocalDate.of(2020,1,1), LocalDate.of(9999,12,31),1,null, createBizTranRole(3L)));
-        list.add(Operator_BizTranRole.createFrom(6L,21L,2L,LocalDate.of(2020,1,1), null,1,null, createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(1L)));
+        list.add(Operator_BizTranRole.createFrom(2L,18L,2L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(4L)));
+        list.add(Operator_BizTranRole.createFrom(3L,20L,2L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(2L)));
+        list.add(Operator_BizTranRole.createFrom(4L,20L,3L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(5L,21L,1L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,null,createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(6L,21L,2L,LocalDate.of(2020,1,1),null,1,null,createBizTranRole(3L)));
         return Operator_BizTranRoles.createFrom(list);
     }
 
     // 取引ロール作成
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1L, "KB0000", "購買メインメニュー", SubSystem.購買.getCode(),1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(2L, "KB0001", "支所検索", SubSystem.購買.getCode(),1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(3L, "KB0002", "顧客検索", SubSystem.購買.getCode(),1, SubSystem.購買));
-        list.add(BizTranRole.createFrom(4L, "YS0000", "野菜メインメニュー", SubSystem.販売_青果.getCode(),1, SubSystem.販売_青果));
+        list.add(BizTranRole.createFrom(1L,"KB0000","購買メインメニュー",SubSystem.購買.getCode(),1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(2L,"KB0001","支所検索",SubSystem.購買.getCode(),1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(3L,"KB0002","顧客検索",SubSystem.購買.getCode(),1,SubSystem.購買));
+        list.add(BizTranRole.createFrom(4L,"YS0000","野菜メインメニュー",SubSystem.販売_青果.getCode(),1,SubSystem.販売_青果));
         return list.stream().filter(b->b.getBizTranRoleId().equals(id)).findFirst().orElse(null);
     }
 

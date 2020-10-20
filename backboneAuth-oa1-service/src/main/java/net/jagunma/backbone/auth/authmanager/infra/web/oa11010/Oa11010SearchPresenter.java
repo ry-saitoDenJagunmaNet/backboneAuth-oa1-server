@@ -60,8 +60,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         List<Operator> list = getOperatorPageList();
         String branchCode = "";
         for (Operator operator : list) {
-            BranchAtMoment branchAtMoment = branchesAtMoment.getValue().stream().filter(
-                b->b.getBranchAttribute().getBranchCode().getValue().equals(operator.getBranchCode())).findFirst().orElse(null);
+            BranchAtMoment branchAtMoment = operator.getBranchAtMoment();
             if (branchAtMoment != null) {
                 if (branchCode.equals(branchAtMoment.getBranchAttribute().getBranchCode().getValue())) {
                     branchAtMoment = null;
@@ -94,7 +93,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
             operator.getOperatorCode()));
 
         // 利用可否
-        String available_status = operator.getAvailableStatus()==0? "oaex_available_status_possible":"oaex_available_status_inpossible";
+        String available_status = operator.getAvailableStatus().getCode()==0? "oaex_available_status_possible":"oaex_available_status_inpossible";
         html.append(String.format("<td class=\"oaex_operator_available_status\"><div class=\"%s\"></div></td>", available_status));
         // ロック
         String lockStatus = (accountLock!=null && accountLock.getLockStatus()==1)? "oaex_account_lock":"oaex_account_unlock";

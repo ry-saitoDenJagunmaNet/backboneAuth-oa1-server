@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class OperatorTest {
 
     /**
-     * {@link Operator#createFrom(Long, String, String, String, LocalDate, LocalDate, Boolean, Long, String, Long, String, Short, Integer, BranchAtMoment)}テスト
+     * {@link Operator#createFrom(Long, String, String, String, LocalDate, LocalDate, Boolean, Long, String, Long, String, AvailableStatus, Integer, BranchAtMoment)}テスト
      *  ●パターン
      *    正常
      *
@@ -36,7 +36,7 @@ class OperatorTest {
         String jaCode = "006";
         Long branchId = 33L;
         String branchCode = "001";
-        Short availableStatus = AvailableStatus.利用可能.getCode();
+        AvailableStatus availableStatus = AvailableStatus.利用可能;
         Integer recordVersion = 1;
         //TODO: BranchAtMomentをnullにしたが、値を入れたテストをする必要がある
         BranchAtMoment branchAtMoment = null;

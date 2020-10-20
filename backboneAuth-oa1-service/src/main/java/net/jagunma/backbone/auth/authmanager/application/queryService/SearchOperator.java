@@ -43,7 +43,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTr
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
-import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
@@ -51,8 +50,6 @@ import net.jagunma.common.ddd.model.criterias.ShortCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
-import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -74,8 +71,6 @@ public class SearchOperator {
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
     private final OperatorHistoryHeadersRepository operatorHistoryHeadersRepository;
-    private final BranchAtMomentRepository branchAtMomentRepository;
-    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public SearchOperator(OperatorsRepository operatorsRepository,
@@ -85,9 +80,7 @@ public class SearchOperator {
         SignOutTracesRepository signOutTracesRepository,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
         Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository,
-        BranchAtMomentRepository branchAtMomentRepository,
-        SimpleSearchBranch simpleSearchBranch) {
+        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository) {
 
         this.operatorsRepository = operatorsRepository;
         this.accountLocksRepository = accountLocksRepository;
@@ -97,8 +90,6 @@ public class SearchOperator {
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
         this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
         this.operatorHistoryHeadersRepository = operatorHistoryHeadersRepository;
-        this.branchAtMomentRepository = branchAtMomentRepository;
-        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
@@ -119,12 +110,6 @@ public class SearchOperator {
         // オペレーターIDおよびオペレーターコードのリストを設定
         setOperatorIdAndCodeList(operators);
 
-        // 店舗群検索
-        // TODO: 店舗の取得は BranchAtMomentで取得
-        // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
-//        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(createBranchAtMomentCriteria(request.getJaId()),
-//            Orders.empty().addOrder("branchAttribute.BranchCode.value"));
-        BranchesAtMoment branchesAtMoment = simpleSearchBranch.branchAtMomentSelectBy(createBranchAtMomentCriteria(request.getJaIdCriteria()));
         // オペレーター_サブシステムロール割当検索
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));
@@ -195,7 +180,6 @@ public class SearchOperator {
         operators.getValues().removeAll(removeOperator);
 
         response.setOperators(operators);
-        response.setBranchesAtMoment(branchesAtMoment);
         response.setOperator_SubSystemRoles(operator_SubSystemRoles);
         response.setOperator_BizTranRoles(operator_BizTranRoles);
         response.setAccountLocks(AccountLocks);
@@ -609,19 +593,6 @@ public class SearchOperator {
     void setOperatorIdAndCodeList(Operators operators) {
         operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
         operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
-    }
-
-    /**
-     * 店舗（BranchAtMoment）検索条件を作成します。
-     *
-     * @param jaIdCriteria ＪＡId検索条件
-     * @return 店舗（BranchAtMoment）検索条件
-    */
-    BranchAtMomentCriteria createBranchAtMomentCriteria(LongCriteria jaIdCriteria) {
-        BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-        if (jaIdCriteria == null) { return criteria; }
-        criteria.getJaIdentifierCriteria().setEqualTo(jaIdCriteria.getEqualTo());
-        return criteria;
     }
 
     /**

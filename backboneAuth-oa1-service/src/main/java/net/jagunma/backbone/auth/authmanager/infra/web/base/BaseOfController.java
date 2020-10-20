@@ -1,5 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -14,11 +15,15 @@ import net.jagunma.common.values.model.ja.JaCode;
 import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controllerの基底クラス
  */
 public class BaseOfController {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(Oa12010Controller.class);
 
     private static Long defaultJaId = 6L;
     private static String defaultJaCode = "006";

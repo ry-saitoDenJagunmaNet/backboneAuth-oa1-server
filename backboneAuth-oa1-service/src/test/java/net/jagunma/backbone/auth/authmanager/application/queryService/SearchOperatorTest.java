@@ -223,14 +223,14 @@ class SearchOperatorTest {
                 return new int[0];
             }
         };
-        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
-            public BranchesAtMoment getBranchesAtMoment(long jaId) {
-                return createBranchesAtMoment();
-            }
-            public BranchesAtMoment branchAtMomentSelectBy(BranchAtMomentCriteria branchAtMomentCriteria) {
-                return createBranchesAtMoment();
-            }
-        };
+//        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
+//            public BranchesAtMoment getBranchesAtMoment(long jaId) {
+//                return createBranchesAtMoment();
+//            }
+//            public BranchesAtMoment branchAtMomentSelectBy(BranchAtMomentCriteria branchAtMomentCriteria) {
+//                return createBranchesAtMoment();
+//            }
+//        };
         return new SearchOperator(operatorsRepository,
             accountLocksRepository,
             passwordHistoriesRepository,
@@ -238,17 +238,15 @@ class SearchOperatorTest {
             signOutTracesRepository,
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
-            operatorHistoryHeadersRepository,
-            branchAtMomentRepository,
-            simpleSearchBranch);
+            operatorHistoryHeadersRepository);
     }
 
     // オペレーター群作成
     private Operators createOperators() {
         List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
-        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
-        list.add(Operator.createFrom(20L,"yu001011","ｙｕ００１０１１","yu001011@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能.getCode() ,1,null));
+        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能 ,1,null));
+        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能 ,1,null));
+        list.add(Operator.createFrom(20L,"yu001011","ｙｕ００１０１１","yu001011@aaaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,21),false,6L,"006",33L,"001",AvailableStatus.利用可能 ,1,null));
         return Operators.createFrom(list);
     }
     // アカウントロック群作成
@@ -516,14 +514,6 @@ class SearchOperatorTest {
                     }
                 }
                 @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
-                    }
-                }
-                @Override
                 public void setAccountLocks(AccountLocks actualAccountLocks) {
                     // 結果検証
                     for(int i = 0; i < actualAccountLocks.getValues().size(); i++) {
@@ -615,14 +605,6 @@ class SearchOperatorTest {
                     }
                 }
                 @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
-                    }
-                }
-                @Override
                 public void setAccountLocks(AccountLocks actualAccountLocks) {
                     // 結果検証
                     for(int i = 0; i < actualAccountLocks.getValues().size(); i++) {
@@ -700,14 +682,6 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
                         assertThat(actualOperators.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperators.getValues().get(i));
-                    }
-                }
-                @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
                     }
                 }
                 @Override
@@ -794,14 +768,6 @@ class SearchOperatorTest {
                     }
                 }
                 @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
-                    }
-                }
-                @Override
                 public void setAccountLocks(AccountLocks actualAccountLocks) {
                     // 結果検証
                     for(int i = 0; i < actualAccountLocks.getValues().size(); i++) {
@@ -879,14 +845,6 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
                         assertThat(actualOperators.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperators.getValues().get(i));
-                    }
-                }
-                @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
                     }
                 }
                 @Override
@@ -973,14 +931,6 @@ class SearchOperatorTest {
                     }
                 }
                 @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
-                    }
-                }
-                @Override
                 public void setAccountLocks(AccountLocks actualAccountLocks) {
                     // 結果検証
                     for(int i = 0; i < actualAccountLocks.getValues().size(); i++) {
@@ -1061,14 +1011,6 @@ class SearchOperatorTest {
                     for(int i = 0; i < actualOperators.getValues().size(); i++) {
                         assertThat(actualOperators.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperators.getValues().get(i));
-                    }
-                }
-                @Override
-                public void setBranchesAtMoment(BranchesAtMoment actualBranchesAtMoment) {
-                    // 結果検証
-                    for(int i = 0; i < actualBranchesAtMoment.getValue().size(); i++) {
-                        assertThat(actualBranchesAtMoment.getValue().get(i)).as(i + 1 + "レコード目でエラー")
-                            .usingRecursiveComparison().isEqualTo(expectedBranchesAtMoment.getValue().get(i));
                     }
                 }
                 @Override

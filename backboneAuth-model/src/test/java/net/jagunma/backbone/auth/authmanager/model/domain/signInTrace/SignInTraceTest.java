@@ -47,7 +47,7 @@ class SignInTraceTest {
         String jaCode = "006";
         Long branchId = 33L;
         String branchCode = "001";
-        Short availableStatus = AvailableStatus.利用可能.getCode();
+        AvailableStatus availableStatus = AvailableStatus.利用可能;
         Integer operatorRecordVersion = 1;
         BranchAtMoment branchAtMoment = null;
         Operator operator = Operator.createFrom(

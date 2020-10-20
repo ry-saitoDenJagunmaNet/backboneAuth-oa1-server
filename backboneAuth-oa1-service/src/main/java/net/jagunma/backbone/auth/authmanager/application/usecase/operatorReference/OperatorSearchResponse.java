@@ -5,7 +5,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * オペレーターリスト参照サービス Response
@@ -23,12 +22,6 @@ public interface OperatorSearchResponse {
      * @param operators オペレーター群
      */
     void setOperators(Operators operators);
-    /**
-     * ある時点Branch群のＳｅｔ
-     *
-     * @param branchesAtMoment ある時点Branch群
-     */
-    void setBranchesAtMoment(BranchesAtMoment branchesAtMoment);
     /**
      * アカウントロック群のＳｅｔ
      *
