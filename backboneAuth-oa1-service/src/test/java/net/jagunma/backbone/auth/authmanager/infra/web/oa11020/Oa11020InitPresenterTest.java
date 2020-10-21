@@ -22,7 +22,7 @@ class Oa11020InitPresenterTest {
     private String jaCode = "006";
     private String jaName = "JA前橋市";
     private String operatorCodePrefix = "yu";
-    List<BranchAtMoment> branchAtMomentList = newArrayList(
+    private List<BranchAtMoment> branchAtMomentList = newArrayList(
         BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
         BranchAtMoment.builder().withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build()).build());
