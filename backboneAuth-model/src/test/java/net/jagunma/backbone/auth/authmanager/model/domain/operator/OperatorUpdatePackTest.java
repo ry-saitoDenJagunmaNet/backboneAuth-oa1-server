@@ -11,6 +11,19 @@ import org.junit.jupiter.api.Test;
 
 class OperatorUpdatePackTest {
 
+    // 実行値 ＆ 期待値
+    private Long operatorId = 123456L;
+    private String operatorName = "オペレーター名";
+    private String mailAddress = "test@den.jagunma.net";
+    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private Boolean isDeviceAuth = true;
+    private Long branchId = 1L;
+    private String branchCode = "001";
+    private AvailableStatus availableStatus = AvailableStatus.利用可能;
+    private Integer recordVersion = 1;
+    private String changeCause = "認証機器使用開始";
+
     /**
      * {@link OperatorUpdatePack#createFrom(
      *      Long operatorId,
@@ -34,18 +47,6 @@ class OperatorUpdatePackTest {
     @Test
     @Tag(TestSize.SMALL)
     void createFrom_test() {
-        // 実行値 ＆ 期待値
-        Long operatorId = 123456L;
-        String operatorName = "オペレーター名";
-        String mailAddress = "test@den.jagunma.net";
-        LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-        LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-        Boolean isDeviceAuth = true;
-        Long branchId = 1L;
-        String branchCode = "001";
-        AvailableStatus availableStatus = AvailableStatus.利用可能;
-        Integer recordVersion = 1;
-        String changeCause = "認証機器使用開始";
 
         // 実行
         OperatorUpdatePack operatorUpdatePack = OperatorUpdatePack.createFrom(

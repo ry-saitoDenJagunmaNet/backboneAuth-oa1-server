@@ -8,7 +8,7 @@ import net.jagunma.common.ddd.model.criterias.LongCriteria;
 /**
  * OA11030 初期表示 Converter
  */
-class Oa11030SearchConverter extends BaseOfOperatorSearchConverter implements OperatorSearchRequest {
+class Oa11030InitConverter extends BaseOfOperatorSearchConverter implements OperatorSearchRequest {
 
     /**
      * OA11030 View Object
@@ -16,13 +16,13 @@ class Oa11030SearchConverter extends BaseOfOperatorSearchConverter implements Op
     private final Oa11030Vo vo;
 
     // コンストラクタ
-    Oa11030SearchConverter(Oa11030Vo vo)  {
+    Oa11030InitConverter(Oa11030Vo vo)  {
         this.vo = vo;
     }
 
     // ファクトリーメソッド
-    public static Oa11030SearchConverter with(Oa11030Vo vo) {
-        return new Oa11030SearchConverter(vo);
+    public static Oa11030InitConverter with(Oa11030Vo vo) {
+        return new Oa11030InitConverter(vo);
     }
 
     /**
