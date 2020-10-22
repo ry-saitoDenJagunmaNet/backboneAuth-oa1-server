@@ -77,7 +77,7 @@ class Oa11030InitPresenterTest {
     private List<Operator> OperatorList= newArrayList(operator);
     private Operators operators = Operators.createFrom(OperatorList);
 
-    // 店舗AtMomentリスト
+    // 店舗群AtMoment
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
         branchAtMoment,
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(jaAtMoment).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
