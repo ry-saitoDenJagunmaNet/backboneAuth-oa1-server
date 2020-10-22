@@ -66,7 +66,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         vo.setIsDeviceAuth(operator.getIsDeviceAuth());
         vo.setAvailableStatus(operator.getAvailableStatus().getCode());
 
-        vo.setChangeCause(operatorHistoryHeader.getChangeCause());
+        vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
 
         vo.setAccountLockStatus(accountLock.getLockStatus());
 

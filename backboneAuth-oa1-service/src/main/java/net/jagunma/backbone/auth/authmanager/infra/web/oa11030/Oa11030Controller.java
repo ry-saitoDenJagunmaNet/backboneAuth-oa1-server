@@ -51,17 +51,17 @@ public class Oa11030Controller extends BaseOfController {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11030Controller.class);
 
     private final SearchOperator searchOperator;
-    private final SimpleSearchBranch simpleSearchBranch;
     private final UpdateOperator updateOperator;
+    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public Oa11030Controller(
         SearchOperator searchOperator,
-        SimpleSearchBranch simpleSearchBranch,
-        UpdateOperator updateOperator) {
+        UpdateOperator updateOperator,
+        SimpleSearchBranch simpleSearchBranch) {
         this.searchOperator = searchOperator;
-        this.simpleSearchBranch = simpleSearchBranch;
         this.updateOperator = updateOperator;
+        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
@@ -83,7 +83,6 @@ public class Oa11030Controller extends BaseOfController {
             Oa11030InitPresenter presenter = new Oa11030InitPresenter();
             presenter.setBranchesAtMomentForBranchItemsSource(simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
 
-            // オぺレーター検索
             searchOperator.execute(converter, presenter);
 
             presenter.bindTo(vo);
@@ -95,13 +94,14 @@ public class Oa11030Controller extends BaseOfController {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa19999";
+            return "oa11030";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
             model.addAttribute("form", vo);
             return "oa19999";
-        }    }
+        }
+    }
 
     /**
      * 更新処理を行います。
@@ -110,8 +110,8 @@ public class Oa11030Controller extends BaseOfController {
      * @param vo ViewObject
      * @return view名
      */
-    @RequestMapping(value = "/entry", method = RequestMethod.POST)
-    public String entry(Model model, Oa11030Vo vo) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(Model model, Oa11030Vo vo) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
@@ -121,8 +121,9 @@ public class Oa11030Controller extends BaseOfController {
 
             updateOperator.execute(converter);
 
+            // ToDo: 遷移制御
             model.addAttribute("form", vo);
-            return "メニュー？"; // ToDo: ★
+            return "oa11030";
 
         } catch (OptimisticLockingFailureException ole) {
             // 楽観的ロック

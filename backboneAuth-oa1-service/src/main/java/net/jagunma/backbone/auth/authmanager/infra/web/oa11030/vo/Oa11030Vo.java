@@ -61,6 +61,10 @@ public class Oa11030Vo extends BaseOfResponseVo {
      */
     private String changeCause;
     /**
+     * 変更事由プレースホルダー
+     */
+    private String changeCausePlaceholder;
+    /**
      * ロック状態
      */
     private Short accountLockStatus;
@@ -115,6 +119,9 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public String getChangeCause() {
         return changeCause;
     }
+    public String getChangeCausePlaceholder() {
+        return changeCausePlaceholder;
+    }
     public Short getAccountLockStatus() {
         return accountLockStatus;
     }
@@ -164,6 +171,9 @@ public class Oa11030Vo extends BaseOfResponseVo {
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
+    }
+    public void setChangeCausePlaceholder(String changeCausePlaceholder) {
+        this.changeCausePlaceholder = changeCausePlaceholder;
     }
     public void setAccountLockStatus(Short accountLockStatus) {
         this.accountLockStatus = accountLockStatus;

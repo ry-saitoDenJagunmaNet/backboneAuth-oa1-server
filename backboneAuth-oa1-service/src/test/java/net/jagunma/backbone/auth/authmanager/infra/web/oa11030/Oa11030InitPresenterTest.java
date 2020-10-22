@@ -57,7 +57,7 @@ class Oa11030InitPresenterTest {
     private Integer recordVersion = 1;
 
     private String jaName = "JA前橋市";
-    private String changeCause = "新職員の入組による登録";
+    private String changeCausePlaceholder = "新職員の入組による登録";
     private AccountLockStatus accountLockStatus = AccountLockStatus.アンロック;
 
     // ＪＡAtMoment
@@ -77,7 +77,7 @@ class Oa11030InitPresenterTest {
     private List<Operator> OperatorList= newArrayList(operator);
     private Operators operators = Operators.createFrom(OperatorList);
 
-    // 店舗群AtMoment
+    // 店舗AtMomentリスト
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
         branchAtMoment,
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(jaAtMoment).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
@@ -114,7 +114,7 @@ class Oa11030InitPresenterTest {
 
     // オペレーター履歴ヘッダー系
     private List<OperatorHistoryHeader> operatorHistoryHeaderList = newArrayList(
-        OperatorHistoryHeader.createFrom(601L, operatorId,LocalDateTime.of(2020,10,1,0,1,2), changeCause, recordVersion, operator));
+        OperatorHistoryHeader.createFrom(601L, operatorId,LocalDateTime.of(2020,10,1,0,1,2), changeCausePlaceholder, recordVersion, operator));
     private OperatorHistoryHeaders operatorHistoryHeaders = OperatorHistoryHeaders.createFrom(operatorHistoryHeaderList);
 
     /**
@@ -172,7 +172,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setExpirationEndDate(expirationEndDate);
         expectedVo.setIsDeviceAuth(isDeviceAuth);
         expectedVo.setAvailableStatus(availableStatus.getCode());
-        expectedVo.setChangeCause(changeCause);
+        expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
         expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);
         expectedVo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);
@@ -254,7 +254,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setExpirationEndDate(expirationEndDate);
         expectedVo.setIsDeviceAuth(isDeviceAuth);
         expectedVo.setAvailableStatus(availableStatus.getCode());
-        expectedVo.setChangeCause(changeCause);
+        expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
         expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);
         expectedVo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);
