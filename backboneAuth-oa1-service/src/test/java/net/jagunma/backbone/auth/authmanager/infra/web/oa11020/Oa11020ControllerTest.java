@@ -52,14 +52,50 @@ class Oa11020ControllerTest {
     private String password = "PaSsWoRd";
     private String confirmPassword = "pAsSwOrD";
     private String mode = "Initial";
-    List<BranchAtMoment> branchAtMomentList = newArrayList(
-        BranchAtMoment.builder().withIdentifier(branchId).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
+    private List<BranchAtMoment> branchAtMomentList = newArrayList(
+        BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
         BranchAtMoment.builder().withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build()).build());
     private BranchesAtMoment branchesAtMoment = BranchesAtMoment.of(branchAtMomentList);
 
     // テスト対象クラス生成
     private Oa11020Controller createOa11020Controller() {
+
+        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
+            @Override
+            public void entry(OperatorEntryPack operatorEntryPack) {
+            }
+            @Override
+            public void update(OperatorUpdatePack operatorUpdatePack) {
+            }
+        };
+        BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
+            @Override
+            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
+                return null;
+            }
+            @Override
+            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
+                return null;
+            }
+        };
+        EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository) {
+            @Override
+            public void execute(OperatorEntryRequest request) {
+                // request.getBranchId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if(request.getBranchId().equals(11L)) {
+                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
+                }
+                // request.getBranchId().equals(12L) の場合：GunmaRuntimeException を発生させる
+                if(request.getBranchId().equals(12L)) {
+                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
+                }
+                // request.getBranchId().equals(13L) の場合：RuntimeException を発生させる
+                if(request.getBranchId().equals(13L)) {
+                    throw new RuntimeException();
+                }
+            }
+        };
 
         OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
             @Override
@@ -111,49 +147,13 @@ class Oa11020ControllerTest {
                 return new int[0];
             }
         };
-        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
-            @Override
-            public void entry(OperatorEntryPack operatorEntryPack) {
-            }
-            @Override
-            public void update(OperatorUpdatePack operatorUpdatePack) {
-
-            }
-        };
-        BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
-            @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-                return null;
-            }
-            @Override
-            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                return null;
-            }
-        };
         SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
             public BranchesAtMoment getBranchesAtMoment(long jaId) {
                 return branchesAtMoment;
             }
         };
-        EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository) {
-            @Override
-            public void execute(OperatorEntryRequest request) {
-                // request.getBranchId() = 11 の場合：GunmaRuntimeException を発生させる
-                if(request.getBranchId().equals(11L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
-                }
-                // request.getBranchId() = 12 の場合：GunmaRuntimeException を発生させる
-                if(request.getBranchId().equals(12L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
-                }
-                // request.getBranchId() = 13 の場合：RuntimeException を発生させる
-                if(request.getBranchId().equals(13L)) {
-                    throw new RuntimeException();
-                }
-            }
-        };
 
-        return new Oa11020Controller(simpleSearchBranch, entryOperator);
+        return new Oa11020Controller(entryOperator, simpleSearchBranch);
     }
 
     // Oa11020Vo作成
@@ -225,6 +225,38 @@ class Oa11020ControllerTest {
     }
 
     /**
+     * {@link Oa11020Controller#get(Model model)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・なし
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void get_test1() {
+        // getメソッドでGunmaRuntimeExceptionを発生させるテストは不可
+        assertThat(true);
+    }
+
+    /**
+     * {@link Oa11020Controller#get(Model model)}テスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・なし
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void get_test2() {
+        // getメソッドでRuntimeExceptionを発生させるテストは実現不可
+        assertThat(true);
+    }
+
+    /**
      * {@link Oa11020Controller#entry(Model model, Oa11020Vo vo)}テスト
      *  ●パターン
      *    正常
@@ -262,86 +294,6 @@ class Oa11020ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
-    }
-
-    /**
-     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void save_test() {
-        // テスト対象クラス生成
-        Oa11020Controller oa11020Controller = createOa11020Controller();
-
-        // 実行値
-        ConcurrentModel model = new ConcurrentModel();
-        Oa11020Vo oa11020Vo = createOa11020Vo();
-        Ed01010Vo ed01010Vo = new Ed01010Vo();
-        ed01010Vo.setMode(mode);
-        ed01010Vo.setJa(oa11020Vo.getJa());
-        ed01010Vo.setOperator(oa11020Vo.getOperatorCodePrefix() + oa11020Vo.getOperatorCode6() + " " + oa11020Vo.getOperatorName());
-        ed01010Vo.setOldPassword(null);
-        ed01010Vo.setNewPassword(password);
-        ed01010Vo.setConfirmPassword(confirmPassword);
-
-        // 期待値
-        String expectedViewName = "oa11020";
-        branchId = null;
-        operatorCode6 = null;
-        operatorName = null;
-        mailAddress = null;
-        expirationStartDate = null;
-        expirationEndDate = null;
-        changeCause = null;
-        password = null;
-        confirmPassword = null;
-        Oa11020Vo expectedVo = createOa11020Vo();
-
-        // 実行
-        String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
-        Oa11020Vo actualVo = (Oa11020Vo) model.getAttribute("form");
-
-        // 結果検証
-        assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
-    }
-
-    /**
-     * {@link Oa11020Controller#get(Model model)}テスト
-     *  ●パターン
-     *    例外（GunmaRuntimeException）発生
-     *
-     *  ●検証事項
-     *  ・なし
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void get_test1() {
-        // getメソッドでGunmaRuntimeExceptionを発生させるテストは不可
-        assertThat(true);
-    }
-
-    /**
-     * {@link Oa11020Controller#get(Model model)}テスト
-     *  ●パターン
-     *    例外（RuntimeException）発生
-     *
-     *  ●検証事項
-     *  ・なし
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void get_test2() {
-        // getメソッドでRuntimeExceptionを発生させるテストは実現不可
-        assertThat(true);
     }
 
     /**
@@ -393,6 +345,54 @@ class Oa11020ControllerTest {
     void entry_test2() {
         // entryメソッドでRuntimeExceptionを発生させるテストは実現不可
         assertThat(true);
+    }
+
+    /**
+     * {@link Oa11020Controller#save(Oa11020Vo session_vo, Model model, Ed01010Vo vo)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void save_test() {
+        // テスト対象クラス生成
+        Oa11020Controller oa11020Controller = createOa11020Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        Oa11020Vo oa11020Vo = createOa11020Vo();
+        Ed01010Vo ed01010Vo = new Ed01010Vo();
+        ed01010Vo.setMode(mode);
+        ed01010Vo.setJa(oa11020Vo.getJa());
+        ed01010Vo.setOperator(oa11020Vo.getOperatorCodePrefix() + oa11020Vo.getOperatorCode6() + " " + oa11020Vo.getOperatorName());
+        ed01010Vo.setOldPassword(null);
+        ed01010Vo.setNewPassword(password);
+        ed01010Vo.setConfirmPassword(confirmPassword);
+
+        // 期待値
+        String expectedViewName = "oa11020";
+        branchId = null;
+        operatorCode6 = null;
+        operatorName = null;
+        mailAddress = null;
+        expirationStartDate = null;
+        expirationEndDate = null;
+        changeCause = null;
+        password = null;
+        confirmPassword = null;
+        Oa11020Vo expectedVo = createOa11020Vo();
+
+        // 実行
+        String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
+        Oa11020Vo actualVo = (Oa11020Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -493,6 +493,7 @@ class Oa11020ControllerTest {
 
         // 期待値
         String expectedViewName = "oa19999";
+        String expectedMessageCode = "EOA10001";
         String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
@@ -501,6 +502,7 @@ class Oa11020ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
         assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 }

@@ -51,15 +51,15 @@ public class Oa11020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11020Controller.class);
 
-    private final SimpleSearchBranch simpleSearchBranch;
     private final EntryOperator entryOperator;
+    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public Oa11020Controller(
-        SimpleSearchBranch simpleSearchBranch,
-        EntryOperator entryOperator) {
-        this.simpleSearchBranch = simpleSearchBranch;
+        EntryOperator entryOperator,
+        SimpleSearchBranch simpleSearchBranch) {
         this.entryOperator = entryOperator;
+        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
