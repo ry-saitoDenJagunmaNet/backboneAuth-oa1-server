@@ -10,6 +10,20 @@ import org.junit.jupiter.api.Test;
 
 class OperatorEntryPackTest {
 
+    // 実行値 ＆ 期待値
+    private String operatorCode = "yu123456";
+    private String operatorName = "オペレーター名";
+    private String mailAddress = "test@den.jagunma.net";
+    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private Long jaId = 6L;
+    private String jaCode = "006";
+    private Long branchId = 1L;
+    private String branchCode = "001";
+    private String changeCause = "新職員の入組による登録";
+    private String password = "PaSsWoRd";
+    private String confirmPassword = "PaSsWoRd";
+
     /**
      * {@link OperatorEntryPack#createFrom(
      *      String operatorCode,
@@ -34,19 +48,6 @@ class OperatorEntryPackTest {
     @Test
     @Tag(TestSize.SMALL)
     void createFrom_test() {
-        // 実行値 ＆ 期待値
-        String operatorCode = "yu123456";
-        String operatorName = "オペレーター名";
-        String mailAddress = "test@den.jagunma.net";
-        LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-        LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-        Long jaId = 6L;
-        String jaCode = "006";
-        Long branchId = 1L;
-        String branchCode = "001";
-        String changeCause = "新職員の入組による登録";
-        String password = "PaSsWoRd";
-        String confirmPassword = "PaSsWoRd";
 
         // 実行
         OperatorEntryPack operatorEntryPack = OperatorEntryPack.createFrom(

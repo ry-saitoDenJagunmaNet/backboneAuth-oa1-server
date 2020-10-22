@@ -46,7 +46,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @ServiceInfo(id = "OA11030", name = "OA11030サービス")
 @Controller
 @RequestMapping(path = "OA11030")
-@SessionAttributes(types=Oa11030Vo.class)
 public class Oa11030Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11030Controller.class);
@@ -80,7 +79,7 @@ public class Oa11030Controller extends BaseOfController {
         vo.setOperatorId(operatorId);
 
         try {
-            Oa11030SearchConverter converter = Oa11030SearchConverter.with(vo);
+            Oa11030InitConverter converter = Oa11030InitConverter.with(vo);
             Oa11030InitPresenter presenter = new Oa11030InitPresenter();
             presenter.setBranchesAtMomentForBranchItemsSource(simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
 
