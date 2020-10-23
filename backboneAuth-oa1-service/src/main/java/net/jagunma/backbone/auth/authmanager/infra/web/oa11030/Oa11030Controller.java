@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @FeatureInfo(id = "OA11030", name = "オペレーター更新")
 @ServiceInfo(id = "OA11030", name = "OA11030サービス")
 @Controller
-@RequestMapping(path = "OA11030")
+@RequestMapping(path = "oa11030")
 public class Oa11030Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11030Controller.class);
