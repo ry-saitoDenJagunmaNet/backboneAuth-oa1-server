@@ -14,7 +14,6 @@
 </head>
 <body th:onLoad="oaex_th_onload();">
 <form>
-
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
@@ -94,11 +93,11 @@
 			</div>
 		</section>
 
-		<!-- ★モック状態操作用★ -->
+		<!-- ★モックアップ時表示★ -->
 		<div class="row" id="display_at_mockup_row">
 			<br><br><br><br><br>
 			<div class="row">
-				<p>★モック状態操作用★</p>
+				<p>★モックアップ時表示★</p>
 			</div>
 			<div class="row">
 				<label>

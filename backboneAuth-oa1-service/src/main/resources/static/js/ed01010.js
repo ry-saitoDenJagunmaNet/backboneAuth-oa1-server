@@ -1,5 +1,5 @@
 /**
- * 画面Loadイベントです。
+ * 画面 Loadイベントです。
  */
 function oaex_th_onload() {
 	_isThymeleaf = true;
@@ -7,24 +7,20 @@ function oaex_th_onload() {
 	let displayAtMockupRow = document.getElementById("display_at_mockup_row");
 	displayAtMockupRow.style.display = "none";
 
-	let a = oaex_mode_onChange();
+	oaex_mode_onChange();
 }
-/**
- * 画面Loadイベント（モック時）です。
- */
 window.onload = function() {
-	let a = oaex_mode_onChange();
+	oaex_mode_onChange();
 }
 
 /**
- * →ボタンクリックイベントです。
+ * →ボタン クリックイベントです。
  */
 function oaex_arrowBtn_onClick() {
 	if (_isThymeleaf) {
 		oaex_th_arrowBtn_onClick();
 		return;
 	}
-
 	oa_showAlert("登録しました。");
 }
 function oaex_th_arrowBtn_onClick() {
@@ -34,7 +30,7 @@ function oaex_th_arrowBtn_onClick() {
 }
 
 /**
- * モード変更時のイベントです。
+ * モード 変更時のイベントです。
  */
 function oaex_mode_onChange() {
 	let modeArray = document.getElementsByName("mode");
