@@ -17,7 +17,7 @@ import net.jagunma.common.util.strings2.Strings2;
  */
 public class StoreBizTranRoleCompositionValidator {
 
-    private BizTranRoleCompositionImportStoreRequest request;
+    private final BizTranRoleCompositionImportStoreRequest request;
 
     // コンストラクタ
     StoreBizTranRoleCompositionValidator(BizTranRoleCompositionImportStoreRequest request) {
@@ -88,18 +88,17 @@ public class StoreBizTranRoleCompositionValidator {
             }
 
             // 同一キーレコード内容一致チェック（取引ロール）
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
+            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().anyMatch(b ->
                 b.getBizTranRoleCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleCode()) &&
-                    !b.getBizTranGrpName().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpName())).count() > 0) {
+                    !b.getBizTranRoleName().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleName()))) {
                 list.add(setMessage("EOA13010", newArrayList(message+"取引ロール")));
                 continue;
             }
             // 同一キーレコード内容一致チェック（取引グループ）
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
+            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().anyMatch(b ->
                 b.getBizTranGrpCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpCode()) &&
-                    !b.getBizTranGrpName().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpName())).count() > 0) {
+                    !b.getBizTranGrpName().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpName()))) {
                 list.add(setMessage("EOA13010", newArrayList(message+"取引グループ")));
-                continue;
             }
         }
     }
@@ -152,21 +151,20 @@ public class StoreBizTranRoleCompositionValidator {
             }
 
             // 同一キーレコード内容一致チェック（取引グループ）
-            if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
+            if (request.getBizTranGrp_BizTransSheet().getValues().stream().anyMatch(b ->
                 b.getBizTranGrpCode().equals(bizTranGrp_BizTransSheet.getBizTranGrpCode()) &&
-                    !b.getBizTranGrpName().equals(bizTranGrp_BizTransSheet.getBizTranGrpName())).count() > 0) {
+                    !b.getBizTranGrpName().equals(bizTranGrp_BizTransSheet.getBizTranGrpName()))) {
                 list.add(setMessage("EOA13010", newArrayList(message+"取引グループ")));
                 continue;
             }
             // 同一キーレコード内容一致チェック（取引）
-            if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
-                b.getBizTranGrpCode().equals(bizTranGrp_BizTransSheet.getBizTranGrpCode()) &&
-                    (!b.getBizTranGrpName().equals(bizTranGrp_BizTransSheet.getBizTranGrpName()) ||
-                    !b.getIsCenterBizTran().equals(bizTranGrp_BizTransSheet.getIsCenterBizTran()) ||
+            if (request.getBizTranGrp_BizTransSheet().getValues().stream().anyMatch(b ->
+                b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode()) &&
+                    (!b.getBizTranName().equals(bizTranGrp_BizTransSheet.getBizTranName()) ||
+                        !b.getIsCenterBizTran().equals(bizTranGrp_BizTransSheet.getIsCenterBizTran()) ||
                         !b.getExpirationStartDate().equals(bizTranGrp_BizTransSheet.getExpirationStartDate()) ||
-                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate()))).count() > 0) {
-                list.add(setMessage("EOA13010", newArrayList(message+"取引グループ")));
-                continue;
+                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate())))) {
+                list.add(setMessage("EOA13010", newArrayList(message+"取引")));
             }
         }
     }
@@ -176,12 +174,14 @@ public class StoreBizTranRoleCompositionValidator {
      *
      * @param messageCode メッセージコード
      * @param messageArgList ッセージコードリスト
-     * @return
+     * @return メッセージDto
      */
     MessageDto setMessage(String messageCode, List<String> messageArgList) {
+//        String[] messageArgArray = messageArgList.toArray(new String[messageArgList.size()]);
         return MessageDto.createFrom(
             messageCode,
-            MessageFormatter.getSimpleMessage("EOA13002", messageArgList.toArray(new String[messageArgList.size()])),
+//            MessageFormatter.getSimpleMessage(messageCode, (Object) messageArgArray),
+            MessageFormatter.getSimpleMessage(messageCode, messageArgList),
             messageArgList
         );
     }

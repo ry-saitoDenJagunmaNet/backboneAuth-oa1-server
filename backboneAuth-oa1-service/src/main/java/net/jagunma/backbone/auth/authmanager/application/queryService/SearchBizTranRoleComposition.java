@@ -80,7 +80,7 @@ public class SearchBizTranRoleComposition {
                 bizTranGrp_BizTran.getBizTranGrp().getBizTranGrpName(),
                 bizTranGrp_BizTran.getBizTran().getBizTranCode(),
                 bizTranGrp_BizTran.getBizTran().getBizTranName(),
-                bizTranGrp_BizTran.getBizTran().getCenterBizTran(),
+                bizTranGrp_BizTran.getBizTran().getIsCenterBizTran(),
                 bizTranGrp_BizTran.getBizTran().getExpirationStartDate(),
                 bizTranGrp_BizTran.getBizTran().getExpirationEndDate()
             ));

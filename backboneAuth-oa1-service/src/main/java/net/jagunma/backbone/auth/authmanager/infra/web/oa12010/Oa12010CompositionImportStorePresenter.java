@@ -14,7 +14,7 @@ import org.aspectj.bridge.Message;
  */
 public class Oa12010CompositionImportStorePresenter implements BizTranRoleCompositionImportStoreResponse {
 
-    private List<MessageDto> messageDtoList;
+    private List<MessageDto> messageDtoList = newArrayList();
 
     /**
      * メッセージリストのＳｅｔ
@@ -39,5 +39,6 @@ public class Oa12010CompositionImportStorePresenter implements BizTranRoleCompos
             messageVo.setMessageArgs(messageDto.getMessageArgs());
             messageVoList.add(messageVo);
         }
+        vo.setMessageVoList(messageVoList);
     }
 }

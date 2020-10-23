@@ -64,7 +64,7 @@ public class BizTransForStoreDataSource implements BizTransRepositoryForStore {
         BizTranEntity entity = new BizTranEntity();
         entity.setBizTranCode(bizTran.getBizTranCode());
         entity.setBizTranName(bizTran.getBizTranName());
-        entity.setIsCenterBizTran(bizTran.getCenterBizTran());
+        entity.setIsCenterBizTran(bizTran.getIsCenterBizTran());
         entity.setExpirationStartDate(bizTran.getExpirationStartDate());
         entity.setExpirationEndDate(bizTran.getExpirationStartDate());
         entity.setSubSystemCode(bizTran.getSubSystemCode());

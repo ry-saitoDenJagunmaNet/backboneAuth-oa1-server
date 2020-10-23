@@ -75,7 +75,7 @@ public class BizTran {
     public String getBizTranName() {
         return bizTranName;
     }
-    public Boolean getCenterBizTran() {
+    public Boolean getIsCenterBizTran() {
         return isCenterBizTran;
     }
     public LocalDate getExpirationStartDate() {
