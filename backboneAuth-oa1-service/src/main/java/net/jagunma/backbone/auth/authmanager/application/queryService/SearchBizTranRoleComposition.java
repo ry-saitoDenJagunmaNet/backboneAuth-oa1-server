@@ -51,10 +51,11 @@ public class SearchBizTranRoleComposition {
         bizTranRole_BizTranGrpCriteria.getSubSystemCode().setEqualTo(request.getSubSystemCode());
         BizTranRole_BizTranGrps bizTranRole_BizTranGrps = bizTranRole_BizTranGrpsRepository.selectBy(bizTranRole_BizTranGrpCriteria, Orders.empty().addOrder("SubSystemCode"));
 
-        // 取引ロール編成（取引ロール＋取引グループ）リスト作成
+        // 取引ロール編成（取引ロール－取引グループ編成）リスト作成
         List<BizTranRole_BizTranGrpSheet> bizTranRole_BizTranGrpSheetList = newArrayList();
         for (BizTranRole_BizTranGrp bizTranRole_BizTranGrp : bizTranRole_BizTranGrps.getValues()) {
             bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(
+                bizTranRole_BizTranGrpSheetList.size(),
                 SubSystem.codeOf(bizTranRole_BizTranGrp.getSubSystemCode()).getName(),
                 bizTranRole_BizTranGrp.getBizTranRole().getBizTranRoleCode(),
                 bizTranRole_BizTranGrp.getBizTranRole().getBizTranRoleName(),
@@ -69,10 +70,11 @@ public class SearchBizTranRoleComposition {
         bizTranGrp_BizTranCriteria.getSubSystemCode().setEqualTo(request.getSubSystemCode());
         BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty().addOrder("SubSystemCode"));
 
-        // 取引ロール編成（取引グループ＋取引）リスト作成
+        // 取引ロール編成（取引グループ－取引編成）リスト作成
         List<BizTranGrp_BizTranSheet> BizTranGrp_BizTranSheetList = newArrayList();
         for (BizTranGrp_BizTran bizTranGrp_BizTran : bizTranGrp_BizTrans.getValues()) {
             BizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(
+                BizTranGrp_BizTranSheetList.size(),
                 SubSystem.codeOf(bizTranGrp_BizTran.getSubSystemCode()).getName(),
                 bizTranGrp_BizTran.getBizTranGrp().getBizTranGrpCode(),
                 bizTranGrp_BizTran.getBizTranGrp().getBizTranGrpName(),

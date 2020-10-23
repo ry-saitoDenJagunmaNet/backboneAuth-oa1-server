@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
  */
 public class BizTranRoleCompositionBook {
 
-    private final ExcelContainer excelContainer;
+    private ExcelContainer excelContainer;
 
     // コンストラクタ
     BizTranRoleCompositionBook(ExcelContainer excelContainer) {

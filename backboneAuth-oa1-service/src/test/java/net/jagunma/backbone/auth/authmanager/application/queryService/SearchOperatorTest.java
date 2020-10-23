@@ -117,7 +117,7 @@ class SearchOperatorTest {
     private SearchOperator createSearchOperator() {
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override
-            public Operators selectBy(OperatorCriteria operetorCriteria, Orders orders) {
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return createOperators();
             }
         };

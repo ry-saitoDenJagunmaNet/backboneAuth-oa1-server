@@ -7,8 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 /**
  * OA12010 取引ロール編成インポート＆エクスポート Excel Weiteサービス Response Presenter
  */
-public class Oa12010CompositionExportWritePresenter implements
-    BizTranRoleCompositionExportWriteResponse {
+public class Oa12010CompositionExportWritePresenter implements BizTranRoleCompositionExportWriteResponse {
 
     private ExcelContainer excelContainer;
 
@@ -29,5 +28,4 @@ public class Oa12010CompositionExportWritePresenter implements
     public void bindTo(Oa12010Vo vo) {
         vo.setExportExcelBook(excelContainer.getExcelOut().toByteArray());
     }
-
 }

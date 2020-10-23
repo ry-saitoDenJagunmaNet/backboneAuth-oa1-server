@@ -17,23 +17,23 @@ public class WriteBizTranRoleComposition {
     // コンストラクタ
     WriteBizTranRoleComposition(
         BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite) {
+
         this.bizTranRoleCompositionBookRepositoryForWrite = bizTranRoleCompositionBookRepositoryForWrite;
     }
 
     /**
-     * エクスポートする取引ロール編成Excelを作成します。
+     * エクスポートする取引ロール編成Excelを書き出します。
      *
-     * @param request 取引ロール編成エクスポートExcel Weiteサービス Request Converter
-     * @param request 取引ロール編成エクスポートExcel Weiteサービス Response Presenter
+     * @param request 取引ロール編成エクスポートExcel Weiteサービス Request
+     * @param request 取引ロール編成エクスポートExcel Weiteサービス Response
      */
     public void execute(BizTranRoleCompositionExportWriteRequest request, BizTranRoleCompositionExportWriteResponse response) {
+
         // 取引ロール編成Excel作成
-        BizTranRoleCompositionBook bizTranRoleCompositionBook = bizTranRoleCompositionBookRepositoryForWrite
-            .create(
+        BizTranRoleCompositionBook bizTranRoleCompositionBook = bizTranRoleCompositionBookRepositoryForWrite.create(
             request.getBizTranRole_BizTranGrpsSheet(),
             request.getBizTranGrp_BizTransSheet());
 
         response.setExcelContainer(bizTranRoleCompositionBook.getExcelContainer());
-
     }
 }

@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 取引グループ＋取引群
+ * 取引グループ－取引編成群
  */
 public class BizTranGrp_BizTransSheet {
     private final List<BizTranGrp_BizTranSheet> list = newArrayList();
@@ -17,19 +17,19 @@ public class BizTranGrp_BizTransSheet {
     }
 
     /**
-     * 取引グループ＋取引リストから作成します。
+     * 取引グループ－取引編成リストから作成します。
      *
-     * @param bizTranGrp_BizTranSheetList 取引グループ＋取引リスト
-     * @return 取引グループ＋取引群
+     * @param bizTranGrp_BizTranSheetList 取引グループ－取引編成リスト
+     * @return 取引グループ－取引編成群
      */
     public static BizTranGrp_BizTransSheet createFrom(Collection<BizTranGrp_BizTranSheet> bizTranGrp_BizTranSheetList) {
         return new BizTranGrp_BizTransSheet(bizTranGrp_BizTranSheetList);
     }
 
     /**
-     * 取引グループ＋取引リストを取得します。
+     * 取引グループ－取引編成リストを取得します。
      *
-     * @return 取引グループ＋取引リスト
+     * @return 取引グループ－取引編成リスト
      */
     public List<BizTranGrp_BizTranSheet> getValues() {
         return list;

@@ -13,7 +13,7 @@
 	<script src="../static/js/oa12010.js" th:src="@{/js/oa12010.js}"></script>
 </head>
 <body th:onLoad="oaex_th_onload();">
-<form>
+<form enctype="multipart/form-data">
 
 	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
@@ -97,7 +97,7 @@
 						<div class="file-field input-field">
 							<div class="btn">
 								<span>...</span>
-								<input type="file"></input>
+								<input type="file" id="importfile" name="importfile"></input>
 							</div>
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text">
@@ -114,6 +114,18 @@
 				</div>
 			</div>
 		</section>
+			<div class="row">
+				<table>
+					<tr th:each="itemrow, iterStat : *{form.messageVoList}">
+						<td th:text="${itemrow.message}"><td>
+					<tr>
+				</table>
+
+			</div>
+		<section>
+
+		</section>
+
 		<br>
 	</main>
 

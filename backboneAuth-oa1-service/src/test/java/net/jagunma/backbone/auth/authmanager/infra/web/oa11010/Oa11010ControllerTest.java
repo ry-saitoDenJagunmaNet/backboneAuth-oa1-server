@@ -127,7 +127,7 @@ class Oa11010ControllerTest {
     private Oa11010Controller createOa11010Controller() {
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override
-            public Operators selectBy(OperatorCriteria operetorCriteria, Orders orders) {
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return null;
             }
         };

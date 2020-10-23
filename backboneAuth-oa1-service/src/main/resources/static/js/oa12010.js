@@ -10,23 +10,14 @@ function oaex_th_onload() {
  */
 function oaex_th_executeBtn_onClick() {
 	if (document.getElementById("mode_export").checked) {
-		document.forms[0].action = "export";
+		document.forms[0].action = "exportExcel";
 		document.forms[0].method = "POST";
 		document.forms[0].submit();
 	} else if (document.getElementById("mode_import").checked) {
-//		document.forms[0].action = "import";
-//		document.forms[0].method = "POST";
-//		document.forms[0].submit();
+		document.forms[0].action = "importExcel";
+		document.forms[0].method = "POST";
+		document.forms[0].submit();
 	}
-}
-
-/**
- * インポートボタンクリックイベントです。
- */
-function oaex_th_impotBtn_onClick() {
-//	document.forms[0].action = "import";
-//	document.forms[0].method = "POST";
-//	document.forms[0].submit();
 }
 
 /**

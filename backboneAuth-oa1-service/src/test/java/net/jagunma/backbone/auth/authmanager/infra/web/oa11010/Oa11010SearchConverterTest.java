@@ -79,8 +79,8 @@ class Oa11010SearchConverterTest {
         Oa11010BizTranRoleVo bizTranRoleVo = new Oa11010BizTranRoleVo();
         bizTranRoleVo.setBizTranRoleSelected((short) 1);
         bizTranRoleVo.setBizTranRoleId(1L);
-        bizTranRoleVo.setBizTranRoleCode("KBXX01");
-        bizTranRoleVo.setBizTranRoleName("購買管理者");
+        bizTranRoleVo.setBizTranRoleCode("KBAG01");
+        bizTranRoleVo.setBizTranRoleName("（購買）購買業務基本");
         bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
         bizTranRoleVo.setExpirationSelect(1);
         bizTranRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 11));
@@ -92,8 +92,8 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo = new Oa11010BizTranRoleVo();
         bizTranRoleVo.setBizTranRoleSelected((short) 1);
         bizTranRoleVo.setBizTranRoleId(2L);
-        bizTranRoleVo.setBizTranRoleCode("KBXX02");
-        bizTranRoleVo.setBizTranRoleName("購買ＮＮ担当者");
+        bizTranRoleVo.setBizTranRoleCode("KBAG02");
+        bizTranRoleVo.setBizTranRoleName("（購買）本所業務");
         bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
         bizTranRoleVo.setExpirationSelect(1);
         bizTranRoleVo.setExpirationStatusDate(LocalDate.of(2020, 10, 16));
@@ -105,8 +105,8 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo = new Oa11010BizTranRoleVo();
         bizTranRoleVo.setBizTranRoleSelected((short) 0);
         bizTranRoleVo.setBizTranRoleId(3L);
-        bizTranRoleVo.setBizTranRoleCode("KBXX03");
-        bizTranRoleVo.setBizTranRoleName("購買ｘｘ担当者");
+        bizTranRoleVo.setBizTranRoleCode("KBAG03");
+        bizTranRoleVo.setBizTranRoleName("（購買）本所管理業務");
         bizTranRoleVo.setSubSystemCode(SubSystem.購買.getCode());
         bizTranRoleVo.setExpirationSelect(0);
         bizTranRoleVo.setExpirationStatusDate(null);

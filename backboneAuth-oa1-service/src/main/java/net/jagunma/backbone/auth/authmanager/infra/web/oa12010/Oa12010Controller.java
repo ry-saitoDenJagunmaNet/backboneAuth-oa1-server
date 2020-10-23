@@ -1,22 +1,32 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletResponse;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.commandService.WriteBizTranRoleComposition;
+import net.jagunma.backbone.auth.authmanager.application.queryService.RaedBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBizTranRoleComposition;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.util.strings2.Strings2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * OA12010コントローラ
@@ -41,21 +51,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @ServiceInfo(id = "OA12010", name = "OA12010サービス")
 @Controller
 @RequestMapping(path = "oa12010")
-public class Oa12010Controller {
+public class Oa12010Controller extends BaseOfController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Oa12010Controller.class);
 
     // エクスポートExcelファイル名
-    private final String exportExcelFileName = "取引ロール編成.xlsx";
+    private final String EXPORT_EXCEL_FILE_NAME = "取引ロール編成";
+    private final String EXPORT_EXCEL_FILE_CONNECTOR = "－";
+    private final String EXPORT_EXCEL_FILE_SUBSYSTEM = "システム";
+    private final String EXPORT_EXCEL_FILE_EXTENSION = ".xlsx";
     private final String CHARSET_UTF8 = "UTF-8";
 
     private final SearchBizTranRoleComposition searchBizTranRoleComposition;
     private final WriteBizTranRoleComposition writeBizTranRoleComposition;
+    private final RaedBizTranRoleComposition raedBizTranRoleComposition;
+    private final StoreBizTranRoleComposition storeBizTranRoleComposition;
 
     // コンストラクタ
     Oa12010Controller(SearchBizTranRoleComposition searchBizTranRoleComposition,
-        WriteBizTranRoleComposition writeBizTranRoleComposition) {
+        WriteBizTranRoleComposition writeBizTranRoleComposition,
+        RaedBizTranRoleComposition raedBizTranRoleComposition,
+        StoreBizTranRoleComposition storeBizTranRoleComposition) {
 
         this.searchBizTranRoleComposition = searchBizTranRoleComposition;
         this.writeBizTranRoleComposition = writeBizTranRoleComposition;
+        this.raedBizTranRoleComposition = raedBizTranRoleComposition;
+        this.storeBizTranRoleComposition = storeBizTranRoleComposition;
     }
 
     /**
@@ -66,6 +87,10 @@ public class Oa12010Controller {
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public String get(Model model) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+
+        LOGGER.debug("get START");
 
         Oa12010Vo vo = new Oa12010Vo();
         try {
@@ -75,6 +100,8 @@ public class Oa12010Controller {
 
             presenter.bindTo(vo);
             model.addAttribute("form", vo);
+
+            LOGGER.debug("get END");
             return "oa12010";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
@@ -90,16 +117,19 @@ public class Oa12010Controller {
     }
 
     /**
-     * 取引ロール編成エクスポートします。
+     * 取引ロール編成ファイルをエクスポートします。
      *
      * @param model モデル
      * @param vo ViewObject
      * @param response Httpサーブレットレスポンス
      * @return view名（制表示null）
      */
-    @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public String  export(Model model, Oa12010Vo vo, HttpServletResponse response) {
-        System.out.println("### Oa12010Controller export START");
+    @RequestMapping(value = "/exportExcel", method = RequestMethod.POST)
+    public String  exportExcel(Model model, Oa12010Vo vo, HttpServletResponse response) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+
+        LOGGER.debug("exportExcel START");
 
         // エクスポートExcelの作成
         try {
@@ -113,6 +143,7 @@ public class Oa12010Controller {
             Oa12010CompositionExportWritePresenter writehPresenter = new Oa12010CompositionExportWritePresenter();
             writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
 
+            LOGGER.debug("exportExcel END");
             writehPresenter.bindTo(vo);
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
@@ -127,9 +158,16 @@ public class Oa12010Controller {
         }
 
         // エクスポート
+        String exportExcelFilename =  EXPORT_EXCEL_FILE_NAME;
+        if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
+            exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_CONNECTOR;
+            exportExcelFilename = exportExcelFilename + SubSystem.codeOf(vo.getSubSystemCode()).getName();
+            exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_SUBSYSTEM;
+        }
+        exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_EXTENSION;
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder
-            .encode(exportExcelFileName, StandardCharsets.UTF_8) );
+            .encode(exportExcelFilename, StandardCharsets.UTF_8) );
 
         try {
             response.getOutputStream().write(vo.getExportExcelBook());
@@ -140,5 +178,57 @@ public class Oa12010Controller {
         }
 
         return null;
+    }
+
+    /**
+     * 取引ロール編成ファイルをインポートします。
+     *
+     * @param importfile インポートファイル
+     * @param model モデル
+     * @param vo ViewObject
+     * @return view名
+     */
+    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+    public String importExcel(@RequestParam("importfile") MultipartFile importfile, Model model, Oa12010Vo vo) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+
+        LOGGER.debug("importExcel START");
+
+        try {
+            ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
+            Oa12010CompositionImportReadConverter readConverter = Oa12010CompositionImportReadConverter.with(vo, is);
+            Oa12010CompositionImportReadPresenter readPresenter = new Oa12010CompositionImportReadPresenter();
+            raedBizTranRoleComposition.execute(readConverter, readPresenter);
+
+            // Excel Weite
+            Oa12010CompositionImportStoreConverter storeConverter = readPresenter.ConverterTo();
+            Oa12010CompositionImportStorePresenter storePresenter = new Oa12010CompositionImportStorePresenter();
+            storeBizTranRoleComposition.execute(storeConverter, storePresenter);
+            storePresenter.bindTo(vo);
+
+            model.addAttribute("form", vo);
+            //TODO:
+            if (vo.getMessageVoList() == null || vo.getMessageVoList().size() == 0) {
+                vo.setMessage("DEBUG 登録が完了 DEBUG");
+            } else {
+                vo.setMessage("DEBUG インポートデータにエラーあり DEBUG");
+            }
+            LOGGER.debug("importExcel END");
+            return "oa12010";
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "oa12010";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "oa19999";
+        }
     }
 }

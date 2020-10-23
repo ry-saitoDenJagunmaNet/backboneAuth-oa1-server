@@ -27,6 +27,10 @@ public class Oa12010Vo extends BaseOfResponseVo {
      * エクスポートExcelBook
      */
     private byte[] exportExcelBook;
+    /**
+     * メッセージリスト
+     */
+    private List<Oa12010MessageVo> messageVoList;
 
     // Getter／Setter
     public String getMode() {
@@ -52,5 +56,12 @@ public class Oa12010Vo extends BaseOfResponseVo {
     }
     public void setExportExcelBook(byte[] exportExcelBook) {
         this.exportExcelBook = exportExcelBook;
+    }
+    public List<Oa12010MessageVo> getMessageVoList() {
+        return messageVoList;
+    }
+    public void setMessageVoList(
+        List<Oa12010MessageVo> messageVoList) {
+        this.messageVoList = messageVoList;
     }
 }

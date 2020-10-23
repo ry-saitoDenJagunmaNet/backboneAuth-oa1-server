@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 取引ロール＋取引グループ群
+ * 取引ロール－取引グループ編成群
  */
 public class BizTranRole_BizTranGrpsSheet {
 

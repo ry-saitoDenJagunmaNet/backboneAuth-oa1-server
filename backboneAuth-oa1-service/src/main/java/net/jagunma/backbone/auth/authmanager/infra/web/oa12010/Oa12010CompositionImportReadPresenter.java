@@ -1,16 +1,26 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionImportReadResponse;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート エクスポート検索 Response Presenter
+ * OA12010 取引ロール編成インポート＆エクスポート Excel Readサービス Response Presenter
  */
-public class Oa12010CompositionExportSearchPresenter implements BizTranRoleCompositionExportSearchResponse {
+public class Oa12010CompositionImportReadPresenter implements BizTranRoleCompositionImportReadResponse {
 
+    private String subSystemCode;
     private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet;
     private BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet;
+
+    /**
+     * サブシステムコードのＳｅｔ
+     *
+     * @param subSystemCode　サブシステムコード
+     */
+    public void setSubSystemCode(String subSystemCode) {
+        this.subSystemCode = subSystemCode;
+    }
 
     /**
      * 取引ロール－取引グループ編成群のＳｅｔ
@@ -33,9 +43,12 @@ public class Oa12010CompositionExportSearchPresenter implements BizTranRoleCompo
     /**
      * converterに変換
      *
-     * @return 取引ロール編成エクスポートExcel Weiteサービス Request Converter
+     * @return 取引ロール編成エクスポートExcel 登録サービス Request Converter
      */
-    public Oa12010CompositionExportWriteConverter ConverterTo() {
-        return Oa12010CompositionExportWriteConverter.with(bizTranRole_BizTranGrpsSheet, bizTranGrp_BizTransSheet);
+    public Oa12010CompositionImportStoreConverter ConverterTo() {
+        return Oa12010CompositionImportStoreConverter.with(
+            subSystemCode,
+            bizTranRole_BizTranGrpsSheet,
+            bizTranGrp_BizTransSheet);
     }
 }

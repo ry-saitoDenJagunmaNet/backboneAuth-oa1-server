@@ -3,10 +3,11 @@ package net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition
 import java.time.LocalDate;
 
 /**
- * 取引グループ＋取引
+ * 取引グループ－取引編成
  */
 public class BizTranGrp_BizTranSheet {
 
+    private final int rowno;
     private final String subSystemName;
     private final String bizTranGrpCode;
     private final String bizTranGrpName;
@@ -18,6 +19,7 @@ public class BizTranGrp_BizTranSheet {
 
     // コンストラクタ
     BizTranGrp_BizTranSheet(
+        int rowno,
         String subSystemName,
         String bizTranGrpCode,
         String bizTranGrpName,
@@ -27,6 +29,7 @@ public class BizTranGrp_BizTranSheet {
         LocalDate expirationStartDate,
         LocalDate expirationEndDate) {
 
+        this.rowno = rowno;
         this.subSystemName = subSystemName;
         this.bizTranGrpCode = bizTranGrpCode;
         this.bizTranGrpName = bizTranGrpName;
@@ -39,6 +42,7 @@ public class BizTranGrp_BizTranSheet {
 
     // ファクトリーメソッド
     public static BizTranGrp_BizTranSheet createFrom(
+        int rowno,
         String subSystemName,
         String bizTranGrpCode,
         String bizTranGrpName,
@@ -49,6 +53,7 @@ public class BizTranGrp_BizTranSheet {
         LocalDate expirationEndDate) {
 
         return new BizTranGrp_BizTranSheet(
+            rowno,
             subSystemName,
             bizTranGrpCode,
             bizTranGrpName,
@@ -60,6 +65,9 @@ public class BizTranGrp_BizTranSheet {
     }
 
     // Getter
+    public int getRowno() {
+        return rowno;
+    }
     public String getSubSystemName() {
         return subSystemName;
     }
