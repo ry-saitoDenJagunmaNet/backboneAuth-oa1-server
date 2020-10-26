@@ -34,7 +34,7 @@ public class AccountLocksDataSource implements AccountLocksRepository {
     }
 
     /**
-     * アカウントロック群の検索を行います。
+     * アカウントロック群の検索を行います
      *
      * @param accountLockCriteria アカウントロックの検索条件
      * @param orders              オーダー指定
@@ -42,12 +42,12 @@ public class AccountLocksDataSource implements AccountLocksRepository {
      */
     public AccountLocks selectBy(AccountLockCriteria accountLockCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(accountLockCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // アカウントロック検索
+        // アカウントロック群検索
         AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(accountLockCriteria.getOperatorIdCriteria().getIncludes());
 

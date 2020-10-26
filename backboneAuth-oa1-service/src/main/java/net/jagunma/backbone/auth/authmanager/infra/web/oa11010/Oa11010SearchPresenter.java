@@ -7,23 +7,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11010 オペレーター＜一覧＞検索サービス Response Presenter
  */
-class Oa11010SearchPresenter implements OperatorSearchResponse {
+class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements OperatorSearchResponse {
 
     /**
      * オペレーター一覧の１ページ当たりの行数
@@ -31,11 +27,6 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     private final int PAGE_SIZE = 10;
 
     private int pageNo;
-    private Operators operators;
-    private BranchesAtMoment branchesAtMoment;
-    private AccountLocks accountLocks;
-    private Operator_SubSystemRoles operator_SubSystemRoles;
-    private Operator_BizTranRoles operator_BizTranRoles;
 
     // コンストラクタ
     Oa11010SearchPresenter() {}
@@ -47,46 +38,6 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
      */
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
-    }
-    /**
-     * オペレーター群のＳｅｔ
-     *
-     * @param operators オペレーター群
-     */
-    public void setOperators(Operators operators) {
-        this.operators = operators;
-    }
-    /**
-     * ある時点Branch群のＳｅｔ
-     *
-     * @param branchesAtMoment ある時点Branch群
-     */
-    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
-        this.branchesAtMoment = branchesAtMoment;
-    }
-    /**
-     * アカウントロック群のＳｅｔ
-     *
-     * @param accountLocks アカウントロック群
-     */
-    public void setAccountLocks(AccountLocks accountLocks) {
-        this.accountLocks = accountLocks;
-    }
-    /**
-     * オペレーター_サブシステムロール割当群のＳｅｔ
-     *
-     * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
-     */
-    public void setOperator_SubSystemRoles(Operator_SubSystemRoles operator_SubSystemRoles) {
-        this.operator_SubSystemRoles = operator_SubSystemRoles;
-    }
-    /**
-     * オペレーター_取引ロール割当群のＳｅｔ
-     *
-     * @param operator_BizTranRoles オペレーター_取引ロール割当群
-     */
-    public void setOperator_BizTranRoles(Operator_BizTranRoles operator_BizTranRoles) {
-        this.operator_BizTranRoles = operator_BizTranRoles;
     }
 
     /**
@@ -100,7 +51,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * オペレーターテーブルHtmlを生成します。
+     * オペレーターテーブルHtmlを生成します
      *
      * @return オペレーターテーブルHtml
      */
@@ -109,12 +60,13 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
         List<Operator> list = getOperatorPageList();
         String branchCode = "";
         for (Operator operator : list) {
-            BranchAtMoment branchAtMoment = branchesAtMoment.getValue().stream().filter(
-                b->b.getBranchAttribute().getBranchCode().getValue().equals(operator.getBranchCode())).findFirst().orElse(null);
-            if (branchCode.equals(branchAtMoment.getBranchAttribute().getBranchCode().getValue())) {
-                branchAtMoment = null;
-            } else {
-                branchCode = branchAtMoment.getBranchAttribute().getBranchCode().getValue();
+            BranchAtMoment branchAtMoment = operator.getBranchAtMoment();
+            if (branchAtMoment != null) {
+                if (branchCode.equals(branchAtMoment.getBranchAttribute().getBranchCode().getValue())) {
+                    branchAtMoment = null;
+                } else {
+                    branchCode = branchAtMoment.getBranchAttribute().getBranchCode().getValue();
+                }
             }
             html.append(genOperatorTableRowHtml(operator, branchAtMoment));
         }
@@ -122,7 +74,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * オペレーターテーブル行Htmlを生成します。
+     * オペレーターテーブル行Htmlを生成します
      *
      * @param operator オペレーター
      * @param branchAtMoment ある時点の店舗
@@ -141,7 +93,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
             operator.getOperatorCode()));
 
         // 利用可否
-        String available_status = operator.getAvailableStatus()==0? "oaex_available_status_possible":"oaex_available_status_inpossible";
+        String available_status = operator.getAvailableStatus().getCode()==0? "oaex_available_status_possible":"oaex_available_status_inpossible";
         html.append(String.format("<td class=\"oaex_operator_available_status\"><div class=\"%s\"></div></td>", available_status));
         // ロック
         String lockStatus = (accountLock!=null && accountLock.getLockStatus()==1)? "oaex_account_lock":"oaex_account_unlock";
@@ -248,7 +200,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * 取引ロール表示Htmlを生成します。
+     * 取引ロール表示Htmlを生成します
      *
      * @param operatorBizTranRole オペレーター_取引ロール割当
      * @return 取引ロール表示Html
@@ -272,7 +224,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * オペレーターの未設定Htmlを生成します。
+     * オペレーターの未設定Htmlを生成します
      *
      * @param operatorCode オペレーターコード
      * @return オペレーターの未設定Html
@@ -301,7 +253,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * オペレーターサブシステムロールの未設定Htmlを生成します。
+     * オペレーターサブシステムロールの未設定Htmlを生成します
      *
      * @return オペレーターサブシステムロールの未設定Html
      */
@@ -318,7 +270,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * 取引ロールの未設定Htmlを生成します。
+     * 取引ロールの未設定Htmlを生成します
      *
      * @return 取引ロールの未設定Html
      */
@@ -337,7 +289,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * Pagination Htmlを生成します。
+     * Pagination Htmlを生成します
      *
      * @return Pagination Html
      */
@@ -349,7 +301,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
         if (pageNo == 1) {
             html.append("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>");
         } else {
-            html.append(String.format("<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(%d);\">&lt;</a></li>", maxPageNo-1));
+            html.append(String.format("<li class=\"waves-effect\" th:remove=\"all\"><a href=\"#!\" onclick=\"oaex_th_searchBtn_onClick(%d);\">&lt;</a></li>", pageNo-1));
         }
         for (int i = 1; i <= maxPageNo; i++) {
             if (pageNo == i) {
@@ -367,17 +319,18 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * 該当ページのオペレーター一覧を取得します。
+     * 該当ページのオペレーター一覧を取得します
      *
      * @return 該当ページのオペレーター一覧
      */
     private List<Operator> getOperatorPageList() {
+        if (operators.getValues().size() == 0) { return newArrayList(); }
         int skip = pageNo * PAGE_SIZE - PAGE_SIZE;
-        return operators.getValues().stream().skip(skip).limit(10).collect(Collectors.toList());
+        return operators.getValues().stream().skip(skip).limit(PAGE_SIZE).collect(Collectors.toList());
     }
 
     /**
-     * オペレーター一覧の最終ページを取得します。
+     * オペレーター一覧の最終ページを取得します
      *
      * @return オペレーター一覧の最終ページ
      */
@@ -386,7 +339,7 @@ class Oa11010SearchPresenter implements OperatorSearchResponse {
     }
 
     /**
-     * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+     * 日付を”yyyy/MM/dd”の書式でフォ－マットします
      *
      * @param localDt フォーマット対象の日付
      * @return フォ－マットした日付

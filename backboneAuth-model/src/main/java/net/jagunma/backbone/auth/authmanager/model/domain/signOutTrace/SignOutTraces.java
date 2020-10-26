@@ -2,15 +2,15 @@ package net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * サインアウト証跡群
  */
 public class SignOutTraces {
 
-    private final ArrayList<SignOutTrace> list = newArrayList();
+    private final List<SignOutTrace> list = newArrayList();
 
     // コンストラクタ
     SignOutTraces(Collection<SignOutTrace> collection) {
@@ -18,7 +18,7 @@ public class SignOutTraces {
     }
 
     /**
-     * サインアウト証跡リストから作成します。
+     * サインアウト証跡リストから作成します
      *
      * @param signOutTraceList サインアウト証跡リスト
      * @return サインアウト証跡群
@@ -28,11 +28,11 @@ public class SignOutTraces {
     }
 
     /**
-     * サインアウト証跡リストを取得します。
+     * サインアウト証跡リストを取得します
      *
      * @return サインアウト証跡リスト
      */
-    public ArrayList<SignOutTrace> getValues() {
+    public List<SignOutTrace> getValues() {
         return list;
     }
 }

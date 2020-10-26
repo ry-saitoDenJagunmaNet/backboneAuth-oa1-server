@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 
 /**
  * オペレーター_サブシステムロール割当
@@ -13,6 +14,8 @@ public class Operator_BizTranRole {
     private final Long bizTranRoleId;
     private final LocalDate expirationStartDate;
     private final LocalDate expirationEndDate;
+    private final Integer recordVersion;
+    private final Operator operator;
     private final BizTranRole bizTranRole;
 
     // コンストラクタ
@@ -22,6 +25,8 @@ public class Operator_BizTranRole {
         Long bizTranRoleId,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Integer recordVersion,
+        Operator operator,
         BizTranRole bizTranRole) {
 
         this.operator_BizTranRoleId = operator_BizTranRoleId;
@@ -29,6 +34,8 @@ public class Operator_BizTranRole {
         this.bizTranRoleId = bizTranRoleId;
         this.expirationStartDate = expirationStartDate;
         this.expirationEndDate = expirationEndDate;
+        this.recordVersion = recordVersion;
+        this.operator = operator;
         this.bizTranRole = bizTranRole;
     }
 
@@ -39,6 +46,8 @@ public class Operator_BizTranRole {
         Long bizTranRoleId,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Integer recordVersion,
+        Operator operator,
         BizTranRole bizTranRole) {
 
         return new Operator_BizTranRole(
@@ -47,6 +56,8 @@ public class Operator_BizTranRole {
             bizTranRoleId,
             expirationStartDate,
             expirationEndDate,
+            recordVersion,
+            operator,
             bizTranRole);
     }
 
@@ -65,6 +76,12 @@ public class Operator_BizTranRole {
     }
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
+    }
+    public Operator getOperator() {
+        return operator;
     }
     public BizTranRole getBizTranRole() {
         return bizTranRole;

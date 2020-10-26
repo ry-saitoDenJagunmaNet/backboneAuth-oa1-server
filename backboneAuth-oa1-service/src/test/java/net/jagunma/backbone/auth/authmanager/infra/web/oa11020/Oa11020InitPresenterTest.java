@@ -19,31 +19,17 @@ import org.junit.jupiter.api.Test;
 class Oa11020InitPresenterTest {
 
     // 実行既定値
-    String jaCode = "006";
-    String jaName = "JA前橋市";
-    String prefix = "yu";
-
-    // 店舗群AtMoment作成
-    private BranchesAtMoment createBranchesAtMoment() {
-        List<BranchAtMoment> branchAtMomentList = newArrayList();
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
-            .build());
-        branchAtMomentList.add(BranchAtMoment.builder()
-            .withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
-                .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build())
-            .build());
-
-        return BranchesAtMoment.of(branchAtMomentList);
-    }
+    private String jaCode = "006";
+    private String jaName = "JA前橋市";
+    private String operatorCodePrefix = "yu";
+    private List<BranchAtMoment> branchAtMomentList = newArrayList(
+        BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
+        BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
+        BranchAtMoment.builder().withIdentifier(3L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("003")).withName("店舗003").build()).build());
+    private BranchesAtMoment branchesAtMoment = BranchesAtMoment.of(branchAtMomentList);
 
     /**
-     * {@link Oa11020InitPresenter#bindTo(Oa11020Vo)}テスト
+     * {@link Oa11020InitPresenter#bindTo(Oa11020Vo vo)}テスト
      *  ●パターン
      *    正常
      *
@@ -59,21 +45,21 @@ class Oa11020InitPresenterTest {
         Oa11020InitPresenter presenter = new Oa11020InitPresenter();
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
-        presenter.setOperatorCodePrefix(prefix);
-        presenter.setBranchesAtMoment(createBranchesAtMoment());
+        presenter.setOperatorCodePrefix(operatorCodePrefix);
+        presenter.setBranchesAtMomentForBranchItemsSource(branchesAtMoment);
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setBranchId(null);
-        expectedVo.setOperatorCodePrefix(prefix);
+        expectedVo.setOperatorCodePrefix(operatorCodePrefix);
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);
         expectedVo.setMailAddress(null);
         expectedVo.setExpirationStartDate(null);
         expectedVo.setExpirationEndDate(null);
         expectedVo.setChangeCause(null);
-        expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(createBranchesAtMoment()).getValue());
+        expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         expectedVo.setPassword(null);
         expectedVo.setConfirmPassword(null);
 

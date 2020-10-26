@@ -2,16 +2,16 @@
  * OA11030 オペレーター更新
  */
 
-/* ロック状態（アンロック） */
- .oaex_lock_status_unlock {
+/* アカウントロック状態（アンロック） */
+ .oaex_account_lock_status_unlock {
 	color: #1de9b6;
 	font-size: 300%;
 	vertical-align: middle;
 	margin-top: 10px;
 	line-height: 0;
 }
-/* ロック状態（ロック） */
- .oaex_lock_status_lock {
+/* アカウントロック状態（ロック） */
+ .oaex_account_lock_status_lock {
 	color: #ff1744;
 	font-size: 300%;
 	vertical-align: middle;

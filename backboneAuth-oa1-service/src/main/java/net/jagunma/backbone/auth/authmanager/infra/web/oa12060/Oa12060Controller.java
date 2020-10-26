@@ -58,7 +58,7 @@ public class Oa12060Controller extends BaseOfController {
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -93,7 +93,7 @@ public class Oa12060Controller extends BaseOfController {
     }
 
     /**
-     * カレンダー検索処理を行います。
+     * カレンダー検索処理を行います
      *
      * @param model モデル
      * @param ym 年月
@@ -140,7 +140,7 @@ public class Oa12060Controller extends BaseOfController {
     }
 
     /**
-     * カレンダー適用処理を行います。
+     * カレンダー適用処理を行います
      *
      * @param model モデル
      * @param vo ViewObject

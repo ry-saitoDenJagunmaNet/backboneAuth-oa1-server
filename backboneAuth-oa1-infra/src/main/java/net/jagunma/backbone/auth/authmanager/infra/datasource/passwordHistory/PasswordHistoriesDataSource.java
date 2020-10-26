@@ -34,7 +34,7 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
     }
 
     /**
-     * パスワード履歴群の検索を行います。
+     * パスワード履歴群の検索を行います
      *
      * @param passwordHistoryCriteria パスワード履歴の検索条件
      * @param orders                  オーダー指定
@@ -42,12 +42,12 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
      */
     public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
 
-        // オペレーターリストの検索
+        // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
-        // パスワード履歴検索
+        // パスワード履歴群検索
         PasswordHistoryEntityCriteria entityCriteria = new PasswordHistoryEntityCriteria();
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
 

@@ -2,15 +2,15 @@ package net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * パスワード履歴群
  */
 public class PasswordHistories {
 
-    private final ArrayList<PasswordHistory> list = newArrayList();
+    private final List<PasswordHistory> list = newArrayList();
 
     // コンストラクタ
     PasswordHistories(Collection<PasswordHistory> collection) {
@@ -18,7 +18,7 @@ public class PasswordHistories {
     }
 
     /**
-     * パスワード履歴リストから作成します。
+     * パスワード履歴リストから作成します
      *
      * @param passwordHistoryList パスワード履歴リスト
      * @return パスワード履歴群
@@ -28,11 +28,11 @@ public class PasswordHistories {
     }
 
     /**
-     * パスワード履歴リストを取得します。
+     * パスワード履歴リストを取得します
      *
      * @return パスワード履歴リスト
      */
-    public ArrayList<PasswordHistory> getValues() {
+    public List<PasswordHistory> getValues() {
         return list;
     }
 }

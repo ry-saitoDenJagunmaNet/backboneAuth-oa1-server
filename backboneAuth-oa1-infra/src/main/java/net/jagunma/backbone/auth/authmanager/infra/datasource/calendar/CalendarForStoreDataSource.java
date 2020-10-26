@@ -20,7 +20,7 @@ public class CalendarForStoreDataSource implements CalendarRepositoryForStore {
     }
 
     /**
-     * カレンダーを更新します。
+     * カレンダーを更新します
      *
      * @param calendar カレンダー
      */

@@ -96,7 +96,7 @@ class Oa11010InitPresenter {
     }
 
     /**
-     * voに変換に変換します。
+     * voに変換します
      *
      * @param vo オペレーター＜一覧＞View Object
      */

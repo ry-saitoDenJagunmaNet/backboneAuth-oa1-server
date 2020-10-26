@@ -1,26 +1,25 @@
 /**
- * 画面Loadイベントです。
+ * 画面 Loadイベントです。
  */
 function oaex_th_onload() {
 	_isThymeleaf = true;
 }
 
 /**
- * 閉じるボタンクリックイベントです。
+ * 閉じるボタン クリックイベントです。
  */
 function oaex_closeBtn_onClick() {
 	oa_transferForm("oa00000");
 }
 
 /**
- * 登録ボタンクリックイベントです。
+ * 登録ボタン クリックイベントです。
  */
 function oaex_entryBtn_onClick() {
 	if (_isThymeleaf) {
 		oaex_th_entryBtn_onClick();
 		return;
 	}
-
 	oa_showAlert("登録しました。");
 }
 function oaex_th_entryBtn_onClick() {

@@ -21,7 +21,7 @@ public class SearchCalendar {
     }
 
     /**
-     * カレンダー群を検索します。
+     * カレンダー群を検索します
      *
      * @param request カレンダーメンテナンス検索サービス Request
      * @param response 検索結果
@@ -37,7 +37,7 @@ public class SearchCalendar {
     }
 
     /**
-     * カレンダーの検索条件を作成します。
+     * カレンダーの検索条件を作成します
      *
      * @param request カレンダーメンテナンス検索サービス Request
      * @return カレンダー検索条件

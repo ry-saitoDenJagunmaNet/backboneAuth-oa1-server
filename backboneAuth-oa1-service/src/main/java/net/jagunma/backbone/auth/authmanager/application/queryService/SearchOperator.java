@@ -10,7 +10,6 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
@@ -19,6 +18,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -40,15 +42,14 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTr
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
-import net.jagunma.backbone.auth.authmanager.model.types.ConditionsExpirationSelect;
-import net.jagunma.backbone.auth.authmanager.model.types.ConditionsSelect;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
-import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
+import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
+import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
+import net.jagunma.common.ddd.model.criterias.LongCriteria;
+import net.jagunma.common.ddd.model.criterias.ShortCriteria;
+import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
-import net.jagunma.common.util.strings2.Strings2;
-import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -69,8 +70,7 @@ public class SearchOperator {
     private final SignOutTracesRepository signOutTracesRepository;
     private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
-    private final BranchAtMomentRepository branchAtMomentRepository;
-    private final BranchReference branchReference;
+    private final OperatorHistoryHeadersRepository operatorHistoryHeadersRepository;
 
     // コンストラクタ
     public SearchOperator(OperatorsRepository operatorsRepository,
@@ -80,8 +80,7 @@ public class SearchOperator {
         SignOutTracesRepository signOutTracesRepository,
         Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
         Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        BranchReference branchReference,
-        BranchAtMomentRepository branchAtMomentRepository) {
+        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository) {
 
         this.operatorsRepository = operatorsRepository;
         this.accountLocksRepository = accountLocksRepository;
@@ -90,12 +89,11 @@ public class SearchOperator {
         this.signOutTracesRepository = signOutTracesRepository;
         this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
         this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
-        this.branchAtMomentRepository = branchAtMomentRepository;
-        this.branchReference = branchReference;
+        this.operatorHistoryHeadersRepository = operatorHistoryHeadersRepository;
     }
 
     /**
-     * オペレーター群を検索します。
+     * オペレーター群を検索します
      *
      * @param request  オペレーターリスト参照サービス Request
      * @param response オペレーターリスト参照サービス Response
@@ -103,11 +101,7 @@ public class SearchOperator {
     public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
 
         // パラメーターの検証
-        SeatchOperatorValidator.with(request).validate();
-
-        // ページ
-        response.setPageNo(request.getPageNo());
-        System.out.println("### PageNo="+request.getPageNo());
+        SearchOperatorValidator.with(request).validate();
 
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
@@ -116,12 +110,6 @@ public class SearchOperator {
         // オペレーターIDおよびオペレーターコードのリストを設定
         setOperatorIdAndCodeList(operators);
 
-        // 店舗群検索
-        // TODO: 店舗の取得は BranchAtMomentで取得
-        // TODO: 暫定でオペレーターテーブルからJA毎に店舗コードを取得
-//        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(createBranchAtMomentCriteria(request),
-//            Orders.empty().addOrder("branchAttribute.BranchCode.value"));
-        BranchesAtMoment branchesAtMoment = branchReference.branchAtMomentSelectBy(createBranchAtMomentCriteria(request));
         // オペレーター_サブシステムロール割当検索
         Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
             Orders.empty().addOrder("OperatorId"));
@@ -140,12 +128,15 @@ public class SearchOperator {
         // サインアウト証跡
         SignOutTraces signOutTraces = signOutTracesRepository.selectBy(createSignOutTraceCriteria(),
             Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
+        // オペレーター履歴ヘッダー
+        OperatorHistoryHeaders operatorHistoryHeaders = operatorHistoryHeadersRepository.selectBy(createOperatorHistoryHeaderCriteria(),
+            Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
 
         List<Operator> removeOperator = newArrayList();
         for (Operator operator : operators.getValues()) {
             // オペレーター_サブシステムロール割当検索
-            List<Operator_SubSystemRole> operator_SubSystemRolesList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
-            if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRolesList)) {
+            List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+            if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRoleList)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;
@@ -164,13 +155,6 @@ public class SearchOperator {
                 removeOperator.add(operator);
                 continue;
             }
-            // パスワード履歴の検索条件判定
-            PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-            if (!conditionsPasswordHistory(request, passwordHistory)) {
-                // 削除対象を退避
-                removeOperator.add(operator);
-                continue;
-            }
             // サインイン証跡検索
             SignInTrace signInTrace = signInTraces.getValues().stream().filter(a->a.getOperatorCode().equals(operator.getOperatorCode())).findFirst().orElse(null);
             if (!conditionsSignInTrace(request, signInTrace)) {
@@ -184,19 +168,26 @@ public class SearchOperator {
                 // 削除対象を退避
                 removeOperator.add(operator);
             }
+            // パスワード履歴の検索条件判定
+            PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
+            if (!conditionsPasswordHistory(request, passwordHistory)) {
+                // 削除対象を退避
+                removeOperator.add(operator);
+                continue;
+            }
         }
         // 対象から削除
         operators.getValues().removeAll(removeOperator);
 
         response.setOperators(operators);
-        response.setBranchesAtMoment(branchesAtMoment);
         response.setOperator_SubSystemRoles(operator_SubSystemRoles);
         response.setOperator_BizTranRoles(operator_BizTranRoles);
         response.setAccountLocks(AccountLocks);
+        response.setOperatorHistoryHeaders(operatorHistoryHeaders);
     }
 
     /**
-     * オペレーター_サブシステムロール割当の検索条件判定を行います。
+     * オペレーター_サブシステムロール割当の検索条件判定を行います
      *
      * @param request                   オペレーターリスト参照サービス Request
      * @param operatorSubSystemRoleList オペレーター_サブシステムロール割当
@@ -204,26 +195,27 @@ public class SearchOperator {
      */
     boolean conditionsOperatorSubSystemRole(OperatorSearchRequest request, List<Operator_SubSystemRole> operatorSubSystemRoleList) {
 
-        // 選択チェックしたサブシステムロールを検索条件にする
-        List<OparatorSearchSubSystemRoleRequest> subSystemRoleRequestList =
-            request.getSubSystemRoleList().stream().filter(reqossr->
-                Oa11010Vo.CHECKBOX_TRUE.equals(reqossr.getSubSystemRoleSelected())).collect(Collectors.toList());
-        if (subSystemRoleRequestList.size() > 0) {
+        if (request.getSubSystemRoleList() == null) { return true; }
+        if (request.getSubSystemRoleConditionsSelect() == null) { return true; }
+
+        if (request.getSubSystemRoleList().size() > 0) {
             //サブシステムロールでの検索条件設定あり（無しの場合は全件対象）
 
             //対象オペレーターにオペレーター_サブシステムロール割当無し
             if (operatorSubSystemRoleList.size() == 0) { return false; }
 
             // サブシステムロール条件選択による振り分け
-            if (request.getSubSystemRoleConditionsSelect().equals(ConditionsSelect.AND.getCode())) {
-                for (OparatorSearchSubSystemRoleRequest subSystemRoleRequest : subSystemRoleRequestList) {
+            if (request.getSubSystemRoleConditionsSelect() == 1) {
+                // AND
+                for (OparatorSearchSubSystemRoleRequest subSystemRoleRequest : request.getSubSystemRoleList()) {
                     if (!conditionsOperatorSubSystemRoleRow(operatorSubSystemRoleList, subSystemRoleRequest)) {
                         return false;
                     }
                 }
-            } else if (request.getSubSystemRoleConditionsSelect().equals(ConditionsSelect.OR.getCode())) {
+            } else if (request.getSubSystemRoleConditionsSelect() == 2) {
+                // OR
                 boolean orReturn = false;
-                for (OparatorSearchSubSystemRoleRequest subSystemRoleRequest : subSystemRoleRequestList) {
+                for (OparatorSearchSubSystemRoleRequest subSystemRoleRequest : request.getSubSystemRoleList()) {
                     if (conditionsOperatorSubSystemRoleRow(operatorSubSystemRoleList, subSystemRoleRequest)) {
                         orReturn = true;
                         break;
@@ -237,7 +229,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_サブシステムロール割当１行の検索条件判定を行います。
+     * オペレーター_サブシステムロール割当１行の検索条件判定を行います
      *
      * @param operatorSubSystemRoleList オペレーター_サブシステムロール割当リスト
      * @param subSystemRoleRequest      サブシステムの検索条件
@@ -246,34 +238,41 @@ public class SearchOperator {
     boolean conditionsOperatorSubSystemRoleRow(List<Operator_SubSystemRole> operatorSubSystemRoleList,
         OparatorSearchSubSystemRoleRequest subSystemRoleRequest) {
 
-        if (subSystemRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.指定なし.getCode())) {
+        LocalDate defaultFromDate = LocalDate.of(1,1,1);
+        LocalDate defaultToDate = LocalDate.of(9999,12,31);
+
+        if (subSystemRoleRequest.getExpirationSelect() == null) { return true; }
+
+        if (subSystemRoleRequest.getExpirationSelect() == 0) {
+            // 指定なし
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode())).count() != 0;
-        } else if (subSystemRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+        } else if (subSystemRoleRequest.getExpirationSelect() == 1) {
+            // 状態指定日
+            if (subSystemRoleRequest.getExpirationStatusDate() == null) { return true; }
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
-        } else if (subSystemRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+                    o.getExpirationStartDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) <= 0 &&
+                    o.getExpirationEndDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
+        } else if (subSystemRoleRequest.getExpirationSelect() == 2) {
+            // 条件指定
+            LocalDate expirationStartDateFrom = subSystemRoleRequest.getExpirationStartDateFrom()==null? defaultFromDate : subSystemRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = subSystemRoleRequest.getExpirationStartDateTo()==null? defaultToDate : subSystemRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = subSystemRoleRequest.getExpirationEndDateFrom()==null? defaultFromDate : subSystemRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = subSystemRoleRequest.getExpirationEndDateTo()==null? defaultToDate : subSystemRoleRequest.getExpirationEndDateTo();
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    (o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStartDateFrom()) >= 0) &&
-                    o.getExpirationStartDate()
-                        .compareTo(subSystemRoleRequest.getExpirationStartDateTo()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationEndDateFrom()) >= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(subSystemRoleRequest.getExpirationEndDateTo()) <= 0).count() != 0;
+                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
+                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
+                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
+                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
     }
 
     /**
-     * オペレーター_取引ロール割当の検索条件判定を行います。
+     * オペレーター_取引ロール割当の検索条件判定を行います
      *
      * @param request                 オペレーターリスト参照サービス Request
      * @param operatorBizTranRoleList オペレーター_取引割当
@@ -281,26 +280,27 @@ public class SearchOperator {
      */
     boolean conditionsOperatorBizTranRole(OperatorSearchRequest request, List<Operator_BizTranRole> operatorBizTranRoleList) {
 
-        // 選択チェックした取引ロールを検索条件にする
-        List<OparatorSearchBizTranRoleRequest> bizTranRoleRequestList =
-            request.getBizTranRoleList().stream().filter(reqossr->
-                Oa11010Vo.CHECKBOX_TRUE.equals(reqossr.getBizTranRoleSelected())).collect(Collectors.toList());
-        if (bizTranRoleRequestList.size() > 0) {
+        if (request.getBizTranRoleList() == null) { return true; }
+        if (request.getBizTranRoleConditionsSelect() == null) { return true; }
+
+        if (request.getBizTranRoleList().size() > 0) {
             //取引ロールロールでの検索条件設定あり（無しの場合は全件対象）
 
             //対象オペレーターにオペレーター_取引ロール割当無し
             if (operatorBizTranRoleList.size() == 0) { return false; }
 
             // 取引ロール条件選択による振り分け
-            if (request.getBizTranRoleConditionsSelect().equals(ConditionsSelect.AND.getCode())) {
-                for (OparatorSearchBizTranRoleRequest bizTranRoleRequest : bizTranRoleRequestList) {
+            if (request.getBizTranRoleConditionsSelect() == 1) {
+                // AND
+                for (OparatorSearchBizTranRoleRequest bizTranRoleRequest : request.getBizTranRoleList()) {
                     if (!conditionsOperatorBizTranRoleRow(operatorBizTranRoleList, bizTranRoleRequest)) {
                         return false;
                     }
                 }
-            } else if (request.getBizTranRoleConditionsSelect().equals(ConditionsSelect.OR.getCode())) {
+            } else if (request.getBizTranRoleConditionsSelect() == 2) {
+                // OR
                 boolean orReturn = false;
-                for (OparatorSearchBizTranRoleRequest bizTranRoleRequest : bizTranRoleRequestList) {
+                for (OparatorSearchBizTranRoleRequest bizTranRoleRequest : request.getBizTranRoleList()) {
                     if (conditionsOperatorBizTranRoleRow(operatorBizTranRoleList, bizTranRoleRequest)) {
                         orReturn = true;
                         break;
@@ -314,7 +314,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_取引ロール割当１行の検索条件判定を行います。
+     * オペレーター_取引ロール割当１行の検索条件判定を行います
      *
      * @param operatorBizTranRoleList オペレーター_取引ロール割当リスト
      * @param bizTranRoleRequest      取引の検索条件
@@ -323,34 +323,41 @@ public class SearchOperator {
     boolean conditionsOperatorBizTranRoleRow(List<Operator_BizTranRole> operatorBizTranRoleList,
         OparatorSearchBizTranRoleRequest bizTranRoleRequest){
 
-        if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.指定なし.getCode())) {
+        LocalDate defaultFromDate = LocalDate.of(1,1,1);
+        LocalDate defaultToDate = LocalDate.of(9999,12,31);
+
+        if (bizTranRoleRequest.getExpirationSelect() == null) { return true; }
+
+        if (bizTranRoleRequest.getExpirationSelect() == 0) {
+            // 指定なし
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId())).count() != 0;
-        } else if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
+        } else if (bizTranRoleRequest.getExpirationSelect() == 1) {
+            // 状態指定日
+            if (bizTranRoleRequest.getExpirationStatusDate() == null) { return true; }
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
-        } else if (bizTranRoleRequest.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
+                    o.getExpirationStartDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) <= 0 &&
+                    o.getExpirationEndDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
+        } else if (bizTranRoleRequest.getExpirationSelect() == 2) {
+            // 条件指定
+            LocalDate expirationStartDateFrom = bizTranRoleRequest.getExpirationStartDateFrom()==null? defaultFromDate : bizTranRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = bizTranRoleRequest.getExpirationStartDateTo()==null? defaultToDate : bizTranRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = bizTranRoleRequest.getExpirationEndDateFrom()==null? defaultFromDate : bizTranRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = bizTranRoleRequest.getExpirationEndDateTo()==null? defaultToDate : bizTranRoleRequest.getExpirationEndDateTo();
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    (o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStartDateFrom()) >= 0) &&
-                    o.getExpirationStartDate()
-                        .compareTo(bizTranRoleRequest.getExpirationStartDateTo()) <= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationEndDateFrom()) >= 0 &&
-                    o.getExpirationEndDate()
-                        .compareTo(bizTranRoleRequest.getExpirationEndDateTo()) <= 0).count() != 0;
+                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
+                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
+                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
+                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
     }
 
     /**
-     * アカウントロックの検索条件判定を行います。
+     * アカウントロックの検索条件判定を行います
      *
      * @param request     オペレーターリスト参照サービス Request
      * @param accountLock アカウントロック
@@ -379,18 +386,18 @@ public class SearchOperator {
         }
 
         // アカウントロック ロック状態の条件
-        Short accountLockStatusLock = Oa11010Vo.CHECKBOX_FALSE;
-        Short accountLockStatusUnlock = Oa11010Vo.CHECKBOX_FALSE;
-        if (request.getAccountLockStatusLock() != null) {accountLockStatusLock = request.getAccountLockStatusLock();}
-        if (request.getAccountLockStatusUnlock() != null) {accountLockStatusUnlock = request.getAccountLockStatusUnlock();}
+        boolean accountLockStatusLock = false;
+        boolean accountLockStatusUnlock = false;
+        if (request.getAccountLockStatusLock() != null) {accountLockStatusLock = request.getAccountLockStatusLock().equals((short)1);}
+        if (request.getAccountLockStatusUnlock() != null) {accountLockStatusUnlock = request.getAccountLockStatusUnlock().equals((short)1);}
 
-        if (!accountLockStatusLock.equals(accountLockStatusUnlock)) {
-            if (Oa11010Vo.CHECKBOX_TRUE.equals(accountLockStatusLock)) {
+        if (!accountLockStatusLock == accountLockStatusUnlock) {
+            if (accountLockStatusLock) {
                 //ロック
                 if (accountLock == null || accountLock.getLockStatus().equals(AccountLockStatus.アンロック.getCode())) {
                     return false;
                 }
-            } else if (Oa11010Vo.CHECKBOX_TRUE.equals(accountLockStatusUnlock)) {
+            } else if (accountLockStatusUnlock) {
                 //アンロック
                 if (accountLock != null && accountLock.getLockStatus().equals(AccountLockStatus.ロック.getCode())) {
                     return false;
@@ -402,7 +409,7 @@ public class SearchOperator {
     }
 
     /**
-     * パスワード履歴の検索条件判定を行います。
+     * パスワード履歴の検索条件判定を行います
      *
      * @param request         オペレーターリスト参照サービス Request
      * @param passwordHistory パスワード履歴
@@ -411,7 +418,9 @@ public class SearchOperator {
     boolean conditionsPasswordHistory(OperatorSearchRequest request, PasswordHistory passwordHistory) {
 
         // パスワード履歴　最終パスワード変更日の条件
-        if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getPasswordHistoryCheck()) &&
+        boolean passwordHistoryCheck = false;
+        if (request.getPasswordHistoryCheck() != null) {passwordHistoryCheck = request.getPasswordHistoryCheck().equals((short)1);}
+        if (passwordHistoryCheck &&
             request.getPasswordHistoryLastChangeDate() != null) {
             LocalDate passwodrChanheDate = LocalDate.now().minusDays(request.getPasswordHistoryLastChangeDate());
             if ("1".equals(request.getPasswordHistoryLastChangeDateStatus())) {
@@ -419,7 +428,7 @@ public class SearchOperator {
                 if (passwordHistory == null) {
                     return false;
                 } else {
-                    if (passwordHistory.getChangeDateTime().toLocalDate().compareTo(passwodrChanheDate) < 0) {
+                    if (passwordHistory.getChangeDateTime().toLocalDate().compareTo(passwodrChanheDate) >= 0) {
                         return false;
                     }
                 }
@@ -434,36 +443,32 @@ public class SearchOperator {
         }
 
         // パスワード履歴　最終パスワード変更種別の条件
-        Short passwordHistoryChangeType0 = 0;
-        Short passwordHistoryChangeType1 = 0;
-        Short passwordHistoryChangeType2 = 0;
-        Short passwordHistoryChangeType3 = 0;
-        if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0();}
-        if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1();}
-        if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2();}
-        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType2();}
-        if (!passwordHistoryChangeType0.equals(passwordHistoryChangeType1) ||
-            !passwordHistoryChangeType0.equals(passwordHistoryChangeType2) ||
-            !passwordHistoryChangeType0.equals(passwordHistoryChangeType3)) {
+        boolean passwordHistoryChangeType0 = false;
+        boolean passwordHistoryChangeType1 = false;
+        boolean passwordHistoryChangeType2 = false;
+        boolean passwordHistoryChangeType3 = false;
+        if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0().equals((short)1);}
+        if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1().equals((short)1);}
+        if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2().equals((short)1);}
+        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType3().equals((short)1);}
+        if (passwordHistoryChangeType0 != passwordHistoryChangeType1 ||
+            passwordHistoryChangeType0 != passwordHistoryChangeType2 ||
+            passwordHistoryChangeType0 != passwordHistoryChangeType3) {
 
-            if (passwordHistory == null) {
-                return false;
-            }
+            if (passwordHistory == null) { return false; }
             // 最終パスワード変更種別が全て同じでない
-            if (passwordHistory.getChangeType().equals(PasswordChangeType.初期.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType0)) {
+            if (passwordHistory.getChangeType().equals(PasswordChangeType.初期.getCode()) && passwordHistoryChangeType0) {
                 // 初期
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.ユーザーによる変更.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType1)) {
+            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.ユーザーによる変更.getCode()) && passwordHistoryChangeType1) {
                 // ユーザーによる変更
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.管理者によるリセット.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType2)) {
+            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.管理者によるリセット.getCode()) && passwordHistoryChangeType2) {
                 // 管理者によるリセット
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.機器認証パスワード.getCode()) && Oa11010Vo.CHECKBOX_TRUE.equals(passwordHistoryChangeType3)) {
+            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.機器認証パスワード.getCode()) && passwordHistoryChangeType3) {
                 // 機器認証パスワード
                 return true;
-            } else {
-                return false;
             }
         }
 
@@ -471,7 +476,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインイン証跡の検索条件判定を行います。
+     * サインイン証跡の検索条件判定を行います
      *
      * @param request     オペレーターリスト参照サービス Request
      * @param signInTrace サインイン証跡
@@ -504,8 +509,7 @@ public class SearchOperator {
         }
 
         // サインイン証跡　最終サインオペレーションの条件
-        if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getSignintraceSignIn())) {
-
+        if (request.getSignintraceSignIn() != null && request.getSignintraceSignIn().equals((short)1)) {
             if (signInTrace == null) { return false; }
         }
         if (request.getSignintraceSignInResult() != null && request.getSignintraceSignInResult().length > 0) {
@@ -522,7 +526,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインアウト証跡の検索条件判定を行います。
+     * サインアウト証跡の検索条件判定を行います
      *
      * @param request      オペレーターリスト参照サービス Request
      * @param signOutTrace サインアウト証跡
@@ -531,7 +535,7 @@ public class SearchOperator {
     boolean conditionsSignOutTrace(OperatorSearchRequest request, SignOutTrace signOutTrace) {
 
         // サインアウト証跡　最終サインオペレーションの条件
-        if (Oa11010Vo.CHECKBOX_TRUE.equals(request.getSignintraceSignOut())) {
+        if (request.getSignintraceSignOut() != null && request.getSignintraceSignOut().equals((short)1)) {
             return signOutTrace != null;
         }
 
@@ -539,52 +543,50 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター検索条件を作成します。
+     * オペレーター検索条件を作成します
      *
      * @param request オペレーターリスト参照サービス Request
      * @return オペレータ検索条件
      */
     OperatorCriteria createOperatorCriteria(OperatorSearchRequest request) {
         OperatorCriteria criteria = new OperatorCriteria();
-        // ＪＡID
-        criteria.getJaIdCriteria().setEqualTo(request.getJaId());
-        // 店舗ID
-        if (request.getBranchId() != null) {
-            criteria.getBranchIdCriteria().setEqualTo(request.getBranchId());
-        }
+        // オペレーターID
+        criteria.getOperatorIdCriteria().assignFrom(
+            request.getOperatorIdCriteria() == null? new LongCriteria() : request.getOperatorIdCriteria());
         // オペレーターコード
-        if (!Strings2.isEmpty(request.getOperatorCode())) {
-            criteria.getOperatorCodeCriteria().setForwardMatch(request.getOperatorCode());
-        }
+        criteria.getOperatorCodeCriteria().assignFrom(
+            request.getOperatorCodeCriteria() == null? new StringCriteria() : request.getOperatorCodeCriteria());
         // オペレーター名
-        if (!Strings2.isEmpty(request.getOperatorName())) {
-            criteria.getOperatorNameCriteria().setForwardMatch(request.getOperatorName());
-        }
+        criteria.getOperatorNameCriteria().assignFrom(
+            request.getOperatorNameCriteria() == null? new StringCriteria() : request.getOperatorNameCriteria());
         // メールアドレス
-        if (!Strings2.isEmpty(request.getMailAddress())) {
-            criteria.getMailAddressCriteria().setForwardMatch(request.getMailAddress());
+        criteria.getMailAddressCriteria().assignFrom(
+            request.getMailAddressCriteria() == null? new StringCriteria() : request.getMailAddressCriteria());
+        // 有効期限開始
+        criteria.getExpirationStartDateCriteria().assignFrom(
+            request.getExpirationStartDateCriteria() == null? new LocalDateCriteria() : request.getExpirationStartDateCriteria());
+        // 有効期限開始
+        criteria.getExpirationEndDateCriteria().assignFrom(
+            request.getExpirationEndDateCriteria() == null? new LocalDateCriteria() : request.getExpirationEndDateCriteria());
+        // ＪＡID
+        if (request.getJaIdCriteria() != null && request.getJaIdCriteria().getEqualTo() != null) {
+            criteria.getJaIdentifierCriteria().setEqualTo(request.getJaIdCriteria().getEqualTo());
         }
+        // 店舗ID
+        criteria.getBranchIdCriteria().assignFrom(
+            request.getBranchIdCriteria() == null? new LongCriteria() : request.getBranchIdCriteria());
         // 利用可否状態
-        criteria.getAvailableStatusCriteria().getIncludes()
-            .addAll(request.getAvailableStatusIncludesList());
-        // OPTION検索条件 有効期限
-        if (request.getExpirationSelect().equals(ConditionsExpirationSelect.状態指定日.getCode())) {
-            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStatusDate());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationStatusDate());
-        } else if (request.getExpirationSelect().equals(ConditionsExpirationSelect.条件指定.getCode())) {
-            criteria.getExpirationStartDateCriteria().setMoreOrEqual(request.getExpirationStartDateFrom());
-            criteria.getExpirationStartDateCriteria().setLessOrEqual(request.getExpirationStartDateTo());
-            criteria.getExpirationEndDateCriteria().setMoreOrEqual(request.getExpirationEndDateFrom());
-            criteria.getExpirationEndDateCriteria().setLessOrEqual(request.getExpirationEndDateTo());
-        }
-        // OPTION検索条件 その他　機器認証
-        criteria.getIsDeviceAuthCriteria().setEqualTo(request.getDeviceAuthUse());
+        criteria.getAvailableStatusCriteria().assignFrom(
+            request.getAvailableStatusCriteria() == null? new ShortCriteria() : request.getAvailableStatusCriteria());
+        // 機器認証
+        criteria.getIsDeviceAuthCriteria().assignFrom(
+            request.getIsDeviceAuthCriteria() == null? new BooleanCriteria(): request.getIsDeviceAuthCriteria());
 
         return criteria;
     }
 
     /**
-     * オペレーターIDおよびオペレーターコードのリストを設定します。
+     * オペレーターIDおよびオペレーターコードのリストを設定します
      *
      * @param operators オペレーター群
      */
@@ -594,19 +596,7 @@ public class SearchOperator {
     }
 
     /**
-     * 店舗（BranchAtMoment）検索条件を作成します。
-     *
-     * @param request オペレーター群
-     * @return 店舗（BranchAtMoment）検索条件
-     */
-    BranchAtMomentCriteria createBranchAtMomentCriteria(OperatorSearchRequest request) {
-        BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-        criteria.getJaIdentifierCriteria().setEqualTo(request.getJaId());
-        return criteria;
-    }
-
-    /**
-     * アカウントロック検索条件を作成します。
+     * アカウントロック検索条件を作成します
      *
      * @return アカウントロック検索条件
      */
@@ -617,7 +607,7 @@ public class SearchOperator {
     }
 
     /**
-     * パスワード履歴検索条件を作成します。
+     * パスワード履歴検索条件を作成します
      *
      * @return パスワード履歴検索条件
      */
@@ -628,7 +618,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインイン証跡検索条件を作成します。
+     * サインイン証跡検索条件を作成します
      *
      * @return サインイン証跡検索条件
      */
@@ -639,7 +629,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインアウト証跡検索条件を作成します。
+     * サインアウト証跡検索条件を作成します
      *
      * @return サインアウト証跡検索条件
      */
@@ -650,7 +640,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_サブシステムロール割当検索条件を作成します。
+     * オペレーター_サブシステムロール割当検索条件を作成します
      *
      * @return オペレーター_サブシステムロール割当検索条件
      */
@@ -661,12 +651,23 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_取引ロール割当検索条件を作成します。
+     * オペレーター_取引ロール割当検索条件を作成します
      *
      * @return オペレーター_取引ロール割当検索条件
      */
     Operator_BizTranRoleCriteria createOperator_BizTranRoleCriteria() {
         Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
+        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
+        return criteria;
+    }
+
+    /**
+     * オペレーター履歴ヘッダー検索条件を作成します
+     *
+     * @return オペレーター履歴ヘッダー検索条件
+     */
+    OperatorHistoryHeaderCriteria createOperatorHistoryHeaderCriteria() {
+        OperatorHistoryHeaderCriteria criteria = new OperatorHistoryHeaderCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
         return criteria;
     }

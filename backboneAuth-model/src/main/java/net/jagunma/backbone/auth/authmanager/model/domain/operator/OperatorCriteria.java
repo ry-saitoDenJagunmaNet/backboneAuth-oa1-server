@@ -5,6 +5,7 @@ import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.ShortCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
+import net.jagunma.common.values.model.branch.JaIdentifierCriteria;
 
 /**
  * オペレーターの検索条件
@@ -18,7 +19,7 @@ public class OperatorCriteria {
     private LocalDateCriteria expirationStartDateCriteria = new LocalDateCriteria();
     private LocalDateCriteria expirationEndDateCriteria = new LocalDateCriteria();
     private BooleanCriteria isDeviceAuthCriteria = new BooleanCriteria();
-    private LongCriteria jaIdCriteria = new LongCriteria();
+    private final JaIdentifierCriteria jaIdentifierCriteria = new JaIdentifierCriteria();
     private StringCriteria jaCodeCriteria = new StringCriteria();
     private LongCriteria branchIdCriteria = new LongCriteria();
     private StringCriteria branchCodeCriteria = new StringCriteria();
@@ -46,8 +47,8 @@ public class OperatorCriteria {
     public BooleanCriteria getIsDeviceAuthCriteria() {
         return isDeviceAuthCriteria;
     }
-    public LongCriteria getJaIdCriteria() {
-        return jaIdCriteria;
+    public JaIdentifierCriteria getJaIdentifierCriteria() {
+        return jaIdentifierCriteria;
     }
     public StringCriteria getJaCodeCriteria() {
         return jaCodeCriteria;

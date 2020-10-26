@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
@@ -51,19 +51,19 @@ public class Oa11020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11020Controller.class);
 
-    private final BranchReference branchReference;
     private final EntryOperator entryOperator;
+    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public Oa11020Controller(
-        BranchReference branchReference,
-        EntryOperator entryOperator) {
-        this.branchReference = branchReference;
+        EntryOperator entryOperator,
+        SimpleSearchBranch simpleSearchBranch) {
         this.entryOperator = entryOperator;
+        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -81,8 +81,7 @@ public class Oa11020Controller extends BaseOfController {
             presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
             presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
             presenter.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
-            presenter.setBranchesAtMoment(branchReference.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
-
+            presenter.setBranchesAtMomentForBranchItemsSource(simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
             presenter.bindTo(vo);
 
             model.addAttribute("form", vo);
@@ -101,7 +100,7 @@ public class Oa11020Controller extends BaseOfController {
         }    }
 
     /**
-     * 登録ボタン処理を行います。
+     * 登録ボタン処理を行います
      *
      * @param model モデル
      * @param vo ViewObject
@@ -140,7 +139,7 @@ public class Oa11020Controller extends BaseOfController {
     }
 
     /**
-     * 登録処理を行います。
+     * 登録処理を行います
      *
      * @param session_vo SessionViewObject
      * @param model モデル
@@ -164,25 +163,31 @@ public class Oa11020Controller extends BaseOfController {
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
-            vo.setExceptionMessage(gre);
-            model.addAttribute("form", vo);
-            return "oa11020";
+            if (gre.getSimpleMessage().contains("パスワード")) {
+                vo.setExceptionMessage(gre);
+                model.addAttribute("form", vo);
+                return "ed01010";
+            } else {
+                session_vo.setExceptionMessage(gre);
+                model.addAttribute("form", session_vo);
+                return "oa11020";
+            }
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
-            vo.setExceptionMessage(re);
-            model.addAttribute("form", vo);
+            session_vo.setExceptionMessage(re);
+            model.addAttribute("form", session_vo);
             return "oa19999";
         }
     }
 
     /**
-     * SessionにViewObjectの格納を行います。
+     * SessionにViewObjectの格納を行います
      *
      * @param vo ViewObject
      * @return view名
      */
     @ModelAttribute("session_vo")
-    public Oa11020Vo setSessionVo(Oa11020Vo vo){
+    public Oa11020Vo setSessionVo(Oa11020Vo vo) {
         return vo;
     }
 }

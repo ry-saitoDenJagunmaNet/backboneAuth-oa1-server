@@ -2,15 +2,15 @@ package net.jagunma.backbone.auth.authmanager.model.domain.accountLock;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * アカウントロック群
  */
 public class AccountLocks {
 
-    private final ArrayList<AccountLock> list = newArrayList();
+    private final List<AccountLock> list = newArrayList();
 
     // コンストラクタ
     AccountLocks(Collection<AccountLock> collection) {
@@ -18,7 +18,7 @@ public class AccountLocks {
     }
 
     /**
-     * アカウントロックリストから作成します。
+     * アカウントロックリストから作成します
      *
      * @param accountLockList アカウントロックリスト
      * @return アカウントロック群
@@ -28,11 +28,11 @@ public class AccountLocks {
     }
 
     /**
-     * アカウントロックリストを取得します。
+     * アカウントロックリストを取得します
      *
      * @return アカウントロックリスト
      */
-    public ArrayList<AccountLock> getValues() {
+    public List<AccountLock> getValues() {
         return list;
     }
 }

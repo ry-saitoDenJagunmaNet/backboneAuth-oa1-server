@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.server.aop.AuditInfoHolder;
@@ -19,18 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class EntryOperator {
 
-    private final OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore;
+    private final OperatorRepositoryForStore operatorRepositoryForStore;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
-    public EntryOperator(OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore,
+    public EntryOperator(OperatorRepositoryForStore operatorRepositoryForStore,
         BranchAtMomentRepository branchAtMomentRepository) {
 
-        this.operatorEntryPackRepositoryForStore = operatorEntryPackRepositoryForStore;
+        this.operatorRepositoryForStore = operatorRepositoryForStore;
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
     /**
-     * オペレーターの登録を行います。
+     * オペレーターの登録を行います
      *
      * @param request オペレーター登録サービス Request
      */
@@ -53,12 +53,12 @@ public class EntryOperator {
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
             branchAtMoment.getBranchAttribute().getBranchCode().getValue());
 
-        // オペレーターエントリーパックのインサートを行います
-        operatorEntryPackRepositoryForStore.insert(operatorEntryPack);
+        // オペレーターの登録を行います
+        operatorRepositoryForStore.entry(operatorEntryPack);
     }
 
     /**
-     * 店舗の取得を行います。
+     * 店舗の取得を行います
      *
      * @param branchId 店舗ID
      * @return branchAtMoment 店舗AtMoment
@@ -77,19 +77,18 @@ public class EntryOperator {
     }
 
     /**
-     * 店舗が当JAに属するかのチェックを行います。
+     * 店舗が当JAに属するかのチェックを行います
      *
      * @param branchAtMoment 店舗
      */
-    void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
-        if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(
-            AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
+    static void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
+        if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
             throw new GunmaRuntimeException("EOA12002", AuditInfoHolder.getJa().getJaAttribute().getJaCode(), branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
         }
     }
 
     /**
-     * オペレーターエントリーパックの生成を行います。
+     * オペレーターエントリーパックの生成を行います
      *
      * @param request オペレーター登録サービス Request
      * @param operatorCodePrefix 識別（オペレーターコードプレフィックス）

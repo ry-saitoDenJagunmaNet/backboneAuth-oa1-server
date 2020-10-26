@@ -29,6 +29,7 @@ buildscript {
         backboneInterfaceVersion = '20.2.9'
         backboneStubVersion = '20.1.13'
         junitJupiterVersion = '5.7.0'
+        poiOoxmlVersion = '4.1.2'
 
     }
 }

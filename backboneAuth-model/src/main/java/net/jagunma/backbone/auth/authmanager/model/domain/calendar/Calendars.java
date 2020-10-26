@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public class Calendars {
 
-    private final ArrayList<Calendar> list = newArrayList();
+    private final List<Calendar> list = newArrayList();
 
     // コンストラクタ
     Calendars(Collection<Calendar> collection) {
@@ -19,7 +18,7 @@ public class Calendars {
     }
 
     /**
-     * カレンダーリストから作成します。
+     * カレンダーリストから作成します
      *
      * @param calendarList カレンダーリスト
      * @return カレンダー群
@@ -29,7 +28,7 @@ public class Calendars {
     }
 
     /**
-     * カレンダーリストを取得します。
+     * カレンダーリストを取得します
      *
      * @return カレンダーリスト
      */

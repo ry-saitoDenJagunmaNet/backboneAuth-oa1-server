@@ -28,7 +28,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
     }
 
     /**
-     * 取引ロール群の検索を行います。
+     * 取引ロール群の検索を行います
      *
      * @param bizTranRoleCriteria 取引ロールの検索条件
      * @param orders              オーダー指定
@@ -36,7 +36,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
      */
     public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
 
-        // 取引ロール検索
+        // 取引ロール群検索
         BizTranRoleEntityCriteria entityCriteria = new BizTranRoleEntityCriteria();
         entityCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes());
 
@@ -47,6 +47,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
                 entity.getBizTranRoleCode(),
                 entity.getBizTranRoleName(),
                 entity.getSubSystemCode(),
+                entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())
             ));
         }
@@ -55,12 +56,14 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
     }
 
     /**
-     * 取引ロール群の全件検索を行います。
+     * 取引ロール群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return 取引ロール群
      */
     public BizTranRoles selectAll(Orders orders) {
+
+        // 取引ロール群検索
         List<BizTranRole> list = newArrayList();
         for (BizTranRoleEntity entity : bizTranRoleEntityDao.findAll(orders)) {
             list.add(BizTranRole.createFrom(
@@ -68,6 +71,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
                 entity.getBizTranRoleCode(),
                 entity.getBizTranRoleName(),
                 entity.getSubSystemCode(),
+                entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())
             ));
         }

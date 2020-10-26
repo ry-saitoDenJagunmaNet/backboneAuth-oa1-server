@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
@@ -39,7 +40,7 @@ class EntryOperatorTest {
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
-    private OperatorEntryRequest createOperatorEntryRequest() {
+    private OperatorEntryRequest createRequest() {
         return new OperatorEntryRequest() {
             @Override
             public String getOperatorCode6() {
@@ -82,16 +83,20 @@ class EntryOperatorTest {
 
     // テスト対象クラス生成
     private EntryOperator createEntryOperator() {
-        OperatorEntryPackRepositoryForStore operatorEntryPackRepositoryForStore = new OperatorEntryPackRepositoryForStore() {
+        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
             @Override
-            public void insert(OperatorEntryPack operatorEntryPack) {
+            public void entry(OperatorEntryPack operatorEntryPack) {
+
+            }
+            @Override
+            public void update(OperatorUpdatePack operatorUpdatePack) {
 
             }
         };
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
             @Override
             public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-
+                // 店舗未存在 テスト時
                 if (!criteria.getIdentifierCriteria().getEqualTo().equals(AuditInfoHolder.getBranch().getIdentifier())) {
                     return BranchAtMoment.empty();
                 }
@@ -104,7 +109,7 @@ class EntryOperatorTest {
             }
         };
 
-        return new EntryOperator(operatorEntryPackRepositoryForStore, branchAtMomentRepository);
+        return new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository);
     }
 
     // 店舗AtMoment
@@ -131,7 +136,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#execute(OperatorEntryRequest)}テスト
+     * {@link EntryOperator#execute(OperatorEntryRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -146,7 +151,7 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createOperatorEntryRequest();
+        OperatorEntryRequest operatorEntryRequest = createRequest();
 
         assertThatCode(() ->
             // 実行
@@ -155,7 +160,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
+     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
      *    正常
      *
@@ -179,7 +184,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long)}テスト
+     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
      *    店舗未存在
      *
@@ -207,7 +212,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
      *    正常
      *
@@ -231,7 +236,7 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment)}テスト
+     * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
      *    店舗所属JA不一致
      *
@@ -261,11 +266,11 @@ class EntryOperatorTest {
 
     /**
      * {@link EntryOperator#createOperatorEntryPack(
-     *      OperatorEntryRequest,
-     *      String,
-     *      Long,
-     *      String,
-     *      String)}テスト
+     *      OperatorEntryRequest request,
+     *      String operatorCodePrefix,
+     *      Long jaId,
+     *      String jaCode,
+     *      String branchCode)}テスト
      *  ●パターン
      *    正常
      *
@@ -280,7 +285,7 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createOperatorEntryRequest();
+        OperatorEntryRequest operatorEntryRequest = createRequest();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行

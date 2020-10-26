@@ -3,12 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.web.base.vo;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.message.MessageFormatter;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -67,7 +64,7 @@ public class BaseOfResponseVo implements Serializable {
     public void setStackTrace(String stackTrace) { this.stackTrace = stackTrace; }
 
     /**
-     * 例外メッセージをセットします。
+     * 例外メッセージをセットします
      * @param gre GunmaRuntimeException
      */
     public void setExceptionMessage(GunmaRuntimeException gre) {
@@ -77,10 +74,11 @@ public class BaseOfResponseVo implements Serializable {
     }
 
     /**
-     * 楽観的ロックのメッセージをセットします。
+     * 楽観的ロックのメッセージをセットします
      * @param ole OptimisticLockingFailureException
      */
     public void setExceptionMessage(OptimisticLockingFailureException ole) {
+        messageCode = "EOA10002";
         errorMessage = MessageFormatter.getSimpleMessage("EOA10002");
 
         if (ole.getMessage() != null) {errorDetailsMessage = ole.getMessage() + "\r\n";}
@@ -93,10 +91,11 @@ public class BaseOfResponseVo implements Serializable {
     }
 
     /**
-     * 例外メッセージをセットします。
+     * 例外メッセージをセットします
      * @param re RuntimeException
      */
     public void setExceptionMessage(RuntimeException re) {
+        messageCode = "EOA10001";
         errorMessage = MessageFormatter.getSimpleMessage("EOA10001");
 
         if (re.getMessage() != null) {errorDetailsMessage = re.getMessage() + "\r\n";}

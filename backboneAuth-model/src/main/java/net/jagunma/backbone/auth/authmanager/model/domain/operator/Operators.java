@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public class Operators {
 
-    private final ArrayList<Operator> list = newArrayList();
+    private final List<Operator> list = newArrayList();
 
     // コンストラクタ
     Operators(Collection<Operator> collection) {
@@ -19,7 +18,7 @@ public class Operators {
     }
 
     /**
-     * オペレーターリストから作成します。
+     * オペレーターリストから作成します
      *
      * @param operatorList オペレーターリスト
      * @return オペレーター群
@@ -29,7 +28,7 @@ public class Operators {
     }
 
     /**
-     * オペレーターリストを取得します。
+     * オペレーターリストを取得します
      *
      * @return オペレーターリスト
      */

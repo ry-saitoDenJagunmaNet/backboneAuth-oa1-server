@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BizTranRoleReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.BranchReference;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -56,27 +56,27 @@ public class Oa11010Controller extends BaseOfController {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11010Controller.class);
 
     private final SearchOperator searchOperator;
-    private final BizTranRoleReference bizTranRoleReference;
-    private final BranchReference branchReference;
+    private final SimpleSearchBizTranRole simpleSearchBizTranRole;
+    private final SimpleSearchBranch simpleSearchBranch;
 
     // コンストラクタ
     public Oa11010Controller(SearchOperator searchOperator,
-        BizTranRoleReference bizTranRoleReference,
-        BranchReference branchReference) {
+        SimpleSearchBizTranRole simpleSearchBizTranRole,
+        SimpleSearchBranch simpleSearchBranch) {
 
         this.searchOperator = searchOperator;
-        this.bizTranRoleReference = bizTranRoleReference;
-        this.branchReference = branchReference;
+        this.simpleSearchBizTranRole = simpleSearchBizTranRole;
+        this.simpleSearchBranch = simpleSearchBranch;
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
      */
     @GetMapping(path = "/get")
-    private String get(Model model) {
+    public String get(Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
@@ -104,7 +104,7 @@ public class Oa11010Controller extends BaseOfController {
     }
 
     /**
-     * オペレーター検索処理を行います。
+     * オペレーター検索処理を行います
      *
      * @param vo 検索条件（form json）
      * @return オペレーター検索結果
@@ -122,6 +122,8 @@ public class Oa11010Controller extends BaseOfController {
             // オぺレーター検索
             searchOperator.execute(converter, presenter);
 
+            // ページ
+            presenter.setPageNo(vo.getPageNo());
             presenter.bindTo(responseVo);
             return new ResponseEntity<>(responseVo, HttpStatus.OK);
 
@@ -137,7 +139,7 @@ public class Oa11010Controller extends BaseOfController {
     }
 
     /**
-     * InitPresenterの初期化を行います。
+     * InitPresenterの初期化を行います
      *
      * @return InitPresenter
      */
@@ -149,7 +151,8 @@ public class Oa11010Controller extends BaseOfController {
         presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
         presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
         // 店舗リスト
-        presenter.setBranchesAtMoment(branchReference.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
+        presenter.setBranchesAtMoment(
+            simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
         // 有効期限選択
         presenter.setExpirationSelect(0);
         // サブシステムロール初期選択
@@ -159,7 +162,7 @@ public class Oa11010Controller extends BaseOfController {
         // 取引ロール初期選択
         presenter.setBizTranRoleConditionsSelect(1);
         // 取引ロール群
-        presenter.setBizTranRoles(bizTranRoleReference.getBizTranRoles());
+        presenter.setBizTranRoles(simpleSearchBizTranRole.getBizTranRoles());
 
         return presenter;
     }

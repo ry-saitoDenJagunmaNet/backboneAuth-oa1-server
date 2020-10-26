@@ -70,9 +70,6 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public Long getBranchId() {
         return branchId;
     }
-    public List<SelectOptionItemSource> getBranchItemsSource() {
-        return branchItemsSource;
-    }
     public String getOperatorCodePrefix() {
         return operatorCodePrefix;
     }
@@ -94,6 +91,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public String getChangeCause() {
         return changeCause;
     }
+    public List<SelectOptionItemSource> getBranchItemsSource() {
+        return branchItemsSource;
+    }
     public String getPassword() {
         return password;
     }
@@ -107,9 +107,6 @@ public class Oa11020Vo extends BaseOfResponseVo {
     }
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
-    }
-    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
-        this.branchItemsSource = branchItemsSource;
     }
     public void setOperatorCodePrefix(String operatorCodePrefix) {
         this.operatorCodePrefix = operatorCodePrefix;
@@ -131,6 +128,9 @@ public class Oa11020Vo extends BaseOfResponseVo {
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
+    }
+    public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
+        this.branchItemsSource = branchItemsSource;
     }
     public void setPassword(String password) {
         this.password = password;

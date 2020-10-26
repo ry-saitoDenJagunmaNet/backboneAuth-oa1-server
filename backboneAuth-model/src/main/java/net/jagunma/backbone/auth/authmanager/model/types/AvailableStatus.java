@@ -33,7 +33,7 @@ public enum AvailableStatus {
     }
 
     /**
-     * コードで検索を行います。
+     * コードで検索を行います
      *
      * @param code コード
      * @return 利用可否状態

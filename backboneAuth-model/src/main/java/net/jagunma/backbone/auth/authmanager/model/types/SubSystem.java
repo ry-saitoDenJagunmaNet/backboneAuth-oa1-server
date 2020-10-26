@@ -36,7 +36,7 @@ public enum SubSystem {
     }
 
     /**
-     * コードで検索を行います。
+     * コードで検索を行います
      *
      * @param code コード
      * @return サブシステム
@@ -44,6 +44,21 @@ public enum SubSystem {
     public static SubSystem codeOf(String code) {
         for (SubSystem enumItem : values()) {
             if (enumItem.code.equals(code)) {
+                return enumItem;
+            }
+        }
+        return SubSystem.UnKnown;
+    }
+
+    /**
+     * 名称で検索を行います
+     *
+     * @param name 名称
+     * @return サブシステム
+     */
+    public static SubSystem nameOf(String name) {
+        for (SubSystem enumItem : values()) {
+            if (enumItem.name.equals(name)) {
                 return enumItem;
             }
         }

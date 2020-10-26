@@ -538,7 +538,7 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled
+    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test18() {
@@ -603,7 +603,7 @@ class EntryOperatorValidatorTest {
             EntryOperatorValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13007");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13008");
                 assertThat(e.getArgs()).containsSequence("有効期限");
             });
     }

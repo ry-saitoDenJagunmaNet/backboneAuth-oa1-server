@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.Oa12060StoreDetai
  */
 public interface CalendarStoreRequest {
     /**
-     * カレンダーリストを作成します。
+     * カレンダーリストを作成します
      * @return カレンダーリスト
      */
     List<Oa12060StoreDetailsConverter> createCalendarList();

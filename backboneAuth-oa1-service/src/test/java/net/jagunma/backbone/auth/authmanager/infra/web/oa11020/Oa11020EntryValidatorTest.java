@@ -26,17 +26,17 @@ class Oa11020EntryValidatorTest {
 
     // Oa11020Vo作成
     private Oa11020Vo createOa11020Vo() {
-        Oa11020Vo oa11020Vo = new Oa11020Vo();
+        Oa11020Vo vo = new Oa11020Vo();
 
-        oa11020Vo.setBranchId(branchId);
-        oa11020Vo.setOperatorCode6(operatorCode6);
-        oa11020Vo.setOperatorName(operatorName);
-        oa11020Vo.setMailAddress(mailAddress);
-        oa11020Vo.setExpirationStartDate(expirationStartDate);
-        oa11020Vo.setExpirationEndDate(expirationEndDate);
-        oa11020Vo.setChangeCause(changeCause);
+        vo.setBranchId(branchId);
+        vo.setOperatorCode6(operatorCode6);
+        vo.setOperatorName(operatorName);
+        vo.setMailAddress(mailAddress);
+        vo.setExpirationStartDate(expirationStartDate);
+        vo.setExpirationEndDate(expirationEndDate);
+        vo.setChangeCause(changeCause);
 
-        return oa11020Vo;
+        return vo;
     }
 
     /**
@@ -136,6 +136,7 @@ class Oa11020EntryValidatorTest {
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）", "入力");
             });
     }
+
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
@@ -445,7 +446,7 @@ class Oa11020EntryValidatorTest {
             Oa11020EntryValidator.with(vo).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA14007");
+                assertThat(e.getMessageCode()).isEqualTo("EOA14008");
                 assertThat(e.getArgs()).containsSequence("有効期限");
             });
     }

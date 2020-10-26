@@ -11,6 +11,7 @@ public class BizTranRole {
     private final String bizTranRoleCode;
     private final String bizTranRoleName;
     private final String subSystemCode;
+    private final Integer recordVersion;
     private final SubSystem subSystem;
 
     // コンストラクタ
@@ -19,12 +20,14 @@ public class BizTranRole {
         String bizTranRoleCode,
         String bizTranRoleName,
         String subSystemCode,
+        Integer recordVersion,
         SubSystem subSystem) {
 
         this.bizTranRoleId = bizTranRoleId;
         this.bizTranRoleCode = bizTranRoleCode;
         this.bizTranRoleName = bizTranRoleName;
         this.subSystemCode = subSystemCode;
+        this.recordVersion = recordVersion;
         this.subSystem = subSystem;
     }
 
@@ -34,6 +37,7 @@ public class BizTranRole {
         String bizTranRoleCode,
         String bizTranRoleName,
         String subSystemCode,
+        Integer recordVersion,
         SubSystem subSystem) {
 
         return new BizTranRole(
@@ -41,6 +45,7 @@ public class BizTranRole {
             bizTranRoleCode,
             bizTranRoleName,
             subSystemCode,
+            recordVersion,
             subSystem);
     }
 
@@ -56,6 +61,9 @@ public class BizTranRole {
     }
     public String getSubSystemCode() {
         return subSystemCode;
+    }
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
     public SubSystem getSubSystem() {
         return subSystem;

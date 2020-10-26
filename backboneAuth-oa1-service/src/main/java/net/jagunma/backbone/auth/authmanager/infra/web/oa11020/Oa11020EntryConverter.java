@@ -15,13 +15,13 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
     private final Oa11020Vo vo;
 
     // コンストラクタ
-    Oa11020EntryConverter(Oa11020Vo oa11020Vo) {
-        vo = oa11020Vo;
+    Oa11020EntryConverter(Oa11020Vo vo) {
+        this.vo = vo;
     }
 
     // ファクトリーメソッド
-    public static Oa11020EntryConverter with(Oa11020Vo oa11020Vo) {
-        return new Oa11020EntryConverter(oa11020Vo);
+    public static Oa11020EntryConverter with(Oa11020Vo vo) {
+        return new Oa11020EntryConverter(vo);
     }
 
     /**
