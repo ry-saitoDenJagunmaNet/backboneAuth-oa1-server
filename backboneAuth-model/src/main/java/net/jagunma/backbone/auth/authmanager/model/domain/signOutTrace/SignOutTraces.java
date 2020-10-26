@@ -18,7 +18,7 @@ public class SignOutTraces {
     }
 
     /**
-     * サインアウト証跡リストから作成します。
+     * サインアウト証跡リストから作成します
      *
      * @param signOutTraceList サインアウト証跡リスト
      * @return サインアウト証跡群
@@ -28,7 +28,7 @@ public class SignOutTraces {
     }
 
     /**
-     * サインアウト証跡リストを取得します。
+     * サインアウト証跡リストを取得します
      *
      * @return サインアウト証跡リスト
      */

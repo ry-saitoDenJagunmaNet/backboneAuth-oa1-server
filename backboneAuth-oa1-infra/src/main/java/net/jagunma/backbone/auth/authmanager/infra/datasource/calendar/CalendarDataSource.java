@@ -23,7 +23,7 @@ public class CalendarDataSource implements CalendarRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います。
+     * カレンダーの条件検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @return カレンダー

@@ -34,7 +34,7 @@ public class AccountLocksDataSource implements AccountLocksRepository {
     }
 
     /**
-     * アカウントロック群の検索を行います。
+     * アカウントロック群の検索を行います
      *
      * @param accountLockCriteria アカウントロックの検索条件
      * @param orders              オーダー指定

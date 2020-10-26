@@ -8,7 +8,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface OperatorsRepository {
 
     /**
-     * オペレーター群の条件検索を行います。
+     * オペレーター群の条件検索を行います
      *
      * @param operatorCriteria オペレーターの検索条件
      * @param orders           オーダー指定

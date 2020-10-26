@@ -28,7 +28,7 @@ public class UpdateOperator {
     }
 
     /**
-     * オペレーターの更新を行います。
+     * オペレーターの更新を行います
      *
      * @param request オペレーター更新サービス Request
      */
@@ -53,7 +53,7 @@ public class UpdateOperator {
     }
 
     /**
-     * 店舗の取得を行います。
+     * 店舗の取得を行います
      *
      * @param branchId 店舗ID
      * @return branchAtMoment 店舗AtMoment
@@ -72,7 +72,7 @@ public class UpdateOperator {
     }
 
     /**
-     * オペレーターアップデートパックの生成を行います。
+     * オペレーターアップデートパックの生成を行います
      *
      * @param request オペレーター更新サービス Request
      * @param branchCode 店舗コード

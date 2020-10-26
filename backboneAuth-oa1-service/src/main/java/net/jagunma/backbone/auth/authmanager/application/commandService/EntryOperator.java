@@ -30,7 +30,7 @@ public class EntryOperator {
     }
 
     /**
-     * オペレーターの登録を行います。
+     * オペレーターの登録を行います
      *
      * @param request オペレーター登録サービス Request
      */
@@ -58,7 +58,7 @@ public class EntryOperator {
     }
 
     /**
-     * 店舗の取得を行います。
+     * 店舗の取得を行います
      *
      * @param branchId 店舗ID
      * @return branchAtMoment 店舗AtMoment
@@ -77,7 +77,7 @@ public class EntryOperator {
     }
 
     /**
-     * 店舗が当JAに属するかのチェックを行います。
+     * 店舗が当JAに属するかのチェックを行います
      *
      * @param branchAtMoment 店舗
      */
@@ -88,7 +88,7 @@ public class EntryOperator {
     }
 
     /**
-     * オペレーターエントリーパックの生成を行います。
+     * オペレーターエントリーパックの生成を行います
      *
      * @param request オペレーター登録サービス Request
      * @param operatorCodePrefix 識別（オペレーターコードプレフィックス）

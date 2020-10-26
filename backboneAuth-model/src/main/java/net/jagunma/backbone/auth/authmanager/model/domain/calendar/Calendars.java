@@ -18,7 +18,7 @@ public class Calendars {
     }
 
     /**
-     * カレンダーリストから作成します。
+     * カレンダーリストから作成します
      *
      * @param calendarList カレンダーリスト
      * @return カレンダー群
@@ -28,7 +28,7 @@ public class Calendars {
     }
 
     /**
-     * カレンダーリストを取得します。
+     * カレンダーリストを取得します
      *
      * @return カレンダーリスト
      */

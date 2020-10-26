@@ -19,7 +19,7 @@ public class SimpleSearchBizTranRole {
     }
 
     /**
-     * 取引ロール群を取得します。
+     * 取引ロール群を取得します
      *
      * @return 取引ロール群
      */

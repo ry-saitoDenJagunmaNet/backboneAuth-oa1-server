@@ -17,7 +17,7 @@ public class BizTranGrp_BizTransSheet {
     }
 
     /**
-     * 取引グループ－取引編成リストから作成します。
+     * 取引グループ－取引編成リストから作成します
      *
      * @param bizTranGrp_BizTranSheetList 取引グループ－取引編成リスト
      * @return 取引グループ－取引編成群
@@ -27,7 +27,7 @@ public class BizTranGrp_BizTransSheet {
     }
 
     /**
-     * 取引グループ－取引編成リストを取得します。
+     * 取引グループ－取引編成リストを取得します
      *
      * @return 取引グループ－取引編成リスト
      */

@@ -42,7 +42,7 @@ public class Oa11100Controller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11010Controller.class);
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名

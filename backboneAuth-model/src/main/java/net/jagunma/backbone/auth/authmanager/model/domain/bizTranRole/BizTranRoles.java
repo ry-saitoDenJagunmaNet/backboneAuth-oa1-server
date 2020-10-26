@@ -18,7 +18,7 @@ public class BizTranRoles {
     }
 
     /**
-     * 取引ロールリストから作成します。
+     * 取引ロールリストから作成します
      *
      * @param bizTranRoleList 取引ロールリスト
      * @return 取引ロール群
@@ -28,7 +28,7 @@ public class BizTranRoles {
     }
 
     /**
-     * 取引ロールリストを取得します。
+     * 取引ロールリストを取得します
      *
      * @return 取引ロールリスト
      */

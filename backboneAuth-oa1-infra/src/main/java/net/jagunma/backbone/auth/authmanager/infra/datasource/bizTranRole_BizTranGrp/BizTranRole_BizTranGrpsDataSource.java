@@ -41,7 +41,7 @@ public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrp
     }
 
     /**
-     * 取引ロール_取引グループ割当群の検索を行います。
+     * 取引ロール_取引グループ割当群の検索を行います
      *
      * @param bizTranRole_BizTranGrpCriteria 取引ロール_取引グループ割当の検索条件
      * @param orders                         オーダー指定
@@ -81,7 +81,7 @@ public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrp
     }
 
     /**
-     * 取引ロール_取引グループ割当群の全件検索を行います。
+     * 取引ロール_取引グループ割当群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return 取引ロール_取引グループ割当群

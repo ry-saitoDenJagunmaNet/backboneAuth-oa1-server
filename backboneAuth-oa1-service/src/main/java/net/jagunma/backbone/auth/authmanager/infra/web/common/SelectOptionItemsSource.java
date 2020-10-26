@@ -21,7 +21,7 @@ public class SelectOptionItemsSource {
     }
 
     /**
-     * 店舗群（BranchesAtMoment）から作成します。
+     * 店舗群（BranchesAtMoment）から作成します
      *
      * @param branchesAtMoment 店舗群
      * @return 店舗コンボボックス選択肢群
@@ -40,7 +40,7 @@ public class SelectOptionItemsSource {
     }
 
     /**
-     * サブシステム（enum）から作成します。
+     * サブシステム（enum）から作成します
      * <pre>
      * 記述例
      *   SelectOptionItemsSource.createFrom(SubSystem.values())
@@ -64,7 +64,7 @@ public class SelectOptionItemsSource {
     }
 
     /**
-     * 共通 コンボボックス選択子リストを取得します。
+     * 共通 コンボボックス選択子リストを取得します
      *
      * @return 共通 コンボボックス選択子リスト
      */

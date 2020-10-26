@@ -39,7 +39,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
     }
 
     /**
-     * voに変換します。
+     * voに変換します
      *
      * @param vo
      */

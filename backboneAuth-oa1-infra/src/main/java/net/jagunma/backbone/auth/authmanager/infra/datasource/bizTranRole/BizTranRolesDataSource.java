@@ -28,7 +28,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
     }
 
     /**
-     * 取引ロール群の検索を行います。
+     * 取引ロール群の検索を行います
      *
      * @param bizTranRoleCriteria 取引ロールの検索条件
      * @param orders              オーダー指定
@@ -56,7 +56,7 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
     }
 
     /**
-     * 取引ロール群の全件検索を行います。
+     * 取引ロール群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return 取引ロール群

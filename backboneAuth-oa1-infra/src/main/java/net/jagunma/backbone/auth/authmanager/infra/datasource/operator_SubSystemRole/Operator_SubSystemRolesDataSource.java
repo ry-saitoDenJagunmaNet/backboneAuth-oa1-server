@@ -35,7 +35,7 @@ public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRole
     }
 
     /**
-     * オペレーター_サブシステムロール割当群の検索を行います。
+     * オペレーター_サブシステムロール割当群の検索を行います
      *
      * @param operator_SubSystemRoleCriteria オペレーター_サブシステムロール割当の検索条件
      * @param orders                         オーダー指定

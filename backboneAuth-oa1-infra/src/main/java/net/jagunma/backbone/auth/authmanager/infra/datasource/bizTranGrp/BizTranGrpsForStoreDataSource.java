@@ -25,7 +25,7 @@ public class BizTranGrpsForStoreDataSource implements BizTranGrpsRepositoryForSt
     }
 
     /**
-     * 取引グループの登録を行います。
+     * 取引グループの登録を行います
      *
      * @param bizTranGrps 取引グループ群
      * @return 取引グループ群（登録後）
@@ -44,7 +44,7 @@ public class BizTranGrpsForStoreDataSource implements BizTranGrpsRepositoryForSt
     }
 
     /**
-     * 取引グループの削除を行います。
+     * 取引グループの削除を行います
      *
      * @param subSystemCode サブシステムコード
      */
@@ -55,7 +55,7 @@ public class BizTranGrpsForStoreDataSource implements BizTranGrpsRepositoryForSt
     }
 
     /**
-     * 取引グループの追加を行います。
+     * 取引グループの追加を行います
      *
      * @param bizTranGrp 取引グループ
      * @return 取引グループ

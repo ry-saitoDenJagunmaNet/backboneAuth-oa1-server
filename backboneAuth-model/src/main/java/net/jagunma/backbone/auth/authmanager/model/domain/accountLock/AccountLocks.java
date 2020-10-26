@@ -18,7 +18,7 @@ public class AccountLocks {
     }
 
     /**
-     * アカウントロックリストから作成します。
+     * アカウントロックリストから作成します
      *
      * @param accountLockList アカウントロックリスト
      * @return アカウントロック群
@@ -28,7 +28,7 @@ public class AccountLocks {
     }
 
     /**
-     * アカウントロックリストを取得します。
+     * アカウントロックリストを取得します
      *
      * @return アカウントロックリスト
      */

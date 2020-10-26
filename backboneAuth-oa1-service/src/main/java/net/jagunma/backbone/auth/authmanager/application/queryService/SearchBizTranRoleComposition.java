@@ -39,7 +39,7 @@ public class SearchBizTranRoleComposition {
     }
 
     /**
-     * エクスポートする取引ロール編成Excelを作成します。
+     * エクスポートする取引ロール編成Excelを作成します
      *
      * @param request  取引ロール編成エクスポート検索サービス Request
      * @param response 取引ロール編成エクスポート検索サービス Response

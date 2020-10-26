@@ -21,7 +21,7 @@ class StoreCalendarValidator {
     }
 
     /**
-     * リクエストのチェックを行います。
+     * リクエストのチェックを行います
      */
     public void validate() {
         // 未入力チェック

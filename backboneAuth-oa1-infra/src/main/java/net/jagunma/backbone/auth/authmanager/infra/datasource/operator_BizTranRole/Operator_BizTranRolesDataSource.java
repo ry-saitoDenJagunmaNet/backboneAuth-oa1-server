@@ -41,7 +41,7 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
     }
 
     /**
-     * オペレーター_取引ロール割当群の検索を行います。
+     * オペレーター_取引ロール割当群の検索を行います
      *
      * @param operator_BizTranRoleCriteria オペレーター_取引ロール割当の検索条件
      * @param orders                       オーダー指定

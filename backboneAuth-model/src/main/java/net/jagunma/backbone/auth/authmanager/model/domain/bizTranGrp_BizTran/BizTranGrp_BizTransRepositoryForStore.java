@@ -6,13 +6,13 @@ package net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran;
 public interface BizTranGrp_BizTransRepositoryForStore {
 
     /**
-     * 取引グループ_取引割当の削除を行います。
+     * 取引グループ_取引割当の削除を行います
      *
      * @param subSystemCode サブシステムコード
      */
     void delete(String subSystemCode);
     /**
-     * 取引グループ_取引割当の追加を行います。
+     * 取引グループ_取引割当の追加を行います
      *
      * @param bizTranGrp_BizTrans 取引グループ_取引割当群
      */

@@ -63,7 +63,7 @@ public class Oa11020Controller extends BaseOfController {
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -100,7 +100,7 @@ public class Oa11020Controller extends BaseOfController {
         }    }
 
     /**
-     * 登録ボタン処理を行います。
+     * 登録ボタン処理を行います
      *
      * @param model モデル
      * @param vo ViewObject
@@ -139,7 +139,7 @@ public class Oa11020Controller extends BaseOfController {
     }
 
     /**
-     * 登録処理を行います。
+     * 登録処理を行います
      *
      * @param session_vo SessionViewObject
      * @param model モデル
@@ -181,7 +181,7 @@ public class Oa11020Controller extends BaseOfController {
     }
 
     /**
-     * SessionにViewObjectの格納を行います。
+     * SessionにViewObjectの格納を行います
      *
      * @param vo ViewObject
      * @return view名

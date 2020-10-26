@@ -8,7 +8,7 @@ import java.util.List;
 public interface BizTranRoleCompositionBookRepositoryForRead {
 
     /**
-     * 取引ロール編成Excelを読み込みます。
+     * 取引ロール編成Excelを読み込みます
      *
      * @param bizTranRoleCompositionBook      取引ロール編成 Book
      * @param bizTranRole_BizTranGrpSheetList 取引ロール－取引グループ編成リスト

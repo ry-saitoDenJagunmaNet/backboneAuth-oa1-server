@@ -18,7 +18,7 @@ public class BizTrans {
     }
 
     /**
-     * 取引リストから作成します。
+     * 取引リストから作成します
      *
      * @param bizTranList 取引リスト
      * @return 取引群
@@ -28,7 +28,7 @@ public class BizTrans {
     }
 
     /**
-     * 取引リストを取得します。
+     * 取引リストを取得します
      *
      * @return 取引リスト
      */

@@ -28,7 +28,7 @@ class Oa12060StoreConverter implements CalendarStoreRequest {
     }
 
     /**
-     * カレンダー詳細リストを作成します。
+     * カレンダー詳細リストを作成します
      *
      * @return カレンダー詳細リスト
      */

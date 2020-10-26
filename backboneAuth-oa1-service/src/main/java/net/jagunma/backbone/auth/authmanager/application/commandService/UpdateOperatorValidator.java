@@ -23,7 +23,7 @@ class UpdateOperatorValidator {
     }
 
     /**
-     * リクエストの検証を行います。
+     * リクエストの検証を行います
      */
     public void validate() {
 

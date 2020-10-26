@@ -37,7 +37,7 @@ public class BaseOfController {
     private static String defaultOperatorIp = "001.001.001.001";
 
     /**
-     * 認証情報を設定します。（ＰＧ用暫定）
+     * 認証情報を設定します（ＰＧ用暫定）
      */
     public static void setAuthInf() {
         setAuthInf(null, null, null, null, null);

@@ -73,7 +73,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーターの登録を行います。
+     * オペレーターの登録を行います
      *
      * @param operatorEntryPack オペレーターエントリーパック
      */
@@ -96,7 +96,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーターの更新を行います。
+     * オペレーターの更新を行います
      *
      * @param operatorUpdatePack オペレーターアップデートパック
      */
@@ -119,7 +119,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーター（コード）がすでに存在しているかのチェックを行います。
+     * オペレーター（コード）がすでに存在しているかのチェックを行います
      *
      * @param operatorCode オペレーターコード
      */
@@ -134,7 +134,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーターのインサートを行います。
+     * オペレーターのインサートを行います
      *
      * @param operatorEntryPack オペレーターエントリーパック
      * @return オペレーターエンティティ
@@ -159,7 +159,7 @@ public class OperatorForStoreDataSource implements
         return operatorEntity;
     }
     /**
-     * オペレーターのアップデートを行います。
+     * オペレーターのアップデートを行います
      *
      * @param operatorUpdatePack オペレーターアップデートパック
      * @return オペレーターエンティティ
@@ -187,7 +187,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーター履歴ヘッダーのインサートを行います。
+     * オペレーター履歴ヘッダーのインサートを行います
      *
      * @param operatorId オペレーターID
      * @param changeDateTime 変更日時
@@ -207,7 +207,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーター履歴のインサートを行います。
+     * オペレーター履歴のインサートを行います
      *
      * @param operatorHistoryId オペレーター履歴ID
      * @param operatorEntity オペレーターエンティティ
@@ -231,7 +231,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * パスワード履歴のインサートを行います。
+     * パスワード履歴のインサートを行います
      *
      * @param operatorId オペレーターID
      * @param password パスワード
@@ -253,7 +253,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーター_サブシステムロール割当履歴のインサートを行います。
+     * オペレーター_サブシステムロール割当履歴のインサートを行います
      *
      * @param operatorHistoryId オペレーター履歴ID
      * @param operatorId オペレーターID
@@ -283,7 +283,7 @@ public class OperatorForStoreDataSource implements
     }
 
     /**
-     * オペレーター_取引ロール割当履歴のインサートを行います。
+     * オペレーター_取引ロール割当履歴のインサートを行います
      *
      * @param operatorHistoryId オペレーター履歴ID
      * @param operatorId オペレーターID

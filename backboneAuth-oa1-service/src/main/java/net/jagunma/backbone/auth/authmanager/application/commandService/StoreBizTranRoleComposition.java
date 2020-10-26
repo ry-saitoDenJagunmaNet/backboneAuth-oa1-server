@@ -61,7 +61,7 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * 取引ロール編成を登録します。
+     * 取引ロール編成を登録します
      *
      * @param request 取引ロール編成インポートExcel 登録サービス Request
      * @param request 取引ロール編成インポートExcel 登録サービス Response
@@ -137,7 +137,7 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * 登録データ（取引グループ－取引編成）を作成します。
+     * 登録データ（取引グループ－取引編成）を作成します
      *
      * @param request        取引ロール編成インポートExcel 登録サービス Request
      * @param subSystemCode  サブシステムコード
@@ -183,7 +183,7 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * 登録データ（取引グループ_取引割当）を作成します。
+     * 登録データ（取引グループ_取引割当）を作成します
      *
      * @param request                取引ロール編成インポートExcel 登録サービス Request
      * @param bizTranGrps            取引グループ群
@@ -217,7 +217,7 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * 登録データ（取引ロール）を作成します。
+     * 登録データ（取引ロール）を作成します
      *
      * @param request         取引ロール編成インポートExcel 登録サービス Request
      * @param subSystemCode   サブシステムコード
@@ -245,7 +245,7 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * 登録データ（取引ロール_取引グループ割当）を作成します。
+     * 登録データ（取引ロール_取引グループ割当）を作成します
      *
      * @param request                    取引ロール編成インポートExcel 登録サービス Request
      * @param bizTranRoles               取引ロール群

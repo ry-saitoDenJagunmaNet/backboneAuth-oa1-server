@@ -18,7 +18,7 @@ public class Operators {
     }
 
     /**
-     * オペレーターリストから作成します。
+     * オペレーターリストから作成します
      *
      * @param operatorList オペレーターリスト
      * @return オペレーター群
@@ -28,7 +28,7 @@ public class Operators {
     }
 
     /**
-     * オペレーターリストを取得します。
+     * オペレーターリストを取得します
      *
      * @return オペレーターリスト
      */

@@ -65,7 +65,7 @@ public class Oa11030Controller extends BaseOfController {
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -104,7 +104,7 @@ public class Oa11030Controller extends BaseOfController {
     }
 
     /**
-     * 更新処理を行います。
+     * 更新処理を行います
      *
      * @param model モデル
      * @param vo ViewObject

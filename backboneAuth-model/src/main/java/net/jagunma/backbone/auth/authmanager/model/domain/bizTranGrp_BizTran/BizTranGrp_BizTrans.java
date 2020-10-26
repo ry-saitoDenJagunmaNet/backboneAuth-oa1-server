@@ -18,7 +18,7 @@ public class BizTranGrp_BizTrans {
     }
 
     /**
-     * 取引グループ_取引割当リストから作成します。
+     * 取引グループ_取引割当リストから作成します
      *
      * @param bizTranGrp_BizTransList 取引グループ_取引割当リスト
      * @return 取引グループ_取引割当群
@@ -28,7 +28,7 @@ public class BizTranGrp_BizTrans {
     }
 
     /**
-     * 取引グループ_取引割当リストを取得します。
+     * 取引グループ_取引割当リストを取得します
      *
      * @return 取引グループ_取引割当リスト
      */

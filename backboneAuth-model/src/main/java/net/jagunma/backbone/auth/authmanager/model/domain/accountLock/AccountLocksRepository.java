@@ -8,7 +8,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface AccountLocksRepository {
 
     /**
-     * アカウントロック群の条件検索を行います。
+     * アカウントロック群の条件検索を行います
      *
      * @param accountLockrCriteria アカウントロックの検索条件
      * @param orders               オーダー指定

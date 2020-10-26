@@ -18,7 +18,7 @@ public class Operator_SubSystemRoles {
     }
 
     /**
-     * オペレーター_サブシステムロール割当リストから作成します。
+     * オペレーター_サブシステムロール割当リストから作成します
      *
      * @param operator_SubSystemRoleList オペレーター_サブシステムロール割当リスト
      * @return オペレーター_サブシステムロール割当群
@@ -28,7 +28,7 @@ public class Operator_SubSystemRoles {
     }
 
     /**
-     * オペレーター_サブシステムロール割当リストを取得します。
+     * オペレーター_サブシステムロール割当リストを取得します
      *
      * @return オペレーター_サブシステムロール割当リスト
      */

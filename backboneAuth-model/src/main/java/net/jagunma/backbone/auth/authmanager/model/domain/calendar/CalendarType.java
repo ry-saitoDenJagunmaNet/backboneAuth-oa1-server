@@ -35,7 +35,7 @@ public enum CalendarType {
     }
 
     /**
-     * コードで検索を行います。
+     * コードで検索を行います
      *
      * @param code コード
      * @return カレンダー種類
@@ -50,28 +50,28 @@ public enum CalendarType {
     }
 
     /**
-     * 天文台カレンダーかを判定します。
+     * 天文台カレンダーかを判定します
      * @return true:天文台カレンダー
      */
     public boolean is天文台カレンダー() {
         return this.equals(天文台カレンダー);
     }
     /**
-     * 経済システム稼働カレンダーかを判定します。
+     * 経済システム稼働カレンダーかを判定します
      * @return true:経済システム稼働カレンダー
      */
     public boolean is経済システム稼働カレンダー() {
         return this.equals(経済システム稼働カレンダー);
     }
     /**
-     * 信用カレンダーかを判定します。
+     * 信用カレンダーかを判定します
      * @return true:信用カレンダー
      */
     public boolean is信用カレンダー() {
         return this.equals(信用カレンダー);
     }
     /**
-     * 広域物流カレンダーかを判定します。
+     * 広域物流カレンダーかを判定します
      * @return true:広域物流カレンダー
      */
     public boolean is広域物流カレンダー() {

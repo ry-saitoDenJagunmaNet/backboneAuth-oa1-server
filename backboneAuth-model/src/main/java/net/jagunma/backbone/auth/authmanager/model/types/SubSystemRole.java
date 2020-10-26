@@ -51,7 +51,7 @@ public enum SubSystemRole {
     }
 
     /**
-     * コードで検索を行います。
+     * コードで検索を行います
      *
      * @param code コード
      * @return サブシステムロール

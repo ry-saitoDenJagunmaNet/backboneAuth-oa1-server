@@ -18,7 +18,7 @@ public class PasswordHistories {
     }
 
     /**
-     * パスワード履歴リストから作成します。
+     * パスワード履歴リストから作成します
      *
      * @param passwordHistoryList パスワード履歴リスト
      * @return パスワード履歴群
@@ -28,7 +28,7 @@ public class PasswordHistories {
     }
 
     /**
-     * パスワード履歴リストを取得します。
+     * パスワード履歴リストを取得します
      *
      * @return パスワード履歴リスト
      */

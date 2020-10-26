@@ -30,7 +30,7 @@ public class StoreBizTranRoleCompositionValidator {
     }
 
     /**
-     * リクエストのチェックを行います。
+     * リクエストのチェックを行います
      */
     public void validate() {
         // 未入力チェック
@@ -41,7 +41,7 @@ public class StoreBizTranRoleCompositionValidator {
     }
 
     /**
-     * インポートテータのチェックを行います。
+     * インポートテータのチェックを行います
      *
      * @return メッセージリスト
      */
@@ -53,7 +53,7 @@ public class StoreBizTranRoleCompositionValidator {
     }
 
     /**
-     * 取引ロール－取引グループ編成のチェックを行います。
+     * 取引ロール－取引グループ編成のチェックを行います
      *
      * @param list メッセージリスト
      */
@@ -104,7 +104,7 @@ public class StoreBizTranRoleCompositionValidator {
     }
 
     /**
-     * 取引グループ－取引編成のチェックを行います。
+     * 取引グループ－取引編成のチェックを行います
      *
      * @param list メッセージリスト
      */
@@ -170,7 +170,7 @@ public class StoreBizTranRoleCompositionValidator {
     }
 
     /**
-     * メッセージをセットします。
+     * メッセージをセットします
      *
      * @param messageCode メッセージコード
      * @param messageArgList ッセージコードリスト

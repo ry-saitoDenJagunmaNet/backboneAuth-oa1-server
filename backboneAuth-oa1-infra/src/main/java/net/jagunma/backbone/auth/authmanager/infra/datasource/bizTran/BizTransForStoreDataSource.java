@@ -25,7 +25,7 @@ public class BizTransForStoreDataSource implements BizTransRepositoryForStore {
     }
 
     /**
-     * 取引の登録を行います。
+     * 取引の登録を行います
      *
      * @param bizTrans 取引群]
      * @return 取引群（登録後）
@@ -44,7 +44,7 @@ public class BizTransForStoreDataSource implements BizTransRepositoryForStore {
     }
 
     /**
-     * 取引の削除を行います。
+     * 取引の削除を行います
      *
      * @param subSystemCode サブシステムコード
      */
@@ -55,7 +55,7 @@ public class BizTransForStoreDataSource implements BizTransRepositoryForStore {
     }
 
     /**
-     * 取引の追加を行います。
+     * 取引の追加を行います
      *
      * @param bizTran 取引
      * @return 取引

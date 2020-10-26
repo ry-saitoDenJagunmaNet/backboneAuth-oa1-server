@@ -18,7 +18,7 @@ public class BizTranGrps {
     }
 
     /**
-     * 取引グループリストから作成します。
+     * 取引グループリストから作成します
      *
      * @param bizTranGrpList 取引グループリスト
      * @return 取引グループ群
@@ -28,7 +28,7 @@ public class BizTranGrps {
     }
 
     /**
-     * 取引グループリストを取得します。
+     * 取引グループリストを取得します
      *
      * @return 取引グループリスト
      */

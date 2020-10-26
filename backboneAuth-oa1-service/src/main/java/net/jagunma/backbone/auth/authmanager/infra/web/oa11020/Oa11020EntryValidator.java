@@ -24,7 +24,7 @@ class Oa11020EntryValidator {
     }
 
     /**
-     * ViewObjectの検証を行います。
+     * ViewObjectの検証を行います
      */
     public void validate() {
 

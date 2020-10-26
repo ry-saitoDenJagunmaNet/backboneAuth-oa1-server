@@ -31,7 +31,7 @@ public class Oa12010InitPresenter {
     }
 
     /**
-     * voに変換に変換します。
+     * voに変換に変換します
      *
      * @param vo 取引ロール編成インポート＆エクスポートView Object
      */

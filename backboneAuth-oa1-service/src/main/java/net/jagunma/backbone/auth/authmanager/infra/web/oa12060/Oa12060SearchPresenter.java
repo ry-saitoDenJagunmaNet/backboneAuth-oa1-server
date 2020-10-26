@@ -67,7 +67,7 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
     }
 
     /**
-     * 表示対象フィルターチェックが無効か判定します。
+     * 表示対象フィルターチェックが無効か判定します
      *
      * @param calendarType カレンダータイプ
      * @return true:表示対象フィルターチェックが無効
@@ -80,7 +80,7 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
     }
 
     /**
-     * カレンターテーブルHtmlを生成します。
+     * カレンターテーブルHtmlを生成します
      *
      * @return カレンターテーブルHtml
      */
@@ -145,7 +145,7 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
     }
 
     /**
-     * カレンダーセル（一日分）のhtmlを生成します。
+     * カレンダーセル（一日分）のhtmlを生成します
      *
      * @param day 対象日
      * @param currentWeek 対象曜日
@@ -160,7 +160,7 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
         if (currentWeek == 6) {classids = "blue-text";}
         classids += " oaex_calendarcell_left";
 
-        // 対象日が稼働日の場合。チェックボックスをチェック済にする（データがない場合は、稼働日）
+        // 対象日が稼働日の場合 チェックボックスをチェック済にする（データがない場合は、稼働日）
         int index = day - 1;
         String[] checked = {" checked=\"checked\"", " checked=\"checked\"", " checked=\"checked\""};
         String[] calendarId = {"", "", ""};

@@ -28,7 +28,7 @@ public class BizTransDataSource implements BizTransRepository {
     }
 
     /**
-     * 取引群の検索を行います。
+     * 取引群の検索を行います
      *
      * @param bizTranCriteria 取引の検索条件
      * @param orders          オーダー指定
@@ -59,7 +59,7 @@ public class BizTransDataSource implements BizTransRepository {
     }
 
     /**
-     * 取引群の全件検索を行います。
+     * 取引群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return 取引群

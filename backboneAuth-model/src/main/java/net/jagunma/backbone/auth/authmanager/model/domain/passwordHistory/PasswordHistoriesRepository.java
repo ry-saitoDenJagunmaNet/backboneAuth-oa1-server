@@ -8,7 +8,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface PasswordHistoriesRepository {
 
     /**
-     * パスワード履歴群の条件検索を行います。
+     * パスワード履歴群の条件検索を行います
      *
      * @param passwordHistoryCriteria パスワード履歴の検索条件
      * @param orders                  オーダー指定

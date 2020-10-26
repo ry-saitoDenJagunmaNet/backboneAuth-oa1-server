@@ -41,7 +41,7 @@ public class BizTranRoleCompositionBookForWrite implements
     ResourceLoader resourceLoader;
 
     /**
-     * 取引ロール編成Excelを作成します。
+     * 取引ロール編成Excelを作成します
      *
      * @param bizTranRole_BizTranGrpsSheet 取引ロール－取引グループ編成群
      * @param bizTranGrp_BizTransSheet     取引グループ－取引編成群
@@ -91,7 +91,7 @@ public class BizTranRoleCompositionBookForWrite implements
     }
 
     /**
-     * 番目の(取引ロール－取引グループ編成)シートを作成します。
+     * 番目の(取引ロール－取引グループ編成)シートを作成します
      *
      * @param workbook Excel Workbook
      * @param bizTranRole_BizTranGrpsSheet 取引ロール－取引グループ編成群
@@ -114,7 +114,7 @@ public class BizTranRoleCompositionBookForWrite implements
     }
 
     /**
-     * ２番目の(取引グループ－取引編成)シートを作成を作成します。
+     * ２番目の(取引グループ－取引編成)シートを作成を作成します
      *
      * @param workbook Excel Workbook
      * @param bizTranGrp_BizTransSheet     取引グループ－取引編成群
@@ -142,7 +142,7 @@ public class BizTranRoleCompositionBookForWrite implements
     }
 
     /**
-     * 指定行から行プロパティをCopyして行を取得します。
+     * 指定行から行プロパティをCopyして行を取得します
      *
      * @param rowIndex      取得する行Index
      * @param baseRowIndex  プロパティをCopyする元の行Index
@@ -172,7 +172,7 @@ public class BizTranRoleCompositionBookForWrite implements
     }
 
     /**
-     * セルを取得します。
+     * セルを取得します
      *
      * @param row      行
      * @param colIndex 列Index

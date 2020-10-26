@@ -27,7 +27,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
     BizTranRoleCompositionBookForRead() {}
 
     /**
-     * 取引ロール編成Excelを読み込みます。
+     * 取引ロール編成Excelを読み込みます
      *
      * @param bizTranRoleCompositionBook      取引ロール編成 Book
      * @param bizTranRole_BizTranGrpSheetList 取引ロール－取引グループ編成リスト
@@ -51,7 +51,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
     }
 
     /**
-     * 取引ロール－取引グループ編成 Excel Sheetを読み込みます。
+     * 取引ロール－取引グループ編成 Excel Sheetを読み込みます
      *
      * @param sheet                           取引ロール－取引グループ編成 Excel Sheet
      * @param bizTranRole_BizTranGrpSheetList 取引ロール－取引グループ編成リスト
@@ -85,7 +85,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
     }
 
     /**
-     * 取引グループ－取引編成 Excel Sheetを読み込みます。
+     * 取引グループ－取引編成 Excel Sheetを読み込みます
      *
      * @param sheet                       取引グループ－取引編成 Excel Sheet
      * @param bizTranGrp_BizTranSheetList 取引グループ－取引編成取引グループ－取引編成リスト

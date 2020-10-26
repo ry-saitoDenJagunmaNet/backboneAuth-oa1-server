@@ -18,7 +18,7 @@ public class SignInTraces {
     }
 
     /**
-     * サインイン証跡リストから作成します。
+     * サインイン証跡リストから作成します
      *
      * @param signInTraceList サインイン証跡リスト
      * @return サインイン証跡群
@@ -28,7 +28,7 @@ public class SignInTraces {
     }
 
     /**
-     * サインイン証跡リストを取得します。
+     * サインイン証跡リストを取得します
      *
      * @return サインイン証跡リスト
      */

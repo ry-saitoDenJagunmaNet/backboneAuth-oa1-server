@@ -29,7 +29,7 @@ public class RaedBizTranRoleComposition {
     }
 
     /**
-     * インポートした取引ロール編成Excelから取引ロール編成を読み込みます。
+     * インポートした取引ロール編成Excelから取引ロール編成を読み込みます
      *
      * @param request 取引ロール編成エクスポートExcel Raedサービス Request
      * @param request 取引ロール編成エクスポートExcel Raedサービス Response

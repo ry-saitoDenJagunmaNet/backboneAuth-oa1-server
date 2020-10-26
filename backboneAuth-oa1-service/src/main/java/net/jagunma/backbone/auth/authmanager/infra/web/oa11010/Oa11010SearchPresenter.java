@@ -51,7 +51,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * オペレーターテーブルHtmlを生成します。
+     * オペレーターテーブルHtmlを生成します
      *
      * @return オペレーターテーブルHtml
      */
@@ -74,7 +74,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * オペレーターテーブル行Htmlを生成します。
+     * オペレーターテーブル行Htmlを生成します
      *
      * @param operator オペレーター
      * @param branchAtMoment ある時点の店舗
@@ -200,7 +200,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * 取引ロール表示Htmlを生成します。
+     * 取引ロール表示Htmlを生成します
      *
      * @param operatorBizTranRole オペレーター_取引ロール割当
      * @return 取引ロール表示Html
@@ -224,7 +224,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * オペレーターの未設定Htmlを生成します。
+     * オペレーターの未設定Htmlを生成します
      *
      * @param operatorCode オペレーターコード
      * @return オペレーターの未設定Html
@@ -253,7 +253,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * オペレーターサブシステムロールの未設定Htmlを生成します。
+     * オペレーターサブシステムロールの未設定Htmlを生成します
      *
      * @return オペレーターサブシステムロールの未設定Html
      */
@@ -270,7 +270,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * 取引ロールの未設定Htmlを生成します。
+     * 取引ロールの未設定Htmlを生成します
      *
      * @return 取引ロールの未設定Html
      */
@@ -289,7 +289,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * Pagination Htmlを生成します。
+     * Pagination Htmlを生成します
      *
      * @return Pagination Html
      */
@@ -319,7 +319,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * 該当ページのオペレーター一覧を取得します。
+     * 該当ページのオペレーター一覧を取得します
      *
      * @return 該当ページのオペレーター一覧
      */
@@ -330,7 +330,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * オペレーター一覧の最終ページを取得します。
+     * オペレーター一覧の最終ページを取得します
      *
      * @return オペレーター一覧の最終ページ
      */
@@ -339,7 +339,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
     }
 
     /**
-     * 日付を”yyyy/MM/dd”の書式でフォ－マットします。
+     * 日付を”yyyy/MM/dd”の書式でフォ－マットします
      *
      * @param localDt フォーマット対象の日付
      * @return フォ－マットした日付

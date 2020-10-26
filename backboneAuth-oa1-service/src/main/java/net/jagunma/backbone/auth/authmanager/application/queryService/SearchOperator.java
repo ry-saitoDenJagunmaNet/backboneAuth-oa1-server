@@ -93,7 +93,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター群を検索します。
+     * オペレーター群を検索します
      *
      * @param request  オペレーターリスト参照サービス Request
      * @param response オペレーターリスト参照サービス Response
@@ -187,7 +187,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_サブシステムロール割当の検索条件判定を行います。
+     * オペレーター_サブシステムロール割当の検索条件判定を行います
      *
      * @param request                   オペレーターリスト参照サービス Request
      * @param operatorSubSystemRoleList オペレーター_サブシステムロール割当
@@ -229,7 +229,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_サブシステムロール割当１行の検索条件判定を行います。
+     * オペレーター_サブシステムロール割当１行の検索条件判定を行います
      *
      * @param operatorSubSystemRoleList オペレーター_サブシステムロール割当リスト
      * @param subSystemRoleRequest      サブシステムの検索条件
@@ -272,7 +272,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_取引ロール割当の検索条件判定を行います。
+     * オペレーター_取引ロール割当の検索条件判定を行います
      *
      * @param request                 オペレーターリスト参照サービス Request
      * @param operatorBizTranRoleList オペレーター_取引割当
@@ -314,7 +314,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_取引ロール割当１行の検索条件判定を行います。
+     * オペレーター_取引ロール割当１行の検索条件判定を行います
      *
      * @param operatorBizTranRoleList オペレーター_取引ロール割当リスト
      * @param bizTranRoleRequest      取引の検索条件
@@ -357,7 +357,7 @@ public class SearchOperator {
     }
 
     /**
-     * アカウントロックの検索条件判定を行います。
+     * アカウントロックの検索条件判定を行います
      *
      * @param request     オペレーターリスト参照サービス Request
      * @param accountLock アカウントロック
@@ -409,7 +409,7 @@ public class SearchOperator {
     }
 
     /**
-     * パスワード履歴の検索条件判定を行います。
+     * パスワード履歴の検索条件判定を行います
      *
      * @param request         オペレーターリスト参照サービス Request
      * @param passwordHistory パスワード履歴
@@ -476,7 +476,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインイン証跡の検索条件判定を行います。
+     * サインイン証跡の検索条件判定を行います
      *
      * @param request     オペレーターリスト参照サービス Request
      * @param signInTrace サインイン証跡
@@ -526,7 +526,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインアウト証跡の検索条件判定を行います。
+     * サインアウト証跡の検索条件判定を行います
      *
      * @param request      オペレーターリスト参照サービス Request
      * @param signOutTrace サインアウト証跡
@@ -543,7 +543,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター検索条件を作成します。
+     * オペレーター検索条件を作成します
      *
      * @param request オペレーターリスト参照サービス Request
      * @return オペレータ検索条件
@@ -586,7 +586,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーターIDおよびオペレーターコードのリストを設定します。
+     * オペレーターIDおよびオペレーターコードのリストを設定します
      *
      * @param operators オペレーター群
      */
@@ -596,7 +596,7 @@ public class SearchOperator {
     }
 
     /**
-     * アカウントロック検索条件を作成します。
+     * アカウントロック検索条件を作成します
      *
      * @return アカウントロック検索条件
      */
@@ -607,7 +607,7 @@ public class SearchOperator {
     }
 
     /**
-     * パスワード履歴検索条件を作成します。
+     * パスワード履歴検索条件を作成します
      *
      * @return パスワード履歴検索条件
      */
@@ -618,7 +618,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインイン証跡検索条件を作成します。
+     * サインイン証跡検索条件を作成します
      *
      * @return サインイン証跡検索条件
      */
@@ -629,7 +629,7 @@ public class SearchOperator {
     }
 
     /**
-     * サインアウト証跡検索条件を作成します。
+     * サインアウト証跡検索条件を作成します
      *
      * @return サインアウト証跡検索条件
      */
@@ -640,7 +640,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_サブシステムロール割当検索条件を作成します。
+     * オペレーター_サブシステムロール割当検索条件を作成します
      *
      * @return オペレーター_サブシステムロール割当検索条件
      */
@@ -651,7 +651,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター_取引ロール割当検索条件を作成します。
+     * オペレーター_取引ロール割当検索条件を作成します
      *
      * @return オペレーター_取引ロール割当検索条件
      */
@@ -662,7 +662,7 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター履歴ヘッダー検索条件を作成します。
+     * オペレーター履歴ヘッダー検索条件を作成します
      *
      * @return オペレーター履歴ヘッダー検索条件
      */

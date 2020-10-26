@@ -80,7 +80,7 @@ public class Oa12010Controller extends BaseOfController {
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -117,7 +117,7 @@ public class Oa12010Controller extends BaseOfController {
     }
 
     /**
-     * 取引ロール編成ファイルをエクスポートします。
+     * 取引ロール編成ファイルをエクスポートします
      *
      * @param model モデル
      * @param vo ViewObject
@@ -181,7 +181,7 @@ public class Oa12010Controller extends BaseOfController {
     }
 
     /**
-     * 取引ロール編成ファイルをインポートします。
+     * 取引ロール編成ファイルをインポートします
      *
      * @param importfile インポートファイル
      * @param model モデル

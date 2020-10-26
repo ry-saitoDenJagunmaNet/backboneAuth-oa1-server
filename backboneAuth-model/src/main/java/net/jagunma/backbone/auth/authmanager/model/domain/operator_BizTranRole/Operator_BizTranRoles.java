@@ -18,7 +18,7 @@ public class Operator_BizTranRoles {
     }
 
     /**
-     * オペレーター_取引ロール割当リストから作成します。
+     * オペレーター_取引ロール割当リストから作成します
      *
      * @param operator_BizTranRoleList オペレーター_取引ロール割当リスト
      * @return オペレーター_取引ロール割当群
@@ -28,7 +28,7 @@ public class Operator_BizTranRoles {
     }
 
     /**
-     * オペレーター_取引ロール割当リストを取得します。
+     * オペレーター_取引ロール割当リストを取得します
      *
      * @return オペレーター_取引ロール割当リスト
      */

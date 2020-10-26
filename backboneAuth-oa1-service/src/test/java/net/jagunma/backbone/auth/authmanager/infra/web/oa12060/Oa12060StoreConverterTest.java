@@ -120,7 +120,7 @@ class Oa12060StoreConverterTest {
     }
 
     /**
-     * リクエスト用の１日分カレンダーを作成します。
+     * リクエスト用の１日分カレンダーを作成します
      *
      * @param calendarId1   経済システム稼働カレンダーのカレンダーID
      * @param isWorkingDay1 経済システム稼働カレンダーの稼働日フラグ

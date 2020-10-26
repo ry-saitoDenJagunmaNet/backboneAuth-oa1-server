@@ -25,7 +25,7 @@ public class BizTranRolesForStoreDataSource implements BizTranRolesRepositoryFor
     }
 
     /**
-     * 取引ロールの登録を行います。
+     * 取引ロールの登録を行います
      *
      * @param bizTranRoles 取引ロール群
      * @return 取引ロール群（登録後）
@@ -44,7 +44,7 @@ public class BizTranRolesForStoreDataSource implements BizTranRolesRepositoryFor
     }
 
     /**
-     * 取引ロールの削除を行います。
+     * 取引ロールの削除を行います
      *
      * @param subSystemCode サブシステムコード
      */
@@ -55,7 +55,7 @@ public class BizTranRolesForStoreDataSource implements BizTranRolesRepositoryFor
     }
 
     /**
-     * 取引ロールの追加を行います。
+     * 取引ロールの追加を行います
      *
      * @param bizTranRole 取引ロール
      * @return 取引ロール

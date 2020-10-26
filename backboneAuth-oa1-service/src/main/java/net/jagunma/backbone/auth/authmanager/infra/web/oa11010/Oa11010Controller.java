@@ -70,7 +70,7 @@ public class Oa11010Controller extends BaseOfController {
     }
 
     /**
-     * 画面を初期表示します。
+     * 画面を初期表示します
      *
      * @param model モデル
      * @return view名
@@ -104,7 +104,7 @@ public class Oa11010Controller extends BaseOfController {
     }
 
     /**
-     * オペレーター検索処理を行います。
+     * オペレーター検索処理を行います
      *
      * @param vo 検索条件（form json）
      * @return オペレーター検索結果
@@ -139,7 +139,7 @@ public class Oa11010Controller extends BaseOfController {
     }
 
     /**
-     * InitPresenterの初期化を行います。
+     * InitPresenterの初期化を行います
      *
      * @return InitPresenter
      */

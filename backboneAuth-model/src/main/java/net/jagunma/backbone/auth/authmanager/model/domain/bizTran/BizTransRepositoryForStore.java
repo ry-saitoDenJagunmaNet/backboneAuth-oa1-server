@@ -8,7 +8,7 @@ import java.util.List;
 public interface BizTransRepositoryForStore {
 
     /**
-     * 取引の登録を行います。
+     * 取引の登録を行います
      *
      * @param bizTrans 取引群
      * @return 取引群（登録後）

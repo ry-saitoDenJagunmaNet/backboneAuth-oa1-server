@@ -34,7 +34,7 @@ public class OperatorHistoryHeadersDataSource implements OperatorHistoryHeadersR
     }
 
     /**
-     * オペレーター履歴ヘッダー群の検索を行います。
+     * オペレーター履歴ヘッダー群の検索を行います
      *
      * @param operatorHistoryHeaderCriteria オペレーター履歴ヘッダーの検索条件
      * @param orders                        オーダー指定

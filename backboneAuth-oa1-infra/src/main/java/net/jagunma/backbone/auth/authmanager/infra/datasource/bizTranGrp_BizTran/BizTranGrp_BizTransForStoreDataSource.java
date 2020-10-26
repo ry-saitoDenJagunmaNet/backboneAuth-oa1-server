@@ -22,7 +22,7 @@ public class BizTranGrp_BizTransForStoreDataSource implements BizTranGrp_BizTran
     }
 
     /**
-     * 取引グループ_取引割当の削除を行います。
+     * 取引グループ_取引割当の削除を行います
      *
      * @param subSystemCode サブシステムコード
      */
@@ -33,7 +33,7 @@ public class BizTranGrp_BizTransForStoreDataSource implements BizTranGrp_BizTran
     }
 
     /**
-     * 取引グループ_取引割当の追加を行います。
+     * 取引グループ_取引割当の追加を行います
      *
      * @param bizTranGrp_BizTrans 取引グループ_取引割当群
      */

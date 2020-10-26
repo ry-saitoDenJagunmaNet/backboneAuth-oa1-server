@@ -29,7 +29,7 @@ public class StoreCalendar {
     }
 
     /**
-     * 稼働日または休日を適用します。
+     * 稼働日または休日を適用します
      *
      * @param request レンダーメンテナンス反映サービス Request
      * @return 適用件数

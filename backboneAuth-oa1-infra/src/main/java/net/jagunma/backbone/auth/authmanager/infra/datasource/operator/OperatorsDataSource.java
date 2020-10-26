@@ -41,7 +41,7 @@ public class OperatorsDataSource implements OperatorsRepository {
     }
 
     /**
-     * オペレーター群の検索を行います。
+     * オペレーター群の検索を行います
      *
      * @param operatorCriteria オペレーターの検索条件
      * @param orders           オーダー指定

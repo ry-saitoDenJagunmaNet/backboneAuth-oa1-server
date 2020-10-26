@@ -6,7 +6,7 @@ package net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition
 public interface BizTranRoleCompositionBookRepositoryForWrite {
 
     /**
-     * 取引ロール編成Excelを作成します。
+     * 取引ロール編成Excelを作成します
      *
      * @param bizTranRole_BizTranGrpsSheet 取引ロール－取引グループ編成群
      * @param bizTranGrp_BizTransSheet     取引グループ－取引編成群

@@ -18,7 +18,7 @@ public class BizTranRole_BizTranGrpsSheet {
     }
 
     /**
-     * 取引ロール編成リストから作成します。
+     * 取引ロール編成リストから作成します
      *
      * @param bizTranRole_BizTranGrpSheetList 取引ロール編成リスト
      * @return 取引ロール編成群
@@ -28,7 +28,7 @@ public class BizTranRole_BizTranGrpsSheet {
     }
 
     /**
-     * 取引ロール編成リストを取得します。
+     * 取引ロール編成リストを取得します
      *
      * @return 取引ロール編成リスト
      */

@@ -24,7 +24,7 @@ public class SearchOperatorValidator {
     }
 
     /**
-     * リクエストのチェックを行います。
+     * リクエストのチェックを行います
      */
     public void validate() {
 

@@ -28,7 +28,7 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
     }
 
     /**
-     * 取引グループ群の検索を行います。
+     * 取引グループ群の検索を行います
      *
      * @param bizTranGrpCriteria 取引グループの検索条件
      * @param orders             オーダー指定
@@ -56,7 +56,7 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
     }
 
     /**
-     * 取引グループ群の全件検索を行います。
+     * 取引グループ群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return 取引グループ群

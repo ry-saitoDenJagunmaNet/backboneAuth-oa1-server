@@ -29,7 +29,7 @@ public class CalendarsDataSource implements CalendarsRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います。
+     * カレンダーの条件検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @param orders           オーダー指定
@@ -48,7 +48,7 @@ public class CalendarsDataSource implements CalendarsRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います。
+     * カレンダーの条件検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @return カレンダー群
@@ -59,7 +59,7 @@ public class CalendarsDataSource implements CalendarsRepository {
     }
 
     /**
-     * カレンダーの全件検索を行います。
+     * カレンダーの全件検索を行います
      *
      * @param orders オーダー指定
      * @return カレンダー群
@@ -71,7 +71,7 @@ public class CalendarsDataSource implements CalendarsRepository {
     }
 
     /**
-     * カレンダーの全件検索を行います。
+     * カレンダーの全件検索を行います
      *
      * @return カレンダー群
      */
@@ -81,7 +81,7 @@ public class CalendarsDataSource implements CalendarsRepository {
     }
 
     /**
-     *  カレンダー群を作成します。
+     *  カレンダー群を作成します
      *
      * @param entityList カレンダーリスト
      * @return カレンダー群

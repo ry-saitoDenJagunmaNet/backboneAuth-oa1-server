@@ -22,7 +22,7 @@ public class WriteBizTranRoleComposition {
     }
 
     /**
-     * エクスポートする取引ロール編成Excelを書き出します。
+     * エクスポートする取引ロール編成Excelを書き出します
      *
      * @param request 取引ロール編成エクスポートExcel Weiteサービス Request
      * @param request 取引ロール編成エクスポートExcel Weiteサービス Response

@@ -34,7 +34,7 @@ public class SignOutTracesDataSource implements SignOutTracesRepository {
     }
 
     /**
-     * サインアウト証跡群の検索を行います。
+     * サインアウト証跡群の検索を行います
      *
      * @param signOutTraceCriteria サインアウト証跡の検索条件
      * @param orders               オーダー指定
