@@ -18,7 +18,7 @@ buildscript {
         commonFaoVersion = '20.0.118'
         jacsonDatabindVersion = '2.11.3'
         domaCoreVersion = '2.44.0'
-        domaVersion = '2.43.0'
+        domaVersion = '2.44.0'
         sf4jApiVersion = '1.7.30'
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.2'
