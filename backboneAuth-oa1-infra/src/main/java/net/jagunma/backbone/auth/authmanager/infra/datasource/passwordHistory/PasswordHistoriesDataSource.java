@@ -10,6 +10,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.Passwo
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityDao;
@@ -58,7 +59,7 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
                 entity.getOperatorId(),
                 entity.getChangeDateTime(),
                 entity.getPassword(),
-                entity.getChangeType(),
+                PasswordChangeType.codeOf(entity.getChangeType()),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null)

@@ -457,16 +457,16 @@ public class SearchOperator {
 
             if (passwordHistory == null) { return false; }
             // 最終パスワード変更種別が全て同じでない
-            if (passwordHistory.getChangeType().equals(PasswordChangeType.初期.getCode()) && passwordHistoryChangeType0) {
+            if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.初期) && passwordHistoryChangeType0) {
                 // 初期
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.ユーザーによる変更.getCode()) && passwordHistoryChangeType1) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.ユーザーによる変更) && passwordHistoryChangeType1) {
                 // ユーザーによる変更
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.管理者によるリセット.getCode()) && passwordHistoryChangeType2) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.管理者によるリセット) && passwordHistoryChangeType2) {
                 // 管理者によるリセット
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.機器認証パスワード.getCode()) && passwordHistoryChangeType3) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.機器認証パスワード) && passwordHistoryChangeType3) {
                 // 機器認証パスワード
                 return true;
             }
