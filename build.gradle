@@ -9,7 +9,7 @@ buildscript {
         }
     }
     ext {
-        assertjVersion = '3.17.2'
+        assertjVersion = '3.18.0'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
         commonServerVersion = '20.2.16'
@@ -23,7 +23,7 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.11.2'
         mssqlJdbcVersion = '9.1.0.jre11-preview'
-        backboneAuthDaoVersion = '20.0.20'
+        backboneAuthDaoVersion = '20.0.21'
         sharedDataInterfaceVersion = '20.1.19'
         sharedDataStubVersion = '20.1.17'
         backboneInterfaceVersion = '20.2.9'
