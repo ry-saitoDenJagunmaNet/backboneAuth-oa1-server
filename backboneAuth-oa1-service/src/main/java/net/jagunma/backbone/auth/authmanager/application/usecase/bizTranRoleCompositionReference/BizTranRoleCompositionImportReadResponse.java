@@ -1,13 +1,16 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference;
 
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
-/**
- * 取引ロール編成エクスポート検索サービス Response
- */
-public interface BizTranRoleCompositionExportSearchResponse {
+public interface BizTranRoleCompositionImportReadResponse {
 
+    /**
+     * サブシステムコードのＳｅｔ
+     *
+     * @param subSystemCode　サブシステムコード
+     */
+    void setSubSystemCode(String subSystemCode);
     /**
      * 取引ロール－取引グループ編成群のＳｅｔ
      *

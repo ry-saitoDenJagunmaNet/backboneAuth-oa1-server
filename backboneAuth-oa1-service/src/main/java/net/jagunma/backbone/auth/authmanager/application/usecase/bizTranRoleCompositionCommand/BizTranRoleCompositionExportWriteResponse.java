@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand;
 
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 

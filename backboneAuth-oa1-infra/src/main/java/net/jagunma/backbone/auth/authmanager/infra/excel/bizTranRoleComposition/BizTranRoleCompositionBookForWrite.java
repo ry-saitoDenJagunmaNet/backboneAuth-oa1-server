@@ -4,20 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import net.jagunma.backbone.auth.authmanager.infra.excel.constant.BizTranRoleCompositionConstants;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -47,7 +44,7 @@ public class BizTranRoleCompositionBookForWrite implements
      * @param bizTranGrp_BizTransSheet     取引グループ－取引編成群
      * @return 取引ロール編成作成結果
      */
-    public BizTranRoleCompositionBook create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
+    public ExcelContainer create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
         Resource resource = resourceLoader.getResource("classpath:" + TemplateExcelfile);
@@ -86,8 +83,7 @@ public class BizTranRoleCompositionBookForWrite implements
             workbook = null;
         }
 
-        return BizTranRoleCompositionBook
-            .createFrom(ExcelContainer.createFrom(out));
+        return ExcelContainer.createFrom(out);
     }
 
     /**
@@ -104,11 +100,11 @@ public class BizTranRoleCompositionBookForWrite implements
         int rowIndex = 2;
         for (BizTranRole_BizTranGrpSheet bizTranRole_BizTranGrpSheet : bizTranRole_BizTranGrpsSheet.getValues()) {
             Row row = getRow(rowIndex, 2, 4, sheet);
-            getCell(row, 0).setCellValue(bizTranRole_BizTranGrpSheet.getSubSystemName());
-            getCell(row, 1).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleCode());
-            getCell(row, 2).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleName());
-            getCell(row, 3).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpCode());
-            getCell(row, 4).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_SUBSYSTE_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getSubSystemName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_ROLE_CODE).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_ROLE_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_CODE).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpName());
             rowIndex++;
         }
     }
@@ -128,14 +124,14 @@ public class BizTranRoleCompositionBookForWrite implements
         int rowIndex = 2;
         for (BizTranGrp_BizTranSheet bizTranGrp_BizTranSheet : bizTranGrp_BizTransSheet.getValues()) {
             Row row = getRow(rowIndex, 2, 7, sheet);
-            getCell(row, 0).setCellValue(bizTranGrp_BizTranSheet.getSubSystemName());
-            getCell(row, 1).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpCode());
-            getCell(row, 2).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpName());
-            getCell(row, 3).setCellValue(bizTranGrp_BizTranSheet.getBizTranCode());
-            getCell(row, 4).setCellValue(bizTranGrp_BizTranSheet.getBizTranName());
-            getCell(row, 5).setCellValue(bizTranGrp_BizTranSheet.getIsCenterBizTran()? 1 : 0);
-            getCell(row, 6).setCellValue(bizTranGrp_BizTranSheet.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            getCell(row, 7).setCellValue(bizTranGrp_BizTranSheet.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_SUBSYSTE_NAME).setCellValue(bizTranGrp_BizTranSheet.getSubSystemName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_GRP_CODE).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_GRP_NAME).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_CODE).setCellValue(bizTranGrp_BizTranSheet.getBizTranCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_NAME).setCellValue(bizTranGrp_BizTranSheet.getBizTranName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_CENTER_BIZTRAN).setCellValue(bizTranGrp_BizTranSheet.getIsCenterBizTran()? 1 : 0);
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_STARTDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_ENDDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
 
             rowIndex++;
         }

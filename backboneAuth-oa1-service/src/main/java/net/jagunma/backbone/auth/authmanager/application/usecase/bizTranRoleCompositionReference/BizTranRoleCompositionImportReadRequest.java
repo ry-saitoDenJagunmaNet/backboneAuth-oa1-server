@@ -1,6 +1,6 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference;
 
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
+import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
  * 取引ロール編成インポート＆エクスポート Excel Readサービス Request
@@ -18,5 +18,5 @@ public interface BizTranRoleCompositionImportReadRequest {
      *
      * @return 取引ロール編成 Book
      */
-    BizTranRoleCompositionBook getBizTranRoleCompositionBook();
+    ExcelContainer getBizTranRoleCompositionBook();
 }

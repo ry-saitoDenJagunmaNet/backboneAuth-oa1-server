@@ -3,6 +3,9 @@ package net.jagunma.backbone.auth.authmanager.model.excel;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Excel格納
+ */
 public class ExcelContainer {
 
     private ByteArrayInputStream excelIn;

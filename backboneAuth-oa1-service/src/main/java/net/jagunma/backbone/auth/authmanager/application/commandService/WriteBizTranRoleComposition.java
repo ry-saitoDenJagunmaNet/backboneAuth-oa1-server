@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportWriteRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportWriteResponse;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteResponse;
+import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +30,10 @@ public class WriteBizTranRoleComposition {
     public void execute(BizTranRoleCompositionExportWriteRequest request, BizTranRoleCompositionExportWriteResponse response) {
 
         // 取引ロール編成Excel作成
-        BizTranRoleCompositionBook bizTranRoleCompositionBook = bizTranRoleCompositionBookRepositoryForWrite.create(
+        ExcelContainer excelContainer = bizTranRoleCompositionBookRepositoryForWrite.create(
             request.getBizTranRole_BizTranGrpsSheet(),
             request.getBizTranGrp_BizTransSheet());
 
-        response.setExcelContainer(bizTranRoleCompositionBook.getExcelContainer());
+        response.setExcelContainer(excelContainer);
     }
 }

@@ -1,0 +1,9 @@
+/**
+ * OA12010 取引ロール編成インポート＆エクスポート
+ */
+
+/* メッセージ表示エリア */
+#message_table {
+	overflow-y: auto;
+	height: 240px;
+}

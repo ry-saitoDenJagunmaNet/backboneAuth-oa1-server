@@ -4,10 +4,9 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionImportStoreResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportStoreResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010MessageVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
-import org.aspectj.bridge.Message;
 
 /**
  * OA12010 取引ロール編成インポート＆エクスポート Excel 登録サービス Response Presenter

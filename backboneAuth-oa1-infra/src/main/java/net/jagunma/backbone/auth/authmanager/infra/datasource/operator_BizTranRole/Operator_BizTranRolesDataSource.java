@@ -51,11 +51,15 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(operator_BizTranRoleCriteria.getOperatorIdCriteria());
         Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター_取引ロール割当群検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
+        entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
+        entityCriteria.getBizTranRoleCodeCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleCodeCriteria());
+
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
@@ -74,6 +78,7 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
                 entity.getOperator_BizTranRoleId(),
                 entity.getOperatorId(),
                 entity.getBizTranRoleId(),
+                entity.getBizTranRoleCode(),
                 entity.getExpirationStartDate(),
                 entity.getExpirationEndDate(),
                 entity.getRecordVersion(),

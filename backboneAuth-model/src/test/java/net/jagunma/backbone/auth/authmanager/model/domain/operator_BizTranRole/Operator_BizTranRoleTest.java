@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class Operator_BizTranRoleTest {
 
     /**
-     * {@link Operator_BizTranRole#createFrom(Long, Long, Long, LocalDate, LocalDate, Integer, Operator, BizTranRole )}テスト
+     * {@link Operator_BizTranRole#createFrom(Long,Long,Long,String,LocalDate,LocalDate,Integer,Operator,BizTranRole )}テスト
      *  ●パターン
      *    正常
      *
@@ -31,8 +31,9 @@ class Operator_BizTranRoleTest {
         Long operator_BizTranRoleId = 123L;
         Long operatorId = 18L;
         Long bizTranRoleId = 456L;
+        String bizTranRoleCode = "KBAG01";
         LocalDate expirationStartDate = LocalDate.of(2020,1,1);
-        LocalDate expirationEndDate = LocalDate.of(9999,12,31);;
+        LocalDate expirationEndDate = LocalDate.of(9999,12,31);
         Integer recordVersion = 1;
 
         String operatorCode = "yu001009";
@@ -64,7 +65,6 @@ class Operator_BizTranRoleTest {
             operatorRecordVersion,
             branchAtMoment);
 
-        String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";
         String subSystemCode = "KB";
         Integer bizTranRoleRecordVersion = 1;
@@ -82,6 +82,7 @@ class Operator_BizTranRoleTest {
             operator_BizTranRoleId,
             operatorId,
             bizTranRoleId,
+            bizTranRoleCode,
             expirationStartDate,
             expirationEndDate,
             recordVersion,
@@ -93,6 +94,7 @@ class Operator_BizTranRoleTest {
         assertThat(operator_BizTranRole.getOperator_BizTranRoleId()).isEqualTo(operator_BizTranRoleId);
         assertThat(operator_BizTranRole.getOperatorId()).isEqualTo(operatorId);
         assertThat(operator_BizTranRole.getBizTranRoleId()).isEqualTo(bizTranRoleId);
+        assertThat(operator_BizTranRole.getBizTranRoleCode()).isEqualTo(bizTranRoleCode);
         assertThat(operator_BizTranRole.getExpirationStartDate()).isEqualTo(expirationStartDate);
         assertThat(operator_BizTranRole.getExpirationEndDate()).isEqualTo(expirationEndDate);
         assertThat(operator_BizTranRole.getRecordVersion()).isEqualTo(recordVersion);

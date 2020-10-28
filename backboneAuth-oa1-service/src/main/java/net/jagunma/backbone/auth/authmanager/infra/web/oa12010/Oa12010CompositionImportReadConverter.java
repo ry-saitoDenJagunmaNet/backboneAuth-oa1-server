@@ -1,10 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
 import java.io.ByteArrayInputStream;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionImportReadRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionImportReadRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
 
 /**
  * OA12010 取引ロール編成インポート＆エクスポート Excel Readサービス Request Converter
@@ -44,8 +43,8 @@ public class Oa12010CompositionImportReadConverter implements BizTranRoleComposi
      *
      * @return 取引ロール編成 Book
      */
-    public BizTranRoleCompositionBook getBizTranRoleCompositionBook() {
-        return BizTranRoleCompositionBook.createFrom(ExcelContainer.createFrom(byteArrayInputStream));
+    public ExcelContainer getBizTranRoleCompositionBook() {
+        return ExcelContainer.createFrom(byteArrayInputStream);
     }
 
 }

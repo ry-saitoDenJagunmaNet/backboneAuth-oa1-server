@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportWriteResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
