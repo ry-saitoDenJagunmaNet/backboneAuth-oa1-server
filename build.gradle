@@ -12,12 +12,12 @@ buildscript {
         assertjVersion = '3.18.0'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.2.16'
-        commonCommonVersion = '20.5.4'
+        commonServerVersion = '20.2.17'
+        commonCommonVersion = '20.5.5'
         commonUtilsVersion = '20.3.4'
         commonFaoVersion = '20.0.118'
         jacsonDatabindVersion = '2.11.3'
-        domaCoreVersion = '2.44.0'
+        domaCoreVersion = '2.44.1'
         domaVersion = '2.44.0'
         sf4jApiVersion = '1.7.30'
         domaSpringBootStarterVersion = '1.4.0'
@@ -35,7 +35,7 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version "2.3.4.RELEASE"
+    id 'org.springframework.boot' version "2.3.5.RELEASE"
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
     id 'net.researchgate.release' version '2.8.1'
     id 'java'
@@ -110,7 +110,7 @@ subprojects {
             }
         }
         dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.4.RELEASE")
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.5.RELEASE")
         }
     }
     apply plugin: 'java'
@@ -170,7 +170,7 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter"
         testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
         testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
-        spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
+        spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'
     }
 
     spotbugs {
@@ -308,7 +308,7 @@ subprojects {
  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
  testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
 
- spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'}`*/
+ spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.11.0'}`*/
 
 dependencyUpdates {
     // checkForGradleUpdate = true
