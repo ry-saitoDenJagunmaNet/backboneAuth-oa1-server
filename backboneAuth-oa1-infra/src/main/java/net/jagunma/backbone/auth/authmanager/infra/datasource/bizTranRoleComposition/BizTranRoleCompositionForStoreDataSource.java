@@ -108,9 +108,9 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             bizTranRoleComposition.getBizTranRole_BizTranGrps().getValues().get(0).getSubSystemCode());
         LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store insertBizTranRole_BizTranGrps 取引ロール_取引グループ割当の追加 end count="+bizTranRoleComposition.getBizTranRole_BizTranGrps().getValues().size());
 
-        // オペレーター_取引ロール割の更新
-        updateBizTranRole_BizTranGrps(bizTranRoles);
-        LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store updateBizTranRole_BizTranGrps オペレーター_取引ロール割の更新 end");
+//        // オペレーター_取引ロール割の更新
+//        updateBizTranRole_BizTranGrps(bizTranRoles);
+//        LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store updateBizTranRole_BizTranGrps オペレーター_取引ロール割の更新 end");
     }
 
     /**
@@ -261,6 +261,20 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         return BizTranRoles.createFrom(returnList);
     }
 
+    void storeBizTranRolesXXX(BizTranRoles bizTranRoles) {
+
+        // 取引ロール検索
+        BizTranRoleEntityCriteria criteria = new BizTranRoleEntityCriteria();
+        criteria.getSubSystemCodeCriteria().setEqualTo(bizTranRoles.getValues().get(0).getSubSystemCode());
+        List<BizTranRoleEntity> bizTranRoleEntityList = bizTranRoleEntityDao.findBy(criteria, Orders.empty().addOrder("BizTranRoleCode"));
+
+        // 取引ロール更新／追加
+
+
+        // 取引ロール削除
+    }
+
+
     /**
      * 取引ロール_取引グループ割当の削除を行います
      *
@@ -302,24 +316,25 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         }
     }
 
-    /**
-     * オペレーター_取引ロール割の更新を行います
-     *
-     * @param bizTranRoles 取引ロール群
-     */
-    void updateBizTranRole_BizTranGrps(BizTranRoles bizTranRoles) {
 
-        // オペレーター_取引ロール割当検索
-        Operator_BizTranRoleEntityCriteria criteria = new Operator_BizTranRoleEntityCriteria();
-        criteria.getBizTranRoleCodeCriteria().setForwardMatch(bizTranRoles.getValues().get(0).getSubSystemCode());
-        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = operator_BizTranRoleEntityDao.findBy(criteria, Orders.empty().addOrder("BizTranRoleCode"));
-
-        for(BizTranRole bizTranRole : bizTranRoles.getValues()) {
-            List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityFilterList = operator_BizTranRoleEntityList.stream().filter(o->o.getBizTranRoleCode().equals(bizTranRole.getBizTranRoleCode())).collect(Collectors.toList());
-            for(Operator_BizTranRoleEntity operator_BizTranRoleEntity : operator_BizTranRoleEntityFilterList) {
-                operator_BizTranRoleEntity.setBizTranRoleId(bizTranRole.getBizTranRoleId());
-                operator_BizTranRoleEntityDao.update(operator_BizTranRoleEntity);
-            }
-        }
-    }
+//    /**
+//     * オペレーター_取引ロール割の更新を行います
+//     *
+//     * @param bizTranRoles 取引ロール群
+//     */
+//    void updateBizTranRole_BizTranGrps(BizTranRoles bizTranRoles) {
+//
+//        // オペレーター_取引ロール割当検索
+//        Operator_BizTranRoleEntityCriteria criteria = new Operator_BizTranRoleEntityCriteria();
+//        criteria.getBizTranRoleCodeCriteria().setForwardMatch(bizTranRoles.getValues().get(0).getSubSystemCode());
+//        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = operator_BizTranRoleEntityDao.findBy(criteria, Orders.empty().addOrder("BizTranRoleCode"));
+//
+//        for(BizTranRole bizTranRole : bizTranRoles.getValues()) {
+//            List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityFilterList = operator_BizTranRoleEntityList.stream().filter(o->o.getBizTranRoleCode().equals(bizTranRole.getBizTranRoleCode())).collect(Collectors.toList());
+//            for(Operator_BizTranRoleEntity operator_BizTranRoleEntity : operator_BizTranRoleEntityFilterList) {
+//                operator_BizTranRoleEntity.setBizTranRoleId(bizTranRole.getBizTranRoleId());
+//                operator_BizTranRoleEntityDao.update(operator_BizTranRoleEntity);
+//            }
+//        }
+//    }
 }

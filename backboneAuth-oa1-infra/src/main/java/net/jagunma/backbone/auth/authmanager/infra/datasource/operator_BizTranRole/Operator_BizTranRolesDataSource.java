@@ -58,7 +58,6 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
         entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
         entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
-        entityCriteria.getBizTranRoleCodeCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleCodeCriteria());
 
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
@@ -78,7 +77,6 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
                 entity.getOperator_BizTranRoleId(),
                 entity.getOperatorId(),
                 entity.getBizTranRoleId(),
-                entity.getBizTranRoleCode(),
                 entity.getExpirationStartDate(),
                 entity.getExpirationEndDate(),
                 entity.getRecordVersion(),

@@ -112,20 +112,21 @@ public class StoreBizTranRoleComposition {
      */
     List<MessageDto> checkOperator_BizTranRoleRelation(BizTranRoleCompositionImportStoreRequest request) {
 
-        // オペレーター_取引ロール割当検索
-        Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
-        criteria.getBizTranRoleCodeCriteria().setForwardMatch(request.getSubSystemCode());
-        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(criteria, Orders.empty().addOrder("BizTranRoleCode"));
+        // TODO: オペレーター_取引ロール割当のチェック見直し
+//        // オペレーター_取引ロール割当検索
+//        Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
+//        criteria.getBizTranRoleCodeCriteria().setForwardMatch(request.getSubSystemCode());
+//        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(criteria, Orders.empty().addOrder("BizTranRoleCode"));
 
         // 登録済のオペレーター_取引ロール割当の取引ロールが、取引ロール編成に無い場合エラー（メッセージを設定）
         List<MessageDto> messageDtoList = newArrayList();
-        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(
-                b->b.getBizTranRoleCode().equals(operator_BizTranRole.getBizTranRoleCode())).count() == 0) {
-
-                messageDtoList.add(MessageDto.createFrom("EOA13014", newArrayList(operator_BizTranRole.getOperatorId().toString(),operator_BizTranRole.getBizTranRoleCode())));
-            }
-        }
+//        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
+//            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(
+//                b->b.getBizTranRoleCode().equals(operator_BizTranRole.getBizTranRoleCode())).count() == 0) {
+//
+//                messageDtoList.add(MessageDto.createFrom("EOA13014", newArrayList(operator_BizTranRole.getOperatorId().toString(),operator_BizTranRole.getBizTranRoleCode())));
+//            }
+//        }
         return messageDtoList;
     }
 

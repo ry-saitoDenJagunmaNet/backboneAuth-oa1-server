@@ -48,9 +48,9 @@ class Operator_BizTranRolesTest {
 
         // 実行値 ＆ 期待値
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,"KBAG01",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(18L),createBizTranRole(1L)));
-        list.add(Operator_BizTranRole.createFrom(2L,19L,2L,"KBAG02",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(19L),createBizTranRole(2L)));
-        list.add(Operator_BizTranRole.createFrom(3L,20L,3L,"KBAG03",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(20L),createBizTranRole(3L)));
+        list.add(Operator_BizTranRole.createFrom(1L,18L,1L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(18L),createBizTranRole(1L)));
+        list.add(Operator_BizTranRole.createFrom(2L,19L,2L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(19L),createBizTranRole(2L)));
+        list.add(Operator_BizTranRole.createFrom(3L,20L,3L,LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),1,createOperator(20L),createBizTranRole(3L)));
 
         // 実行
         Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(list);
