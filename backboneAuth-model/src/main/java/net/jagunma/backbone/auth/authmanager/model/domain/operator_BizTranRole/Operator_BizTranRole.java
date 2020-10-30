@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 
 /**

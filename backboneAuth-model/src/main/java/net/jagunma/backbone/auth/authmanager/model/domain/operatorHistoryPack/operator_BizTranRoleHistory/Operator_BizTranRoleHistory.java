@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operator_BizTranRoleHistory;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 
 /**
  * オペレーター_サブシステムロール割当履歴

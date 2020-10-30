@@ -4,10 +4,10 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRole.BizTranRolesDataSource;
+import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleComposition.bizTranRole.BizTranRolesDataSource;
 import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
