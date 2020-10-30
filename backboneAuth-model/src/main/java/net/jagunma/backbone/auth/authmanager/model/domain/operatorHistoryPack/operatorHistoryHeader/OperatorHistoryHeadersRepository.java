@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader;
+package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader;
 
 import net.jagunma.common.ddd.model.orders.Orders;
 

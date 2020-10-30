@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader;
+package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 

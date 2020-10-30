@@ -309,6 +309,5 @@ class EntryOperatorTest {
         assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
         assertThat(operatorEntryPack.getChangeCause()).isEqualTo(operatorEntryRequest.getChangeCause());
         assertThat(operatorEntryPack.getPassword()).isEqualTo(operatorEntryRequest.getPassword());
-        assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(operatorEntryRequest.getConfirmPassword());
     }
 }

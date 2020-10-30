@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader;
+package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader;
 
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;

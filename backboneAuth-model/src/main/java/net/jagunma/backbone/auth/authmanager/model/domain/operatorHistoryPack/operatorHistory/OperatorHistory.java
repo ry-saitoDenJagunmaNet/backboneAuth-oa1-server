@@ -1,79 +1,102 @@
-package net.jagunma.backbone.auth.authmanager.model.domain.operator;
+package net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistory;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 
 /**
- * オペレーターエントリーパック
+ * オペレーター履歴
  */
-public class OperatorEntryPack {
+public class OperatorHistory {
 
+    private final Long operatorHistoryId;
+    private final Long operatorId;
     private final String operatorCode;
     private final String operatorName;
     private final String mailAddress;
     private final LocalDate expirationStartDate;
     private final LocalDate expirationEndDate;
+    private final Boolean isDeviceAuth;
     private final Long jaId;
     private final String jaCode;
     private final Long branchId;
     private final String branchCode;
-    private final String changeCause;
-    private final String password;
+    private final AvailableStatus availableStatus;
+    private final Integer recordVersion;
 
     // コンストラクタ
-    OperatorEntryPack(
+    OperatorHistory(
+        Long operatorHistoryId,
+        Long operatorId,
         String operatorCode,
         String operatorName,
         String mailAddress,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
         Long branchId,
         String branchCode,
-        String changeCause,
-        String password) {
+        AvailableStatus availableStatus,
+        Integer recordVersion) {
 
+        this.operatorHistoryId = operatorHistoryId;
+        this.operatorId = operatorId;
         this.operatorCode = operatorCode;
         this.operatorName = operatorName;
         this.mailAddress = mailAddress;
         this.expirationStartDate = expirationStartDate;
         this.expirationEndDate = expirationEndDate;
+        this.isDeviceAuth = isDeviceAuth;
         this.jaId = jaId;
         this.jaCode = jaCode;
         this.branchId = branchId;
         this.branchCode = branchCode;
-        this.changeCause = changeCause;
-        this.password = password;
+        this.availableStatus = availableStatus;
+        this.recordVersion = recordVersion;
     }
+
     // ファクトリーメソッド
-    public static OperatorEntryPack createFrom(
+    public static OperatorHistory createFrom(
+        Long operatorHistoryId,
+        Long operatorId,
         String operatorCode,
         String operatorName,
         String mailAddress,
         LocalDate expirationStartDate,
         LocalDate expirationEndDate,
+        Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
         Long branchId,
         String branchCode,
-        String changeCause,
-        String password) {
+        AvailableStatus availableStatus,
+        Integer recordVersion) {
 
-        return new OperatorEntryPack(
+        return new OperatorHistory(
+            operatorHistoryId,
+            operatorId,
             operatorCode,
             operatorName,
             mailAddress,
             expirationStartDate,
             expirationEndDate,
+            isDeviceAuth,
             jaId,
             jaCode,
             branchId,
             branchCode,
-            changeCause,
-            password);
+            availableStatus,
+            recordVersion);
     }
 
     // Getter
+    public Long getOperatorHistoryId() {
+        return operatorHistoryId;
+    }
+    public Long getOperatorId() {
+        return operatorId;
+    }
     public String getOperatorCode() {
         return operatorCode;
     }
@@ -89,6 +112,9 @@ public class OperatorEntryPack {
     public LocalDate getExpirationEndDate() {
         return expirationEndDate;
     }
+    public Boolean getIsDeviceAuth() {
+        return isDeviceAuth;
+    }
     public Long getJaId() {
         return jaId;
     }
@@ -101,10 +127,10 @@ public class OperatorEntryPack {
     public String getBranchCode() {
         return branchCode;
     }
-    public String getChangeCause() {
-        return changeCause;
+    public AvailableStatus getAvailableStatus() {
+        return availableStatus;
     }
-    public String getPassword() {
-        return password;
+    public Integer getRecordVersion() {
+        return recordVersion;
     }
 }

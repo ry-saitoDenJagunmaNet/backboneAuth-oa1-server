@@ -22,7 +22,6 @@ class OperatorEntryPackTest {
     private String branchCode = "001";
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
-    private String confirmPassword = "PaSsWoRd";
 
     /**
      * {@link OperatorEntryPack#createFrom(
@@ -36,8 +35,7 @@ class OperatorEntryPackTest {
      *      Long branchId,
      *      String branchCode,
      *      String changeCause,
-     *      String password,
-     *      String confirmPassword)}テスト
+     *      String password)}テスト
      *  ●パターン
      *    正常
      *
@@ -61,8 +59,7 @@ class OperatorEntryPackTest {
             branchId,
             branchCode,
             changeCause,
-            password,
-            confirmPassword);
+            password);
 
         // 結果検証
         assertTrue(operatorEntryPack instanceof OperatorEntryPack);
@@ -77,6 +74,5 @@ class OperatorEntryPackTest {
         assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchCode);
         assertThat(operatorEntryPack.getChangeCause()).isEqualTo(changeCause);
         assertThat(operatorEntryPack.getPassword()).isEqualTo(password);
-        assertThat(operatorEntryPack.getConfirmPassword()).isEqualTo(confirmPassword);
     }
 }

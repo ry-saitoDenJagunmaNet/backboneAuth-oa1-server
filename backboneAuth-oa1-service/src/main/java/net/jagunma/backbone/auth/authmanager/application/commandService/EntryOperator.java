@@ -115,7 +115,6 @@ public class EntryOperator {
             request.getBranchId(),
             branchCode,
             request.getChangeCause(),
-            request.getPassword(),
-            request.getConfirmPassword());
+            request.getPassword());
     }
 }
