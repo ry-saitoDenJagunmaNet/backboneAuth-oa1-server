@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand.BizTranRoleCompositionExcelWriteRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand.BizTranRoleCompositionExcelWriteResponse;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class WriteBizTranRoleComposition {
      * エクスポートする取引ロール編成Excelを書き出します
      *
      * @param request 取引ロール編成エクスポートExcel Weiteサービス Request
-     * @param request 取引ロール編成エクスポートExcel Weiteサービス Response
+     * @param response 取引ロール編成エクスポートExcel Weiteサービス Response
      */
-    public void execute(BizTranRoleCompositionExportWriteRequest request, BizTranRoleCompositionExportWriteResponse response) {
+    public void execute(BizTranRoleCompositionExcelWriteRequest request, BizTranRoleCompositionExcelWriteResponse response) {
 
         // 取引ロール編成Excel作成
         ExcelContainer excelContainer = bizTranRoleCompositionBookRepositoryForWrite.create(

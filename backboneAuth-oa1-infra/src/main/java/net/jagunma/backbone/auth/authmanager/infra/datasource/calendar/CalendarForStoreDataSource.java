@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
 import org.springframework.stereotype.Component;
 
 /**
- * カレンダー登録
+ * カレンダー格納
  */
 @Component
 public class CalendarForStoreDataSource implements CalendarRepositoryForStore {

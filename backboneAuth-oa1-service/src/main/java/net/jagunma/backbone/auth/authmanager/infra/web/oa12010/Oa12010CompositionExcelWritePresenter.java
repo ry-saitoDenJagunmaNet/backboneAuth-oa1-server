@@ -1,13 +1,14 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionExportWriteResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand.BizTranRoleCompositionExcelWriteResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
  * OA12010 取引ロール編成インポート＆エクスポート Excel Weiteサービス Response Presenter
  */
-public class Oa12010CompositionExportWritePresenter implements BizTranRoleCompositionExportWriteResponse {
+public class Oa12010CompositionExcelWritePresenter implements
+    BizTranRoleCompositionExcelWriteResponse {
 
     private ExcelContainer excelContainer;
 

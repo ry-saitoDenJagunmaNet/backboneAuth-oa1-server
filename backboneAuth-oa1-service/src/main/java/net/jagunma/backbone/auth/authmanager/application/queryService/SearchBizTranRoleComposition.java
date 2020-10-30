@@ -3,8 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTrans;
@@ -44,7 +44,7 @@ public class SearchBizTranRoleComposition {
      * @param request  取引ロール編成エクスポート検索サービス Request
      * @param response 取引ロール編成エクスポート検索サービス Response
      */
-    public void execute(BizTranRoleCompositionExportSearchRequest request, BizTranRoleCompositionExportSearchResponse response)  {
+    public void execute(BizTranRoleCompositionExportRequest request, BizTranRoleCompositionExportResponse response)  {
 
         // 取引ロール_取引グループ割当検索
         BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria = new BizTranRole_BizTranGrpCriteria();

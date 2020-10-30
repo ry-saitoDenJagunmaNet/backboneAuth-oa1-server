@@ -1,11 +1,11 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand;
 
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
  * 取引ロール編成エクスポートExcel Weiteサービス Response
  */
-public interface BizTranRoleCompositionExportWriteResponse {
+public interface BizTranRoleCompositionExcelWriteResponse {
 
     /**
      * 取引ロール編成エクスポートExcelのＳｅｔ

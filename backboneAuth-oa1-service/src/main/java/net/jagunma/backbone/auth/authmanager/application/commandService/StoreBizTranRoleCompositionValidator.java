@@ -4,17 +4,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportStoreRequest;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import net.jagunma.common.util.message.MessageFormatter;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
@@ -22,15 +17,16 @@ import net.jagunma.common.util.strings2.Strings2;
  */
 public class StoreBizTranRoleCompositionValidator {
 
-    private final BizTranRoleCompositionImportStoreRequest request;
+    private final BizTranRoleCompositionImportRequest request;
 
     // コンストラクタ
-    StoreBizTranRoleCompositionValidator(BizTranRoleCompositionImportStoreRequest request) {
+    StoreBizTranRoleCompositionValidator(BizTranRoleCompositionImportRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static StoreBizTranRoleCompositionValidator with(BizTranRoleCompositionImportStoreRequest request) {
+    public static StoreBizTranRoleCompositionValidator with(
+        BizTranRoleCompositionImportRequest request) {
         return new StoreBizTranRoleCompositionValidator(request);
     }
 

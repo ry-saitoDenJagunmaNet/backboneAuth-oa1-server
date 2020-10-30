@@ -38,7 +38,7 @@ public class BizTransDataSource implements BizTransRepository {
 
         // 取引検索
         BizTranEntityCriteria entityCriteria = new BizTranEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranCriteria.getSubSystemCode().getEqualTo());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranCriteria.getSubSystemCode());
 
         List<BizTran> list = newArrayList();
         for (BizTranEntity entity : bizTranEntityDao.findBy(entityCriteria, orders)) {

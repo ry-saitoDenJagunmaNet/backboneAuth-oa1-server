@@ -1,13 +1,14 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionImportReadResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelReference.BizTranRoleCompositionExcelReadResponse;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
 /**
  * OA12010 取引ロール編成インポート＆エクスポート Excel Readサービス Response Presenter
  */
-public class Oa12010CompositionImportReadPresenter implements BizTranRoleCompositionImportReadResponse {
+public class Oa12010CompositionExcelReadPresenter implements
+    BizTranRoleCompositionExcelReadResponse {
 
     private String subSystemCode;
     private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet;
@@ -45,8 +46,8 @@ public class Oa12010CompositionImportReadPresenter implements BizTranRoleComposi
      *
      * @return 取引ロール編成エクスポートExcel 登録サービス Request Converter
      */
-    public Oa12010CompositionImportStoreConverter ConverterTo() {
-        return Oa12010CompositionImportStoreConverter.with(
+    public Oa12010CompositionImportConverter ConverterTo() {
+        return Oa12010CompositionImportConverter.with(
             subSystemCode,
             bizTranRole_BizTranGrpsSheet,
             bizTranGrp_BizTransSheet);

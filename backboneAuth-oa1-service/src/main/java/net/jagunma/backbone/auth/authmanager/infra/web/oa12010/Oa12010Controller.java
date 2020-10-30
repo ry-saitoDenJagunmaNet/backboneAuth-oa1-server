@@ -134,13 +134,13 @@ public class Oa12010Controller extends BaseOfController {
         // エクスポートExcelの作成
         try {
             // 取引ロール編成検索
-            Oa12010CompositionExportSearchConverter searchConverter = Oa12010CompositionExportSearchConverter.with(vo);
-            Oa12010CompositionExportSearchPresenter searchPresenter = new Oa12010CompositionExportSearchPresenter();
+            Oa12010CompositionExportConverter searchConverter = Oa12010CompositionExportConverter.with(vo);
+            Oa12010CompositionExportPresenter searchPresenter = new Oa12010CompositionExportPresenter();
             searchBizTranRoleComposition.execute(searchConverter, searchPresenter);
 
             // Excel Weite
-            Oa12010CompositionExportWriteConverter writeConverter = searchPresenter.ConverterTo();
-            Oa12010CompositionExportWritePresenter writehPresenter = new Oa12010CompositionExportWritePresenter();
+            Oa12010CompositionExcelWriteConverter writeConverter = searchPresenter.ConverterTo();
+            Oa12010CompositionExcelWritePresenter writehPresenter = new Oa12010CompositionExcelWritePresenter();
             writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
 
             LOGGER.debug("exportExcel END");
@@ -198,13 +198,14 @@ public class Oa12010Controller extends BaseOfController {
         try {
             // Excel Read
             ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
-            Oa12010CompositionImportReadConverter readConverter = Oa12010CompositionImportReadConverter.with(vo, is);
-            Oa12010CompositionImportReadPresenter readPresenter = new Oa12010CompositionImportReadPresenter();
+            Oa12010CompositionExcelReadConverter readConverter = Oa12010CompositionExcelReadConverter
+                .with(vo, is);
+            Oa12010CompositionExcelReadPresenter readPresenter = new Oa12010CompositionExcelReadPresenter();
             raedBizTranRoleComposition.execute(readConverter, readPresenter);
 
             // 取引ロール編成登録
-            Oa12010CompositionImportStoreConverter storeConverter = readPresenter.ConverterTo();
-            Oa12010CompositionImportStorePresenter storePresenter = new Oa12010CompositionImportStorePresenter();
+            Oa12010CompositionImportConverter storeConverter = readPresenter.ConverterTo();
+            Oa12010CompositionImportPresenter storePresenter = new Oa12010CompositionImportPresenter();
             storeBizTranRoleComposition.execute(storeConverter, storePresenter);
             storePresenter.bindTo(vo);
 

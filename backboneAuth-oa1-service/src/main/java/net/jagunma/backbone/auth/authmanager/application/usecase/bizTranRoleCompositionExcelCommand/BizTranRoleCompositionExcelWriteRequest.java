@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand;
 
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
@@ -6,7 +6,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 /**
  * 取引ロール編成エクスポートExcel Weiteサービス Request
  */
-public interface BizTranRoleCompositionExportWriteRequest {
+public interface BizTranRoleCompositionExcelWriteRequest {
 
     /**
      * 取引ロール－取引グループ編成群のＧｅｔ

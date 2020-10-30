@@ -1,48 +1,33 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportStoreRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand.BizTranRoleCompositionExcelWriteRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート Excel 登録サービス Request Converter
+ * OA12010 取引ロール編成インポート＆エクスポート Excel Weiteサービス Request Converter
  */
-public class Oa12010CompositionImportStoreConverter implements BizTranRoleCompositionImportStoreRequest {
+public class Oa12010CompositionExcelWriteConverter implements
+    BizTranRoleCompositionExcelWriteRequest {
 
-    private String subSystemCode;
     private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet;
     private BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet;
 
     // コンストラクタ
-    Oa12010CompositionImportStoreConverter(
-        String subSystemCode,
-        BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
+    Oa12010CompositionExcelWriteConverter(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        this.subSystemCode = subSystemCode;
         this.bizTranRole_BizTranGrpsSheet = bizTranRole_BizTranGrpsSheet;
         this.bizTranGrp_BizTransSheet = bizTranGrp_BizTransSheet;
     }
 
     // ファクトリーメソッド
-    public static Oa12010CompositionImportStoreConverter with(
-        String subSystemCode,
-        BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
+    public static Oa12010CompositionExcelWriteConverter with(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        return new Oa12010CompositionImportStoreConverter(
-            subSystemCode,
+        return new Oa12010CompositionExcelWriteConverter(
             bizTranRole_BizTranGrpsSheet,
             bizTranGrp_BizTransSheet);
-    }
-
-    /**
-     * サブシステムコードのＧｅｔ
-     *
-     * @return サブシステムコード
-     */
-    public String getSubSystemCode() {
-        return subSystemCode;
     }
 
     /**
@@ -55,7 +40,7 @@ public class Oa12010CompositionImportStoreConverter implements BizTranRoleCompos
     }
 
     /**
-     *取引グループ－取引編成群のＧｅｔ
+     * 取引グループ－取引編成群のＧｅｔ
      *
      * @return 取引グループ－取引編成群
      */

@@ -4,8 +4,8 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportStoreRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportStoreResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTran.BizTrans;
@@ -51,10 +51,10 @@ public class StoreBizTranRoleComposition {
      * 取引ロール編成を登録します
      *
      * @param request 取引ロール編成インポートExcel 登録サービス Request
-     * @param request 取引ロール編成インポートExcel 登録サービス Response
+     * @param response 取引ロール編成インポートExcel 登録サービス Response
      */
-    public void execute(BizTranRoleCompositionImportStoreRequest request,
-        BizTranRoleCompositionImportStoreResponse response) {
+    public void execute(BizTranRoleCompositionImportRequest request,
+        BizTranRoleCompositionImportResponse response) {
 
         // パラメーターの検証
         StoreBizTranRoleCompositionValidator validator = StoreBizTranRoleCompositionValidator.with(request);
@@ -106,7 +106,7 @@ public class StoreBizTranRoleComposition {
      * @param request 取引ロール編成インポートExcel 登録サービス Request
      * @return メッセージシスト
      */
-    List<MessageDto> checkOperator_BizTranRoleRelation(BizTranRoleCompositionImportStoreRequest request) {
+    List<MessageDto> checkOperator_BizTranRoleRelation(BizTranRoleCompositionImportRequest request) {
 
         // TODO: オペレーター_取引ロール割当のチェック見直し
 //        // オペレーター_取引ロール割当検索
@@ -135,7 +135,7 @@ public class StoreBizTranRoleComposition {
      * @param bizTranGrpList         取引グループリスト
      * @param bizTranGrp_BizTranList 取引グループ_取引割当リスト
      */
-    void cteateStoreDataForBizTranAndBizTranGrp(BizTranRoleCompositionImportStoreRequest request,
+    void cteateStoreDataForBizTranAndBizTranGrp(BizTranRoleCompositionImportRequest request,
         String subSystemCode,
         List<BizTran> bizTranList,
         List<BizTranGrp> bizTranGrpList,
@@ -208,7 +208,7 @@ public class StoreBizTranRoleComposition {
      * @param bizTranRoleList            取引ロールリスト
      * @param bizTranRole_BizTranGrpList 取引ロール_取引グループ割当リスト
      */
-    void cteateStoreDataForBizTranRole(BizTranRoleCompositionImportStoreRequest request,
+    void cteateStoreDataForBizTranRole(BizTranRoleCompositionImportRequest request,
         String subSystemCode,
         List<BizTranRole> bizTranRoleList,
         List<BizTranRole_BizTranGrp> bizTranRole_BizTranGrpList) {

@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCom
 /**
  * 取引ロール編成エクスポート検索サービス Request
  */
-public interface BizTranRoleCompositionExportSearchRequest {
+public interface BizTranRoleCompositionExportRequest {
 
     /**
      * サブシステムコードのＧｅｔ

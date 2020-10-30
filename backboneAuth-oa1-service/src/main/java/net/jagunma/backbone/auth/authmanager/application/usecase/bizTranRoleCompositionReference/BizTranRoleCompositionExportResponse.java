@@ -6,7 +6,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 /**
  * 取引ロール編成エクスポート検索サービス Response
  */
-public interface BizTranRoleCompositionExportSearchResponse {
+public interface BizTranRoleCompositionExportResponse {
 
     /**
      * 取引ロール－取引グループ編成群のＳｅｔ
