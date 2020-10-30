@@ -3,12 +3,12 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleCompos
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleComposition.bizTranGrp.BizTranGrpsDataSource;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleComposition.bizTranRole.BizTranRolesDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
@@ -27,17 +27,17 @@ import org.springframework.stereotype.Component;
 public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrpsRepository {
 
     private final BizTranRole_BizTranGrpEntityDao bizTranRole_BizTranGrpEntityDao;
-    private final BizTranRolesDataSource bizTranRolesDataSource;
-    private final BizTranGrpsDataSource bizTranGrpsDataSource;
+    private final BizTranRolesRepository bizTranRolesRepository;
+    private final BizTranGrpsRepository bizTranGrpsRepository;
 
     // コンストラクタ
     BizTranRole_BizTranGrpsDataSource(BizTranRole_BizTranGrpEntityDao bizTranRole_BizTranGrpEntityDao,
-        BizTranRolesDataSource bizTranRolesDataSource,
-        BizTranGrpsDataSource bizTranGrpsDataSource) {
+        BizTranRolesRepository bizTranRolesRepository,
+        BizTranGrpsRepository bizTranGrpsRepository) {
 
         this.bizTranRole_BizTranGrpEntityDao = bizTranRole_BizTranGrpEntityDao;
-        this.bizTranRolesDataSource = bizTranRolesDataSource;
-        this.bizTranGrpsDataSource = bizTranGrpsDataSource;
+        this.bizTranRolesRepository = bizTranRolesRepository;
+        this.bizTranGrpsRepository = bizTranGrpsRepository;
     }
 
     /**
@@ -52,12 +52,12 @@ public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrp
         // 取引ロール群検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
         bizTranRoleCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranRole_BizTranGrpCriteria.getSubSystemCode().getEqualTo());
-        BizTranRoles bizTranRoles = bizTranRolesDataSource.selectBy(bizTranRoleCriteria, Orders.empty().addOrder("BizTranRoleCode"));
+        BizTranRoles bizTranRoles = bizTranRolesRepository.selectBy(bizTranRoleCriteria, Orders.empty().addOrder("BizTranRoleCode"));
 
         // 取引グループ群検索
         BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
         bizTranGrpCriteria.getSubSystemCode().setEqualTo(bizTranRole_BizTranGrpCriteria.getSubSystemCode().getEqualTo());
-        BizTranGrps bizTranGrps = bizTranGrpsDataSource.selectBy(bizTranGrpCriteria, Orders.empty().addOrder("BizTranGrpCode"));
+        BizTranGrps bizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty().addOrder("BizTranGrpCode"));
 
         // 取引ロール_取引グループ割当群検索
         BizTranRole_BizTranGrpEntityCriteria entityCriteria = new BizTranRole_BizTranGrpEntityCriteria();
@@ -89,10 +89,10 @@ public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrp
     public BizTranRole_BizTranGrps selectAll(Orders orders) {
 
         // 取引ロール群検索
-        BizTranRoles bizTranRoles = bizTranRolesDataSource.selectAll(Orders.empty().addOrder("BizTranRoleCode"));
+        BizTranRoles bizTranRoles = bizTranRolesRepository.selectAll(Orders.empty().addOrder("BizTranRoleCode"));
 
         // 取引グループ群検索
-        BizTranGrps bizTranGrps = bizTranGrpsDataSource.selectAll(Orders.empty().addOrder("BizTranGrpCode"));
+        BizTranGrps bizTranGrps = bizTranGrpsRepository.selectAll(Orders.empty().addOrder("BizTranGrpCode"));
 
         // 取引ロール_取引グループ割当群検索
         List<BizTranRole_BizTranGrp> list = newArrayList();
