@@ -196,12 +196,13 @@ public class Oa12010Controller extends BaseOfController {
         LOGGER.debug("importExcel START");
 
         try {
+            // Excel Read
             ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
             Oa12010CompositionImportReadConverter readConverter = Oa12010CompositionImportReadConverter.with(vo, is);
             Oa12010CompositionImportReadPresenter readPresenter = new Oa12010CompositionImportReadPresenter();
             raedBizTranRoleComposition.execute(readConverter, readPresenter);
 
-            // Excel Weite
+            // 取引ロール編成登録
             Oa12010CompositionImportStoreConverter storeConverter = readPresenter.ConverterTo();
             Oa12010CompositionImportStorePresenter storePresenter = new Oa12010CompositionImportStorePresenter();
             storeBizTranRoleComposition.execute(storeConverter, storePresenter);

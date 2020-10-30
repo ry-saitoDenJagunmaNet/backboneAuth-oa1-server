@@ -38,7 +38,8 @@ public class BizTranRolesDataSource implements BizTranRolesRepository {
 
         // 取引ロール群検索
         BizTranRoleEntityCriteria entityCriteria = new BizTranRoleEntityCriteria();
-        entityCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes());
+        entityCriteria.getBizTranRoleIdCriteria().assignFrom(bizTranRoleCriteria.getBizTranRoleIdCriteria());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRoleCriteria.getSubSystemCodeCriteria());
 
         List<BizTranRole> list = newArrayList();
         for (BizTranRoleEntity entity : bizTranRoleEntityDao.findBy(entityCriteria, orders)) {

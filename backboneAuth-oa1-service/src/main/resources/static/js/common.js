@@ -586,3 +586,18 @@ function oa_getHeader(id, title, isThymeleaf) {
 
     document.write(html);
 }
+
+/**
+ *  処理中 preloaderを表示します。
+ */
+function oa_showPreloader() {
+	let preloader = document.getElementById("preloader");
+	preloader.classList.remove("oa_preloader_bg_hide");
+}
+/**
+ *  処理中 preloaderを非表示にします。
+ */
+function oa_closePreloader() {
+	let preloader = document.getElementById("preloader");
+	preloader.classList.add("oa_preloader_bg_hide");
+}
