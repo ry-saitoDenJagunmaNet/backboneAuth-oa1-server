@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.signOutTrace;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class SignOutTracesDataSource implements SignOutTracesRepository {
 
     private final SignOutTraceEntityDao signOutTraceEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
     SignOutTracesDataSource(SignOutTraceEntityDao signOutTraceEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorsRepository operatorsRepository) {
 
         this.signOutTraceEntityDao = signOutTraceEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorsRepository = operatorsRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ public class SignOutTracesDataSource implements SignOutTracesRepository {
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(signOutTraceCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインアウト証跡群検索
         SignOutTraceEntityCriteria entityCriteria = new SignOutTraceEntityCriteria();

@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operator_SubSyste
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
@@ -24,14 +24,14 @@ import org.springframework.stereotype.Component;
 public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRolesRepository {
 
     private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
     Operator_SubSystemRolesDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorsRepository operatorsRepository) {
 
         this.operator_SubSystemRoleEntityDao = operator_SubSystemRoleEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorsRepository = operatorsRepository;
     }
 
     /**
@@ -47,7 +47,7 @@ public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRole
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_SubSystemRoleCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター_サブシステムロール割当群検索
         Operator_SubSystemRoleEntityCriteria entityCriteria = new Operator_SubSystemRoleEntityCriteria();

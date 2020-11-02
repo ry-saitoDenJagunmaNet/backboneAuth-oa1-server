@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.signInTrace;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class SignInTracesDataSource implements SignInTracesRepository {
 
     private final SignInTraceEntityDao signInTraceEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
     SignInTracesDataSource(SignInTraceEntityDao signInTraceEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorsRepository operatorsRepository) {
 
         this.signInTraceEntityDao = signInTraceEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorsRepository = operatorsRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ public class SignInTracesDataSource implements SignInTracesRepository {
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインイン証跡群検索
         SignInTraceEntityCriteria entityCriteria = new SignInTraceEntityCriteria();

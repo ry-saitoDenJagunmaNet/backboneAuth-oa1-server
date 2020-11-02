@@ -6,6 +6,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
@@ -24,14 +25,14 @@ import org.springframework.stereotype.Component;
 public class PasswordHistoriesDataSource implements PasswordHistoriesRepository {
 
     private final PasswordHistoryEntityDao passwordHistoryEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
     PasswordHistoriesDataSource(PasswordHistoryEntityDao passwordHistoryEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorsRepository operatorsRepository) {
 
         this.passwordHistoryEntityDao = passwordHistoryEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorsRepository = operatorsRepository;
     }
 
     /**
@@ -46,7 +47,7 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // パスワード履歴群検索
         PasswordHistoryEntityCriteria entityCriteria = new PasswordHistoryEntityCriteria();
