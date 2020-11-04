@@ -80,9 +80,9 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         // オペレーター履歴パックの格納を行います
         operatorHistoryPackRepositoryForStore.store(operatorUpdatePack.getOperatorId(), operatorUpdatePack.getChangeCause());
 
-        // パスワード履歴のインサートを行います（機器認証に変更があった場合）
+        // パスワード履歴の格納を行います（機器認証に変更があった場合）
         if (isChangeDeviceAuth) {
-            storePasswordHistory(operatorEntity.getOperatorId(), operatorEntity.getUpdatedAt());
+            storePasswordHistory(operatorUpdatePack.getOperatorId(), operatorEntity.getUpdatedAt(), operatorUpdatePack.getIsDeviceAuth());
         }
     }
 
@@ -202,16 +202,22 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
      *
      * @param operatorId オペレーターID
      * @param changeDateTime 変更日時
+     * @param isDeviceAuth 機器認証
      * @return パスワード履歴
      */
-    PasswordHistory storePasswordHistory(Long operatorId, LocalDateTime changeDateTime) {
+    PasswordHistory storePasswordHistory(Long operatorId, LocalDateTime changeDateTime, boolean isDeviceAuth) {
         PasswordHistoryCriteria passwordHistoryCriteria = new PasswordHistoryCriteria();
 
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
         PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
 
-        // 前回（前々回でも同じ値）の「パスワード」と 前々回の「変更種別」を補完
-        return storePasswordHistory(operatorId, changeDateTime, passwordHistories.getValues().get(0).getPassword(), passwordHistories.getValues().get(1).getPasswordChangeType());
+        if (isDeviceAuth) {
+            // 前回の「パスワード」と 「変更種別」機器認証パスワード を補完
+            return storePasswordHistory(operatorId, changeDateTime, passwordHistories.getValues().get(0).getPassword(), PasswordChangeType.機器認証パスワード);
+        } else {
+            // 前回の「パスワード」と 前々回の「変更種別」を補完
+            return storePasswordHistory(operatorId, changeDateTime, passwordHistories.getValues().get(0).getPassword(), passwordHistories.getValues().get(1).getPasswordChangeType());
+        }
     }
 }
