@@ -12,6 +12,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForRead;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -41,7 +42,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
         try {
             workbook = WorkbookFactory.create(excelContainer.getExcelIn());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new GunmaRuntimeException("EOA11003", "取引ロール編成Excel", e);
         }
 
         // １番目のシートを読み込む
@@ -64,15 +65,6 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
             String bizTranRoleName = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_ROLE_NAME);
             String bizTranGrpCode = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_CODE);
             String bizTranGrpName = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_NAME);
-
-            //何れかの項目が空の場合は対象外
-            if (isEmpty(subSystemName) ||
-                isEmpty(bizTranRoleCode) ||
-                isEmpty(bizTranRoleName) ||
-                isEmpty(bizTranGrpCode) ||
-                isEmpty(bizTranGrpName)) {
-                continue;
-            }
 
             bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(
                 i,
@@ -110,8 +102,8 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
                 bizTranCode,
                 bizTranName,
                 centerBizTran == 1,
-                expirationStartDate == null? null : LocalDate.parse(expirationStartDate, DateTimeFormatter.ofPattern("yyyy/MM/dd")),
-                expirationEndDate == null? null : LocalDate.parse(expirationEndDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))));
+                LocalDate.parse(expirationStartDate, DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                LocalDate.parse(expirationEndDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))));
         }
     }
 }

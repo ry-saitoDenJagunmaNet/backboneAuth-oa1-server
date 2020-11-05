@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleComposition;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -311,8 +312,9 @@ class BizTranRoleCompositionForStoreDataSourceTest {
         return new BizTranRolesRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
-                // TODO: 2020/11/02 取引ロール更新のパターン用を追加
                 List<BizTranRole> list = newArrayList();
+                list.add(BizTranRole.createFrom(null,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),null,null));
+                list.add(BizTranRole.createFrom(null,"ANAG96","（畜産）センター維持管理担当者【削除テスト】",SubSystem.販売_畜産.getCode(),null,null));
                 return BizTranRoles.createFrom(list);
             }
             @Override
@@ -324,13 +326,13 @@ class BizTranRoleCompositionForStoreDataSourceTest {
     // 取引群データ作成
     private BizTrans createBizTrans() {
         List<BizTran> list = newArrayList();
-        list.add(BizTran.createFrom(100001L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTran.createFrom(null,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),null,null));
         return BizTrans.createFrom(list);
     }
     // 取引グループ群データ作成
     private BizTranGrps createBizTranGrps() {
         List<BizTranGrp> list = newArrayList();
-        list.add(BizTranGrp.createFrom(10001L,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranGrp.createFrom(null,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),null,null));
         return BizTranGrps.createFrom(list);
     }
     // 取引グループ_取引割当群データ作成
@@ -338,22 +340,23 @@ class BizTranRoleCompositionForStoreDataSourceTest {
         List<BizTranGrp_BizTran> list = newArrayList();
         list.add(BizTranGrp_BizTran.createFrom(null,null,null,SubSystem.販売_畜産.getCode(),1,
             BizTranGrp.createFrom(null,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),1,null),
-            BizTran.createFrom(null,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,null),
-            SubSystem.販売_畜産));
+            BizTran.createFrom(null,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),null,null),
+            null));
         return BizTranGrp_BizTrans.createFrom(list);
     }
     // 取引ロール群データ作成
     private BizTranRoles createBizTranRoles() {
         List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(1001L,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranRole.createFrom(null,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),null,null));
+        list.add(BizTranRole.createFrom(null,"ANAG97","（畜産）センター維持管理担当者【追加テスト】",SubSystem.販売_畜産.getCode(),null,null));
         return BizTranRoles.createFrom(list);
     }
     // 取引ロール_取引グループ割当群データ作成
     private BizTranRole_BizTranGrps createBizTranRole_BizTranGrps() {
         List<BizTranRole_BizTranGrp> list = newArrayList();
-        list.add(BizTranRole_BizTranGrp.createFrom(null,null,null,SubSystem.販売_畜産.getCode(),1,
-            BizTranRole.createFrom(null,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),1,null),
-            BizTranGrp.createFrom(null,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),1,null),
+        list.add(BizTranRole_BizTranGrp.createFrom(null,null,null,SubSystem.販売_畜産.getCode(),null,
+            BizTranRole.createFrom(null,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),null,null),
+            BizTranGrp.createFrom(null,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),null,null),
             SubSystem.販売_畜産));
         return BizTranRole_BizTranGrps.createFrom(list);
     }
@@ -387,10 +390,10 @@ class BizTranRoleCompositionForStoreDataSourceTest {
             createBizTranGrp_BizTranEntityDao(),
             createBizTranRolesRepository());
 
-        // 期待値
-        bizTranRoleCompositionForStoreDataSource.store(bizTranRoleComposition);
-
         // 結果検証
-
+        assertThatCode(() ->
+            // 実行
+            bizTranRoleCompositionForStoreDataSource.store(bizTranRoleComposition))
+            .doesNotThrowAnyException();
     }
 }

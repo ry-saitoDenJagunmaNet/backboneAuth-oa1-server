@@ -24,7 +24,7 @@ class ExcelContainerTest {
     void createFrom_test0() {
 
         // 実行値 ＆ 期待値
-        ByteArrayInputStream excelIn = new ByteArrayInputStream("abcd".getBytes());;
+        ByteArrayInputStream excelIn = new ByteArrayInputStream("abcd".getBytes());
 
         // 実行
         ExcelContainer excelContainer = ExcelContainer.createFrom(excelIn);

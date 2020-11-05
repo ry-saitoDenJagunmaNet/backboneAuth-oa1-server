@@ -158,7 +158,6 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         criteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrps.getValues().get(0).getSubSystemCode());
         bizTranGrpEntityDao.forceDelete(criteria);
 
-
         // 取引グループ追加
         List<BizTranGrp> returnList = newArrayList();
         for (BizTranGrp bizTranGrp : bizTranGrps.getValues()) {
@@ -210,13 +209,11 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             BizTran bizTran = bizTrans.getValues().stream().filter(
                 b -> b.getBizTranCode().equals(bizTranGrp_BizTran.getBizTran().getBizTranCode())).findFirst().orElse(null);
 
-            if (bizTranGrp != null && bizTran != null) {
-                BizTranGrp_BizTranEntity entity = new BizTranGrp_BizTranEntity();
-                entity.setBizTranGrpId(bizTranGrp.getBizTranGrpId());
-                entity.setBizTranId(bizTran.getBizTranId());
-                entity.setSubSystemCode(subSystemCode);
-                bizTranGrp_BizTranEntityDao.insert(entity);
-            }
+            BizTranGrp_BizTranEntity entity = new BizTranGrp_BizTranEntity();
+            entity.setBizTranGrpId(bizTranGrp.getBizTranGrpId());
+            entity.setBizTranId(bizTran.getBizTranId());
+            entity.setSubSystemCode(subSystemCode);
+            bizTranGrp_BizTranEntityDao.insert(entity);
         }
     }
 
@@ -307,13 +304,11 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             BizTranGrp bizTranGrp = bizTranGrps.getValues().stream().filter(
                 b->b.getBizTranGrpCode().equals(bizTranRole_BizTranGrp.getBizTranGrp().getBizTranGrpCode())).findFirst().orElse(null);
 
-            if (bizTranRole != null && bizTranGrp != null) {
-                BizTranRole_BizTranGrpEntity entity = new BizTranRole_BizTranGrpEntity();
-                entity.setBizTranRoleId(bizTranRole.getBizTranRoleId());
-                entity.setBizTranGrpId(bizTranGrp.getBizTranGrpId());
-                entity.setSubSystemCode(subSystemCode);
-                bizTranRole_BizTranGrpEntityDao.insert(entity);
-            }
+            BizTranRole_BizTranGrpEntity entity = new BizTranRole_BizTranGrpEntity();
+            entity.setBizTranRoleId(bizTranRole.getBizTranRoleId());
+            entity.setBizTranGrpId(bizTranGrp.getBizTranGrpId());
+            entity.setSubSystemCode(subSystemCode);
+            bizTranRole_BizTranGrpEntityDao.insert(entity);
         }
     }
 }

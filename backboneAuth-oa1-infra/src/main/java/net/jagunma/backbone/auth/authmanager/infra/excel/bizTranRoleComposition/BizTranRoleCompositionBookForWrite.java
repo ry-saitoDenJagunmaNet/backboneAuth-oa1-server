@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.excel.bizTranRoleComposition
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import net.jagunma.backbone.auth.authmanager.infra.excel.constant.BizTranRoleCompositionConstants;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 /**
  * 取引ロール編成書き出し
@@ -31,9 +33,13 @@ import org.springframework.stereotype.Component;
 public class BizTranRoleCompositionBookForWrite implements
     BizTranRoleCompositionBookRepositoryForWrite {
 
-    private final String TemplateExcelfile = "Template取引ロール編成.xlsx";
+//    // リソースファイルを検索するクラスローダー
+//    ResourceLoader resourceLoader;
+//
+//    BizTranRoleCompositionBookForWrite(ResourceLoader resourceLoader) {
+//        this.resourceLoader = resourceLoader;
+//    }
 
-    // リソースファイルを検索するクラスローダー
     @Autowired
     ResourceLoader resourceLoader;
 
@@ -47,7 +53,12 @@ public class BizTranRoleCompositionBookForWrite implements
     public ExcelContainer create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        Resource resource = resourceLoader.getResource("classpath:" + TemplateExcelfile);
+//        try {
+//            ResourceUtils.getFile("classpath:data/employees.dat");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        Resource resource = resourceLoader.getResource("classpath:" + BizTranRoleCompositionConstants.TEMPLATE_EXCEL_FILE);
         Workbook workbook = null;
 
         // Templateを読む
@@ -55,9 +66,8 @@ public class BizTranRoleCompositionBookForWrite implements
             FileInputStream is = new FileInputStream(resource.getFile().toString());
             workbook = WorkbookFactory.create(is);
         } catch (IOException e) {
-            e.printStackTrace();
             workbook = null;
-            throw new GunmaRuntimeException("EOA11003", "Excel Template", e);
+            throw new GunmaRuntimeException("EOA11003", "取引ロール編成Excel Template");
         }
 
         // １番目の(取引ロール－取引グループ編成)シートのデータを作成
@@ -70,15 +80,11 @@ public class BizTranRoleCompositionBookForWrite implements
         try {
             workbook.write(out);
 
-            //TODO: DEBUG
-//            FileOutputStream outExcelFile = new FileOutputStream("C:\\Work\\test.xlsx");
-//            workbook.write(outExcelFile);
-
             out.flush();
             out.close();
             workbook.close();
         } catch (IOException e) {
-            throw new GunmaRuntimeException("EOA11004", "Excel Template", e);
+            throw new GunmaRuntimeException("EOA11004", "取引ロール編成Excel Template");
         } finally {
             workbook = null;
         }
