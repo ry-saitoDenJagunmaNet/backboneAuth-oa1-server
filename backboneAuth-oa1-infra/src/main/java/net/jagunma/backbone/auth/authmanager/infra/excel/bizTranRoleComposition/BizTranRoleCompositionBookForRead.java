@@ -24,9 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class BizTranRoleCompositionBookForRead implements BizTranRoleCompositionBookRepositoryForRead {
 
-    // コンストラクタ
-    BizTranRoleCompositionBookForRead() {}
-
     /**
      * 取引ロール編成Excelを読み込みます
      *

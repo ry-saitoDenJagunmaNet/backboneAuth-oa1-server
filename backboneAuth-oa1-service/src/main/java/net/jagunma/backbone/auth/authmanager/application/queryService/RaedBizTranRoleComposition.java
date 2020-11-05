@@ -14,7 +14,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import org.springframework.stereotype.Service;
 
 /**
- * 取引ロール編成エクスポートExcel Raedサービス
+ * 取引ロール編成インポートExcel Raedサービス
  */
 @Service
 public class RaedBizTranRoleComposition {
@@ -22,17 +22,15 @@ public class RaedBizTranRoleComposition {
     private final BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead;
 
     // コンストラクタ
-    RaedBizTranRoleComposition(
-        BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead) {
-
+    RaedBizTranRoleComposition(BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead) {
         this.bizTranRoleCompositionBookRepositoryForRead = bizTranRoleCompositionBookRepositoryForRead;
     }
 
     /**
      * インポートした取引ロール編成Excelから取引ロール編成を読み込みます
      *
-     * @param request 取引ロール編成エクスポートExcel Raedサービス Request
-     * @param request 取引ロール編成エクスポートExcel Raedサービス Response
+     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Request
+     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Response
      */
     public void execute(BizTranRoleCompositionExcelReadRequest request, BizTranRoleCompositionExcelReadResponse response) {
 

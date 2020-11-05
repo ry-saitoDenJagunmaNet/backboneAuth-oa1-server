@@ -15,16 +15,14 @@ public class WriteBizTranRoleComposition {
     private final BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite;
 
     // コンストラクタ
-    WriteBizTranRoleComposition(
-        BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite) {
-
+    WriteBizTranRoleComposition(BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite) {
         this.bizTranRoleCompositionBookRepositoryForWrite = bizTranRoleCompositionBookRepositoryForWrite;
     }
 
     /**
      * エクスポートする取引ロール編成Excelを書き出します
      *
-     * @param request 取引ロール編成エクスポートExcel Weiteサービス Request
+     * @param request  取引ロール編成エクスポートExcel Weiteサービス Request
      * @param response 取引ロール編成エクスポートExcel Weiteサービス Response
      */
     public void execute(BizTranRoleCompositionExcelWriteRequest request, BizTranRoleCompositionExcelWriteResponse response) {

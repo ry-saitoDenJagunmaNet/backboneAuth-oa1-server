@@ -3,6 +3,9 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCom
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
+/**
+ * 取引ロール編成インポート＆エクスポート Excel Readサービス Response
+ */
 public interface BizTranRoleCompositionExcelReadResponse {
 
     /**
