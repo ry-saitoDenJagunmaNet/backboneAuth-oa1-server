@@ -186,7 +186,7 @@ class EntryOperatorTest {
     /**
      * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
-     *    店舗未存在
+     *    店舗の取得）店舗未存在
      *
      *  ●検証事項
      *  ・エラー発生
@@ -238,7 +238,7 @@ class EntryOperatorTest {
     /**
      * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
-     *    店舗所属JA不一致
+     *    店舗が当JAに属するかのチェック）店舗所属JA不一致
      *
      *  ●検証事項
      *  ・エラー発生

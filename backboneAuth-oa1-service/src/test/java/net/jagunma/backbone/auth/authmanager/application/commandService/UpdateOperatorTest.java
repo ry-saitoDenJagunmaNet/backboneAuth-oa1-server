@@ -165,7 +165,7 @@ class UpdateOperatorTest {
     /**
      * {@link UpdateOperator#getBranchAtMoment(Long branchId)}テスト
      *  ●パターン
-     *    店舗未存在
+     *    店舗の取得）店舗未存在
      *
      *  ●検証事項
      *  ・エラー発生

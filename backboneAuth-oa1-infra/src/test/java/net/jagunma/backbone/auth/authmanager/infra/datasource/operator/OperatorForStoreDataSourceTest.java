@@ -283,7 +283,7 @@ class OperatorForStoreDataSourceTest {
     /**
      * {@link OperatorForStoreDataSource#checkAlreadyExists(String operatorCode)}テスト
      *  ●パターン
-     *    同(オペレーターコード)既存データあり(オペレーターコード:yu999999)
+     *    オペレーター（コード）がすでに存在しているかのチェック）同オペレーターコード既存データあり(オペレーターコード:yu999999)
      *
      *  ●検証事項
      *  ・エラー発生
@@ -312,7 +312,7 @@ class OperatorForStoreDataSourceTest {
     /**
      * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
      *  ●パターン
-     *    機器認証の変更 有
+     *    機器認証の変更有無を判定）機器認証の変更 有
      *
      *  ●検証事項
      *  ・判定結果
@@ -339,7 +339,7 @@ class OperatorForStoreDataSourceTest {
     /**
      * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
      *  ●パターン
-     *    機器認証の変更 無
+     *    機器認証の変更有無を判定）機器認証の変更 無
      *
      *  ●検証事項
      *  ・判定結果

@@ -63,7 +63,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    ViewObject不正
+     *    ViewObject不正チェック
      *
      *  ●検証事項
      *  ・エラー発生
@@ -87,7 +87,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  店舗ID
+     *    未セットチェック  店舗ID
      *
      *  ●検証事項
      *  ・エラー発生
@@ -114,7 +114,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  オペレーターコード（下6桁）
+     *    未セットチェック  オペレーターコード（下6桁）
      *
      *  ●検証事項
      *  ・エラー発生
@@ -140,7 +140,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  オペレーター名
+     *    未セットチェック  オペレーター名
      *
      *  ●検証事項
      *  ・エラー発生
@@ -166,7 +166,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  有効期限（開始日）
+     *    未セットチェック  有効期限（開始日）
      *
      *  ●検証事項
      *  ・エラー発生
@@ -192,7 +192,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  有効期限（終了日）
+     *    未セットチェック  有効期限（終了日）
      *
      *  ●検証事項
      *  ・エラー発生
@@ -218,7 +218,7 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    未セット  変更事由
+     *    未セットチェック  変更事由
      *
      *  ●検証事項
      *  ・エラー発生
