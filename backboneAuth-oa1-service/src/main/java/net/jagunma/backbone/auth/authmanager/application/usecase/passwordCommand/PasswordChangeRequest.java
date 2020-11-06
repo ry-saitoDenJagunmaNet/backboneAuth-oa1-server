@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.passwordComman
 
 /**
  * パスワード変更サービス Request
- * パスワード更新サービス Request  ToDo:★どっちにするか？
  */
 public interface PasswordChangeRequest {
     /**

@@ -37,7 +37,7 @@ public class UpdatePassword {
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             null,
             request.getOperatorId(),
-            LocalDateTime.now(), //ToDo:★検討
+            LocalDateTime.now(),
             request.getPassword(),
             PasswordChangeType.管理者によるリセット,
             null,
@@ -49,20 +49,20 @@ public class UpdatePassword {
 
     /**
      * パスワードの更新を行います
-     * （パスワードの変更）
+     * （変更）
      *
      * @param request パスワード変更サービス Request
      */
     public void execute(PasswordChangeRequest request) {
 
         // パラメーターの検証
-//        UpdatePasswordValidator.with(request).validate();
+        UpdatePasswordValidator.with(request).validate();
 
         // パスワード履歴の生成を行います
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             null,
             request.getOperatorId(),
-            LocalDateTime.now(), //ToDo:★検討
+            LocalDateTime.now(),
             request.getNewPassword(),
             PasswordChangeType.ユーザーによる変更,
             null,
