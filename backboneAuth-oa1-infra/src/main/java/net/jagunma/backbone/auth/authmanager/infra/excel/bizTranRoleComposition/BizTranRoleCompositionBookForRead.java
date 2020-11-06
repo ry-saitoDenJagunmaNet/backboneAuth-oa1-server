@@ -64,7 +64,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
             String bizTranGrpName = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_NAME);
 
             bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(
-                i,
+                i+1,
                 subSystemName,
                 bizTranRoleCode,
                 bizTranRoleName,
@@ -92,7 +92,7 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
             String expirationEndDate = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_ENDDATE);
 
             bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(
-                i,
+                i+1,
                 subSystemName,
                 bizTranGrpCode,
                 bizTranGrpName,

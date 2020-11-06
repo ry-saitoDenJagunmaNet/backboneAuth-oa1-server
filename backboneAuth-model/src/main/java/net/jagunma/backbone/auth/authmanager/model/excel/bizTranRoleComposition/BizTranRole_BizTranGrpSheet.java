@@ -5,7 +5,7 @@ package net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition
  */
 public class BizTranRole_BizTranGrpSheet {
 
-    private final int rowno;
+    private final Integer rowno;
     private final String subSystemName;
     private final String bizTranRoleCode;
     private final String bizTranRoleName;
@@ -14,7 +14,7 @@ public class BizTranRole_BizTranGrpSheet {
 
     // コンストラクタ
     BizTranRole_BizTranGrpSheet(
-        int rowno,
+        Integer rowno,
         String subSystemName,
         String bizTranRoleCode,
         String bizTranRoleName,
@@ -31,7 +31,7 @@ public class BizTranRole_BizTranGrpSheet {
 
     // ファクトリーメソッド
     public static BizTranRole_BizTranGrpSheet createFrom(
-        int rowno,
+        Integer rowno,
         String subSystemName,
         String bizTranRoleCode,
         String bizTranRoleName,
@@ -48,7 +48,7 @@ public class BizTranRole_BizTranGrpSheet {
     }
 
     // Getter
-    public int getRowno() {
+    public Integer getRowno() {
         return rowno;
     }
     public String getSubSystemName() {

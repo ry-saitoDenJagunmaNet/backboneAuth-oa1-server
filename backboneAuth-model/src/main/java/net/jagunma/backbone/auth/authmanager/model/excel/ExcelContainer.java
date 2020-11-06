@@ -8,14 +8,16 @@ import java.io.ByteArrayOutputStream;
  */
 public class ExcelContainer {
 
-    private ByteArrayInputStream excelIn;
-    private ByteArrayOutputStream excelOut;
+    private final ByteArrayInputStream excelIn;
+    private final ByteArrayOutputStream excelOut;
 
     // コンストラクタ
     ExcelContainer(ByteArrayInputStream excelIn) {
         this.excelIn = excelIn;
+        this.excelOut = null;
     }
     ExcelContainer(ByteArrayOutputStream excelOut) {
+        this.excelIn = null;
         this.excelOut = excelOut;
     }
 

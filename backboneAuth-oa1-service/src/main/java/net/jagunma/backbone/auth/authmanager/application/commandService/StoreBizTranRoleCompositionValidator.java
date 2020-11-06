@@ -39,6 +39,16 @@ public class StoreBizTranRoleCompositionValidator {
 
         // 未セットチェック
         Preconditions.checkNotNull(request.getSubSystemCode(), () -> new GunmaRuntimeException("EOA13002", "サブシステム"));
+
+        // サブシステムチェック
+        if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            throw new GunmaRuntimeException("EOA13011", "取引ロール－取引グループ編成");
+        }
+        if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            throw new GunmaRuntimeException("EOA13011", "取引グループ－取引編成");
+        }
     }
 
     /**
@@ -61,7 +71,7 @@ public class StoreBizTranRoleCompositionValidator {
     private void checkExcelImportBizTranRole_BizTranGrps(List<MessageDto> list) {
         // 取引ロール－取引グループ編成
         for (BizTranRole_BizTranGrpSheet bizTranRole_BizTranGrpsSheet : request.getBizTranRole_BizTranGrpsSheet().getValues()) {
-            String message = "［取引ロール－取引グループ編成］（"+bizTranRole_BizTranGrpsSheet.getRowno()+"行目）";
+            String message = "［取引ロール－取引グループ編成］（Excel行："+bizTranRole_BizTranGrpsSheet.getRowno()+"）";
             // 未セットチェック
             if (Strings2.isEmpty(bizTranRole_BizTranGrpsSheet.getSubSystemName())) {
                 list.add(MessageDto.createFrom("EOA13013", newArrayList(message+"サブシステム")));
@@ -84,16 +94,11 @@ public class StoreBizTranRoleCompositionValidator {
                 continue;
             }
 
-            // サブシステムチェック
-            if (!request.getSubSystemCode().equals(SubSystem.nameOf(bizTranRole_BizTranGrpsSheet.getSubSystemName()).getCode())) {
-                list.add(MessageDto.createFrom("EOA13011", newArrayList(message+"取引グループ名称")));
-                continue;
-            }
-
             // 重複チェック
             if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
                 b.getBizTranRoleCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleCode()) &&
-                    b.getBizTranGrpCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpCode())).count() > 1) {
+                    b.getBizTranGrpCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpCode()) &&
+                    b.getRowno().compareTo(bizTranRole_BizTranGrpsSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13009", newArrayList(message+"取引ロールコード＋取引グループコード")));
                 continue;
             }
@@ -130,7 +135,7 @@ public class StoreBizTranRoleCompositionValidator {
     private void checkExcelImportBizTranGrp_BizTrans(List<MessageDto> list) {
         // 取引グループ－取引編成
         for (BizTranGrp_BizTranSheet bizTranGrp_BizTransSheet : request.getBizTranGrp_BizTransSheet().getValues()) {
-            String message = "［取引グループ－取引編成］（"+bizTranGrp_BizTransSheet.getRowno()+"行目）";
+            String message = "［取引グループ－取引編成］（Excel行："+bizTranGrp_BizTransSheet.getRowno()+"）";
             // 未セットチェック
             if (Strings2.isEmpty(bizTranGrp_BizTransSheet.getBizTranGrpCode())) {
                 list.add(MessageDto.createFrom("EOA13013", newArrayList(message+"取引グループコード")));
@@ -158,12 +163,6 @@ public class StoreBizTranRoleCompositionValidator {
             }
             if (bizTranGrp_BizTransSheet.getExpirationEndDate() == null) {
                 list.add(MessageDto.createFrom("EOA13013", newArrayList(message+"有効期限To")));
-                continue;
-            }
-
-            // サブシステムチェック
-            if (!request.getSubSystemCode().equals(SubSystem.nameOf(bizTranGrp_BizTransSheet.getSubSystemName()).getCode())) {
-                list.add(MessageDto.createFrom("EOA13011", newArrayList(message+"取引グループ名称")));
                 continue;
             }
 
@@ -199,7 +198,6 @@ public class StoreBizTranRoleCompositionValidator {
                 list.add(MessageDto.createFrom("EOA13012",
                     newArrayList("［取引グループ－取引編成］", "［取引ロール－取引グループ編成］", bizTranGrp_BizTransSheet.getBizTranGrpCode())));
             }
-
         }
     }
 }

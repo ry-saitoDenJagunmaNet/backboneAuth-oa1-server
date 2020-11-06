@@ -195,6 +195,7 @@ public class Oa12010Controller extends BaseOfController {
 
         LOGGER.debug("importExcel START");
 
+        Oa12010CompositionImportPresenter storePresenter = new Oa12010CompositionImportPresenter();
         try {
             // Excel Read
             ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
@@ -205,21 +206,19 @@ public class Oa12010Controller extends BaseOfController {
 
             // 取引ロール編成登録
             Oa12010CompositionImportConverter storeConverter = readPresenter.ConverterTo();
-            Oa12010CompositionImportPresenter storePresenter = new Oa12010CompositionImportPresenter();
             storeBizTranRoleComposition.execute(storeConverter, storePresenter);
             storePresenter.bindTo(vo);
 
             model.addAttribute("form", vo);
+
             //TODO:
-            if (vo.getMessageVoList() == null || vo.getMessageVoList().size() == 0) {
-                vo.setMessage("DEBUG 登録が完了 DEBUG");
-            } else {
-                vo.setMessage("DEBUG インポートデータにエラーあり DEBUG");
-            }
+            vo.setMessage("DEBUG 登録が完了 DEBUG");
+
             LOGGER.debug("importExcel END");
             return "oa12010";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
+            storePresenter.bindTo(vo);
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
             return "oa12010";
