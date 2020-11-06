@@ -31,7 +31,7 @@ public class UpdatePassword {
     public void execute(PasswordResetRequest request) {
 
         // パラメーターの検証
-//        UpdatePasswordValidator.with(request).validate();
+        UpdatePasswordValidator.with(request).validate();
 
         // パスワード履歴の生成を行います
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
