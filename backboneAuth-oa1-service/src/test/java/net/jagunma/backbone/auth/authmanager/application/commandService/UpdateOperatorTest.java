@@ -154,11 +154,11 @@ class UpdateOperatorTest {
         UpdateOperator updateOperator = createUpdateOperator();
 
         // 実行値
-        OperatorUpdateRequest operatorUpdateRequest = createRequest();
+        OperatorUpdateRequest request = createRequest();
 
         assertThatCode(() ->
             // 実行
-            updateOperator.execute(operatorUpdateRequest))
+            updateOperator.execute(request))
             .doesNotThrowAnyException();
     }
 
@@ -208,26 +208,26 @@ class UpdateOperatorTest {
         UpdateOperator updateOperator = createUpdateOperator();
 
         // 実行値
-        OperatorUpdateRequest operatorUpdateRequest = createRequest();
+        OperatorUpdateRequest request = createRequest();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行
         OperatorUpdatePack operatorUpdatePack = updateOperator.createOperatorUpdatePack(
-            operatorUpdateRequest,
+            request,
             branchAtMoment.getBranchAttribute().getBranchCode().getValue());
 
         // 結果検証
         assertTrue(operatorUpdatePack instanceof OperatorUpdatePack);
-        assertThat(operatorUpdatePack.getOperatorId()).isEqualTo(operatorUpdateRequest.getOperatorId());
-        assertThat(operatorUpdatePack.getOperatorName()).isEqualTo(operatorUpdateRequest.getOperatorName());
-        assertThat(operatorUpdatePack.getMailAddress()).isEqualTo(operatorUpdateRequest.getMailAddress());
-        assertThat(operatorUpdatePack.getExpirationStartDate()).isEqualTo(operatorUpdateRequest.getExpirationStartDate());
-        assertThat(operatorUpdatePack.getExpirationEndDate()).isEqualTo(operatorUpdateRequest.getExpirationEndDate());
-        assertThat(operatorUpdatePack.getIsDeviceAuth()).isEqualTo(operatorUpdateRequest.getIsDeviceAuth());
-        assertThat(operatorUpdatePack.getBranchId()).isEqualTo(operatorUpdateRequest.getBranchId());
+        assertThat(operatorUpdatePack.getOperatorId()).isEqualTo(request.getOperatorId());
+        assertThat(operatorUpdatePack.getOperatorName()).isEqualTo(request.getOperatorName());
+        assertThat(operatorUpdatePack.getMailAddress()).isEqualTo(request.getMailAddress());
+        assertThat(operatorUpdatePack.getExpirationStartDate()).isEqualTo(request.getExpirationStartDate());
+        assertThat(operatorUpdatePack.getExpirationEndDate()).isEqualTo(request.getExpirationEndDate());
+        assertThat(operatorUpdatePack.getIsDeviceAuth()).isEqualTo(request.getIsDeviceAuth());
+        assertThat(operatorUpdatePack.getBranchId()).isEqualTo(request.getBranchId());
         assertThat(operatorUpdatePack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
-        assertThat(operatorUpdatePack.getAvailableStatus()).isEqualTo(operatorUpdateRequest.getAvailableStatus());
-        assertThat(operatorUpdatePack.getRecordVersion()).isEqualTo(operatorUpdateRequest.getRecordVersion());
-        assertThat(operatorUpdatePack.getChangeCause()).isEqualTo(operatorUpdateRequest.getChangeCause());
+        assertThat(operatorUpdatePack.getAvailableStatus()).isEqualTo(request.getAvailableStatus());
+        assertThat(operatorUpdatePack.getRecordVersion()).isEqualTo(request.getRecordVersion());
+        assertThat(operatorUpdatePack.getChangeCause()).isEqualTo(request.getChangeCause());
     }
 }

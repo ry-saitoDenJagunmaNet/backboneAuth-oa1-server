@@ -151,11 +151,11 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createRequest();
+        OperatorEntryRequest request = createRequest();
 
         assertThatCode(() ->
             // 実行
-            entryOperator.execute(operatorEntryRequest))
+            entryOperator.execute(request))
             .doesNotThrowAnyException();
     }
 
@@ -285,12 +285,12 @@ class EntryOperatorTest {
         EntryOperator entryOperator = createEntryOperator();
 
         // 実行値
-        OperatorEntryRequest operatorEntryRequest = createRequest();
+        OperatorEntryRequest request = createRequest();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
 
         // 実行
         OperatorEntryPack operatorEntryPack = entryOperator.createOperatorEntryPack(
-            operatorEntryRequest,
+            request,
             OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix(),
             AuditInfoHolder.getJa().getIdentifier(),
             AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue(),
@@ -298,16 +298,16 @@ class EntryOperatorTest {
 
         // 結果検証
         assertTrue(operatorEntryPack instanceof OperatorEntryPack);
-        assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + operatorEntryRequest.getOperatorCode6());
-        assertThat(operatorEntryPack.getOperatorName()).isEqualTo(operatorEntryRequest.getOperatorName());
-        assertThat(operatorEntryPack.getMailAddress()).isEqualTo(operatorEntryRequest.getMailAddress());
-        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(operatorEntryRequest.getExpirationStartDate());
-        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(operatorEntryRequest.getExpirationEndDate());
+        assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + request.getOperatorCode6());
+        assertThat(operatorEntryPack.getOperatorName()).isEqualTo(request.getOperatorName());
+        assertThat(operatorEntryPack.getMailAddress()).isEqualTo(request.getMailAddress());
+        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(request.getExpirationStartDate());
+        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(request.getExpirationEndDate());
         assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
-        assertThat(operatorEntryPack.getBranchId()).isEqualTo(operatorEntryRequest.getBranchId());
+        assertThat(operatorEntryPack.getBranchId()).isEqualTo(request.getBranchId());
         assertThat(operatorEntryPack.getBranchCode()).isEqualTo(branchAtMoment.getBranchAttribute().getBranchCode().getValue());
-        assertThat(operatorEntryPack.getChangeCause()).isEqualTo(operatorEntryRequest.getChangeCause());
-        assertThat(operatorEntryPack.getPassword()).isEqualTo(operatorEntryRequest.getPassword());
+        assertThat(operatorEntryPack.getChangeCause()).isEqualTo(request.getChangeCause());
+        assertThat(operatorEntryPack.getPassword()).isEqualTo(request.getPassword());
     }
 }
