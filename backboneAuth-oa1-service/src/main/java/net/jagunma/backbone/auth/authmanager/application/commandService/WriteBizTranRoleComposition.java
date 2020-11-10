@@ -15,7 +15,7 @@ public class WriteBizTranRoleComposition {
     private final BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite;
 
     // コンストラクタ
-    WriteBizTranRoleComposition(BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite) {
+    public WriteBizTranRoleComposition(BizTranRoleCompositionBookRepositoryForWrite bizTranRoleCompositionBookRepositoryForWrite) {
         this.bizTranRoleCompositionBookRepositoryForWrite = bizTranRoleCompositionBookRepositoryForWrite;
     }
 

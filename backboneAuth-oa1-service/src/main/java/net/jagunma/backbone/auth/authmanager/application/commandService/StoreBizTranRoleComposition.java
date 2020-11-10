@@ -51,7 +51,7 @@ public class StoreBizTranRoleComposition {
     private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
 
     // コンストラクタ
-    StoreBizTranRoleComposition(BizTranRoleCompositionRepositoryForStore bizTranRoleCompositionRepositoryForStore,
+    public StoreBizTranRoleComposition(BizTranRoleCompositionRepositoryForStore bizTranRoleCompositionRepositoryForStore,
         BizTranRolesRepository bizTranRolesRepository,
         Operator_BizTranRolesRepository operator_BizTranRolesRepository) {
         this.bizTranRoleCompositionRepositoryForStore = bizTranRoleCompositionRepositoryForStore;
@@ -134,14 +134,16 @@ public class StoreBizTranRoleComposition {
         }
 
         // オペレーター_取引ロール割当検索
-        Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
-        operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
-        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria,
-            Orders.empty().addOrder("Operator.OperatorCode").addOrder("BizTranRole.BizTranRoleCode"));
-        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-            messageDtoList.add(MessageDto.createFrom("EOA13014",
-                newArrayList(operator_BizTranRole.getOperator().getOperatorCode(),operator_BizTranRole.getBizTranRole().getBizTranRoleCode())));
+        if (bizTranRoleIdList.size() > 0) {
+            Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
+            operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
+            Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria, Orders.empty());
+            for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
+                messageDtoList.add(MessageDto.createFrom("EOA13014",
+                    newArrayList(operator_BizTranRole.getOperator().getOperatorCode(),operator_BizTranRole.getBizTranRole().getBizTranRoleCode())));
+            }
         }
+
         return messageDtoList;
     }
 

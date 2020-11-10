@@ -35,7 +35,7 @@ public class Oa12010CompositionExportPresenter implements BizTranRoleComposition
      *
      * @return 取引ロール編成エクスポートExcel Weiteサービス Request Converter
      */
-    public Oa12010CompositionExcelWriteConverter ConverterTo() {
+    public Oa12010CompositionExcelWriteConverter converterTo() {
         return Oa12010CompositionExcelWriteConverter
             .with(bizTranRole_BizTranGrpsSheet, bizTranGrp_BizTransSheet);
     }

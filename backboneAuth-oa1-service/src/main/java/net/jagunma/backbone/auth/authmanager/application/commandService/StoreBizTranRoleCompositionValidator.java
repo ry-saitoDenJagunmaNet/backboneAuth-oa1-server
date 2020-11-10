@@ -38,7 +38,7 @@ public class StoreBizTranRoleCompositionValidator {
         Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13001"));
 
         // 未セットチェック
-        Preconditions.checkNotNull(request.getSubSystemCode(), () -> new GunmaRuntimeException("EOA13002", "サブシステム"));
+        Preconditions.checkNotEmpty(request.getSubSystemCode(), () -> new GunmaRuntimeException("EOA13002", "サブシステム"));
 
         // サブシステムチェック
         if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
@@ -104,16 +104,18 @@ public class StoreBizTranRoleCompositionValidator {
             }
 
             // 同一キーレコード内容一致チェック（取引ロール）
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().anyMatch(b ->
+            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b ->
                 b.getBizTranRoleCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleCode()) &&
-                    !b.getBizTranRoleName().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleName()))) {
+                    !b.getBizTranRoleName().equals(bizTranRole_BizTranGrpsSheet.getBizTranRoleName())  &&
+                    b.getRowno().compareTo(bizTranRole_BizTranGrpsSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13010", newArrayList(message+"取引ロール")));
                 continue;
             }
             // 同一キーレコード内容一致チェック（取引グループ）
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().anyMatch(b ->
+            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b ->
                 b.getBizTranGrpCode().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpCode()) &&
-                    !b.getBizTranGrpName().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpName()))) {
+                    !b.getBizTranGrpName().equals(bizTranRole_BizTranGrpsSheet.getBizTranGrpName()) &&
+                    b.getRowno().compareTo(bizTranRole_BizTranGrpsSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13010", newArrayList(message+"取引グループ")));
             }
 
@@ -137,6 +139,10 @@ public class StoreBizTranRoleCompositionValidator {
         for (BizTranGrp_BizTranSheet bizTranGrp_BizTransSheet : request.getBizTranGrp_BizTransSheet().getValues()) {
             String message = "［取引グループ－取引編成］（Excel行："+bizTranGrp_BizTransSheet.getRowno()+"）";
             // 未セットチェック
+            if (Strings2.isEmpty(bizTranGrp_BizTransSheet.getSubSystemName())) {
+                list.add(MessageDto.createFrom("EOA13013", newArrayList(message+"サブシステム")));
+                continue;
+            }
             if (Strings2.isEmpty(bizTranGrp_BizTransSheet.getBizTranGrpCode())) {
                 list.add(MessageDto.createFrom("EOA13013", newArrayList(message+"取引グループコード")));
                 continue;
@@ -169,25 +175,28 @@ public class StoreBizTranRoleCompositionValidator {
             // 重複チェック
             if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
                 b.getBizTranGrpCode().equals(bizTranGrp_BizTransSheet.getBizTranGrpCode()) &&
-                    b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode())).count() > 1) {
+                    b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode()) &&
+                    b.getRowno().compareTo(bizTranGrp_BizTransSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13009", newArrayList(message+"取引グループコード＋取引コード")));
                 continue;
             }
 
             // 同一キーレコード内容一致チェック（取引グループ）
-            if (request.getBizTranGrp_BizTransSheet().getValues().stream().anyMatch(b ->
+            if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b ->
                 b.getBizTranGrpCode().equals(bizTranGrp_BizTransSheet.getBizTranGrpCode()) &&
-                    !b.getBizTranGrpName().equals(bizTranGrp_BizTransSheet.getBizTranGrpName()))) {
+                    !b.getBizTranGrpName().equals(bizTranGrp_BizTransSheet.getBizTranGrpName()) &&
+                    b.getRowno().compareTo(bizTranGrp_BizTransSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13010", newArrayList(message+"取引グループ")));
                 continue;
             }
             // 同一キーレコード内容一致チェック（取引）
-            if (request.getBizTranGrp_BizTransSheet().getValues().stream().anyMatch(b ->
+            if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b ->
                 b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode()) &&
                     (!b.getBizTranName().equals(bizTranGrp_BizTransSheet.getBizTranName()) ||
                         !b.getIsCenterBizTran().equals(bizTranGrp_BizTransSheet.getIsCenterBizTran()) ||
                         !b.getExpirationStartDate().equals(bizTranGrp_BizTransSheet.getExpirationStartDate()) ||
-                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate())))) {
+                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate())) &&
+                    b.getRowno().compareTo(bizTranGrp_BizTransSheet.getRowno()) > 0).count() > 0) {
                 list.add(MessageDto.createFrom("EOA13010", newArrayList(message+"取引")));
             }
 

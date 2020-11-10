@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 class SearchBizTranRoleCompositionTest {
 
     // 実行既定値
+    private String subSystemCode = SubSystem.販売_畜産.getCode();
     //  取引ロールリストデータ作成
     private List<BizTranRole> createBizTranRoleList() {
         List<BizTranRole> list = newArrayList();
@@ -105,7 +106,7 @@ class SearchBizTranRoleCompositionTest {
         return new BizTranRoleCompositionExportRequest() {
             @Override
             public String getSubSystemCode() {
-                return null;
+                return subSystemCode;
             }
         };
     }

@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreBizTranRoleCompositionValidator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
@@ -31,7 +32,7 @@ public class SearchBizTranRoleComposition {
     private final BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository;
 
     // コンストラクタ
-    SearchBizTranRoleComposition(BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository,
+    public SearchBizTranRoleComposition(BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository,
         BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository) {
 
         this.bizTranRole_BizTranGrpsRepository = bizTranRole_BizTranGrpsRepository;
@@ -45,6 +46,10 @@ public class SearchBizTranRoleComposition {
      * @param response 取引ロール編成エクスポート検索サービス Response
      */
     public void execute(BizTranRoleCompositionExportRequest request, BizTranRoleCompositionExportResponse response)  {
+
+        // パラメーターの検証
+        SearchBizTranRoleCompositionValidator validator = SearchBizTranRoleCompositionValidator.with(request);
+        validator.validate();
 
         // 取引ロール_取引グループ割当検索
         BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria = new BizTranRole_BizTranGrpCriteria();

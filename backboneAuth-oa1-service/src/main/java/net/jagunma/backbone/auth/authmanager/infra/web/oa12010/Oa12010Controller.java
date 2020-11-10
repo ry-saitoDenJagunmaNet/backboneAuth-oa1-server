@@ -139,7 +139,7 @@ public class Oa12010Controller extends BaseOfController {
             searchBizTranRoleComposition.execute(searchConverter, searchPresenter);
 
             // Excel Weite
-            Oa12010CompositionExcelWriteConverter writeConverter = searchPresenter.ConverterTo();
+            Oa12010CompositionExcelWriteConverter writeConverter = searchPresenter.converterTo();
             Oa12010CompositionExcelWritePresenter writehPresenter = new Oa12010CompositionExcelWritePresenter();
             writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
 
@@ -173,8 +173,11 @@ public class Oa12010Controller extends BaseOfController {
             response.getOutputStream().write(vo.getExportExcelBook());
             response.getOutputStream().flush();
             response.getOutputStream().close();
-        } catch (IOException e) {
-            e.getStackTrace();
+        } catch (IOException ie) {
+            // IOExceptionが発生した場合
+            vo.setExceptionMessage(ie);
+            model.addAttribute("form", vo);
+            return "oa19999";
         }
 
         return null;
@@ -196,23 +199,32 @@ public class Oa12010Controller extends BaseOfController {
         LOGGER.debug("importExcel START");
 
         Oa12010CompositionImportPresenter storePresenter = new Oa12010CompositionImportPresenter();
+
+        ByteArrayInputStream is = null;
+        try {
+            is = new ByteArrayInputStream(importfile.getBytes());
+        } catch (IOException ie) {
+            // IOExceptionが発生した場合
+            vo.setExceptionMessage(ie);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+
         try {
             // Excel Read
-            ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
-            Oa12010CompositionExcelReadConverter readConverter = Oa12010CompositionExcelReadConverter
-                .with(vo, is);
+            Oa12010CompositionExcelReadConverter readConverter = Oa12010CompositionExcelReadConverter.with(vo, is);
             Oa12010CompositionExcelReadPresenter readPresenter = new Oa12010CompositionExcelReadPresenter();
             raedBizTranRoleComposition.execute(readConverter, readPresenter);
 
             // 取引ロール編成登録
-            Oa12010CompositionImportConverter storeConverter = readPresenter.ConverterTo();
+            Oa12010CompositionImportConverter storeConverter = readPresenter.converterTo();
             storeBizTranRoleComposition.execute(storeConverter, storePresenter);
             storePresenter.bindTo(vo);
 
             model.addAttribute("form", vo);
 
-            //TODO:
-            vo.setMessage("DEBUG 登録が完了 DEBUG");
+//            //TODO:
+//            vo.setMessage("DEBUG 登録が完了 DEBUG");
 
             LOGGER.debug("importExcel END");
             return "oa12010";
@@ -226,9 +238,6 @@ public class Oa12010Controller extends BaseOfController {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
             model.addAttribute("form", vo);
-            return "oa19999";
-        } catch (IOException e) {
-            e.printStackTrace();
             return "oa19999";
         }
     }

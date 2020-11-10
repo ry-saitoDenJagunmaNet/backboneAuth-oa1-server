@@ -46,7 +46,7 @@ public class Oa12010CompositionExcelReadPresenter implements
      *
      * @return 取引ロール編成エクスポートExcel 登録サービス Request Converter
      */
-    public Oa12010CompositionImportConverter ConverterTo() {
+    public Oa12010CompositionImportConverter converterTo() {
         return Oa12010CompositionImportConverter.with(
             subSystemCode,
             bizTranRole_BizTranGrpsSheet,
