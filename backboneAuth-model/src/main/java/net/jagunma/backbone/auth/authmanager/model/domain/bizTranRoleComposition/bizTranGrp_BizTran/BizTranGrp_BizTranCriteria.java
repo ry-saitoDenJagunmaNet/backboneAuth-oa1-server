@@ -7,10 +7,10 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
  */
 public class BizTranGrp_BizTranCriteria {
 
-    private StringCriteria subSystemCode = new StringCriteria();
+    private StringCriteria subSystemCodeCriteria = new StringCriteria();
 
     // Getter
-    public StringCriteria getSubSystemCode() {
-        return subSystemCode;
+    public StringCriteria getSubSystemCodeCriteria() {
+        return subSystemCodeCriteria;
     }
 }

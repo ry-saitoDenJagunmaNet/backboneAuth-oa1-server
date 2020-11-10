@@ -51,17 +51,17 @@ public class BizTranGrp_BizTransDataSource implements BizTranGrp_BizTransReposit
 
         // 取引グループ群検索
         BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-        bizTranGrpCriteria.getSubSystemCode().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCode().getEqualTo());
+        bizTranGrpCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().getEqualTo());
         BizTranGrps bizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty());
 
         // 取引群検索
         BizTranCriteria bizTranCriteria = new BizTranCriteria();
-        bizTranCriteria.getSubSystemCode().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCode().getEqualTo());
+        bizTranCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().getEqualTo());
         BizTrans bizTrans = bizTransRepository.selectBy(bizTranCriteria, Orders.empty());
 
         // 取引グループ_取引割当群検索
         BizTranGrp_BizTranEntityCriteria entityCriteria = new BizTranGrp_BizTranEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCode().getEqualTo());
+        entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().getEqualTo());
 
         List<BizTranGrp_BizTran> list = newArrayList();
         for (BizTranGrp_BizTranEntity entity : bizTranGrp_BizTranEntityDao.findBy(entityCriteria, orders)) {

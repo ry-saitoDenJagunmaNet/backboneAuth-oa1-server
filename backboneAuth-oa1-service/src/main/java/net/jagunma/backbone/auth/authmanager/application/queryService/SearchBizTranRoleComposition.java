@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.commandService.StoreBizTranRoleCompositionValidator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
@@ -53,7 +52,7 @@ public class SearchBizTranRoleComposition {
 
         // 取引ロール_取引グループ割当検索
         BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria = new BizTranRole_BizTranGrpCriteria();
-        bizTranRole_BizTranGrpCriteria.getSubSystemCode().setEqualTo(request.getSubSystemCode());
+        bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria().setEqualTo(request.getSubSystemCode());
         BizTranRole_BizTranGrps bizTranRole_BizTranGrps = bizTranRole_BizTranGrpsRepository.selectBy(bizTranRole_BizTranGrpCriteria, Orders.empty().addOrder("SubSystemCode"));
 
         // 取引ロール編成（取引ロール－取引グループ編成）リスト作成
@@ -72,7 +71,7 @@ public class SearchBizTranRoleComposition {
 
         // 取引グループ_取引割当検索
         BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria = new BizTranGrp_BizTranCriteria();
-        bizTranGrp_BizTranCriteria.getSubSystemCode().setEqualTo(request.getSubSystemCode());
+        bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().setEqualTo(request.getSubSystemCode());
         BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty().addOrder("SubSystemCode"));
 
         // 取引ロール編成（取引グループ－取引編成）リスト作成
