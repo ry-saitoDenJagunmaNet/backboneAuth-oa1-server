@@ -3,16 +3,17 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionExportSearchResponse;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTran;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpsRepository;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreBizTranRoleCompositionValidator;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportResponse;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -31,7 +32,7 @@ public class SearchBizTranRoleComposition {
     private final BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository;
 
     // コンストラクタ
-    SearchBizTranRoleComposition(BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository,
+    public SearchBizTranRoleComposition(BizTranRole_BizTranGrpsRepository bizTranRole_BizTranGrpsRepository,
         BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository) {
 
         this.bizTranRole_BizTranGrpsRepository = bizTranRole_BizTranGrpsRepository;
@@ -44,7 +45,11 @@ public class SearchBizTranRoleComposition {
      * @param request  取引ロール編成エクスポート検索サービス Request
      * @param response 取引ロール編成エクスポート検索サービス Response
      */
-    public void execute(BizTranRoleCompositionExportSearchRequest request, BizTranRoleCompositionExportSearchResponse response)  {
+    public void execute(BizTranRoleCompositionExportRequest request, BizTranRoleCompositionExportResponse response)  {
+
+        // パラメーターの検証
+        SearchBizTranRoleCompositionValidator validator = SearchBizTranRoleCompositionValidator.with(request);
+        validator.validate();
 
         // 取引ロール_取引グループ割当検索
         BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria = new BizTranRole_BizTranGrpCriteria();

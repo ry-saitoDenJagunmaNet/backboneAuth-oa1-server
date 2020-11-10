@@ -1,5 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base.vo;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -86,6 +87,23 @@ public class BaseOfResponseVo implements Serializable {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         ole.printStackTrace(pw);
+        pw.flush();
+        stackTrace = sw.toString();
+    }
+
+    /**
+     * 例外メッセージをセットします
+     * @param re IOException
+     */
+    public void setExceptionMessage(IOException re) {
+        messageCode = "EOA10001";
+        errorMessage = MessageFormatter.getSimpleMessage("EOA10001");
+
+        if (re.getMessage() != null) {errorDetailsMessage = re.getMessage() + "\r\n";}
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        re.printStackTrace(pw);
         pw.flush();
         stackTrace = sw.toString();
     }

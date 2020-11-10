@@ -3,18 +3,17 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionImportReadRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExport.BizTranRoleCompositionImportReadResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelReference.BizTranRoleCompositionExcelReadRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelReference.BizTranRoleCompositionExcelReadResponse;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForRead;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 import org.springframework.stereotype.Service;
 
 /**
- * 取引ロール編成エクスポートExcel Raedサービス
+ * 取引ロール編成インポートExcel Raedサービス
  */
 @Service
 public class RaedBizTranRoleComposition {
@@ -22,19 +21,17 @@ public class RaedBizTranRoleComposition {
     private final BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead;
 
     // コンストラクタ
-    RaedBizTranRoleComposition(
-        BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead) {
-
+    public RaedBizTranRoleComposition(BizTranRoleCompositionBookRepositoryForRead bizTranRoleCompositionBookRepositoryForRead) {
         this.bizTranRoleCompositionBookRepositoryForRead = bizTranRoleCompositionBookRepositoryForRead;
     }
 
     /**
      * インポートした取引ロール編成Excelから取引ロール編成を読み込みます
      *
-     * @param request 取引ロール編成エクスポートExcel Raedサービス Request
-     * @param request 取引ロール編成エクスポートExcel Raedサービス Response
+     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Request
+     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Response
      */
-    public void execute(BizTranRoleCompositionImportReadRequest request, BizTranRoleCompositionImportReadResponse response) {
+    public void execute(BizTranRoleCompositionExcelReadRequest request, BizTranRoleCompositionExcelReadResponse response) {
 
         List<BizTranRole_BizTranGrpSheet> bizTranRole_BizTranGrpSheetList = newArrayList();
         List<BizTranGrp_BizTranSheet> bizTranGrp_BizTranSheetList = newArrayList();

@@ -3,16 +3,21 @@ package net.jagunma.backbone.auth.authmanager.model.excel;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+/**
+ * Excel格納
+ */
 public class ExcelContainer {
 
-    private ByteArrayInputStream excelIn;
-    private ByteArrayOutputStream excelOut;
+    private final ByteArrayInputStream excelIn;
+    private final ByteArrayOutputStream excelOut;
 
     // コンストラクタ
     ExcelContainer(ByteArrayInputStream excelIn) {
         this.excelIn = excelIn;
+        this.excelOut = null;
     }
     ExcelContainer(ByteArrayOutputStream excelOut) {
+        this.excelIn = null;
         this.excelOut = excelOut;
     }
 

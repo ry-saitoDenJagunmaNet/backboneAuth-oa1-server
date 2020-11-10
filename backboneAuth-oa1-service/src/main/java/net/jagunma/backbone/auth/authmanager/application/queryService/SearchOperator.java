@@ -18,9 +18,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeadersRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -457,16 +457,16 @@ public class SearchOperator {
 
             if (passwordHistory == null) { return false; }
             // 最終パスワード変更種別が全て同じでない
-            if (passwordHistory.getChangeType().equals(PasswordChangeType.初期.getCode()) && passwordHistoryChangeType0) {
+            if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.初期) && passwordHistoryChangeType0) {
                 // 初期
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.ユーザーによる変更.getCode()) && passwordHistoryChangeType1) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.ユーザーによる変更) && passwordHistoryChangeType1) {
                 // ユーザーによる変更
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.管理者によるリセット.getCode()) && passwordHistoryChangeType2) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.管理者によるリセット) && passwordHistoryChangeType2) {
                 // 管理者によるリセット
                 return true;
-            } else if (passwordHistory.getChangeType().equals(PasswordChangeType.機器認証パスワード.getCode()) && passwordHistoryChangeType3) {
+            } else if (passwordHistory.getPasswordChangeType().equals(PasswordChangeType.機器認証パスワード) && passwordHistoryChangeType3) {
                 // 機器認証パスワード
                 return true;
             }

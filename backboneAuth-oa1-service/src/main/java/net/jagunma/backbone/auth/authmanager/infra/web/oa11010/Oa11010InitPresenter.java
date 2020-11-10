@@ -7,8 +7,8 @@ import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsS
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;

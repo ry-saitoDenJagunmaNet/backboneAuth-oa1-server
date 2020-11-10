@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
 	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
 	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
-	<!--	<link rel="stylesheet" href="../static/css/oa12010.css" th:href="@{/css/oa12010.css}"/>-->
+	<link rel="stylesheet" href="../static/css/oa12010.css" th:href="@{/css/oa12010.css}"/>
 	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
 	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
 	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
@@ -19,12 +19,13 @@
 	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
 	<script th:remove="all">oa_getMessageDialog();</script>
-	<div th:replace="include/messageDialog :: messageDialog"></div>
+	<!-- 共通部品用定義 -->
+	<div th:replace="include/commonParts :: commonParts"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa12010");</script>
 	<!-- header定義 -->
 	<header>
-		<script th:remove="all">oa_getHeader("oa12010", "取引ロール編成インポート＆エクスポート"");</script>
+		<script th:remove="all">oa_getHeader("oa12010", "取引ロール編成インポート＆エクスポート");</script>
 		<div th:replace="include/header :: header (id='oa12010', title='取引ロール編成インポート＆エクスポート')"></div>
 	</header>
 
@@ -114,16 +115,41 @@
 				</div>
 			</div>
 		</section>
-			<div class="row">
-				<table>
-					<tr th:each="itemrow, iterStat : *{form.messageVoList}">
-						<td th:text="${itemrow.message}"><td>
-					<tr>
-				</table>
 
-			</div>
 		<section>
-
+			<div class="row" th:if="!${#lists.isEmpty(form.messageVoList)}">
+				<div class="oa_table_head_dflex">
+					<div class="oa_table_head_flex">
+						<table>
+							<thead>
+							<tr><th>メッセージ</th></tr>
+							</thead>
+						</table>
+					</div>
+					<div class="oa_table_head_flex_scroll_bar"></div>
+				</div>
+				<div id="message_table">
+					<table>
+						<tbody>
+						<tr th:each="itemrow, iterStat : *{form.messageVoList}">
+							<td th:text="${itemrow.message}"></td>
+						</tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（1行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（2行目）の同一キーで重複するレコードがあります。a</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（3行目）の同一キーで各項目内容が不一致のレコードがあります。</td></tr>
+						<tr th:remove="all"><td>インポートした取引ロール編成ファイルと選択したサブシステムが一致していません。</td></tr>
+						<tr th:remove="all"><td>［取引ロール－取引グループ編成］に入力した取引グループコードが［取引グループ－取引編成］に存在しません。(取引グループコード:ANTG01)</td></tr>
+						<tr th:remove="all"><td>オペレーター_取引ロール割当に登録済の取引ロールコードを削除します。(オペレーターID:123、取引ロールコード:ANAG01)</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（7行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（8行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（9行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（10行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（11行目）取引グループコードが入力されていません。</td></tr>
+						<tr th:remove="all"><td>［取引グループ－取引編成］（12行目）取引グループコードが入力されていません。</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</section>
 
 		<br>

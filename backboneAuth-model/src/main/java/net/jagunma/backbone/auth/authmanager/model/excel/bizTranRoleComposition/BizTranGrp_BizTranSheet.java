@@ -7,7 +7,7 @@ import java.time.LocalDate;
  */
 public class BizTranGrp_BizTranSheet {
 
-    private final int rowno;
+    private final Integer rowno;
     private final String subSystemName;
     private final String bizTranGrpCode;
     private final String bizTranGrpName;
@@ -19,7 +19,7 @@ public class BizTranGrp_BizTranSheet {
 
     // コンストラクタ
     BizTranGrp_BizTranSheet(
-        int rowno,
+        Integer rowno,
         String subSystemName,
         String bizTranGrpCode,
         String bizTranGrpName,
@@ -42,7 +42,7 @@ public class BizTranGrp_BizTranSheet {
 
     // ファクトリーメソッド
     public static BizTranGrp_BizTranSheet createFrom(
-        int rowno,
+        Integer rowno,
         String subSystemName,
         String bizTranGrpCode,
         String bizTranGrpName,
@@ -65,7 +65,7 @@ public class BizTranGrp_BizTranSheet {
     }
 
     // Getter
-    public int getRowno() {
+    public Integer getRowno() {
         return rowno;
     }
     public String getSubSystemName() {

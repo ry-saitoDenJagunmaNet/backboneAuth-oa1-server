@@ -6,6 +6,11 @@ package net.jagunma.backbone.auth.authmanager.infra.excel.constant;
 public class BizTranRoleCompositionConstants {
 
     /**
+     * 取引ロール編成 Templateファイル
+     */
+    public static final String TEMPLATE_EXCEL_FILE = "Template取引ロール編成.xlsx";
+
+    /**
      * 取引ロール－取引グループ編成Sheetのindex
      */
     public static final int INDEX_OF_SHEET1 = 0;

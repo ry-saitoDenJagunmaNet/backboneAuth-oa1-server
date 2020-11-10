@@ -8,43 +8,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
-import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntity;
-import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityDao;
-import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
-import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
-import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntity;
-import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_BizTranRoleHistoryEntityDao;
-import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
-import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
-import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntity;
-import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.passwordHistory.PasswordHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.beans.Beans;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -59,7 +37,7 @@ class OperatorForStoreDataSourceTest {
     private String mailAddress = "test@den.jagunma.net";
     private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
     private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
-    private Boolean isDeviceAuth = false;
+    private Boolean isDeviceAuth = true;   private Boolean isDeviceAuthBefore = false;
     private Long jaId = 6L;
     private String jaCode = "006";
     private Long branchId = 1L;
@@ -72,38 +50,22 @@ class OperatorForStoreDataSourceTest {
     private LocalDateTime updatedAt = LocalDateTime.of(2020, 10, 31,4,5,6);
     private String updatedIpAddress = "200.200.200.200";
     private Integer recordVersion = 1;
-    private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, expirationStartDate, expirationEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, null);
 
     // オペレーター履歴ヘッダー系
-    private Long operatorHistoryId = 234567L;
     private String changeCause = "新職員の入組による登録";
 
     // パスワード履歴系
     private Long passwordHistoryId = 345678L;
     private String password = "PaSsWoRd";
-    private String confirmPassword = "PaSsWoRd";
+    private String passwordLastTime = "PasswordLastTime";
+    private String password2TimesBefore = "PasswordTwoTimesBefore";
+    private PasswordChangeType passwordChangeType = PasswordChangeType.初期;
+    private PasswordChangeType passwordChangeTypeLastTime = PasswordChangeType.ユーザーによる変更;
+    private PasswordChangeType passwordChangeType2TimesBefore = PasswordChangeType.管理者によるリセット;
+    private PasswordHistories passwordHistories;
 
-    // オペレーター_サブシステムロール割当履歴系
-    private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
-        Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), expirationStartDate, expirationEndDate, 391, operator, SubSystemRole.JA管理者),
-        Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), expirationStartDate, expirationEndDate, 392, operator, SubSystemRole.業務統括者_購買),
-        Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), expirationStartDate, expirationEndDate, 393, operator, SubSystemRole.業務統括者_販売_青果),
-        Operator_SubSystemRole.createFrom(304L, operatorId, SubSystemRole.業務統括者_販売_米.getCode(), expirationStartDate, expirationEndDate, 394, operator, SubSystemRole.業務統括者_販売_米),
-        Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), expirationStartDate, expirationEndDate, 395, operator, SubSystemRole.業務統括者_販売_畜産));
-    private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
-
-    // オペレーター_取引ロール割当履歴系
-    private List<BizTranRole> bizTranRoleList = newArrayList(
-        BizTranRole.createFrom(401L, "KBAG01", "（購買）購買業務基本", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
-        BizTranRole.createFrom(402L, "YSAG19", "（青果）管理者（仕切実績修正）", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果),
-        BizTranRole.createFrom(403L, "HKAG10", "（米）ＪＡ取引全般", SubSystem.販売_米.getCode(), recordVersion, SubSystem.販売_米),
-        BizTranRole.createFrom(404L, "ANAG01", "（畜産）取引全般", SubSystem.販売_畜産.getCode(), recordVersion, SubSystem.販売_畜産));
-    private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
-        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(0)),
-        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(1)),
-        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(2)),
-        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(3)));
-    private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
+    // テスト制御用
+    boolean isOperatorEntityUpdated = false;
 
     // オペレーターエントリーパック生成
     private OperatorEntryPack createOperatorEntryPack() {
@@ -118,8 +80,7 @@ class OperatorForStoreDataSourceTest {
             branchId,
             branchCode,
             changeCause,
-            password,
-            confirmPassword);
+            password);
     }
     // オペレーターアップデートパック生成
     private OperatorUpdatePack createOperatorUpdatePack() {
@@ -137,21 +98,29 @@ class OperatorForStoreDataSourceTest {
             changeCause);
     }
 
+    // パスワード履歴生成
+    private PasswordHistories createPasswordHistories() {
+        List<PasswordHistory> passwordHistoryList = newArrayList(
+            PasswordHistory.createFrom(202L, operatorId, LocalDateTime.of(2020,10,1,8,31,12), passwordLastTime, passwordChangeTypeLastTime, recordVersion, null),
+            PasswordHistory.createFrom(201L, operatorId, LocalDateTime.of(2020,10,1,8,30,12), password2TimesBefore, passwordChangeType2TimesBefore, recordVersion, null));
+
+        return PasswordHistories.createFrom(passwordHistoryList);
+    }
+
     // テスト対象クラス生成
     private OperatorForStoreDataSource createOperatorForStoreDataSource() {
         OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
             @Override
             public int countBy(OperatorEntityCriteria criteria) {
-                // entryテスト時
-                if (criteria.getOperatorCodeCriteria().getEqualTo() != null &&
-                    !criteria.getOperatorCodeCriteria().getEqualTo().equals(operatorCode)) {
+                // entry系テスト時
+                if (!criteria.getOperatorCodeCriteria().getEqualTo().equals(operatorCode)) {
                     return 1;
                 }
                 return 0;
             }
             @Override
             public int insert(OperatorEntity entity) {
-                // entryテスト時
+                // entry系テスト時
                 entity.setOperatorId(operatorId);
                 entity.setCreatedBy(createdBy);
                 entity.setCreatedAt(createdAt);
@@ -165,15 +134,16 @@ class OperatorForStoreDataSourceTest {
             }
             @Override
             public OperatorEntity findOneBy(OperatorEntityCriteria criteria) {
-                // updateテスト時
                 OperatorEntity entity = new OperatorEntity();
-                entity.setOperatorId(operatorId);
+
+                // update系テスト時
+                entity.setOperatorId(criteria.getOperatorIdCriteria().getEqualTo());
                 entity.setOperatorCode(operatorCode);
                 entity.setOperatorName(operatorName);
                 entity.setMailAddress(mailAddress);
                 entity.setExpirationStartDate(expirationStartDate);
                 entity.setExpirationEndDate(expirationEndDate);
-                entity.setIsDeviceAuth(isDeviceAuth);
+
                 entity.setJaId(jaId);
                 entity.setJaCode(jaCode);
                 entity.setBranchId(branchId);
@@ -182,10 +152,25 @@ class OperatorForStoreDataSourceTest {
                 entity.setCreatedBy(createdBy);
                 entity.setCreatedAt(createdAt);
                 entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(updatedBy);
-                entity.setUpdatedAt(updatedAt);
-                entity.setUpdatedIpAddress(updatedIpAddress);
-                entity.setRecordVersion(recordVersion + 1);
+
+                // update系テスト時（updateOperator での update 前の findOneBy）＆（isChangeDeviceAuth）
+                if (!isOperatorEntityUpdated) {
+                    entity.setIsDeviceAuth(isDeviceAuthBefore);
+
+                    entity.setUpdatedBy(null);
+                    entity.setUpdatedAt(null);
+                    entity.setUpdatedIpAddress(null);
+                    entity.setRecordVersion(recordVersion);
+                } else {
+                // update系テスト時（updateOperator での update 後の findOneBy）
+                    entity.setIsDeviceAuth(isDeviceAuth);
+
+                    entity.setUpdatedBy(updatedBy);
+                    entity.setUpdatedAt(updatedAt);
+                    entity.setUpdatedIpAddress(updatedIpAddress);
+                    entity.setRecordVersion(recordVersion + 1);
+                }
+
                 return entity;
             }
             @Override
@@ -194,6 +179,7 @@ class OperatorForStoreDataSourceTest {
             }
             @Override
             public int update(OperatorEntity entity) {
+                isOperatorEntityUpdated = true;
                 return 0;
             }
             @Override
@@ -221,322 +207,28 @@ class OperatorForStoreDataSourceTest {
                 return new int[0];
             }
         };
-        OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao = new OperatorHistoryHeaderEntityDao() {
+        OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore = new OperatorHistoryPackRepositoryForStore() {
             @Override
-            public int insert(OperatorHistoryHeaderEntity entity) {
-                // entryテスト時 ＆ updateテスト時
-                entity.setOperatorHistoryId(operatorHistoryId);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public List<OperatorHistoryHeaderEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public OperatorHistoryHeaderEntity findOneBy(OperatorHistoryHeaderEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<OperatorHistoryHeaderEntity> findBy(OperatorHistoryHeaderEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(OperatorHistoryHeaderEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int update(OperatorHistoryHeaderEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(OperatorHistoryHeaderEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(OperatorHistoryHeaderEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(OperatorHistoryHeaderEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<OperatorHistoryHeaderEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<OperatorHistoryHeaderEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<OperatorHistoryHeaderEntity> entities) {
-                return new int[0];
+            public void store(Long operatorId, String changeCause) {
             }
         };
-        OperatorHistoryEntityDao operatorHistoryEntityDao = new OperatorHistoryEntityDao() {
+        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
             @Override
-            public int insert(OperatorHistoryEntity entity) {
-                // entryテスト時 ＆ updateテスト時
-                entity.setOperatorHistoryId(operatorHistoryId);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public List<OperatorHistoryEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public OperatorHistoryEntity findOneBy(OperatorHistoryEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<OperatorHistoryEntity> findBy(OperatorHistoryEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(OperatorHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int update(OperatorHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(OperatorHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(OperatorHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(OperatorHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<OperatorHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<OperatorHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<OperatorHistoryEntity> entities) {
-                return new int[0];
+            public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
+                return passwordHistories;
             }
         };
-        PasswordHistoryEntityDao passwordHistoryEntityDao = new PasswordHistoryEntityDao() {
+        PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore = new PasswordHistoryRepositoryForStore() {
             @Override
-            public int insert(PasswordHistoryEntity entity) {
-                // entryテスト時
-                entity.setPasswordHistoryId(passwordHistoryId);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public List<PasswordHistoryEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public PasswordHistoryEntity findOneBy(PasswordHistoryEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<PasswordHistoryEntity> findBy(PasswordHistoryEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(PasswordHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int update(PasswordHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(PasswordHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(PasswordHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(PasswordHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<PasswordHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<PasswordHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<PasswordHistoryEntity> entities) {
-                return new int[0];
-            }
-        };
-        Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao = new Operator_SubSystemRoleHistoryEntityDao() {
-            @Override
-            public List<Operator_SubSystemRoleHistoryEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public Operator_SubSystemRoleHistoryEntity findOneBy(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<Operator_SubSystemRoleHistoryEntity> findBy(Operator_SubSystemRoleHistoryEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int insert(Operator_SubSystemRoleHistoryEntity entity) {
-                // updateテスト時
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public int update(Operator_SubSystemRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(Operator_SubSystemRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(Operator_SubSystemRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-        };
-        Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao = new Operator_BizTranRoleHistoryEntityDao() {
-            @Override
-            public List<Operator_BizTranRoleHistoryEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public Operator_BizTranRoleHistoryEntity findOneBy(Operator_BizTranRoleHistoryEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<Operator_BizTranRoleHistoryEntity> findBy(Operator_BizTranRoleHistoryEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(Operator_BizTranRoleHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int insert(Operator_BizTranRoleHistoryEntity entity) {
-                // updateテスト時
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public int update(Operator_BizTranRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(Operator_BizTranRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(Operator_BizTranRoleHistoryEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(Operator_BizTranRoleHistoryEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<Operator_BizTranRoleHistoryEntity> entities) {
-                return new int[0];
-            }
-        };
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
-            @Override
-            public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
-                // updateテスト時
-                return operator_SubSystemRoles;
-            }
-        };
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
-            @Override
-            public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
-                // updateテスト時
-                return operator_BizTranRoles;
+            public void store(PasswordHistory passwordHistory) {
             }
         };
 
-        return new OperatorForStoreDataSource(operatorEntityDao,
-            operatorHistoryHeaderEntityDao,
-            operatorHistoryEntityDao,
-            passwordHistoryEntityDao,
-            operator_SubSystemRoleHistoryEntityDao,
-            operator_BizTranRoleHistoryEntityDao,
-            operator_SubSystemRolesRepository,
-            operator_BizTranRolesRepository);
+        return new OperatorForStoreDataSource(
+            operatorEntityDao,
+            operatorHistoryPackRepositoryForStore,
+            passwordHistoriesRepository,
+            passwordHistoryRepositoryForStore);
     }
 
     /**
@@ -578,9 +270,9 @@ class OperatorForStoreDataSourceTest {
         OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
-        isDeviceAuth = true;
         changeCause = "認証機器使用開始";
         OperatorUpdatePack operatorUpdatePack = createOperatorUpdatePack();
+        passwordHistories = createPasswordHistories();
 
         assertThatCode(() ->
             // 実行
@@ -591,7 +283,7 @@ class OperatorForStoreDataSourceTest {
     /**
      * {@link OperatorForStoreDataSource#checkAlreadyExists(String operatorCode)}テスト
      *  ●パターン
-     *    同(オペレーターコード)既存データあり(オペレーターコード:yu999999)
+     *    オペレーター（コード）がすでに存在しているかのチェック）同オペレーターコード既存データあり(オペレーターコード:yu999999)
      *
      *  ●検証事項
      *  ・エラー発生
@@ -615,6 +307,63 @@ class OperatorForStoreDataSourceTest {
                 assertThat(e.getArgs()).containsSequence("オペレーターコード");
                 assertThat(e.getArgs()).containsSequence(alreadyExistsOperatorCode);
             });
+    }
+
+    /**
+     * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
+     *  ●パターン
+     *    機器認証の変更有無を判定）機器認証の変更 有
+     *
+     *  ●検証事項
+     *  ・判定結果
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isChangeDeviceAuth_test0() {
+        // テスト対象クラス生成
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
+
+        // 実行値
+        OperatorUpdatePack operatorUpdatePack = createOperatorUpdatePack();
+
+        // 期待値
+        Boolean expectedValue = true;
+
+        // 実行
+        boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
+
+        // 結果検証
+        assertThat(actualValue).isEqualTo(expectedValue);
+    }
+    /**
+     * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
+     *  ●パターン
+     *    機器認証の変更有無を判定）機器認証の変更 無
+     *
+     *  ●検証事項
+     *  ・判定結果
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isChangeDeviceAuth_test1() {
+        // テスト対象クラス生成
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
+
+        // 実行値
+        isDeviceAuth = false;
+        isDeviceAuthBefore = false;
+        OperatorUpdatePack operatorUpdatePack = createOperatorUpdatePack();
+
+        // 期待値
+        Boolean expectedValue = false;
+
+        // 実行
+        boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
+
+        // 結果検証
+        assertThat(actualValue).isEqualTo(expectedValue);
     }
 
     /**
@@ -643,7 +392,7 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setMailAddress(mailAddress);
         expectedEntity.setExpirationStartDate(expirationStartDate);
         expectedEntity.setExpirationEndDate(expirationEndDate);
-        expectedEntity.setIsDeviceAuth(isDeviceAuth);
+        expectedEntity.setIsDeviceAuth(isDeviceAuthBefore);
         expectedEntity.setJaId(jaId);
         expectedEntity.setJaCode(jaCode);
         expectedEntity.setBranchId(branchId);
@@ -680,7 +429,6 @@ class OperatorForStoreDataSourceTest {
         OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
-        isDeviceAuth = true;
         OperatorUpdatePack operatorUpdatePack = createOperatorUpdatePack();
 
         // 期待値
@@ -713,208 +461,109 @@ class OperatorForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorForStoreDataSource#insertOperatorHistoryHeader(Long operatorId, LocalDateTime changeDateTime, String changeCause)}テスト
+     * {@link OperatorForStoreDataSource#storePasswordHistory(Long operatorId, LocalDateTime changeDateTime, String password, PasswordChangeType passwordChangeType)}テスト
      *  ●パターン
      *    正常
      *
      *  ●検証事項
-     *  ・Entityへのセット
+     *  ・modelへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void insertOperatorHistoryHeader_test() {
+    void storePasswordHistory_test0() {
+        // テスト対象クラス生成
+        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
+
+        // 期待値
+        PasswordHistory expectedModel = PasswordHistory.createFrom(
+            null,
+            operatorId,
+            createdAt,
+            password,
+            passwordChangeType,
+            null,
+            null);
+
+        // 実行
+        PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, createdAt, password, passwordChangeType);
+
+        // 結果検証
+        assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
+    }
+
+    /**
+     * {@link OperatorForStoreDataSource#storePasswordHistory(Long operatorId, LocalDateTime changeDateTime, boolean isDeviceAuth)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・modelへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void storePasswordHistory_test1() {
         // テスト対象クラス生成
         OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
-        changeCause = "認証機器使用開始";
+        passwordHistories = createPasswordHistories();
 
         // 期待値
-        OperatorHistoryHeaderEntity expectedEntity = new OperatorHistoryHeaderEntity();
-        expectedEntity.setOperatorHistoryId(operatorHistoryId);
-        expectedEntity.setOperatorId(operatorId);
-        expectedEntity.setChangeDateTime(createdAt);
-        expectedEntity.setChangeCause(changeCause);
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(null);
-        expectedEntity.setUpdatedAt(null);
-        expectedEntity.setUpdatedIpAddress(null);
-        expectedEntity.setRecordVersion(recordVersion);
+        PasswordHistory expectedModel = PasswordHistory.createFrom(
+            null,
+            operatorId,
+            updatedAt,
+            passwordLastTime,
+            PasswordChangeType.機器認証パスワード,
+            null,
+            null);
 
         // 実行
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorForStoreDataSource.insertOperatorHistoryHeader(operatorId, createdAt, changeCause);
+        PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);
 
         // 結果検証
-        assertThat(operatorHistoryHeaderEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
+        assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
     }
 
     /**
-     * {@link OperatorForStoreDataSource#insertOperatorHistory(Long operatorHistoryId, OperatorEntity operatorEntity)}テスト
+     * {@link OperatorForStoreDataSource#storePasswordHistory(Long operatorId, LocalDateTime changeDateTime, boolean isDeviceAuth)}テスト
      *  ●パターン
      *    正常
      *
      *  ●検証事項
-     *  ・Entityへのセット
+     *  ・modelへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void insertOperatorHistory_test() {
+    void storePasswordHistory_test2() {
         // テスト対象クラス生成
         OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
 
         // 実行値
-        isDeviceAuth = true;
-        OperatorEntity operatorEntity = new OperatorEntity();
-        operatorEntity.setOperatorId(operatorId);
-        operatorEntity.setOperatorCode(operatorCode);
-        operatorEntity.setOperatorName(operatorName);
-        operatorEntity.setMailAddress(mailAddress);
-        operatorEntity.setExpirationStartDate(expirationStartDate);
-        operatorEntity.setExpirationEndDate(expirationEndDate);
-        operatorEntity.setIsDeviceAuth(isDeviceAuth);
-        operatorEntity.setJaId(jaId);
-        operatorEntity.setJaCode(jaCode);
-        operatorEntity.setBranchId(branchId);
-        operatorEntity.setBranchCode(branchCode);
-        operatorEntity.setAvailableStatus(availableStatus.getCode());
-        operatorEntity.setCreatedBy(createdBy);
-        operatorEntity.setCreatedAt(createdAt);
-        operatorEntity.setCreatedIpAddress(createdIpAddress);
+        isDeviceAuth = false;
+        passwordLastTime = "pAsSwOrD";
+        password2TimesBefore = "pAsSwOrD";
+        passwordChangeTypeLastTime = PasswordChangeType.機器認証パスワード;
+        passwordChangeType2TimesBefore = PasswordChangeType.ユーザーによる変更;
+        passwordHistories = createPasswordHistories();
 
         // 期待値
-        OperatorHistoryEntity expectedEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
-        expectedEntity.setOperatorHistoryId(operatorHistoryId);
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(null);
-        expectedEntity.setUpdatedAt(null);
-        expectedEntity.setUpdatedIpAddress(null);
-        expectedEntity.setRecordVersion(recordVersion);
+        PasswordHistory expectedModel = PasswordHistory.createFrom(
+            null,
+            operatorId,
+            updatedAt,
+            passwordLastTime,
+            passwordChangeType2TimesBefore,
+            null,
+            null);
 
         // 実行
-        OperatorHistoryEntity operatorHistoryEntity = operatorForStoreDataSource.insertOperatorHistory(operatorHistoryId, operatorEntity);
+        PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);
 
         // 結果検証
-        assertThat(operatorHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
-    }
-
-    /**
-     * {@link OperatorForStoreDataSource#insertPasswordHistory(Long operatorId, String password, LocalDateTime changeDateTime, PasswordChangeType passwordChangeType)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・Entityへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void insertPasswordHistory_test() {
-        // テスト対象クラス生成
-        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
-
-        // 期待値
-        PasswordHistoryEntity expectedEntity = new PasswordHistoryEntity();
-        expectedEntity.setPasswordHistoryId(passwordHistoryId);
-        expectedEntity.setOperatorId(operatorId);
-        expectedEntity.setChangeDateTime(createdAt);
-        expectedEntity.setPassword(password);
-        expectedEntity.setChangeType(PasswordChangeType.初期.getCode());
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(null);
-        expectedEntity.setUpdatedAt(null);
-        expectedEntity.setUpdatedIpAddress(null);
-        expectedEntity.setRecordVersion(recordVersion);
-
-        // 実行
-        PasswordHistoryEntity passwordHistoryEntity = operatorForStoreDataSource.insertPasswordHistory(operatorId, password, createdAt, PasswordChangeType.初期);
-
-        // 結果検証
-        assertThat(passwordHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
-    }
-
-    /**
-     * {@link OperatorForStoreDataSource#insertOperator_SubSystemRoleHistory(Long operatorHistoryId, Long operatorId)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・Entityへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void insertOperator_SubSystemRoleHistory_test() {
-        // テスト対象クラス生成
-        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
-
-        // 期待値
-        List<Operator_SubSystemRoleHistoryEntity> expectedEntityList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-
-            Operator_SubSystemRoleHistoryEntity expectedEntity = Beans.createAndCopy(Operator_SubSystemRoleHistoryEntity.class, operator_SubSystemRole).execute();
-            expectedEntity.setOperatorHistoryId(operatorHistoryId);
-            expectedEntity.setCreatedBy(createdBy);
-            expectedEntity.setCreatedAt(createdAt);
-            expectedEntity.setCreatedIpAddress(createdIpAddress);
-            expectedEntity.setUpdatedBy(null);
-            expectedEntity.setUpdatedAt(null);
-            expectedEntity.setUpdatedIpAddress(null);
-            expectedEntity.setRecordVersion(recordVersion);
-
-            expectedEntityList.add(expectedEntity);
-        }
-
-        // 実行
-        List<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = operatorForStoreDataSource.insertOperator_SubSystemRoleHistory(operatorHistoryId, operatorId);
-
-        // 結果検証
-        assertThat(operator_SubSystemRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
-    }
-
-    /**
-     * {@link OperatorForStoreDataSource#insertOperator_BizTranRoleHistory(Long operatorHistoryId, Long operatorId)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・Entityへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void insertOperator_BizTranRoleHistory_test() {
-        // テスト対象クラス生成
-        OperatorForStoreDataSource operatorForStoreDataSource = createOperatorForStoreDataSource();
-
-        // 期待値
-        List<Operator_BizTranRoleHistoryEntity> expectedEntityList = newArrayList();
-        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-
-            Operator_BizTranRoleHistoryEntity expectedEntity = Beans.createAndCopy(Operator_BizTranRoleHistoryEntity.class, operator_BizTranRole).execute();
-            expectedEntity.setOperatorHistoryId(operatorHistoryId);
-            expectedEntity.setCreatedBy(createdBy);
-            expectedEntity.setCreatedAt(createdAt);
-            expectedEntity.setCreatedIpAddress(createdIpAddress);
-            expectedEntity.setUpdatedBy(null);
-            expectedEntity.setUpdatedAt(null);
-            expectedEntity.setUpdatedIpAddress(null);
-            expectedEntity.setRecordVersion(recordVersion);
-
-            expectedEntityList.add(expectedEntity);
-        }
-
-        // 実行
-        List<Operator_BizTranRoleHistoryEntity> Operator_BizTranRoleHistoryEntityList = operatorForStoreDataSource.insertOperator_BizTranRoleHistory(operatorHistoryId, operatorId);
-
-        // 結果検証
-        assertThat(Operator_BizTranRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
+        assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
     }
 }

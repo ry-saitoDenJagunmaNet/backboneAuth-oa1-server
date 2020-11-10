@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class PasswordHistoryTest {
 
     /**
-     * {@link PasswordHistory#createFrom(Long, Long, LocalDateTime, String, Short, Integer, Operator)}テスト
+     * {@link PasswordHistory#createFrom(Long, Long, LocalDateTime, String, PasswordChangeType, Integer, Operator)}テスト
      *  ●パターン
      *    正常
      *
@@ -32,7 +32,7 @@ class PasswordHistoryTest {
         Long operatorId = 20L;
         LocalDateTime changeDateTime = LocalDateTime.of(2020, 10, 1, 8,30,12);
         String password = "password";
-        Short changeType = PasswordChangeType.初期.getCode();
+        PasswordChangeType passwordChangeType = PasswordChangeType.初期;
         Integer recordVersion = 1;
 
         String operatorCode = "yu001011";
@@ -70,7 +70,7 @@ class PasswordHistoryTest {
             operatorId,
             changeDateTime,
             password,
-            changeType,
+            passwordChangeType,
             recordVersion,
             operator);
 
@@ -80,7 +80,7 @@ class PasswordHistoryTest {
         assertThat(passwordHistory.getOperatorId()).isEqualTo(operatorId);
         assertThat(passwordHistory.getChangeDateTime()).isEqualTo(changeDateTime);
         assertThat(passwordHistory.getPassword()).isEqualTo(password);
-        assertThat(passwordHistory.getChangeType()).isEqualTo(changeType);
+        assertThat(passwordHistory.getPasswordChangeType()).isEqualTo(passwordChangeType);
         assertThat(passwordHistory.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(passwordHistory.getOperator()).usingRecursiveComparison().isEqualTo(operator);
     }

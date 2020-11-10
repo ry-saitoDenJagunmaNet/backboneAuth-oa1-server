@@ -18,7 +18,6 @@ public class OperatorEntryPack {
     private final String branchCode;
     private final String changeCause;
     private final String password;
-    private final String confirmPassword;
 
     // コンストラクタ
     OperatorEntryPack(
@@ -32,8 +31,7 @@ public class OperatorEntryPack {
         Long branchId,
         String branchCode,
         String changeCause,
-        String password,
-        String confirmPassword) {
+        String password) {
 
         this.operatorCode = operatorCode;
         this.operatorName = operatorName;
@@ -46,7 +44,6 @@ public class OperatorEntryPack {
         this.branchCode = branchCode;
         this.changeCause = changeCause;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
     // ファクトリーメソッド
     public static OperatorEntryPack createFrom(
@@ -60,8 +57,7 @@ public class OperatorEntryPack {
         Long branchId,
         String branchCode,
         String changeCause,
-        String password,
-        String confirmPassword) {
+        String password) {
 
         return new OperatorEntryPack(
             operatorCode,
@@ -74,8 +70,7 @@ public class OperatorEntryPack {
             branchId,
             branchCode,
             changeCause,
-            password,
-            confirmPassword);
+            password);
     }
 
     // Getter
@@ -111,8 +106,5 @@ public class OperatorEntryPack {
     }
     public String getPassword() {
         return password;
-    }
-    public String getConfirmPassword() {
-        return confirmPassword;
     }
 }

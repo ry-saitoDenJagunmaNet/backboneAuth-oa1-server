@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class Operator_BizTranRoleTest {
 
     /**
-     * {@link Operator_BizTranRole#createFrom(Long, Long, Long, LocalDate, LocalDate, Integer, Operator, BizTranRole )}テスト
+     * {@link Operator_BizTranRole#createFrom(Long,Long,Long,LocalDate,LocalDate,Integer,Operator,BizTranRole )}テスト
      *  ●パターン
      *    正常
      *
@@ -32,7 +32,7 @@ class Operator_BizTranRoleTest {
         Long operatorId = 18L;
         Long bizTranRoleId = 456L;
         LocalDate expirationStartDate = LocalDate.of(2020,1,1);
-        LocalDate expirationEndDate = LocalDate.of(9999,12,31);;
+        LocalDate expirationEndDate = LocalDate.of(9999,12,31);
         Integer recordVersion = 1;
 
         String operatorCode = "yu001009";

@@ -478,3 +478,21 @@ ul.oa_collapsible > li > .collapsible-body {
 
 /* footerボタンの下余白設定 */ 
 .oa_footer_button {margin-bottom: 4px;}
+
+/**
+ * 処理中 preloader
+ */
+.oa_preloader_bg_hide {display: none;}
+.oa_preloader_bg {
+	position: fixed;
+	z-index: 10;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	background:rgba(0,0,0,0.1);
+}
+.oa_preloader {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+}

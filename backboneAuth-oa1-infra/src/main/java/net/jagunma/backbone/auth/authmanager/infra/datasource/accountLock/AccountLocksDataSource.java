@@ -3,13 +3,13 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.accountLock;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class AccountLocksDataSource implements AccountLocksRepository {
 
     private final AccountLockEntityDao accountLockEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
     AccountLocksDataSource(AccountLockEntityDao accountLockEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorsRepository operatorsRepository) {
 
         this.accountLockEntityDao = accountLockEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorsRepository = operatorsRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ public class AccountLocksDataSource implements AccountLocksRepository {
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(accountLockCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // アカウントロック群検索
         AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();

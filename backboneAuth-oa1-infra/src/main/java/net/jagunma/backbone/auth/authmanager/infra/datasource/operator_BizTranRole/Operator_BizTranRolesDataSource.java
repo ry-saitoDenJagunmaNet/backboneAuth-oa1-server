@@ -4,12 +4,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRole.BizTranRolesDataSource;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -27,17 +27,17 @@ import org.springframework.stereotype.Component;
 public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRepository {
 
     private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
-    private final BizTranRolesDataSource bizTranRolesDataSource;
+    private final OperatorsRepository operatorsRepository;
+    private final BizTranRolesRepository bizTranRolesRepository;
 
     // コンストラクタ
     Operator_BizTranRolesDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
-        OperatorsDataSource operatorsDataSource,
-        BizTranRolesDataSource bizTranRolesDataSource) {
+        OperatorsRepository operatorsRepository,
+        BizTranRolesRepository bizTranRolesRepository) {
 
         this.operator_BizTranRoleEntityDao = operator_BizTranRoleEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
-        this.bizTranRolesDataSource = bizTranRolesDataSource;
+        this.operatorsRepository = operatorsRepository;
+        this.bizTranRolesRepository = bizTranRolesRepository;
     }
 
     /**
@@ -51,11 +51,14 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(operator_BizTranRoleCriteria.getOperatorIdCriteria());
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター_取引ロール割当群検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
+        entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
+
         entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
@@ -66,7 +69,7 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
         // 取引ロール群の検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
         bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
-        BizTranRoles bizTranRoles = bizTranRolesDataSource.selectBy(bizTranRoleCriteria, Orders.empty());
+        BizTranRoles bizTranRoles = bizTranRolesRepository.selectBy(bizTranRoleCriteria, Orders.empty());
 
         List<Operator_BizTranRole> list = newArrayList();
         for (Operator_BizTranRoleEntity entity : OperatorBizTranRoleList) {

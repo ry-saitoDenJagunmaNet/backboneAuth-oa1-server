@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory;
 
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 
 /**
  * パスワード履歴
@@ -12,7 +13,7 @@ public class PasswordHistory {
     private final Long operatorId;
     private final LocalDateTime changeDateTime;
     private final String password;
-    private final Short changeType;
+    private final PasswordChangeType passwordChangeType;
     private final Integer recordVersion;
     private final Operator operator;
 
@@ -22,7 +23,7 @@ public class PasswordHistory {
         Long operatorId,
         LocalDateTime changeDateTime,
         String password,
-        Short changeType,
+        PasswordChangeType passwordChangeType,
         Integer recordVersion,
         Operator operator) {
 
@@ -30,7 +31,7 @@ public class PasswordHistory {
         this.operatorId = operatorId;
         this.changeDateTime = changeDateTime;
         this.password = password;
-        this.changeType = changeType;
+        this.passwordChangeType = passwordChangeType;
         this.recordVersion = recordVersion;
         this.operator = operator;
     }
@@ -41,7 +42,7 @@ public class PasswordHistory {
         Long operatorId,
         LocalDateTime changeDateTime,
         String password,
-        Short changeType,
+        PasswordChangeType passwordChangeType,
         Integer recordVersion,
         Operator operator) {
 
@@ -50,7 +51,7 @@ public class PasswordHistory {
             operatorId,
             changeDateTime,
             password,
-            changeType,
+            passwordChangeType,
             recordVersion,
             operator);
     }
@@ -68,8 +69,8 @@ public class PasswordHistory {
     public String getPassword() {
         return password;
     }
-    public Short getChangeType() {
-        return changeType;
+    public PasswordChangeType getPasswordChangeType() {
+        return passwordChangeType;
     }
     public Integer getRecordVersion() {
         return recordVersion;

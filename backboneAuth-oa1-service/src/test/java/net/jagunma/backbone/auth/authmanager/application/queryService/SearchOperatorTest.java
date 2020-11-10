@@ -17,15 +17,15 @@ import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLoc
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeader;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryHeader.OperatorHistoryHeadersRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -252,8 +252,8 @@ class SearchOperatorTest {
     // パスワード履歴群作成
     private PasswordHistories createPasswordHistories() {
         List<PasswordHistory> list = newArrayList();
-        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),"12345678",(short) 1,0,null));
-        list.add(PasswordHistory.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),"abcdefgh",(short) 1,1,null));
+        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),"12345678",PasswordChangeType.ユーザーによる変更,0,null));
+        list.add(PasswordHistory.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),"abcdefgh",PasswordChangeType.ユーザーによる変更,1,null));
         return PasswordHistories.createFrom(list);
     }
     // サインイン証跡群作成
@@ -1474,7 +1474,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(5),
             "password",
-            PasswordChangeType.初期.getCode(),
+            PasswordChangeType.初期,
             1,
             null);
 
@@ -1519,7 +1519,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.初期.getCode(),
+            PasswordChangeType.初期,
             1,
             null
         );
@@ -1561,7 +1561,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(5),
             "password",
-            PasswordChangeType.初期.getCode(),
+            PasswordChangeType.初期,
             1,
             null
         );
@@ -1607,7 +1607,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.ユーザーによる変更.getCode(),
+            PasswordChangeType.ユーザーによる変更,
             1,
             null
         );
@@ -1647,7 +1647,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.ユーザーによる変更.getCode(),
+            PasswordChangeType.ユーザーによる変更,
             1,
             null
         );
@@ -1758,7 +1758,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.管理者によるリセット.getCode(),
+            PasswordChangeType.管理者によるリセット,
             1,
             null
         );
@@ -1803,7 +1803,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.機器認証パスワード.getCode(),
+            PasswordChangeType.機器認証パスワード,
             1,
             null
         );
@@ -1848,7 +1848,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.機器認証パスワード.getCode(),
+            PasswordChangeType.機器認証パスワード,
             1,
             null
         );
@@ -1930,7 +1930,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.初期.getCode(),
+            PasswordChangeType.初期,
             1,
             null
         );
@@ -1975,7 +1975,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.ユーザーによる変更.getCode(),
+            PasswordChangeType.ユーザーによる変更,
             1,
             null
         );
@@ -2020,7 +2020,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.管理者によるリセット.getCode(),
+            PasswordChangeType.管理者によるリセット,
             1,
             null
         );
@@ -2065,7 +2065,7 @@ class SearchOperatorTest {
             18L,
             LocalDateTime.now().minusDays(6),
             "password",
-            PasswordChangeType.機器認証パスワード.getCode(),
+            PasswordChangeType.機器認証パスワード,
             1,
             null
         );

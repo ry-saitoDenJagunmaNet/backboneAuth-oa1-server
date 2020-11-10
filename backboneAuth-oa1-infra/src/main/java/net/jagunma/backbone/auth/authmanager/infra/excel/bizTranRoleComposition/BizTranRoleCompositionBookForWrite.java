@@ -1,31 +1,28 @@
 package net.jagunma.backbone.auth.authmanager.infra.excel.bizTranRoleComposition;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import net.jagunma.backbone.auth.authmanager.infra.excel.constant.BizTranRoleCompositionConstants;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBook;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRoleCompositionBookRepositoryForWrite;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 /**
  * 取引ロール編成書き出し
@@ -34,12 +31,6 @@ import org.springframework.stereotype.Component;
 public class BizTranRoleCompositionBookForWrite implements
     BizTranRoleCompositionBookRepositoryForWrite {
 
-    private final String TemplateExcelfile = "Template取引ロール編成.xlsx";
-
-    // リソースファイルを検索するクラスローダー
-    @Autowired
-    ResourceLoader resourceLoader;
-
     /**
      * 取引ロール編成Excelを作成します
      *
@@ -47,47 +38,75 @@ public class BizTranRoleCompositionBookForWrite implements
      * @param bizTranGrp_BizTransSheet     取引グループ－取引編成群
      * @return 取引ロール編成作成結果
      */
-    public BizTranRoleCompositionBook create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
+    public ExcelContainer create(BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
         BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
 
-        Resource resource = resourceLoader.getResource("classpath:" + TemplateExcelfile);
-        Workbook workbook = null;
-
-        // Templateを読む
-        try {
-            FileInputStream is = new FileInputStream(resource.getFile().toString());
-            workbook = WorkbookFactory.create(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-            workbook = null;
-            throw new GunmaRuntimeException("EOA11003", "Excel Template", e);
-        }
-
+        // 取引ロール編成Excel Template取得
+        Workbook workbook = getTemplateWorkbook(getTemplateResource(BizTranRoleCompositionConstants.TEMPLATE_EXCEL_FILE));
         // １番目の(取引ロール－取引グループ編成)シートのデータを作成
         createBizTranRole_BizTranGrpsSheet(workbook, bizTranRole_BizTranGrpsSheet);
         // ２番目の(取引グループ－取引編成)シートのデータを作成
         createBizTranGrp_BizTransSheet(workbook, bizTranGrp_BizTransSheet);
 
-        // excel workbook出力
+        // Excel Workbook出力
+        ByteArrayOutputStream out = wrietExcelWorkbook(workbook);
+
+        return ExcelContainer.createFrom(out);
+    }
+
+    /**
+     * 取引ロール編成Excel Template Resourceを取得します
+     *
+     * @param templateFileName 取引ロール編成Excel Templateファイル名
+     * @return emplateFileName 取引ロール編成Excel Template Resource
+     */
+    File getTemplateResource(String templateFileName) {
+        // Resourceのtemplateファイルを取得
+        File templateFile = null;
+        try {
+            templateFile =  ResourceUtils.getFile("classpath:" + templateFileName);
+        } catch (FileNotFoundException e) {
+            throw new GunmaRuntimeException("EOA11003", "取引ロール編成Excel Template", e);
+        }
+        return templateFile;
+    }
+
+    /**
+     * 取引ロール編成Excel TemplateWorkbookを取得します
+     *
+     * @param templateFile 取引ロール編成Excel Templateファイル
+     * @return emplateFileName 取引ロール編成Excel Template
+     */
+    Workbook getTemplateWorkbook(File templateFile) {
+        // Templateを読む
+        Workbook workbook = null;
+        try {
+            FileInputStream is = new FileInputStream(templateFile.toString());
+            workbook = WorkbookFactory.create(is);
+        } catch (IOException e) {
+            throw new GunmaRuntimeException("EOA11003", "取引ロール編成Excel Template", e);
+        }
+        return workbook;
+    }
+
+    /**
+     * Excel Workbookを出力します
+     * @param workbook
+     * @return
+     */
+    ByteArrayOutputStream  wrietExcelWorkbook(Workbook workbook) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             workbook.write(out);
-
-            //TODO: DEBUG
-//            FileOutputStream outExcelFile = new FileOutputStream("C:\\Work\\test.xlsx");
-//            workbook.write(outExcelFile);
-
             out.flush();
             out.close();
             workbook.close();
-        } catch (IOException e) {
-            throw new GunmaRuntimeException("EOA11004", "Excel Template", e);
+        } catch (Exception e) {
+            throw new GunmaRuntimeException("EOA11004", "取引ロール編成Excel", e);
         } finally {
             workbook = null;
         }
-
-        return BizTranRoleCompositionBook
-            .createFrom(ExcelContainer.createFrom(out));
+        return out;
     }
 
     /**
@@ -104,11 +123,11 @@ public class BizTranRoleCompositionBookForWrite implements
         int rowIndex = 2;
         for (BizTranRole_BizTranGrpSheet bizTranRole_BizTranGrpSheet : bizTranRole_BizTranGrpsSheet.getValues()) {
             Row row = getRow(rowIndex, 2, 4, sheet);
-            getCell(row, 0).setCellValue(bizTranRole_BizTranGrpSheet.getSubSystemName());
-            getCell(row, 1).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleCode());
-            getCell(row, 2).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleName());
-            getCell(row, 3).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpCode());
-            getCell(row, 4).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_SUBSYSTE_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getSubSystemName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_ROLE_CODE).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_ROLE_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranRoleName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_CODE).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET1_BIZTRAN_GRP_NAME).setCellValue(bizTranRole_BizTranGrpSheet.getBizTranGrpName());
             rowIndex++;
         }
     }
@@ -128,14 +147,14 @@ public class BizTranRoleCompositionBookForWrite implements
         int rowIndex = 2;
         for (BizTranGrp_BizTranSheet bizTranGrp_BizTranSheet : bizTranGrp_BizTransSheet.getValues()) {
             Row row = getRow(rowIndex, 2, 7, sheet);
-            getCell(row, 0).setCellValue(bizTranGrp_BizTranSheet.getSubSystemName());
-            getCell(row, 1).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpCode());
-            getCell(row, 2).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpName());
-            getCell(row, 3).setCellValue(bizTranGrp_BizTranSheet.getBizTranCode());
-            getCell(row, 4).setCellValue(bizTranGrp_BizTranSheet.getBizTranName());
-            getCell(row, 5).setCellValue(bizTranGrp_BizTranSheet.getIsCenterBizTran()? 1 : 0);
-            getCell(row, 6).setCellValue(bizTranGrp_BizTranSheet.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            getCell(row, 7).setCellValue(bizTranGrp_BizTranSheet.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_SUBSYSTE_NAME).setCellValue(bizTranGrp_BizTranSheet.getSubSystemName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_GRP_CODE).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_GRP_NAME).setCellValue(bizTranGrp_BizTranSheet.getBizTranGrpName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_CODE).setCellValue(bizTranGrp_BizTranSheet.getBizTranCode());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_NAME).setCellValue(bizTranGrp_BizTranSheet.getBizTranName());
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_CENTER_BIZTRAN).setCellValue(bizTranGrp_BizTranSheet.getIsCenterBizTran()? 1 : 0);
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_STARTDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_ENDDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
 
             rowIndex++;
         }

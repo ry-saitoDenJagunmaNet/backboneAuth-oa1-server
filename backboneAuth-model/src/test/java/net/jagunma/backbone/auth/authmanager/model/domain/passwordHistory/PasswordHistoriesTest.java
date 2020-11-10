@@ -39,9 +39,9 @@ class PasswordHistoriesTest {
 
         // 実行値 ＆ 期待値
         List<PasswordHistory> list = newArrayList();
-        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.初期.getCode(),1,createOperator(18L)));
-        list.add(PasswordHistory.createFrom(2L,19L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.初期.getCode(),1,createOperator(19L)));
-        list.add(PasswordHistory.createFrom(3L,20L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.初期.getCode(),1,createOperator(20L)));
+        list.add(PasswordHistory.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.管理者によるリセット,1,createOperator(18L)));
+        list.add(PasswordHistory.createFrom(2L,19L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.ユーザーによる変更,1,createOperator(19L)));
+        list.add(PasswordHistory.createFrom(3L,20L,LocalDateTime.of(2020,10,1,8,30,12),"password",PasswordChangeType.初期,1,createOperator(20L)));
 
         // 実行
         PasswordHistories passwordHistories = PasswordHistories.createFrom(list);

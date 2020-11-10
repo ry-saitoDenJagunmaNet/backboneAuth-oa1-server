@@ -14,6 +14,8 @@ function oaex_th_executeBtn_onClick() {
 		document.forms[0].method = "POST";
 		document.forms[0].submit();
 	} else if (document.getElementById("mode_import").checked) {
+		// Preloader表示
+		oa_showPreloader();
 		document.forms[0].action = "importExcel";
 		document.forms[0].method = "POST";
 		document.forms[0].submit();

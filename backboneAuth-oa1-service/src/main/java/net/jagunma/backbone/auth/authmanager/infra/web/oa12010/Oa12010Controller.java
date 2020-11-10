@@ -134,13 +134,13 @@ public class Oa12010Controller extends BaseOfController {
         // エクスポートExcelの作成
         try {
             // 取引ロール編成検索
-            Oa12010CompositionExportSearchConverter searchConverter = Oa12010CompositionExportSearchConverter.with(vo);
-            Oa12010CompositionExportSearchPresenter searchPresenter = new Oa12010CompositionExportSearchPresenter();
+            Oa12010CompositionExportConverter searchConverter = Oa12010CompositionExportConverter.with(vo);
+            Oa12010CompositionExportPresenter searchPresenter = new Oa12010CompositionExportPresenter();
             searchBizTranRoleComposition.execute(searchConverter, searchPresenter);
 
             // Excel Weite
-            Oa12010CompositionExportWriteConverter writeConverter = searchPresenter.ConverterTo();
-            Oa12010CompositionExportWritePresenter writehPresenter = new Oa12010CompositionExportWritePresenter();
+            Oa12010CompositionExcelWriteConverter writeConverter = searchPresenter.converterTo();
+            Oa12010CompositionExcelWritePresenter writehPresenter = new Oa12010CompositionExcelWritePresenter();
             writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
 
             LOGGER.debug("exportExcel END");
@@ -173,8 +173,11 @@ public class Oa12010Controller extends BaseOfController {
             response.getOutputStream().write(vo.getExportExcelBook());
             response.getOutputStream().flush();
             response.getOutputStream().close();
-        } catch (IOException e) {
-            e.getStackTrace();
+        } catch (IOException ie) {
+            // IOExceptionが発生した場合
+            vo.setExceptionMessage(ie);
+            model.addAttribute("form", vo);
+            return "oa19999";
         }
 
         return null;
@@ -195,29 +198,39 @@ public class Oa12010Controller extends BaseOfController {
 
         LOGGER.debug("importExcel START");
 
+        Oa12010CompositionImportPresenter storePresenter = new Oa12010CompositionImportPresenter();
+
+        ByteArrayInputStream is = null;
         try {
-            ByteArrayInputStream is = new ByteArrayInputStream(importfile.getBytes());
-            Oa12010CompositionImportReadConverter readConverter = Oa12010CompositionImportReadConverter.with(vo, is);
-            Oa12010CompositionImportReadPresenter readPresenter = new Oa12010CompositionImportReadPresenter();
+            is = new ByteArrayInputStream(importfile.getBytes());
+        } catch (IOException ie) {
+            // IOExceptionが発生した場合
+            vo.setExceptionMessage(ie);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+
+        try {
+            // Excel Read
+            Oa12010CompositionExcelReadConverter readConverter = Oa12010CompositionExcelReadConverter.with(vo, is);
+            Oa12010CompositionExcelReadPresenter readPresenter = new Oa12010CompositionExcelReadPresenter();
             raedBizTranRoleComposition.execute(readConverter, readPresenter);
 
-            // Excel Weite
-            Oa12010CompositionImportStoreConverter storeConverter = readPresenter.ConverterTo();
-            Oa12010CompositionImportStorePresenter storePresenter = new Oa12010CompositionImportStorePresenter();
+            // 取引ロール編成登録
+            Oa12010CompositionImportConverter storeConverter = readPresenter.converterTo();
             storeBizTranRoleComposition.execute(storeConverter, storePresenter);
             storePresenter.bindTo(vo);
 
             model.addAttribute("form", vo);
-            //TODO:
-            if (vo.getMessageVoList() == null || vo.getMessageVoList().size() == 0) {
-                vo.setMessage("DEBUG 登録が完了 DEBUG");
-            } else {
-                vo.setMessage("DEBUG インポートデータにエラーあり DEBUG");
-            }
+
+//            //TODO:
+//            vo.setMessage("DEBUG 登録が完了 DEBUG");
+
             LOGGER.debug("importExcel END");
             return "oa12010";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
+            storePresenter.bindTo(vo);
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
             return "oa12010";
@@ -225,9 +238,6 @@ public class Oa12010Controller extends BaseOfController {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
             model.addAttribute("form", vo);
-            return "oa19999";
-        } catch (IOException e) {
-            e.printStackTrace();
             return "oa19999";
         }
     }

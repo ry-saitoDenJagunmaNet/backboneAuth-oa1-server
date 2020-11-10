@@ -96,7 +96,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    リクエスト不正
+     *    リクエスト不正チェック
      *
      *  ●検証事項
      *  ・エラー発生
@@ -120,7 +120,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  オペレーターID
+     *    未セットチェック  オペレーターID
      *
      *  ●検証事項
      *  ・エラー発生
@@ -146,7 +146,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  オペレーター名
+     *    未セットチェック  オペレーター名
      *
      *  ●検証事項
      *  ・エラー発生
@@ -172,7 +172,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  有効期限（開始日）
+     *    未セットチェック  有効期限（開始日）
      *
      *  ●検証事項
      *  ・エラー発生
@@ -198,7 +198,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  有効期限（終了日）
+     *    未セットチェック  有効期限（終了日）
      *
      *  ●検証事項
      *  ・エラー発生
@@ -224,7 +224,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  機器認証
+     *    未セットチェック  機器認証
      *
      *  ●検証事項
      *  ・エラー発生
@@ -250,7 +250,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  店舗ID
+     *    未セットチェック  店舗ID
      *
      *  ●検証事項
      *  ・エラー発生
@@ -276,7 +276,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  変更事由
+     *    未セッチェック  変更事由
      *
      *  ●検証事項
      *  ・エラー発生
@@ -302,7 +302,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セット  利用可否状態
+     *    未セットチェック  利用可否状態
      *
      *  ●検証事項
      *  ・エラー発生

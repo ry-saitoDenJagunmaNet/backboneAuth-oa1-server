@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.dto;
 
 import java.util.List;
+import net.jagunma.common.util.message.MessageFormatter;
 
 public class MessageDto {
 
@@ -20,6 +21,23 @@ public class MessageDto {
     }
 
     // ファクトリーメソッド
+    public static MessageDto createFrom(
+        String messageCode,
+        List<String> messageArgs) {
+
+        Object[] messageArgArray = messageArgs.toArray(new String[messageArgs.size()]);
+        return new MessageDto(
+            messageCode,
+            MessageFormatter.getSimpleMessage(messageCode, messageArgArray),
+            messageArgs);
+    }
+    public static MessageDto createFrom(String messageCode) {
+
+        return new MessageDto(
+            messageCode,
+            MessageFormatter.getSimpleMessage(messageCode),
+            null);
+    }
     public static MessageDto createFrom(
         String messageCode,
         String message,
