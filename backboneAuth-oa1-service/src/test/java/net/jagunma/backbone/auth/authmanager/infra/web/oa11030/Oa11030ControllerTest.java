@@ -95,7 +95,6 @@ class Oa11030ControllerTest {
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
     private Integer recordVersion = 1;
 
-    private String jaName = "JA前橋市";
     private String changeCause = "認証機器使用開始";
     private String changeCausePlaceholder = "新職員の入組による登録";
     private AccountLockStatus accountLockStatus = AccountLockStatus.アンロック;
@@ -104,6 +103,7 @@ class Oa11030ControllerTest {
     private List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList;
 
     // ＪＡAtMoment
+    private String jaName = "JA前橋市";
     private JaAtMoment jaAtMoment = JaAtMoment.builder()
         .withIdentifier(jaId)
         .withJaAttribute(JaAttribute.builder()

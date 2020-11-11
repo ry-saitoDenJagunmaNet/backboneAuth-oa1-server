@@ -56,11 +56,11 @@ class Oa11030InitPresenterTest {
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
     private Integer recordVersion = 1;
 
-    private String jaName = "JA前橋市";
     private String changeCausePlaceholder = "新職員の入組による登録";
     private AccountLockStatus accountLockStatus = AccountLockStatus.アンロック;
 
     // ＪＡAtMoment
+    private String jaName = "JA前橋市";
     private JaAtMoment jaAtMoment = JaAtMoment.builder()
         .withIdentifier(jaId)
         .withJaAttribute(JaAttribute.builder()
