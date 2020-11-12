@@ -40,6 +40,7 @@ import org.springframework.ui.Model;
 class Oa11020ControllerTest {
 
     // 実行 ＆ 期待 既定値
+    private String mode = "Initial";
     private String ja = null;                   //コンストラクタでセット
     private Long branchId = 1L;
     private String operatorCodePrefix = null;   //コンストラクタでセット
@@ -51,7 +52,6 @@ class Oa11020ControllerTest {
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "pAsSwOrD";
-    private String mode = "Initial";
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
         BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
