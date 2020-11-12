@@ -18,9 +18,9 @@ class UpdatePasswordValidatorTest {
     // 実行既定値
     private Long operatorId = 123456L;
     private String password = "PaSsWoRd";
-    private String confirmPassword = "PaSsWoRd";
     private String oldPassword = "OldPaSsWoRd";
     private String newPassword = "PaSsWoRd";
+    private String confirmPassword = "PaSsWoRd";
     private String messageAddition = "新しい";
 
     private PasswordResetRequest createPasswordResetRequest() {

@@ -18,6 +18,10 @@ public class Ed01010Vo extends BaseOfResponseVo {
      */
     private String ja;
     /**
+     * オペレーターID
+     */
+    private Long operatorId;
+    /**
      * オペレーター
      */
     private String operator;
@@ -26,7 +30,7 @@ public class Ed01010Vo extends BaseOfResponseVo {
      */
     private String oldPassword;
     /**
-     * 新しいパスワード
+     * 新しいパスワード・パスワード
      */
     private String newPassword;
     /**
@@ -40,6 +44,9 @@ public class Ed01010Vo extends BaseOfResponseVo {
     }
     public String getJa() {
         return ja;
+    }
+    public Long getOperatorId() {
+        return operatorId;
     }
     public String getOperator() {
         return operator;
@@ -60,6 +67,9 @@ public class Ed01010Vo extends BaseOfResponseVo {
     }
     public void setJa(String ja) {
         this.ja = ja;
+    }
+    public void setOperatorId(Long operatorId) {
+        this.operatorId = operatorId;
     }
     public void setOperator(String operator) {
         this.operator = operator;
