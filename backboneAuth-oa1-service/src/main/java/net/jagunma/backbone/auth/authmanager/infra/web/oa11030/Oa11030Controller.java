@@ -67,6 +67,7 @@ public class Oa11030Controller extends BaseOfController {
     /**
      * 画面を初期表示します
      *
+     * @param operatorId オペレーターID
      * @param model モデル
      * @return view名
      */
