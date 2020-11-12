@@ -229,7 +229,6 @@ class Oa11030ControllerTest {
                     throw new RuntimeException();
                 }
                 response.setOperators(operators);
-                response.setOperators(operators);
                 response.setAccountLocks(accountLocks);
                 response.setOperator_SubSystemRoles(operator_SubSystemRoles);
                 response.setOperator_BizTranRoles(operator_BizTranRoles);
