@@ -118,7 +118,7 @@ public class Oa11030Controller extends BaseOfController {
 
         try {
 
-            Oa11030UpdateConverter converter =  Oa11030UpdateConverter.with(vo);
+            Oa11030UpdateConverter converter = Oa11030UpdateConverter.with(vo);
 
             updateOperator.execute(converter);
 
