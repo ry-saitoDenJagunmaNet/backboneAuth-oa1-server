@@ -186,7 +186,7 @@ class BizTranRoleCompositionBookForWriteTest {
     @Tag(TestSize.SMALL)
     void getTemplateResource_test0() {
         // 実行値
-        String templateFileName = "";
+        String templateFileName = "無いファイル";
 
         // テスト対象クラス生成
         BizTranRoleCompositionBookForWrite bizTranRoleCompositionBookForWrite = new BizTranRoleCompositionBookForWrite();

@@ -72,7 +72,7 @@ class Oa12010ControllerTest {
     private byte[] exportExcelBook = null;
     private List<Oa12010MessageVo> messageVoList = null;
 
-    private byte[] actualHttpServletResponseWeitr = null;
+    private byte[] actualHttpServletResponseWrite = null;
 
     private final String GunmaRuntimeExceptionMessageCode = "EOA14002";
     private final String GunmaRuntimeExceptionMessageArg1 = "サブシステム";
@@ -217,11 +217,10 @@ class Oa12010ControllerTest {
                 return new ServletOutputStream() {
                     @Override
                     public void write(byte b[]) {
-                        actualHttpServletResponseWeitr = b;
+                        actualHttpServletResponseWrite = b;
                     }
                     @Override
                     public void write(int b) throws IOException {
-
                     }
                     @Override
                     public boolean isReady() {
@@ -229,7 +228,6 @@ class Oa12010ControllerTest {
                     }
                     @Override
                     public void setWriteListener(WriteListener listener) {
-
                     }
                 };
             }
@@ -300,10 +298,12 @@ class Oa12010ControllerTest {
                 return null;
             }
             @Override
+            @SuppressWarnings("deprecation")
             public String encodeUrl(String url) {
                 return null;
             }
             @Override
+            @SuppressWarnings("deprecation")
             public String encodeRedirectUrl(String url) {
                 return null;
             }
@@ -338,6 +338,7 @@ class Oa12010ControllerTest {
             public void setStatus(int sc) {
             }
             @Override
+            @SuppressWarnings("deprecation")
             public void setStatus(int sc, String sm) {
             }
             @Override
@@ -462,7 +463,7 @@ class Oa12010ControllerTest {
      *    正常
      *
      *  ●検証事項
-     *  ・HttpServletResponse Weitr
+     *  ・HttpServletResponse Write
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -487,7 +488,7 @@ class Oa12010ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualHttpServletResponseWeitr).isEqualTo(expectedExportExcelBook);
+        assertThat(actualHttpServletResponseWrite).isEqualTo(expectedExportExcelBook);
     }
 
     /**
@@ -496,7 +497,7 @@ class Oa12010ControllerTest {
      *    正常
      *
      *  ●検証事項
-     *  ・HttpServletResponse Weitr
+     *  ・HttpServletResponse Write
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -520,7 +521,7 @@ class Oa12010ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualHttpServletResponseWeitr).isEqualTo(expectedExportExcelBook);
+        assertThat(actualHttpServletResponseWrite).isEqualTo(expectedExportExcelBook);
     }
 
 
