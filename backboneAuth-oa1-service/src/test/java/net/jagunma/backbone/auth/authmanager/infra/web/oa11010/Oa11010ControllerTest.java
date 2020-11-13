@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranch;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
@@ -52,9 +52,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTr
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -184,57 +181,7 @@ class Oa11010ControllerTest {
                 return null;
             }
         };
-        OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
-            @Override
-            public List<OperatorEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public OperatorEntity findOneBy(OperatorEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<OperatorEntity> findBy(OperatorEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int insert(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int update(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-        };
-        SearchBranch searchBranch = new SearchBranch(branchAtMomentRepository) {
+        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
             public BranchesAtMoment selectBy(long jaId) {
                 return createBranchesAtMoment();
             }
@@ -284,7 +231,7 @@ class Oa11010ControllerTest {
         return new Oa11010Controller(
             searchOperator,
             simpleSearchBizTranRole,
-            searchBranch);
+            searchBranchAtMoment);
     }
 
     // Oa11010Vo作成

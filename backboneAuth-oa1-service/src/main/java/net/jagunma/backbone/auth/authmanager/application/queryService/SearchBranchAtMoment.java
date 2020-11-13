@@ -9,15 +9,15 @@ import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import org.springframework.stereotype.Service;
 
 /**
- * Branch検索サービス
+ * BranchAtMoment検索サービス
  */
 @Service
-public class SearchBranch {
+public class SearchBranchAtMoment {
 
     private final BranchAtMomentRepository branchAtMomentRepository;
 
     // コンストラクタ
-    public SearchBranch(BranchAtMomentRepository branchAtMomentRepository) {
+    public SearchBranchAtMoment(BranchAtMomentRepository branchAtMomentRepository) {
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
@@ -32,7 +32,6 @@ public class SearchBranch {
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
         criteria.getIdentifierCriteria().setEqualTo(branchId);
         criteria.setTargetDate(TargetDate.now());
-//        criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         return branchAtMomentRepository.findOneBy(criteria);
     }
 
