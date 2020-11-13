@@ -21,10 +21,15 @@ function oaex_arrowBtn_onClick() {
 		oaex_th_arrowBtn_onClick();
 		return;
 	}
-	oa_showAlert("登録しました。");
+
+	let modeTitle = document.getElementById("mode_title");
+	if (modeTitle.innerText == "初期パスワードの入力") {
+		oa_showAlert("登録しました。");
+	} else {
+		oa_showAlert("更新しました。");
+	}
 }
 function oaex_th_arrowBtn_onClick() {
-	document.forms[0].action = "save";
 	document.forms[0].method = "POST";
 	document.forms[0].submit();
 }
@@ -45,16 +50,19 @@ function oaex_mode_onChange() {
 				modeTitle.innerText = "初期パスワードの入力"
 				passwordOldRow.style.display = "none";
 				passwordNewLabel.innerText = "パスワード"
+				document.forms[0].action = "save";
 				break;
 			case "Reset":
 				modeTitle.innerText = "パスワードのリセット"
 				passwordOldRow.style.display = "none";
 				passwordNewLabel.innerText = "パスワード"
+				document.forms[0].action = "update";
 				break;
 			case "Change":
 				modeTitle.innerText = "パスワードの変更"
 				passwordOldRow.style.display = "block";
 				passwordNewLabel.innerText = "新しいパスワード"
+				document.forms[0].action = "update";
 				break;
 			default:
 				break;
