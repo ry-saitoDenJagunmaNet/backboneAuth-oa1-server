@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranch;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
@@ -234,8 +234,8 @@ class Oa11010ControllerTest {
                 return new int[0];
             }
         };
-        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
-            public BranchesAtMoment getBranchesAtMoment(long jaId) {
+        SearchBranch searchBranch = new SearchBranch(branchAtMomentRepository) {
+            public BranchesAtMoment selectBy(long jaId) {
                 return createBranchesAtMoment();
             }
         };
@@ -284,7 +284,7 @@ class Oa11010ControllerTest {
         return new Oa11010Controller(
             searchOperator,
             simpleSearchBizTranRole,
-            simpleSearchBranch);
+            searchBranch);
     }
 
     // Oa11010Vo作成
