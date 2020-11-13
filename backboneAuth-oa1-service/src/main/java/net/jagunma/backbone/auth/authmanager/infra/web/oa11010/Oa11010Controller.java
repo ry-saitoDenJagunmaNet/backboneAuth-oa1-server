@@ -5,7 +5,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranch;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -57,16 +57,16 @@ public class Oa11010Controller extends BaseOfController {
 
     private final SearchOperator searchOperator;
     private final SimpleSearchBizTranRole simpleSearchBizTranRole;
-    private final SimpleSearchBranch simpleSearchBranch;
+    private final SearchBranch searchBranch;
 
     // コンストラクタ
     public Oa11010Controller(SearchOperator searchOperator,
         SimpleSearchBizTranRole simpleSearchBizTranRole,
-        SimpleSearchBranch simpleSearchBranch) {
+        SearchBranch searchBranch) {
 
         this.searchOperator = searchOperator;
         this.simpleSearchBizTranRole = simpleSearchBizTranRole;
-        this.simpleSearchBranch = simpleSearchBranch;
+        this.searchBranch = searchBranch;
     }
 
     /**
@@ -152,7 +152,7 @@ public class Oa11010Controller extends BaseOfController {
         presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
         // 店舗リスト
         presenter.setBranchesAtMoment(
-            simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
+            searchBranch.selectBy(AuditInfoHolder.getJa().getIdentifier()));
         // 有効期限選択
         presenter.setExpirationSelect(0);
         // サブシステムロール初期選択
