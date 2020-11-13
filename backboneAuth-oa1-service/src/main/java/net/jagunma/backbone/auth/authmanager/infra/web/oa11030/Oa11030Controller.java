@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11030;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.UpdateOperator;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * OA11030 コントローラー
@@ -52,16 +51,16 @@ public class Oa11030Controller extends BaseOfController {
 
     private final SearchOperator searchOperator;
     private final UpdateOperator updateOperator;
-    private final SimpleSearchBranch simpleSearchBranch;
+    private final SearchBranchAtMoment searchBranchAtMoment;
 
     // コンストラクタ
     public Oa11030Controller(
         SearchOperator searchOperator,
         UpdateOperator updateOperator,
-        SimpleSearchBranch simpleSearchBranch) {
+        SearchBranchAtMoment searchBranchAtMoment) {
         this.searchOperator = searchOperator;
         this.updateOperator = updateOperator;
-        this.simpleSearchBranch = simpleSearchBranch;
+        this.searchBranchAtMoment = searchBranchAtMoment;
     }
 
     /**
@@ -82,7 +81,7 @@ public class Oa11030Controller extends BaseOfController {
         try {
             Oa11030InitConverter converter = Oa11030InitConverter.with(vo);
             Oa11030InitPresenter presenter = new Oa11030InitPresenter();
-            presenter.setBranchesAtMomentForBranchItemsSource(simpleSearchBranch.getBranchesAtMoment(AuditInfoHolder.getJa().getIdentifier()));
+            presenter.setBranchesAtMomentForBranchItemsSource(searchBranchAtMoment.selectBy(AuditInfoHolder.getJa().getIdentifier()));
 
             searchOperator.execute(converter, presenter);
 
