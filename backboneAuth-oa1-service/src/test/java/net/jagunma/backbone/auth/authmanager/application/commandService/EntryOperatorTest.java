@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
@@ -21,6 +22,7 @@ import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchNotFoundException;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JaAttribute;
@@ -86,30 +88,29 @@ class EntryOperatorTest {
         OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
             @Override
             public void entry(OperatorEntryPack operatorEntryPack) {
-
             }
             @Override
             public void update(OperatorUpdatePack operatorUpdatePack) {
-
             }
         };
+
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
             @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-                // 店舗未存在 テスト時
-                if (!criteria.getIdentifierCriteria().getEqualTo().equals(AuditInfoHolder.getBranch().getIdentifier())) {
-                    return BranchAtMoment.empty();
-                }
-
-                return createBranchAtMoment();
+            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) throws BranchNotFoundException {
+                return null;
             }
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
                 return null;
             }
         };
+        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
+            public BranchAtMoment findOneBy(long branchId) {
+                return createBranchAtMoment();
+            }
+        };
 
-        return new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository);
+        return new EntryOperator(operatorRepositoryForStore, searchBranchAtMoment);
     }
 
     // 店舗AtMoment
@@ -160,58 +161,6 @@ class EntryOperatorTest {
     }
 
     /**
-     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test() {
-        // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
-
-        // 実行値
-        branchId = AuditInfoHolder.getBranch().getIdentifier();
-
-        assertThatCode(() ->
-            // 実行
-            entryOperator.getBranchAtMoment(branchId))
-            .doesNotThrowAnyException();
-    }
-
-    /**
-     * {@link EntryOperator#getBranchAtMoment(Long branchId)}テスト
-     *  ●パターン
-     *    店舗の取得）店舗未存在
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test1() {
-        // テスト対象クラス生成
-        EntryOperator entryOperator = createEntryOperator();
-
-        // 実行値
-        branchId = 999L;
-
-        assertThatThrownBy(() ->
-            // 実行
-            entryOperator.getBranchAtMoment(branchId))
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA12001");
-                assertThat(e.getArgs()).containsSequence(branchId);
-            });
-    }
-
-    /**
      * {@link EntryOperator#checkBranchBelongJa(BranchAtMoment branchAtMoment)}テスト
      *  ●パターン
      *    正常
@@ -258,7 +207,7 @@ class EntryOperatorTest {
             entryOperator.checkBranchBelongJa(branchAtMoment))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA12002");
+                assertThat(e.getMessageCode()).isEqualTo("EOA12001");
                 assertThat(e.getArgs()).containsSequence(AuditInfoHolder.getJa().getJaAttribute().getJaCode());
                 assertThat(e.getArgs()).containsSequence(branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
             });

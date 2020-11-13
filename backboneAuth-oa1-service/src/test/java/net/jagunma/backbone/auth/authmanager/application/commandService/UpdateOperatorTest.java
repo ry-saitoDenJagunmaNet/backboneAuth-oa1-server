@@ -2,10 +2,10 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
@@ -16,11 +16,11 @@ import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchNotFoundException;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JaAttribute;
@@ -98,23 +98,24 @@ class UpdateOperatorTest {
 
             }
         };
+
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
             @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-                // 店舗未存在 テスト時
-                if (!criteria.getIdentifierCriteria().getEqualTo().equals(AuditInfoHolder.getBranch().getIdentifier())) {
-                    return BranchAtMoment.empty();
-                }
-
-                return createBranchAtMoment();
+            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) throws BranchNotFoundException {
+                return null;
             }
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
                 return null;
             }
         };
+        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
+            public BranchAtMoment findOneBy(long branchId) {
+                return createBranchAtMoment();
+            }
+        };
 
-        return new UpdateOperator(operatorRepositoryForStore, branchAtMomentRepository);
+        return new UpdateOperator(operatorRepositoryForStore, searchBranchAtMoment);
     }
 
     // 店舗AtMoment
@@ -160,34 +161,6 @@ class UpdateOperatorTest {
             // 実行
             updateOperator.execute(request))
             .doesNotThrowAnyException();
-    }
-
-    /**
-     * {@link UpdateOperator#getBranchAtMoment(Long branchId)}テスト
-     *  ●パターン
-     *    店舗の取得）店舗未存在
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchAtMoment_test1() {
-        // テスト対象クラス生成
-        UpdateOperator updateOperator = createUpdateOperator();
-
-        // 実行値
-        branchId = 999L;
-
-        assertThatThrownBy(() ->
-            // 実行
-            updateOperator.getBranchAtMoment(branchId))
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA12001");
-                assertThat(e.getArgs()).containsSequence(branchId);
-            });
     }
 
     /**

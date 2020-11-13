@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntryOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBranch;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
@@ -16,9 +16,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepos
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.backbone.auth.authmanager.util.TestAuditInfoHolder;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.server.aop.AuditInfoHolder;
@@ -29,6 +26,7 @@ import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchNotFoundException;
 import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
@@ -69,9 +67,10 @@ class Oa11020ControllerTest {
             public void update(OperatorUpdatePack operatorUpdatePack) {
             }
         };
+
         BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
             @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
+            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) throws BranchNotFoundException {
                 return null;
             }
             @Override
@@ -79,7 +78,13 @@ class Oa11020ControllerTest {
                 return null;
             }
         };
-        EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, branchAtMomentRepository) {
+        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
+            public BranchesAtMoment selectBy(long jaId) {
+                return branchesAtMoment;
+            }
+        };
+
+        EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, searchBranchAtMoment) {
             @Override
             public void execute(OperatorEntryRequest request) {
                 // request.getBranchId().equals(11L) の場合：GunmaRuntimeException を発生させる
@@ -97,63 +102,7 @@ class Oa11020ControllerTest {
             }
         };
 
-        OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
-            @Override
-            public List<OperatorEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public OperatorEntity findOneBy(OperatorEntityCriteria criteria) {
-                return null;
-            }
-            @Override
-            public List<OperatorEntity> findBy(OperatorEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int insert(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int update(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-        };
-        SimpleSearchBranch simpleSearchBranch = new SimpleSearchBranch(branchAtMomentRepository, operatorEntityDao) {
-            public BranchesAtMoment getBranchesAtMoment(long jaId) {
-                return branchesAtMoment;
-            }
-        };
-
-        return new Oa11020Controller(entryOperator, simpleSearchBranch);
+        return new Oa11020Controller(entryOperator, searchBranchAtMoment);
     }
 
     // Oa11020Vo作成

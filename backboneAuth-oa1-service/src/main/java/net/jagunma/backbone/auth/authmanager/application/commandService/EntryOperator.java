@@ -1,14 +1,13 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorEntryRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
-import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
-import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class EntryOperator {
 
     private final OperatorRepositoryForStore operatorRepositoryForStore;
-    private final BranchAtMomentRepository branchAtMomentRepository;
+    private final SearchBranchAtMoment searchBranchAtMoment;
 
     public EntryOperator(OperatorRepositoryForStore operatorRepositoryForStore,
-        BranchAtMomentRepository branchAtMomentRepository) {
+        SearchBranchAtMoment searchBranchAtMoment) {
 
         this.operatorRepositoryForStore = operatorRepositoryForStore;
-        this.branchAtMomentRepository = branchAtMomentRepository;
+        this.searchBranchAtMoment = searchBranchAtMoment;
     }
 
     /**
@@ -40,7 +39,7 @@ public class EntryOperator {
         EntryOperatorValidator.with(request).validate();
 
         // 店舗の取得を行います
-        BranchAtMoment branchAtMoment = getBranchAtMoment(request.getBranchId());
+        BranchAtMoment branchAtMoment = searchBranchAtMoment.findOneBy(request.getBranchId());
 
         // 店舗が当JAに属するかのチェックを行います
         checkBranchBelongJa(branchAtMoment);
@@ -58,32 +57,13 @@ public class EntryOperator {
     }
 
     /**
-     * 店舗の取得を行います
-     *
-     * @param branchId 店舗ID
-     * @return branchAtMoment 店舗AtMoment
-     */
-    BranchAtMoment getBranchAtMoment(Long branchId) {
-        BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-
-        criteria.getIdentifierCriteria().setEqualTo(branchId);
-
-        BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(criteria);
-        if (branchAtMoment.isEmpty()) {
-            throw new GunmaRuntimeException("EOA12001", branchId);
-        }
-
-        return branchAtMoment;
-    }
-
-    /**
      * 店舗が当JAに属するかのチェックを行います
      *
      * @param branchAtMoment 店舗
      */
     static void checkBranchBelongJa (BranchAtMoment branchAtMoment) {
         if (!branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode().sameValueAs(AuditInfoHolder.getJa().getJaAttribute().getJaCode())) {
-            throw new GunmaRuntimeException("EOA12002", AuditInfoHolder.getJa().getJaAttribute().getJaCode(), branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
+            throw new GunmaRuntimeException("EOA12001", AuditInfoHolder.getJa().getJaAttribute().getJaCode(), branchAtMoment.getJaAtMoment().getJaAttribute().getJaCode());
         }
     }
 
