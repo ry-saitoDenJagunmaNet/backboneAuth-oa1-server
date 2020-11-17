@@ -1,3 +1,83 @@
+/** Thymeleaf で起動時のみ実行 **/
+/**
+ * 画面Loadイベントです。
+ */
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	// ＪＡ ItemSourceの取得
+	document.getElementById("jaSelect").innerHTML = oa_th_getItemsSource("getJaItemsSource", document.forms[0]);
+
+	// サブシステム ItemSourceの取得
+	document.getElementById("subSystemSelect").innerHTML = oa_th_getItemsSource("getSubSystemItemsSource", document.forms[0]);
+
+	// Changeイベントの追加
+	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
+	document.getElementById("subSystem").addEventListener("change", (event) => {oaex_th_subsystem_onChange();});
+	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+
+	// テーブル＆ページネーションを表示
+	document.getElementById("suspend_biztran_table").style.visibility = "visible";
+	document.getElementById("suspend_biztran_pagination").style.visibility = "visible";
+
+
+	// selectの初期化
+	oa_initSelect();
+
+	if (document.getElementById("ja").value.length > 0) {oaex_th_ja_onChange();}
+	if (document.getElementById("subSystem").value.length > 0) {oaex_th_subsystem_onChange();}
+}
+
+/**
+ * JAの変更イベントです。
+ */
+function oaex_th_ja_onChange() {
+	// 店舗 ItemSourceの取得
+	document.getElementById("branchSelect").innerHTML = oa_th_getItemsSource("getBranchItemsSource", document.forms[0]);
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+/**
+ * サブシステムの変更イベントです。
+ */
+function oaex_th_subsystem_onChange() {
+	// 取引グループ ItemSourceの取得
+	document.getElementById("bizTranGrpSelect").innerHTML = oa_th_getItemsSource("getBizTranGrpItemsSource", document.forms[0]);
+	// 取引 ItemSourceの取得
+	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+
+	// Changeイベントの追加
+	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+/**
+ * 取引グループの変更イベントです。
+ */
+function oaex_th_biztran_grp_onChange() {
+	// 取引 ItemSourceの取得
+	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+
+/**
+ * 検索ボタンクリックイベントです。
+ */
+function oaex_th_searchBtn_onClick() {
+	document.forms[0].action = "search";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+
+
 /**
  * 画面Loadイベントです。
  */
@@ -334,7 +414,12 @@ function oaex_biztran_onChange() {
  * 検索ボタンクリックイベントです。
  */
 function oaex_searchBtn_onClick() {
-	// todo:テーブル＆ページネーションを表示
+	if (_isThymeleaf) {
+		oaex_th_searchBtn_onClick();
+		return;
+	}
+
+	// テーブル＆ページネーションを表示
 	document.getElementById("suspend_biztran_table").style.visibility = "visible";
 	document.getElementById("suspend_biztran_pagination").style.visibility = "visible";
 }

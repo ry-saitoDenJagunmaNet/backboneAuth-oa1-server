@@ -38,7 +38,8 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
 
         // 取引グループ運検索
         BizTranGrpEntityCriteria entityCriteria = new BizTranGrpEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranGrpCriteria.getSubSystemCodeCriteria().getEqualTo());
+        entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrpCriteria.getBizTranGrpIdCriteria());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrpCriteria.getSubSystemCodeCriteria());
 
         List<BizTranGrp> list = newArrayList();
         for (BizTranGrpEntity entity : bizTranGrpEntityDao.findBy(entityCriteria, orders)) {

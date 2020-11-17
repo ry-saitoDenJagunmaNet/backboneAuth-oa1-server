@@ -1,25 +1,32 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>一時取引抑止＜一覧＞ | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa12020.css"/>
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa12020.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+	<link rel="stylesheet" href="../static/css/oa12020.css" th:href="@{/css/oa12020.css}"/>
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa12020.js" th:src="@{/js/oa12020.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_th_onload();">
+<form>
+
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"/>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<!-- 共通部品用定義 -->
+	<div th:replace="include/commonParts :: commonParts"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa12020");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa12020", "一時取引抑止<一覧>");</script>
+		<script th:remove="all">oa_getHeader("oa12020", "一時取引抑止<一覧>");</script>
+		<div th:replace="include/header :: header (id='oa12020', title='一時取引抑止<一覧>')"></div>
 	</header>
 
 	<!-- main定義 -->
@@ -28,8 +35,11 @@
 			<!-- ＪＡ -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div class="input-field">
-						<select id="ja" class="validate" onchange="oaex_ja_onChange()">
+					<div id="jaSelect">
+						<div th:replace="include/ajaxSelectController::ajaxSelectJa(title='ＪＡ',id='ja',name='jaId',selectedValue=${form.jaId})" th:fragment="ajaxSelectJa"></div>
+					</div>
+					<div class="input-field" th:remove="all">
+						<select id="ja" name="jaid" class="validate" onchange="oaex_ja_onChange()">
 							<option value=""></option>
 							<option value="002">ＪＡ赤城たちばな</option>
 							<option value="006">ＪＡ前橋市</option>
@@ -54,8 +64,11 @@
 			<!-- 店舗 -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div class="input-field">
-						<select id="tempo" class="validate">
+					<div id="branchSelect">
+						<div th:replace="include/ajaxSelectController::ajaxSelectBranch(title='店舗',id='branch',name='branchId',selectedValue=${form.branchId})" th:fragment="ajaxSelectBranch"></div>
+					</div>
+					<div class="input-field" th:remove="all">
+						<select id="tempo" name="branchId" class="validate">
 							<option value=""></option>
 							<option value="001">本所</option>
 							<option value="002">○○○支所</option>
@@ -73,8 +86,11 @@
 			<div class="row oa_optional">
 				<!-- サブシステム -->
 				<div class="col s3">
-					<div class="input-field">
-						<select id="subsystem" class="validate" onchange="oaex_subsystem_onChange()">
+					<div id="subSystemSelect">
+						<div th:replace="include/ajaxSelectController::ajaxSelectSubSystem(title='サブシステム',id='subSystem',name='subSystemCode',selectedValue=${form.subSystemCode})" th:fragment="ajaxSelectSubSystem"></div>
+					</div>
+					<div class="input-field" th:remove="all">
+						<select id="subsystem" name="subSystemCode" class="validate" onchange="oaex_subsystem_onChange()">
 							<option value=""></option>
 							<option value="KB">購買</option>
 							<option value="YS">販売・青果</option>
@@ -88,18 +104,22 @@
 				</div>
 				<!-- 取引グループ -->
 				<div class="col s4">
-					<div class="input-field">
-						<select id="biztran_grp" class="validate" onchange="oaex_biztran_grp_onChange()">
-							<option value=""></option>
+					<div id="bizTranGrpSelect">
+						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranGrp(title='取引グループ',id='bizTranGrp',name='bizTranGrpId',selectedValue=${form.bizTranGrpId})" th:fragment="ajaxSelectBizTranGrp"></div>
+					</div>
+					<div class="input-field" th:remove="all">
+						<select id="biztran_grp" name="bizTranGrpId" class="validate" onchange="oaex_biztran_grp_onChange()">
 						</select>
 						<label>取引グループ</label>
 					</div>
 				</div>
 				<!-- 取引 -->
 				<div class="col s5">
-					<div class="input-field">
+					<div id="bizTranSelect">
+						<div th:replace="include/ajaxSelectController::ajaxSelectBizTran(title='取引',id='bizTran',name='bizTranId',selectedValue=${form.bizTranId})" th:fragment="ajaxSelectBizTran"></div>
+					</div>
+					<div class="input-field" th:remove="all">
 						<select id="biztran" class="validate" onchange="oaex_biztran_onChange()">
-							<option value=""></option>
 						</select>
 						<label>取引</label>
 					</div>
@@ -113,44 +133,50 @@
 				<!-- 有効期限 -->
 				<li>
 					<div class="collapsible-header oa_collapsible_header">
-						<img src="../static/img/collapsible.png" alt="collapsible"/>
+						<img src="../static/img/collapsible.png" alt="collapsible" th:src="@{/img/collapsible.png}"/>
 						<label class="oa_content_label">抑止期間</label>
 					</div>
 					<div class="collapsible-body">
 						<div class="row oa_optional">
 							<div class="col s3">
 								<label>
-									<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"></input>
+									<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"
+										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 0}"/>
 									<span>指定なし</span>
 								</label>
 							</div>
 							<div class="col s3">
 								<label>
-									<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"></input>
+									<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"
+										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 1}"/>
 									<span>状態指定日</span>
 								</label>
 								<div class="input-field">
-									<input type="text" id="expiration_status_date" class="validate datepicker" value=""></input>
+									<input type="text" id="expiration_status_date" name="suspendStatusDate" class="validate datepicker" value=""
+										   th:value="${form.suspendStatusDate}"/>
 									<label for="expiration_status_date"></label>
 								</div>
 							</div>
 							<div class="col s6">
 								<label>
-									<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"></input>
+									<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"
+										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 2}"/>
 									<span>条件指定</span>
 								</label>
 								<div class="row">
 									<div class="col s4"><p>抑止開始</p></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_start_date_from" class="validate datepicker" value=""></input>
+											<input type="text" id="expiration_start_date_from" name="suspendStatusStartDateFrom" class="validate datepicker" value=""
+												   th:value="${form.suspendStatusStartDateFrom}"/>
 											<label for="expiration_start_date_from"></label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_start_date_to" class="validate datepicker" value=""></input>
+											<input type="text" id="expiration_start_date_to" name="suspendStatusStartDateTo" class="validate datepicker" value=""
+												   th:value="${form.suspendStatusStartDateTo}"/>
 											<label for="expiration_start_date_to"></label>
 										</div>
 									</div>
@@ -159,14 +185,16 @@
 									<div class="col s4"><p>抑止終了</p></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_end_date_from" class="validate datepicker" value=""></input>
+											<input type="text" id="expiration_end_date_from" name="suspendStatusEndDateFrom" class="validate datepicker" value=""
+												   th:value="${form.suspendStatusEndDateFrom}"/>
 											<label for="expiration_end_date_from"></label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_end_date_to" class="validate datepicker" value=""></input>
+											<input type="text" id="expiration_end_date_to" name="suspendStatusEndDateTo" class="validate datepicker" value=""
+												   th:value="${form.suspendStatusEndDateTo}"/>
 											<label for="expiration_end_date_to"></label>
 										</div>
 									</div>
@@ -177,7 +205,8 @@
 						<div class="row oa_optional">
 							<div class="col s7">
 								<div class="input-field">
-									<input type="text" id="suspend_reason" class="validate" value=""></input>
+									<input type="text" id="suspend_reason" name="suspendReason" class="validate" value=""
+										   th:value="${form.suspendReason}"/>
 									<label for="suspend_reason">抑止理由</label>
 								</div>
 							</div>
@@ -214,18 +243,31 @@
 								</tr>
 							</thead>
 							<tbody id="suspend_biztran_table">
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_expiration_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>006</td><td>JA前橋</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>合併前のデータ凍結の為のデータ投入抑止</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>007</td><td>JAたかさき</td><td>000</td><td>本所</td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>購買</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>販売・青果</td><td>YSTG03</td><td>市況取引グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>販売・花卉</td><td></td><td></td><td>YF4301</td><td>振込要求</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>230</td><td>JA甘楽富岡</td><td></td><td></td><td>販売・米</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>350</td><td>JA碓氷安中</td><td></td><td></td><td>販売・麦</td><td>HMTG20</td><td>麦ＪＡ取引グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>420</td><td>JA嬬恋村</td><td></td><td></td><td>販売・畜産</td><td></td><td></td><td>AN1210</td><td>仕切入力</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>474</td><td>JA片品村</td><td>000</td><td>本所</td><td>販売・米</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>616</td><td>JA藪塚本町</td><td>000</td><td>本所</td><td>販売・麦</td><td>HMTG25</td><td>麦ＪＡ取引（振込以外取引）グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td>618</td><td>JA太田市</td><td>000</td><td>本所</td><td>販売・畜産</td><td></td><td></td><td>AN1210</td><td>仕切入力</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+							<tr th:each="itemrow, iterStat : *{form.searchResultList}" onclick="oa_setTableRowSelected(this)">
+								<td class="oaex_table_ja_code" th:text="${itemrow.jaCode}"></td>
+								<td class="oaex_table_ja_name" th:text="${itemrow.jaName}"></td>
+								<td class="oaex_table_tempo_code" th:text="${itemrow.branchCode}"></td>
+								<td class="oaex_table_tempo_name" th:text="${itemrow.branchName}"></td>
+								<td class="oaex_table_subsystem" th:text="${itemrow.subSystemName}"></td>
+								<td class="oaex_table_biztran_grp_code" th:text="${itemrow.bizTranGrpCode}"></td>
+								<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
+								<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
+								<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
+								<td class="oaex_table_expiration_date" th:text="${itemrow.suspendStartDate}"></td>
+								<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
+							</tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_expiration_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>006</td><td>JA前橋</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>合併前のデータ凍結の為のデータ投入抑止</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>007</td><td>JAたかさき</td><td>000</td><td>本所</td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>購買</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>販売・青果</td><td>YSTG03</td><td>市況取引グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>販売・花卉</td><td></td><td></td><td>YF4301</td><td>振込要求</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>230</td><td>JA甘楽富岡</td><td></td><td></td><td>販売・米</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>350</td><td>JA碓氷安中</td><td></td><td></td><td>販売・麦</td><td>HMTG20</td><td>麦ＪＡ取引グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>420</td><td>JA嬬恋村</td><td></td><td></td><td>販売・畜産</td><td></td><td></td><td>AN1210</td><td>仕切入力</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>474</td><td>JA片品村</td><td>000</td><td>本所</td><td>販売・米</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>616</td><td>JA藪塚本町</td><td>000</td><td>本所</td><td>販売・麦</td><td>HMTG25</td><td>麦ＪＡ取引（振込以外取引）グループ</td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>618</td><td>JA太田市</td><td>000</td><td>本所</td><td>販売・畜産</td><td></td><td></td><td>AN1210</td><td>仕切入力</td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
 							</tbody>
 						</table>
 					</div>
@@ -264,5 +306,6 @@
 			</div>
 		</div>
 	</footer>
+</form>
 </body>
 </html>
