@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxSmoother;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
@@ -44,13 +43,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 利用可否状態 利用可能
      */
-    private CheckboxSmoother availableStatus0;
-//    private Boolean availableStatus0;
+    private Boolean availableStatus0;
     /**
      * 利用可否状態 利用不可
      */
-    private CheckboxSmoother availableStatus1;
-//    private Boolean availableStatus1;
+    private Boolean availableStatus1;
     /**
      * 有効期限選択
      */
@@ -227,33 +224,18 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
-//    public Boolean getAvailableStatus0() {
-//        return availableStatus0;
-//    }
-//    public void setAvailableStatus0(Boolean availableStatus0) {
-//        this.availableStatus0 = availableStatus0;
-//    }
-//    public Boolean getAvailableStatus1() {
-//        return availableStatus1;
-//    }
-//    public void setAvailableStatus1(Boolean availableStatus1) {
-//        this.availableStatus1 = availableStatus1;
-//    }
-
-    public CheckboxSmoother getAvailableStatus0() {
+    public Boolean getAvailableStatus0() {
         return availableStatus0;
     }
-    public void setAvailableStatus0(CheckboxSmoother availableStatus0) {
+    public void setAvailableStatus0(Boolean availableStatus0) {
         this.availableStatus0 = availableStatus0;
     }
-    public CheckboxSmoother getAvailableStatus1() {
+    public Boolean getAvailableStatus1() {
         return availableStatus1;
     }
-    public void setAvailableStatus1(CheckboxSmoother availableStatus1) {
+    public void setAvailableStatus1(Boolean availableStatus1) {
         this.availableStatus1 = availableStatus1;
     }
-
-
     public Integer getExpirationSelect() {
         return expirationSelect;
     }

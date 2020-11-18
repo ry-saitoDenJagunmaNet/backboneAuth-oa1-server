@@ -145,8 +145,8 @@ class Oa11010SearchConverterTest {
         vo.setOperatorCode(operatorCode);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-        vo.setAvailableStatus0(availableStatus0);
-        vo.setAvailableStatus1(availableStatus1);
+//        vo.setAvailableStatus0(availableStatus0);
+//        vo.setAvailableStatus1(availableStatus1);
         vo.setExpirationSelect(expirationSelect);
         vo.setExpirationStatusDate(expirationStatusDate);
         vo.setExpirationStartDateFrom(expirationStartDateFrom);

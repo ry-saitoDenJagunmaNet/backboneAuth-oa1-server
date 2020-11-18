@@ -244,8 +244,8 @@ class Oa11010ControllerTest {
         oa11010Vo.setOperatorCode(operatorCode);
         oa11010Vo.setOperatorName(operatorName);
         oa11010Vo.setMailAddress(mailAddress);
-        oa11010Vo.setAvailableStatus0(availableStatus0);
-        oa11010Vo.setAvailableStatus1(availableStatus1);
+//        oa11010Vo.setAvailableStatus0(availableStatus0);
+//        oa11010Vo.setAvailableStatus1(availableStatus1);
         oa11010Vo.setExpirationSelect(expirationSelect);
         oa11010Vo.setExpirationStatusDate(expirationStatusDate);
         oa11010Vo.setExpirationStartDateFrom(expirationStartDateFrom);

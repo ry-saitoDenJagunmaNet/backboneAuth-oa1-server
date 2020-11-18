@@ -154,24 +154,10 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
     public ShortCriteria getAvailableStatusCriteria() {
         ShortCriteria criteria = new ShortCriteria();
         List<Short> result = newArrayList();
-//        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
-//            result.add((short) 0);
-//        }
-//        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
-//            result.add((short) 1);
-//        }
-
-//        if (CheckboxUtil.getSmoother(vo.getAvailableStatus0())) {
-//            result.add((short) 0);
-//        }
-//        if (CheckboxUtil.getSmoother(vo.getAvailableStatus1())) {
-//            result.add((short) 1);
-//        }
-
-        if (vo.getAvailableStatus0().getValue()) {
+        if (CheckboxUtil.getSmoother(vo.getAvailableStatus0())) {
             result.add((short) 0);
         }
-        if (vo.getAvailableStatus1().getValue()) {
+        if (CheckboxUtil.getSmoother(vo.getAvailableStatus1())) {
             result.add((short) 1);
         }
         criteria.getIncludes().addAll(result);
