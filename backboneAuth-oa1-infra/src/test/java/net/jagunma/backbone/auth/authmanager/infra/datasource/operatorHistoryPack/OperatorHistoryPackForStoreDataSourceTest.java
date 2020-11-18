@@ -107,7 +107,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
                 entity.setJaCode(jaCode);
                 entity.setBranchId(branchId);
                 entity.setBranchCode(branchCode);
-                entity.setAvailableStatus(availableStatus.getCode());
+                entity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
                 entity.setCreatedBy(createdBy);
                 entity.setCreatedAt(createdAt);
                 entity.setCreatedIpAddress(createdIpAddress);
@@ -463,7 +463,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
         expectedEntity.setJaCode(jaCode);
         expectedEntity.setBranchId(branchId);
         expectedEntity.setBranchCode(branchCode);
-        expectedEntity.setAvailableStatus(availableStatus.getCode());
+        expectedEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
         expectedEntity.setCreatedBy(createdBy);
         expectedEntity.setCreatedAt(createdAt);
         expectedEntity.setCreatedIpAddress(createdIpAddress);
@@ -543,7 +543,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
         operatorEntity.setJaCode(jaCode);
         operatorEntity.setBranchId(branchId);
         operatorEntity.setBranchCode(branchCode);
-        operatorEntity.setAvailableStatus(availableStatus.getCode());
+        operatorEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
         operatorEntity.setCreatedBy(createdBy);
         operatorEntity.setCreatedAt(createdAt);
         operatorEntity.setCreatedIpAddress(createdIpAddress);

@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11030;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 
@@ -71,7 +72,7 @@ class Oa11030UpdateConverter implements OperatorUpdateRequest {
      * @return 機器認証
      */
     public Boolean getIsDeviceAuth() {
-        return (vo.getIsDeviceAuth() == null)? false : true;//ToDo:★
+        return CheckboxUtil.getSmoother(vo.getIsDeviceAuth());
     }
     /**
      * 店舗IDのＧｅｔ
@@ -87,7 +88,7 @@ class Oa11030UpdateConverter implements OperatorUpdateRequest {
      * @return 利用可否状態
      */
     public AvailableStatus getAvailableStatus() {
-     return (vo.getAvailableStatus() == null)? AvailableStatus.利用不可 : AvailableStatus.利用可能;//ToDo:★
+        return (CheckboxUtil.getSmoother(vo.getAvailableStatus()) == true)? AvailableStatus.利用可能 : AvailableStatus.利用不可;
     }
     /**
      * レコードバージョンのＧｅｔ

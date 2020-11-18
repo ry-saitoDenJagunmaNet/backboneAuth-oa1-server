@@ -5,12 +5,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubsystemRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
@@ -63,8 +63,8 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         vo.setMailAddress(operator.getMailAddress());
         vo.setExpirationStartDate(operator.getExpirationStartDate());
         vo.setExpirationEndDate(operator.getExpirationEndDate());
-        vo.setIsDeviceAuth((operator.getIsDeviceAuth().equals(true))? true : null); //ToDo:★
-        vo.setAvailableStatus((operator.getAvailableStatus().equals(AvailableStatus.利用可能))? true : null);//ToDo:★
+        vo.setIsDeviceAuth(CheckboxUtil.setSmoother(operator.getIsDeviceAuth()));
+        vo.setAvailableStatus(CheckboxUtil.setSmoother((operator.getAvailableStatus().equals(AvailableStatus.利用可能))? true : false));
 
         vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
 
