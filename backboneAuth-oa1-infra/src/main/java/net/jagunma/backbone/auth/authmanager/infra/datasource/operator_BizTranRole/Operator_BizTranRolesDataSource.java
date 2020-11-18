@@ -56,10 +56,9 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
 
         // オペレーター_取引ロール割当群検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
         entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
+        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
 
-        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(operator_BizTranRoleCriteria.getOperatorIdCriteria().getIncludes());
         List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
         // オペレーター_取引ロール割当から取引ロールIDリストを取得

@@ -46,12 +46,13 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(passwordHistoryCriteria.getOperatorIdCriteria());
         Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // パスワード履歴群検索
         PasswordHistoryEntityCriteria entityCriteria = new PasswordHistoryEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(passwordHistoryCriteria.getOperatorIdCriteria().getIncludes());
+        entityCriteria.getPasswordHistoryIdCriteria().assignFrom(passwordHistoryCriteria.getPasswordHistoryIdCriteria());
+        entityCriteria.getOperatorIdCriteria().assignFrom(passwordHistoryCriteria.getOperatorIdCriteria());
 
         List<PasswordHistory> list = newArrayList();
         for (PasswordHistoryEntity entity : passwordHistoryEntityDao.findBy(entityCriteria, orders)) {

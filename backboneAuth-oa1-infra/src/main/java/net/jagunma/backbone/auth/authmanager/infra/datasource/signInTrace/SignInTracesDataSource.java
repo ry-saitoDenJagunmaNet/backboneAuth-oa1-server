@@ -44,12 +44,12 @@ public class SignInTracesDataSource implements SignInTracesRepository {
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
+        operatorCriteria.getOperatorCodeCriteria().assignFrom(signInTraceCriteria.getOperatorCodeCriteria());
         Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインイン証跡群検索
         SignInTraceEntityCriteria entityCriteria = new SignInTraceEntityCriteria();
-        entityCriteria.getOperatorCodeCriteria().getIncludes().addAll(signInTraceCriteria.getOperatorCodeCriteria().getIncludes());
+        entityCriteria.getOperatorCodeCriteria().assignFrom(signInTraceCriteria.getOperatorCodeCriteria());
 
         List<SignInTrace> list = newArrayList();
         for (SignInTraceEntity entity : signInTraceEntityDao.findBy(entityCriteria, orders)) {
