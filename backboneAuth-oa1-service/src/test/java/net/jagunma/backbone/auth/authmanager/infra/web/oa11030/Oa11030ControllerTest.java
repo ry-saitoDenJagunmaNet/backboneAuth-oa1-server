@@ -13,6 +13,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOper
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubsystemRoleTableVo;
@@ -292,8 +293,8 @@ class Oa11030ControllerTest {
         vo.setMailAddress(mailAddress);
         vo.setExpirationStartDate(expirationStartDate);
         vo.setExpirationEndDate(expirationEndDate);
-        vo.setIsDeviceAuth(isDeviceAuth);
-        vo.setAvailableStatus(availableStatus.getCode());
+        vo.setIsDeviceAuth(CheckboxUtil.setSmoother(isDeviceAuth));
+        vo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
         vo.setChangeCause(changeCause);
         vo.setChangeCausePlaceholder(changeCausePlaceholder);
         vo.setAccountLockStatus(accountLockStatus.getCode());

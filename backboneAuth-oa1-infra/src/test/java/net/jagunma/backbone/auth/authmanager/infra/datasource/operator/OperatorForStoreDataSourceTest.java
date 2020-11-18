@@ -148,7 +148,7 @@ class OperatorForStoreDataSourceTest {
                 entity.setJaCode(jaCode);
                 entity.setBranchId(branchId);
                 entity.setBranchCode(branchCode);
-                entity.setAvailableStatus(availableStatus.getCode());
+                entity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
                 entity.setCreatedBy(createdBy);
                 entity.setCreatedAt(createdAt);
                 entity.setCreatedIpAddress(createdIpAddress);
@@ -179,11 +179,11 @@ class OperatorForStoreDataSourceTest {
             }
             @Override
             public int update(OperatorEntity entity) {
-                isOperatorEntityUpdated = true;
                 return 0;
             }
             @Override
             public int updateExcludeNull(OperatorEntity entity) {
+                isOperatorEntityUpdated = true;
                 return 0;
             }
             @Override
@@ -209,7 +209,7 @@ class OperatorForStoreDataSourceTest {
         };
         OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore = new OperatorHistoryPackRepositoryForStore() {
             @Override
-            public void store(Long operatorId, String changeCause) {
+            public void store(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
             }
         };
         PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
@@ -397,7 +397,7 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setJaCode(jaCode);
         expectedEntity.setBranchId(branchId);
         expectedEntity.setBranchCode(branchCode);
-        expectedEntity.setAvailableStatus(availableStatus.getCode());
+        expectedEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
         expectedEntity.setCreatedBy(createdBy);
         expectedEntity.setCreatedAt(createdAt);
         expectedEntity.setCreatedIpAddress(createdIpAddress);
@@ -444,7 +444,7 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setJaCode(jaCode);
         expectedEntity.setBranchId(branchId);
         expectedEntity.setBranchCode(branchCode);
-        expectedEntity.setAvailableStatus(availableStatus.getCode());
+        expectedEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
         expectedEntity.setCreatedBy(createdBy);
         expectedEntity.setCreatedAt(createdAt);
         expectedEntity.setCreatedIpAddress(createdIpAddress);

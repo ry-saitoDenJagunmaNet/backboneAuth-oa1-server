@@ -58,7 +58,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         OperatorEntity operatorEntity = insertOperator(operatorEntryPack);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operatorEntity.getOperatorId(), operatorEntryPack.getChangeCause());
+        operatorHistoryPackRepositoryForStore.store(operatorEntity.getOperatorId(), operatorEntity.getCreatedAt(), operatorEntryPack.getChangeCause());
 
         // パスワード履歴の格納を行います
         storePasswordHistory(operatorEntity.getOperatorId(), operatorEntity.getCreatedAt(), operatorEntryPack.getPassword(), PasswordChangeType.初期);
@@ -78,7 +78,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         OperatorEntity operatorEntity = updateOperator(operatorUpdatePack);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operatorUpdatePack.getOperatorId(), operatorUpdatePack.getChangeCause());
+        operatorHistoryPackRepositoryForStore.store(operatorUpdatePack.getOperatorId(), operatorEntity.getUpdatedAt(), operatorUpdatePack.getChangeCause());
 
         // パスワード履歴の格納を行います（機器認証に変更があった場合）
         if (isChangeDeviceAuth) {
@@ -165,7 +165,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         operatorEntity.setAvailableStatus(operatorUpdatePack.getAvailableStatus().getCode());
         operatorEntity.setRecordVersion(operatorUpdatePack.getRecordVersion());
 
-        operatorEntityDao.update(operatorEntity);
+        operatorEntityDao.updateExcludeNull(operatorEntity);
 
         OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
         operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorUpdatePack.getOperatorId());

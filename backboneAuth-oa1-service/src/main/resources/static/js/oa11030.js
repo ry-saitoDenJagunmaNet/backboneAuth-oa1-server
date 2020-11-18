@@ -6,6 +6,7 @@ function oaex_th_onload() {
 
 	let displayAtMockupRow = document.getElementById("display_at_mockup_row");
 	displayAtMockupRow.style.display = "none";
+	oaex_accountLockStatus_onChange();
 }
 
 /**
