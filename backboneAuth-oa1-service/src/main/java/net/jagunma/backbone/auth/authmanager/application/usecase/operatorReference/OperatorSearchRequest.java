@@ -31,19 +31,19 @@ public interface OperatorSearchRequest {
     List<OparatorSearchBizTranRoleRequest> getBizTranRoleList();
     LocalDate getAccountLockOccurredDateFrom();
     LocalDate getAccountLockOccurredDateTo();
-    Short getAccountLockStatusLock();
-    Short getAccountLockStatusUnlock();
-    Short getPasswordHistoryCheck();
+    Boolean getAccountLockStatusLock();
+    Boolean getAccountLockStatusUnlock();
+    Boolean getPasswordHistoryCheck();
     Integer getPasswordHistoryLastChangeDate();
     String getPasswordHistoryLastChangeDateStatus();
-    Short getPasswordHistoryChangeType0();
-    Short getPasswordHistoryChangeType1();
-    Short getPasswordHistoryChangeType2();
-    Short getPasswordHistoryChangeType3();
+    Boolean getPasswordHistoryChangeType0();
+    Boolean getPasswordHistoryChangeType1();
+    Boolean getPasswordHistoryChangeType2();
+    Boolean getPasswordHistoryChangeType3();
     LocalDate getSignintraceTrydateFrom();
     LocalDate getSignintraceTrydateTo();
     String getSignintraceTryIpAddress();
-    Short getSignintraceSignIn();
-    Short getSignintraceSignOut();
+    Boolean getSignintraceSignIn();
+    Boolean getSignintraceSignOut();
     Short[] getSignintraceSignInResult();
 }

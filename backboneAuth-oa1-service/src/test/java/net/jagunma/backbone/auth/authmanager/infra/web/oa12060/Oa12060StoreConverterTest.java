@@ -86,8 +86,8 @@ class Oa12060StoreConverterTest {
         boolean calendarTypeFilterCheck3disabled = false;
         List<Oa12060CalendarVo> calendarList = newArrayList();
         Oa12060CalendarVo calendarVo = new Oa12060CalendarVo();
-        calendarList.add(cretaeOa12060CalendarVo(1l, (short) 1, 2l, (short) 0, 3l, (short) 1));
-        calendarList.add(cretaeOa12060CalendarVo(null, (short) 1, null, (short) 0, null, (short) 1));
+        calendarList.add(cretaeOa12060CalendarVo(1l,true,2l,false,3l,true));
+        calendarList.add(cretaeOa12060CalendarVo(null,true,null,false,null,true));
         Oa12060Vo vo = new Oa12060Vo();
         vo.setYearMonth(yearMonth);
         vo.setYearMonthToString(yearMonthToString);
@@ -131,9 +131,9 @@ class Oa12060StoreConverterTest {
      * @return リクエスト用の１日分カレンダー
      */
     private Oa12060CalendarVo cretaeOa12060CalendarVo(
-        Long calendarId1, short isWorkingDay1,
-        Long calendarId2, short isWorkingDay2,
-        Long calendarId3, short isWorkingDay3) {
+        Long calendarId1, Boolean isWorkingDay1,
+        Long calendarId2, Boolean isWorkingDay2,
+        Long calendarId3, Boolean isWorkingDay3) {
 
         Oa12060CalendarVo calendarVo = new Oa12060CalendarVo();
         calendarVo.setCalendarId1(calendarId1);

@@ -61,9 +61,9 @@ class Oa12060SearchPresenter implements CalendarSearchResponse {
         vo.setCalendarTable(genCalendarTableHtml());
 
         // 表示対象フィルターチェックの設定
-        vo.setCalendarTypeFilterCheck1(calendarTypeFilterCheck1disabled? (short)0 : (short)1);
-        vo.setCalendarTypeFilterCheck2(calendarTypeFilterCheck2disabled? (short)0 : (short)1);
-        vo.setCalendarTypeFilterCheck3(calendarTypeFilterCheck3disabled? (short)0 : (short)1);
+        vo.setCalendarTypeFilterCheck1((calendarTypeFilterCheck1disabled)? (short)0 : (short)1);
+        vo.setCalendarTypeFilterCheck2((calendarTypeFilterCheck2disabled)? (short)0 : (short)1);
+        vo.setCalendarTypeFilterCheck3((calendarTypeFilterCheck3disabled)? (short)0 : (short)1);
     }
 
     /**

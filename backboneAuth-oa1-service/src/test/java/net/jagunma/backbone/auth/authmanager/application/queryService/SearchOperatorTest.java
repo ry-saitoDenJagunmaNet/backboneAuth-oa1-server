@@ -95,20 +95,20 @@ class SearchOperatorTest {
     private List<OparatorSearchBizTranRoleRequest> bizTranRoleList = null;
     private LocalDate accountLockOccurredDateFrom = null;
     private LocalDate accountLockOccurredDateTo = null;
-    private Short accountLockStatusLock = null;
-    private Short accountLockStatusUnlock = null;
-    private Short passwordHistoryCheck = null;
+    private Boolean accountLockStatusLock = null;
+    private Boolean accountLockStatusUnlock = null;
+    private Boolean passwordHistoryCheck = null;
     private Integer passwordHistoryLastChangeDate = null;
     private String passwordHistoryLastChangeDateStatus = null;
-    private Short passwordHistoryChangeType0 = null;
-    private Short passwordHistoryChangeType1 = null;
-    private Short passwordHistoryChangeType2 = null;
-    private Short passwordHistoryChangeType3 = null;
+    private Boolean passwordHistoryChangeType0 = null;
+    private Boolean passwordHistoryChangeType1 = null;
+    private Boolean passwordHistoryChangeType2 = null;
+    private Boolean passwordHistoryChangeType3 = null;
     private LocalDate signintraceTrydateFrom = null;
     private LocalDate signintraceTrydateTo = null;
     private String signintraceTryIpAddress = null;
-    private Short signintraceSignIn = null;
-    private Short signintraceSignOut = null;
+    private Boolean signintraceSignIn = null;
+    private Boolean signintraceSignOut = null;
     private Short[] signintraceSignInResult = null;
     private int pageNo = 1;
     private List<Short> availableStatusIncludesList = null;
@@ -394,15 +394,15 @@ class SearchOperatorTest {
                 return accountLockOccurredDateTo;
             }
             @Override
-            public Short getAccountLockStatusLock() {
+            public Boolean getAccountLockStatusLock() {
                 return accountLockStatusLock;
             }
             @Override
-            public Short getAccountLockStatusUnlock() {
+            public Boolean getAccountLockStatusUnlock() {
                 return accountLockStatusUnlock;
             }
             @Override
-            public Short getPasswordHistoryCheck() {
+            public Boolean getPasswordHistoryCheck() {
                 return passwordHistoryCheck;
             }
             @Override
@@ -414,19 +414,19 @@ class SearchOperatorTest {
                 return passwordHistoryLastChangeDateStatus;
             }
             @Override
-            public Short getPasswordHistoryChangeType0() {
+            public Boolean getPasswordHistoryChangeType0() {
                 return passwordHistoryChangeType0;
             }
             @Override
-            public Short getPasswordHistoryChangeType1() {
+            public Boolean getPasswordHistoryChangeType1() {
                 return passwordHistoryChangeType1;
             }
             @Override
-            public Short getPasswordHistoryChangeType2() {
+            public Boolean getPasswordHistoryChangeType2() {
                 return passwordHistoryChangeType2;
             }
             @Override
-            public Short getPasswordHistoryChangeType3() {
+            public Boolean getPasswordHistoryChangeType3() {
                 return passwordHistoryChangeType3;
             }
             @Override
@@ -442,11 +442,11 @@ class SearchOperatorTest {
                 return signintraceTryIpAddress;
             }
             @Override
-            public Short getSignintraceSignIn() {
+            public Boolean getSignintraceSignIn() {
                 return signintraceSignIn;
             }
             @Override
-            public Short getSignintraceSignOut() {
+            public Boolean getSignintraceSignOut() {
                 return signintraceSignOut;
             }
             @Override
@@ -460,9 +460,9 @@ class SearchOperatorTest {
     // サブシステムローロール検索条件作成
     private List<Oa11010SearchSubSystemRoleConverter> createOa11010SearchSubSystemRoleConverterList() {
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
         return list;
     }
 
@@ -565,7 +565,7 @@ class SearchOperatorTest {
         expirationEndDateCriteria.setMoreOrEqual(LocalDate.of(2020, 10, 1));
         availableStatusIncludesList = newArrayList();
         availableStatusIncludesList.add((short) 0); //利用可能
-        signintraceSignOut = (short) 1;
+        signintraceSignOut = true;
 
         // 期待値
         Operators expectedOperators = createOperators();
@@ -639,7 +639,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        signintraceSignIn = (short) 1;
+        signintraceSignIn = true;
         signintraceSignInResult = new Short[(short) 1];
 
         // 期待値
@@ -716,7 +716,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDateStatus = "1";
         passwordHistoryLastChangeDate = 30;
 
@@ -869,8 +869,8 @@ class SearchOperatorTest {
         // 実行値
         bizTranRoleConditionsSelect = 1;    //AND;
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,1L,"KBAG01","（購買）購買業務基本","KB",1,LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,1L,"KBAG01","（購買）購買業務基本","KB",1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         bizTranRoleList = list;
 
         // 期待値
@@ -947,8 +947,8 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 1;  //AND
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
         subSystemRoleList = list;
 
         // 期待値
@@ -1025,9 +1025,9 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1065,7 +1065,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1100,7 +1100,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1135,7 +1135,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1170,8 +1170,8 @@ class SearchOperatorTest {
         // 実行値
         bizTranRoleConditionsSelect = 2;  //OR
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",0, null, null, null, null, null));
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 2L, "KBAG02", "（購買）本所業務", "KB",2, null, LocalDate.of(2020, 10, 1),LocalDate.of(2020, 10, 31), LocalDate.of(2020, 10, 1), LocalDate.of(2020, 10, 31)));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true, 1L, "KBAG01", "（購買）購買業務基本", "KB",0, null, null, null, null, null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true, 2L, "KBAG02", "（購買）本所業務", "KB",2, null, LocalDate.of(2020, 10, 1),LocalDate.of(2020, 10, 31), LocalDate.of(2020, 10, 1), LocalDate.of(2020, 10, 31)));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));
@@ -1206,7 +1206,7 @@ class SearchOperatorTest {
         // 実行値
         bizTranRoleConditionsSelect = 2;  //OR
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",1, LocalDate.of(2020,10,1), null, null, null, null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true, 1L, "KBAG01", "（購買）購買業務基本", "KB",1, LocalDate.of(2020,10,1), null, null, null, null));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(2020, 9, 30),1,null,null));
@@ -1241,7 +1241,7 @@ class SearchOperatorTest {
         // 実行値
         bizTranRoleConditionsSelect = 2;  //OR
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with(Oa11010Vo.CHECKBOX_TRUE, 1L, "KBAG01", "（購買）購買業務基本", "KB",-1, null, null, null, null, null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true, 1L, "KBAG01", "（購買）購買業務基本", "KB",-1, null, null, null, null, null));
         bizTranRoleList = list;
         List<Operator_BizTranRole> operatorBizTranRoleList = newArrayList();
         operatorBizTranRoleList.add(Operator_BizTranRole.createFrom(1L, 18L, 1L, LocalDate.of(2020, 1, 1), LocalDate.of(9999, 12, 31),1,null,null));
@@ -1338,7 +1338,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        accountLockStatusLock = Oa11010Vo.CHECKBOX_TRUE;
+        accountLockStatusLock = true;
         AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
 
         // 期待値
@@ -1370,8 +1370,8 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        accountLockStatusLock = Oa11010Vo.CHECKBOX_TRUE;
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus. アンロック.getCode(), 0, null);
+        accountLockStatusLock = true;
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
 
         // 期待値
         boolean expected = false;
@@ -1402,7 +1402,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        accountLockStatusUnlock = Oa11010Vo.CHECKBOX_TRUE;
+        accountLockStatusUnlock = true;
         AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
 
         // 期待値
@@ -1434,7 +1434,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        accountLockStatusUnlock = Oa11010Vo.CHECKBOX_TRUE;
+        accountLockStatusUnlock = true;
         AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
 
         // 期待値
@@ -1466,7 +1466,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDateStatus = "1";
         passwordHistoryLastChangeDate = 5;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
@@ -1507,13 +1507,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDateStatus = "1";
         passwordHistoryLastChangeDate = 5;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = true;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1553,7 +1553,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDateStatus = "2";
         passwordHistoryLastChangeDate = 5;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
@@ -1595,13 +1595,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDateStatus = "2";
         passwordHistoryLastChangeDate = 5;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = false;
+        passwordHistoryChangeType1 = true;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1640,7 +1640,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDate = null;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
@@ -1680,7 +1680,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDate = 5;
         passwordHistoryLastChangeDateStatus = "2";
         PasswordHistory passwordHistory = null;
@@ -1713,7 +1713,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryCheck = true;
         passwordHistoryLastChangeDate = 5;
         passwordHistoryLastChangeDateStatus = "";
         PasswordHistory passwordHistory = null;
@@ -1746,13 +1746,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = false;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = true;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1791,13 +1791,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType0 = false;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = true;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1836,13 +1836,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = false;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1881,13 +1881,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = true;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = null;
 
         // 期待値
@@ -1918,13 +1918,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType0 = false;
+        passwordHistoryChangeType1 = true;
+        passwordHistoryChangeType2 = true;
+        passwordHistoryChangeType3 = true;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -1963,13 +1963,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType0 = true;
+        passwordHistoryChangeType1 = false;
+        passwordHistoryChangeType2 = true;
+        passwordHistoryChangeType3 = true;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -2008,13 +2008,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_FALSE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_TRUE;
+        passwordHistoryChangeType0 = true;
+        passwordHistoryChangeType1 = true;
+        passwordHistoryChangeType2 = false;
+        passwordHistoryChangeType3 = true;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -2053,13 +2053,13 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        passwordHistoryCheck = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryCheck = false;
         passwordHistoryLastChangeDateStatus = null;
         passwordHistoryLastChangeDate = null;
-        passwordHistoryChangeType0 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType1 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType2 = Oa11010Vo.CHECKBOX_TRUE;
-        passwordHistoryChangeType3 = Oa11010Vo.CHECKBOX_FALSE;
+        passwordHistoryChangeType0 = true;
+        passwordHistoryChangeType1 = true;
+        passwordHistoryChangeType2 = true;
+        passwordHistoryChangeType3 = false;
         PasswordHistory passwordHistory = PasswordHistory.createFrom(
             1L,
             18L,
@@ -2486,7 +2486,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        signintraceSignIn = Oa11010Vo.CHECKBOX_TRUE;
+        signintraceSignIn = true;
         List<Short> signintraceSignInResultList = newArrayList((short) 0);
         signintraceSignInResult = signintraceSignInResultList.toArray(new Short[signintraceSignInResultList.size()]);
         SignInTrace signInTrace = SignInTrace.createFrom(
@@ -2528,7 +2528,7 @@ class SearchOperatorTest {
         SearchOperator searchOperator = createSearchOperator();
 
         // 実行値
-        signintraceSignIn = Oa11010Vo.CHECKBOX_TRUE;
+        signintraceSignIn = true;
         SignInTrace signInTrace = null;
 
         // 期待値

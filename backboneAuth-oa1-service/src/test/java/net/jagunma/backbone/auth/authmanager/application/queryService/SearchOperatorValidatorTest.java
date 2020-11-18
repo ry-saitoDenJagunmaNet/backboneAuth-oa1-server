@@ -121,15 +121,15 @@ class SearchOperatorValidatorTest {
                 return null;
             }
             @Override
-            public Short getAccountLockStatusLock() {
+            public Boolean getAccountLockStatusLock() {
                 return null;
             }
             @Override
-            public Short getAccountLockStatusUnlock() {
+            public Boolean getAccountLockStatusUnlock() {
                 return null;
             }
             @Override
-            public Short getPasswordHistoryCheck() {
+            public Boolean getPasswordHistoryCheck() {
                 return null;
             }
             @Override
@@ -141,19 +141,19 @@ class SearchOperatorValidatorTest {
                 return null;
             }
             @Override
-            public Short getPasswordHistoryChangeType0() {
+            public Boolean getPasswordHistoryChangeType0() {
                 return null;
             }
             @Override
-            public Short getPasswordHistoryChangeType1() {
+            public Boolean getPasswordHistoryChangeType1() {
                 return null;
             }
             @Override
-            public Short getPasswordHistoryChangeType2() {
+            public Boolean getPasswordHistoryChangeType2() {
                 return null;
             }
             @Override
-            public Short getPasswordHistoryChangeType3() {
+            public Boolean getPasswordHistoryChangeType3() {
                 return null;
             }
             @Override
@@ -161,11 +161,11 @@ class SearchOperatorValidatorTest {
                 return null;
             }
             @Override
-            public Short getSignintraceSignIn() {
+            public Boolean getSignintraceSignIn() {
                 return null;
             }
             @Override
-            public Short getSignintraceSignOut() {
+            public Boolean getSignintraceSignOut() {
                 return null;
             }
             @Override
@@ -214,12 +214,12 @@ class SearchOperatorValidatorTest {
         expirationEndDateMoreOrEqual = LocalDate.of(2020, 10, 2);
         expirationEndDateLessOrEqual = LocalDate.of(2020, 10, 2);
         List<OparatorSearchSubSystemRoleRequest> searchSubSystemRoleConverterList = newArrayList();
-        searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,3),null,null));
-        searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,null,null,LocalDate.of(2020,10,4),LocalDate.of(2020,10,4)));
+        searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,3),null,null));
+        searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,null,null,LocalDate.of(2020,10,4),LocalDate.of(2020,10,4)));
         oparatorSearchSubSystemRoleRequestList = searchSubSystemRoleConverterList;
         List<OparatorSearchBizTranRoleRequest> searchBizTranRoleList = newArrayList();
-        searchBizTranRoleList.add(Oa11010SearchBizTranRoleConverter.with((short)1,1L,"KBAG01","（購買）購買業務基本","KB",2,null,LocalDate.of(2020,10,5),LocalDate.of(2020,10,5),null,null));
-        searchBizTranRoleList.add(Oa11010SearchBizTranRoleConverter.with((short)1,2L,"KBAG02","（購買）本所業務","KB",2,null,null,null,LocalDate.of(2020,10,6),LocalDate.of(2020,10,6)));
+        searchBizTranRoleList.add(Oa11010SearchBizTranRoleConverter.with(true,1L,"KBAG01","（購買）購買業務基本","KB",2,null,LocalDate.of(2020,10,5),LocalDate.of(2020,10,5),null,null));
+        searchBizTranRoleList.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,null,null,LocalDate.of(2020,10,6),LocalDate.of(2020,10,6)));
         accountLockOccurredDateFrom = LocalDate.of(2020, 10, 7);
         accountLockOccurredDateTo = LocalDate.of(2020, 10, 7);
         signintraceTrydateFrom = LocalDate.of(2020, 10, 8);
@@ -326,9 +326,9 @@ class SearchOperatorValidatorTest {
 
         // 実行値
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
         oparatorSearchSubSystemRoleRequestList = list;
         OperatorSearchRequest request = createRequest();
 
@@ -356,9 +356,9 @@ class SearchOperatorValidatorTest {
 
         // 実行値
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,null,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with((short) 1,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,null,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
         oparatorSearchSubSystemRoleRequestList = list;
         OperatorSearchRequest request = createRequest();
 
@@ -386,9 +386,9 @@ class SearchOperatorValidatorTest {
 
         // 実行値
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,1L,"KBAG01","（購買）購買業務基本","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),null,null));
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,3L,"KBAG03","（購買）本所管理業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,1L,"KBAG01","（購買）購買業務基本","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),null,null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,3L,"KBAG03","（購買）本所管理業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
         oparatorSearchBizTranRoleRequestList = list;
         OperatorSearchRequest request = createRequest();
 
@@ -416,9 +416,9 @@ class SearchOperatorValidatorTest {
 
         // 実行値
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,1L,"KBAG01","（購買）購買業務基本","KB",2,null,null,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,2L,"KBAG02","（購買）本所業務","KB",2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchBizTranRoleConverter.with((short)1,3L,"KBAG03","（購買）本所管理業務","KB",2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,1L,"KBAG01","（購買）購買業務基本","KB",2,null,null,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchBizTranRoleConverter.with(true,3L,"KBAG03","（購買）本所管理業務","KB",2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
         oparatorSearchBizTranRoleRequestList = list;
         OperatorSearchRequest request = createRequest();
 

@@ -158,9 +158,9 @@ class Oa12060ControllerTest {
     }
     //OA12060カレンダー１日分のセル作成
     private Oa12060CalendarVo cretaeOa12060CalendarVo(
-        Long calendarId1, short isWorkingDay1,
-        Long calendarId2, short isWorkingDay2,
-        Long calendarId3, short isWorkingDay3) {
+        Long calendarId1, Boolean isWorkingDay1,
+        Long calendarId2, Boolean isWorkingDay2,
+        Long calendarId3, Boolean isWorkingDay3) {
 
         Oa12060CalendarVo calendarVo = new Oa12060CalendarVo();
         calendarVo.setCalendarId1(calendarId1);
@@ -347,8 +347,8 @@ class Oa12060ControllerTest {
         vo.setCalendarTypeFilterCheck3(Short.parseShort(ct3));
         vo.setWorkingdayOrHolidaySelect("");
         List<Oa12060CalendarVo> calendarList = newArrayList();
-        calendarList.add(cretaeOa12060CalendarVo(1L, (short) 1, 2L, (short) 0, 3L, (short) 1));
-        calendarList.add(cretaeOa12060CalendarVo(4L, (short) 0, 5L, (short) 1, 6L, (short) 0));
+        calendarList.add(cretaeOa12060CalendarVo(1L,true,2L,false,3L,true));
+        calendarList.add(cretaeOa12060CalendarVo(4L,false,5L,true,6L,false));
         vo.setCalendarList(calendarList);
 
         // テスト対象クラス生成
@@ -387,8 +387,8 @@ class Oa12060ControllerTest {
         vo.setYearMonthToString(ym);
         vo.setWorkingdayOrHolidaySelect("");
         List<Oa12060CalendarVo> calendarList = newArrayList();
-        calendarList.add(cretaeOa12060CalendarVo(1L, (short) 1, 2L, (short) 0, 3L, (short) 1));
-        calendarList.add(cretaeOa12060CalendarVo(4L, (short) 0, 5L, (short) 1, 6L, (short) 0));
+        calendarList.add(cretaeOa12060CalendarVo(1L, true, 2L, false, 3L, true));
+        calendarList.add(cretaeOa12060CalendarVo(4L, false, 5L,true, 6L, false));
         vo.setCalendarList(calendarList);
 
         // テスト対象クラス生成

@@ -120,10 +120,10 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      */
     public BooleanCriteria getIsDeviceAuthCriteria() {
         BooleanCriteria criteria = new BooleanCriteria();
-        Short deviceAuthUse = vo.getDeviceAuthUse() == null? Oa11010Vo.CHECKBOX_FALSE : vo.getDeviceAuthUse();
-        Short deviceAuthUnuse = vo.getDeviceAuthUnuse() == null? Oa11010Vo.CHECKBOX_FALSE : vo.getDeviceAuthUnuse();
+        Short deviceAuthUse = (Boolean.TRUE.equals(vo.getDeviceAuthUse()))? (short)1 : (short)0;
+        Short deviceAuthUnuse = (Boolean.TRUE.equals(vo.getDeviceAuthUnuse()))? (short)1 : (short)0;
         if (deviceAuthUse.equals(deviceAuthUnuse)) { return criteria; }
-        criteria.setEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        criteria.setEqualTo(Boolean.TRUE.equals(vo.getDeviceAuthUse()));
         return criteria;
     }
     /**
@@ -182,7 +182,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
         for (Oa11010SubSystemRoleVo subSystemRoleVo : vo.getSubSystemRoleList()) {
             // 選択チェックしたサブシステムロールを検索条件にする
-            if (Oa11010Vo.CHECKBOX_TRUE.equals(subSystemRoleVo.getSubSystemRoleSelected())) {
+            if (CheckboxUtil.getSmoother(subSystemRoleVo.getSubSystemRoleSelected())) {
                 list.add(Oa11010SearchSubSystemRoleConverter.with(
                     subSystemRoleVo.getSubSystemRoleSelected(),
                     subSystemRoleVo.getSubSystemRoleCode(),
@@ -222,7 +222,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
         List<OparatorSearchBizTranRoleRequest> list = newArrayList();
         for (Oa11010BizTranRoleVo bizTranRoleVo : vo.getBizTranRoleList()) {
             // 選択チェックした取引ロールを検索条件にする
-            if (Oa11010Vo.CHECKBOX_TRUE.equals(bizTranRoleVo.getBizTranRoleSelected())) {
+            if (CheckboxUtil.getSmoother(bizTranRoleVo.getBizTranRoleSelected())) {
                 list.add(Oa11010SearchBizTranRoleConverter.with(
                     bizTranRoleVo.getBizTranRoleSelected(),
                     bizTranRoleVo.getBizTranRoleId(),
@@ -260,7 +260,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 現在ロック状態ロック（0:アンロック、1:ロック）
      */
-    public Short getAccountLockStatusLock() {
+    public Boolean getAccountLockStatusLock() {
         return vo.getAccountLockStatusLock();
     }
     /**
@@ -268,7 +268,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 現在ロック状態アンロック
      */
-    public Short getAccountLockStatusUnlock() {
+    public Boolean getAccountLockStatusUnlock() {
         return vo.getAccountLockStatusUnlock();
     }
     /**
@@ -276,7 +276,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終パスワード変更日チェック（0:チェックfalse、1:チェックtrue）
      */
-    public Short getPasswordHistoryCheck() {
+    public Boolean getPasswordHistoryCheck() {
         return vo.getPasswordHistoryCheck();
     }
     /**
@@ -300,7 +300,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終パスワード変更種別初期
      */
-    public Short getPasswordHistoryChangeType0() {
+    public Boolean getPasswordHistoryChangeType0() {
         return vo.getPasswordHistoryChangeType0();
     }
     /**
@@ -308,7 +308,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終パスワード変更種別ユーザによる変更
      */
-    public Short getPasswordHistoryChangeType1() {
+    public Boolean getPasswordHistoryChangeType1() {
         return vo.getPasswordHistoryChangeType1();
     }
     /**
@@ -316,7 +316,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終パスワード変更種別管理者によるリセット
      */
-    public Short getPasswordHistoryChangeType2() {
+    public Boolean getPasswordHistoryChangeType2() {
         return vo.getPasswordHistoryChangeType2();
     }
     /**
@@ -324,7 +324,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終パスワード変更種別機器認証パスワード
      */
-    public Short getPasswordHistoryChangeType3() {
+    public Boolean getPasswordHistoryChangeType3() {
         return vo.getPasswordHistoryChangeType3();
     }
     /**
@@ -356,7 +356,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終サインオペレーションサインイン
      */
-    public Short getSignintraceSignIn() {
+    public Boolean getSignintraceSignIn() {
         return vo.getSignintraceSignIn();
     }
     /**
@@ -364,7 +364,7 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 最終サインオペレーションサインアウト
      */
-    public Short getSignintraceSignOut() {
+    public Boolean getSignintraceSignOut() {
         return vo.getSignintraceSignOut();
     }
     /**

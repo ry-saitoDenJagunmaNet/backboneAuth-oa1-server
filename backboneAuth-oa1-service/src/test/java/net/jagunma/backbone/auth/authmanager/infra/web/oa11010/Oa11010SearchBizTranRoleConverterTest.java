@@ -24,7 +24,7 @@ class Oa11010SearchBizTranRoleConverterTest {
     void with_test0() {
 
         // 実行既定値
-        Short bizTranRoleSelected = 0;
+        Boolean bizTranRoleSelected = false;
         long bizTranRoleId = 1L;
         String bizTranRoleCode = "KBAG01";
         String bizTranRoleName = "（購買）購買業務基本";

@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
  */
 public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSystemRoleRequest {
 
-    private final Short subSystemRoleSelected;
+    private final Boolean subSystemRoleSelected;
     private final String subSystemRoleCode;
     private final String subSystemRoleName;
     private final Integer expirationSelect;
@@ -20,7 +20,7 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
 
     // コンストラクタ
     Oa11010SearchSubSystemRoleConverter(
-        Short subSystemRoleSelected,
+        Boolean subSystemRoleSelected,
         String subSystemRoleCode,
         String subSystemRoleName,
         Integer expirationSelect,
@@ -43,7 +43,7 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
 
     // ファクトリーメソッド
     public static Oa11010SearchSubSystemRoleConverter with(
-        Short subSystemRoleSelected,
+        Boolean subSystemRoleSelected,
         String subSystemRoleCode,
         String subSystemRoleName,
         Integer expirationSelect,
@@ -70,7 +70,7 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
      *
      * @return サブシステムロール選択
      */
-    public Short getSubSystemRoleSelected() {
+    public Boolean getSubSystemRoleSelected() {
         return subSystemRoleSelected;
     }
     /**

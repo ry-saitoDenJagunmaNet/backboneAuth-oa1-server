@@ -16,7 +16,7 @@ public class Oa12060CalendarVo implements Serializable {
     /**
      * 経済稼働日チェック
      */
-    private Short isWorkingDay1;
+    private Boolean isWorkingDay1;
     /**
      * 経済レコードバージョン
      */
@@ -28,7 +28,7 @@ public class Oa12060CalendarVo implements Serializable {
     /**
      * 信用稼働日チェック
      */
-    private Short isWorkingDay2;
+    private Boolean isWorkingDay2;
     /**
      * 信用レコードバージョン
      */
@@ -40,7 +40,7 @@ public class Oa12060CalendarVo implements Serializable {
     /**
      * 広域物流稼働日チェック
      */
-    private Short isWorkingDay3;
+    private Boolean isWorkingDay3;
     /**
      * 広域物流レコードバージョン
      */
@@ -52,10 +52,10 @@ public class Oa12060CalendarVo implements Serializable {
     public void setCalendarId1(Long calendarId1) {
         this.calendarId1 = calendarId1;
     }
-    public Short getIsWorkingDay1() {
+    public Boolean getIsWorkingDay1() {
         return isWorkingDay1;
     }
-    public void setIsWorkingDay1(Short isWorkingDay1) {
+    public void setIsWorkingDay1(Boolean isWorkingDay1) {
         this.isWorkingDay1 = isWorkingDay1;
     }
     public Integer getRecordVersion1() {
@@ -70,10 +70,10 @@ public class Oa12060CalendarVo implements Serializable {
     public void setCalendarId2(Long calendarId2) {
         this.calendarId2 = calendarId2;
     }
-    public Short getIsWorkingDay2() {
+    public Boolean getIsWorkingDay2() {
         return isWorkingDay2;
     }
-    public void setIsWorkingDay2(Short isWorkingDay2) {
+    public void setIsWorkingDay2(Boolean isWorkingDay2) {
         this.isWorkingDay2 = isWorkingDay2;
     }
     public Integer getRecordVersion2() {
@@ -88,10 +88,10 @@ public class Oa12060CalendarVo implements Serializable {
     public void setCalendarId3(Long calendarId3) {
         this.calendarId3 = calendarId3;
     }
-    public Short getIsWorkingDay3() {
+    public Boolean getIsWorkingDay3() {
         return isWorkingDay3;
     }
-    public void setIsWorkingDay3(Short isWorkingDay3) {
+    public void setIsWorkingDay3(Boolean isWorkingDay3) {
         this.isWorkingDay3 = isWorkingDay3;
     }
     public Integer getRecordVersion3() {
