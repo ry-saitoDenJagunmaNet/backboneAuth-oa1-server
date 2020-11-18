@@ -25,8 +25,8 @@ class Oa11010SearchConverterTest {
     private String operatorCode = "yu001009";
     private String operatorName = "ｙｕ００１００９";
     private String mailAddress = "abcd@efgh.net";
-    private Short availableStatus0 = (short) 1;
-    private Short availableStatus1 = (short) 1;
+    private Boolean availableStatus0 = true;
+    private Boolean availableStatus1 = true;
     private Integer expirationSelect = 1;
     private final LocalDate expirationStatusDate = LocalDate.of(2020, 9, 1);
     private final LocalDate expirationStartDateFrom = LocalDate.of(2020, 9, 2);
@@ -37,7 +37,7 @@ class Oa11010SearchConverterTest {
     private List<Oa11010SubSystemRoleVo> getSubSystemRoleVoList() {
         List<Oa11010SubSystemRoleVo> subSystemRoleVoList = newArrayList();
         Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
-        subSystemRoleVo.setSubSystemRoleSelected((short) 1);
+        subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.JA管理者.getCode());
         subSystemRoleVo.setSubSystemRoleName(SubSystemRole.JA管理者.getName());
         subSystemRoleVo.setExpirationSelect(1);
@@ -48,7 +48,7 @@ class Oa11010SearchConverterTest {
         subSystemRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 5));
         subSystemRoleVoList.add(subSystemRoleVo);
         subSystemRoleVo = new Oa11010SubSystemRoleVo();
-        subSystemRoleVo.setSubSystemRoleSelected((short) 1);
+        subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_青果.getCode());
         subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_青果.getName());
         subSystemRoleVo.setExpirationSelect(2);
@@ -59,7 +59,7 @@ class Oa11010SearchConverterTest {
         subSystemRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 10));
         subSystemRoleVoList.add(subSystemRoleVo);
         subSystemRoleVo = new Oa11010SubSystemRoleVo();
-        subSystemRoleVo.setSubSystemRoleSelected((short) 0);
+        subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_米.getCode());
         subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_米.getName());
         subSystemRoleVo.setExpirationSelect(0);
@@ -77,7 +77,7 @@ class Oa11010SearchConverterTest {
     private List<Oa11010BizTranRoleVo> getBizTranRoleVoList() {
         List<Oa11010BizTranRoleVo> bizTranRoleVoList = newArrayList();
         Oa11010BizTranRoleVo bizTranRoleVo = new Oa11010BizTranRoleVo();
-        bizTranRoleVo.setBizTranRoleSelected((short) 1);
+        bizTranRoleVo.setBizTranRoleSelected(true);
         bizTranRoleVo.setBizTranRoleId(1L);
         bizTranRoleVo.setBizTranRoleCode("KBAG01");
         bizTranRoleVo.setBizTranRoleName("（購買）購買業務基本");
@@ -90,7 +90,7 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 15));
         bizTranRoleVoList.add(bizTranRoleVo);
         bizTranRoleVo = new Oa11010BizTranRoleVo();
-        bizTranRoleVo.setBizTranRoleSelected((short) 1);
+        bizTranRoleVo.setBizTranRoleSelected(true);
         bizTranRoleVo.setBizTranRoleId(2L);
         bizTranRoleVo.setBizTranRoleCode("KBAG02");
         bizTranRoleVo.setBizTranRoleName("（購買）本所業務");
@@ -103,7 +103,7 @@ class Oa11010SearchConverterTest {
         bizTranRoleVo.setExpirationEndDateTo(LocalDate.of(2020, 10, 20));
         bizTranRoleVoList.add(bizTranRoleVo);
         bizTranRoleVo = new Oa11010BizTranRoleVo();
-        bizTranRoleVo.setBizTranRoleSelected((short) 0);
+        bizTranRoleVo.setBizTranRoleSelected(true);
         bizTranRoleVo.setBizTranRoleId(3L);
         bizTranRoleVo.setBizTranRoleCode("KBAG03");
         bizTranRoleVo.setBizTranRoleName("（購買）本所管理業務");
@@ -117,24 +117,24 @@ class Oa11010SearchConverterTest {
         bizTranRoleVoList.add(bizTranRoleVo);
         return bizTranRoleVoList;
     }
-    private Short deviceAuthUse = (short) 0;
-    private Short deviceAuthUnuse = (short) 1;
+    private Boolean deviceAuthUse = false;
+    private Boolean deviceAuthUnuse = true;
     private final LocalDate accountLockOccurredDateFrom = LocalDate.of(2020, 9, 6);
     private final LocalDate accountLockOccurredDateTo = LocalDate.of(2020, 9, 7);
-    private final Short accountLockStatusLock = (short) 0;
-    private final Short accountLockStatusUnlock = (short) 1;
-    private final Short passwordHistoryCheck = (short) 1;
+    private final Boolean accountLockStatusLock = false;
+    private final Boolean accountLockStatusUnlock = true;
+    private final Boolean passwordHistoryCheck = true;
     private final Integer passwordHistoryLastChangeDate = 30;
     private final String passwordHistoryLastChangeDateStatus = "2";
-    private final Short passwordHistoryChangeType0 = (short) 0;
-    private final Short passwordHistoryChangeType1 = (short) 1;
-    private final Short passwordHistoryChangeType2 = (short) 0;
-    private final Short passwordHistoryChangeType3 = (short) 1;
+    private final Boolean passwordHistoryChangeType0 = false;
+    private final Boolean passwordHistoryChangeType1 = true;
+    private final Boolean passwordHistoryChangeType2 = false;
+    private final Boolean passwordHistoryChangeType3 = true;
     private final LocalDate signintraceTrydateFrom = LocalDate.of(2020, 9, 8);
     private final LocalDate signintraceTrydateTo = LocalDate.of(2020, 9, 9);
     private final String signintraceTryIpAddress = "001.001.001.001";
-    private final Short signintraceSignIn = (short) 0;
-    private final Short signintraceSignOut = (short) 1;
+    private final Boolean signintraceSignIn = false;
+    private final Boolean signintraceSignOut = true;
     private final Short[] signintraceSignInResult = {(short)0, (short)1};
     private final Integer pageNo = 1;
 
@@ -145,8 +145,8 @@ class Oa11010SearchConverterTest {
         vo.setOperatorCode(operatorCode);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-//        vo.setAvailableStatus0(availableStatus0);
-//        vo.setAvailableStatus1(availableStatus1);
+        vo.setAvailableStatus0(availableStatus0);
+        vo.setAvailableStatus1(availableStatus1);
         vo.setExpirationSelect(expirationSelect);
         vo.setExpirationStatusDate(expirationStatusDate);
         vo.setExpirationStartDateFrom(expirationStartDateFrom);
@@ -198,16 +198,12 @@ class Oa11010SearchConverterTest {
 
         // 期待値
         List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
-            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getSubSystemRoleSelected().equals(true)).collect(Collectors.toList());
         List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
-            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getBizTranRoleSelected().equals(true)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
-            availableStatusIncludesList.add((short) 0);
-        }
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
-            availableStatusIncludesList.add((short) 1);
-        }
+        availableStatusIncludesList.add((short) 0);
+        availableStatusIncludesList.add((short) 1);
 
         // 実行
         Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
@@ -219,7 +215,7 @@ class Oa11010SearchConverterTest {
         assertThat(converter.getMailAddressCriteria().getForwardMatch()).isEqualTo(mailAddress);
         assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isEqualTo(expirationStatusDate);
         assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isEqualTo(expirationStatusDate);
-        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(deviceAuthUse);
         assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
         assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
         assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
@@ -263,24 +259,18 @@ class Oa11010SearchConverterTest {
 
         // 実行値
         expirationSelect = 2;
-        availableStatus0 = (short) 0;
-        availableStatus1 = (short) 0;
-        deviceAuthUse = (short) 1;
-        deviceAuthUnuse = (short) 0;
+        availableStatus0 = false;
+        availableStatus1 = false;
+        deviceAuthUse = true;
+        deviceAuthUnuse = false;
         Oa11010Vo vo = createOa11010Vo();
 
         // 期待値
         List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
-            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getSubSystemRoleSelected().equals(true)).collect(Collectors.toList());
         List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
-            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getBizTranRoleSelected().equals(true)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
-            availableStatusIncludesList.add((short) 0);
-        }
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
-            availableStatusIncludesList.add((short) 1);
-        }
 
         // 実行
         Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
@@ -294,7 +284,7 @@ class Oa11010SearchConverterTest {
         assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isEqualTo(expirationStartDateTo);
         assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isEqualTo(expirationEndDateFrom);
         assertThat(converter.getExpirationEndDateCriteria().getLessOrEqual()).isEqualTo(expirationEndDateTo);
-        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(deviceAuthUse);
         assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
         assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
         assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
@@ -345,16 +335,12 @@ class Oa11010SearchConverterTest {
 
         // 期待値
         List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
-            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getSubSystemRoleSelected().equals(true)).collect(Collectors.toList());
         List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
-            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getBizTranRoleSelected().equals(true)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
-            availableStatusIncludesList.add((short) 0);
-        }
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
-            availableStatusIncludesList.add((short) 1);
-        }
+        availableStatusIncludesList.add((short) 0);
+        availableStatusIncludesList.add((short) 1);
 
         // 実行
         Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);
@@ -370,7 +356,7 @@ class Oa11010SearchConverterTest {
         assertThat(converter.getExpirationStartDateCriteria().getLessOrEqual()).isNull();
         assertThat(converter.getExpirationEndDateCriteria().getMoreOrEqual()).isNull();
         assertThat(converter.getExpirationEndDateCriteria().getLessOrEqual()).isNull();
-        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(Oa11010Vo.CHECKBOX_TRUE.equals(deviceAuthUse));
+        assertThat(converter.getIsDeviceAuthCriteria().getEqualTo()).isEqualTo(deviceAuthUse);
         assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
         assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
         assertThat(converter.getAvailableStatusCriteria().getIncludes()).usingRecursiveComparison().isEqualTo(availableStatusIncludesList);
@@ -425,16 +411,12 @@ class Oa11010SearchConverterTest {
 
         // 期待値
         List<Oa11010SubSystemRoleVo> expectedSubSystemRoleVoList = getSubSystemRoleVoList().stream().filter(
-            s->s.getSubSystemRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getSubSystemRoleSelected().equals(true)).collect(Collectors.toList());
         List<Oa11010BizTranRoleVo> expectedBizTranRoleVoList = getBizTranRoleVoList().stream().filter(
-            s->s.getBizTranRoleSelected().equals((short)1)).collect(Collectors.toList());
+            s->s.getBizTranRoleSelected().equals(true)).collect(Collectors.toList());
         List<Short> availableStatusIncludesList = newArrayList();
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
-            availableStatusIncludesList.add((short) 0);
-        }
-        if (BaseOfResponseVo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
-            availableStatusIncludesList.add((short) 1);
-        }
+        availableStatusIncludesList.add((short) 0);
+        availableStatusIncludesList.add((short) 1);
 
         // 実行
         Oa11010SearchConverter converter = Oa11010SearchConverter.with(vo);

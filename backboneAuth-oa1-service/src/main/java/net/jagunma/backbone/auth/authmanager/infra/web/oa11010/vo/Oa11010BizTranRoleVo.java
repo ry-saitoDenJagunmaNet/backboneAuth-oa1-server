@@ -12,7 +12,7 @@ public class Oa11010BizTranRoleVo {
     /**
      * 取引ロール選択
      */
-    private Short bizTranRoleSelected;
+    private Boolean bizTranRoleSelected;
     /**
      * 取引ロールID
      */
@@ -55,10 +55,10 @@ public class Oa11010BizTranRoleVo {
     private LocalDate expirationEndDateTo;
 
     // Getter／Setter
-    public Short getBizTranRoleSelected() {
+    public Boolean getBizTranRoleSelected() {
         return bizTranRoleSelected;
     }
-    public void setBizTranRoleSelected(Short bizTranRoleSelected) {
+    public void setBizTranRoleSelected(Boolean bizTranRoleSelected) {
         this.bizTranRoleSelected = bizTranRoleSelected;
     }
     public long getBizTranRoleId() {

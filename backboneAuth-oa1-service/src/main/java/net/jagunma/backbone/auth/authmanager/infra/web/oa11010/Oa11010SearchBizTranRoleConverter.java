@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
  */
 public class Oa11010SearchBizTranRoleConverter implements OparatorSearchBizTranRoleRequest {
 
-    private final Short bizTranRoleSelected;
+    private final Boolean bizTranRoleSelected;
     private final long bizTranRoleId;
     private final String bizTranRoleCode;
     private final String bizTranRoleName;
@@ -22,7 +22,7 @@ public class Oa11010SearchBizTranRoleConverter implements OparatorSearchBizTranR
 
     // コンストラクタ
     Oa11010SearchBizTranRoleConverter(
-        Short bizTranRoleSelected,
+        Boolean bizTranRoleSelected,
         long bizTranRoleId,
         String bizTranRoleCode,
         String bizTranRoleName,
@@ -49,7 +49,7 @@ public class Oa11010SearchBizTranRoleConverter implements OparatorSearchBizTranR
 
     // ファクトリーメソッド
     public static Oa11010SearchBizTranRoleConverter with(
-        Short bizTranRoleSelected,
+        Boolean bizTranRoleSelected,
         long bizTranRoleId,
         String bizTranRoleCode,
         String bizTranRoleName,
@@ -80,7 +80,7 @@ public class Oa11010SearchBizTranRoleConverter implements OparatorSearchBizTranR
      *
      * @return 取引ロール選択
      */
-    public Short getBizTranRoleSelected() {
+    public Boolean getBizTranRoleSelected() {
         return bizTranRoleSelected;
     }
     /**

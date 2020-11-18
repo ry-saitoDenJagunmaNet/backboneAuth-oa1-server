@@ -24,7 +24,7 @@ class Oa11010SearchSubSystemRoleConverterTest {
     void with_test() {
 
         // 実行既定値
-        Short subSystemRoleSelected = 1;
+        Boolean subSystemRoleSelected = true;
         String subSystemRoleCode = SubSystemRole.JA管理者.getCode();
         String subSystemRoleName = SubSystemRole.JA管理者.getName();
         Integer expirationSelect = 2;

@@ -13,7 +13,7 @@ public class Oa11010SubSystemRoleVo implements Serializable {
     /**
      * サブシステムロール選択
      */
-    private Short subSystemRoleSelected;
+    private Boolean subSystemRoleSelected;
     /**
      * サブシステムロールコード
      */
@@ -48,10 +48,10 @@ public class Oa11010SubSystemRoleVo implements Serializable {
     private LocalDate expirationEndDateTo;
 
     // Getter／Setter
-    public Short getSubSystemRoleSelected() {
+    public Boolean getSubSystemRoleSelected() {
         return subSystemRoleSelected;
     }
-    public void setSubSystemRoleSelected(Short subSystemRoleSelected) {
+    public void setSubSystemRoleSelected(Boolean subSystemRoleSelected) {
         this.subSystemRoleSelected = subSystemRoleSelected;
     }
     public String getSubSystemRoleCode() {

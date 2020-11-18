@@ -18,15 +18,6 @@ public class BaseOfResponseVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * チェックボックスのチェックtrue状態値
-     */
-    public static final Short CHECKBOX_TRUE  = 1;
-    /**
-     * チェックボックスのチェックfalse状態値
-     */
-    public static final Short CHECKBOX_FALSE  = 0;
-
-    /**
      * メッセージコード
      */
     private String messageCode;

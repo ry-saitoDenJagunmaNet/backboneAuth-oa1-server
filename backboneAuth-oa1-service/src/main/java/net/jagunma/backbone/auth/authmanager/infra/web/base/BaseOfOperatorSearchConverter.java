@@ -123,19 +123,19 @@ public class BaseOfOperatorSearchConverter {
      *
      * @return 現在ロック状態ロック
      */
-    public Short getAccountLockStatusLock() { return null; }
+    public Boolean getAccountLockStatusLock() { return null; }
     /**
      * 現在ロック状態アンロックのＧｅｔ
      *
      * @return 現在ロック状態アンロック
      */
-    public Short getAccountLockStatusUnlock() { return null; }
+    public Boolean getAccountLockStatusUnlock() { return null; }
     /**
      * 最終パスワード変更日チェックのＧｅｔ
      *
      * @return 最終パスワード変更日チェック
      */
-    public Short getPasswordHistoryCheck() { return null; }
+    public Boolean getPasswordHistoryCheck() { return null; }
     /**
      * 最終パスワード変更日数のＧｅｔ
      *
@@ -153,25 +153,25 @@ public class BaseOfOperatorSearchConverter {
      *
      * @return 最終パスワード変更種別初期
      */
-    public Short getPasswordHistoryChangeType0() { return null; }
+    public Boolean getPasswordHistoryChangeType0() { return null; }
     /**
      * 最終パスワード変更種別ユーザによる変更のＧｅｔ
      *
      * @return 最終パスワード変更種別ユーザによる変更
      */
-    public Short getPasswordHistoryChangeType1() { return null; }
+    public Boolean getPasswordHistoryChangeType1() { return null; }
     /**
      * 最終パスワード変更種別管理者によるリセットのＧｅｔ
      *
      * @return 最終パスワード変更種別管理者によるリセット
      */
-    public Short getPasswordHistoryChangeType2() { return null; }
+    public Boolean getPasswordHistoryChangeType2() { return null; }
     /**
      * 最終パスワード変更種別機器認証パスワードのＧｅｔ
      *
      * @return 最終パスワード変更種別機器認証パスワード
      */
-    public Short getPasswordHistoryChangeType3() { return null; }
+    public Boolean getPasswordHistoryChangeType3() { return null; }
     /**
      * 最終サインオペレーション試行日（開始日）のＧｅｔ
      *
@@ -195,13 +195,13 @@ public class BaseOfOperatorSearchConverter {
      *
      * @return 最終サインオペレーションサインイン
      */
-    public Short getSignintraceSignIn() { return null; }
+    public Boolean getSignintraceSignIn() { return null; }
     /**
      * 最終サインオペレーションサインアウトのＧｅｔ
      *
      * @return 最終サインオペレーションサインアウト
      */
-    public Short getSignintraceSignOut() { return null; }
+    public Boolean getSignintraceSignOut() { return null; }
     /**
      * 最終サインオペレーションサインイン結果のＧｅｔ
      *

@@ -256,10 +256,10 @@ public class SearchOperator {
                     o.getExpirationEndDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
         } else if (subSystemRoleRequest.getExpirationSelect() == 2) {
             // 条件指定
-            LocalDate expirationStartDateFrom = subSystemRoleRequest.getExpirationStartDateFrom()==null? defaultFromDate : subSystemRoleRequest.getExpirationStartDateFrom();
-            LocalDate expirationStartDateTo = subSystemRoleRequest.getExpirationStartDateTo()==null? defaultToDate : subSystemRoleRequest.getExpirationStartDateTo();
-            LocalDate expirationEndDateFrom = subSystemRoleRequest.getExpirationEndDateFrom()==null? defaultFromDate : subSystemRoleRequest.getExpirationEndDateFrom();
-            LocalDate expirationEndtDateTo = subSystemRoleRequest.getExpirationEndDateTo()==null? defaultToDate : subSystemRoleRequest.getExpirationEndDateTo();
+            LocalDate expirationStartDateFrom = (subSystemRoleRequest.getExpirationStartDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = (subSystemRoleRequest.getExpirationStartDateTo() == null)? defaultToDate : subSystemRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = (subSystemRoleRequest.getExpirationEndDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = (subSystemRoleRequest.getExpirationEndDateTo() == null)? defaultToDate : subSystemRoleRequest.getExpirationEndDateTo();
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
                     (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
@@ -341,10 +341,10 @@ public class SearchOperator {
                     o.getExpirationEndDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
         } else if (bizTranRoleRequest.getExpirationSelect() == 2) {
             // 条件指定
-            LocalDate expirationStartDateFrom = bizTranRoleRequest.getExpirationStartDateFrom()==null? defaultFromDate : bizTranRoleRequest.getExpirationStartDateFrom();
-            LocalDate expirationStartDateTo = bizTranRoleRequest.getExpirationStartDateTo()==null? defaultToDate : bizTranRoleRequest.getExpirationStartDateTo();
-            LocalDate expirationEndDateFrom = bizTranRoleRequest.getExpirationEndDateFrom()==null? defaultFromDate : bizTranRoleRequest.getExpirationEndDateFrom();
-            LocalDate expirationEndtDateTo = bizTranRoleRequest.getExpirationEndDateTo()==null? defaultToDate : bizTranRoleRequest.getExpirationEndDateTo();
+            LocalDate expirationStartDateFrom = (bizTranRoleRequest.getExpirationStartDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getExpirationStartDateFrom();
+            LocalDate expirationStartDateTo = (bizTranRoleRequest.getExpirationStartDateTo() == null)? defaultToDate : bizTranRoleRequest.getExpirationStartDateTo();
+            LocalDate expirationEndDateFrom = (bizTranRoleRequest.getExpirationEndDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getExpirationEndDateFrom();
+            LocalDate expirationEndtDateTo = (bizTranRoleRequest.getExpirationEndDateTo() == null)? defaultToDate : bizTranRoleRequest.getExpirationEndDateTo();
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
                     (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
@@ -388,8 +388,8 @@ public class SearchOperator {
         // アカウントロック ロック状態の条件
         boolean accountLockStatusLock = false;
         boolean accountLockStatusUnlock = false;
-        if (request.getAccountLockStatusLock() != null) {accountLockStatusLock = request.getAccountLockStatusLock().equals((short)1);}
-        if (request.getAccountLockStatusUnlock() != null) {accountLockStatusUnlock = request.getAccountLockStatusUnlock().equals((short)1);}
+        if (request.getAccountLockStatusLock() != null) {accountLockStatusLock = request.getAccountLockStatusLock();}
+        if (request.getAccountLockStatusUnlock() != null) {accountLockStatusUnlock = request.getAccountLockStatusUnlock();}
 
         if (!accountLockStatusLock == accountLockStatusUnlock) {
             if (accountLockStatusLock) {
@@ -419,7 +419,7 @@ public class SearchOperator {
 
         // パスワード履歴　最終パスワード変更日の条件
         boolean passwordHistoryCheck = false;
-        if (request.getPasswordHistoryCheck() != null) {passwordHistoryCheck = request.getPasswordHistoryCheck().equals((short)1);}
+        if (request.getPasswordHistoryCheck() != null) {passwordHistoryCheck = request.getPasswordHistoryCheck();}
         if (passwordHistoryCheck &&
             request.getPasswordHistoryLastChangeDate() != null) {
             LocalDate passwodrChanheDate = LocalDate.now().minusDays(request.getPasswordHistoryLastChangeDate());
@@ -447,10 +447,10 @@ public class SearchOperator {
         boolean passwordHistoryChangeType1 = false;
         boolean passwordHistoryChangeType2 = false;
         boolean passwordHistoryChangeType3 = false;
-        if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0().equals((short)1);}
-        if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1().equals((short)1);}
-        if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2().equals((short)1);}
-        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType3().equals((short)1);}
+        if (request.getPasswordHistoryChangeType0() != null) {passwordHistoryChangeType0 = request.getPasswordHistoryChangeType0();}
+        if (request.getPasswordHistoryChangeType1() != null) {passwordHistoryChangeType1 = request.getPasswordHistoryChangeType1();}
+        if (request.getPasswordHistoryChangeType2() != null) {passwordHistoryChangeType2 = request.getPasswordHistoryChangeType2();}
+        if (request.getPasswordHistoryChangeType3() != null) {passwordHistoryChangeType3 = request.getPasswordHistoryChangeType3();}
         if (passwordHistoryChangeType0 != passwordHistoryChangeType1 ||
             passwordHistoryChangeType0 != passwordHistoryChangeType2 ||
             passwordHistoryChangeType0 != passwordHistoryChangeType3) {
@@ -509,7 +509,7 @@ public class SearchOperator {
         }
 
         // サインイン証跡　最終サインオペレーションの条件
-        if (request.getSignintraceSignIn() != null && request.getSignintraceSignIn().equals((short)1)) {
+        if (request.getSignintraceSignIn() != null && request.getSignintraceSignIn()) {
             if (signInTrace == null) { return false; }
         }
         if (request.getSignintraceSignInResult() != null && request.getSignintraceSignInResult().length > 0) {
@@ -535,7 +535,7 @@ public class SearchOperator {
     boolean conditionsSignOutTrace(OperatorSearchRequest request, SignOutTrace signOutTrace) {
 
         // サインアウト証跡　最終サインオペレーションの条件
-        if (request.getSignintraceSignOut() != null && request.getSignintraceSignOut().equals((short)1)) {
+        if (request.getSignintraceSignOut() != null && request.getSignintraceSignOut()) {
             return signOutTrace != null;
         }
 
@@ -552,35 +552,35 @@ public class SearchOperator {
         OperatorCriteria criteria = new OperatorCriteria();
         // オペレーターID
         criteria.getOperatorIdCriteria().assignFrom(
-            request.getOperatorIdCriteria() == null? new LongCriteria() : request.getOperatorIdCriteria());
+            (request.getOperatorIdCriteria() == null)? new LongCriteria() : request.getOperatorIdCriteria());
         // オペレーターコード
         criteria.getOperatorCodeCriteria().assignFrom(
-            request.getOperatorCodeCriteria() == null? new StringCriteria() : request.getOperatorCodeCriteria());
+            (request.getOperatorCodeCriteria() == null)? new StringCriteria() : request.getOperatorCodeCriteria());
         // オペレーター名
         criteria.getOperatorNameCriteria().assignFrom(
-            request.getOperatorNameCriteria() == null? new StringCriteria() : request.getOperatorNameCriteria());
+            (request.getOperatorNameCriteria() == null)? new StringCriteria() : request.getOperatorNameCriteria());
         // メールアドレス
         criteria.getMailAddressCriteria().assignFrom(
-            request.getMailAddressCriteria() == null? new StringCriteria() : request.getMailAddressCriteria());
+            (request.getMailAddressCriteria() == null)? new StringCriteria() : request.getMailAddressCriteria());
         // 有効期限開始
         criteria.getExpirationStartDateCriteria().assignFrom(
-            request.getExpirationStartDateCriteria() == null? new LocalDateCriteria() : request.getExpirationStartDateCriteria());
+            (request.getExpirationStartDateCriteria() == null)? new LocalDateCriteria() : request.getExpirationStartDateCriteria());
         // 有効期限開始
         criteria.getExpirationEndDateCriteria().assignFrom(
-            request.getExpirationEndDateCriteria() == null? new LocalDateCriteria() : request.getExpirationEndDateCriteria());
+            (request.getExpirationEndDateCriteria() == null)? new LocalDateCriteria() : request.getExpirationEndDateCriteria());
         // ＪＡID
         if (request.getJaIdCriteria() != null && request.getJaIdCriteria().getEqualTo() != null) {
             criteria.getJaIdentifierCriteria().setEqualTo(request.getJaIdCriteria().getEqualTo());
         }
         // 店舗ID
         criteria.getBranchIdCriteria().assignFrom(
-            request.getBranchIdCriteria() == null? new LongCriteria() : request.getBranchIdCriteria());
+            (request.getBranchIdCriteria() == null)? new LongCriteria() : request.getBranchIdCriteria());
         // 利用可否状態
         criteria.getAvailableStatusCriteria().assignFrom(
-            request.getAvailableStatusCriteria() == null? new ShortCriteria() : request.getAvailableStatusCriteria());
+            (request.getAvailableStatusCriteria() == null)? new ShortCriteria() : request.getAvailableStatusCriteria());
         // 機器認証
         criteria.getIsDeviceAuthCriteria().assignFrom(
-            request.getIsDeviceAuthCriteria() == null? new BooleanCriteria(): request.getIsDeviceAuthCriteria());
+            (request.getIsDeviceAuthCriteria() == null)? new BooleanCriteria(): request.getIsDeviceAuthCriteria());
 
         return criteria;
     }

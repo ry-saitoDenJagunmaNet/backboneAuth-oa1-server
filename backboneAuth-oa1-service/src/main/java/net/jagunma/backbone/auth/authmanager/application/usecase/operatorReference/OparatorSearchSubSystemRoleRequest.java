@@ -8,7 +8,7 @@ public interface OparatorSearchSubSystemRoleRequest {
      *
      * @return サブシステムロール選択
      */
-    Short getSubSystemRoleSelected();
+    Boolean getSubSystemRoleSelected();
     /**
      * サブシステムロールコードのＧｅｔ
      *

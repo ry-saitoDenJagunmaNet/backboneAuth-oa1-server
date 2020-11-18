@@ -102,11 +102,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 機器認証使用
      */
-    private Short deviceAuthUse;
+    private Boolean deviceAuthUse;
     /**
      * 機器認証未使用
      */
-    private Short deviceAuthUnuse;
+    private Boolean deviceAuthUnuse;
     /**
      * 最終ロック・アンロック発生日（開始日）
      */
@@ -118,15 +118,15 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 現在ロック状態ロック
      */
-    private Short accountLockStatusLock;
+    private Boolean accountLockStatusLock;
     /**
      * 現在ロック状態アンロック
      */
-    private Short accountLockStatusUnlock;
+    private Boolean accountLockStatusUnlock;
     /**
      * 最終パスワード変更日チェック
      */
-    private Short passwordHistoryCheck;
+    private Boolean passwordHistoryCheck;
     /**
      * 最終パスワード変更日数
      */
@@ -138,19 +138,19 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 最終パスワード変更種別初期
      */
-    private Short passwordHistoryChangeType0;
+    private Boolean passwordHistoryChangeType0;
     /**
      * 最終パスワード変更種別ユーザによる変更
      */
-    private Short passwordHistoryChangeType1;
+    private Boolean passwordHistoryChangeType1;
     /**
      * 最終パスワード変更種別管理者によるリセット
      */
-    private Short passwordHistoryChangeType2;
+    private Boolean passwordHistoryChangeType2;
     /**
      * 最終パスワード変更種別機器認証パスワード
      */
-    private Short passwordHistoryChangeType3;
+    private Boolean passwordHistoryChangeType3;
     /**
      * 最終サインオペレーション試行日（開始日）
      */
@@ -166,11 +166,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     /**
      * 最終サインオペレーションサインイン
      */
-    private Short signintraceSignIn;
+    private Boolean signintraceSignIn;
     /**
      * 最終サインオペレーションサインアウト
      */
-    private Short signintraceSignOut;
+    private Boolean signintraceSignOut;
     /**
      * 最終サインオペレーションサインイン結果
      */
@@ -308,16 +308,16 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setBizTranRoleList(List<Oa11010BizTranRoleVo> bizTranRoleList) {
         this.bizTranRoleList = bizTranRoleList;
     }
-    public Short getDeviceAuthUse() {
+    public Boolean getDeviceAuthUse() {
         return deviceAuthUse;
     }
-    public void setDeviceAuthUse(Short deviceAuthUse) {
+    public void setDeviceAuthUse(Boolean deviceAuthUse) {
         this.deviceAuthUse = deviceAuthUse;
     }
-    public Short getDeviceAuthUnuse() {
+    public Boolean getDeviceAuthUnuse() {
         return deviceAuthUnuse;
     }
-    public void setDeviceAuthUnuse(Short deviceAuthUnuse) {
+    public void setDeviceAuthUnuse(Boolean deviceAuthUnuse) {
         this.deviceAuthUnuse = deviceAuthUnuse;
     }
     public LocalDate getAccountLockOccurredDateFrom() {
@@ -332,22 +332,22 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setAccountLockOccurredDateTo(LocalDate accountLockOccurredDateTo) {
         this.accountLockOccurredDateTo = accountLockOccurredDateTo;
     }
-    public Short getAccountLockStatusLock() {
+    public Boolean getAccountLockStatusLock() {
         return accountLockStatusLock;
     }
-    public void setAccountLockStatusLock(Short accountLockStatusLock) {
+    public void setAccountLockStatusLock(Boolean accountLockStatusLock) {
         this.accountLockStatusLock = accountLockStatusLock;
     }
-    public Short getAccountLockStatusUnlock() {
+    public Boolean getAccountLockStatusUnlock() {
         return accountLockStatusUnlock;
     }
-    public void setAccountLockStatusUnlock(Short accountLockStatusUnlock) {
+    public void setAccountLockStatusUnlock(Boolean accountLockStatusUnlock) {
         this.accountLockStatusUnlock = accountLockStatusUnlock;
     }
-    public Short getPasswordHistoryCheck() {
+    public Boolean getPasswordHistoryCheck() {
         return passwordHistoryCheck;
     }
-    public void setPasswordHistoryCheck(Short passwordHistoryCheck) {
+    public void setPasswordHistoryCheck(Boolean passwordHistoryCheck) {
         this.passwordHistoryCheck = passwordHistoryCheck;
     }
     public Integer getPasswordHistoryLastChangeDate() {
@@ -362,28 +362,28 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setPasswordHistoryLastChangeDateStatus(String passwordHistoryLastChangeDateStatus) {
         this.passwordHistoryLastChangeDateStatus = passwordHistoryLastChangeDateStatus;
     }
-    public Short getPasswordHistoryChangeType0() {
+    public Boolean getPasswordHistoryChangeType0() {
         return passwordHistoryChangeType0;
     }
-    public void setPasswordHistoryChangeType0(Short passwordHistoryChangeType0) {
+    public void setPasswordHistoryChangeType0(Boolean passwordHistoryChangeType0) {
         this.passwordHistoryChangeType0 = passwordHistoryChangeType0;
     }
-    public Short getPasswordHistoryChangeType1() {
+    public Boolean getPasswordHistoryChangeType1() {
         return passwordHistoryChangeType1;
     }
-    public void setPasswordHistoryChangeType1(Short passwordHistoryChangeType1) {
+    public void setPasswordHistoryChangeType1(Boolean passwordHistoryChangeType1) {
         this.passwordHistoryChangeType1 = passwordHistoryChangeType1;
     }
-    public Short getPasswordHistoryChangeType2() {
+    public Boolean getPasswordHistoryChangeType2() {
         return passwordHistoryChangeType2;
     }
-    public void setPasswordHistoryChangeType2(Short passwordHistoryChangeType2) {
+    public void setPasswordHistoryChangeType2(Boolean passwordHistoryChangeType2) {
         this.passwordHistoryChangeType2 = passwordHistoryChangeType2;
     }
-    public Short getPasswordHistoryChangeType3() {
+    public Boolean getPasswordHistoryChangeType3() {
         return passwordHistoryChangeType3;
     }
-    public void setPasswordHistoryChangeType3(Short passwordHistoryChangeType3) {
+    public void setPasswordHistoryChangeType3(Boolean passwordHistoryChangeType3) {
         this.passwordHistoryChangeType3 = passwordHistoryChangeType3;
     }
     public LocalDate getSignintraceTrydateFrom() {
@@ -404,16 +404,16 @@ public class Oa11010Vo extends BaseOfResponseVo {
     public void setSignintraceTryIpAddress(String signintraceTryIpAddress) {
         this.signintraceTryIpAddress = signintraceTryIpAddress;
     }
-    public Short getSignintraceSignIn() {
+    public Boolean getSignintraceSignIn() {
         return signintraceSignIn;
     }
-    public void setSignintraceSignIn(Short signintraceSignIn) {
+    public void setSignintraceSignIn(Boolean signintraceSignIn) {
         this.signintraceSignIn = signintraceSignIn;
     }
-    public Short getSignintraceSignOut() {
+    public Boolean getSignintraceSignOut() {
         return signintraceSignOut;
     }
-    public void setSignintraceSignOut(Short signintraceSignOut) {
+    public void setSignintraceSignOut(Boolean signintraceSignOut) {
         this.signintraceSignOut = signintraceSignOut;
     }
     public Short[] getSignintraceSignInResult() {

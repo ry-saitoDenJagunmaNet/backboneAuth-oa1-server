@@ -4,6 +4,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo.Oa12060Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
@@ -40,21 +41,21 @@ class Oa12060StoreConverter implements CalendarStoreRequest {
                 list.add(Oa12060StoreDetailsConverter.with(
                     c.getCalendarId1(),
                     CalendarType.経済システム稼働カレンダー,
-                    Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay1()),
+                    CheckboxUtil.getSmoother(c.getIsWorkingDay1()),
                     c.getRecordVersion1()));
             }
             if (c.getCalendarId2() != null) {
                 list.add(Oa12060StoreDetailsConverter.with(
                     c.getCalendarId2(),
                     CalendarType.信用カレンダー,
-                    Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay2()),
+                    CheckboxUtil.getSmoother(c.getIsWorkingDay2()),
                     c.getRecordVersion2()));
             }
             if (c.getCalendarId3() != null) {
                 list.add(Oa12060StoreDetailsConverter.with(
                     c.getCalendarId3(),
                     CalendarType.広域物流カレンダー,
-                    Oa12060Vo.CHECKBOX_TRUE.equals(c.getIsWorkingDay3()),
+                    CheckboxUtil.getSmoother(c.getIsWorkingDay3()),
                     c.getRecordVersion3()));
             }
         });

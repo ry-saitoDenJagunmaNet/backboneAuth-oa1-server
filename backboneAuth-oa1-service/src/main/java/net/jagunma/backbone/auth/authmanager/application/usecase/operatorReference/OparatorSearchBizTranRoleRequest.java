@@ -9,7 +9,7 @@ public interface OparatorSearchBizTranRoleRequest {
      *
      * @return 取引ロール選択
      */
-    Short getBizTranRoleSelected();
+    Boolean getBizTranRoleSelected();
     /**
      * 取引ロールIDのＧｅｔ
      *

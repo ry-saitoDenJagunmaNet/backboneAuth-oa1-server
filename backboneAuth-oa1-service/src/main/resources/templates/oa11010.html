@@ -270,9 +270,9 @@
 											<tr th:each="itemrow, iterStat : *{form.subSystemRoleList}">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
-														<input type="checkbox" value="1"
+														<input type="checkbox"
 															   th:name="'subSystemRoleList['+${iterStat.index}+'].subSystemRoleSelected'"
-															   th:checked="${itemrow.subSystemRoleSelected == 1}"/>
+															   th:checked="${itemrow.subSystemRoleSelected}"/>
 														<span></span>
 													</label>
 													<input type="hidden"
@@ -688,10 +688,10 @@
 											<tr th:each="itemrow, iterStat : *{form.bizTranRoleList}">
 												<td class="oaex_biztran_role_check">
 													<label class="oa_non_label_checkbox">
-														<input type="checkbox" value="1"
+														<input type="checkbox"
 															   th:id="'bizTranRoleList['+${iterStat.index}+'].bizTranRoleSelected'"
 															   th:name="'bizTranRoleList['+${iterStat.index}+'].bizTranRoleSelected'"
-															   th:checked="${itemrow.bizTranRoleSelected == 1}"/>
+															   th:checked="${itemrow.bizTranRoleSelected}"/>
 														<span></span>
 													</label>
 													<!-- POST用にコード、名称を定義 -->
@@ -1046,11 +1046,11 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox" name="deviceAuthUse" value="1" th:checked="${form.deviceAuthUse == 1}"/>
+											<input type="checkbox" name="deviceAuthUse" th:checked="${form.deviceAuthUse}"/>
 											<span>使用</span>
 										</label>
 										<label>
-											<input type="checkbox" name="deviceAuthUnuse" value="1" th:checked="${form.deviceAuthUnuse == 1}"/>
+											<input type="checkbox" name="deviceAuthUnuse" th:checked="${form.deviceAuthUnuse}"/>
 											<span>未使用</span>
 										</label>
 									</div>
@@ -1092,11 +1092,11 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox" name="accountLockStatusLock" value="1" th:checked="${form.accountLockStatusLock == 1}"/>
+											<input type="checkbox" name="accountLockStatusLock" th:checked="${form.accountLockStatusLock}"/>
 											<span>ロック</span>
 										</label>
 										<label>
-											<input type="checkbox" name="accountLockStatusUnlock" value="1" th:checked="${form.accountLockStatusUnlock == 1}"/>
+											<input type="checkbox" name="accountLockStatusUnlock" th:checked="${form.accountLockStatusUnlock}"/>
 											<span>アンロック</span>
 										</label>
 									</div>
@@ -1114,7 +1114,7 @@
 								<div class="row">
 									<div class="col s2">
 										<label>
-											<input type="checkbox" name="passwordHistoryCheck" value="1" th:checked="${form.passwordHistoryCheck == 1}"/>
+											<input type="checkbox" name="passwordHistoryCheck" th:checked="${form.passwordHistoryCheck}"/>
 											<span>過去</span>
 										</label>
 									</div>
@@ -1148,19 +1148,19 @@
 								<div class="row">
 									<div class="col s12">
 										<label>
-											<input type="checkbox" name="passwordHistoryChangeType0" value="1" th:checked="${form.passwordHistoryChangeType0 == 1}"/>
+											<input type="checkbox" name="passwordHistoryChangeType0" th:checked="${form.passwordHistoryChangeType0}"/>
 											<span>初期</span>
 										</label>
 										<label>
-											<input type="checkbox" name="passwordHistoryChangeType1" value="1" th:checked="${form.passwordHistoryChangeType1 == 1}"/>
+											<input type="checkbox" name="passwordHistoryChangeType1" th:checked="${form.passwordHistoryChangeType1}"/>
 											<span>ユーザによる変更</span>
 										</label>
 										<label>
-											<input type="checkbox" name="passwordHistoryChangeType2" value="1" th:checked="${form.passwordHistoryChangeType2 == 1}"/>
+											<input type="checkbox" name="passwordHistoryChangeType2" th:checked="${form.passwordHistoryChangeType2}"/>
 											<span>管理者によるリセット</span>
 										</label>
 										<label>
-											<input type="checkbox" name="passwordHistoryChangeType3" value="1" th:checked="${form.passwordHistoryChangeType3 == 1}"/>
+											<input type="checkbox" name="passwordHistoryChangeType3" th:checked="${form.passwordHistoryChangeType3}"/>
 											<span>機器認証パスワード</span>
 										</label>
 									</div>
@@ -1211,7 +1211,7 @@
 									<!-- サインイン -->
 									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox" name="signintraceSignIn" value="1" th:checked="${form.signintraceSignIn == 1}"/>
+											<input type="checkbox" name="signintraceSignIn" th:checked="${form.signintraceSignIn}"/>
 											<span>サインイン</span>
 										</label>
 									</div>
@@ -1234,7 +1234,7 @@
 									<!-- サインイン -->
 									<div class="col s2 oaex_signintrace_checkbox_col">
 										<label>
-											<input type="checkbox" name="signintraceSignOut" value="1" th:checked="${form.signintraceSignOut == 1}"/>
+											<input type="checkbox" name="signintraceSignOut" th:checked="${form.signintraceSignOut}"/>
 											<span>サインアウト</span>
 										</label>
 									</div>
