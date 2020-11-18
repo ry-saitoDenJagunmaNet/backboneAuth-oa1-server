@@ -44,12 +44,12 @@ public class SignOutTracesDataSource implements SignOutTracesRepository {
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(signOutTraceCriteria.getOperatorIdCriteria().getIncludes());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(signOutTraceCriteria.getOperatorIdCriteria());
         Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインアウト証跡群検索
         SignOutTraceEntityCriteria entityCriteria = new SignOutTraceEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(signOutTraceCriteria.getOperatorIdCriteria().getIncludes());
+        entityCriteria.getOperatorIdCriteria().assignFrom(signOutTraceCriteria.getOperatorIdCriteria());
 
         List<SignOutTrace> list = newArrayList();
         for (SignOutTraceEntity entity : signOutTraceEntityDao.findBy(entityCriteria, orders)) {

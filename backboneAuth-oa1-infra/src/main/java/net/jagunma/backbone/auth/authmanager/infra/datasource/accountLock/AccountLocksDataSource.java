@@ -44,12 +44,13 @@ public class AccountLocksDataSource implements AccountLocksRepository {
 
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(accountLockCriteria.getOperatorIdCriteria().getIncludes());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(accountLockCriteria.getOperatorIdCriteria());
         Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
 
         // アカウントロック群検索
         AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().getIncludes().addAll(accountLockCriteria.getOperatorIdCriteria().getIncludes());
+        entityCriteria.getAccountLockIdCriteria().assignFrom(accountLockCriteria.getAccountLockIdCriteria());
+        entityCriteria.getOperatorIdCriteria().assignFrom(accountLockCriteria.getOperatorIdCriteria());
 
         List<AccountLock> list = newArrayList();
         for (AccountLockEntity entity : accountLockEntityDao.findBy(entityCriteria, orders)) {

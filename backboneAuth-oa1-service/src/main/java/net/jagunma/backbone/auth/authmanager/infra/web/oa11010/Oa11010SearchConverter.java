@@ -7,6 +7,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -153,10 +154,24 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
     public ShortCriteria getAvailableStatusCriteria() {
         ShortCriteria criteria = new ShortCriteria();
         List<Short> result = newArrayList();
-        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
+//        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus0())) {
+//            result.add((short) 0);
+//        }
+//        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
+//            result.add((short) 1);
+//        }
+
+//        if (CheckboxUtil.getSmoother(vo.getAvailableStatus0())) {
+//            result.add((short) 0);
+//        }
+//        if (CheckboxUtil.getSmoother(vo.getAvailableStatus1())) {
+//            result.add((short) 1);
+//        }
+
+        if (vo.getAvailableStatus0().getValue()) {
             result.add((short) 0);
         }
-        if (Oa11010Vo.CHECKBOX_TRUE.equals(vo.getAvailableStatus1())) {
+        if (vo.getAvailableStatus1().getValue()) {
             result.add((short) 1);
         }
         criteria.getIncludes().addAll(result);

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax Select Controller</title>
+</head>
+<body>
+	<!-- ＪＡ -->
+	<div class="input-field" th:fragment="ajaxSelectJa">
+		<select id="selectJa" name="selectJa" th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option id="optionJa"
+					th:each="item : ${selectAjaxItems}"
+					th:value="${item.id}"
+					th:text="${item.name}"
+					th:selected="${item.id} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+
+	<!-- 店舗 -->
+	<div class="input-field" th:fragment="ajaxSelectBranch">
+		<select id="selectBranch" name="selectBranch" th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option id="optionBranch"
+					th:each="item : ${selectAjaxItems}"
+					th:value="${item.id}"
+					th:text="${item.name}"
+					th:selected="${item.id} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+
+	<!-- サブシステム -->
+	<div class="input-field" th:fragment="ajaxSelectSubSystem">
+		<select id="selectSubSystem" name="selectSubSystem" th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option id="optionSubSystem"
+					th:each="item : ${selectAjaxItems}"
+					th:value="${item.code}"
+					th:text="${item.name}"
+					th:selected="${item.code} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+
+	<!-- 取引グループ -->
+	<div class="input-field" th:fragment="ajaxSelectBizTranGrp">
+		<select id="selectBizTranGrp" name="selectBizTranGrp" th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option id="optionBizTranGrp"
+					th:each="item : ${selectAjaxItems}"
+					th:value="${item.id}"
+					th:text="${item.name}"
+					th:selected="${item.id} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+
+	<!-- 取引 -->
+	<div class="input-field" th:fragment="ajaxSelectBizTran">
+		<select id="selectBizTran" name="selectBizTran" th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option id="optionBizTran"
+					th:each="item : ${selectAjaxItems}"
+					th:value="${item.id}"
+					th:text="${item.name}"
+					th:selected="${item.id} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+</body>
+</html>

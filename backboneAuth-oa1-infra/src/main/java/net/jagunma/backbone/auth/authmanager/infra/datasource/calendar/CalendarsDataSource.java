@@ -39,9 +39,8 @@ public class CalendarsDataSource implements CalendarsRepository {
     public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
 
         CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
-        entityCriteria.getDateCriteria().setFrom(calendarCriteria.getDateCriteria().getFrom());
-        entityCriteria.getDateCriteria().setTo(calendarCriteria.getDateCriteria().getTo());
-        entityCriteria.getDateCriteria().setEqualTo(calendarCriteria.getDateCriteria().getEqualTo());
+        entityCriteria.getCalendarIdCriteria().assignFrom(calendarCriteria.getCalendarIdCriteria());
+        entityCriteria.getDateCriteria().assignFrom(calendarCriteria.getDateCriteria());
 
         List<CalendarEntity> list = calendarEntityDao.findBy(entityCriteria, orders);
         return createCalendars(list);

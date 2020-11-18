@@ -43,6 +43,38 @@ function oa_th_sendFormData(url, formObj) {
 	}
 }
 
+/**
+ * サーバーからSelectタグのItemsSourceを取得します。
+ * @param {String} url リクエスト先URL
+ * @param {Json} formObj リクエスト送信するFORMオブジェクト
+ */
+function oa_th_getItemsSource(url, formObj) {
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, false);
+	xhr.send(new FormData(formObj));
+
+	if(xhr.readyState === 4 && xhr.status === 200) {
+		// 正常
+//		let result = JSON.parse(xhr.responseText);
+//		//if (typeof result.message !== "undefined" && result.message != null && result.message.length > 0) {
+//		if (result.message != null && result.message.length > 0) {
+//			oa_showAlert(result.message);
+//			return xhr;
+//		}
+//		if (result.errorMessage != null && result.errorMessage.length > 0) {
+//			oa_showAlert(result.errorMessage+result.stackTrace);
+//			return xhr;
+//		}
+		return xhr.response;
+
+	} else {
+		// 異常
+		//alert(xhr.responseText);
+		oa_showAlert(xhr.responseText);
+		return null;
+	}
+}
+
 
 /******** イベント処理 ********/
 

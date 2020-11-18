@@ -32,7 +32,8 @@ public class CalendarDataSource implements CalendarRepository {
     public Calendar findOneBy(CalendarCriteria calendarCriteria) {
 
         CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
-        entityCriteria.getCalendarIdCriteria().setEqualTo(calendarCriteria.getCalendarIdCriteria().getEqualTo());
+        entityCriteria.getCalendarIdCriteria().assignFrom(calendarCriteria.getCalendarIdCriteria());
+        entityCriteria.getDateCriteria().assignFrom(calendarCriteria.getDateCriteria());
 
         CalendarEntity calendarEntity = calendarEntityDao.findOneBy(entityCriteria);
         return calendarEntity == null? null : Calendar.createFrom(

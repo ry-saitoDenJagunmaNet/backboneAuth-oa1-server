@@ -51,17 +51,17 @@ public class BizTranRole_BizTranGrpsDataSource implements BizTranRole_BizTranGrp
 
         // 取引ロール群検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
-        bizTranRoleCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria().getEqualTo());
+        bizTranRoleCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
         BizTranRoles bizTranRoles = bizTranRolesRepository.selectBy(bizTranRoleCriteria, Orders.empty().addOrder("BizTranRoleCode"));
 
         // 取引グループ群検索
         BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-        bizTranGrpCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria().getEqualTo());
+        bizTranGrpCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
         BizTranGrps bizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty().addOrder("BizTranGrpCode"));
 
         // 取引ロール_取引グループ割当群検索
         BizTranRole_BizTranGrpEntityCriteria entityCriteria = new BizTranRole_BizTranGrpEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().setEqualTo(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria().getEqualTo());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
 
         List<BizTranRole_BizTranGrp> list = newArrayList();
         for (BizTranRole_BizTranGrpEntity entity : bizTranRole_BizTranGrpEntityDao.findBy(entityCriteria, orders)) {
