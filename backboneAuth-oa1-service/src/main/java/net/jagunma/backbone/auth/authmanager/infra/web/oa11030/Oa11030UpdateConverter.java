@@ -71,7 +71,7 @@ class Oa11030UpdateConverter implements OperatorUpdateRequest {
      * @return 機器認証
      */
     public Boolean getIsDeviceAuth() {
-        return vo.getIsDeviceAuth();
+        return (vo.getIsDeviceAuth() == null)? false : true;//ToDo:★
     }
     /**
      * 店舗IDのＧｅｔ
@@ -87,7 +87,7 @@ class Oa11030UpdateConverter implements OperatorUpdateRequest {
      * @return 利用可否状態
      */
     public AvailableStatus getAvailableStatus() {
-     return AvailableStatus.codeOf(vo.getAvailableStatus());
+     return (vo.getAvailableStatus() == null)? AvailableStatus.利用不可 : AvailableStatus.利用可能;//ToDo:★
     }
     /**
      * レコードバージョンのＧｅｔ

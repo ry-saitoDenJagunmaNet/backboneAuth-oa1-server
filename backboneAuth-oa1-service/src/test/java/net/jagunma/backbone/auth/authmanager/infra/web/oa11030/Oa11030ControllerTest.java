@@ -293,7 +293,7 @@ class Oa11030ControllerTest {
         vo.setExpirationStartDate(expirationStartDate);
         vo.setExpirationEndDate(expirationEndDate);
         vo.setIsDeviceAuth(isDeviceAuth);
-        vo.setAvailableStatus(availableStatus.getCode());
+        vo.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? true : false);//ToDo:★
         vo.setChangeCause(changeCause);
         vo.setChangeCausePlaceholder(changeCausePlaceholder);
         vo.setAccountLockStatus(accountLockStatus.getCode());

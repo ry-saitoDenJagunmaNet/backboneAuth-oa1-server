@@ -15,6 +15,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
@@ -52,7 +53,6 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         Operator operator = operators.getValues().get(0);
         BranchAtMoment branchAtMoment = operators.getValues().get(0).getBranchAtMoment();
         OperatorHistoryHeader operatorHistoryHeader = operatorHistoryHeaders.getValues().get(0);
-        AccountLock accountLock = accountLocks.getValues().get(0);
 
         vo.setOperatorId(operator.getOperatorId());
         vo.setRecordVersion(operator.getRecordVersion());
@@ -63,12 +63,12 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         vo.setMailAddress(operator.getMailAddress());
         vo.setExpirationStartDate(operator.getExpirationStartDate());
         vo.setExpirationEndDate(operator.getExpirationEndDate());
-        vo.setIsDeviceAuth(operator.getIsDeviceAuth());
-        vo.setAvailableStatus(operator.getAvailableStatus().getCode());
+        vo.setIsDeviceAuth((operator.getIsDeviceAuth().equals(true))? true : null); //ToDo:★
+        vo.setAvailableStatus((operator.getAvailableStatus().equals(AvailableStatus.利用可能))? true : null);//ToDo:★
 
         vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
 
-        vo.setAccountLockStatus(accountLock.getLockStatus());
+        vo.setAccountLockStatus((!accountLocks.getValues().isEmpty())? accountLocks.getValues().get(0).getLockStatus() : 0);
 
         List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_subSystemRole : operator_SubSystemRoles.getValues()) {

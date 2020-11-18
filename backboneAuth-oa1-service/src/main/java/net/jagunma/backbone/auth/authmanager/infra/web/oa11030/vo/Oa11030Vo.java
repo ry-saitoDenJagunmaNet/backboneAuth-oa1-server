@@ -55,7 +55,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     /**
      * 利用可否状態
      */
-    private Short availableStatus;
+    private Boolean availableStatus;
     /**
      * 変更事由
      */
@@ -113,7 +113,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public Boolean getIsDeviceAuth() {
         return isDeviceAuth;
     }
-    public Short getAvailableStatus() {
+    public Boolean getAvailableStatus() {
         return availableStatus;
     }
     public String getChangeCause() {
@@ -166,7 +166,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setIsDeviceAuth(Boolean isDeviceAuth) {
         this.isDeviceAuth = isDeviceAuth;
     }
-    public void setAvailableStatus(Short availableStatus) {
+    public void setAvailableStatus(Boolean availableStatus) {
         this.availableStatus = availableStatus;
     }
     public void setChangeCause(String changeCause) {

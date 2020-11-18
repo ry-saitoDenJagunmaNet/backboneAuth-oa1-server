@@ -65,15 +65,16 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
      * オペレーター履歴の格納を行います
      *
      * @param operatorId オペレーターID
+     * @param changeDateTime 変更日時
      * @param changeCause 変更事由
      */
-    public void store(Long operatorId, String changeCause) {
+    public void store(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
 
         // オペレーターエンティティを取得します
         OperatorEntity operatorEntity = getOperatorEntity(operatorId);
 
         // オペレーター履歴ヘッダーのインサートを行います
-        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorId, operatorEntity.getUpdatedAt(), changeCause);
+        OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorId, changeDateTime, changeCause);
 
         // オペレーター履歴のインサートを行います
         insertOperatorHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorEntity);

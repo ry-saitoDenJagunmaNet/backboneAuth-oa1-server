@@ -415,7 +415,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorHistoryPackForStoreDataSource#store(Long operatorId, String changeCause)}テスト
+     * {@link OperatorHistoryPackForStoreDataSource#store(Long operatorId, LocalDateTime changeDateTime, String changeCause)}テスト
      *  ●パターン
      *    正常
      *
@@ -431,7 +431,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
         assertThatCode(() ->
             // 実行
-            operatorHistoryPackForStoreDataSource.store(operatorId, changeCause))
+            operatorHistoryPackForStoreDataSource.store(operatorId, createdAt, changeCause))
             .doesNotThrowAnyException();
     }
 

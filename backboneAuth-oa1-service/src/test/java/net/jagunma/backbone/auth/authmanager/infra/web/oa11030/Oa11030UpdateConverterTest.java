@@ -46,7 +46,7 @@ class Oa11030UpdateConverterTest {
         vo.setExpirationEndDate(expirationEndDate);
         vo.setIsDeviceAuth(isDeviceAuth);
         vo.setBranchId(branchId);
-        vo.setAvailableStatus(availableStatus.getCode());
+        vo.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? true : false);//ToDo:★
         vo.setChangeCause(changeCause);
 
         // 実行
@@ -55,6 +55,7 @@ class Oa11030UpdateConverterTest {
         // 結果検証
         assertTrue(converter instanceof Oa11030UpdateConverter);
         assertThat(converter.getOperatorId()).isEqualTo(operatorId);
+        assertThat(converter.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(converter.getOperatorName()).isEqualTo(operatorName);
         assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
         assertThat(converter.getExpirationStartDate()).isEqualTo(expirationStartDate);

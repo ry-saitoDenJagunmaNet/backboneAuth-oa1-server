@@ -171,7 +171,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setExpirationStartDate(expirationStartDate);
         expectedVo.setExpirationEndDate(expirationEndDate);
         expectedVo.setIsDeviceAuth(isDeviceAuth);
-        expectedVo.setAvailableStatus(availableStatus.getCode());
+        expectedVo.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? true : false);//ToDo:★
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
         expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);
@@ -218,6 +218,7 @@ class Oa11030InitPresenterTest {
      * {@link Oa11030InitPresenter#bindTo(Oa11030Vo vo)}テスト
      *  ●パターン
      *    正常
+     *    （アカウントロック なし）
      *    （オペレーター_サブシステムロール割当履歴 なし）
      *    （オペレーター_取引ロール割当履歴 なし）
      *
@@ -232,7 +233,7 @@ class Oa11030InitPresenterTest {
         Oa11030Vo vo = new Oa11030Vo();
         Oa11030InitPresenter presenter = new Oa11030InitPresenter();
         presenter.setOperators(operators);
-        presenter.setAccountLocks(accountLocks);
+        presenter.setAccountLocks(AccountLocks.createFrom(newArrayList()));
         presenter.setOperator_SubSystemRoles(Operator_SubSystemRoles.createFrom(newArrayList()));
         presenter.setOperator_BizTranRoles(Operator_BizTranRoles.createFrom(newArrayList()));
         presenter.setOperatorHistoryHeaders(operatorHistoryHeaders);
@@ -253,7 +254,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setExpirationStartDate(expirationStartDate);
         expectedVo.setExpirationEndDate(expirationEndDate);
         expectedVo.setIsDeviceAuth(isDeviceAuth);
-        expectedVo.setAvailableStatus(availableStatus.getCode());
+        expectedVo.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? true : false);//ToDo:★
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
         expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);

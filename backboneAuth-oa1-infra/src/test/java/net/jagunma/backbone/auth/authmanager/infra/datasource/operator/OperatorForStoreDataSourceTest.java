@@ -209,7 +209,7 @@ class OperatorForStoreDataSourceTest {
         };
         OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore = new OperatorHistoryPackRepositoryForStore() {
             @Override
-            public void store(Long operatorId, String changeCause) {
+            public void store(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
             }
         };
         PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
