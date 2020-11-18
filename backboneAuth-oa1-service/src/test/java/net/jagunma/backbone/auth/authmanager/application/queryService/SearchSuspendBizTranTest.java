@@ -143,30 +143,30 @@ class SearchSuspendBizTranTest {
             @Override
             public void setJaId(Long jaId) {
             }
-            @Override
-            public void setJasAtMoment(JasAtMoment jasAtMoment) {
-            }
+//            @Override
+//            public void setJasAtMoment(JasAtMoment jasAtMoment) {
+//            }
             @Override
             public void setBranchId(Long branchId) {
             }
-            @Override
-            public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
-            }
+//            @Override
+//            public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
+//            }
             @Override
             public void setSubSystemCode(String subSystemCode) {
             }
             @Override
             public void setBizTranGrpId(Long bizTranGrpId) {
             }
-            @Override
-            public void setBizTranGrps(BizTranGrps bizTranGrps) {
-            }
+//            @Override
+//            public void setBizTranGrps(BizTranGrps bizTranGrps) {
+//            }
             @Override
             public void setBizTranId(Long bizTranId) {
             }
-            @Override
-            public void setBizTrans(BizTrans bizTrans) {
-            }
+//            @Override
+//            public void setBizTrans(BizTrans bizTrans) {
+//            }
             @Override
             public void setSuspendConditionsSelect(Integer suspendConditionsSelect) {
             }
