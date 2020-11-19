@@ -15,7 +15,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -100,7 +103,13 @@ class Ed01010ControllerTest {
             public void store(PasswordHistory passwordHistory) {
             }
         };
-        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore) {
+        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+            @Override
+            public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
+                return null;
+            }
+        };
+        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoriesRepository) {
             @Override
             public void execute(PasswordResetRequest request) {
                 // request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
