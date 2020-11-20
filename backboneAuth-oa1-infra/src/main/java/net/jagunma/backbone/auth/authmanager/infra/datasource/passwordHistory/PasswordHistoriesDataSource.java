@@ -53,6 +53,7 @@ public class PasswordHistoriesDataSource implements PasswordHistoriesRepository 
         PasswordHistoryEntityCriteria entityCriteria = new PasswordHistoryEntityCriteria();
         entityCriteria.getPasswordHistoryIdCriteria().assignFrom(passwordHistoryCriteria.getPasswordHistoryIdCriteria());
         entityCriteria.getOperatorIdCriteria().assignFrom(passwordHistoryCriteria.getOperatorIdCriteria());
+        entityCriteria.getChangeTypeCriteria().assignFrom(passwordHistoryCriteria.getChangeTypeCriteria());
 
         List<PasswordHistory> list = newArrayList();
         for (PasswordHistoryEntity entity : passwordHistoryEntityDao.findBy(entityCriteria, orders)) {
