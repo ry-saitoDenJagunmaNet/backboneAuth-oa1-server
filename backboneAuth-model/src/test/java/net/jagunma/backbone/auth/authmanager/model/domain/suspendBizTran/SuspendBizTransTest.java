@@ -27,8 +27,8 @@ class SuspendBizTransTest {
 
         // 実行値 ＆ 期待値
         List<SuspendBizTran> list = newArrayList();
-        list.add(SuspendBizTran.createFrom(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,100001L,LocalDate.of(2020,4,1),LocalDate.of(2020,4,2),"抑止理由",1,null,SubSystem.販売_畜産,null,null));
-        list.add(SuspendBizTran.createFrom(2L,6L,33L,SubSystem.販売_畜産.getCode(),10002L,null,LocalDate.of(2020,4,1),LocalDate.of(2020,4,2),"抑止理由",1,null,SubSystem.販売_畜産,null,null));
+        list.add(SuspendBizTran.createFrom(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,100001L,LocalDate.of(2020,4,1),LocalDate.of(2020,4,2),"抑止理由",1,null,null,SubSystem.販売_畜産,null,null));
+        list.add(SuspendBizTran.createFrom(2L,6L,33L,SubSystem.販売_畜産.getCode(),10002L,null,LocalDate.of(2020,4,1),LocalDate.of(2020,4,2),"抑止理由",1,null,null,SubSystem.販売_畜産,null,null));
 
         // 実行
         SuspendBizTrans suspendBizTrans = SuspendBizTrans.createFrom(list);

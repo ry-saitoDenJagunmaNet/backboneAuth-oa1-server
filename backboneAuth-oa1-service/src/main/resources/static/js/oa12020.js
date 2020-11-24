@@ -66,11 +66,11 @@ function oaex_th_biztran_grp_onChange() {
 	oa_initSelect();
 }
 
-
 /**
  * 検索ボタンクリックイベントです。
  */
-function oaex_th_searchBtn_onClick() {
+function oaex_th_searchBtn_onClick(pageNo) {
+	document.getElementById("pageNo").value = pageNo;
 	document.forms[0].action = "search";
 	document.forms[0].method = "POST";
 	document.forms[0].submit();
@@ -415,7 +415,7 @@ function oaex_biztran_onChange() {
  */
 function oaex_searchBtn_onClick() {
 	if (_isThymeleaf) {
-		oaex_th_searchBtn_onClick();
+		oaex_th_searchBtn_onClick(1);
 		return;
 	}
 

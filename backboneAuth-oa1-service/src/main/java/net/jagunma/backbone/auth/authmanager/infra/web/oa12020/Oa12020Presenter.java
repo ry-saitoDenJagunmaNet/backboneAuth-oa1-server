@@ -2,8 +2,11 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12020;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020SearchResultVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
@@ -16,10 +19,11 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
  */
 class Oa12020Presenter implements SuspendBizTranSearchResponse {
 
-//    private JasAtMoment jasAtMoment;
-//    private BranchesAtMoment branchesAtMoment;
-//    private BizTranGrps bizTranGrps;
-//    private BizTrans bizTrans;
+    /**
+     *一時取引抑止一覧の１ページ当たりの行数
+     */
+    private final int PAGE_SIZE = 10;
+
     private Long jaId;
     private Long  branchId;
     private String  subSystemCode;
@@ -32,8 +36,9 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
     private LocalDate suspendStatusEndDateFrom;
     private LocalDate suspendStatusEndDateTo;
     private String suspendReason;
-    private SuspendBizTrans suspendBizTrans;
     private Integer pageNo;
+    private SuspendBizTrans suspendBizTrans;
+    private Integer paginationLastPageNo;
 
     // コンストラクタ
     public Oa12020Presenter() {}
@@ -49,8 +54,8 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         this.suspendStatusStartDateTo = vo.getSuspendStatusStartDateTo();
         this.suspendStatusEndDateFrom = vo.getSuspendStatusEndDateFrom();
         this.suspendStatusEndDateTo = vo.getSuspendStatusEndDateTo();
-        this.suspendReason = vo.getSuspendReason();
         this.pageNo = vo.getPageNo();
+        this.suspendReason = vo.getSuspendReason();
     }
 
     // ファクトリーメソッド
@@ -58,38 +63,6 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         return new Oa12020Presenter(vo);
     }
 
-//    /**
-//     * JasAtMomentのＳｅｔ
-//     *
-//     * @param jasAtMoment JasAtMoment
-//     */
-//    public void setJasAtMoment(JasAtMoment jasAtMoment) {
-//        this.jasAtMoment = jasAtMoment;
-//    }
-//    /**
-//     * BranchesAtMomentのＳｅｔ
-//     *
-//     * @param branchesAtMoment BranchesAtMoment
-//     */
-//    public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
-//        this.branchesAtMoment = branchesAtMoment;
-//    }
-//    /**
-//     * 取引グループ群のＳｅｔ
-//     *
-//     * @param bizTranGrps 取引グループ群
-//     */
-//    public void setBizTranGrps(BizTranGrps bizTranGrps) {
-//        this.bizTranGrps = bizTranGrps;
-//    }
-//    /**
-//     * 取引群のＳｅｔ
-//     *
-//     * @param bizTrans 取引群
-//     */
-//    public void setBizTrans(BizTrans bizTrans) {
-//        this.bizTrans = bizTrans;
-//    }
     /**
      * ＪＡIDのＳｅｔ
      *
@@ -187,15 +160,6 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         this.suspendReason = suspendReason;
     }
     /**
-     * 一時取引抑止群のＳｅｔ
-     *
-     * @param suspendBizTrans 一時取引抑止群
-     */
-    public void setSuspendBizTrans(SuspendBizTrans suspendBizTrans) {
-        this.suspendBizTrans = suspendBizTrans;
-    }
-
-    /**
      * 一時取引抑止一覧表示ページのＳｅｔ
      *
      * @param pageNo 一時取引抑止一覧表示ページ
@@ -205,30 +169,29 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
     }
 
     /**
+     * 一時取引抑止群のＳｅｔ
+     *
+     * @param suspendBizTrans 一時取引抑止群
+     */
+    public void setSuspendBizTrans(SuspendBizTrans suspendBizTrans) {
+        this.suspendBizTrans = suspendBizTrans;
+    }
+
+    /**
+     * 一時取引抑止検索結果一覧最終ページのＳｅｔ
+     *
+     * @param paginationLastPageNo 一時取引抑止検索結果一覧最終ページ
+     */
+    public void setPaginationLastPageNo(Integer paginationLastPageNo) {
+        this.paginationLastPageNo = paginationLastPageNo;
+    }
+
+    /**
      * voに変換します
      *
      * @param vo 一時取引抑止<一覧> View Object
      */
     public void bindTo(Oa12020Vo vo) {
-
-//        // ＪＡコンボボックスItemsSource
-//        if (jasAtMoment != null) {
-//            vo.setJaItemsSource(SelectOptionItemsSource.createFrom(jasAtMoment).getValue());
-//        }
-//        // 店舗コンボボックスItemsSource
-//        if (branchesAtMoment != null) {
-//            vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
-//        }
-//        // サブシステムコンボボックスItemsSource
-//        vo.setSubSystemItemsSource(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
-//        // 取引グループコンボボックスItemsSource
-//        if (bizTranGrps != null) {
-//            vo.setBizTranGrpItemsSource(SelectOptionItemsSource.createFrom(bizTranGrps).getValue());
-//        }
-//        // 取引コンボボックスItemsSource
-//        if (bizTrans != null) {
-//            vo.setBizTranItemsSource(SelectOptionItemsSource.createFrom(bizTrans).getValue());
-//        }
 
         vo.setJaId(jaId);
         vo.setBranchId(branchId);
@@ -242,27 +205,63 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         vo.setSuspendStatusEndDateFrom(suspendStatusEndDateFrom);
         vo.setSuspendStatusEndDateTo(suspendStatusEndDateTo);
         vo.setSuspendReason(suspendReason);
+        vo.setPageNo(pageNo);
+        vo.setSearchResultList(createSearchResultList());
+        vo.setPaginationLastPageNo(calculationPaginationLastPageNo());
+    }
+
+    /**
+     * 一時取引抑止リストを作成します
+     *
+     * @return 一時取引抑止リスト
+     */
+    List<Oa12020SearchResultVo> createSearchResultList() {
+
         List<Oa12020SearchResultVo> list = newArrayList();
-        if (suspendBizTrans != null) {
-            for (SuspendBizTran suspendBizTran : suspendBizTrans.getValues()) {
-                Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
-                searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
-                searchResultVo.setJaCode(suspendBizTran.getBranchAtMoment().getJaAtMoment().getJaAttribute().getJaCode().getValue());
-                searchResultVo.setJaName(suspendBizTran.getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
+        if (suspendBizTrans == null) {return list;}
+
+        for (SuspendBizTran suspendBizTran : suspendBizTrans.getValues()) {
+            Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
+            searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
+            if (suspendBizTran.getJaId() != null){
+                searchResultVo.setJaCode(suspendBizTran.getJaAtMoment().getJaAttribute().getJaCode().getValue());
+                searchResultVo.setJaName(suspendBizTran.getJaAtMoment().getJaAttribute().getName());
+            }
+            if (suspendBizTran.getBranchId() != null) {
                 searchResultVo.setBranchCode(suspendBizTran.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue());
                 searchResultVo.setBranchName(suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
+            }
+            if (suspendBizTran.getSubSystemCode() != null) {
                 searchResultVo.setSubSystemName(SubSystem.codeOf(suspendBizTran.getSubSystemCode()).getName());
+            }
+            if (suspendBizTran.getBizTranGrpId() != null) {
                 searchResultVo.setBizTranGrpCode(suspendBizTran.getBizTranGrp().getBizTranGrpCode());
                 searchResultVo.setBizTranGrpName(suspendBizTran.getBizTranGrp() .getBizTranGrpName());
+            }
+            if (suspendBizTran.getBizTranId() != null) {
                 searchResultVo.setBizTranCode(suspendBizTran.getBizTran().getBizTranCode());
                 searchResultVo.setBizTranName(suspendBizTran.getBizTran().getBizTranName());
-                searchResultVo.setSuspendStartDate(suspendBizTran.getSuspendStartDate());
-                searchResultVo.setSuspendEndDate(suspendBizTran.getSuspendEndDate());
-                searchResultVo.setSuspendReason(suspendBizTran.getSuspendReason());
-                list.add(searchResultVo);
             }
+            searchResultVo.setSuspendStartDate(suspendBizTran.getSuspendStartDate());
+            searchResultVo.setSuspendEndDate(suspendBizTran.getSuspendEndDate());
+            searchResultVo.setSuspendReason(suspendBizTran.getSuspendReason());
+            list.add(searchResultVo);
         }
-        vo.setSearchResultList(list);
-        vo.setPageNo(pageNo);
+
+        // 対象ページの表示行のみ出力
+        int skipcnt = PAGE_SIZE * pageNo - PAGE_SIZE;
+        return list.stream().skip(skipcnt).limit(PAGE_SIZE).collect(Collectors.toList());
+    }
+
+    /**
+     * Paginationの最終ページを計算します
+     *
+     * @return Paginationの最終ページ
+     */
+    Integer calculationPaginationLastPageNo() {
+        if (suspendBizTrans == null) {return 0;}
+        BigDecimal lastPage = BigDecimal.valueOf(suspendBizTrans.getValues().size()).divide(
+            BigDecimal.valueOf(PAGE_SIZE), 0, RoundingMode.UP);
+        return lastPage.intValue();
     }
 }

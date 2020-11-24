@@ -5,6 +5,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.ja.JaAtMoment;
 
 /**
  * 一時取引抑止
@@ -21,10 +22,16 @@ public class SuspendBizTran {
     private final LocalDate suspendEndDate;
     private final String suspendReason;
     private final Integer recordVersion;
+    private final JaAtMoment jaAtMoment;
+    private final String jaCode;
     private final BranchAtMoment branchAtMoment;
+    private final String branchCode;
     private final SubSystem subSystem;
+    private final Integer subSystemDisplaySortOrder;
     private final BizTranGrp bizTranGrp;
+    private final String bizTranGrpCode;
     private final BizTran bizTran;
+    private final String bizTranCode;
 
     // コンストラクタ
     SuspendBizTran(
@@ -38,6 +45,7 @@ public class SuspendBizTran {
         LocalDate suspendEndDate,
         String suspendReason,
         Integer recordVersion,
+        JaAtMoment jaAtMoment,
         BranchAtMoment branchAtMoment,
         SubSystem subSystem,
         BizTranGrp bizTranGrp,
@@ -53,10 +61,16 @@ public class SuspendBizTran {
         this.suspendEndDate = suspendEndDate;
         this.suspendReason = suspendReason;
         this.recordVersion = recordVersion;
+        this.jaAtMoment = jaAtMoment;
+        this.jaCode = (jaAtMoment == null)? "" : jaAtMoment.getJaAttribute().getJaCode().getValue();
         this.branchAtMoment = branchAtMoment;
+        this.branchCode = (branchAtMoment == null)? "" : branchAtMoment.getBranchAttribute().getBranchCode().getValue();
         this.subSystem = subSystem;
+        this.subSystemDisplaySortOrder = (subSystem == null)? 0 : subSystem.getDisplaySortOrder();
         this.bizTranGrp = bizTranGrp;
+        this.bizTranGrpCode = (bizTranGrp == null)? "" : bizTranGrp.getBizTranGrpCode();
         this.bizTran = bizTran;
+        this.bizTranCode = (bizTran == null)? "" : bizTran.getBizTranCode();
     }
 
     // ファクトリーメソッド
@@ -71,6 +85,7 @@ public class SuspendBizTran {
         LocalDate suspendEndDate,
         String suspendReason,
         Integer recordVersion,
+        JaAtMoment jaAtMoment,
         BranchAtMoment branchAtMoment,
         SubSystem subSystem,
         BizTranGrp bizTranGrp,
@@ -87,6 +102,7 @@ public class SuspendBizTran {
             suspendEndDate,
             suspendReason,
             recordVersion,
+            jaAtMoment,
             branchAtMoment,
             subSystem,
             bizTranGrp,
@@ -124,16 +140,34 @@ public class SuspendBizTran {
     public Integer getRecordVersion() {
         return recordVersion;
     }
+    public JaAtMoment getJaAtMoment() {
+        return jaAtMoment;
+    }
+    public String getJaCode() {
+        return jaCode;
+    }
     public BranchAtMoment getBranchAtMoment() {
         return branchAtMoment;
+    }
+    public String getBranchCode() {
+        return branchCode;
     }
     public SubSystem getSubSystem() {
         return subSystem;
     }
+    public Integer getSubSystemDisplaySortOrder() {
+        return subSystemDisplaySortOrder;
+    }
     public BizTranGrp getBizTranGrp() {
         return bizTranGrp;
     }
+    public String getBizTranGrpCode() {
+        return bizTranGrpCode;
+    }
     public BizTran getBizTran() {
         return bizTran;
+    }
+    public String getBizTranCode() {
+        return bizTranCode;
     }
 }
