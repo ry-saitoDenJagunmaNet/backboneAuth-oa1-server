@@ -16,7 +16,7 @@ public class SearchSuspendBizTran {
     private final SuspendBizTransRepository suspendBizTransRepository;
 
     // コンストラクタ
-    SearchSuspendBizTran(SuspendBizTransRepository suspendBizTransRepository) {
+    public SearchSuspendBizTran(SuspendBizTransRepository suspendBizTransRepository) {
         this.suspendBizTransRepository = suspendBizTransRepository;
     }
 
@@ -32,13 +32,14 @@ public class SearchSuspendBizTran {
         SearchSuspendBizTranValidator.with(request).validate();
 
         // 一時取引抑止検索
-        Orders orders = Orders.empty().addOrder("branchAtMoment.jaAtMoment.jaAttribute.jaCode")
-            .addOrder("branchAtMoment.branchAttribute.branchCode")
-            .addOrder("subSystemCode.branchAttribute.branchCode")
-            .addOrder("bizTranGrp.bizTranGrpCode")
-            .addOrder("bizTran.bizTranGrp")
+        Orders orders = Orders.empty()
             .addOrder("suspendStartDate")
-            .addOrder("suspendEndDate");
+            .addOrder("suspendEndDate")
+            .addOrder("jaCode")
+            .addOrder("branchCode")
+            .addOrder("subSystemDisplaySortOrder")
+            .addOrder("bizTranGrpCode")
+            .addOrder("bizTranCode");
         response.setSuspendBizTrans(suspendBizTransRepository.selectBy(createSuspendBizTranCriteria(request), orders));
     }
 

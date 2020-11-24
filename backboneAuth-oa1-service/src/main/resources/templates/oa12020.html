@@ -253,7 +253,7 @@
 								<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
 								<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
 								<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
-								<td class="oaex_table_expiration_date" th:text="${itemrow.suspendStartDate}"></td>
+								<td class="oaex_table_expiration_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
 								<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
 							</tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_expiration_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
@@ -276,14 +276,24 @@
 			<!-- pagination -->
 			<div class="row">
 				<div class="col s12">
+					<input type="hidden" id="pageNo" name="pageNo" th:value="${form.pageNo}"/>
 					<ul id="suspend_biztran_pagination" class="pagination">
-						<li class="disabled"><a href="#!">&lt;</a></li>
-						<li class="active"><a href="#!">1</a></li>
-						<li class="waves-effect"><a href="#!">2</a></li>
-						<li class="waves-effect"><a href="#!">3</a></li>
-						<li class="waves-effect"><a href="#!">4</a></li>
-						<li class="waves-effect"><a href="#!">5</a></li>
-						<li class="waves-effect"><a href="#!">&gt;</a></li>
+						<li th:if="${form.paginationLastPageNo > 0}" th:class="${form.pageNo == 1}? 'disabled' : 'waves-effect'">
+							<a th:href="${form.pageNo == 1}? '#!' : 'javascript:oaex_th_searchBtn_onClick('+${form.pageNo-1}+');'" >&lt;</a>
+						</li>
+						<li th:if="${form.paginationLastPageNo > 0}" th:each='item : ${#numbers.sequence(1, form.paginationLastPageNo)}' th:class="${item == form.pageNo}? 'active' : 'waves-effect'">
+							<a th:href="${item == form.pageNo}? '#!' : 'javascript:oaex_th_searchBtn_onClick('+${item}+');'" ><span th:text="${item}"></span></a>
+						</li>
+						<li th:if="${form.paginationLastPageNo > 0}" th:class="${form.pageNo == form.paginationLastPageNo}? 'disabled' : 'waves-effect'">
+							<a th:href="${form.pageNo == form.paginationLastPageNo}? '#!' : 'javascript:oaex_th_searchBtn_onClick('+${form.pageNo+1}+');'" >&gt;</a>
+						</li>
+						<li class="disabled" th:remove="all"><a href="#!">&lt;</a></li>
+						<li class="active" th:remove="all"><a href="#!">1</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">2</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">3</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">4</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">5</a></li>
+						<li class="waves-effect" th:remove="all"><a href="#!">&gt;</a></li>
 					</ul>
 				</div>
 			</div>

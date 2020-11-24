@@ -1,11 +1,14 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12020;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchJaAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
+import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.Oa12060Controller;
@@ -24,6 +27,7 @@ import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.util.strings2.Strings2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -117,24 +121,50 @@ public class Oa12020Controller extends BaseOfController {
      * 一時取引抑止検索処理を行います
      *
      * @param model モデル
-     * @param vo ViewObject
+     * @param vo    ViewObject
      * @return 一時取引抑止検索結果
      */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String  search(Model model, Oa12020Vo vo) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
-        vo.setMessage("");
         LOGGER.debug("search START");
 
-        try {
-            // ToDo: 登録画面から戻ってきたときにSessoonから画面の条件を取り出す予定
-            // ToDo: 破棄はいつするか？戻るメソッドはどこに？  getメソッド？
-            // SessionにViewObjectの格納
-            setSessionVo(vo);
+        return Search(vo, model);
+    }
 
-            Oa12020SearchConverter converter = Oa12020SearchConverter.with(vo);
-            Oa12020Presenter presenter = Oa12020Presenter.with(vo);
+    /**
+     * 一時取引抑止メンテナンスから戻った時の一時取引抑止再検索処理を行います
+     *
+     * @param session_vo Sessionに退避したViewObject
+     * @param model モデル
+     * @return 一時取引抑止検索結果
+     */
+    @RequestMapping(value = "/backSearch", method = RequestMethod.POST)
+    public String  backSearch(@ModelAttribute("session_vo") Oa12020Vo session_vo, Model model) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+        LOGGER.debug("search START");
+
+        return Search(session_vo, model);
+    }
+
+    /**
+     * 一時取引抑止検索処理を行います
+     *
+     * @param argVo ViewObject
+     * @param model モデル
+     * @return
+     */
+    private String Search(Oa12020Vo argVo, Model model) {
+
+        Oa12020Vo vo = new Oa12020Vo();
+        try {
+            setSessionVo(argVo);
+
+            Oa12020SearchConverter converter = Oa12020SearchConverter.with(argVo);
+            // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているため元のvo値が無いため）
+            Oa12020Presenter presenter = Oa12020Presenter.with(argVo);
 
             // 一時取引抑止検索
             searchSuspendBizTran.execute(converter, presenter);
@@ -159,13 +189,13 @@ public class Oa12020Controller extends BaseOfController {
      * ＪＡコンボボックスのtemsSourceを取得します
      *
      * @param model モデル
-     * @param vo View Model（form json）
+     * @param vo    View Model（form json）
      * @return ＪＡコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getJaItemsSource", method = RequestMethod.POST)
     public String getJaItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getJaItemsSource START");
-        model.addAttribute("selectAjaxItems",SelectOptionItemsSource.createFrom(searchJaAtMoment.selectBy()).getValue());
+        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(searchJaAtMoment.selectBy()).getValue());
         return "oa12020::ajaxSelectJa";
     }
 
@@ -173,13 +203,17 @@ public class Oa12020Controller extends BaseOfController {
      * 店舗コンボボックスのtemsSourceを取得します
      *
      * @param model モデル
-     * @param vo View Model（form json）
+     * @param vo    View Model（form json）
      * @return 店舗コンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBranchItemsSource", method = RequestMethod.POST)
     public String getBranchItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBranchItemsSource START");
-        model.addAttribute("selectAjaxItems",SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaId())).getValue());
+        List<SelectOptionItemSource> list = newArrayList();
+        if (vo.getJaId() != null) {
+            list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaId())).getValue();
+        }
+        model.addAttribute("selectAjaxItems", list);
         return "oa12020::ajaxSelectBranch";
     }
 
@@ -187,13 +221,13 @@ public class Oa12020Controller extends BaseOfController {
      * サブシステムコンボボックスのtemsSourceを取得します
      *
      * @param model モデル
-     * @param vo View Model（form json）
+     * @param vo    View Model（form json）
      * @return サブシステムコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getSubSystemItemsSource", method = RequestMethod.POST)
     public String getSubSystemItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getSubSystemItemsSource START");
-        model.addAttribute("selectAjaxItems",SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
         return "oa12020::ajaxSelectSubSystem";
     }
 
@@ -201,15 +235,19 @@ public class Oa12020Controller extends BaseOfController {
      * 取引グループコンボボックスのtemsSourceを取得します
      *
      * @param model モデル
-     * @param vo View Model（form json）
+     * @param vo    View Model（form json）
      * @return 取引グループコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBizTranGrpItemsSource", method = RequestMethod.POST)
     public String getBizTranGrpItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBizTranGrpItemsSource START");
-        BizTranGrpCriteria criteria = new BizTranGrpCriteria();
-        criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
-        model.addAttribute("selectAjaxItems",SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders.empty())).getValue());
+        List<SelectOptionItemSource> list = newArrayList();
+        if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
+            BizTranGrpCriteria criteria = new BizTranGrpCriteria();
+            criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
+            list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders.empty())).getValue();
+        }
+        model.addAttribute("selectAjaxItems", list);
         return "oa12020::ajaxSelectBizTranGrp";
     }
 
@@ -217,18 +255,22 @@ public class Oa12020Controller extends BaseOfController {
      * 取引コンボボックスのtemsSourceを取得します
      *
      * @param model モデル
-     * @param vo View Model（form json）
+     * @param vo    View Model（form json）
      * @return 取引コンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBizTranItemsSource", method = RequestMethod.POST)
     public String getBizTranItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBizTranItemsSource START");
-        BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
-        criteria.getBizTranGrpIdCriteria().setEqualTo(vo.getBizTranGrpId());
-        criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
-        BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(criteria, Orders.empty());
-        List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
-        model.addAttribute("selectAjaxItems",SelectOptionItemsSource.createFrom(bizTranList).getValue());
+        List<SelectOptionItemSource> list = newArrayList();
+        if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
+            BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
+            criteria.getBizTranGrpIdCriteria().setEqualTo(vo.getBizTranGrpId());
+            criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
+            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(criteria, Orders.empty());
+            List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
+            list = SelectOptionItemsSource.createFrom(bizTranList).getValue();
+        }
+        model.addAttribute("selectAjaxItems", list);
         return "oa12020::ajaxSelectBizTran";
     }
 
@@ -252,8 +294,6 @@ public class Oa12020Controller extends BaseOfController {
 
         Oa12020Presenter presenter = new Oa12020Presenter();
 
-//        // ＪＡリスト
-//        presenter.setJasAtMoment(searchJaAtMoment.selectBy());
         // 抑止期間条件選択
         presenter.setSuspendConditionsSelect(0);
 
