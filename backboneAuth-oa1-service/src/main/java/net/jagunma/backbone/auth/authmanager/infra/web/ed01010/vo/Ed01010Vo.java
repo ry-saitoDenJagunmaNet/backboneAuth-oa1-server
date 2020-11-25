@@ -14,13 +14,13 @@ public class Ed01010Vo extends BaseOfResponseVo {
      */
     private String mode;
     /**
-     * ＪＡ
-     */
-    private String ja;
-    /**
      * オペレーターID
      */
     private Long operatorId;
+    /**
+     * ＪＡ
+     */
+    private String ja;
     /**
      * オペレーター
      */

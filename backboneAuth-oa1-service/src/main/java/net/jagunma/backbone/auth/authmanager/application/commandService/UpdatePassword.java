@@ -43,7 +43,7 @@ public class UpdatePassword {
         // パラメーターの検証
         UpdatePasswordValidator.with(request).validate();
 
-        // 現在の変更種別が「機器認証パスワード」でないかチェックを行います
+        // 現在の変更種別が「機器認証パスワード」でないかのチェックを行います
         checkNotDeviceAuthPassword(request.getOperatorId());
 
         // パスワード履歴の生成を行います
@@ -71,7 +71,7 @@ public class UpdatePassword {
         // パラメーターの検証
         UpdatePasswordValidator.with(request).validate();
 
-        // 現在の変更種別が「機器認証パスワード」でないかチェックを行います
+        // 現在の変更種別が「機器認証パスワード」でないかのチェックを行います
         checkNotDeviceAuthPassword(request.getOperatorId());
 
         // 機器認証パスワード以外での過去世代のパスワードのチェックを行います
@@ -92,7 +92,7 @@ public class UpdatePassword {
     }
 
     /**
-     * 現在の変更種別が「機器認証パスワード」でないかチェックを行います
+     * 現在の変更種別が「機器認証パスワード」でないかのチェックを行います
      *
      * @param operatorId オペレーターID
      */
@@ -110,8 +110,8 @@ public class UpdatePassword {
 
     /**
      * 機器認証パスワード以外での過去世代のパスワードのチェックを行います
-     * ・リクエストの古いパスワードと１世代前のパスワードが同じか
-     * ・過去2世代に同じパスワードを使用していないか
+     * ・リクエストの古いパスワードと現在のパスワードが同じか
+     * ・現在と過去2世代に同じパスワードを使用していないか
      *
      * @param request パスワード変更サービス Request
      */
@@ -125,16 +125,15 @@ public class UpdatePassword {
 
         int counter = 0;
         for (PasswordHistory passwordHistory : passwordHistories.getValues()) {
-            counter ++;
 
-            // リクエストの古いパスワードと１世代前のパスワードが同じか
-            if (counter == 1) {
+            // リクエストの古いパスワードと現在のパスワードが同じか
+            if (counter == 0) {
                 if (!request.getOldPassword().equals(passwordHistory.getPassword())) {
                     throw new GunmaRuntimeException("EOA12003");
                 }
             }
 
-            // 過去2世代に同じパスワードを使用していないか
+            // 現在と過去2世代に同じパスワードを使用していないか
             if (counter <= 2) {
                 if (request.getNewPassword().equals(passwordHistory.getPassword())) {
                     throw new GunmaRuntimeException("EOA12004");
@@ -142,6 +141,8 @@ public class UpdatePassword {
             } else {
                 break;
             }
+
+            counter ++;
         }
     }
 }
