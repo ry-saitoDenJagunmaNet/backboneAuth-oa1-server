@@ -12,7 +12,7 @@ buildscript {
         assertjVersion = '3.18.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '20.2.21'
+        commonServerVersion = '20.2.22'
         commonCommonVersion = '20.5.8'
         commonUtilsVersion = '20.3.9'
         commonFaoVersion = '20.0.118'
