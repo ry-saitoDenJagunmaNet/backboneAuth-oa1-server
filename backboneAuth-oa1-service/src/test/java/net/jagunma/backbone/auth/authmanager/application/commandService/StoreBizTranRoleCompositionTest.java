@@ -198,7 +198,7 @@ class StoreBizTranRoleCompositionTest {
 
         // 期待値
         List<MessageDto> expectedMessageDtoList = newArrayList();
-        expectedMessageDtoList.add(MessageDto.createFrom("EOA13107","",Arrays.asList("yu001011", "ANAG99")));
+        expectedMessageDtoList.add(MessageDto.createFrom("WOA13107","",Arrays.asList("yu001011", "ANAG99")));
 
         // テスト対象クラス生成
         StoreBizTranRoleComposition StoreBizTranRoleComposition = new StoreBizTranRoleComposition(

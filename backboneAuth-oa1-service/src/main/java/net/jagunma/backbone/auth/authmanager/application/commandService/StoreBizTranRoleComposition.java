@@ -137,7 +137,7 @@ public class StoreBizTranRoleComposition {
             operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
             Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria, Orders.empty());
             for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-                messageDtoList.add(MessageDto.createFrom("EOA13107",
+                messageDtoList.add(MessageDto.createFrom("WOA13107",
                     newArrayList(operator_BizTranRole.getOperator().getOperatorCode(),operator_BizTranRole.getBizTranRole().getBizTranRoleCode())));
             }
         }
