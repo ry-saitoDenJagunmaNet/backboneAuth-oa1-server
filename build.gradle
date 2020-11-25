@@ -14,7 +14,7 @@ buildscript {
         logbackCoreVersion = '1.2.3'
         commonServerVersion = '20.2.21'
         commonCommonVersion = '20.5.8'
-        commonUtilsVersion = '20.3.8'
+        commonUtilsVersion = '20.3.9'
         commonFaoVersion = '20.0.118'
         jacsonDatabindVersion = '2.11.3'
         domaCoreVersion = '2.44.3'
