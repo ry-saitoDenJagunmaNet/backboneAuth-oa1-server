@@ -239,7 +239,7 @@ class UpdatePasswordTest {
     /**
      * {@link UpdatePassword#checkNotDeviceAuthPassword(Long operatorId)}テスト
      *  ●パターン
-     *    リクエストの古いパスワードと１世代前のパスワードが同じかのチェック）不一致
+     *    現在の変更種別が「機器認証パスワード」でないかのチェック）機器認証パスワード
      *
      *  ●検証事項
      *  ・エラー発生
@@ -267,7 +267,7 @@ class UpdatePasswordTest {
      * {@link UpdatePassword#checkPastGenerationsPassword(PasswordChangeRequest request)}テスト
      *  ●パターン
      *    機器認証パスワード以外での過去世代のパスワードのチェック
-     *    ・リクエストの古いパスワードと１世代前のパスワードが同じかのチェック）不一致
+     *    ・リクエストの古いパスワードと現在のパスワードが同じかのチェック）不一致
      *
      *  ●検証事項
      *  ・エラー発生
@@ -295,7 +295,7 @@ class UpdatePasswordTest {
      * {@link UpdatePassword#checkPastGenerationsPassword(PasswordChangeRequest request)}テスト
      *  ●パターン
      *    機器認証パスワード以外での過去世代のパスワードのチェック
-     *    ・過去2世代に同じパスワードを使用していないか）使用している
+     *    ・現在と過去2世代に同じパスワードを使用していないか）使用している
      *
      *  ●検証事項
      *  ・エラー発生
