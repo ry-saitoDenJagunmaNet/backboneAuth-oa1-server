@@ -428,7 +428,6 @@ class Oa11030ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
         String actualViewName = oa11030Controller.get(operatorId, model);
@@ -437,7 +436,6 @@ class Oa11030ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 
     /**
@@ -533,7 +531,6 @@ class Oa11030ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
         String actualViewName = oa11030Controller.update(model, vo);
@@ -542,7 +539,6 @@ class Oa11030ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 
     /**
@@ -569,7 +565,6 @@ class Oa11030ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10002";
-        String expectedErrorMessage = "該当データは他端末で更新されています。";
 
         // 実行
         String actualViewName = oa11030Controller.update(model, vo);
@@ -578,6 +573,5 @@ class Oa11030ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 }
