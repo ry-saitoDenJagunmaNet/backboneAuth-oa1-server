@@ -3,11 +3,12 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleComposition;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleCompositionRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
@@ -17,8 +18,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleComposition;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleCompositionRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
@@ -28,7 +27,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.O
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
-import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
@@ -75,7 +73,7 @@ public class StoreBizTranRoleComposition {
         List<MessageDto> messageDtoList = validator.checkExcelImport();
         if (messageDtoList.size() > 0) {
             response.setMessageDtoList(messageDtoList);
-            throw new GunmaRuntimeException("EOA13015");
+            throw new GunmaRuntimeException("EOA13001");
         }
 
         // オペレータ取引ロール割当の関連チェック
@@ -139,7 +137,7 @@ public class StoreBizTranRoleComposition {
             operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
             Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria, Orders.empty());
             for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-                messageDtoList.add(MessageDto.createFrom("EOA13014",
+                messageDtoList.add(MessageDto.createFrom("WOA13107",
                     newArrayList(operator_BizTranRole.getOperator().getOperatorCode(),operator_BizTranRole.getBizTranRole().getBizTranRoleCode())));
             }
         }

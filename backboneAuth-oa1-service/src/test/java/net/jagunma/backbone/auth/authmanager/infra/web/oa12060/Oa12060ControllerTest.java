@@ -198,11 +198,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.get(model);
-        Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -255,11 +255,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-        Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -286,12 +286,12 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-        Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
-        assertThat(vo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg);
+        assertThat(actualVo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
+        assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg);
     }
 
     /**
@@ -315,15 +315,15 @@ class Oa12060ControllerTest {
 
         // 期待値
         String expected = "oa19999";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
+        String expectedMessageCode = "EOA10001";
 
         // 実行
         String result = oa12060Controller.search(model, ym, ct1, ct2, ct3, wh);
-        Oa12060Vo vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo.getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
     }
 
     /**
@@ -361,11 +361,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.store(model, vo);
-        Oa12060Vo oa12060Vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -401,11 +401,11 @@ class Oa12060ControllerTest {
 
         // 実行
         String result = oa12060Controller.store(model, vo);
-        Oa12060Vo oa12060Vo = (Oa12060Vo) model.getAttribute("form");
+        Oa12060Vo actualVo = (Oa12060Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(oa12060Vo).usingRecursiveComparison().isEqualTo(expectedVo);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
@@ -422,7 +422,7 @@ class Oa12060ControllerTest {
     void store_test2() {
 
         // 実行値
-        Oa12060Vo vo = new Oa12060Vo();
+        Oa12060Vo actualVo = new Oa12060Vo();
         Boolean isOptimisticLockingFailureException = true;
 
         // テスト対象クラス生成
@@ -430,14 +430,14 @@ class Oa12060ControllerTest {
 
         // 期待値
         String expected = "oa19999";
-        String expectedErrorMessage = "該当データは他端末で更新されています。";
+        String expectedMessageCode = "EOA10002";
 
         // 実行
-        String result = oa12060Controller.store(model, vo);
+        String result = oa12060Controller.store(model, actualVo);
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo.getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
     }
 
     /**
@@ -454,7 +454,7 @@ class Oa12060ControllerTest {
     void store_test3() {
 
         // 実行値
-        Oa12060Vo vo = new Oa12060Vo();
+        Oa12060Vo actualVo = new Oa12060Vo();
         String ymEmpty = "";
 
         // テスト対象クラス生成
@@ -464,12 +464,12 @@ class Oa12060ControllerTest {
         String expected = "oa12060";
 
         // 実行
-        String result = oa12060Controller.store(model, vo);
+        String result = oa12060Controller.store(model, actualVo);
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
-        assertThat(vo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg);
+        assertThat(actualVo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
+        assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg);
     }
 
     /**
@@ -486,7 +486,7 @@ class Oa12060ControllerTest {
     void store_test4() {
 
         // 実行値
-        Oa12060Vo vo = new Oa12060Vo();
+        Oa12060Vo actualVo = new Oa12060Vo();
         String ymNull = null;
 
         // テスト対象クラス生成
@@ -494,13 +494,13 @@ class Oa12060ControllerTest {
 
         // 期待値
         String expected = "oa19999";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
+        String expectedMessageCode = "EOA10001";
 
         // 実行
-        String result = oa12060Controller.store(model, vo);
+        String result = oa12060Controller.store(model, actualVo);
 
         // 結果検証
         assertThat(result).isEqualTo(expected);
-        assertThat(vo.getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
     }
 }
