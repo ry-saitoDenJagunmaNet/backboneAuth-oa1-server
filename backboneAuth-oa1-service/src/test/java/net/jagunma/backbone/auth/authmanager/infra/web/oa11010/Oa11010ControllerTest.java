@@ -540,16 +540,16 @@ class Oa11010ControllerTest {
         // 実行値
         jaId = -1L;
         Oa11010Vo oa11010Vo = createOa11010Vo();
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 期待値
         String expectedViewName = "oa11010";
+        String expectedMessageCode = "EOA10001";
 
         // 実行
         ResponseEntity<Oa11010SearchResponseVo> actualVo = oa11010Controller.search(oa11010Vo);
 
         // 結果検証
         assertThat(actualVo.getStatusCode().toString()).isEqualTo(statusCode);
-        assertThat(actualVo.getBody().getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getBody().getMessageCode()).isEqualTo(expectedMessageCode);
     }
 }
