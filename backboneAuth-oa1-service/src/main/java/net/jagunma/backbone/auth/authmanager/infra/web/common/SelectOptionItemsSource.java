@@ -2,8 +2,11 @@ package net.jagunma.backbone.auth.authmanager.infra.web.common;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
@@ -15,7 +18,7 @@ import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JasAtMoment;
 
 /**
- * 共通 コンボボックス選択子群 View Object
+ * 共通 コンボボックス選択肢群 View Object
  */
 public class SelectOptionItemsSource {
 
@@ -133,9 +136,10 @@ public class SelectOptionItemsSource {
      * @return サブシステムコンボボックス選択肢群
      */
     public static SelectOptionItemsSource createFrom(SubSystem[] subSystems) {
+        List<SubSystem> subSystemList = Arrays.asList(subSystems);
         List<SelectOptionItemSource> list = newArrayList();
         list.add(SelectOptionItemSource.empty());
-        for (SubSystem subSystem : subSystems) {
+        for (SubSystem subSystem : subSystemList.stream().sorted(Comparator.comparing(SubSystem::getDisplaySortOrder)).collect(Collectors.toList())) {
             if (subSystem.getCode().length() == 0) { continue; }
             list.add(new SelectOptionItemSource(
                 null,
