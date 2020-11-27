@@ -10,7 +10,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubsystemRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubSystemRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
@@ -141,14 +141,14 @@ class Oa11030InitPresenterTest {
         presenter.setBranchesAtMomentForBranchItemsSource(branchesAtMoment);
 
         // 期待値
-        List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList = newArrayList();
-        for (Operator_SubSystemRole operator_subSystemRole : operator_SubSystemRoles.getValues()) {
-            Oa11030SubsystemRoleTableVo oa11030SubsystemRoleTableVo = new Oa11030SubsystemRoleTableVo();
-            oa11030SubsystemRoleTableVo.setRoleName(operator_subSystemRole.getSubSystemRole().getName());
-            oa11030SubsystemRoleTableVo.setExpirationDate(
-                operator_subSystemRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
-                operator_subSystemRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            oa11030SubsystemRoleTableVoList.add(oa11030SubsystemRoleTableVo);
+        List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList = newArrayList();
+        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
+            Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
+            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
+            oa11030SubSystemRoleTableVo.setExpirationDate(
+                operator_SubSystemRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
+                operator_SubSystemRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            oa11030SubSystemRoleTableVoList.add(oa11030SubSystemRoleTableVo);
         }
         List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList = newArrayList();
         for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
@@ -175,7 +175,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
-        expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);
+        expectedVo.setOa11030SubSystemRoleTableVoList(oa11030SubSystemRoleTableVoList);
         expectedVo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);
         expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
 
@@ -241,7 +241,7 @@ class Oa11030InitPresenterTest {
         presenter.setBranchesAtMomentForBranchItemsSource(branchesAtMoment);
 
         // 期待値
-        List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList = newArrayList();
+        List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList = newArrayList();
         List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList = newArrayList();
 
         Oa11030Vo expectedVo = new Oa11030Vo();
@@ -258,7 +258,7 @@ class Oa11030InitPresenterTest {
         expectedVo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
         expectedVo.setAccountLockStatus(accountLockStatus.getCode());
-        expectedVo.setOa11030SubsystemRoleTableVoList(oa11030SubsystemRoleTableVoList);
+        expectedVo.setOa11030SubSystemRoleTableVoList(oa11030SubSystemRoleTableVoList);
         expectedVo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);
         expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
 
