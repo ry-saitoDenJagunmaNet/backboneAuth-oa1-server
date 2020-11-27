@@ -98,7 +98,7 @@ class UpdatePasswordValidator {
         Preconditions.checkSize(8, 255, newPassword, () -> new GunmaRuntimeException("EOA13004", messageAddition + "パスワード", "8", "以上", "255", "以下"));
 
         // ToDo: 全角混入チェック
-//          throw new GunmaRuntimeException("EOA13005", messageAddition + "パスワード");
+        //  throw new GunmaRuntimeException("EOA13005", messageAddition + "パスワード");
 
         // パスワード不一致チェック
         if (!newPassword.equals(confirmPassword)) {
