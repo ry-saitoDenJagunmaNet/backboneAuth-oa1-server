@@ -278,7 +278,7 @@ class Ed01010ControllerTest {
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証
-        assertThat(actualViewName).isEqualTo(expectedViewName);// ToDo: 遷移制御
+        assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
@@ -311,7 +311,7 @@ class Ed01010ControllerTest {
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証
-        assertThat(actualViewName).isEqualTo(expectedViewName);// ToDo: 遷移制御
+        assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 

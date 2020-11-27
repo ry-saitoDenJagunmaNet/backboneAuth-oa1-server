@@ -121,9 +121,8 @@ public class Ed01010Controller extends BaseOfController {
                 updatePassword.execute(converter);
             }
 
-            // ToDo: 遷移制御
             model.addAttribute("form", vo);
-            return "ed01010";
+            return "ed01010"; // ToDo: 遷移制御
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合

@@ -357,7 +357,7 @@ class Oa11030ControllerTest {
         ConcurrentModel model = new ConcurrentModel();
 
         // 期待値
-        String expectedViewName = "oa11030";
+        String expectedViewName = "oa11030"; // ToDo: 遷移制御
         changeCause = null;
         Oa11030Vo expectedVo = createOa11030Vo();
 
@@ -459,8 +459,8 @@ class Oa11030ControllerTest {
         Oa11030Vo vo = createOa11030Vo();
 
         // 期待値
-        String expectedViewName = "oa11030";
-        Oa11030Vo expectedVo = createOa11030Vo(); // ToDo: 遷移制御
+        String expectedViewName = "oa11030"; // ToDo: 遷移制御
+        Oa11030Vo expectedVo = createOa11030Vo();
 
         // 実行
         String actualViewName = oa11030Controller.update(model, vo);
@@ -468,7 +468,7 @@ class Oa11030ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo); // ToDo: 遷移制御
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
