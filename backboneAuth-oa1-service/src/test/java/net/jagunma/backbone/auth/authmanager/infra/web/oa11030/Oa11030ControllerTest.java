@@ -16,7 +16,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubsystemRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubSystemRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
@@ -98,7 +98,7 @@ class Oa11030ControllerTest {
     private String changeCausePlaceholder = "新職員の入組による登録";
     private AccountLockStatus accountLockStatus = AccountLockStatus.アンロック;
 
-    private List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList;
+    private List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList;
     private List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList;
 
     // ＪＡAtMoment
@@ -298,19 +298,19 @@ class Oa11030ControllerTest {
         vo.setChangeCause(changeCause);
         vo.setChangeCausePlaceholder(changeCausePlaceholder);
         vo.setAccountLockStatus(accountLockStatus.getCode());
-        vo.setOa11030SubsystemRoleTableVoList(createOa11030SubsystemRoleTableVoList());
+        vo.setOa11030SubSystemRoleTableVoList(createOa11030SubSystemRoleTableVoList());
         vo.setOa11030BizTranRoleTableVoList(createOa11030BizTranRoleTableVoList());
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
 
         return vo;
     }
 
-    // Oa11030SubsystemRoleTableVoList作成
-    private List<Oa11030SubsystemRoleTableVo> createOa11030SubsystemRoleTableVoList() {
-        List<Oa11030SubsystemRoleTableVo> tableVoList = newArrayList();
+    // Oa11030SubSystemRoleTableVoList作成
+    private List<Oa11030SubSystemRoleTableVo> createOa11030SubSystemRoleTableVoList() {
+        List<Oa11030SubSystemRoleTableVo> tableVoList = newArrayList();
 
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoleList) {
-            Oa11030SubsystemRoleTableVo tableVo = new Oa11030SubsystemRoleTableVo();
+            Oa11030SubSystemRoleTableVo tableVo = new Oa11030SubSystemRoleTableVo();
             tableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
             tableVo.setExpirationDate(
                 operator_SubSystemRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +

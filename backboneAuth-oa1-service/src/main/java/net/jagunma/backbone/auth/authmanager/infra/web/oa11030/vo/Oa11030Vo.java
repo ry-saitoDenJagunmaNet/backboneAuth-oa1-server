@@ -71,7 +71,7 @@ public class Oa11030Vo extends BaseOfResponseVo {
     /**
      * サブシステムロールテーブル
      */
-    private List<Oa11030SubsystemRoleTableVo> Oa11030SubsystemRoleTableVoList;
+    private List<Oa11030SubSystemRoleTableVo> Oa11030SubSystemRoleTableVoList;
     /**
      * 取引ロールテーブル
      */
@@ -125,8 +125,8 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public Short getAccountLockStatus() {
         return accountLockStatus;
     }
-    public List<Oa11030SubsystemRoleTableVo> getOa11030SubsystemRoleTableVoList() {
-        return Oa11030SubsystemRoleTableVoList;
+    public List<Oa11030SubSystemRoleTableVo> getOa11030SubSystemRoleTableVoList() {
+        return Oa11030SubSystemRoleTableVoList;
     }
     public List<Oa11030BizTranRoleTableVo> getOa11030BizTranRoleTableVoList() {
         return Oa11030BizTranRoleTableVoList;
@@ -178,8 +178,8 @@ public class Oa11030Vo extends BaseOfResponseVo {
     public void setAccountLockStatus(Short accountLockStatus) {
         this.accountLockStatus = accountLockStatus;
     }
-    public void setOa11030SubsystemRoleTableVoList(List<Oa11030SubsystemRoleTableVo> oa11030SubsystemRoleTableVoList) {
-        Oa11030SubsystemRoleTableVoList = oa11030SubsystemRoleTableVoList;
+    public void setOa11030SubSystemRoleTableVoList(List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList) {
+        Oa11030SubSystemRoleTableVoList = oa11030SubSystemRoleTableVoList;
     }
     public void setOa11030BizTranRoleTableVoList(List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList) {
         Oa11030BizTranRoleTableVoList = oa11030BizTranRoleTableVoList;

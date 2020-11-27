@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo;
 /**
  * OA11030 サブシステムロールテーブル
  */
-public class Oa11030SubsystemRoleTableVo {
+public class Oa11030SubSystemRoleTableVo {
 
     private static final long serialVersionUID = 1L;
 
