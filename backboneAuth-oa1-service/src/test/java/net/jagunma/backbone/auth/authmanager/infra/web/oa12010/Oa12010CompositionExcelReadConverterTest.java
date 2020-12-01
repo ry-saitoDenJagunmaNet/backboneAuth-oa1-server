@@ -30,7 +30,7 @@ class Oa12010CompositionExcelReadConverterTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void with_test1() {
+    void with_test0() {
 
         // 実行値
         Oa12010Vo vo = new Oa12010Vo();

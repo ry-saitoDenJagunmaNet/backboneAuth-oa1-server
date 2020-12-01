@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -15,21 +16,21 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * 取引ロール編成エクスポートExcel 登録サービス Validator
+ * 取引ロール編成エクスポートExcel Import登録サービス Validator
  */
-public class StoreBizTranRoleCompositionValidator {
+public class CheckBizTranRoleCompositionValidator {
 
-    private final BizTranRoleCompositionImportRequest request;
+    private final BizTranRoleCompositionImportCheckRequest request;
 
     // コンストラクタ
-    StoreBizTranRoleCompositionValidator(BizTranRoleCompositionImportRequest request) {
+    CheckBizTranRoleCompositionValidator(BizTranRoleCompositionImportCheckRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static StoreBizTranRoleCompositionValidator with(
-        BizTranRoleCompositionImportRequest request) {
-        return new StoreBizTranRoleCompositionValidator(request);
+    public static CheckBizTranRoleCompositionValidator with(
+        BizTranRoleCompositionImportCheckRequest request) {
+        return new CheckBizTranRoleCompositionValidator(request);
     }
 
     /**

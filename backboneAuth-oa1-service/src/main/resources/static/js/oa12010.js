@@ -6,6 +6,17 @@ function oaex_th_onload() {
 }
 
 /**
+ * チェックボタンクリックイベントです。
+ */
+function oaex_th_checkBtn_onClick() {
+	// Preloader表示
+	oa_showPreloader();
+	document.forms[0].action = "checkExcel";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+/**
  * 実行ボタン（インポート／エクスポート）クリックイベントです。
  */
 function oaex_th_executeBtn_onClick() {
@@ -39,22 +50,40 @@ window.onload = function() {
 function oaex_mode_onChange() {
 	let modeArray = document.getElementsByName("mode");
 	let importFileSection = document.getElementById("import_file_section");
-	let executeBtn = document.getElementById("execute_btn");
+	let importExecuteBtn = document.getElementById("importExecute_btn");
+	let exportExecuteBtn = document.getElementById("exportExecute_btn");
+	let checkBtn = document.getElementById("check_Btn");
 
 	for (let mode of modeArray) {
 		if (mode.checked) {
 			switch (mode.value) {
 			case "import":
 				importFileSection.style.display = "block"
-				executeBtn.innerText = "インポート"
+				importExecuteBtn.style.display = ""
+				checkBtn.style.display = ""
+				exportExecuteBtn.style.display = "none"
 				break;
 			case "export":
 				importFileSection.style.display = "none"
-				executeBtn.innerText = "エクスポート"
+				importExecuteBtn.style.display = "none"
+				checkBtn.style.display = "none"
+				exportExecuteBtn.style.display = ""
 				break;
 			}
 		}
 	}
+}
+
+/**
+ * チェックボタンクリックイベントです。
+ */
+function oaex_checkBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_checkBtn_onClick();
+		return;
+	}
+
+	return;
 }
 
 /**

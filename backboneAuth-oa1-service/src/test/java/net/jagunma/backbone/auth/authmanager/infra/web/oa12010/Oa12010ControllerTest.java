@@ -15,10 +15,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import net.jagunma.backbone.auth.authmanager.application.commandService.CheckBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.commandService.StoreBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.commandService.WriteBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.queryService.RaedBizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBizTranRoleComposition;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckResponse;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionExcelCommand.BizTranRoleCompositionExcelWriteRequest;
@@ -29,6 +32,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleComp
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionReference.BizTranRoleCompositionExportResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.dto.Oa12010Dto;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010MessageVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleComposition;
@@ -59,6 +63,7 @@ import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,6 +75,8 @@ class Oa12010ControllerTest {
     private String subSystemCode = "";
     private List<SelectOptionItemSource> subSystemList = SelectOptionItemsSource.createFrom(SubSystem.values()).getValue();
     private byte[] exportExcelBook = null;
+    private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet = null;
+    private BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet = null;
     private List<Oa12010MessageVo> messageVoList = null;
 
     private byte[] actualHttpServletResponseWrite = null;
@@ -97,6 +104,14 @@ class Oa12010ControllerTest {
         vo.setExportExcelBook(exportExcelBook);
         vo.setMessageVoList(messageVoList);
         return vo;
+    }
+    // OA12010 Importデータ Dto作成
+    private Oa12010Dto createOa12010Dto() {
+        Oa12010Dto dto = new Oa12010Dto();
+        dto.setSubSystemCode(subSystemCode);
+        dto.setBizTranRole_BizTranGrpsSheet(bizTranRole_BizTranGrpsSheet);
+        dto.setBizTranGrp_BizTransSheet(bizTranGrp_BizTransSheet);
+        return dto;
     }
 
     // テスト対象クラス生成
@@ -181,7 +196,23 @@ class Oa12010ControllerTest {
                 public void store(BizTranRoleComposition bizTranRoleComposition) {
 
                 }
-            },
+            }
+        ) {
+            public void execute(BizTranRoleCompositionImportRequest request,BizTranRoleCompositionImportResponse response) {
+                if (throwExceptio == null) { return;}
+                // createOa12010Controllerの引数 throwExceptio == -1 の場合：RuntimeException を発生させる
+                if (throwExceptio == -1) {
+                    throw new RuntimeException();
+                }
+                // createOa12010Controllerの引数 throwExceptio == -2 の場合：GunmaRuntimeException を発生させる
+                if (throwExceptio == -2) {
+                    Preconditions.checkNotEmpty("", () -> new GunmaRuntimeException(GunmaRuntimeExceptionMessageCode, GunmaRuntimeExceptionMessageArg1, GunmaRuntimeExceptionMessageArg2));
+                }
+            }
+        };
+
+        // 取引ロール編成エクスポートExcel チェックサービス
+        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
             new BizTranRolesRepository() {
                 @Override
                 public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
@@ -199,7 +230,7 @@ class Oa12010ControllerTest {
                 }
             }
         ) {
-            public void execute(BizTranRoleCompositionImportRequest request,BizTranRoleCompositionImportResponse response) {
+            public void execute(BizTranRoleCompositionImportCheckRequest request, BizTranRoleCompositionImportCheckResponse response) {
             }
         };
 
@@ -207,7 +238,8 @@ class Oa12010ControllerTest {
             searchBizTranRoleComposition,
             writeBizTranRoleComposition,
             raedBizTranRoleComposition,
-            storeBizTranRoleComposition);
+            storeBizTranRoleComposition,
+            checkBizTranRoleComposition);
     }
     // HttpServletResponse作成
     private HttpServletResponse createHttpServletResponse() {
@@ -359,7 +391,7 @@ class Oa12010ControllerTest {
             }
         };
     }
-
+    // importfile作成
     private MultipartFile createMultipartFile() {
         return new MultipartFile() {
             @Override
@@ -495,6 +527,7 @@ class Oa12010ControllerTest {
      * {@link Oa12010Controller#exportExcel(Model,Oa12010Vo,HttpServletResponse)}テスト
      *  ●パターン
      *    正常
+     *    ・ViewModelのサブシステム未指定
      *
      *  ●検証事項
      *  ・HttpServletResponse Write
@@ -609,7 +642,128 @@ class Oa12010ControllerTest {
     }
 
     /**
-     * {@link Oa12010Controller#importExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     * {@link Oa12010Controller#checkExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・Voへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void checkExcel_test0() {
+
+        // テスト対象クラス生成
+        Oa12010Controller oa12010Controller = createOa12010Controller(null);
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        subSystemCode = SubSystem.販売_畜産.getCode();
+        Oa12010Vo Oa12010Vo = createOa12010Vo();
+        MultipartFile multipartFile = createMultipartFile();
+        MockHttpServletRequest mockHttpServletReques = new MockHttpServletRequest();
+        oa12010Controller.session = mockHttpServletReques.getSession();
+
+        // 期待値
+        String expectedViewName = "oa12010";
+//        subSystemCode = SubSystem.販売_畜産.getCode();
+        messageVoList = newArrayList();
+        Oa12010Vo expectedVo = createOa12010Vo();
+
+        // 実行
+        String actualViewName = oa12010Controller.checkExcel(multipartFile, model, Oa12010Vo);
+        Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Oa12010Controller#checkExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void checkExcel_test1() {
+
+        // テスト対象クラス生成
+        Oa12010Controller oa12010Controller = createOa12010Controller(-1);
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        Oa12010Vo Oa12010Vo = createOa12010Vo();
+        MultipartFile multipartFile = createMultipartFile();
+
+        // 期待値
+        String expectedViewName = "oa19999";
+        String expectedMessageCode = "EOA10001";
+
+        // 実行
+        String actualViewName = oa12010Controller.checkExcel(multipartFile, model, Oa12010Vo);
+        Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+    }
+
+    /**
+     * {@link Oa12010Controller#checkExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException ）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void checkExcel_test2() {
+
+        // テスト対象クラス生成
+        Oa12010Controller oa12010Controller = createOa12010Controller(-2);
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        Oa12010Vo Oa12010Vo = createOa12010Vo();
+        MultipartFile multipartFile = createMultipartFile();
+
+        // 期待値
+        String expectedViewName = "oa12010";
+
+        // 実行
+        String actualViewName = oa12010Controller.checkExcel(multipartFile, model, Oa12010Vo);
+        Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
+        assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg1);
+        assertThat(actualVo.getMessageArgs().get(1)).isEqualTo(GunmaRuntimeExceptionMessageArg2);
+    }
+
+    /**
+     * {@link Oa12010Controller#checkExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     *  ●パターン
+     *    例外（IOException  ）発生
+     *
+     *  ●検証事項
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void checkExcel_test3() {
+        // TODO: exportExcelメソッドでIOExceptionを発生させるテストは実現不可
+        assertThat(true);
+    }
+
+    /**
+     * {@link Oa12010Controller#importExcel(Model,Oa12010Vo)}テスト
      *  ●パターン
      *    正常
      *
@@ -625,18 +779,21 @@ class Oa12010ControllerTest {
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        subSystemCode = SubSystem.販売_畜産.getCode();
         Oa12010Vo Oa12010Vo = createOa12010Vo();
-        MultipartFile multipartFile = createMultipartFile();
+        subSystemCode = SubSystem.販売_畜産.getCode();
+        Oa12010Dto oa12010Dto = createOa12010Dto();
+        MockHttpServletRequest mockHttpServletReques = new MockHttpServletRequest();
+        oa12010Controller.session = mockHttpServletReques.getSession();
+        oa12010Controller.session.setAttribute(oa12010Controller.SESSION_KEY_OA12010DTO,oa12010Dto);
 
         // 期待値
         String expectedViewName = "oa12010";
-        subSystemCode = SubSystem.販売_畜産.getCode();
+        subSystemCode = "";
         messageVoList = newArrayList();
         Oa12010Vo expectedVo = createOa12010Vo();
 
         // 実行
-        String actualViewName = oa12010Controller.importExcel(multipartFile, model, Oa12010Vo);
+        String actualViewName = oa12010Controller.importExcel(model, Oa12010Vo);
         Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
 
         // 結果検証
@@ -645,7 +802,7 @@ class Oa12010ControllerTest {
     }
 
     /**
-     * {@link Oa12010Controller#importExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     * {@link Oa12010Controller#importExcel(Model,Oa12010Vo)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -663,14 +820,18 @@ class Oa12010ControllerTest {
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12010Vo Oa12010Vo = createOa12010Vo();
-        MultipartFile multipartFile = createMultipartFile();
+        subSystemCode = SubSystem.販売_畜産.getCode();
+        Oa12010Dto oa12010Dto = createOa12010Dto();
+        MockHttpServletRequest mockHttpServletReques = new MockHttpServletRequest();
+        oa12010Controller.session = mockHttpServletReques.getSession();
+        oa12010Controller.session.setAttribute(oa12010Controller.SESSION_KEY_OA12010DTO,oa12010Dto);
 
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
 
         // 実行
-        String actualViewName = oa12010Controller.importExcel(multipartFile, model, Oa12010Vo);
+        String actualViewName = oa12010Controller.importExcel(model, Oa12010Vo);
         Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
 
         // 結果検証
@@ -679,7 +840,7 @@ class Oa12010ControllerTest {
     }
 
     /**
-     * {@link Oa12010Controller#importExcel(MultipartFile,Model,Oa12010Vo)}テスト
+     * {@link Oa12010Controller#importExcel(Model,Oa12010Vo)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException ）発生
      *
@@ -697,13 +858,17 @@ class Oa12010ControllerTest {
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12010Vo Oa12010Vo = createOa12010Vo();
-        MultipartFile multipartFile = createMultipartFile();
+        subSystemCode = SubSystem.販売_畜産.getCode();
+        Oa12010Dto oa12010Dto = createOa12010Dto();
+        MockHttpServletRequest mockHttpServletReques = new MockHttpServletRequest();
+        oa12010Controller.session = mockHttpServletReques.getSession();
+        oa12010Controller.session.setAttribute(oa12010Controller.SESSION_KEY_OA12010DTO,oa12010Dto);
 
         // 期待値
         String expectedViewName = "oa12010";
 
         // 実行
-        String actualViewName = oa12010Controller.importExcel(multipartFile, model, Oa12010Vo);
+        String actualViewName = oa12010Controller.importExcel(model, Oa12010Vo);
         Oa12010Vo actualVo = (Oa12010Vo) model.getAttribute("form");
 
         // 結果検証
@@ -711,19 +876,5 @@ class Oa12010ControllerTest {
         assertThat(actualVo.getMessageCode()).isEqualTo(GunmaRuntimeExceptionMessageCode);
         assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg1);
         assertThat(actualVo.getMessageArgs().get(1)).isEqualTo(GunmaRuntimeExceptionMessageArg2);
-    }
-
-    /**
-     * {@link Oa12010Controller#importExcel(MultipartFile,Model,Oa12010Vo)}テスト
-     *  ●パターン
-     *    例外（IOException  ）発生
-     *
-     *  ●検証事項
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void importExcel_test3() {
-        // TODO: exportExcelメソッドでIOExceptionを発生させるテストは実現不可
-        assertThat(true);
     }
 }
