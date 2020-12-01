@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -20,16 +20,16 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class StoreBizTranRoleCompositionValidatorTest {
+class CheckBizTranRoleCompositionValidatorTest {
 
     // 実行既定値
     private String subSystemCode = SubSystem.販売_畜産.getCode();
     private List<BizTranRole_BizTranGrpSheet> bizTranRole_BizTranGrpSheetList = newArrayList();
     private List<BizTranGrp_BizTranSheet> bizTranGrp_BizTranSheetList = newArrayList();
 
-    // 取引ロール編成インポート＆エクスポート Excel 登録サービス Requestの作成
-    private BizTranRoleCompositionImportRequest createBizTranRoleCompositionImportRequest() {
-        return new BizTranRoleCompositionImportRequest() {
+    // 取引ロール編成インポート＆エクスポート Excel Importチェックサービス Requestの作成
+    private BizTranRoleCompositionImportCheckRequest createBizTranRoleCompositionImportCheckRequest() {
+        return new BizTranRoleCompositionImportCheckRequest() {
             @Override
             public String getSubSystemCode() {
                 return subSystemCode;
@@ -46,7 +46,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#validate()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#validate()}のテスト
      *  ●パターン
      *    正常
      *
@@ -58,15 +58,15 @@ class StoreBizTranRoleCompositionValidatorTest {
     void validate_test0() {
 
         // 実行値
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatCode(()->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).validate()).doesNotThrowAnyException();
+            CheckBizTranRoleCompositionValidator.with(request).validate()).doesNotThrowAnyException();
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#validate()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#validate()}のテスト
      *  ●パターン
      *    リクエスト不正
      *
@@ -78,11 +78,11 @@ class StoreBizTranRoleCompositionValidatorTest {
     void validate_test1() {
 
         // 実行値
-        BizTranRoleCompositionImportRequest request = null;
+        BizTranRoleCompositionImportCheckRequest request = null;
 
         assertThatThrownBy(() ->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).validate())
+            CheckBizTranRoleCompositionValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13001");
@@ -90,7 +90,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#validate()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#validate()}のテスト
      *  ●パターン
      *    サブシステム 未セット
      *
@@ -103,11 +103,11 @@ class StoreBizTranRoleCompositionValidatorTest {
 
         // 実行値
         subSystemCode = null;
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).validate())
+            CheckBizTranRoleCompositionValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");
@@ -116,7 +116,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#validate()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#validate()}のテスト
      *  ●パターン
      *    サブシステム不一致（取引ロール－取引グループ編成シ－ト）
      *
@@ -133,11 +133,11 @@ class StoreBizTranRoleCompositionValidatorTest {
         list.add(BizTranRole_BizTranGrpSheet.createFrom(3,"販売・畜産","ANAG01","（畜産）取引全般","ANTG01","データ入力取引グループ"));
         list.add(BizTranRole_BizTranGrpSheet.createFrom(4,"購買","KBAG01","（購買）購買業務基本","KBTG01","購買メニュー"));
         bizTranRole_BizTranGrpSheetList = list;
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).validate())
+            CheckBizTranRoleCompositionValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13102");
@@ -146,7 +146,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#validate()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#validate()}のテスト
      *  ●パターン
      *    サブシステム不一致（取引グループ－取引編成シ－ト）
      *
@@ -163,11 +163,11 @@ class StoreBizTranRoleCompositionValidatorTest {
         list.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         list.add(BizTranGrp_BizTranSheet.createFrom(4,"購買","KBTG01","購買メニュー","KB0000","購買メインメニュー",false,LocalDate.of(2010,3,11),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList = list;
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).validate())
+            CheckBizTranRoleCompositionValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13102");
@@ -176,7 +176,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    正常
      *
@@ -188,15 +188,15 @@ class StoreBizTranRoleCompositionValidatorTest {
     void checkExcelImport_test00() {
 
         // 実行値
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatCode(()->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).checkExcelImport()).doesNotThrowAnyException();
+            CheckBizTranRoleCompositionValidator.with(request).checkExcelImport()).doesNotThrowAnyException();
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    正常
      *
@@ -214,15 +214,15 @@ class StoreBizTranRoleCompositionValidatorTest {
         // [取引グループ－取引編成]シートデータ
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         assertThatCode(()->
             // 実行
-            StoreBizTranRoleCompositionValidator.with(request).checkExcelImport()).doesNotThrowAnyException();
+            CheckBizTranRoleCompositionValidator.with(request).checkExcelImport()).doesNotThrowAnyException();
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引ロール－取引グループ編成シ－ト
      *    ・未セットチェック
@@ -246,7 +246,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         // [取引グループ－取引編成]シートデータ
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13103";
@@ -259,7 +259,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"8","取引グループ名称")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -272,7 +272,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引ロール－取引グループ編成シ－ト
      *    ・重複チェック
@@ -296,7 +296,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG02","精算取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(5,"販売・畜産","ANTG03","マスタ取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13104";
@@ -305,7 +305,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"4","取引ロールコード＋取引グループコード")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -318,7 +318,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引ロール－取引グループ編成シ－ト
      *    ・同一キーレコード内容一致チェック（取引ロール）
@@ -339,7 +339,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG02","精算取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13105";
@@ -348,7 +348,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"3","取引ロール")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -361,7 +361,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引ロール－取引グループ編成シ－ト
      *    ・同一キーレコード内容一致チェック（取引グループ）
@@ -383,7 +383,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG02","精算取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13105";
@@ -392,7 +392,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"4","取引グループ")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -405,7 +405,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引ロール－取引グループ編成シ－ト
      *    ・［取引グループコード］双方向存在チェック
@@ -425,7 +425,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         // [取引グループ－取引編成]シートデータ
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13106";
@@ -434,7 +434,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"4","[取引グループ－取引編成]シート")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -447,7 +447,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引グループ－取引編成シ－ト
      *    ・未セットチェック
@@ -474,7 +474,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(9,"販売・畜産","ANTG01","データ入力取引グループ","AN1710","特別控除入力メニュー",false,null,LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(10,"販売・畜産","ANTG01","データ入力取引グループ","AN1711","特別控除控除コード指定入力",false,LocalDate.of(2010,6,21),null));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(11,"販売・畜産","ANTG02","","AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13103";
@@ -490,7 +490,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"11","取引グループ名称")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -503,7 +503,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引グループ－取引編成シ－ト
      *    ・重複チェック
@@ -525,7 +525,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG01","データ入力取引グループ","AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(5,"販売・畜産","ANTG01","データ入力取引グループ","AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(6,"販売・畜産","ANTG01","データ入力取引グループ","AN1210","仕切入力",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13104";
@@ -534,7 +534,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"4","取引グループコード＋取引コード")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -547,7 +547,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引グループ－取引編成シ－ト
      *    ・同一キーレコード内容一致チェック（取引グループ）
@@ -567,7 +567,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG01","データ入力取引グループx","AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13105";
@@ -576,7 +576,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"3","取引グループ")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -589,7 +589,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引グループ－取引編成シ－ト
      *    ・同一キーレコード内容一致チェック（取引）
@@ -616,7 +616,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(8,"販売・畜産","ANTG02","精算取引グループ","AN1110","前日処理照会",false,LocalDate.of(2010,6,22),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(9,"販売・畜産","ANTG02","精算取引グループ","AN1610","振込処理",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,30)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(10,"販売・畜産","ANTG02","精算取引グループ","AN1611","振込要求照会",true,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13105";
@@ -628,7 +628,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"6","取引")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());
@@ -641,7 +641,7 @@ class StoreBizTranRoleCompositionValidatorTest {
     }
 
     /**
-     * {@link StoreBizTranRoleCompositionValidator#checkExcelImport()}のテスト
+     * {@link CheckBizTranRoleCompositionValidator#checkExcelImport()}のテスト
      *  ●パターン
      *    取引グループ－取引編成シ－ト
      *    ・［取引グループコード］双方向存在チェック
@@ -661,7 +661,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         bizTranGrp_BizTranSheetList =  newArrayList();
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(3,"販売・畜産","ANTG01","データ入力取引グループ","ANTG01","畜産メインメニュー",false, LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(4,"販売・畜産","ANTG02","精算取引グループ","AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
 
         // 期待値
         String meaasgeCode = "EOA13106";
@@ -670,7 +670,7 @@ class StoreBizTranRoleCompositionValidatorTest {
         expectedList.add(MessageDto.createFrom(meaasgeCode,"",Arrays.asList(meaasgeArg1,"4","[取引ロール－取引グループ編成]シート")));
 
         // 実行
-        List<MessageDto> actualList = StoreBizTranRoleCompositionValidator.with(request).checkExcelImport();
+        List<MessageDto> actualList = CheckBizTranRoleCompositionValidator.with(request).checkExcelImport();
 
         // 結果検証
         assertThat(actualList.size()).isEqualTo(expectedList.size());

@@ -593,6 +593,7 @@ function oa_getMessageDialog() {
     html += '           <a href="#!" class="modal-close btn waves-effect waves-light btn" id="confirmCancelOnClick">キャンセル</a>';
     html += '       </div>';
     html += '   </div>';
+    html += '   <input type="hidden" id="message" th:value="${form.message}"></input>';
     html += '</div>';
 
     document.write(html);

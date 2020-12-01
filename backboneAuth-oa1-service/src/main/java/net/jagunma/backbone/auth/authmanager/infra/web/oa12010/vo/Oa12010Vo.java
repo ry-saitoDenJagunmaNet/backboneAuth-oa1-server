@@ -24,6 +24,10 @@ public class Oa12010Vo extends BaseOfResponseVo {
      */
     private List<SelectOptionItemSource> subSystemList;
     /**
+     * インポートファイル（表示）
+     */
+    private String importfileView;
+    /**
      * エクスポートExcelBook
      */
     private byte[] exportExcelBook;
@@ -31,6 +35,10 @@ public class Oa12010Vo extends BaseOfResponseVo {
      * メッセージリスト
      */
     private List<Oa12010MessageVo> messageVoList;
+    /**
+     * 状態
+     */
+    private String status = "";
 
     // Getter／Setter
     public String getMode() {
@@ -51,6 +59,12 @@ public class Oa12010Vo extends BaseOfResponseVo {
     public void setSubSystemList(List<SelectOptionItemSource> subSystemList) {
         this.subSystemList = subSystemList;
     }
+    public String getImportfileView() {
+        return importfileView;
+    }
+    public void setImportfileView(String importfileView) {
+        this.importfileView = importfileView;
+    }
     public byte[] getExportExcelBook() {
         return exportExcelBook;
     }
@@ -60,8 +74,13 @@ public class Oa12010Vo extends BaseOfResponseVo {
     public List<Oa12010MessageVo> getMessageVoList() {
         return messageVoList;
     }
-    public void setMessageVoList(
-        List<Oa12010MessageVo> messageVoList) {
+    public void setMessageVoList(List<Oa12010MessageVo> messageVoList) {
         this.messageVoList = messageVoList;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

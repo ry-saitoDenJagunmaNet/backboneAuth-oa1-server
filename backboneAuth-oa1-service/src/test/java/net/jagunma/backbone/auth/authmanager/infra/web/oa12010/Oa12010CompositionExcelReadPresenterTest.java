@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.dto.Oa12010Dto;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -52,15 +53,47 @@ class Oa12010CompositionExcelReadPresenterTest {
         presenter.setBizTranGrp_BizTransSheet(createBizTranGrp_BizTransSheet());
 
         // 期待値
-        Oa12010CompositionImportConverter expectedConverter = Oa12010CompositionImportConverter.with(
+        Oa12010CompositionImportCheckConverter expectedConverter = Oa12010CompositionImportCheckConverter.with(
             subSystemCode,
             createBizTranRole_BizTranGrpsSheet(),
             createBizTranGrp_BizTransSheet());
 
         // 実行
-        Oa12010CompositionImportConverter actualConverter = presenter.converterTo();
+        Oa12010CompositionImportCheckConverter actualConverter = presenter.converterTo();
 
         // 結果検証
         assertThat(actualConverter).usingRecursiveComparison().isEqualTo(expectedConverter);
+    }
+
+    /**
+     * {@link Oa12010CompositionExcelReadPresenter#bindTo(Oa12010Dto)}のテスト
+     *  ●パターン
+     *    通常
+     *
+     *  ●検証事項
+     *  ・Dtoへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void bindTo_test0() {
+
+        // 実行値
+        Oa12010CompositionExcelReadPresenter presenter = new Oa12010CompositionExcelReadPresenter();
+        presenter.setSubSystemCode(subSystemCode);
+        presenter.setBizTranRole_BizTranGrpsSheet(createBizTranRole_BizTranGrpsSheet());
+        presenter.setBizTranGrp_BizTransSheet(createBizTranGrp_BizTransSheet());
+        Oa12010Dto actualDto = new Oa12010Dto();
+
+        // 期待値
+        Oa12010Dto expectedDto = new Oa12010Dto();
+        expectedDto.setSubSystemCode(subSystemCode);
+        expectedDto.setBizTranRole_BizTranGrpsSheet(createBizTranRole_BizTranGrpsSheet());
+        expectedDto.setBizTranGrp_BizTransSheet(createBizTranGrp_BizTransSheet());
+
+        // 実行
+        presenter.bindTo(actualDto);
+
+        // 結果検証
+        assertThat(actualDto).usingRecursiveComparison().isEqualTo(expectedDto);
     }
 }

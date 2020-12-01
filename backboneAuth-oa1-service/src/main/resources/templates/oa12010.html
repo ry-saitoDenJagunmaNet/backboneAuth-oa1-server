@@ -61,7 +61,7 @@
 			<div class="row oa_required">
 				<div class="col s5 offset-s1">
 					<div class="input-field">
-						<select id="subsystem" name="subSystemCode" class="validate" th:value="${form.subSystemList}">
+						<select id="subsystem" name="subSystemCode" class="validate" th:disabled="${form.status != ''}" th:value="${form.subSystemList}">
 							<option th:each="item : ${form.subSystemList}"
 									th:value="${item.code}"
 									th:text="${item.name}"
@@ -95,7 +95,7 @@
 				</div>
 				<div class="row">
 					<div class="col s8 offset-s1">
-						<div class="file-field input-field">
+						<div class="file-field input-field" th:class="${form.status == ''}? 'file-field input-field' : 'file-field input-field oaex_importfile_hide_textbox'">
 							<div class="btn">
 								<span>...</span>
 								<input type="file" id="importfile" name="importfile"></input>
@@ -103,6 +103,9 @@
 							<div class="file-path-wrapper">
 								<input class="file-path validate" type="text">
 							</div>
+						</div>
+						<div class="input-field oaex_importfile_hide_textbox" th:class="${form.status == ''}? 'input-field oaex_importfile_hide_textbox' : 'input-field'">
+							<input type="text" disabled th:value="${form.importfileView}"></input>
 						</div>
 					</div>
 				</div>
@@ -139,7 +142,7 @@
 						<tr th:remove="all"><td>［取引グループ－取引編成］（3行目）の同一キーで各項目内容が不一致のレコードがあります。</td></tr>
 						<tr th:remove="all"><td>インポートした取引ロール編成ファイルと選択したサブシステムが一致していません。</td></tr>
 						<tr th:remove="all"><td>［取引ロール－取引グループ編成］に入力した取引グループコードが［取引グループ－取引編成］に存在しません。(取引グループコード:ANTG01)</td></tr>
-						<tr th:remove="all"><td>オペレーター_取引ロール割当に登録済の取引ロールコードを削除します。(オペレーターID:123、取引ロールコード:ANAG01)</td></tr>
+						<tr th:remove="all"><td>:取引ロールを削除しました。この取引ロールは「オペレーター_取引ロール割当」で使用中のため、「オペレーター_取引ロール割当」の修正を行って下さい。(オペレーターコード:XX123456、取引ロールコード:ANAG01)</td></tr>
 						<tr th:remove="all"><td>［取引グループ－取引編成］（7行目）取引グループコードが入力されていません。</td></tr>
 						<tr th:remove="all"><td>［取引グループ－取引編成］（8行目）取引グループコードが入力されていません。</td></tr>
 						<tr th:remove="all"><td>［取引グループ－取引編成］（9行目）取引グループコードが入力されていません。</td></tr>
@@ -162,7 +165,11 @@
 				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
 			<div class="col s3 offset-s6">
-				<a class="btn waves-effect waves-light" href="javascript:oaex_executeBtn_onClick();" id="execute_btn">○○ポート</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_executeBtn_onClick();" id="exportExecute_btn">エクスポート</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_checkBtn_onClick();" id="check_Btn">チェック</a>
+				&nbsp;&nbsp;&nbsp;
+				<a class="btn waves-effect waves-light" href="javascript:oaex_executeBtn_onClick();" id="importExecute_btn"
+				   th:class="${form.status == ''}? 'btn waves-effect waves-light disabled' : 'btn waves-effect waves-light'">インポート</a>
 			</div>
 		</div>
 	</footer>

@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12010;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.dto.Oa12010Dto;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
@@ -9,31 +10,16 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
  */
 public class Oa12010CompositionImportConverter implements BizTranRoleCompositionImportRequest {
 
-    private String subSystemCode;
-    private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet;
-    private BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet;
+    private Oa12010Dto oa12010Dto;
 
     // コンストラクタ
-    Oa12010CompositionImportConverter(
-        String subSystemCode,
-        BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
-        BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
-
-        this.subSystemCode = subSystemCode;
-        this.bizTranRole_BizTranGrpsSheet = bizTranRole_BizTranGrpsSheet;
-        this.bizTranGrp_BizTransSheet = bizTranGrp_BizTransSheet;
+    Oa12010CompositionImportConverter(Oa12010Dto oa12010Dto) {
+        this.oa12010Dto = oa12010Dto;
     }
 
     // ファクトリーメソッド
-    public static Oa12010CompositionImportConverter with(
-        String subSystemCode,
-        BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet,
-        BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet) {
-
-        return new Oa12010CompositionImportConverter(
-            subSystemCode,
-            bizTranRole_BizTranGrpsSheet,
-            bizTranGrp_BizTransSheet);
+    public static Oa12010CompositionImportConverter with(Oa12010Dto oa12010Dto) {
+        return new Oa12010CompositionImportConverter(oa12010Dto);
     }
 
     /**
@@ -42,7 +28,7 @@ public class Oa12010CompositionImportConverter implements BizTranRoleComposition
      * @return サブシステムコード
      */
     public String getSubSystemCode() {
-        return subSystemCode;
+        return oa12010Dto.getSubSystemCode();
     }
 
     /**
@@ -51,7 +37,7 @@ public class Oa12010CompositionImportConverter implements BizTranRoleComposition
      * @return 取引ロール－取引グループ編成群
      */
     public BizTranRole_BizTranGrpsSheet getBizTranRole_BizTranGrpsSheet() {
-        return bizTranRole_BizTranGrpsSheet;
+        return oa12010Dto.getBizTranRole_BizTranGrpsSheet();
     }
 
     /**
@@ -60,6 +46,6 @@ public class Oa12010CompositionImportConverter implements BizTranRoleComposition
      * @return 取引グループ－取引編成群
      */
     public BizTranGrp_BizTransSheet getBizTranGrp_BizTransSheet() {
-        return bizTranGrp_BizTransSheet;
+        return oa12010Dto.getBizTranGrp_BizTransSheet();
     }
 }
