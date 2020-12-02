@@ -45,12 +45,13 @@ class SearchSuspendBizTranTest {
     private List<SuspendBizTran> createSuspendBizTranList() {
         List<SuspendBizTran> list = newArrayList();
         list.add(SuspendBizTran.createFrom(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,100001L,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"×××により緊急抑止",1,
+            createJaAtMoment().stream().filter(j->j.getIdentifier().equals(33L)).findFirst().orElse(null),
             createBranchAtMoment().stream().filter(j->j.getIdentifier().equals(6L)).findFirst().orElse(null),
             SubSystem.販売_畜産,
             createBizTranGrpList().stream().filter(b->b.getBizTranGrpId().equals(10001L)).findFirst().orElse(null),
             createBizTranList().stream().filter(b->b.getBizTranId().equals(100001L)).findFirst().orElse(null)));
         list.add(SuspendBizTran.createFrom(2L,null,null,SubSystem.購買.getCode(),null,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"×××により緊急抑止",1,
-            null,SubSystem.購買,null,null));
+            null,null,SubSystem.購買,null,null));
         return list;
     }
     // 店舗リストデータ作成
@@ -143,30 +144,18 @@ class SearchSuspendBizTranTest {
             @Override
             public void setJaId(Long jaId) {
             }
-//            @Override
-//            public void setJasAtMoment(JasAtMoment jasAtMoment) {
-//            }
             @Override
             public void setBranchId(Long branchId) {
             }
-//            @Override
-//            public void setBranchesAtMoment(BranchesAtMoment branchesAtMoment) {
-//            }
             @Override
             public void setSubSystemCode(String subSystemCode) {
             }
             @Override
             public void setBizTranGrpId(Long bizTranGrpId) {
             }
-//            @Override
-//            public void setBizTranGrps(BizTranGrps bizTranGrps) {
-//            }
             @Override
             public void setBizTranId(Long bizTranId) {
             }
-//            @Override
-//            public void setBizTrans(BizTrans bizTrans) {
-//            }
             @Override
             public void setSuspendConditionsSelect(Integer suspendConditionsSelect) {
             }

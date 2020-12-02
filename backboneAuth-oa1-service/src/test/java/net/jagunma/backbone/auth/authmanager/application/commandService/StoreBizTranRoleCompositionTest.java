@@ -181,7 +181,6 @@ class StoreBizTranRoleCompositionTest {
                     assertThat(messageDtoList).usingRecursiveComparison().isEqualTo(expectedMessageDtoList);
                 }
             });
-
     }
 
     /**
@@ -199,10 +198,7 @@ class StoreBizTranRoleCompositionTest {
 
         // 期待値
         List<MessageDto> expectedMessageDtoList = newArrayList();
-        expectedMessageDtoList.add(MessageDto.createFrom(
-            "EOA13014",
-            "登録済オペレーター_取引ロール割当の取引ロールコード削除(オペレーターID:yu001011、取引ロールコード:ANAG99)    CL:取引ロールコードを削除しました。この取引ロールコードはオペレーター_取引ロール割当で登録済のため、オペレーター_取引ロール割当の修正を行って下さい。(オペレーターID:yu001011、取引ロールコード:ANAG99)",
-            Arrays.asList("yu001011", "ANAG99")));
+        expectedMessageDtoList.add(MessageDto.createFrom("WOA13107","",Arrays.asList("yu001011", "ANAG99")));
 
         // テスト対象クラス生成
         StoreBizTranRoleComposition StoreBizTranRoleComposition = new StoreBizTranRoleComposition(
@@ -216,10 +212,15 @@ class StoreBizTranRoleCompositionTest {
                 @Override
                 public void setMessageDtoList(List<MessageDto> messageDtoList) {
                     // 結果検証
-                    assertThat(messageDtoList).usingRecursiveComparison().isEqualTo(expectedMessageDtoList);
+                    assertThat(messageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
+                    for(int i = 0; i < messageDtoList.size(); i++) {
+                        assertThat(messageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
+                            .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
+                        assertThat(messageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
+                            .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
+                    }
                 }
             });
-
     }
 
     /**
@@ -239,10 +240,7 @@ class StoreBizTranRoleCompositionTest {
 
         // 期待値
         List<MessageDto> expectedMessageDtoList = newArrayList();
-        expectedMessageDtoList.add(MessageDto.createFrom(
-            "EOA13013",
-            "未セット(［取引ロール－取引グループ編成］（Excel行：4）取引ロールコード)  CL:［取引ロール－取引グループ編成］（Excel行：4）取引ロールコードが入力されていません。",
-            Arrays.asList("［取引ロール－取引グループ編成］（Excel行：4）取引ロールコード")));
+        expectedMessageDtoList.add(MessageDto.createFrom("EOA13103","",Arrays.asList("[取引ロール－取引グループ編成]シート", "4", "取引ロールコード")));
 
         // テスト対象クラス生成
         StoreBizTranRoleComposition StoreBizTranRoleComposition = new StoreBizTranRoleComposition(
@@ -257,12 +255,18 @@ class StoreBizTranRoleCompositionTest {
                     @Override
                     public void setMessageDtoList(List<MessageDto> messageDtoList) {
                         // 結果検証
-                        assertThat(messageDtoList).usingRecursiveComparison().isEqualTo(expectedMessageDtoList);
+                        assertThat(messageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
+                        for(int i = 0; i < messageDtoList.size(); i++) {
+                            assertThat(messageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
+                                .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
+                            assertThat(messageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
+                                .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
+                        }
                     }
                 }))
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13015");
+                assertThat(e.getMessageCode()).isEqualTo("EOA13001");
             });
     }
 }

@@ -20,7 +20,7 @@ function oaex_initialize() {
 		for (let j = 0; j <  tbNode.rows[i].cells.length; j++) {
 			let colNode = tbNode.rows[i].cells[j];
 			colNode.addEventListener('click', function(event) {
-                oaex_weekSubsystemList_onClick(this, true);
+                oaex_weekSubSystemList_onClick(this, true);
             });
 		}
 	}
@@ -56,7 +56,7 @@ function oaex_closeBtn_onClick() {
  * @param {Object} obj システム利用可能時間帯テーブル（曜日 ＼ サブシステム）のセル
  * @param {Boolean} subsystemWeekSelect true:サブシステム ＼ 曜日選択をする
  */
-function oaex_weekSubsystemList_onClick(obj, subsystemWeekSelect) {
+function oaex_weekSubSystemList_onClick(obj, subsystemWeekSelect) {
 	let rowIx = obj.parentNode.rowIndex;
 	let celIx = obj.cellIndex;
 
@@ -113,6 +113,6 @@ function oaex_subsystemWeekList_onClick(obj) {
 	// 曜日 ＼ サブシステム選択
 	// （曜日 ＼ サブシステム選択）の列　＝　（サブシステム＼曜日）の選択行ix　×　２　－　２
 	let colix = obj.rowIndex * 2 - 2;
-	let weekSubsystemCol = document.getElementById("subsystem_week_table").rows[1].cells[colix];
-	oaex_weekSubsystemList_onClick(weekSubsystemCol, false)
+	let weekSubSystemCol = document.getElementById("subsystem_week_table").rows[1].cells[colix];
+	oaex_weekSubSystemList_onClick(weekSubSystemCol, false)
 }

@@ -443,7 +443,6 @@ class Oa11020ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
         String actualViewName = oa11020Controller.save(oa11020Vo, model, ed01010Vo);
@@ -452,6 +451,5 @@ class Oa11020ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 }

@@ -30,6 +30,11 @@
 	<!-- main定義 -->
 	<main>
 		<section>
+			<!-- Hidden項目 -->
+			<div>
+				<input type="hidden" id="operator_id" name="operatorId" th:value="${form.operatorId}"></input>
+				<input type="hidden" id="record_version" name="recordVersion" th:value="${form.recordVersion}"></input>
+			</div>
 			<!-- ＪＡ -->
 			<div class="row oa_readonly">
 				<div class="col s6">
@@ -68,7 +73,7 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="operater_code" readonly="readonly" value="OP101008" th:value="${form.operatorCode}"></input>
+						<input type="text" id="operater_code" name="operatorCode" readonly="readonly" value="OP101008" th:value="${form.operatorCode}"></input>
 						<label for="operater_code">オペレーターコード</label>
 					</div>
 				</div>
@@ -131,7 +136,7 @@
 						<div class="switch">
 							<label>
 								未使用
-								<input type="checkbox" id="is_deviceAuth" name="isDeviceAuth" value=true th:checked="${form.isDeviceAuth}"></input>
+								<input type="checkbox" id="is_deviceAuth" name="isDeviceAuth" th:checked="${form.isDeviceAuth}"></input>
 								<span class="lever"></span>
 								使用
 							</label>
@@ -151,7 +156,7 @@
 						<div class="switch">
 							<label>
 								利用不可
-								<input type="checkbox" id="available_status" name="availableStatus" value=true checked="checked" th:checked="${form.availableStatus}"></input>
+								<input type="checkbox" id="available_status" name="availableStatus" checked="checked" th:checked="${form.availableStatus}"></input>
 								<span class="lever"></span>
 								利用可能
 							</label>
@@ -197,7 +202,7 @@
 					<div class="switch">
 						<label>
 							★モックアップ時表示★ unlock
-							<input type="checkbox" id="account_lock_status" name="accountLockStatus" onchange="oaex_accountLockStatus_onChange()" value=true th:checked="${form.accountLockStatus}"></input>
+							<input type="checkbox" id="account_lock_status" name="accountLockStatus" onchange="oaex_accountLockStatus_onChange()" th:checked="${form.accountLockStatus}"></input>
 							<span class="lever"></span>
 							lock
 						</label>
@@ -249,7 +254,7 @@
 					<div class="oaex_subsystem_role_table" onScroll="oa_linkageScrollX(this, 'subsystem_role_table_head')">
 						<table id="subsystem_role_table" class="highlight">
 							<tbody>
-								<tr th:each="itemrow, iterStat : *{form.Oa11030SubsystemRoleTableVoList}">
+								<tr th:each="itemrow, iterStat : *{form.Oa11030SubSystemRoleTableVoList}">
 									<td class="oaex_subsystem_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_subsystem_role_table_expiration" th:text="${itemrow.expirationDate}"></td>
 								</tr>

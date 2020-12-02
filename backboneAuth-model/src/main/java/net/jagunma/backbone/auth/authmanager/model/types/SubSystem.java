@@ -4,20 +4,22 @@ package net.jagunma.backbone.auth.authmanager.model.types;
  * サブシステムの列挙型
  */
 public enum SubSystem {
-    購買("KB", "購買"),
-    販売_青果("YS", "販売・青果"),
-    販売_花卉("YF", "販売・花卉"),
-    販売_米("HK", "販売・米"),
-    販売_麦("HM", "販売・麦"),
-    販売_畜産("AN", "販売・畜産"),
-    UnKnown("", "未定義");
+    購買("KB", "購買", 1),
+    販売_青果("YS", "販売・青果", 2),
+    販売_花卉("YF", "販売・花卉", 3),
+    販売_米("HK", "販売・米", 4),
+    販売_麦("HM", "販売・麦", 5),
+    販売_畜産("AN", "販売・畜産", 6),
+    UnKnown("", "未定義", 7);
 
     private final String code;
     private final String name;
+    private final Integer displaySortOrder;
 
-    private SubSystem(String code, String name) {
+    private SubSystem(String code, String name, Integer displaySortOrder) {
         this.code = code;
         this.name = name;
+        this.displaySortOrder = displaySortOrder;
     }
 
     /**
@@ -33,6 +35,13 @@ public enum SubSystem {
      */
     public String getName() {
         return name;
+    }
+    /**
+     * 表示順のＧｅｔ
+     * @return 表示順
+     */
+    public Integer getDisplaySortOrder() {
+        return displaySortOrder;
     }
 
     /**

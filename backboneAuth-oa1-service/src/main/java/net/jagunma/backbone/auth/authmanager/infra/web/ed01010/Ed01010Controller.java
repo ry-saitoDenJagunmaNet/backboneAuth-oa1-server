@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * <pre>
  * -------------------------------------------------
- * システム：O 業務共通システム
- * サブシステム：OA 基幹系認証管理サブシステム
- * 機能グループID：OA1
- * 機能グループ名：管理WEB
+ * システム：? ＸＸＸＸＸ Todo: 要調査後反映 システムコード・システム名称
+ * サブシステム：ED 経済・共通
+ * 機能グループID：ED0
+ * 機能グループ名：基幹系認証
  * 機能ID：ED01010
  * 機能名：パスワード入力
  * サービスID：ED01010
@@ -35,26 +35,26 @@ import org.springframework.web.bind.annotation.RequestParam;
  * -------------------------------------------------
  * </pre>
  */
-@SystemInfo(id = "O", name = "業務共通システム")
-@SubSystemInfo(id = "OA", name = "基幹系認証管理サブシステム")
-@FeatureGroupInfo(id = "OA1", name = "管理WEB")
+@SystemInfo(id = "?", name = "ＸＸＸＸＸ") // Todo: 要調査後反映 システムコード・システム名称
+@SubSystemInfo(id = "ED", name = "経済・共通")
+@FeatureGroupInfo(id = "ED0", name = "基幹系認証")
 @FeatureInfo(id = "ED01010", name = "パスワード入力")
 @ServiceInfo(id = "ED01010", name = "ED01010サービス")
 @Controller
-@RequestMapping(path = "ED01010")
+@RequestMapping(path = "ed01010")
 public class Ed01010Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01010Controller.class);
 
-    private final SearchOperator searchOperator;
     private final UpdatePassword updatePassword;
+    private final SearchOperator searchOperator;
 
     // コンストラクタ
     public Ed01010Controller(
-        SearchOperator searchOperator,
-        UpdatePassword updatePassword) {
-        this.searchOperator = searchOperator;
+        UpdatePassword updatePassword,
+        SearchOperator searchOperator) {
         this.updatePassword = updatePassword;
+        this.searchOperator = searchOperator;
     }
 
     /**
@@ -121,9 +121,8 @@ public class Ed01010Controller extends BaseOfController {
                 updatePassword.execute(converter);
             }
 
-            // ToDo: 遷移制御
             model.addAttribute("form", vo);
-            return "ed01010";
+            return "ed01010"; // ToDo: 遷移制御
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合

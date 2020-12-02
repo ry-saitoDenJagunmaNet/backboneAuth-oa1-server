@@ -68,7 +68,7 @@ class SuspendBizTranTest {
         .build();
 
     /**
-     * {@link SuspendBizTran#createFrom(Long,Long,Long,String,Long,Long,LocalDate,LocalDate,String,Integer,BranchAtMoment,SubSystem,BizTranGrp,BizTran)}テスト
+     * {@link SuspendBizTran#createFrom(Long,Long,Long,String,Long,Long,LocalDate,LocalDate,String,Integer,JaAtMoment,BranchAtMoment,SubSystem,BizTranGrp,BizTran)}テスト
      *  ●パターン
      *    正常
      *
@@ -91,6 +91,7 @@ class SuspendBizTranTest {
             suspendEndDate,
             suspendReason,
             recordVersion,
+            jaAtMoment,
             branchAtMoment,
             subSystem,
             bizTranGrp,
@@ -108,9 +109,15 @@ class SuspendBizTranTest {
         assertThat(suspendBizTran.getSuspendEndDate()).isEqualTo(suspendEndDate);
         assertThat(suspendBizTran.getSuspendReason()).isEqualTo(suspendReason);
         assertThat(suspendBizTran.getRecordVersion()).isEqualTo(recordVersion);
+        assertThat(suspendBizTran.getJaAtMoment()).usingRecursiveComparison().isEqualTo(jaAtMoment);
+        assertThat(suspendBizTran.getJaCode()).isEqualTo(jaCode);
         assertThat(suspendBizTran.getBranchAtMoment()).usingRecursiveComparison().isEqualTo(branchAtMoment);
+        assertThat(suspendBizTran.getBranchCode()).isEqualTo(branchCode);
         assertThat(suspendBizTran.getSubSystem()).usingRecursiveComparison().isEqualTo(subSystem);
+        assertThat(suspendBizTran.getSubSystemDisplaySortOrder()).isEqualTo(subSystem.getDisplaySortOrder());
         assertThat(suspendBizTran.getBizTranGrp()).usingRecursiveComparison().isEqualTo(bizTranGrp);
+        assertThat(suspendBizTran.getBizTranGrpCode()).isEqualTo(bizTranGrpCode);
         assertThat(suspendBizTran.getBizTran()).usingRecursiveComparison().isEqualTo(bizTran);
+        assertThat(suspendBizTran.getBizTranCode()).isEqualTo(bizTranCode);
     }
 }

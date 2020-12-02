@@ -121,9 +121,8 @@ public class Oa11030Controller extends BaseOfController {
 
             updateOperator.execute(converter);
 
-            // ToDo: 遷移制御
             model.addAttribute("form", vo);
-            return "oa11030";
+            return "oa11030"; // ToDo: 遷移制御
 
         } catch (OptimisticLockingFailureException ole) {
             // 楽観的ロック

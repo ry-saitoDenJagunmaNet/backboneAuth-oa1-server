@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
@@ -22,6 +23,7 @@ import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntity;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityDao;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
+import net.jagunma.backbone.shared.application.ja.JaAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
@@ -32,8 +34,10 @@ import net.jagunma.common.values.model.branch.BranchNotFoundException;
 import net.jagunma.common.values.model.branch.BranchType;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
+import net.jagunma.common.values.model.ja.JaAtMomentCriteria;
 import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
+import net.jagunma.common.values.model.ja.JasAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -108,15 +112,15 @@ class SuspendBizTransDataSourceTest {
     // 取引グループリストデータ作成
     private List<BizTranGrp> createBizTranGrp() {
         List<BizTranGrp> list = newArrayList();
-        list.add(BizTranGrp.createFrom(1001L,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
-        list.add(BizTranGrp.createFrom(1002L,"ANTG02","精算取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranGrp.createFrom(10001L,"ANTG01","データ入力取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranGrp.createFrom(10002L,"ANTG02","精算取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return list;
     }
     // 取引リストデータ作成
     private List<BizTran> createBizTran() {
         List<BizTran> list = newArrayList();
-        list.add(BizTran.createFrom(10001L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
-        list.add(BizTran.createFrom(10002L,"AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTran.createFrom(100001L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTran.createFrom(100002L,"AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return list;
     }
 
@@ -173,7 +177,20 @@ class SuspendBizTransDataSourceTest {
             }
         };
     }
-    // ranchAtMomentRepositoryの作成
+    // JaAtMomentRepositoryの作成
+    private JaAtMomentRepository createJaAtMomentRepository() {
+        return new JaAtMomentRepository() {
+            @Override
+            public JasAtMoment selectBy(JaAtMomentCriteria criteria, Orders orders) {
+                return JasAtMoment.of(createJaAtMomentList());
+            }
+            @Override
+            public JaAtMoment findOneBy(JaAtMomentCriteria criteria) {
+                return null;
+            }
+        };
+    }
+    // BranchAtMomentRepositoryの作成
     private BranchAtMomentRepository createBranchAtMomentRepository() {
         return new BranchAtMomentRepository() {
             @Override
@@ -227,16 +244,25 @@ class SuspendBizTransDataSourceTest {
 
         // 実行値
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        Orders orders = Orders.empty();
+        Orders orders = Orders.empty()
+            .addOrder("suspendStartDate")
+            .addOrder("suspendEndDate")
+            .addOrder("jaCode")
+            .addOrder("branchCode")
+            .addOrder("subSystemDisplaySortOrder")
+            .addOrder("bizTranGrpCode")
+            .addOrder("bizTranCode");
 
         // テスト対象クラス生成
         SuspendBizTransDataSource suspendBizTransDataSource = new SuspendBizTransDataSource(
             createSuspendBizTranEntityDao(),
+            createJaAtMomentRepository(),
             createBranchAtMomentRepository(),
             createBizTranGrpsRepository(),
             createBizTransRepository());
 
         // 期待値
+        List<JaAtMoment> jaAtMomentList = createJaAtMomentList();
         List<BranchAtMoment> branchAtMomentList = createBranchAtMomentList();
         List<BizTranGrp> bizTranGrpList = createBizTranGrp();
         List<BizTran> bizTranList = createBizTran();
@@ -253,16 +279,19 @@ class SuspendBizTransDataSourceTest {
                 entity.getSuspendEndDate(),
                 entity.getSuspendReason(),
                 entity.getRecordVersion(),
+                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaId())).findFirst().orElse(null),
                 branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null),
                 SubSystem.codeOf(entity.getSubSystemCode()),
                 bizTranGrpList.stream().filter(b->b.getBizTranGrpId().equals(entity.getBizTranGrpId())).findFirst().orElse(null),
                 bizTranList.stream().filter(b->b.getBizTranId().equals(entity.getBizTranId())).findFirst().orElse(null)));
         }
+        expectedSuspendBizTranList = expectedSuspendBizTranList.stream().sorted(orders.toComparator()).collect(Collectors.toList());
 
         // 実行
         SuspendBizTrans actualSuspendBizTrans = suspendBizTransDataSource.selectBy(criteria, orders);
 
         // 結果検証
+        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranList.size());
         for(int i = 0; i < actualSuspendBizTrans.getValues().size(); i++) {
             assertThat(actualSuspendBizTrans.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                 .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));
@@ -283,12 +312,20 @@ class SuspendBizTransDataSourceTest {
 
         // 実行値
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        Orders orders = Orders.empty();
+        Orders orders = Orders.empty()
+            .addOrder("jaCode")
+            .addOrder("branchCode")
+            .addOrder("subSystemDisplaySortOrder")
+            .addOrder("bizTranGrpCode")
+            .addOrder("bizTranCode")
+            .addOrder("suspendStartDate")
+            .addOrder("suspendEndDate");
         suspendBizTranEntityList = newArrayList();
 
         // テスト対象クラス生成
         SuspendBizTransDataSource suspendBizTransDataSource = new SuspendBizTransDataSource(
             createSuspendBizTranEntityDao(),
+            createJaAtMomentRepository(),
             createBranchAtMomentRepository(),
             createBizTranGrpsRepository(),
             createBizTransRepository());
@@ -303,6 +340,7 @@ class SuspendBizTransDataSourceTest {
         SuspendBizTrans actualSuspendBizTrans = suspendBizTransDataSource.selectBy(criteria, orders);
 
         // 結果検証
+        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranList.size());
         for(int i = 0; i < actualSuspendBizTrans.getValues().size(); i++) {
             assertThat(actualSuspendBizTrans.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                 .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));

@@ -16,7 +16,7 @@ server:
 spring:
   # データソース設定
   datasource:
-    url: jdbc:sqlserver://145.254.216.157:1433;databaseName=BACKBONE_AUTH
+    url: jdbc:sqlserver://145.254.216.153:1533;databaseName=BACKBONE_AUTH
     username: sa
     password: sqlAdmin2020
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver

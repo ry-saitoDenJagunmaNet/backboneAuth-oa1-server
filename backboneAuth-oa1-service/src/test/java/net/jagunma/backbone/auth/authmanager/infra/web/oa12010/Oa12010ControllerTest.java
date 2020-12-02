@@ -548,7 +548,7 @@ class Oa12010ControllerTest {
 
         // 期待値
         String expectedViewName = "oa19999";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
+        String expectedMessageCode = "EOA10001";
 
         // 実行
         String actualViewName = oa12010Controller.exportExcel(model, Oa12010Vo, response);
@@ -556,7 +556,7 @@ class Oa12010ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
     }
 
     /**
@@ -667,7 +667,7 @@ class Oa12010ControllerTest {
 
         // 期待値
         String expectedViewName = "oa19999";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
+        String expectedMessageCode = "EOA10001";
 
         // 実行
         String actualViewName = oa12010Controller.importExcel(multipartFile, model, Oa12010Vo);
@@ -675,7 +675,7 @@ class Oa12010ControllerTest {
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
     }
 
     /**

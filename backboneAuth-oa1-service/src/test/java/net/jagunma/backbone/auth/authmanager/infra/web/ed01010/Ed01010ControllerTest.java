@@ -15,7 +15,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -100,7 +103,13 @@ class Ed01010ControllerTest {
             public void store(PasswordHistory passwordHistory) {
             }
         };
-        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore) {
+        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+            @Override
+            public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
+                return null;
+            }
+        };
+        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoriesRepository) {
             @Override
             public void execute(PasswordResetRequest request) {
                 // request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
@@ -117,7 +126,7 @@ class Ed01010ControllerTest {
             }
         };
 
-        return new Ed01010Controller(searchOperator, updatePassword);
+        return new Ed01010Controller(updatePassword, searchOperator);
     }
 
     // Ed01010Vo作成
@@ -230,7 +239,6 @@ class Ed01010ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
         String actualViewName = ed01010Controller.get(mode, operatorId, model);
@@ -239,7 +247,6 @@ class Ed01010ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 
     /**
@@ -271,7 +278,7 @@ class Ed01010ControllerTest {
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証
-        assertThat(actualViewName).isEqualTo(expectedViewName);// ToDo: 遷移制御
+        assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
@@ -304,7 +311,7 @@ class Ed01010ControllerTest {
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証
-        assertThat(actualViewName).isEqualTo(expectedViewName);// ToDo: 遷移制御
+        assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
@@ -370,7 +377,6 @@ class Ed01010ControllerTest {
         // 期待値
         String expectedViewName = "oa19999";
         String expectedMessageCode = "EOA10001";
-        String expectedErrorMessage = "サーバーで予期しないエラーが発生しました。";
 
         // 実行
         String actualViewName = ed01010Controller.update(model, vo);
@@ -379,6 +385,5 @@ class Ed01010ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
-        assertThat(actualVo.getErrorMessage()).isEqualTo(expectedErrorMessage);
     }
 }

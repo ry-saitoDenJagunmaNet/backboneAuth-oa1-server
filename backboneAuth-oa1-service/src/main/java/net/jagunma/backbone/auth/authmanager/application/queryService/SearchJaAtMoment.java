@@ -17,7 +17,7 @@ public class SearchJaAtMoment {
     private JaAtMomentRepository jaAtMomentRepository;
 
     // コンストラクタ
-    SearchJaAtMoment(JaAtMomentRepository jaAtMomentRepository) {
+    public SearchJaAtMoment(JaAtMomentRepository jaAtMomentRepository) {
         this.jaAtMomentRepository = jaAtMomentRepository;
     }
 
