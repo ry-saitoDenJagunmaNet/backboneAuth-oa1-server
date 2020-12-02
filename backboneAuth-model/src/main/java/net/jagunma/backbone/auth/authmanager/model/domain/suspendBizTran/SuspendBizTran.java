@@ -13,34 +13,30 @@ import net.jagunma.common.values.model.ja.JaAtMoment;
 public class SuspendBizTran {
 
     private final Long suspendBizTranId;
-    private final Long jaId;
-    private final Long branchId;
+    private final String jaCode;
+    private final String branchCode;
     private final String subSystemCode;
-    private final Long bizTranGrpId;
-    private final Long bizTranId;
+    private final String bizTranGrpCode;
+    private final String bizTranCode;
     private final LocalDate suspendStartDate;
     private final LocalDate suspendEndDate;
     private final String suspendReason;
     private final Integer recordVersion;
     private final JaAtMoment jaAtMoment;
-    private final String jaCode;
     private final BranchAtMoment branchAtMoment;
-    private final String branchCode;
     private final SubSystem subSystem;
     private final Integer subSystemDisplaySortOrder;
     private final BizTranGrp bizTranGrp;
-    private final String bizTranGrpCode;
     private final BizTran bizTran;
-    private final String bizTranCode;
 
     // コンストラクタ
     SuspendBizTran(
         Long suspendBizTranId,
-        Long jaId,
-        Long branchId,
+        String jaCode,
+        String branchCode,
         String subSystemCode,
-        Long bizTranGrpId,
-        Long bizTranId,
+        String bizTranGrpCode,
+        String bizTranCode,
         LocalDate suspendStartDate,
         LocalDate suspendEndDate,
         String suspendReason,
@@ -52,35 +48,31 @@ public class SuspendBizTran {
         BizTran bizTran) {
 
         this.suspendBizTranId = suspendBizTranId;
-        this.jaId = jaId;
-        this.branchId = branchId;
+        this.jaCode = jaCode;
+        this.branchCode = branchCode;
         this.subSystemCode = subSystemCode;
-        this.bizTranGrpId = bizTranGrpId;
-        this.bizTranId = bizTranId;
+        this.bizTranGrpCode = bizTranGrpCode;
+        this.bizTranCode = bizTranCode;
         this.suspendStartDate = suspendStartDate;
         this.suspendEndDate = suspendEndDate;
         this.suspendReason = suspendReason;
         this.recordVersion = recordVersion;
         this.jaAtMoment = jaAtMoment;
-        this.jaCode = (jaAtMoment == null)? "" : jaAtMoment.getJaAttribute().getJaCode().getValue();
         this.branchAtMoment = branchAtMoment;
-        this.branchCode = (branchAtMoment == null)? "" : branchAtMoment.getBranchAttribute().getBranchCode().getValue();
         this.subSystem = subSystem;
         this.subSystemDisplaySortOrder = (subSystem == null)? 0 : subSystem.getDisplaySortOrder();
         this.bizTranGrp = bizTranGrp;
-        this.bizTranGrpCode = (bizTranGrp == null)? "" : bizTranGrp.getBizTranGrpCode();
         this.bizTran = bizTran;
-        this.bizTranCode = (bizTran == null)? "" : bizTran.getBizTranCode();
     }
 
     // ファクトリーメソッド
     public static SuspendBizTran createFrom(
         Long suspendBizTranId,
-        Long jaId,
-        Long branchId,
+        String jaCode,
+        String branchCode,
         String subSystemCode,
-        Long bizTranGrpId,
-        Long bizTranId,
+        String bizTranGrpCode,
+        String bizTranCode,
         LocalDate suspendStartDate,
         LocalDate suspendEndDate,
         String suspendReason,
@@ -93,11 +85,11 @@ public class SuspendBizTran {
 
         return new SuspendBizTran(
             suspendBizTranId,
-            jaId,
-            branchId,
+            jaCode,
+            branchCode,
             subSystemCode,
-            bizTranGrpId,
-            bizTranId,
+            bizTranGrpCode,
+            bizTranCode,
             suspendStartDate,
             suspendEndDate,
             suspendReason,
@@ -113,20 +105,20 @@ public class SuspendBizTran {
     public Long getSuspendBizTranId() {
         return suspendBizTranId;
     }
-    public Long getJaId() {
-        return jaId;
+    public String getJaCode() {
+        return jaCode;
     }
-    public Long getBranchId() {
-        return branchId;
+    public String getBranchCode() {
+        return branchCode;
     }
     public String getSubSystemCode() {
         return subSystemCode;
     }
-    public Long getBizTranGrpId() {
-        return bizTranGrpId;
+    public String getBizTranGrpCode() {
+        return bizTranGrpCode;
     }
-    public Long getBizTranId() {
-        return bizTranId;
+    public String getBizTranCode() {
+        return bizTranCode;
     }
     public LocalDate getSuspendStartDate() {
         return suspendStartDate;
@@ -143,14 +135,8 @@ public class SuspendBizTran {
     public JaAtMoment getJaAtMoment() {
         return jaAtMoment;
     }
-    public String getJaCode() {
-        return jaCode;
-    }
     public BranchAtMoment getBranchAtMoment() {
         return branchAtMoment;
-    }
-    public String getBranchCode() {
-        return branchCode;
     }
     public SubSystem getSubSystem() {
         return subSystem;
@@ -161,13 +147,7 @@ public class SuspendBizTran {
     public BizTranGrp getBizTranGrp() {
         return bizTranGrp;
     }
-    public String getBizTranGrpCode() {
-        return bizTranGrpCode;
-    }
     public BizTran getBizTran() {
         return bizTran;
-    }
-    public String getBizTranCode() {
-        return bizTranCode;
     }
 }

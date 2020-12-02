@@ -10,17 +10,17 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
 public interface SuspendBizTranSearchRequest {
 
     /**
-     * ＪＡID検索条件のＧｅｔ
+     * ＪＡコード検索条件のＧｅｔ
      *
-     * @return ＪＡID検索条件
+     * @return ＪＡコード検索条件
      */
-    LongCriteria getJaIdCriteria();
+    StringCriteria getJaCodeCriteria();
     /**
-     * 店舗ID検索条件のＧｅｔ
+     * 店舗コード検索条件のＧｅｔ
      *
-     * @return 店舗ID検索条件
+     * @return 店舗コード検索条件
      */
-    LongCriteria getBranchIdCriteria();
+    StringCriteria getBranchCodeCriteria();
     /**
      * サブシステムコード検索条件のＧｅｔ
      *
@@ -28,17 +28,17 @@ public interface SuspendBizTranSearchRequest {
      */
     StringCriteria getSubSystemCodeCriteria();
     /**
-     * 取引グループID検索条件のＧｅｔ
+     * 取引グループコード検索条件のＧｅｔ
      *
-     * @return 取引グループID検索条件
+     * @return 取引グループコード検索条件
      */
-    LongCriteria getBizTranGrpIdCriteria();
+    StringCriteria getBizTranGrpCodeCriteria();
     /**
-     * 取引ID検索条件のＧｅｔ
+     * 取引コード検索条件のＧｅｔ
      *
-     * @return 取引ID検索条件
+     * @return 取引コード検索条件
      */
-    LongCriteria getBizTranIdCriteria();
+    StringCriteria getBizTranCodeCriteria();
     /**
      * 抑止期間開始日検索条件のＧｅｔ
      *

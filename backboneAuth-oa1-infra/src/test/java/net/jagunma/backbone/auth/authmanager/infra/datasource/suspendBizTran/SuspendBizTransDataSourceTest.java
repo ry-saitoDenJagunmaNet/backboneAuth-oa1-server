@@ -45,22 +45,46 @@ class SuspendBizTransDataSourceTest {
 
     // 実行既定値
     private List<SuspendBizTranEntity> suspendBizTranEntityList = createSuspendBizTranEntityList();
+    private String jaCode = "006";
+    private String branchCode = "001";
+    private String subSystemCode = SubSystem.販売_畜産.getCode();
+    private String bizTranGrpCode = "ANTG01";
+    private String bizTranCode = "AN0001";
+    private LocalDate suspendStartDate = LocalDate.of(2020,11,1);
+    private LocalDate suspendEndDate = LocalDate.of(2020,11,30);
+    private String suspendReason = "不具合により緊急抑止";
+
+
+    // 検索条件の作成
+    private SuspendBizTranCriteria  createSuspendBizTranCriteria () {
+        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
+        criteria.getJaCodeCriteria().setEqualTo(jaCode);
+        criteria.getBranchCodeCriteria().setEqualTo(branchCode);
+        criteria.getSubSystemCodeCriteria().setEqualTo(subSystemCode);
+        criteria.getBizTranGrpCodeCriteria().setEqualTo(bizTranGrpCode);
+        criteria.getBizTranCodeCriteria().setEqualTo(bizTranCode);
+        criteria.getSuspendStartDateCriteria().setLessOrEqual(suspendStartDate);
+        criteria.getSuspendEndDateCriteria().setMoreOrEqual(suspendEndDate);
+        criteria.getSuspendReasonCriteria().setForwardMatch(suspendReason);
+
+        return criteria;
+    }
 
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTranEntity> createSuspendBizTranEntityList() {
         List<SuspendBizTranEntity> list = newArrayList();
-        list.add(createSuspendBizTranEntity(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
-        list.add(createSuspendBizTranEntity(2L,null,null,SubSystem.販売_畜産.getCode(),null,100001L,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
+        list.add(createSuspendBizTranEntity(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01",null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
+        list.add(createSuspendBizTranEntity(2L,"","",SubSystem.販売_畜産.getCode(),"","AN0001",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
         return list;
     }
     // 一時取引抑止データ作成
     private SuspendBizTranEntity createSuspendBizTranEntity(
         Long suspendBizTranId,
-        Long jaId,
-        Long branchId,
+        String jaCode,
+        String branchCode,
         String subSystemCode,
-        Long bizTranGrpId,
-        Long bizTranId,
+        String bizTranGrpCode,
+        String bizTranCode,
         LocalDate suspendStartDate,
         LocalDate suspendEndDate,
         String suspendReason,
@@ -74,11 +98,11 @@ class SuspendBizTransDataSourceTest {
 
         SuspendBizTranEntity entity = new SuspendBizTranEntity();
         entity.setSuspendBizTranId(suspendBizTranId);
-        entity.setJaId(jaId);
-        entity.setBranchId(branchId);
+        entity.setJaCode(jaCode);
+        entity.setBranchCode(branchCode);
         entity.setSubSystemCode(subSystemCode);
-        entity.setBizTranGrpId(bizTranGrpId);
-        entity.setBizTranId(bizTranId);
+        entity.setBizTranGrpCode(bizTranGrpCode);
+        entity.setBizTranCode(bizTranCode);
         entity.setSuspendStartDate(suspendStartDate);
         entity.setSuspendEndDate(suspendEndDate);
         entity.setSuspendReason(suspendReason);
@@ -243,7 +267,7 @@ class SuspendBizTransDataSourceTest {
     void selectBy_test0() {
 
         // 実行値
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
+        SuspendBizTranCriteria criteria = createSuspendBizTranCriteria();
         Orders orders = Orders.empty()
             .addOrder("suspendStartDate")
             .addOrder("suspendEndDate")
@@ -270,20 +294,96 @@ class SuspendBizTransDataSourceTest {
         for(SuspendBizTranEntity entity : suspendBizTranEntityList) {
             expectedSuspendBizTranList.add(SuspendBizTran.createFrom(
                 entity.getSuspendBizTranId(),
-                entity.getJaId(),
-                entity.getBranchId(),
+                entity.getJaCode(),
+                entity.getBranchCode(),
                 entity.getSubSystemCode(),
-                entity.getBizTranGrpId(),
-                entity.getBizTranId(),
+                entity.getBizTranGrpCode(),
+                entity.getBizTranCode(),
                 entity.getSuspendStartDate(),
                 entity.getSuspendEndDate(),
                 entity.getSuspendReason(),
                 entity.getRecordVersion(),
-                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaId())).findFirst().orElse(null),
-                branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null),
+                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaCode())).findFirst().orElse(null),
+                branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchCode())).findFirst().orElse(null),
                 SubSystem.codeOf(entity.getSubSystemCode()),
-                bizTranGrpList.stream().filter(b->b.getBizTranGrpId().equals(entity.getBizTranGrpId())).findFirst().orElse(null),
-                bizTranList.stream().filter(b->b.getBizTranId().equals(entity.getBizTranId())).findFirst().orElse(null)));
+                bizTranGrpList.stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
+                bizTranList.stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));
+        }
+        expectedSuspendBizTranList = expectedSuspendBizTranList.stream().sorted(orders.toComparator()).collect(Collectors.toList());
+
+        // 実行
+        SuspendBizTrans actualSuspendBizTrans = suspendBizTransDataSource.selectBy(criteria, orders);
+
+        // 結果検証
+        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranList.size());
+        for(int i = 0; i < actualSuspendBizTrans.getValues().size(); i++) {
+            assertThat(actualSuspendBizTrans.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));
+        }
+    }
+
+    /**
+     * {@link SuspendBizTransDataSource#selectBy(SuspendBizTranCriteria,Orders)}のテスト
+     *  ●パターン
+     *    正常（検索条件なし）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void selectBy_test1() {
+
+        // 実行値
+        jaCode = null;
+        branchCode = null;
+        subSystemCode = null;
+        bizTranGrpCode = null;
+        bizTranCode = null;
+        suspendStartDate = null;
+        suspendEndDate = null;
+        suspendReason = null;
+        SuspendBizTranCriteria criteria = createSuspendBizTranCriteria();
+        Orders orders = Orders.empty()
+            .addOrder("suspendStartDate")
+            .addOrder("suspendEndDate")
+            .addOrder("jaCode")
+            .addOrder("branchCode")
+            .addOrder("subSystemDisplaySortOrder")
+            .addOrder("bizTranGrpCode")
+            .addOrder("bizTranCode");
+
+        // テスト対象クラス生成
+        SuspendBizTransDataSource suspendBizTransDataSource = new SuspendBizTransDataSource(
+            createSuspendBizTranEntityDao(),
+            createJaAtMomentRepository(),
+            createBranchAtMomentRepository(),
+            createBizTranGrpsRepository(),
+            createBizTransRepository());
+
+        // 期待値
+        List<JaAtMoment> jaAtMomentList = createJaAtMomentList();
+        List<BranchAtMoment> branchAtMomentList = createBranchAtMomentList();
+        List<BizTranGrp> bizTranGrpList = createBizTranGrp();
+        List<BizTran> bizTranList = createBizTran();
+        List<SuspendBizTran> expectedSuspendBizTranList = newArrayList();
+        for(SuspendBizTranEntity entity : suspendBizTranEntityList) {
+            expectedSuspendBizTranList.add(SuspendBizTran.createFrom(
+                entity.getSuspendBizTranId(),
+                entity.getJaCode(),
+                entity.getBranchCode(),
+                entity.getSubSystemCode(),
+                entity.getBizTranGrpCode(),
+                entity.getBizTranCode(),
+                entity.getSuspendStartDate(),
+                entity.getSuspendEndDate(),
+                entity.getSuspendReason(),
+                entity.getRecordVersion(),
+                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaCode())).findFirst().orElse(null),
+                branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchCode())).findFirst().orElse(null),
+                SubSystem.codeOf(entity.getSubSystemCode()),
+                bizTranGrpList.stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
+                bizTranList.stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));
         }
         expectedSuspendBizTranList = expectedSuspendBizTranList.stream().sorted(orders.toComparator()).collect(Collectors.toList());
 
@@ -308,7 +408,7 @@ class SuspendBizTransDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void selectBy_test1() {
+    void selectBy_test2() {
 
         // 実行値
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();

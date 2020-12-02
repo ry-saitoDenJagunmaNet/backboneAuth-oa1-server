@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 class Oa12020SearchConverterTest {
 
     // 実行既定値
-    private Long jaId = 12345678L;
-    private Long branchId = 23456789L;
+    private String jaCode = "006";
+    private String branchCode = "001";
     private String subSystemCode = SubSystem.販売_畜産.getCode();
-    private Long bizTranGrpId = 10001L;
-    private Long bizTranId = 100001L;
+    private String bizTranGrpCode = "ANTG01";
+    private String bizTranCode = "AN0001";
     private Integer suspendConditionsSelect = 1;
     private LocalDate suspendStatusDate = LocalDate.of(2020,11,1);
     private LocalDate suspendStatusStartDateFrom = LocalDate.of(2020,11,2);
@@ -45,11 +45,11 @@ class Oa12020SearchConverterTest {
     void with_test0() {
 
         // 実行値
-        jaId = null;
-        branchId = null;
+        jaCode = null;
+        branchCode = null;
         subSystemCode = null;
-        bizTranGrpId = null;
-        bizTranId = null;
+        bizTranGrpCode = null;
+        bizTranCode = null;
         suspendConditionsSelect = null;
         suspendStatusDate = null;
         suspendStatusStartDateFrom = null;
@@ -60,11 +60,11 @@ class Oa12020SearchConverterTest {
         searchResultList = newArrayList();
         pageNo = null;
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusDate(suspendStatusDate);
         vo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -83,11 +83,11 @@ class Oa12020SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa12020SearchConverter);
-        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
-        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getJaCodeCriteria().getEqualTo()).isEqualTo(jaCode);
+        assertThat(converter.getBranchCodeCriteria().getEqualTo()).isEqualTo(branchCode);
         assertThat(converter.getSubSystemCodeCriteria().getEqualTo()).isEqualTo(subSystemCode);
-        assertThat(converter.getBizTranGrpIdCriteria().getEqualTo()).isEqualTo(bizTranGrpId);
-        assertThat(converter.getBizTranIdCriteria().getEqualTo()).isEqualTo(bizTranId);
+        assertThat(converter.getBizTranGrpCodeCriteria().getEqualTo()).isEqualTo(bizTranGrpCode);
+        assertThat(converter.getBizTranCodeCriteria().getEqualTo()).isEqualTo(bizTranCode);
         assertThat(converter.getSuspendStartDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusStartDateFrom);
         assertThat(converter.getSuspendStartDateCriteria().getLessOrEqual()).isEqualTo(suspendStatusStartDateTo);
         assertThat(converter.getSuspendEndDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusEndDateFrom);
@@ -110,11 +110,11 @@ class Oa12020SearchConverterTest {
 
         // 実行値
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusDate(suspendStatusDate);
         vo.setSuspendReason(suspendReason);
@@ -129,11 +129,11 @@ class Oa12020SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa12020SearchConverter);
-        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
-        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getJaCodeCriteria().getEqualTo()).isEqualTo(jaCode);
+        assertThat(converter.getBranchCodeCriteria().getEqualTo()).isEqualTo(branchCode);
         assertThat(converter.getSubSystemCodeCriteria().getEqualTo()).isEqualTo(subSystemCode);
-        assertThat(converter.getBizTranGrpIdCriteria().getEqualTo()).isEqualTo(bizTranGrpId);
-        assertThat(converter.getBizTranIdCriteria().getEqualTo()).isEqualTo(bizTranId);
+        assertThat(converter.getBizTranGrpCodeCriteria().getEqualTo()).isEqualTo(bizTranGrpCode);
+        assertThat(converter.getBizTranCodeCriteria().getEqualTo()).isEqualTo(bizTranCode);
         assertThat(converter.getSuspendStartDateCriteria().getLessOrEqual()).isEqualTo(suspendStatusDate);
         assertThat(converter.getSuspendEndDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusDate);
         assertThat(converter.getSuspendReasonCriteria().getForwardMatch()).isEqualTo(suspendReason);
@@ -155,11 +155,11 @@ class Oa12020SearchConverterTest {
         // 実行値
         suspendConditionsSelect = 2;
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
         vo.setSuspendStatusStartDateTo(suspendStatusStartDateTo);
@@ -177,11 +177,11 @@ class Oa12020SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa12020SearchConverter);
-        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
-        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getJaCodeCriteria().getEqualTo()).isEqualTo(jaCode);
+        assertThat(converter.getBranchCodeCriteria().getEqualTo()).isEqualTo(branchCode);
         assertThat(converter.getSubSystemCodeCriteria().getEqualTo()).isEqualTo(subSystemCode);
-        assertThat(converter.getBizTranGrpIdCriteria().getEqualTo()).isEqualTo(bizTranGrpId);
-        assertThat(converter.getBizTranIdCriteria().getEqualTo()).isEqualTo(bizTranId);
+        assertThat(converter.getBizTranGrpCodeCriteria().getEqualTo()).isEqualTo(bizTranGrpCode);
+        assertThat(converter.getBizTranCodeCriteria().getEqualTo()).isEqualTo(bizTranCode);
         assertThat(converter.getSuspendStartDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusStartDateFrom);
         assertThat(converter.getSuspendStartDateCriteria().getLessOrEqual()).isEqualTo(suspendStatusStartDateTo);
         assertThat(converter.getSuspendEndDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusEndDateFrom);
@@ -209,11 +209,11 @@ class Oa12020SearchConverterTest {
         suspendStatusEndDateFrom = null;
         suspendStatusEndDateTo = null;
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
         vo.setSuspendStatusStartDateTo(suspendStatusStartDateTo);
@@ -231,11 +231,11 @@ class Oa12020SearchConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa12020SearchConverter);
-        assertThat(converter.getJaIdCriteria().getEqualTo()).isEqualTo(jaId);
-        assertThat(converter.getBranchIdCriteria().getEqualTo()).isEqualTo(branchId);
+        assertThat(converter.getJaCodeCriteria().getEqualTo()).isEqualTo(jaCode);
+        assertThat(converter.getBranchCodeCriteria().getEqualTo()).isEqualTo(branchCode);
         assertThat(converter.getSubSystemCodeCriteria().getEqualTo()).isEqualTo(subSystemCode);
-        assertThat(converter.getBizTranGrpIdCriteria().getEqualTo()).isEqualTo(bizTranGrpId);
-        assertThat(converter.getBizTranIdCriteria().getEqualTo()).isEqualTo(bizTranId);
+        assertThat(converter.getBizTranGrpCodeCriteria().getEqualTo()).isEqualTo(bizTranGrpCode);
+        assertThat(converter.getBizTranCodeCriteria().getEqualTo()).isEqualTo(bizTranCode);
         assertThat(converter.getSuspendStartDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusStartDateFrom);
         assertThat(converter.getSuspendStartDateCriteria().getLessOrEqual()).isEqualTo(suspendStatusStartDateTo);
         assertThat(converter.getSuspendEndDateCriteria().getMoreOrEqual()).isEqualTo(suspendStatusEndDateFrom);

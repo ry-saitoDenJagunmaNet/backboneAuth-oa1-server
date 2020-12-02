@@ -9,11 +9,15 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
 public class BizTranGrpCriteria {
 
     private LongCriteria bizTranGrpIdCriteria = new LongCriteria();
+    private StringCriteria bizTranGrpCodeCriteria = new StringCriteria();
     private StringCriteria subSystemCodeCriteria = new StringCriteria();
 
     // Getter
     public LongCriteria getBizTranGrpIdCriteria() {
         return bizTranGrpIdCriteria;
+    }
+    public StringCriteria getBizTranGrpCodeCriteria() {
+        return bizTranGrpCodeCriteria;
     }
     public StringCriteria getSubSystemCodeCriteria() {
         return subSystemCodeCriteria;
