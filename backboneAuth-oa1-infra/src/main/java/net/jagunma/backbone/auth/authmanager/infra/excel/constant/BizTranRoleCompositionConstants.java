@@ -74,9 +74,9 @@ public class BizTranRoleCompositionConstants {
     /**
      * 取引グループ－取引編成Sheetの有効期限開始カラム位置
      */
-    public static final int INDEX_OF_SHEET2_EXPIRATION_STARTDATE = 6;
+    public static final int INDEX_OF_SHEET2_VALIDTHRU_STARTDATE = 6;
     /**
      * 取引グループ－取引編成Sheetの有効期限終了カラム位置
      */
-    public static final int INDEX_OF_SHEET2_EXPIRATION_ENDDATE = 7;
+    public static final int INDEX_OF_SHEET2_VALIDTHRU_ENDDATE = 7;
 }

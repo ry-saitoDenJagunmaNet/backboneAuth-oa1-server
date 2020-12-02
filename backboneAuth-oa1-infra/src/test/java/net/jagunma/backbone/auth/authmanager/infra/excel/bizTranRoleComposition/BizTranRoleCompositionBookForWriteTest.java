@@ -168,7 +168,7 @@ class BizTranRoleCompositionBookForWriteTest {
                 isEqualTo(expectedBizTranGrp_BizTranSheet.get(expectedIndex).getBizTranName());
             assertThat(ExcelUtil.getInteger(actualSheet2, excelRow, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_CENTER_BIZTRAN)).
                 isEqualTo(expectedBizTranGrp_BizTranSheet.get(expectedIndex).getIsCenterBizTran()? 1 : 0);
-            assertThat(ExcelUtil.getString(actualSheet2, excelRow, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_STARTDATE)).
+            assertThat(ExcelUtil.getString(actualSheet2, excelRow, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_VALIDTHRU_STARTDATE)).
                 isEqualTo(expectedBizTranGrp_BizTranSheet.get(expectedIndex).getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             expectedIndex++;
         }
