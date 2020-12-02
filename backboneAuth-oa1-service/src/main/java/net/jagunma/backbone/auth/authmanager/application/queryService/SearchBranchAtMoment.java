@@ -6,6 +6,7 @@ import net.jagunma.common.ddd.model.values.buisiness.datetime.TargetDate;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
+import net.jagunma.common.values.model.ja.JaCode;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,6 +46,22 @@ public class SearchBranchAtMoment {
 
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
         criteria.getJaIdentifierCriteria().setEqualTo(jaId);
+        criteria.setTargetDate(TargetDate.now());
+        criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
+        Orders orders = Orders.empty().addOrder("BranchAttribute.BranchCode");
+        return branchAtMomentRepository.selectBy(criteria, orders);
+    }
+
+    /**
+     * BranchesAtMomentを取得します
+     *
+     * @param jaCode ＪＡコード
+     * @return BranchesAtMoment
+     */
+    public BranchesAtMoment selectBy(String jaCode) {
+
+        BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
+        criteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(jaCode));
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         Orders orders = Orders.empty().addOrder("BranchAttribute.BranchCode");

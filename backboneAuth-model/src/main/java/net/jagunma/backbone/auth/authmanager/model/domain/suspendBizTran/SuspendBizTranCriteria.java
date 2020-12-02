@@ -10,11 +10,11 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
 public class SuspendBizTranCriteria {
 
     private LongCriteria suspendBizTranIdCriteria = new LongCriteria();
-    private LongCriteria jaIdCriteria = new LongCriteria();
-    private LongCriteria branchIdCriteria = new LongCriteria();
+    private StringCriteria jaCodeCriteria = new StringCriteria();
+    private StringCriteria branchCodeCriteria = new StringCriteria();
     private StringCriteria subSystemCodeCriteria = new StringCriteria();
-    private LongCriteria bizTranGrpIdCriteria = new LongCriteria();
-    private LongCriteria bizTranIdCriteria = new LongCriteria();
+    private StringCriteria bizTranGrpCodeCriteria = new StringCriteria();
+    private StringCriteria bizTranCodeCriteria = new StringCriteria();
     private LocalDateCriteria suspendStartDateCriteria = new LocalDateCriteria();
     private LocalDateCriteria suspendEndDateCriteria = new LocalDateCriteria();
     private StringCriteria suspendReasonCriteria = new StringCriteria();
@@ -23,20 +23,20 @@ public class SuspendBizTranCriteria {
     public LongCriteria getSuspendBizTranIdCriteria() {
         return suspendBizTranIdCriteria;
     }
-    public LongCriteria getJaIdCriteria() {
-        return jaIdCriteria;
+    public StringCriteria getJaCodeCriteria() {
+        return jaCodeCriteria;
     }
-    public LongCriteria getBranchIdCriteria() {
-        return branchIdCriteria;
+    public StringCriteria getBranchCodeCriteria() {
+        return branchCodeCriteria;
     }
     public StringCriteria getSubSystemCodeCriteria() {
         return subSystemCodeCriteria;
     }
-    public LongCriteria getBizTranGrpIdCriteria() {
-        return bizTranGrpIdCriteria;
+    public StringCriteria getBizTranGrpCodeCriteria() {
+        return bizTranGrpCodeCriteria;
     }
-    public LongCriteria getBizTranIdCriteria() {
-        return bizTranIdCriteria;
+    public StringCriteria getBizTranCodeCriteria() {
+        return bizTranCodeCriteria;
     }
     public LocalDateCriteria getSuspendStartDateCriteria() {
         return suspendStartDateCriteria;

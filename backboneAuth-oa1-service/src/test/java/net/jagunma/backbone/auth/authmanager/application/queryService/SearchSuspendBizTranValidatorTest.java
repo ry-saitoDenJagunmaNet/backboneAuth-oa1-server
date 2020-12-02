@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 class SearchSuspendBizTranValidatorTest {
 
     // 実行既定値
-    private final LongCriteria jaIdCriteria = new LongCriteria();
-    private final LongCriteria branchIdCriteria = new LongCriteria();
+    private final StringCriteria jaCodeCriteria = new StringCriteria();
+    private final StringCriteria branchCodeCriteria = new StringCriteria();
     private final StringCriteria subSystemCodeCriteria = new StringCriteria();
-    private final LongCriteria bizTranGrpIdCriteria = new LongCriteria();
-    private final LongCriteria bizTranIdCriteria = new LongCriteria();
+    private final StringCriteria bizTranGrpCodeCriteria = new StringCriteria();
+    private final StringCriteria bizTranCodeCriteria = new StringCriteria();
     private LocalDateCriteria suspendStartDateCriteria = new LocalDateCriteria();
     private LocalDateCriteria suspendEndDateCriteria = new LocalDateCriteria();
     private final StringCriteria suspendReasonCriteria = new StringCriteria();
@@ -29,24 +29,24 @@ class SearchSuspendBizTranValidatorTest {
     private SuspendBizTranSearchRequest createSuspendBizTranSearchRequest() {
         return new SuspendBizTranSearchRequest() {
             @Override
-            public LongCriteria getJaIdCriteria() {
-                return jaIdCriteria;
+            public StringCriteria getJaCodeCriteria() {
+                return jaCodeCriteria;
             }
             @Override
-            public LongCriteria getBranchIdCriteria() {
-                return branchIdCriteria;
+            public StringCriteria getBranchCodeCriteria() {
+                return branchCodeCriteria;
             }
             @Override
             public StringCriteria getSubSystemCodeCriteria() {
                 return subSystemCodeCriteria;
             }
             @Override
-            public LongCriteria getBizTranGrpIdCriteria() {
-                return bizTranGrpIdCriteria;
+            public StringCriteria getBizTranGrpCodeCriteria() {
+                return bizTranGrpCodeCriteria;
             }
             @Override
-            public LongCriteria getBizTranIdCriteria() {
-                return bizTranIdCriteria;
+            public StringCriteria getBizTranCodeCriteria() {
+                return bizTranCodeCriteria;
             }
             @Override
             public LocalDateCriteria getSuspendStartDateCriteria() {
