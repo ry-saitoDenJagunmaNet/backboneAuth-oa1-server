@@ -23,9 +23,9 @@
 .oaex_role_table_operator_name {min-width: 250px; width: 25%;}
 .oaex_role_table_operator_select {min-width: 50px; width: 5%;}
 
-.oaex_role_table_expiration_th {min-width: 240px; width: 25%;}
-.oaex_role_table_expiration {min-width: 240px; width: 25%;}
-.oaex_role_table_expiration input[type=text] {
+.oaex_role_table_valid_thru_th {min-width: 240px; width: 25%;}
+.oaex_role_table_valid_thru {min-width: 240px; width: 25%;}
+.oaex_role_table_valid_thru input[type=text] {
 	width: 45% !important;
 	margin: 0px !important;
 }

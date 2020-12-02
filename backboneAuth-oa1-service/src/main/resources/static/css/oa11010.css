@@ -32,23 +32,23 @@ div.oa_collapsible_header {width: 150px;}
 .oaex_subsystem_role_subsystem_role_code {min-width: 42px; width: 4%;}
 .oaex_subsystem_role_subsystem_role_name {min-width: 188px; width: 18%;}
 
-.oaex_subsystem_role_expiration_sel_non_th {min-width: 234px; width: 22%;}
-.oaex_subsystem_role_expiration_sel_non {min-width: 110px; width: 10%;}
-.oaex_subsystem_role_expiration_sel_status {min-width: 124px; width: 12%;}
+.oaex_subsystem_role_valid_thru_sel_non_th {min-width: 234px; width: 22%;}
+.oaex_subsystem_role_valid_thru_sel_non {min-width: 110px; width: 10%;}
+.oaex_subsystem_role_valid_thru_sel_status {min-width: 124px; width: 12%;}
 
-.oaex_subsystem_role_expiration_status_date_th {min-width: 202px; width: 18%;}
-.oaex_subsystem_role_expiration_status_date {min-width: 92px; width: 8%;}
-.oaex_subsystem_role_expiration_sel_conditions {min-width: 110px; width: 10%;}
+.oaex_subsystem_role_valid_thru_status_date_th {min-width: 202px; width: 18%;}
+.oaex_subsystem_role_valid_thru_status_date {min-width: 92px; width: 8%;}
+.oaex_subsystem_role_valid_thru_sel_conditions {min-width: 110px; width: 10%;}
 
-.oaex_subsystem_role_expiration_start_date_from_th {min-width: 209px; width: 18%;}
-.oaex_subsystem_role_expiration_start_date_from {min-width: 92px; width: 8%;}
-.oaex_subsystem_role_expiration_start_date_tilde {min-width: 25px; width: 2%;}
-.oaex_subsystem_role_expiration_start_date_to {min-width: 92px; width: 8%;}
+.oaex_subsystem_role_valid_thru_start_date_from_th {min-width: 209px; width: 18%;}
+.oaex_subsystem_role_valid_thru_start_date_from {min-width: 92px; width: 8%;}
+.oaex_subsystem_role_valid_thru_start_date_tilde {min-width: 25px; width: 2%;}
+.oaex_subsystem_role_valid_thru_start_date_to {min-width: 92px; width: 8%;}
 
-.oaex_subsystem_role_expiration_end_date_from_th {min-width: 209px; width: 18%;}
-.oaex_subsystem_role_expiration_end_date_from {min-width: 92px; width: 8%;}
-.oaex_subsystem_role_expiration_end_date_tilde {min-width: 25px; width: 2%;}
-.oaex_subsystem_role_expiration_end_date_to {min-width: 92px; width: 8%;}
+.oaex_subsystem_role_valid_thru_end_date_from_th {min-width: 209px; width: 18%;}
+.oaex_subsystem_role_valid_thru_end_date_from {min-width: 92px; width: 8%;}
+.oaex_subsystem_role_valid_thru_end_date_tilde {min-width: 25px; width: 2%;}
+.oaex_subsystem_role_valid_thru_end_date_to {min-width: 92px; width: 8%;}
 
  /* 取引ロール検索条件の折りたたみヘッダー */
 .oaex_biztran_role_header {position: relative;}
@@ -78,23 +78,23 @@ div.oa_collapsible_header {width: 150px;}
 .oaex_biztran_role_biztran_role_code {min-width: 60px; width: 5%;}
 .oaex_biztran_role_biztran_role_name {min-width: 280px; width: 21%;}
 
-.oaex_biztran_role_expiration_sel_non_th {min-width: 234px; width: 17%;}
-.oaex_biztran_role_expiration_sel_non {min-width: 110px; width: 9%;}
-.oaex_biztran_role_expiration_sel_status {min-width: 124px; width: 10%;}
+.oaex_biztran_role_valid_thru_sel_non_th {min-width: 234px; width: 17%;}
+.oaex_biztran_role_valid_thru_sel_non {min-width: 110px; width: 9%;}
+.oaex_biztran_role_valid_thru_sel_status {min-width: 124px; width: 10%;}
 
-.oaex_biztran_role_expiration_status_date_th {min-width: 202px; width: 18%;}
-.oaex_biztran_role_expiration_status_date {min-width: 92px; width: 8%;}
-.oaex_biztran_role_expiration_sel_conditions {min-width: 110px; width: 9%;}
+.oaex_biztran_role_valid_thru_status_date_th {min-width: 202px; width: 18%;}
+.oaex_biztran_role_valid_thru_status_date {min-width: 92px; width: 8%;}
+.oaex_biztran_role_valid_thru_sel_conditions {min-width: 110px; width: 9%;}
 
-.oaex_biztran_role_expiration_start_date_from_th {min-width: 209px; width: 18%;}
-.oaex_biztran_role_expiration_start_date_from {min-width: 92px; width: 8%;}
-.oaex_biztran_role_expiration_start_date_tilde {min-width: 25px; width: 2%;}
-.oaex_biztran_role_expiration_start_date_to {min-width: 92px; width: 8%;}
+.oaex_biztran_role_valid_thru_start_date_from_th {min-width: 209px; width: 18%;}
+.oaex_biztran_role_valid_thru_start_date_from {min-width: 92px; width: 8%;}
+.oaex_biztran_role_valid_thru_start_date_tilde {min-width: 25px; width: 2%;}
+.oaex_biztran_role_valid_thru_start_date_to {min-width: 92px; width: 8%;}
 
-.oaex_biztran_role_expiration_end_date_from_th {min-width: 209px; width: 18%;}
-.oaex_biztran_role_expiration_end_date_from {min-width: 92px; width: 8%;}
-.oaex_biztran_role_expiration_end_date_tilde {min-width: 25px; width: 2%;}
-.oaex_biztran_role_expiration_end_date_to {min-width: 92px; width: 8%;}
+.oaex_biztran_role_valid_thru_end_date_from_th {min-width: 209px; width: 18%;}
+.oaex_biztran_role_valid_thru_end_date_from {min-width: 92px; width: 8%;}
+.oaex_biztran_role_valid_thru_end_date_tilde {min-width: 25px; width: 2%;}
+.oaex_biztran_role_valid_thru_end_date_to {min-width: 92px; width: 8%;}
 
 /**
  * 最終サインオペレーション チェックボックス
@@ -145,21 +145,21 @@ tr.oaex_th_operator_table_row {
 .oaex_operator_operator_code {min-width: 80px; width: 5%;}
 .oaex_operator_operator_name {min-width: 150px; width: 8%;}
 /* オペレーター有効期限 */
-.oaex_operator_expiration_date_th {min-width: 180px; width: 12%;}
-.oaex_operator_expiration_date {min-width: 180px; width: 12%;}
+.oaex_operator_valid_thru_date_th {min-width: 180px; width: 12%;}
+.oaex_operator_valid_thru_date {min-width: 180px; width: 12%;}
 /* サブシステムロール */
 .oaex_operator_subsystem_role_th {min-width: 200px; width: 14%;}
 .oaex_operator_subsystem_role {min-width: 200px; width: 14%;}
 /* サブシステムロール有効期限 */
-.oaex_operator_subsystem_role_expiration_date_th {min-width: 180px; width: 12%;}
-.oaex_operator_subsystem_role_expiration_date {min-width: 180px; width: 12%;}
+.oaex_operator_subsystem_role_valid_thru_date_th {min-width: 180px; width: 12%;}
+.oaex_operator_subsystem_role_valid_thru_date {min-width: 180px; width: 12%;}
 /* 取引ロール */
 .oaex_operator_biztran_role_th {min-width: 280px; width: 19%;}
 .oaex_operator_biztran_role_code {min-width: 60px; width: 4%;}
 .oaex_operator_biztran_role_name {min-width: 220px; width: 15%;}
 /* 取引ロール有効期限 */
-.oaex_operator_biztran_role_expiration_date_th {min-width: 180px; width: 13%;}
-.oaex_operator_biztran_role_expiration_date {min-width: 180px; width: 13%;}
+.oaex_operator_biztran_role_valid_thru_date_th {min-width: 180px; width: 13%;}
+.oaex_operator_biztran_role_valid_thru_date {min-width: 180px; width: 13%;}
 /* 利用可否状態（利用可） */
 .oaex_available_status_possible {
 	width: 14px;

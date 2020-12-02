@@ -17,9 +17,9 @@
 .oaex_ip_address_range_table_ip_address_range_th {min-width: 300px; width: 60%;}
 .oaex_ip_address_range_table_ip_address_range {min-width: 300px; width: 60%;}
 
-.oaex_ip_address_range_table_expiration_th {min-width: 240px; width: 40%;}
-.oaex_ip_address_range_table_expiration {min-width: 240px; width: 40%;}
-.oaex_ip_address_range_table_expiration input[type=text] {
+.oaex_ip_address_range_table_valid_thru_th {min-width: 240px; width: 40%;}
+.oaex_ip_address_range_table_valid_thru {min-width: 240px; width: 40%;}
+.oaex_ip_address_range_table_valid_thru input[type=text] {
 	width: 45% !important;
 	margin: 0px !important;
 }

@@ -32,8 +32,8 @@ function oaex_initialize() {
 	document.getElementById("biztran_check").checked = false;	
 	oaex_biztran_check_onChange();
 	// 有効期限
-	document.getElementById("expiration_start_date").value = "";
-	document.getElementById("expiration_end_date").value = "";
+	document.getElementById("valid_thru_start_date").value = "";
+	document.getElementById("valid_thru_end_date").value = "";
 	// 抑止理由
 	document.getElementById("suspend_reason").value = "";
 
@@ -61,8 +61,8 @@ function oaex_initialize() {
 		document.getElementById("biztran_table").style.visibility = "visible";
 		oa_setTableRowSelected(document.getElementById("biztran_table").rows[2]);
 		// 有効期限
-		document.getElementById("expiration_start_date").value = "2019/04/01";
-		document.getElementById("expiration_end_date").value = "9999/12/31";
+		document.getElementById("valid_thru_start_date").value = "2019/04/01";
+		document.getElementById("valid_thru_end_date").value = "9999/12/31";
 		// 抑止理由
 		document.getElementById("suspend_reason").value = "合併前のデータ凍結の為のデータ投入抑止";
 

@@ -16,16 +16,16 @@ function oaex_th_onload() {
 		});
 
 	// 有効期限のラジオボタン初期化
-	oaex_expiration_sel_onChange();
+	oaex_validThrusel_onChange();
 	// サブシステムロール/取引ロールの指定方法（指定なし/OR/AND）を非表示
 	oaex_collapsible_onCloseEnd();
 	// サブシステムロール有効期限のラジオボタン初期化
 	for (let i = 0; i < document.getElementById("subsystem_role").rows.length; i++) {
-		oaex_subsystem_role_expiration_sel_onChange(i);
+		oaex_subsystemRoleValidThruSel_onChange(i);
 	}
 	// 取引ロール有効期限のラジオボタン初期化
 	for (let i = 0; i < document.getElementById("biztran_role").rows.length; i++) {
-		oaex_biztran_role_expiration_sel_onChange(i);
+		oaex_biztranRoleValidThruSel_onChange(i);
 	}
 
 	// オペレーター一覧領域を表示
@@ -53,7 +53,7 @@ const _TABLE_ROW_FILTER = "oaex_table_row_filter";
  * サブシステムフィルター選択変更イベントです。
  * @param {Object}} obj サブシステムフィルターオジェクト
  */
-function oaex_th_subsystem_filter_onChange(obj) {
+function oaex_th_subsystemFilter_onChange(obj) {
 	let index = obj.selectedIndex;
 	let biztranRole = document.getElementById("biztran_role");
 
@@ -122,27 +122,27 @@ window.onload = function() {
 	oaex_collapsible_onCloseEnd();
 
 	// 有効期限のラジオボタン初期化
-	document.getElementById("expiration_sel_non").checked = true;
-	oaex_expiration_sel_onChange();
+	document.getElementById("valid_thru_sel_non").checked = true;
+	oaex_validThruSel_onChange();
 
 	//  サブシステムロール条件のラジオボタン初期化
 	document.getElementById("subsystem_role_sel_and").checked = true;
-	oaex_subsystem_role_sel_onChange();
+	oaex_subsystemRoleSel_onChange();
 
 	// サブシステムロール有効期限のラジオボタン初期化
 	for (let i = 0; i < document.getElementById("subsystem_role").rows.length; i++) {
-		document.getElementById("subsystem_role_expiration_sel_non[" + i + "]").checked = true;
-		oaex_subsystem_role_expiration_sel_onChange(i);
+		document.getElementById("subsystem_role_valid_thru_sel_non[" + i + "]").checked = true;
+		oaex_subsystemRoleValidThruSel_onChange(i);
 	}
 
 	// 取引ロール条件のラジオボタン初期化
 	document.getElementById("biztran_role_sel_and").checked = true;
-	oaex_biztran_role_sel_onChange();
+	oaex_biztranRoleSel_onChange();
 
 	// 取引ロール有効期限のラジオボタン初期化
 	for (let i = 0; i < document.getElementById("biztran_role").rows.length; i++) {
-		document.getElementById("biztran_role_expiration_sel_non[" + i + "]").checked = true;
-		oaex_biztran_role_expiration_sel_onChange(i);
+		document.getElementById("biztran_role_valid_thru_sel_non[" + i + "]").checked = true;
+		oaex_biztranRoleValidThruSel_onChange(i);
 	}
 }
 
@@ -197,43 +197,39 @@ function oaex_collapsible_onCloseEnd() {
 /**
  * 有効期限ラジオボタンの変更イベントです。
  */
-function oaex_expiration_sel_onChange() {
+function oaex_validThruSel_onChange() {
 	let val;
-	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("expirationSelect");
-	} else {
-		val = oa_getRadioCheckedValue("expiration_sel");
-	}
+	val = oa_getRadioCheckedValue("validThruSelect");
 
-	document.getElementById("expiration_status_date_div").style.display = "none";
-	document.getElementById("expiration_conditions_div").style.display = "none";
+	document.getElementById("valid_thru_status_date_div").style.display = "none";
+	document.getElementById("valid_thru_conditions_div").style.display = "none";
 
-	oa_setDisabled("expiration_status_date", true);
-	oa_setDisabled("expiration_start_date_from", true);
-	oa_setDisabled("expiration_start_date_to", true);
-	oa_setDisabled("expiration_end_date_from", true);
-	oa_setDisabled("expiration_end_date_to", true);
+	oa_setDisabled("valid_thru_status_date", true);
+	oa_setDisabled("valid_thru_start_date_from", true);
+	oa_setDisabled("valid_thru_start_date_to", true);
+	oa_setDisabled("valid_thru_end_date_from", true);
+	oa_setDisabled("valid_thru_end_date_to", true);
 
 	if (val == "0") {
 		// 指定なし
 	} if (val == "1") {
 		// 状態指定日
-		document.getElementById("expiration_status_date_div").style.display = "block";
-		oa_setDisabled("expiration_status_date", false);
+		document.getElementById("valid_thru_status_date_div").style.display = "block";
+		oa_setDisabled("valid_thru_status_date", false);
 	} if (val == "2") {
 		// 条件指定
-		document.getElementById("expiration_conditions_div").style.display = "block";
-		oa_setDisabled("expiration_start_date_from", false);
-		oa_setDisabled("expiration_start_date_to", false);
-		oa_setDisabled("expiration_end_date_from", false);
-		oa_setDisabled("expiration_end_date_to", false);
+		document.getElementById("valid_thru_conditions_div").style.display = "block";
+		oa_setDisabled("valid_thru_start_date_from", false);
+		oa_setDisabled("valid_thru_start_date_to", false);
+		oa_setDisabled("valid_thru_end_date_from", false);
+		oa_setDisabled("valid_thru_end_date_to", false);
 	}		
 }
 
 /**
  * サブシステムロール条件のラジオボタンの変更イベントです。
  */
-function oaex_subsystem_role_sel_onChange() {
+function oaex_subsystemRoleSel_onChange() {
 	let val = oa_getRadioCheckedValue("subSystemRoleConditionsSelect");
 
 	if (val == "0") {
@@ -255,38 +251,38 @@ function oaex_subsystem_role_sel_onChange() {
  * サブシステムロールテーブル有効期限のラジオボタンの変更イベントです。
  * @param {int}} objRow サブシステムロールテーブルの対象行
  */
-function oaex_subsystem_role_expiration_sel_onChange(objRow) {
+function oaex_subsystemRoleValidThruSel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("subSystemRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("subSystemRoleList[" + objRow + "].validThruSelect");
 	} else {
-		val = oa_getRadioCheckedValue("subsystemRoleExpirationSelect[" + objRow + "]");
+		val = oa_getRadioCheckedValue("subsystemRoleValidThruSelect[" + objRow + "]");
 	}
 
-	oa_setDisabled("subsystem_role_expiration_status_date[" + objRow + "]", true);
-	oa_setDisabled("subsystem_role_expiration_start_date_from[" + objRow + "]", true);
-	oa_setDisabled("subsystem_role_expiration_start_date_to[" + objRow + "]", true);
-	oa_setDisabled("subsystem_role_expiration_end_date_from[" + objRow + "]", true);
-	oa_setDisabled("subsystem_role_expiration_end_date_to[" + objRow + "]", true);
+	oa_setDisabled("subsystem_role_valid_thru_status_date[" + objRow + "]", true);
+	oa_setDisabled("subsystem_role_valid_thru_start_date_from[" + objRow + "]", true);
+	oa_setDisabled("subsystem_role_valid_thru_start_date_to[" + objRow + "]", true);
+	oa_setDisabled("subsystem_role_valid_thru_end_date_from[" + objRow + "]", true);
+	oa_setDisabled("subsystem_role_valid_thru_end_date_to[" + objRow + "]", true);
 
 	if (val == "0") {
 		// 指定なし
 	} if (val == "1") {
 		// 状態指定日
-		oa_setDisabled("subsystem_role_expiration_status_date[" + objRow + "]", false);
+		oa_setDisabled("subsystem_role_valid_thru_status_date[" + objRow + "]", false);
 	} if (val == "2") {
 		// 条件指定
-		oa_setDisabled("subsystem_role_expiration_start_date_from[" + objRow + "]", false);
-		oa_setDisabled("subsystem_role_expiration_start_date_to[" + objRow + "]", false);
-		oa_setDisabled("subsystem_role_expiration_end_date_from[" + objRow + "]", false);
-		oa_setDisabled("subsystem_role_expiration_end_date_to[" + objRow + "]", false);
-		}		
+		oa_setDisabled("subsystem_role_valid_thru_start_date_from[" + objRow + "]", false);
+		oa_setDisabled("subsystem_role_valid_thru_start_date_to[" + objRow + "]", false);
+		oa_setDisabled("subsystem_role_valid_thru_end_date_from[" + objRow + "]", false);
+		oa_setDisabled("subsystem_role_valid_thru_end_date_to[" + objRow + "]", false);
+		}
 }
 
 /**
  * 取引ロール条件のラジオボタンの変更イベントです。
  */
-function oaex_biztran_role_sel_onChange() {
+function oaex_biztranRoleSel_onChange() {
 	let val = oa_getRadioCheckedValue("biztranRoleConditionsSelect");
 
 	if (val == "0") {
@@ -311,31 +307,31 @@ function oaex_biztran_role_sel_onChange() {
  * 取引ロールテーブル有効期限のラジオボタンの変更イベントです。
  * @param {int}} objRow サブシステムロールテーブルの対象行
  */
-function oaex_biztran_role_expiration_sel_onChange(objRow) {
+function oaex_biztranRoleValidThruSel_onChange(objRow) {
 	let val;
 	if (_isThymeleaf) {
-		val = oa_getRadioCheckedValue("bizTranRoleList[" + objRow + "].expirationSelect");
+		val = oa_getRadioCheckedValue("bizTranRoleList[" + objRow + "].validThruSelect");
 	} else {
-		val = oa_getRadioCheckedValue("biztran_role_expiration_sel[" + objRow + "]");
+		val = oa_getRadioCheckedValue("biztranRoleValidThruSel[" + objRow + "]");
 	}
 
-	oa_setDisabled("biztran_role_expiration_status_date[" + objRow + "]", true);
-	oa_setDisabled("biztran_role_expiration_start_date_from[" + objRow + "]", true);
-	oa_setDisabled("biztran_role_expiration_start_date_to[" + objRow + "]", true);
-	oa_setDisabled("biztran_role_expiration_end_date_from[" + objRow + "]", true);
-	oa_setDisabled("biztran_role_expiration_end_date_to[" + objRow + "]", true);
+	oa_setDisabled("biztran_role_valid_thru_status_date[" + objRow + "]", true);
+	oa_setDisabled("biztran_role_valid_thru_start_date_from[" + objRow + "]", true);
+	oa_setDisabled("biztran_role_valid_thru_start_date_to[" + objRow + "]", true);
+	oa_setDisabled("biztran_role_valid_thru_end_date_from[" + objRow + "]", true);
+	oa_setDisabled("biztran_role_valid_thru_end_date_to[" + objRow + "]", true);
 
 	if (val == "0") {
 		// 指定なし
 	} if (val == "1") {
 		// 状態指定日
-		oa_setDisabled("biztran_role_expiration_status_date[" + objRow + "]", false);
+		oa_setDisabled("biztran_role_valid_thru_status_date[" + objRow + "]", false);
 	} if (val == "2") {
 		// 条件指定
-		oa_setDisabled("biztran_role_expiration_start_date_from[" + objRow + "]", false);
-		oa_setDisabled("biztran_role_expiration_start_date_to[" + objRow + "]", false);
-		oa_setDisabled("biztran_role_expiration_end_date_from[" + objRow + "]", false);
-		oa_setDisabled("biztran_role_expiration_end_date_to[" + objRow + "]", false);
+		oa_setDisabled("biztran_role_valid_thru_start_date_from[" + objRow + "]", false);
+		oa_setDisabled("biztran_role_valid_thru_start_date_to[" + objRow + "]", false);
+		oa_setDisabled("biztran_role_valid_thru_end_date_from[" + objRow + "]", false);
+		oa_setDisabled("biztran_role_valid_thru_end_date_to[" + objRow + "]", false);
 	}		
 }
 
@@ -347,7 +343,7 @@ function oaex_biztran_role_expiration_sel_onChange(objRow) {
  * 　※「oaex_operator_table_operator_X」の「X」はオペレーター毎に一意に採番
  * @param {Object} objRow オペレーターテーブルの行オブジェクト
  */
-function oaex_operator_table_onClick(objRow) {
+function oaex_operatorTable_onClick(objRow) {
 	let objTable = document.getElementById("operator_table");
 	// Table全行の選択を解除
 	oa_setTableRowSelectedRemoveAll(objTable);

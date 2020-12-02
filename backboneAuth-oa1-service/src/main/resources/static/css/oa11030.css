@@ -24,7 +24,7 @@
 	overflow-y: scroll;
 }
 .oaex_subsystem_role_table_name {min-width: 350px; width: 65%;}
-.oaex_subsystem_role_table_expiration {min-width: 200px; width: 35%;}
+.oaex_subsystem_role_table_valid_thru {min-width: 200px; width: 35%;}
 
 /* 取引ロールテーブル */
 .oaex_biztran_role_table {
@@ -35,5 +35,5 @@
 .oaex_biztran_role_table_code {min-width: 70px; width: 10%;}
 .oaex_biztran_role_table_name {min-width: 280px; width: 55%;}
 
-.oaex_biztran_role_table_expiration_th {min-width: 200px; width: 35%;}
-.oaex_biztran_role_table_expiration {min-width: 200px; width: 35%;}
+.oaex_biztran_role_table_valid_thru_th {min-width: 200px; width: 35%;}
+.oaex_biztran_role_table_valid_thru {min-width: 200px; width: 35%;}
