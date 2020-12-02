@@ -183,12 +183,12 @@ public class CheckBizTranRoleCompositionValidator {
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
             }
-            if (bizTranGrp_BizTransSheet.getExpirationStartDate() == null) {
+            if (bizTranGrp_BizTransSheet.getValidThruStartDate() == null) {
                 messageArgs.set(2, "有効期限From");
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
             }
-            if (bizTranGrp_BizTransSheet.getExpirationEndDate() == null) {
+            if (bizTranGrp_BizTransSheet.getValidThruEndDate() == null) {
                 messageArgs.set(2, "有効期限To");
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
@@ -218,8 +218,8 @@ public class CheckBizTranRoleCompositionValidator {
                 b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode()) &&
                     (!b.getBizTranName().equals(bizTranGrp_BizTransSheet.getBizTranName()) ||
                         !b.getIsCenterBizTran().equals(bizTranGrp_BizTransSheet.getIsCenterBizTran()) ||
-                        !b.getExpirationStartDate().equals(bizTranGrp_BizTransSheet.getExpirationStartDate()) ||
-                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate())) &&
+                        !b.getValidThruStartDate().equals(bizTranGrp_BizTransSheet.getValidThruStartDate()) ||
+                        !b.getValidThruEndDate().equals(bizTranGrp_BizTransSheet.getValidThruEndDate())) &&
                     b.getRowno().compareTo(bizTranGrp_BizTransSheet.getRowno()) > 0).count() > 0) {
                 messageArgs.set(2, "取引");
                 list.add(MessageDto.createFrom("EOA13105", messageArgs));

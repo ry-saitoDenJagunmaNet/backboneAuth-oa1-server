@@ -20,8 +20,8 @@ class Oa11020EntryValidatorTest {
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private String changeCause = "新職員の入組による登録";
 
     // Oa11020Vo作成
@@ -32,8 +32,8 @@ class Oa11020EntryValidatorTest {
         vo.setOperatorCode6(operatorCode6);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-        vo.setExpirationStartDate(expirationStartDate);
-        vo.setExpirationEndDate(expirationEndDate);
+        vo.setValidThruStartDate(validThruStartDate);
+        vo.setValidThruEndDate(validThruEndDate);
         vo.setChangeCause(changeCause);
 
         return vo;
@@ -176,7 +176,7 @@ class Oa11020EntryValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test05() {
         // 実行値
-        expirationStartDate = null;
+        validThruStartDate = null;
         Oa11020Vo vo = createOa11020Vo();
 
         assertThatThrownBy(() ->
@@ -202,7 +202,7 @@ class Oa11020EntryValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test06() {
         // 実行値
-        expirationEndDate = null;
+        validThruEndDate = null;
         Oa11020Vo vo = createOa11020Vo();
 
         assertThatThrownBy(() ->
@@ -438,7 +438,7 @@ class Oa11020EntryValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test15() {
         // 実行値
-        expirationEndDate = LocalDate.of(2020, 8, 31);
+        validThruEndDate = LocalDate.of(2020, 8, 31);
         Oa11020Vo vo = createOa11020Vo();
 
         assertThatThrownBy(() ->

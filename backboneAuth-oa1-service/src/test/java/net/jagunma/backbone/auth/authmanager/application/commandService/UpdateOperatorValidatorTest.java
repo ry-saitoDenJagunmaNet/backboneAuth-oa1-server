@@ -20,8 +20,8 @@ class UpdateOperatorValidatorTest {
     private Long operatorId = 123456L;
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
@@ -42,12 +42,12 @@ class UpdateOperatorValidatorTest {
                 return mailAddress;
             }
             @Override
-            public LocalDate getExpirationStartDate() {
-                return expirationStartDate;
+            public LocalDate getValidThruStartDate() {
+                return validThruStartDate;
             }
             @Override
-            public LocalDate getExpirationEndDate() {
-                return expirationEndDate;
+            public LocalDate getValidThruEndDate() {
+                return validThruEndDate;
             }
             @Override
             public Boolean getIsDeviceAuth() {
@@ -182,7 +182,7 @@ class UpdateOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test04() {
         // 実行値
-        expirationStartDate = null;
+        validThruStartDate = null;
         OperatorUpdateRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -208,7 +208,7 @@ class UpdateOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test05() {
         // 実行値
-        expirationEndDate = null;
+        validThruEndDate = null;
         OperatorUpdateRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -469,7 +469,7 @@ class UpdateOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test15() {
         // 実行値
-        expirationEndDate = LocalDate.of(2020, 8, 31);
+        validThruEndDate = LocalDate.of(2020, 8, 31);
         OperatorUpdateRequest request = createRequest();
 
         assertThatThrownBy(() ->

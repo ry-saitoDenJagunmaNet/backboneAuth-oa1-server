@@ -33,19 +33,19 @@ public class SearchOperatorValidator {
 
         // 範囲指定不正チェック
         // オペレーター 有効期限開始
-        if (request.getExpirationStartDateCriteria().getMoreOrEqual() != null &&
-            request.getExpirationStartDateCriteria().getLessOrEqual() != null) {
+        if (request.getValidThruStartDateCriteria().getMoreOrEqual() != null &&
+            request.getValidThruStartDateCriteria().getLessOrEqual() != null) {
             // 条件指定
-            Preconditions.checkMax(request.getExpirationStartDateCriteria().getLessOrEqual(),
-                request.getExpirationStartDateCriteria().getMoreOrEqual(),
+            Preconditions.checkMax(request.getValidThruStartDateCriteria().getLessOrEqual(),
+                request.getValidThruStartDateCriteria().getMoreOrEqual(),
                 () -> new GunmaRuntimeException("EOA13008", "有効期限開始"));
         }
         // オペレーター 有効期限終了
-        if (request.getExpirationEndDateCriteria().getMoreOrEqual() != null &&
-            request.getExpirationEndDateCriteria().getLessOrEqual() != null) {
+        if (request.getValidThruEndDateCriteria().getMoreOrEqual() != null &&
+            request.getValidThruEndDateCriteria().getLessOrEqual() != null) {
             // 条件指定
-            Preconditions.checkMax(request.getExpirationEndDateCriteria().getLessOrEqual(),
-                request.getExpirationEndDateCriteria().getMoreOrEqual(),
+            Preconditions.checkMax(request.getValidThruEndDateCriteria().getLessOrEqual(),
+                request.getValidThruEndDateCriteria().getMoreOrEqual(),
                 () -> new GunmaRuntimeException("EOA13008", "有効期限終了"));
         }
         // サブシステムロール 有効期限
@@ -53,15 +53,15 @@ public class SearchOperatorValidator {
             for(OparatorSearchSubSystemRoleRequest subSystemRoleRequest : request.getSubSystemRoleList()) {
                 if (subSystemRoleRequest.getSubSystemRoleSelected() != null) {
                     // 有効期限開始
-                    if (subSystemRoleRequest.getExpirationStartDateFrom() != null && subSystemRoleRequest.getExpirationStartDateTo() != null) {
-                        Preconditions.checkMax(subSystemRoleRequest.getExpirationStartDateTo(),
-                            subSystemRoleRequest.getExpirationStartDateFrom(),
+                    if (subSystemRoleRequest.getValidThruStartDateFrom() != null && subSystemRoleRequest.getValidThruStartDateTo() != null) {
+                        Preconditions.checkMax(subSystemRoleRequest.getValidThruStartDateTo(),
+                            subSystemRoleRequest.getValidThruStartDateFrom(),
                             () -> new GunmaRuntimeException("EOA13008", "サブシステムロール 有効期限開始"));
                     }
                     // 有効期限終了
-                    if (subSystemRoleRequest.getExpirationEndDateFrom() != null && subSystemRoleRequest.getExpirationEndDateTo() != null) {
-                        Preconditions.checkMax(subSystemRoleRequest.getExpirationEndDateTo(),
-                            subSystemRoleRequest.getExpirationEndDateFrom(),
+                    if (subSystemRoleRequest.getValidThruEndDateFrom() != null && subSystemRoleRequest.getValidThruEndDateTo() != null) {
+                        Preconditions.checkMax(subSystemRoleRequest.getValidThruEndDateTo(),
+                            subSystemRoleRequest.getValidThruEndDateFrom(),
                             () -> new GunmaRuntimeException("EOA13008", "サブシステムロール 有効期限終了"));
                     }
                 }
@@ -72,13 +72,13 @@ public class SearchOperatorValidator {
             for(OparatorSearchBizTranRoleRequest bizTranRoleRequest : request.getBizTranRoleList()) {
                 if (bizTranRoleRequest.getBizTranRoleSelected() != null) {
                     // 有効期限開始
-                    if (bizTranRoleRequest.getExpirationStartDateFrom() != null && bizTranRoleRequest.getExpirationStartDateTo() != null) {
-                        Preconditions.checkMax(bizTranRoleRequest.getExpirationStartDateTo(), bizTranRoleRequest.getExpirationStartDateFrom(),
+                    if (bizTranRoleRequest.getValidThruStartDateFrom() != null && bizTranRoleRequest.getValidThruStartDateTo() != null) {
+                        Preconditions.checkMax(bizTranRoleRequest.getValidThruStartDateTo(), bizTranRoleRequest.getValidThruStartDateFrom(),
                             () -> new GunmaRuntimeException("EOA13008", "取引ロール 有効期限開始"));
                     }
                     // 有効期限終了
-                    if (bizTranRoleRequest.getExpirationEndDateFrom() != null && bizTranRoleRequest.getExpirationEndDateTo() != null) {
-                        Preconditions.checkMax(bizTranRoleRequest.getExpirationEndDateTo(), bizTranRoleRequest.getExpirationEndDateFrom(),
+                    if (bizTranRoleRequest.getValidThruEndDateFrom() != null && bizTranRoleRequest.getValidThruEndDateTo() != null) {
+                        Preconditions.checkMax(bizTranRoleRequest.getValidThruEndDateTo(), bizTranRoleRequest.getValidThruEndDateFrom(),
                             () -> new GunmaRuntimeException("EOA13008", "取引ロール 有効期限終了"));
                     }
                 }

@@ -64,8 +64,8 @@ public class OperatorsDataSource implements OperatorsRepository {
         entityCriteria.getOperatorCodeCriteria().assignFrom(operatorCriteria.getOperatorCodeCriteria());
         entityCriteria.getOperatorNameCriteria().assignFrom(operatorCriteria.getOperatorNameCriteria());
         entityCriteria.getMailAddressCriteria().assignFrom(operatorCriteria.getMailAddressCriteria());
-        entityCriteria.getExpirationStartDateCriteria().assignFrom(operatorCriteria.getExpirationStartDateCriteria());
-        entityCriteria.getExpirationEndDateCriteria().assignFrom(operatorCriteria.getExpirationEndDateCriteria());
+        entityCriteria.getValidThruStartDateCriteria().assignFrom(operatorCriteria.getValidThruStartDateCriteria());
+        entityCriteria.getValidThruEndDateCriteria().assignFrom(operatorCriteria.getValidThruEndDateCriteria());
         entityCriteria.getIsDeviceAuthCriteria().assignFrom(operatorCriteria.getIsDeviceAuthCriteria());
         entityCriteria.getJaIdCriteria().setEqualTo(operatorCriteria.getJaIdentifierCriteria().getEqualTo());
         entityCriteria.getJaCodeCriteria().assignFrom(operatorCriteria.getJaCodeCriteria());
@@ -80,8 +80,8 @@ public class OperatorsDataSource implements OperatorsRepository {
                 entity.getOperatorCode(),
                 entity.getOperatorName(),
                 entity.getMailAddress(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getIsDeviceAuth(),
                 entity.getJaId(),
                 entity.getJaCode(),

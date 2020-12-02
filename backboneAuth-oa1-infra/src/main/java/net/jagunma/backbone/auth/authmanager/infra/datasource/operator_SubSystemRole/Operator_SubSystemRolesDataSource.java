@@ -59,8 +59,8 @@ public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRole
                 entity.getOperator_SubSystemRoleId(),
                 entity.getOperatorId(),
                 entity.getSubSystemRoleCode(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),

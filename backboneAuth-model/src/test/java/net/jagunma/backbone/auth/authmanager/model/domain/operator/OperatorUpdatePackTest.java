@@ -15,8 +15,8 @@ class OperatorUpdatePackTest {
     private Long operatorId = 123456L;
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
     private String branchCode = "001";
@@ -29,8 +29,8 @@ class OperatorUpdatePackTest {
      *      Long operatorId,
      *      String operatorName,
      *      String mailAddress,
-     *      LocalDate expirationStartDate,
-     *      LocalDate expirationEndDate,
+     *      LocalDate validThruStartDate,
+     *      LocalDate validThruEndDate,
      *      Boolean isDeviceAuth,
      *      Long branchId,
      *      String branchCode,
@@ -53,8 +53,8 @@ class OperatorUpdatePackTest {
             operatorId,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             branchId,
             branchCode,
@@ -67,8 +67,8 @@ class OperatorUpdatePackTest {
         assertThat(operatorUpdatePack.getOperatorId()).isEqualTo(operatorId);
         assertThat(operatorUpdatePack.getOperatorName()).isEqualTo(operatorName);
         assertThat(operatorUpdatePack.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(operatorUpdatePack.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(operatorUpdatePack.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(operatorUpdatePack.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(operatorUpdatePack.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(operatorUpdatePack.getIsDeviceAuth()).isEqualTo(isDeviceAuth);
         assertThat(operatorUpdatePack.getBranchId()).isEqualTo(branchId);
         assertThat(operatorUpdatePack.getBranchCode()).isEqualTo(branchCode);

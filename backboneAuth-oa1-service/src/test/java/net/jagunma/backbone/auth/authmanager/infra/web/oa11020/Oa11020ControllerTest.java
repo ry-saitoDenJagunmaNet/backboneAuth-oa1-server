@@ -45,8 +45,8 @@ class Oa11020ControllerTest {
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
     private String confirmPassword = "pAsSwOrD";
@@ -115,8 +115,8 @@ class Oa11020ControllerTest {
         vo.setOperatorCode6(operatorCode6);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-        vo.setExpirationStartDate(expirationStartDate);
-        vo.setExpirationEndDate(expirationEndDate);
+        vo.setValidThruStartDate(validThruStartDate);
+        vo.setValidThruEndDate(validThruEndDate);
         vo.setChangeCause(changeCause);
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         vo.setPassword(password);
@@ -157,8 +157,8 @@ class Oa11020ControllerTest {
         operatorCode6 = null;
         operatorName = null;
         mailAddress = null;
-        expirationStartDate = null;
-        expirationEndDate = null;
+        validThruStartDate = null;
+        validThruEndDate = null;
         changeCause = null;
         password = null;
         confirmPassword = null;
@@ -328,8 +328,8 @@ class Oa11020ControllerTest {
         operatorCode6 = null;
         operatorName = null;
         mailAddress = null;
-        expirationStartDate = null;
-        expirationEndDate = null;
+        validThruStartDate = null;
+        validThruEndDate = null;
         changeCause = null;
         password = null;
         confirmPassword = null;

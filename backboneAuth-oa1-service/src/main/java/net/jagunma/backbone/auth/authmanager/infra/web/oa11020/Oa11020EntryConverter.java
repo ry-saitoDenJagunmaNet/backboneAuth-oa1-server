@@ -53,16 +53,16 @@ class Oa11020EntryConverter implements OperatorEntryRequest {
      *
      * @return 有効期限開始日
      */
-    public LocalDate getExpirationStartDate() {
-        return vo.getExpirationStartDate();
+    public LocalDate getValidThruStartDate() {
+        return vo.getValidThruStartDate();
     }
     /**
      * 有効期限終了日のＧｅｔ
      *
      * @return 有効期限終了日
      */
-    public LocalDate getExpirationEndDate() {
-        return vo.getExpirationEndDate();
+    public LocalDate getValidThruEndDate() {
+        return vo.getValidThruEndDate();
     }
     /**
      * 店舗IDのＧｅｔ

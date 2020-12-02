@@ -85,8 +85,8 @@ public class SearchBizTranRoleComposition {
                 bizTranGrp_BizTran.getBizTran().getBizTranCode(),
                 bizTranGrp_BizTran.getBizTran().getBizTranName(),
                 bizTranGrp_BizTran.getBizTran().getIsCenterBizTran(),
-                bizTranGrp_BizTran.getBizTran().getExpirationStartDate(),
-                bizTranGrp_BizTran.getBizTran().getExpirationEndDate()
+                bizTranGrp_BizTran.getBizTran().getValidThruStartDate(),
+                bizTranGrp_BizTran.getBizTran().getValidThruEndDate()
             ));
         }
         response.setBizTranGrp_BizTransSheet(BizTranGrp_BizTransSheet.createFrom(BizTranGrp_BizTranSheetList));

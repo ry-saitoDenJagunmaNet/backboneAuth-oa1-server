@@ -12,8 +12,8 @@ public class Operator_SubSystemRoleHistory {
     private final Long operator_SubSystemRoleId;
     private final Long operatorId;
     private final String subSystemRoleCode;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
     private final Integer recordVersion;
     private final SubSystemRole subSystemRole;
 
@@ -23,8 +23,8 @@ public class Operator_SubSystemRoleHistory {
         Long operator_SubSystemRoleId,
         Long operatorId,
         String subSystemRoleCode,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Integer recordVersion,
         SubSystemRole subSystemRole) {
 
@@ -32,8 +32,8 @@ public class Operator_SubSystemRoleHistory {
         this.operator_SubSystemRoleId = operator_SubSystemRoleId;
         this.operatorId = operatorId;
         this.subSystemRoleCode = subSystemRoleCode;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
         this.recordVersion = recordVersion;
         this.subSystemRole = subSystemRole;
     }
@@ -44,8 +44,8 @@ public class Operator_SubSystemRoleHistory {
         Long operator_SubSystemRoleId,
         Long operatorId,
         String subSystemRoleCode,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Integer recordVersion,
         SubSystemRole subSystemRole) {
 
@@ -54,8 +54,8 @@ public class Operator_SubSystemRoleHistory {
             operator_SubSystemRoleId,
             operatorId,
             subSystemRoleCode,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             recordVersion,
             subSystemRole);
     }
@@ -67,8 +67,8 @@ public class Operator_SubSystemRoleHistory {
     public Long getOperator_SubSystemRoleId() { return operator_SubSystemRoleId; }
     public Long getOperatorId() { return operatorId; }
     public String getSubSystemRoleCode() { return subSystemRoleCode; }
-    public LocalDate getExpirationStartDate() { return expirationStartDate; }
-    public LocalDate getExpirationEndDate() { return expirationEndDate; }
+    public LocalDate getValidThruStartDate() { return validThruStartDate; }
+    public LocalDate getValidThruEndDate() { return validThruEndDate; }
     public Integer getRecordVersion() { return recordVersion; }
     public SubSystemRole getSubSystemRole() { return subSystemRole; }
 

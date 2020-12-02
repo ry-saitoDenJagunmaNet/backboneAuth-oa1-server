@@ -132,8 +132,8 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         operatorEntity.setOperatorCode(operatorEntryPack.getOperatorCode());
         operatorEntity.setOperatorName(operatorEntryPack.getOperatorName());
         operatorEntity.setMailAddress(operatorEntryPack.getMailAddress());
-        operatorEntity.setExpirationStartDate(operatorEntryPack.getExpirationStartDate());
-        operatorEntity.setExpirationEndDate(operatorEntryPack.getExpirationEndDate());
+        operatorEntity.setValidThruStartDate(operatorEntryPack.getValidThruStartDate());
+        operatorEntity.setValidThruEndDate(operatorEntryPack.getValidThruEndDate());
         operatorEntity.setIsDeviceAuth(false);
         operatorEntity.setJaId(operatorEntryPack.getJaId());
         operatorEntity.setJaCode(operatorEntryPack.getJaCode());
@@ -157,8 +157,8 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         operatorEntity.setOperatorId(operatorUpdatePack.getOperatorId());
         operatorEntity.setOperatorName(operatorUpdatePack.getOperatorName());
         operatorEntity.setMailAddress(operatorUpdatePack.getMailAddress());
-        operatorEntity.setExpirationStartDate(operatorUpdatePack.getExpirationStartDate());
-        operatorEntity.setExpirationEndDate(operatorUpdatePack.getExpirationEndDate());
+        operatorEntity.setValidThruStartDate(operatorUpdatePack.getValidThruStartDate());
+        operatorEntity.setValidThruEndDate(operatorUpdatePack.getValidThruEndDate());
         operatorEntity.setIsDeviceAuth(operatorUpdatePack.getIsDeviceAuth());
         operatorEntity.setBranchId(operatorUpdatePack.getBranchId());
         operatorEntity.setBranchCode(operatorUpdatePack.getBranchCode());

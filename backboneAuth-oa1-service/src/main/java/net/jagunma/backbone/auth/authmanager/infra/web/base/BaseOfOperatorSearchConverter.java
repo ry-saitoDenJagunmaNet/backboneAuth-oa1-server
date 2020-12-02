@@ -43,13 +43,13 @@ public class BaseOfOperatorSearchConverter {
      *
      * @return 有効期限開始日
      */
-    public LocalDateCriteria getExpirationStartDateCriteria() { return new LocalDateCriteria(); }
+    public LocalDateCriteria getValidThruStartDateCriteria() { return new LocalDateCriteria(); }
     /***
      * 有効期限終了日検索条件のＧｅｔ
      *
      * @return 有効期限終了日
      */
-    public LocalDateCriteria getExpirationEndDateCriteria() { return new LocalDateCriteria(); }
+    public LocalDateCriteria getValidThruEndDateCriteria() { return new LocalDateCriteria(); }
     /**
      * 機器認証検索条件のＧｅｔ
      *

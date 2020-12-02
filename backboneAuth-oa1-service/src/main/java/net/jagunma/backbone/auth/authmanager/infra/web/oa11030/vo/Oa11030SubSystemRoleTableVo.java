@@ -14,21 +14,21 @@ public class Oa11030SubSystemRoleTableVo {
     /**
      * 有効期限
      */
-    private String expirationDate;
+    private String validThruDate;
 
     // Getter
     public String getRoleName() {
         return roleName;
     }
-    public String getExpirationDate() {
-        return expirationDate;
+    public String getValidThruDate() {
+        return validThruDate;
     }
 
     // Setter
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setValidThruDate(String validThruDate) {
+        this.validThruDate = validThruDate;
     }
 }

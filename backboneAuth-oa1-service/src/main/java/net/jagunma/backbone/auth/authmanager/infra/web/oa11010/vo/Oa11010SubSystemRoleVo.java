@@ -25,27 +25,27 @@ public class Oa11010SubSystemRoleVo implements Serializable {
     /**
      * 有効期限選択
      */
-    private Integer expirationSelect;
+    private Integer validThruSelect;
     /**
      * 状態指定日
      */
-    private LocalDate expirationStatusDate;
+    private LocalDate validThruStatusDate;
     /**
      * 条件指定日開始（開始日）
      */
-    private LocalDate expirationStartDateFrom;
+    private LocalDate validThruStartDateFrom;
     /**
      * 条件指定日開始（終了日）
      */
-    private LocalDate expirationStartDateTo;
+    private LocalDate validThruStartDateTo;
     /**
      * 条件指定日終了（開始日）
      */
-    private LocalDate expirationEndDateFrom;
+    private LocalDate validThruEndDateFrom;
     /**
      * 条件指定日終了（終了日）
      */
-    private LocalDate expirationEndDateTo;
+    private LocalDate validThruEndDateTo;
 
     // Getter／Setter
     public Boolean getSubSystemRoleSelected() {
@@ -66,40 +66,40 @@ public class Oa11010SubSystemRoleVo implements Serializable {
     public void setSubSystemRoleName(String subSystemRoleName) {
         this.subSystemRoleName = subSystemRoleName;
     }
-    public Integer getExpirationSelect() {
-        return expirationSelect;
+    public Integer getValidThruSelect() {
+        return validThruSelect;
     }
-    public void setExpirationSelect(Integer expirationSelect) {
-        this.expirationSelect = expirationSelect;
+    public void setValidThruSelect(Integer validThruSelect) {
+        this.validThruSelect = validThruSelect;
     }
-    public LocalDate getExpirationStatusDate() {
-        return expirationStatusDate;
+    public LocalDate getValidThruStatusDate() {
+        return validThruStatusDate;
     }
-    public void setExpirationStatusDate(LocalDate expirationStatusDate) {
-        this.expirationStatusDate = expirationStatusDate;
+    public void setValidThruStatusDate(LocalDate validThruStatusDate) {
+        this.validThruStatusDate = validThruStatusDate;
     }
-    public LocalDate getExpirationStartDateFrom() {
-        return expirationStartDateFrom;
+    public LocalDate getValidThruStartDateFrom() {
+        return validThruStartDateFrom;
     }
-    public void setExpirationStartDateFrom(LocalDate expirationStartDateFrom) {
-        this.expirationStartDateFrom = expirationStartDateFrom;
+    public void setValidThruStartDateFrom(LocalDate validThruStartDateFrom) {
+        this.validThruStartDateFrom = validThruStartDateFrom;
     }
-    public LocalDate getExpirationStartDateTo() {
-        return expirationStartDateTo;
+    public LocalDate getValidThruStartDateTo() {
+        return validThruStartDateTo;
     }
-    public void setExpirationStartDateTo(LocalDate expirationStartDateTo) {
-        this.expirationStartDateTo = expirationStartDateTo;
+    public void setValidThruStartDateTo(LocalDate validThruStartDateTo) {
+        this.validThruStartDateTo = validThruStartDateTo;
     }
-    public LocalDate getExpirationEndDateFrom() {
-        return expirationEndDateFrom;
+    public LocalDate getValidThruEndDateFrom() {
+        return validThruEndDateFrom;
     }
-    public void setExpirationEndDateFrom(LocalDate expirationEndDateFrom) {
-        this.expirationEndDateFrom = expirationEndDateFrom;
+    public void setValidThruEndDateFrom(LocalDate validThruEndDateFrom) {
+        this.validThruEndDateFrom = validThruEndDateFrom;
     }
-    public LocalDate getExpirationEndDateTo() {
-        return expirationEndDateTo;
+    public LocalDate getValidThruEndDateTo() {
+        return validThruEndDateTo;
     }
-    public void setExpirationEndDateTo(LocalDate expirationEndDateTo) {
-        this.expirationEndDateTo = expirationEndDateTo;
+    public void setValidThruEndDateTo(LocalDate validThruEndDateTo) {
+        this.validThruEndDateTo = validThruEndDateTo;
     }
 }

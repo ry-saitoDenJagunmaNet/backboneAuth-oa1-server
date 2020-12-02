@@ -10,8 +10,8 @@ public class OperatorEntryPack {
     private final String operatorCode;
     private final String operatorName;
     private final String mailAddress;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
     private final Long jaId;
     private final String jaCode;
     private final Long branchId;
@@ -24,8 +24,8 @@ public class OperatorEntryPack {
         String operatorCode,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Long jaId,
         String jaCode,
         Long branchId,
@@ -36,8 +36,8 @@ public class OperatorEntryPack {
         this.operatorCode = operatorCode;
         this.operatorName = operatorName;
         this.mailAddress = mailAddress;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
         this.jaId = jaId;
         this.jaCode = jaCode;
         this.branchId = branchId;
@@ -50,8 +50,8 @@ public class OperatorEntryPack {
         String operatorCode,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Long jaId,
         String jaCode,
         Long branchId,
@@ -63,8 +63,8 @@ public class OperatorEntryPack {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             jaId,
             jaCode,
             branchId,
@@ -83,11 +83,11 @@ public class OperatorEntryPack {
     public String getMailAddress() {
         return mailAddress;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
     public Long getJaId() {
         return jaId;

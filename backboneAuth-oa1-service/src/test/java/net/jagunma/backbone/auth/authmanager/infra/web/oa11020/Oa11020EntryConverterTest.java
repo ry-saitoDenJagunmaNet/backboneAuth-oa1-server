@@ -15,8 +15,8 @@ class Oa11020EntryConverterTest {
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Long branchId = 1L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
@@ -39,8 +39,8 @@ class Oa11020EntryConverterTest {
         vo.setOperatorCode6(operatorCode6);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-        vo.setExpirationStartDate(expirationStartDate);
-        vo.setExpirationEndDate(expirationEndDate);
+        vo.setValidThruStartDate(validThruStartDate);
+        vo.setValidThruEndDate(validThruEndDate);
         vo.setBranchId(branchId);
         vo.setChangeCause(changeCause);
         vo.setPassword(password);
@@ -54,8 +54,8 @@ class Oa11020EntryConverterTest {
         assertThat(converter.getOperatorCode6()).isEqualTo(operatorCode6);
         assertThat(converter.getOperatorName()).isEqualTo(operatorName);
         assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(converter.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(converter.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(converter.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(converter.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(converter.getBranchId()).isEqualTo(branchId);
         assertThat(converter.getChangeCause()).isEqualTo(changeCause);
         assertThat(converter.getPassword()).isEqualTo(password);

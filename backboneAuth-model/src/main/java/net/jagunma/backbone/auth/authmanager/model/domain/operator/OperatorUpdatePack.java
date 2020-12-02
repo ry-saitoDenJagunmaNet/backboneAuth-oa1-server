@@ -11,8 +11,8 @@ public class OperatorUpdatePack {
     private final Long operatorId;
     private final String operatorName;
     private final String mailAddress;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
     private final Boolean isDeviceAuth;
     private final Long branchId;
     private final String branchCode;
@@ -25,8 +25,8 @@ public class OperatorUpdatePack {
         Long operatorId,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Boolean isDeviceAuth,
         Long branchId,
         String branchCode,
@@ -37,8 +37,8 @@ public class OperatorUpdatePack {
         this.operatorId = operatorId;
         this.operatorName = operatorName;
         this.mailAddress = mailAddress;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
         this.isDeviceAuth = isDeviceAuth;
         this.branchId = branchId;
         this.branchCode = branchCode;
@@ -51,8 +51,8 @@ public class OperatorUpdatePack {
         Long operatorId,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Boolean isDeviceAuth,
         Long branchId,
         String branchCode,
@@ -64,8 +64,8 @@ public class OperatorUpdatePack {
             operatorId,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             branchId,
             branchCode,
@@ -84,11 +84,11 @@ public class OperatorUpdatePack {
     public String getMailAddress() {
         return mailAddress;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
     public Boolean getIsDeviceAuth() {
         return isDeviceAuth;

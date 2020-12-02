@@ -105,8 +105,8 @@ public class StoreBizTranRoleComposition {
                     bizTranGrp_BizTranSheet.getBizTranCode(),
                     bizTranGrp_BizTranSheet.getBizTranName(),
                     bizTranGrp_BizTranSheet.getIsCenterBizTran(),
-                    bizTranGrp_BizTranSheet.getExpirationStartDate(),
-                    bizTranGrp_BizTranSheet.getExpirationEndDate(),
+                    bizTranGrp_BizTranSheet.getValidThruStartDate(),
+                    bizTranGrp_BizTranSheet.getValidThruEndDate(),
                     subSystemCode,
                     null,
                     null));

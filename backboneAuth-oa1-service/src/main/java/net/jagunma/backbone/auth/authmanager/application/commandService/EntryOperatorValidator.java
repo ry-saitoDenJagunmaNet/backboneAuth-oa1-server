@@ -34,8 +34,8 @@ class EntryOperatorValidator {
         // 未セットチェック
         Preconditions.checkNotEmpty(request.getOperatorCode6(), () -> new GunmaRuntimeException("EOA13002", "オペレーターコード（下6桁）"));
         Preconditions.checkNotEmpty(request.getOperatorName(), () -> new GunmaRuntimeException("EOA13002", "オペレーター名"));
-        Preconditions.checkNotNull(request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（開始日）"));
-        Preconditions.checkNotNull(request.getExpirationEndDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（終了日）"));
+        Preconditions.checkNotNull(request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（開始日）"));
+        Preconditions.checkNotNull(request.getValidThruEndDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（終了日）"));
         Preconditions.checkNotNull(request.getBranchId(), () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
         Preconditions.checkNotEmpty(request.getChangeCause(), () -> new GunmaRuntimeException("EOA13002", "変更事由"));
         Preconditions.checkNotEmpty(request.getPassword(), () -> new GunmaRuntimeException("EOA13002", "パスワード"));
@@ -59,7 +59,7 @@ class EntryOperatorValidator {
         }
 
         // 範囲指定不正チェック
-        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
+        Preconditions.checkMax(request.getValidThruEndDate(), request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
 
         // パスワード不一致チェック
         if (!request.getPassword().equals(request.getConfirmPassword())) {

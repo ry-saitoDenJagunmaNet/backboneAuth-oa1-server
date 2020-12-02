@@ -26,36 +26,36 @@ public interface OparatorSearchSubSystemRoleRequest {
      *
      * @return 有効期限選択
      */
-    Integer getExpirationSelect();
+    Integer getValidThruSelect();
     /**
      * 状態指定日のＧｅｔ
      *
      * @return 状態指定日
      */
-    LocalDate getExpirationStatusDate();
+    LocalDate getValidThruStatusDate();
     /**
      * 条件指定日開始（開始日）のＧｅｔ
      *
      * @return 条件指定日開始（開始日）
      */
-    LocalDate getExpirationStartDateFrom();
+    LocalDate getValidThruStartDateFrom();
     /**
      * 条件指定日開始（終了日）のＧｅｔ
      *
      * @return 条件指定日開始（終了日）
      */
-    LocalDate getExpirationStartDateTo();
+    LocalDate getValidThruStartDateTo();
     /**
      * 条件指定日終了（開始日）のＧｅｔ
      *
      * @return 条件指定日終了（開始日）
      */
-    LocalDate getExpirationEndDateFrom();
+    LocalDate getValidThruEndDateFrom();
     /**
      * 条件指定日終了（終了日）のＧｅｔ
      *
      * @return 条件指定日終了（終了日）
      */
-    LocalDate getExpirationEndDateTo();
+    LocalDate getValidThruEndDateTo();
 
 }

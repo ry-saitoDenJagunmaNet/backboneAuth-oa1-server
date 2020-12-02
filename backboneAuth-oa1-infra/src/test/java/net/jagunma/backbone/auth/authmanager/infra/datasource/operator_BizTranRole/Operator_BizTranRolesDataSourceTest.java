@@ -96,8 +96,8 @@ class Operator_BizTranRolesDataSourceTest {
         Long operator_BizTranRoleId,
         Long operatorId,
         Long bizTranRoleId,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Long createdBy,
         LocalDateTime createdAt,
         String createdIpAddress,
@@ -110,8 +110,8 @@ class Operator_BizTranRolesDataSourceTest {
         entity.setOperator_BizTranRoleId(operator_BizTranRoleId);
         entity.setOperatorId(operatorId);
         entity.setBizTranRoleId(bizTranRoleId);
-        entity.setExpirationStartDate(expirationStartDate);
-        entity.setExpirationEndDate(expirationEndDate);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
         entity.setCreatedBy(createdBy);
         entity.setCreatedAt(createdAt);
         entity.setCreatedIpAddress(createdIpAddress);
@@ -191,8 +191,8 @@ class Operator_BizTranRolesDataSourceTest {
                 entity.getOperator_BizTranRoleId(),
                 entity.getOperatorId(),
                 entity.getBizTranRoleId(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
                 bizTranRoles.getValues().stream().filter(b->b.getBizTranRoleId().equals(entity.getBizTranRoleId())).findFirst().orElse(null)));

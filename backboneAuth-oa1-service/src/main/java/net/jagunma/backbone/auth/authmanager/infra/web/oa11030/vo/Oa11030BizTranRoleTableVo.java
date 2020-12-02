@@ -18,7 +18,7 @@ public class Oa11030BizTranRoleTableVo {
     /**
      * 有効期限
      */
-    private String expirationDate;
+    private String validThruDate;
 
     // Getter
     public String getRoleCode() {
@@ -27,8 +27,8 @@ public class Oa11030BizTranRoleTableVo {
     public String getRoleName() {
         return roleName;
     }
-    public String getExpirationDate() {
-        return expirationDate;
+    public String getValidThruDate() {
+        return validThruDate;
     }
 
     // Setter
@@ -38,7 +38,7 @@ public class Oa11030BizTranRoleTableVo {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setValidThruDate(String validThruDate) {
+        this.validThruDate = validThruDate;
     }
 }

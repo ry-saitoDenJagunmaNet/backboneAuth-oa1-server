@@ -61,8 +61,8 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         vo.setOperatorCode(operator.getOperatorCode());
         vo.setOperatorName(operator.getOperatorName());
         vo.setMailAddress(operator.getMailAddress());
-        vo.setExpirationStartDate(operator.getExpirationStartDate());
-        vo.setExpirationEndDate(operator.getExpirationEndDate());
+        vo.setValidThruStartDate(operator.getValidThruStartDate());
+        vo.setValidThruEndDate(operator.getValidThruEndDate());
         vo.setIsDeviceAuth(CheckboxUtil.setSmoother(operator.getIsDeviceAuth()));
         vo.setAvailableStatus(CheckboxUtil.setSmoother((operator.getAvailableStatus().equals(AvailableStatus.利用可能))? true : false));
 
@@ -74,9 +74,9 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
             Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
             oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
-            oa11030SubSystemRoleTableVo.setExpirationDate(
-                operator_SubSystemRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
-                operator_SubSystemRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            oa11030SubSystemRoleTableVo.setValidThruDate(
+                operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
+                operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             oa11030SubSystemRoleTableVoList.add(oa11030SubSystemRoleTableVo);
         }
         vo.setOa11030SubSystemRoleTableVoList(oa11030SubSystemRoleTableVoList);
@@ -86,9 +86,9 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
             Oa11030BizTranRoleTableVo oa11030BizTranRoleTableVo = new Oa11030BizTranRoleTableVo();
             oa11030BizTranRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
             oa11030BizTranRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
-            oa11030BizTranRoleTableVo.setExpirationDate(
-                operator_BizTranRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
-                operator_BizTranRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            oa11030BizTranRoleTableVo.setValidThruDate(
+                operator_BizTranRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
+                operator_BizTranRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             oa11030BizTranRoleTableVoList.add(oa11030BizTranRoleTableVo);
         }
         vo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);

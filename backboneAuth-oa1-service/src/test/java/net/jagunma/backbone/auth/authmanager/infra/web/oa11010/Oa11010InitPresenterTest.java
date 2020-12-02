@@ -49,7 +49,7 @@ class Oa11010InitPresenterTest {
             .withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder()
                 .withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build())
             .build());
-        Integer expirationSelect = 1;
+        Integer validThruSelect = 1;
         Integer subSystemRoleConditionsSelect = 1;
         Integer bizTranRoleConditionsSelect = 1;
         List<BizTranRole> bizTranRoleList = newArrayList();
@@ -63,7 +63,7 @@ class Oa11010InitPresenterTest {
         presenter.setJaCode(jaCode);
         presenter.setJaName(jaName);
         presenter.setBranchesAtMoment(BranchesAtMoment.of(branchList));
-        presenter.setExpirationSelect(expirationSelect);
+        presenter.setValidThruSelect(validThruSelect);
         presenter.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         presenter.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         presenter.setBizTranRoles(BizTranRoles.createFrom(bizTranRoleList));
@@ -73,7 +73,7 @@ class Oa11010InitPresenterTest {
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setJaId(jaId);
         expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(BranchesAtMoment.of(branchList)).getValue());
-        expectedVo.setExpirationSelect(expirationSelect);
+        expectedVo.setValidThruSelect(validThruSelect);
         expectedVo.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         List<Oa11010SubSystemRoleVo> subSystemRoleVoList = newArrayList();
         for(SubSystemRole subSystemRole : SubSystemRole.values()) {
@@ -81,7 +81,7 @@ class Oa11010InitPresenterTest {
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
             subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
-            subSystemRoleVo.setExpirationSelect(0);
+            subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }
         expectedVo.setSubSystemRoleList(subSystemRoleVoList);
@@ -94,7 +94,7 @@ class Oa11010InitPresenterTest {
             bizTranRoleVo.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
             bizTranRoleVo.setBizTranRoleName(bizTranRole.getBizTranRoleName());
             bizTranRoleVo.setSubSystemCode(bizTranRole.getSubSystemCode());
-            bizTranRoleVo.setExpirationSelect(0);
+            bizTranRoleVo.setValidThruSelect(0);
             bizTranRoleVoList.add(bizTranRoleVo);
         }
         expectedVo.setBizTranRoleList(bizTranRoleVoList);

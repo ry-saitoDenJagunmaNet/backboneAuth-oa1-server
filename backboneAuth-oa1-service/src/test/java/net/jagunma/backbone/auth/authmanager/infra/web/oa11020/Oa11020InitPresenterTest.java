@@ -56,8 +56,8 @@ class Oa11020InitPresenterTest {
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);
         expectedVo.setMailAddress(null);
-        expectedVo.setExpirationStartDate(null);
-        expectedVo.setExpirationEndDate(null);
+        expectedVo.setValidThruStartDate(null);
+        expectedVo.setValidThruEndDate(null);
         expectedVo.setChangeCause(null);
         expectedVo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         expectedVo.setPassword(null);

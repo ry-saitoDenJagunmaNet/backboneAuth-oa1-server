@@ -30,8 +30,8 @@ class BizTranGrp_BizTranSheetTest {
         String bizTranCode = "AN0001";
         String bizTranName = "畜産メインメニュー";
         Boolean isCenterBizTran = false;
-        LocalDate expirationStartDate = LocalDate.of(2010,6,21);
-        LocalDate expirationEndDate = LocalDate.of(9999,12,31);
+        LocalDate validThruStartDate = LocalDate.of(2010,6,21);
+        LocalDate validThruEndDate = LocalDate.of(9999,12,31);
 
         // 実行
         BizTranGrp_BizTranSheet bizTranGrp_BizTranSheet = BizTranGrp_BizTranSheet.createFrom(
@@ -42,8 +42,8 @@ class BizTranGrp_BizTranSheetTest {
             bizTranCode,
             bizTranName,
             isCenterBizTran,
-            expirationStartDate,
-            expirationEndDate);
+            validThruStartDate,
+            validThruEndDate);
 
         // 結果検証
         assertTrue(bizTranGrp_BizTranSheet instanceof BizTranGrp_BizTranSheet);
@@ -54,7 +54,7 @@ class BizTranGrp_BizTranSheetTest {
         assertThat(bizTranGrp_BizTranSheet.getBizTranCode()).isEqualTo(bizTranCode);
         assertThat(bizTranGrp_BizTranSheet.getBizTranName()).isEqualTo(bizTranName);
         assertThat(bizTranGrp_BizTranSheet.getIsCenterBizTran()).isEqualTo(isCenterBizTran);
-        assertThat(bizTranGrp_BizTranSheet.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(bizTranGrp_BizTranSheet.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(bizTranGrp_BizTranSheet.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(bizTranGrp_BizTranSheet.getValidThruEndDate()).isEqualTo(validThruEndDate);
     }
 }

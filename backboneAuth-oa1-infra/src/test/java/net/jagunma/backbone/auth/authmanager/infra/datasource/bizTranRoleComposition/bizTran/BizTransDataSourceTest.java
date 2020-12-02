@@ -88,8 +88,8 @@ class BizTransDataSourceTest {
         String bizTranCode,
         String bizTranName,
         Boolean isCenterBizTran,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         String subSystemCode,
         Long createdBy,
         LocalDateTime createdAt,
@@ -104,8 +104,8 @@ class BizTransDataSourceTest {
         entity.setBizTranCode(bizTranCode);
         entity.setBizTranName(bizTranName);
         entity.setIsCenterBizTran(isCenterBizTran);
-        entity.setExpirationStartDate(expirationStartDate);
-        entity.setExpirationEndDate(expirationEndDate);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
         entity.setSubSystemCode(subSystemCode);
         entity.setCreatedBy(createdBy);
         entity.setCreatedAt(createdAt);
@@ -144,8 +144,8 @@ class BizTransDataSourceTest {
                 entity.getBizTranCode(),
                 entity.getBizTranName(),
                 entity.getIsCenterBizTran(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getSubSystemCode(),
                 entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())));
@@ -187,8 +187,8 @@ class BizTransDataSourceTest {
                 entity.getBizTranCode(),
                 entity.getBizTranName(),
                 entity.getIsCenterBizTran(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getSubSystemCode(),
                 entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())));
