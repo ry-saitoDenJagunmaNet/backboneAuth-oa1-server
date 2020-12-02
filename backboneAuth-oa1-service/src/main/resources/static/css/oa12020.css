@@ -36,8 +36,8 @@ div.oa_collapsible_header {width: 100px;}
 .oaex_table_biztran_code {min-width: 50px; width: 4%;}
 .oaex_table_biztran_name {min-width: 150px; width: 10%;}
 /* 有効期限 */
-.oaex_table_expiration_date_th {min-width: 180px; width: 13%;}
-.oaex_table_expiration_date {min-width: 180px; width: 13%;}
+.oaex_table_valid_thru_date_th {min-width: 180px; width: 13%;}
+.oaex_table_valid_thru_date {min-width: 180px; width: 13%;}
 /* 抑止理由 */
 .oaex_table_suspend_reason_th {min-width: 320px; width: 22%;}
 .oaex_table_suspend_reason {min-width: 320px; width: 22%;}

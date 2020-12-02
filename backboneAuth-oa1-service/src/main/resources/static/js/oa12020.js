@@ -107,15 +107,15 @@ function oaex_initialize() {
 	//oa_setDisabled("biztran", true);
 
 	// 有効期限のラジオボタン初期化
-	document.getElementById("expiration_sel_non").checked = true;	
-	oaex_expiration_sel_onChange();
+	document.getElementById("valid_thru_sel_non").checked = true;
+	oaex_validThruSel_onChange();
 	// 状態指定日
-	document.getElementById("expiration_status_date").value = "";
+	document.getElementById("valid_thru_status_date").value = "";
 	// 条件指定
-	document.getElementById("expiration_start_date_from").value = "";
-	document.getElementById("expiration_start_date_to").value = "";
-	document.getElementById("expiration_end_date_from").value = "";
-	document.getElementById("expiration_end_date_to").value = "";
+	document.getElementById("valid_thru_start_date_from").value = "";
+	document.getElementById("valid_thru_start_date_to").value = "";
+	document.getElementById("valid_thru_end_date_from").value = "";
+	document.getElementById("valid_thru_end_date_to").value = "";
 	
 	// selectの初期化
 	oa_initSelect();
@@ -335,27 +335,27 @@ function oaex_setBiztranOption() {
 /**
  * 有効期限ラジオボタンの変更イベントです。
  */
-function oaex_expiration_sel_onChange() {
-	let val = oa_getRadioCheckedValue("expiration_sel");
+function oaex_validThruSel_onChange() {
+	let val = oa_getRadioCheckedValue("valid_thru_sel");
 
-	oa_setDisabled("expiration_status_date", true);
-	oa_setDisabled("expiration_start_date_from", true);
-	oa_setDisabled("expiration_start_date_to", true);
-	oa_setDisabled("expiration_end_date_from", true);
-	oa_setDisabled("expiration_end_date_to", true);
+	oa_setDisabled("valid_thru_status_date", true);
+	oa_setDisabled("valid_thru_start_date_from", true);
+	oa_setDisabled("valid_thru_start_date_to", true);
+	oa_setDisabled("valid_thru_end_date_from", true);
+	oa_setDisabled("valid_thru_end_date_to", true);
 
 	if (val == "0") {
 		// 指定なし
 	} if (val == "1") {
 		// 状態指定日
-		oa_setDisabled("expiration_status_date", false);
+		oa_setDisabled("valid_thru_status_date", false);
 	} if (val == "2") {
 		// 条件指定
-		oa_setDisabled("expiration_start_date_from", false);
-		oa_setDisabled("expiration_start_date_to", false);
-		oa_setDisabled("expiration_end_date_from", false);
-		oa_setDisabled("expiration_end_date_to", false);
-	}		
+		oa_setDisabled("valid_thru_start_date_from", false);
+		oa_setDisabled("valid_thru_start_date_to", false);
+		oa_setDisabled("valid_thru_end_date_from", false);
+		oa_setDisabled("valid_thru_end_date_to", false);
+	}
 }
 
 /**

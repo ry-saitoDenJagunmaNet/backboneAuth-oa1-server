@@ -132,39 +132,39 @@
 									<div class="col s3">
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"
-													   th:name="expirationSelect" th:checked="${form.expirationSelect == 0}"></input>
+												<input type="radio" id="valid_thru_sel_non" name="validThruSelect" value="0" onchange="oaex_validThruSel_onChange();"
+													   th:name="validThruSelect" th:checked="${form.validThruSelect == 0}"></input>
 												<span>指定なし</span>
 											</label>
 										</div>
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"
-													   th:name="expirationSelect" th:checked="${form.expirationSelect == 1}"></input>
+												<input type="radio" id="valid_thru_sel_status" name="validThruSelect" value="1" onchange="oaex_validThruSel_onChange();"
+													   th:name="validThruSelect" th:checked="${form.validThruSelect == 1}"></input>
 												<span>状態指定日</span>
 											</label>
 										</div>
 										<div>
 											<label>
-												<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"
-													   th:name="expirationSelect" th:checked="${form.expirationSelect == 2}"></input>
+												<input type="radio" id="valid_thru_sel_conditions" name="validThruSelect" value="2" onchange="oaex_validThruSel_onChange();"
+													   th:name="validThruSelect" th:checked="${form.validThruSelect == 2}"></input>
 												<span>条件指定</span>
 											</label>
 										</div>
 									</div>
 									<div class="col s9">
-										<div id="expiration_status_date_div">
+										<div id="valid_thru_status_date_div">
 											<div class="row">
 												<div class="col s6">
 													<div class="input-field">
-														<input type="text" id="expiration_status_date" name="expirationStatusDate" class="validate datepicker"
-															   th:value="${form.expirationStatusDate}"></input>
-														<label for="expiration_status_date">状態指定日</label>
+														<input type="text" id="valid_thru_status_date" name="validThruStatusDate" class="validate datepicker"
+															   th:value="${form.validThruStatusDate}"></input>
+														<label for="valid_thru_status_date">状態指定日</label>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div id="expiration_conditions_div">
+										<div id="valid_thru_conditions_div">
 											<div class="row">
 												<div class="col s5">
 													<label class="oa_content_label">有効期限開始</label>
@@ -173,17 +173,17 @@
 											<div class="row">
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_start_date_from" name="expirationStartDateFrom" class="validate datepicker"
-															   th:value="${form.expirationStartDateFrom}"></input>
-														<label for="expiration_start_date_from">（開始日）</label>
+														<input type="text" id="valid_thru_start_date_from" name="validThruStartDateFrom" class="validate datepicker"
+															   th:value="${form.validThruStartDateFrom}"></input>
+														<label for="valid_thru_start_date_from">（開始日）</label>
 													</div>
 												</div>
 												<div class="col s1"><div class="center-align"><p>～</p></div></div>
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_start_date_to" name="expirationStartDateTo" class="validate datepicker"
-															   th:value="${form.expirationStartDateTo}"></input>
-														<label for="expiration_start_date_to">（終了日）</label>
+														<input type="text" id="valid_thru_start_date_to" name="validThruStartDateTo" class="validate datepicker"
+															   th:value="${form.validThruStartDateTo}"></input>
+														<label for="valid_thru_start_date_to">（終了日）</label>
 													</div>
 												</div>
 											</div>
@@ -195,17 +195,17 @@
 											<div class="row">
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_end_date_from" name="expirationEndDateFrom" class="validate datepicker"
-															   th:value="${form.expirationEndDateFrom}"></input>
-														<label for="expiration_end_date_from">（開始日）</label>
+														<input type="text" id="valid_thru_end_date_from" name="validThruEndDateFrom" class="validate datepicker"
+															   th:value="${form.validThruEndDateFrom}"></input>
+														<label for="valid_thru_end_date_from">（開始日）</label>
 													</div>
 												</div>
 												<div class="col s1"><div class="center-align"><p>～</p></div></div>
 												<div class="col s5">
 													<div class="input-field">
-														<input type="text" id="expiration_end_date_to" name="expirationEndDateTo" class="validate datepicker"
-															   th:value="${form.expirationEndDateTo}"></input>
-														<label for="expiration_end_date_to">（終了日）</label>
+														<input type="text" id="valid_thru_end_date_to" name="validThruEndDateTo" class="validate datepicker"
+															   th:value="${form.validThruEndDateTo}"></input>
+														<label for="valid_thru_end_date_to">（終了日）</label>
 													</div>
 												</div>
 											</div>
@@ -227,17 +227,17 @@
 						<div class="row">
 							<div class="col s12">
 								<label>
-									<input type="radio" id="subsystem_role_sel_non" name="subSystemRoleConditionsSelect" value="0" onchange="oaex_subsystem_role_sel_onChange();"
+									<input type="radio" id="subsystem_role_sel_non" name="subSystemRoleConditionsSelect" value="0" onchange="oaex_subsystemRoleSel_onChange();"
 										   th:checked="${form.subSystemRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_and" name="subSystemRoleConditionsSelect" value="1" onchange="oaex_subsystem_role_sel_onChange();"
+									<input type="radio" id="subsystem_role_sel_and" name="subSystemRoleConditionsSelect" value="1" onchange="oaex_subsystemRoleSel_onChange();"
 										   th:checked="${form.subSystemRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="subsystem_role_sel_or" name="subSystemRoleConditionsSelect" value="2" onchange="oaex_subsystem_role_sel_onChange();"
+									<input type="radio" id="subsystem_role_sel_or" name="subSystemRoleConditionsSelect" value="2" onchange="oaex_subsystemRoleSel_onChange();"
 										   th:checked="${form.subSystemRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
@@ -254,10 +254,10 @@
 												<tr>
 													<th class="oaex_subsystem_role_check_th"></th>
 													<th class="oaex_subsystem_role_subsystem_role_th">サブシステムロール</th>
-													<th class="oaex_subsystem_role_expiration_sel_non_th" colspan="2">有効期限</th>
-													<th class="oaex_subsystem_role_expiration_status_date_th">状態指定日</th>
-													<th class="oaex_subsystem_role_expiration_start_date_from_th" colspan="3">開始</th>
-													<th class="oaex_subsystem_role_expiration_end_date_from_th" colspan="3">終了</th>
+													<th class="oaex_subsystem_role_valid_thru_sel_non_th" colspan="2">有効期限</th>
+													<th class="oaex_subsystem_role_valid_thru_status_date_th">状態指定日</th>
+													<th class="oaex_subsystem_role_valid_thru_start_date_from_th" colspan="3">開始</th>
+													<th class="oaex_subsystem_role_valid_thru_end_date_from_th" colspan="3">終了</th>
 												</tr>
 											</thead>
 										</table>
@@ -286,76 +286,76 @@
 												<td class="oaex_subsystem_role_subsystem_role_name"
 													th:text="${itemrow.subSystemRoleName}">
 												</td>
-												<td class="oaex_subsystem_role_expiration_sel_non">
+												<td class="oaex_subsystem_role_valid_thru_sel_non">
 													<label>
 														<input type="radio" value="0"
-															   th:id="'subsystem_role_expiration_sel_non['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 0}"
-															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'subsystem_role_valid_thru_sel_non['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 0}"
+															   th:onchange="'oaex_subsystemRoleValidThruSel_onChange('+${iterStat.index}+');'"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_sel_status">
+												<td class="oaex_subsystem_role_valid_thru_sel_status">
 													<label>
 														<input type="radio" value="1"
-															   th:id="'subsystem_role_expiration_sel_status['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 1}"
-															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'subsystem_role_valid_thru_sel_status['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 1}"
+															   th:onchange="'oaex_subsystemRoleValidThrusel_onChange('+${iterStat.index}+');'"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_status_date">
+												<td class="oaex_subsystem_role_valid_thru_status_date">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'subsystem_role_expiration_status_date['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
-														<label th:for="'+subsystem_role_expiration_status_date['+${iterStat.index}+']'"></label>
+															   th:id="'subsystem_role_valid_thru_status_date['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruStatusDate}"></input>
+														<label th:for="'+subsystem_role_valid_thru_status_date['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_sel_conditions">
+												<td class="oaex_subsystem_role_valid_thru_sel_conditions">
 													<label>
 														<input type="radio" value="2"
-															   th:id="'subsystem_role_expiration_sel_conditions['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 2}"
-															   th:onchange="'oaex_subsystem_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'subsystem_role_valid_thru_sel_conditions['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 2}"
+															   th:onchange="'oaex_subsystemRoleValidThruSel_onChange('+${iterStat.index}+');'"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_start_date_from">
+												<td class="oaex_subsystem_role_valid_thru_start_date_from">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
-														<label th:for="'subsystem_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
+															   th:id="'subsystem_role_valid_thru_start_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruStartDateFrom}"></input>
+														<label th:for="'subsystem_role_valid_thru_start_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_start_date_tilde">～</td>
-												<td class="oaex_subsystem_role_expiration_start_date_to">
+												<td class="oaex_subsystem_role_valid_thru_start_date_tilde">～</td>
+												<td class="oaex_subsystem_role_valid_thru_start_date_to">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
-														<label th:for="'subsystem_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
+															   th:id="'subsystem_role_valid_thru_start_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruStartDateTo}"></input>
+														<label th:for="'subsystem_role_valid_thru_start_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_end_date_from">
+												<td class="oaex_subsystem_role_valid_thru_end_date_from">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
-														<label th:for="'subsystem_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
+															   th:id="'subsystem_role_valid_thru_end_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruEndDateFrom}"></input>
+														<label th:for="'subsystem_role_valid_thru_end_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_end_date_tilde">～</td>
-												<td class="oaex_subsystem_role_expiration_end_date_to">
+												<td class="oaex_subsystem_role_valid_thru_end_date_tilde">～</td>
+												<td class="oaex_subsystem_role_valid_thru_end_date_to">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
-														<label th:for="'subsystem_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
+															   th:id="'subsystem_role_valid_thru_end_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.subSystemRoleList[__${iterStat.index}__].validThruEndDateTo}"></input>
+														<label th:for="'subsystem_role_valid_thru_end_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
 											</tr>
@@ -369,54 +369,54 @@
 												</td>
 												<td class="oaex_subsystem_role_subsystem_role_code">0000</td>
 												<td class="oaex_subsystem_role_subsystem_role_name">JA管理者</td>
-												<td class="oaex_subsystem_role_expiration_sel_non">
+												<td class="oaex_subsystem_role_valid_thru_sel_non">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[0]" name="subsystemRoleExpirationSelect[0]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_non[0]" name="subsystemRolevalidThruSelect[0]" value="0" onchange="oaex_subsystemRoleValidThruSel_onChange(0);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_sel_status">
+												<td class="oaex_subsystem_role_valid_thru_sel_status">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[0]" name="subsystemRoleExpirationSelect[0]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_status[0]" name="subsystemRolevalidThruSelect[0]" value="1" onchange="oaex_subsystemRoleValidThruSel_onChange(0);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_status_date">
+												<td class="oaex_subsystem_role_valid_thru_status_date">
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_status_date[0]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_status_date[0]"></label>
+														<input type="text" id="subsystem_role_valid_thru_status_date[0]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_status_date[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_sel_conditions">
+												<td class="oaex_subsystem_role_valid_thru_sel_conditions">
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[0]" name="subsystemRoleExpirationSelect[0]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_conditions[0]" name="subsystemRolevalidThruSelect[0]" value="2" onchange="oaex_subsystemRoleValidThruSel_onChange(0);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
-												<td class="oaex_subsystem_role_expiration_start_date_from">
+												<td class="oaex_subsystem_role_valid_thru_start_date_from">
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_from[0]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_from[0]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_from[0]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_from[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_start_date_tilde">～</td>
-												<td class="oaex_subsystem_role_expiration_start_date_to">
+												<td class="oaex_subsystem_role_valid_thru_start_date_tilde">～</td>
+												<td class="oaex_subsystem_role_valid_thru_start_date_to">
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_to[0]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_to[0]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_to[0]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_to[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_end_date_from">
+												<td class="oaex_subsystem_role_valid_thru_end_date_from">
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_from[0]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_from[0]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_from[0]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_from[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_subsystem_role_expiration_end_date_tilde">～</td>
-												<td class="oaex_subsystem_role_expiration_end_date_to">
+												<td class="oaex_subsystem_role_valid_thru_end_date_tilde">～</td>
+												<td class="oaex_subsystem_role_valid_thru_end_date_to">
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_to[0]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_to[0]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_to[0]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_to[0]"></label>
 													</div>
 												</td>
 											</tr>
@@ -431,52 +431,52 @@
 												<td>業務統括者（購買）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[1]" name="subsystemRoleExpirationSelect[1]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_non[1]" name="subsystemRoleValidThruSelect[1]" value="0" onchange="oaex_subsystemRoleValidThruSel_onChange(1);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[1]" name="subsystemRoleExpirationSelect[1]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_status[1]" name="subsystemRoleValidThruSelect[1]" value="1" onchange="oaex_subsystemRoleValidThruSel_onChange(1);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_status_date[1]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_status_date[1]"></label>
+														<input type="text" id="subsystem_role_valid_thru_status_date[1]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_status_date[1]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[1]" name="subsystemRoleExpirationSelect[1]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_conditions[1]" name="subsystemRoleValidThruSelect[1]" value="2" onchange="oaex_subsystemRoleValidThruSel_onChange(1);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_from[1]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_from[1]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_from[1]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_from[1]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_to[1]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_to[1]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_to[1]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_to[1]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_from[1]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_from[1]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_from[1]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_from[1]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_to[1]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_to[1]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_to[1]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_to[1]"></label>
 													</div>
 												</td>
 											</tr>
@@ -491,52 +491,52 @@
 												<td>業務統括者（販売・青果）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[2]" name="subsystemRoleExpirationSelect[2]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_non[2]" name="subsystemRoleValidThruSelect[2]" value="0" onchange="oaex_subsystemRoleValidThruSel_onChange(2);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[2]" name="subsystemRoleExpirationSelect[2]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_status[2]" name="subsystemRoleValidThruSelect[2]" value="1" onchange="oaex_subsystemRoleValidThruSel_onChange(2);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_status_date[2]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_status_date[2]"></label>
+														<input type="text" id="subsystem_role_valid_thru_status_date[2]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_status_date[2]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[2]" name="subsystemRoleExpirationSelect[2]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_conditions[2]" name="subsystemRoleValidThruSelect[2]" value="2" onchange="oaex_subsystemRoleValidThruSel_onChange(2);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_from[2]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_from[2]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_from[2]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_from[2]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_to[2]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_to[2]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_to[2]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_to[2]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_from[2]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_from[2]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_from[2]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_from[2]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_to[2]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_to[2]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_to[2]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_to[2]"></label>
 													</div>
 												</td>
 											</tr>
@@ -551,52 +551,52 @@
 												<td>業務統括者（販売・花卉）</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_non[3]" name="subsystemRoleExpirationSelect[3]" value="0" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_non[3]" name="subsystemRoleValidThruSelect[3]" value="0" onchange="oaex_subsystemRoleValidThruSel_onChange(3);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_status[3]" name="subsystemRoleExpirationSelect[3]" value="1" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_status[3]" name="subsystemRoleValidThruSelect[3]" value="1" onchange="oaex_subsystemRoleValidThruSel_onChange(3);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_status_date[3]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_status_date[3]"></label>
+														<input type="text" id="subsystem_role_valid_thru_status_date[3]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_status_date[3]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="subsystem_role_expiration_sel_conditions[3]" name="subsystemRoleExpirationSelect[3]" value="2" onchange="oaex_subsystem_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="subsystem_role_valid_thru_sel_conditions[3]" name="subsystemRoleValidThruSelect[3]" value="2" onchange="oaex_subsystemRoleValidThruSel_onChange(3);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_from[3]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_from[3]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_from[3]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_from[3]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_start_date_to[3]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_start_date_to[3]"></label>
+														<input type="text" id="subsystem_role_valid_thru_start_date_to[3]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_start_date_to[3]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_from[3]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_from[3]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_from[3]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_from[3]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="subsystem_role_expiration_end_date_to[3]" class="validate datepicker" value=""></input>
-														<label for="subsystem_role_expiration_end_date_to[3]"></label>
+														<input type="text" id="subsystem_role_valid_thru_end_date_to[3]" class="validate datepicker" value=""></input>
+														<label for="subsystem_role_valid_thru_end_date_to[3]"></label>
 													</div>
 												</td>
 											</tr>
@@ -618,17 +618,17 @@
 						<div class="row">
 							<div class="col s5">
 								<label>
-									<input type="radio" id="biztran_role_sel_non" name="bizTranRoleConditionsSelect" value="0" onchange="oaex_biztran_role_sel_onChange();"
+									<input type="radio" id="biztran_role_sel_non" name="bizTranRoleConditionsSelect" value="0" onchange="oaex_biztranRoleSel_onChange();"
 										   th:checked="${form.bizTranRoleConditionsSelect == 0}"></input>
 									<span>指定なし</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_and" name="bizTranRoleConditionsSelect" value="1" onchange="oaex_biztran_role_sel_onChange();"
+									<input type="radio" id="biztran_role_sel_and" name="bizTranRoleConditionsSelect" value="1" onchange="oaex_biztranRoleSel_onChange();"
 										   th:checked="${form.bizTranRoleConditionsSelect == 1}"></input>
 									<span>AND</span>
 								</label>
 								<label>
-									<input type="radio" id="biztran_role_sel_or" name="bizTranRoleConditionsSelect" value="2" onchange="oaex_biztran_role_sel_onChange();"
+									<input type="radio" id="biztran_role_sel_or" name="bizTranRoleConditionsSelect" value="2" onchange="oaex_biztranRoleSel_onChange();"
 										   th:checked="${form.bizTranRoleConditionsSelect == 2}"></input>
 									<span>OR</span>
 								</label>
@@ -639,7 +639,7 @@
 							<div class="col s4">
 								<div class="input-field">
 									<select id="subsystem_filter" name="subSystemRoleSubSystemCode" class="validate"
-											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_subsystem_filter_onChange(this)">
+											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_SubsystemFilter_onChange(this)">
 										<option th:each="item  : ${form.bizTranRoleSubSystemList}"
 												th:value="${item.code}"
 												th:text="${item.name}"
@@ -672,10 +672,10 @@
 												<tr>
 													<th class="oaex_biztran_role_check_th"></th>
 													<th class="oaex_biztran_role_biztran_role_th">取引ロール</th>
-													<th class="oaex_biztran_role_expiration_sel_non_th" colspan="2">有効期限</th>
-													<th class="oaex_biztran_role_expiration_status_date_th">状態指定日</th>
-													<th class="oaex_biztran_role_expiration_start_date_from_th" colspan="3">開始</th>
-													<th class="oaex_biztran_role_expiration_end_date_from_th" colspan="3">終了</th>
+													<th class="oaex_biztran_role_valid_thru_sel_non_th" colspan="2">有効期限</th>
+													<th class="oaex_biztran_role_valid_thru_status_date_th">状態指定日</th>
+													<th class="oaex_biztran_role_valid_thru_start_date_from_th" colspan="3">開始</th>
+													<th class="oaex_biztran_role_valid_thru_end_date_from_th" colspan="3">終了</th>
 												</tr>
 											</thead>
 										</table>
@@ -706,76 +706,76 @@
 												</td>
 												<td class="oaex_biztran_role_biztran_role_code" th:text="${itemrow.bizTranRoleCode}"></td>
 												<td class="oaex_biztran_role_biztran_role_name" th:text="${itemrow.bizTranRoleName}"></td>
-												<td class="oaex_biztran_role_expiration_sel_non">
+												<td class="oaex_biztran_role_valid_thru_sel_non">
 													<label>
 														<input type="radio" value="0"
-															   th:id="'biztran_role_expiration_sel_non['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 0}"
-															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'biztran_role_valid_thru_sel_non['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 0}"
+															   th:onchange="'oaex_biztranRoleValidThruSel_onChange('+${iterStat.index}+');'"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_sel_status">
+												<td class="oaex_biztran_role_valid_thru_sel_status">
 													<label>
 														<input type="radio" value="1"
-															   th:id="'biztran_role_expiration_sel_status['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 1}"
-															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'biztran_role_valid_thru_sel_status['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 1}"
+															   th:onchange="'oaex_biztranRoleValidThruSel_onChange('+${iterStat.index}+');'"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_status_date">
+												<td class="oaex_biztran_role_valid_thru_status_date">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'biztran_role_expiration_status_date['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStatusDate}"></input>
-														<label th:for="'+biztran_role_expiration_status_date['+${iterStat.index}+']'"></label>
+															   th:id="'biztran_role_valid_thru_status_date['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruStatusDate}"></input>
+														<label th:for="'+biztran_role_valid_thru_status_date['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_sel_conditions">
+												<td class="oaex_biztran_role_valid_thru_sel_conditions">
 													<label>
 														<input type="radio" value="2"
-															   th:id="'biztran_role_expiration_sel_conditions['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationSelect}"
-															   th:checked="${itemrow.expirationSelect == 2}"
-															   th:onchange="'oaex_biztran_role_expiration_sel_onChange('+${iterStat.index}+');'"></input>
+															   th:id="'biztran_role_valid_thru_sel_conditions['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruSelect}"
+															   th:checked="${itemrow.validThruSelect == 2}"
+															   th:onchange="'oaex_biztranRoleValidThruSel_onChange('+${iterStat.index}+');'"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_start_date_from">
+												<td class="oaex_biztran_role_valid_thru_start_date_from">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'biztran_role_expiration_start_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStartDateFrom}"></input>
-														<label th:for="'+biztran_role_expiration_start_date_from['+${iterStat.index}+']'"></label>
+															   th:id="'biztran_role_valid_thru_start_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruStartDateFrom}"></input>
+														<label th:for="'+biztran_role_valid_thru_start_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_start_date_tilde">～</td>
-												<td class="oaex_biztran_role_expiration_start_date_to">
+												<td class="oaex_biztran_role_valid_thru_start_date_tilde">～</td>
+												<td class="oaex_biztran_role_valid_thru_start_date_to">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'biztran_role_expiration_start_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationStartDateTo}"></input>
-														<label th:for="'+biztran_role_expiration_start_date_to['+${iterStat.index}+']'"></label>
+															   th:id="'biztran_role_valid_thru_start_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruStartDateTo}"></input>
+														<label th:for="'+biztran_role_valid_thru_start_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_end_date_from">
+												<td class="oaex_biztran_role_valid_thru_end_date_from">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'biztran_role_expiration_end_date_from['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationEndDateFrom}"></input>
-														<label th:for="'+biztran_role_expiration_end_date_from['+${iterStat.index}+']'"></label>
+															   th:id="'biztran_role_valid_thru_end_date_from['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruEndDateFrom}"></input>
+														<label th:for="'+biztran_role_valid_thru_end_date_from['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_end_date_tilde">～</td>
-												<td class="oaex_biztran_role_expiration_end_date_to">
+												<td class="oaex_biztran_role_valid_thru_end_date_tilde">～</td>
+												<td class="oaex_biztran_role_valid_thru_end_date_to">
 													<div class="input-field">
 														<input type="text" class="validate datepicker"
-															   th:id="'biztran_role_expiration_end_date_to['+${iterStat.index}+']'"
-															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].expirationEndDateTo}"></input>
-														<label th:for="'+biztran_role_expiration_end_date_to['+${iterStat.index}+']'"></label>
+															   th:id="'biztran_role_valid_thru_end_date_to['+${iterStat.index}+']'"
+															   th:field="*{form.bizTranRoleList[__${iterStat.index}__].validThruEndDateTo}"></input>
+														<label th:for="'+biztran_role_valid_thru_end_date_to['+${iterStat.index}+']'"></label>
 													</div>
 												</td>
 											</tr>
@@ -790,54 +790,54 @@
 												</td>
 												<td class="oaex_biztran_role_biztran_role_code">YSAG19</td>
 												<td class="oaex_biztran_role_biztran_role_name">（青果）管理者（仕切実績修正）</td>
-												<td class="oaex_biztran_role_expiration_sel_non">
+												<td class="oaex_biztran_role_valid_thru_sel_non">
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_non[0]" name="biztran_role_expiration_sel[0]" value="0" onchange="oaex_biztran_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_non[0]" name="biztranRoleValidThruSel[0]" value="0" onchange="oaex_biztranRoleValidThruSel_onChange(0);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_sel_status">
+												<td class="oaex_biztran_role_valid_thru_sel_status">
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_status[0]" name="biztran_role_expiration_sel[0]" value="1" onchange="oaex_biztran_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_status[0]" name="biztranRolevalidThruSel[0]" value="1" onchange="oaex_biztranRoleValidThruSel_onChange(0);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_status_date">
+												<td class="oaex_biztran_role_valid_thru_status_date">
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_status_date[0]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_status_date[0]"></label>
+														<input type="text" id="biztran_role_valid_thru_status_date[0]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_status_date[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_sel_conditions">
+												<td class="oaex_biztran_role_valid_thru_sel_conditions">
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_conditions[0]" name="biztran_role_expiration_sel[0]" value="2" onchange="oaex_biztran_role_expiration_sel_onChange(0);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_conditions[0]" name="biztranRolevalidThruSel[0]" value="2" onchange="oaex_biztranRoleValidThruSel_onChange(0);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
-												<td class="oaex_biztran_role_expiration_start_date_from">
+												<td class="oaex_biztran_role_valid_thru_start_date_from">
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_from[0]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_from[0]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_from[0]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_from[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_start_date_tilde">～</td>
-												<td class="oaex_biztran_role_expiration_start_date_to">
+												<td class="oaex_biztran_role_valid_thru_start_date_tilde">～</td>
+												<td class="oaex_biztran_role_valid_thru_start_date_to">
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_to[0]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_to[0]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_to[0]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_to[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_end_date_from">
+												<td class="oaex_biztran_role_valid_thru_end_date_from">
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_from[0]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_from[0]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_from[0]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_from[0]"></label>
 													</div>
 												</td>
-												<td class="oaex_biztran_role_expiration_end_date_tilde">～</td>
-												<td class="oaex_biztran_role_expiration_end_date_to">
+												<td class="oaex_biztran_role_valid_thru_end_date_tilde">～</td>
+												<td class="oaex_biztran_role_valid_thru_end_date_to">
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_to[0]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_to[0]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_to[0]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_to[0]"></label>
 													</div>
 												</td>
 											</tr>
@@ -852,52 +852,52 @@
 												<td>（青果）精算担当</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_non[1]" name="biztran_role_expiration_sel[1]" value="0" onchange="oaex_biztran_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_non[1]" name="biztranRolevalidThruSel[1]" value="0" onchange="oaex_biztranRoleValidThruSel_onChange(1);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_status[1]" name="biztran_role_expiration_sel[1]" value="1" onchange="oaex_biztran_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_status[1]" name="biztranRolevalidThruSel[1]" value="1" onchange="oaex_biztranRoleValidThruSel_onChange(1);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_status_date[1]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_status_date[1]"></label>
+														<input type="text" id="biztran_role_valid_thru_status_date[1]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_status_date[1]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_conditions[1]" name="biztran_role_expiration_sel[1]" value="2" onchange="oaex_biztran_role_expiration_sel_onChange(1);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_conditions[1]" name="biztranRolevalidThruSel[1]" value="2" onchange="oaex_biztranRoleValidThruSel_onChange(1);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_from[1]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_from[1]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_from[1]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_from[1]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_to[1]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_to[1]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_to[1]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_to[1]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_from[1]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_from[1]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_from[1]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_from[1]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_to[1]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_to[1]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_to[1]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_to[1]"></label>
 													</div>
 												</td>
 											</tr>
@@ -912,52 +912,52 @@
 												<td>（青果）集荷場担当</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_non[2]" name="biztran_role_expiration_sel[2]" value="0" onchange="oaex_biztran_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_non[2]" name="biztranRolevalidThruSel[2]" value="0" onchange="oaex_biztranRoleValidThruSel_onChange(2);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_status[2]" name="biztran_role_expiration_sel[2]" value="1" onchange="oaex_biztran_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_status[2]" name="biztranRolevalidThruSel[2]" value="1" onchange="oaex_biztranRoleValidThruSel_onChange(2);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_status_date[2]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_status_date[2]"></label>
+														<input type="text" id="biztran_role_valid_thru_status_date[2]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_status_date[2]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_conditions[2]" name="biztran_role_expiration_sel[2]" value="2" onchange="oaex_biztran_role_expiration_sel_onChange(2);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_conditions[2]" name="biztranRolevalidThruSel[2]" value="2" onchange="oaex_biztranRoleValidThruSel_onChange(2);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_from[2]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_from[2]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_from[2]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_from[2]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_to[2]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_to[2]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_to[2]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_to[2]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_from[2]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_from[2]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_from[2]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_from[2]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_to[2]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_to[2]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_to[2]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_to[2]"></label>
 													</div>
 												</td>
 											</tr>
@@ -972,52 +972,52 @@
 												<td>（青果）集荷場担当（荷受送り入力）</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_non[3]" name="biztran_role_expiration_sel[3]" value="0" onchange="oaex_biztran_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_non[3]" name="biztranRolevalidThruSel[3]" value="0" onchange="oaex_biztranRoleValidThruSel_onChange(3);"></input>
 														<span>指定なし</span>
 													</label>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_status[3]" name="biztran_role_expiration_sel[3]" value="1" onchange="oaex_biztran_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_status[3]" name="biztranRolevalidThruSel[3]" value="1" onchange="oaex_biztranRoleValidThruSel_onChange(3);"></input>
 														<span>状態指定日</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_status_date[3]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_status_date[3]"></label>
+														<input type="text" id="biztran_role_valid_thru_status_date[3]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_status_date[3]"></label>
 													</div>
 												</td>
 												<td>
 													<label>
-														<input type="radio" id="biztran_role_expiration_sel_conditions[3]" name="biztran_role_expiration_sel[3]" value="2" onchange="oaex_biztran_role_expiration_sel_onChange(3);"></input>
+														<input type="radio" id="biztran_role_valid_thru_sel_conditions[3]" name="biztranRolevalidThruSel[3]" value="2" onchange="oaex_biztranRoleValidThruSel_onChange(3);"></input>
 														<span>条件指定</span>
 													</label>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_from[3]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_from[3]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_from[3]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_from[3]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_start_date_to[3]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_start_date_to[3]"></label>
+														<input type="text" id="biztran_role_valid_thru_start_date_to[3]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_start_date_to[3]"></label>
 													</div>
 												</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_from[3]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_from[3]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_from[3]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_from[3]"></label>
 													</div>
 												</td>
 												<td>～</td>
 												<td>
 													<div class="input-field">
-														<input type="text" id="biztran_role_expiration_end_date_to[3]" class="validate datepicker" value=""></input>
-														<label for="biztran_role_expiration_end_date_to[3]"></label>
+														<input type="text" id="biztran_role_valid_thru_end_date_to[3]" class="validate datepicker" value=""></input>
+														<label for="biztran_role_valid_thru_end_date_to[3]"></label>
 													</div>
 												</td>
 											</tr>
@@ -1267,29 +1267,29 @@
 									<th class="oaex_operator_account_lock_th">ﾛｯｸ</th>
 									<th class="oaex_operator_branch_th" colspan="2">店舗</th>
 									<th class="oaex_operator_operator_th" colspan="2">オペレーター</th>
-									<th class="oaex_operator_expiration_date_th">オペレーター有効期限</th>
+									<th class="oaex_operator_valid_thru_date_th">オペレーター有効期限</th>
 									<th class="oaex_operator_subsystem_role_th">サブシステムロール</th>
-									<th class="oaex_operator_subsystem_role_expiration_date_th">サブシステムロール<br/>有効期限</th>
+									<th class="oaex_operator_subsystem_role_valid_thru_date_th">サブシステムロール<br/>有効期限</th>
 									<th class="oaex_operator_biztran_role_th" colspan="2">取引ロール</th>
-									<th class="oaex_operator_biztran_role_expiration_date_th">取引ロール有効期限</th>
+									<th class="oaex_operator_biztran_role_valid_thru_date_th">取引ロール有効期限</th>
 								</tr>
 							</thead>
 							<tbody id="operator_table">
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this);" th:remove="all">
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operatorTable_onClick(this);" th:remove="all">
 									<td class="oaex_operator_available_status"><div class="oaex_available_status_possible"></div></td>
 									<td class="oaex_operator_account_lock"><div class="oaex_account_unlock"></div></td>
 									<td class="oaex_operator_branch_code">000</td>
 									<td class="oaex_operator_branch_name">本所</td>
 									<td class="oaex_operator_operator_code">OP101001</td>
 									<td class="oaex_operator_operator_name">前橋太郎</td>
-									<td class="oaex_operator_expiration_date">2019/04/01～9999/12/31</td>
+									<td class="oaex_operator_valid_thru_date">2019/04/01～9999/12/31</td>
 									<td class="oaex_operator_subsystem_role">業務統括者（販売・青果）</td>
-									<td class="oaex_operator_subsystem_role_expiration_date">2019/04/01～9999/12/31</td>
+									<td class="oaex_operator_subsystem_role_valid_thru_date">2019/04/01～9999/12/31</td>
 									<td class="oaex_operator_biztran_role_code">YSAG20</td>
 									<td class="oaex_operator_biztran_role_name">（青果）精算担当</td>
-									<td class="oaex_operator_biztran_role_expiration_date">2019/04/01～9999/12/31</td>
+									<td class="oaex_operator_biztran_role_valid_thru_date">2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)" th:remove="all">
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operatorTable_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1303,7 +1303,7 @@
 									<td>（青果）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0" onclick="oaex_operator_table_onClick(this)" th:remove="all">
+								<tr class="oaex_operator_table_operator_0" onclick="oaex_operatorTable_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1317,7 +1317,7 @@
 									<td>（花卉）精算担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_0 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)"th:remove="all">
+								<tr class="oaex_operator_table_operator_0 oaex_operator_table_row" onclick="oaex_operatorTable_onClick(this)"th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1331,7 +1331,7 @@
 									<td>（花卉）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_1" onclick="oaex_operator_table_onClick(this)" th:remove="all">
+								<tr class="oaex_operator_table_operator_1" onclick="oaex_operatorTable_onClick(this)" th:remove="all">
 									<td><div class="oaex_available_status_possible"></div></td>
 									<td><div class="oaex_account_lock"></div></td>
 									<td></td>
@@ -1345,7 +1345,7 @@
 									<td>（花卉）精算担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_1 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)" th:remove="all">
+								<tr class="oaex_operator_table_operator_1 oaex_operator_table_row" onclick="oaex_operatorTable_onClick(this)" th:remove="all">
 									<td></td>
 									<td></td>
 									<td></td>
@@ -1359,7 +1359,7 @@
 									<td>（花卉）集荷場担当</td>
 									<td>2019/04/01～9999/12/31</td>
 								</tr>
-								<tr class="oaex_operator_table_operator_2 oaex_operator_table_row" onclick="oaex_operator_table_onClick(this)" th:remove="all">
+								<tr class="oaex_operator_table_operator_2 oaex_operator_table_row" onclick="oaex_operatorTable_onClick(this)" th:remove="all">
 									<td><div class="oaex_available_status_inpossible"></div></td>
 									<td><div class="oaex_account_unlock"></div></td>
 									<td></td>

@@ -140,26 +140,26 @@
 						<div class="row oa_optional">
 							<div class="col s3">
 								<label>
-									<input type="radio" id="expiration_sel_non" name="expiration_sel" value="0" onchange="oaex_expiration_sel_onChange();"
+									<input type="radio" id="valid_thru_sel_non" name="valid_thru_sel" value="0" onchange="oaex_validThruSel_onChange();"
 										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 0}"/>
 									<span>指定なし</span>
 								</label>
 							</div>
 							<div class="col s3">
 								<label>
-									<input type="radio" id="expiration_sel_status" name="expiration_sel" value="1" onchange="oaex_expiration_sel_onChange();"
+									<input type="radio" id="valid_thru_sel_status" name="valid_thru_sel" value="1" onchange="oaex_validThrusel_onChange();"
 										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 1}"/>
 									<span>状態指定日</span>
 								</label>
 								<div class="input-field">
-									<input type="text" id="expiration_status_date" name="suspendStatusDate" class="validate datepicker" value=""
+									<input type="text" id="valid_thru_status_date" name="suspendStatusDate" class="validate datepicker" value=""
 										   th:value="${form.suspendStatusDate}"/>
-									<label for="expiration_status_date"></label>
+									<label for="valid_thru_status_date"></label>
 								</div>
 							</div>
 							<div class="col s6">
 								<label>
-									<input type="radio" id="expiration_sel_conditions" name="expiration_sel" value="2" onchange="oaex_expiration_sel_onChange();"
+									<input type="radio" id="valid_thru_sel_conditions" name="valid_thru_sel" value="2" onchange="oaex_validThrusel_onChange();"
 										   th:name="suspendConditionsSelect" th:checked="${form.suspendConditionsSelect == 2}"/>
 									<span>条件指定</span>
 								</label>
@@ -167,17 +167,17 @@
 									<div class="col s4"><p>抑止開始</p></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_start_date_from" name="suspendStatusStartDateFrom" class="validate datepicker" value=""
+											<input type="text" id="valid_thru_start_date_from" name="suspendStatusStartDateFrom" class="validate datepicker" value=""
 												   th:value="${form.suspendStatusStartDateFrom}"/>
-											<label for="expiration_start_date_from"></label>
+											<label for="valid_thru_start_date_from"></label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_start_date_to" name="suspendStatusStartDateTo" class="validate datepicker" value=""
+											<input type="text" id="valid_thru_start_date_to" name="suspendStatusStartDateTo" class="validate datepicker" value=""
 												   th:value="${form.suspendStatusStartDateTo}"/>
-											<label for="expiration_start_date_to"></label>
+											<label for="valid_thru_start_date_to"></label>
 										</div>
 									</div>
 								</div>
@@ -185,17 +185,17 @@
 									<div class="col s4"><p>抑止終了</p></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_end_date_from" name="suspendStatusEndDateFrom" class="validate datepicker" value=""
+											<input type="text" id="valid_thru_end_date_from" name="suspendStatusEndDateFrom" class="validate datepicker" value=""
 												   th:value="${form.suspendStatusEndDateFrom}"/>
-											<label for="expiration_end_date_from"></label>
+											<label for="valid_thru_end_date_from"></label>
 										</div>
 									</div>
 									<div class="col s1"><div class="center-align"><p>～</p></div></div>
 									<div class="col s3">
 										<div class="input-field">
-											<input type="text" id="expiration_end_date_to" name="suspendStatusEndDateTo" class="validate datepicker" value=""
+											<input type="text" id="valid_thru_end_date_to" name="suspendStatusEndDateTo" class="validate datepicker" value=""
 												   th:value="${form.suspendStatusEndDateTo}"/>
-											<label for="expiration_end_date_to"></label>
+											<label for="valid_thru_end_date_to"></label>
 										</div>
 									</div>
 								</div>
@@ -238,7 +238,7 @@
 									<th class="oaex_table_subsystem_th">サブシステム</th>
 									<th class="oaex_table_biztran_grp_th" colspan="2">取引グループ</th>
 									<th class="oaex_table_biztran_th" colspan="2">取引</th>
-									<th class="oaex_table_expiration_date_th">有効期限</th>
+									<th class="oaex_table_valid_thru_date_th">有効期限</th>
 									<th class="oaex_table_suspend_reason_th">抑止理由</th>
 								</tr>
 							</thead>
@@ -253,10 +253,10 @@
 								<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
 								<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
 								<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
-								<td class="oaex_table_expiration_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
+								<td class="oaex_table_valid_thru_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
 								<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
 							</tr>
-								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_expiration_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_valid_thru_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>006</td><td>JA前橋</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>合併前のデータ凍結の為のデータ投入抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>007</td><td>JAたかさき</td><td>000</td><td>本所</td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td></td><td></td><td></td><td></td><td>購買</td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
