@@ -47,8 +47,8 @@ class Oa11030InitPresenterTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = false;
     private Long jaId = 6L;
     private String jaCode = "006";
@@ -74,7 +74,7 @@ class Oa11030InitPresenterTest {
     private BranchAtMoment branchAtMoment = BranchAtMoment.builder().withIdentifier(branchId).withJaAtMoment(jaAtMoment).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of(branchCode)).withName("本店").build()).build();
 
     // オペレーター系
-    private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, expirationStartDate, expirationEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, branchAtMoment);
+    private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, validThruStartDate, validThruEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, branchAtMoment);
     private List<Operator> OperatorList= newArrayList(operator);
     private Operators operators = Operators.createFrom(OperatorList);
 
@@ -93,11 +93,11 @@ class Oa11030InitPresenterTest {
 
     // オペレーター_サブシステムロール割当履歴系
     private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
-        Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), expirationStartDate, expirationEndDate, 391, operator, SubSystemRole.JA管理者),
-        Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), expirationStartDate, expirationEndDate, 392, operator, SubSystemRole.業務統括者_購買),
-        Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), expirationStartDate, expirationEndDate, 393, operator, SubSystemRole.業務統括者_販売_青果),
-        Operator_SubSystemRole.createFrom(304L, operatorId, SubSystemRole.業務統括者_販売_米.getCode(), expirationStartDate, expirationEndDate, 394, operator, SubSystemRole.業務統括者_販売_米),
-        Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), expirationStartDate, expirationEndDate, 395, operator, SubSystemRole.業務統括者_販売_畜産));
+        Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), validThruStartDate, validThruEndDate, 391, operator, SubSystemRole.JA管理者),
+        Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), validThruStartDate, validThruEndDate, 392, operator, SubSystemRole.業務統括者_購買),
+        Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), validThruStartDate, validThruEndDate, 393, operator, SubSystemRole.業務統括者_販売_青果),
+        Operator_SubSystemRole.createFrom(304L, operatorId, SubSystemRole.業務統括者_販売_米.getCode(), validThruStartDate, validThruEndDate, 394, operator, SubSystemRole.業務統括者_販売_米),
+        Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), validThruStartDate, validThruEndDate, 395, operator, SubSystemRole.業務統括者_販売_畜産));
     private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
     // オペレーター_取引ロール割当履歴系
@@ -107,10 +107,10 @@ class Oa11030InitPresenterTest {
         BizTranRole.createFrom(403L, "KB0002", "顧客検索", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
         BizTranRole.createFrom(404L, "YS0000", "野菜メインメニュー", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果));
     private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
-        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(0)),
-        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(1)),
-        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(2)),
-        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, operator, bizTranRoleList.get(3)));
+        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, operator, bizTranRoleList.get(0)),
+        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, operator, bizTranRoleList.get(1)),
+        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, operator, bizTranRoleList.get(2)),
+        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, operator, bizTranRoleList.get(3)));
     private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
     // オペレーター履歴ヘッダー系
@@ -145,9 +145,9 @@ class Oa11030InitPresenterTest {
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
             Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
             oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
-            oa11030SubSystemRoleTableVo.setExpirationDate(
-                operator_SubSystemRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
-                operator_SubSystemRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            oa11030SubSystemRoleTableVo.setValidThruDate(
+                operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
+                operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             oa11030SubSystemRoleTableVoList.add(oa11030SubSystemRoleTableVo);
         }
         List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList = newArrayList();
@@ -155,9 +155,9 @@ class Oa11030InitPresenterTest {
             Oa11030BizTranRoleTableVo oa11030BizTranRoleTableVo = new Oa11030BizTranRoleTableVo();
             oa11030BizTranRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
             oa11030BizTranRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
-            oa11030BizTranRoleTableVo.setExpirationDate(
-                operator_BizTranRole.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
-                operator_BizTranRole.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            oa11030BizTranRoleTableVo.setValidThruDate(
+                operator_BizTranRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
+                operator_BizTranRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             oa11030BizTranRoleTableVoList.add(oa11030BizTranRoleTableVo);
         }
 
@@ -169,8 +169,8 @@ class Oa11030InitPresenterTest {
         expectedVo.setOperatorCode(operatorCode);
         expectedVo.setOperatorName(operatorName);
         expectedVo.setMailAddress(mailAddress);
-        expectedVo.setExpirationStartDate(expirationStartDate);
-        expectedVo.setExpirationEndDate(expirationEndDate);
+        expectedVo.setValidThruStartDate(validThruStartDate);
+        expectedVo.setValidThruEndDate(validThruEndDate);
         expectedVo.setIsDeviceAuth(CheckboxUtil.setSmoother(isDeviceAuth));
         expectedVo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
@@ -252,8 +252,8 @@ class Oa11030InitPresenterTest {
         expectedVo.setOperatorCode(operatorCode);
         expectedVo.setOperatorName(operatorName);
         expectedVo.setMailAddress(mailAddress);
-        expectedVo.setExpirationStartDate(expirationStartDate);
-        expectedVo.setExpirationEndDate(expirationEndDate);
+        expectedVo.setValidThruStartDate(validThruStartDate);
+        expectedVo.setValidThruEndDate(validThruEndDate);
         expectedVo.setIsDeviceAuth(CheckboxUtil.setSmoother(isDeviceAuth));
         expectedVo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);

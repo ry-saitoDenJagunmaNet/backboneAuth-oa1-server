@@ -80,16 +80,16 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 有効期限開始日
      */
-    public LocalDateCriteria getExpirationStartDateCriteria() {
+    public LocalDateCriteria getValidThruStartDateCriteria() {
         LocalDateCriteria criteria = new LocalDateCriteria();
-        if (vo.getExpirationSelect() != null) {
-            if (vo.getExpirationSelect() == 1) {
+        if (vo.getValidThruSelect() != null) {
+            if (vo.getValidThruSelect() == 1) {
                 // 状態指定日
-                criteria.setLessOrEqual(vo.getExpirationStatusDate());
-            } else if (vo.getExpirationSelect() == 2) {
+                criteria.setLessOrEqual(vo.getValidThruStatusDate());
+            } else if (vo.getValidThruSelect() == 2) {
                 // 条件指定
-                criteria.setMoreOrEqual(vo.getExpirationStartDateFrom());
-                criteria.setLessOrEqual(vo.getExpirationStartDateTo());
+                criteria.setMoreOrEqual(vo.getValidThruStartDateFrom());
+                criteria.setLessOrEqual(vo.getValidThruStartDateTo());
             }
         }
         return criteria;
@@ -99,16 +99,16 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
      *
      * @return 有効期限終了日
      */
-    public LocalDateCriteria getExpirationEndDateCriteria() {
+    public LocalDateCriteria getValidThruEndDateCriteria() {
         LocalDateCriteria criteria = new LocalDateCriteria();
-        if (vo.getExpirationSelect() != null) {
-            if (vo.getExpirationSelect() == 1) {
+        if (vo.getValidThruSelect() != null) {
+            if (vo.getValidThruSelect() == 1) {
                 // 状態指定日
-                criteria.setMoreOrEqual(vo.getExpirationStatusDate());
-            } else if (vo.getExpirationSelect() == 2) {
+                criteria.setMoreOrEqual(vo.getValidThruStatusDate());
+            } else if (vo.getValidThruSelect() == 2) {
                 // 条件指定
-                criteria.setMoreOrEqual(vo.getExpirationEndDateFrom());
-                criteria.setLessOrEqual(vo.getExpirationEndDateTo());
+                criteria.setMoreOrEqual(vo.getValidThruEndDateFrom());
+                criteria.setLessOrEqual(vo.getValidThruEndDateTo());
             }
         }
         return criteria;
@@ -187,12 +187,12 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
                     subSystemRoleVo.getSubSystemRoleSelected(),
                     subSystemRoleVo.getSubSystemRoleCode(),
                     subSystemRoleVo.getSubSystemRoleName(),
-                    subSystemRoleVo.getExpirationSelect(),
-                    subSystemRoleVo.getExpirationStatusDate(),
-                    subSystemRoleVo.getExpirationStartDateFrom(),
-                    subSystemRoleVo.getExpirationStartDateTo(),
-                    subSystemRoleVo.getExpirationEndDateFrom(),
-                    subSystemRoleVo.getExpirationEndDateTo()));
+                    subSystemRoleVo.getValidThruSelect(),
+                    subSystemRoleVo.getValidThruStatusDate(),
+                    subSystemRoleVo.getValidThruStartDateFrom(),
+                    subSystemRoleVo.getValidThruStartDateTo(),
+                    subSystemRoleVo.getValidThruEndDateFrom(),
+                    subSystemRoleVo.getValidThruEndDateTo()));
             }
         }
         return list;
@@ -229,12 +229,12 @@ class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements Op
                     bizTranRoleVo.getBizTranRoleCode(),
                     bizTranRoleVo.getBizTranRoleName(),
                     bizTranRoleVo.getSubSystemCode(),
-                    bizTranRoleVo.getExpirationSelect(),
-                    bizTranRoleVo.getExpirationStatusDate(),
-                    bizTranRoleVo.getExpirationStartDateFrom(),
-                    bizTranRoleVo.getExpirationStartDateTo(),
-                    bizTranRoleVo.getExpirationEndDateFrom(),
-                    bizTranRoleVo.getExpirationEndDateTo()));
+                    bizTranRoleVo.getValidThruSelect(),
+                    bizTranRoleVo.getValidThruStatusDate(),
+                    bizTranRoleVo.getValidThruStartDateFrom(),
+                    bizTranRoleVo.getValidThruStartDateTo(),
+                    bizTranRoleVo.getValidThruEndDateFrom(),
+                    bizTranRoleVo.getValidThruEndDateTo()));
             }
         }
         return list;

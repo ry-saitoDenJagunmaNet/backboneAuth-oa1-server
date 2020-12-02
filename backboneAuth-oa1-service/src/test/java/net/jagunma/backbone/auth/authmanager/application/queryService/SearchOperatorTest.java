@@ -81,8 +81,8 @@ class SearchOperatorTest {
     private final StringCriteria operatorCodeCriteria = new StringCriteria();
     private final StringCriteria operatorNameCriteria = new StringCriteria();
     private final StringCriteria mailAddressCriteria = new StringCriteria();
-    private final LocalDateCriteria expirationStartDateCriteria = new LocalDateCriteria();
-    private final LocalDateCriteria expirationEndDateCriteria = new LocalDateCriteria();
+    private final LocalDateCriteria validThruStartDateCriteria = new LocalDateCriteria();
+    private final LocalDateCriteria validThruEndDateCriteria = new LocalDateCriteria();
     private final BooleanCriteria isDeviceAuthCriteria = new BooleanCriteria();
     private final LongCriteria jaIdCriteria = new LongCriteria();
     private final LongCriteria branchIdCriteria = new LongCriteria();
@@ -342,12 +342,12 @@ class SearchOperatorTest {
                 return mailAddressCriteria;
             }
             @Override
-            public LocalDateCriteria getExpirationStartDateCriteria() {
-                return expirationStartDateCriteria;
+            public LocalDateCriteria getValidThruStartDateCriteria() {
+                return validThruStartDateCriteria;
             }
             @Override
-            public LocalDateCriteria getExpirationEndDateCriteria() {
-                return expirationEndDateCriteria;
+            public LocalDateCriteria getValidThruEndDateCriteria() {
+                return validThruEndDateCriteria;
             }
             @Override
             public BooleanCriteria getIsDeviceAuthCriteria() {
@@ -561,8 +561,8 @@ class SearchOperatorTest {
         mailAddressCriteria.setForwardMatch("y");
         jaIdCriteria.setEqualTo(6L);
         branchIdCriteria.setEqualTo(33L);
-        expirationStartDateCriteria.setLessOrEqual(LocalDate.of(2020, 10, 1));
-        expirationEndDateCriteria.setMoreOrEqual(LocalDate.of(2020, 10, 1));
+        validThruStartDateCriteria.setLessOrEqual(LocalDate.of(2020, 10, 1));
+        validThruEndDateCriteria.setMoreOrEqual(LocalDate.of(2020, 10, 1));
         availableStatusIncludesList = newArrayList();
         availableStatusIncludesList.add((short) 0); //利用可能
         signintraceSignOut = true;

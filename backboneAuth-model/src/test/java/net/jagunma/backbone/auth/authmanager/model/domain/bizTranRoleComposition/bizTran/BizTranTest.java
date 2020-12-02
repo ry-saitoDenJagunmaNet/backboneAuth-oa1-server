@@ -28,8 +28,8 @@ class BizTranTest {
         String bizTranCode = "AN0001";
         String bizTranName = "畜産メインメニュー";
         Boolean isCenterBizTran = false;
-        LocalDate expirationStartDate = LocalDate.of(2020,10,1);
-        LocalDate expirationEndDate = LocalDate.of(9999,12,31);
+        LocalDate validThruStartDate = LocalDate.of(2020,10,1);
+        LocalDate validThruEndDate = LocalDate.of(9999,12,31);
         String subSystemCode = SubSystem.販売_畜産.getCode();
         Integer recordVersion = 1;
         SubSystem subSystem = SubSystem.販売_畜産;
@@ -40,8 +40,8 @@ class BizTranTest {
             bizTranCode,
             bizTranName,
             isCenterBizTran,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             subSystemCode,
             recordVersion,
             subSystem);
@@ -52,8 +52,8 @@ class BizTranTest {
         assertThat(bizTran.getBizTranCode()).isEqualTo(bizTranCode);
         assertThat(bizTran.getBizTranName()).isEqualTo(bizTranName);
         assertThat(bizTran.getIsCenterBizTran()).isEqualTo(isCenterBizTran);
-        assertThat(bizTran.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(bizTran.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(bizTran.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(bizTran.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(bizTran.getSubSystemCode()).isEqualTo(subSystemCode);
         assertThat(bizTran.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(bizTran.getSubSystem()).isEqualTo(subSystem);

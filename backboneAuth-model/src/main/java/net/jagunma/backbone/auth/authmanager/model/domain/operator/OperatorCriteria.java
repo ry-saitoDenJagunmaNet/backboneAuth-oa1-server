@@ -16,8 +16,8 @@ public class OperatorCriteria {
     private StringCriteria operatorCodeCriteria = new StringCriteria();
     private StringCriteria operatorNameCriteria = new StringCriteria();
     private StringCriteria mailAddressCriteria = new StringCriteria();
-    private LocalDateCriteria expirationStartDateCriteria = new LocalDateCriteria();
-    private LocalDateCriteria expirationEndDateCriteria = new LocalDateCriteria();
+    private LocalDateCriteria validThruStartDateCriteria = new LocalDateCriteria();
+    private LocalDateCriteria validThruEndDateCriteria = new LocalDateCriteria();
     private BooleanCriteria isDeviceAuthCriteria = new BooleanCriteria();
     private final JaIdentifierCriteria jaIdentifierCriteria = new JaIdentifierCriteria();
     private StringCriteria jaCodeCriteria = new StringCriteria();
@@ -38,11 +38,11 @@ public class OperatorCriteria {
     public StringCriteria getMailAddressCriteria() {
         return mailAddressCriteria;
     }
-    public LocalDateCriteria getExpirationStartDateCriteria() {
-        return expirationStartDateCriteria;
+    public LocalDateCriteria getValidThruStartDateCriteria() {
+        return validThruStartDateCriteria;
     }
-    public LocalDateCriteria getExpirationEndDateCriteria() {
-        return expirationEndDateCriteria;
+    public LocalDateCriteria getValidThruEndDateCriteria() {
+        return validThruEndDateCriteria;
     }
     public BooleanCriteria getIsDeviceAuthCriteria() {
         return isDeviceAuthCriteria;

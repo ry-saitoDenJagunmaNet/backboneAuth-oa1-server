@@ -39,11 +39,11 @@ public class Oa11020Vo extends BaseOfResponseVo {
     /**
      * 有効期限（開始日）
      */
-    private LocalDate expirationStartDate;
+    private LocalDate validThruStartDate;
     /**
      * 有効期限（終了日）
      */
-    private LocalDate expirationEndDate;
+    private LocalDate validThruEndDate;
     /**
      * 変更事由
      */
@@ -82,11 +82,11 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public String getMailAddress() {
         return mailAddress;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
     public String getChangeCause() {
         return changeCause;
@@ -120,11 +120,11 @@ public class Oa11020Vo extends BaseOfResponseVo {
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
-    public void setExpirationStartDate(LocalDate expirationStartDate) {
-        this.expirationStartDate = expirationStartDate;
+    public void setValidThruStartDate(LocalDate validThruStartDate) {
+        this.validThruStartDate = validThruStartDate;
     }
-    public void setExpirationEndDate(LocalDate expirationEndDate) {
-        this.expirationEndDate = expirationEndDate;
+    public void setValidThruEndDate(LocalDate validThruEndDate) {
+        this.validThruEndDate = validThruEndDate;
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;

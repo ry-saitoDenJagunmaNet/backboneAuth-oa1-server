@@ -47,8 +47,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = false;
     private Long jaId = 6L;
     private String jaCode = "006";
@@ -69,11 +69,11 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
     // オペレーター_サブシステムロール割当履歴系
     private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
-        Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), expirationStartDate, expirationEndDate, 391, null, SubSystemRole.JA管理者),
-        Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), expirationStartDate, expirationEndDate, 392, null, SubSystemRole.業務統括者_購買),
-        Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), expirationStartDate, expirationEndDate, 393, null, SubSystemRole.業務統括者_販売_青果),
-        Operator_SubSystemRole.createFrom(304L, operatorId, SubSystemRole.業務統括者_販売_米.getCode(), expirationStartDate, expirationEndDate, 394, null, SubSystemRole.業務統括者_販売_米),
-        Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), expirationStartDate, expirationEndDate, 395, null, SubSystemRole.業務統括者_販売_畜産));
+        Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), validThruStartDate, validThruEndDate, 391, null, SubSystemRole.JA管理者),
+        Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), validThruStartDate, validThruEndDate, 392, null, SubSystemRole.業務統括者_購買),
+        Operator_SubSystemRole.createFrom(303L, operatorId, SubSystemRole.業務統括者_販売_青果.getCode(), validThruStartDate, validThruEndDate, 393, null, SubSystemRole.業務統括者_販売_青果),
+        Operator_SubSystemRole.createFrom(304L, operatorId, SubSystemRole.業務統括者_販売_米.getCode(), validThruStartDate, validThruEndDate, 394, null, SubSystemRole.業務統括者_販売_米),
+        Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), validThruStartDate, validThruEndDate, 395, null, SubSystemRole.業務統括者_販売_畜産));
     private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
     // オペレーター_取引ロール割当履歴系
@@ -83,10 +83,10 @@ class OperatorHistoryPackForStoreDataSourceTest {
         BizTranRole.createFrom(403L, "HKAG10", "（米）ＪＡ取引全般", SubSystem.販売_米.getCode(), recordVersion, SubSystem.販売_米),
         BizTranRole.createFrom(404L, "ANAG01", "（畜産）取引全般", SubSystem.販売_畜産.getCode(), recordVersion, SubSystem.販売_畜産));
     private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
-        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, null, bizTranRoleList.get(0)),
-        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, null, bizTranRoleList.get(1)),
-        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, null, bizTranRoleList.get(2)),
-        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), expirationStartDate, expirationEndDate, recordVersion, null, bizTranRoleList.get(3)));
+        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, null, bizTranRoleList.get(0)),
+        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, null, bizTranRoleList.get(1)),
+        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, null, bizTranRoleList.get(2)),
+        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, null, bizTranRoleList.get(3)));
     private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
     // テスト対象クラス生成
@@ -100,8 +100,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
                 entity.setOperatorCode(operatorCode);
                 entity.setOperatorName(operatorName);
                 entity.setMailAddress(mailAddress);
-                entity.setExpirationStartDate(expirationStartDate);
-                entity.setExpirationEndDate(expirationEndDate);
+                entity.setValidThruStartDate(validThruStartDate);
+                entity.setValidThruEndDate(validThruEndDate);
                 entity.setIsDeviceAuth(isDeviceAuth);
                 entity.setJaId(jaId);
                 entity.setJaCode(jaCode);
@@ -456,8 +456,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
         expectedEntity.setOperatorCode(operatorCode);
         expectedEntity.setOperatorName(operatorName);
         expectedEntity.setMailAddress(mailAddress);
-        expectedEntity.setExpirationStartDate(expirationStartDate);
-        expectedEntity.setExpirationEndDate(expirationEndDate);
+        expectedEntity.setValidThruStartDate(validThruStartDate);
+        expectedEntity.setValidThruEndDate(validThruEndDate);
         expectedEntity.setIsDeviceAuth(isDeviceAuth);
         expectedEntity.setJaId(jaId);
         expectedEntity.setJaCode(jaCode);
@@ -536,8 +536,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
         operatorEntity.setOperatorCode(operatorCode);
         operatorEntity.setOperatorName(operatorName);
         operatorEntity.setMailAddress(mailAddress);
-        operatorEntity.setExpirationStartDate(expirationStartDate);
-        operatorEntity.setExpirationEndDate(expirationEndDate);
+        operatorEntity.setValidThruStartDate(validThruStartDate);
+        operatorEntity.setValidThruEndDate(validThruEndDate);
         operatorEntity.setIsDeviceAuth(isDeviceAuth);
         operatorEntity.setJaId(jaId);
         operatorEntity.setJaCode(jaCode);

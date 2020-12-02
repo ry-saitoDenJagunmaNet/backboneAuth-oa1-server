@@ -17,8 +17,8 @@ class Oa11030UpdateConverterTest {
     private Long operatorId = 123456L;
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;
     private Long branchId = 1L;
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
@@ -43,8 +43,8 @@ class Oa11030UpdateConverterTest {
         vo.setRecordVersion(recordVersion);
         vo.setOperatorName(operatorName);
         vo.setMailAddress(mailAddress);
-        vo.setExpirationStartDate(expirationStartDate);
-        vo.setExpirationEndDate(expirationEndDate);
+        vo.setValidThruStartDate(validThruStartDate);
+        vo.setValidThruEndDate(validThruEndDate);
         vo.setIsDeviceAuth(CheckboxUtil.setSmoother(isDeviceAuth));
         vo.setBranchId(branchId);
         vo.setAvailableStatus(CheckboxUtil.setSmoother((availableStatus.equals(AvailableStatus.利用可能))? true : false));
@@ -59,8 +59,8 @@ class Oa11030UpdateConverterTest {
         assertThat(converter.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(converter.getOperatorName()).isEqualTo(operatorName);
         assertThat(converter.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(converter.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(converter.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(converter.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(converter.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(converter.getIsDeviceAuth()).isEqualTo(isDeviceAuth);
         assertThat(converter.getBranchId()).isEqualTo(branchId);
         assertThat(converter.getAvailableStatus()).isEqualTo(availableStatus);

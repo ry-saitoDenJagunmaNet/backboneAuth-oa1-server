@@ -22,7 +22,7 @@ class Oa11010InitPresenter {
     private String jaCode;
     private String jaName;
     private BranchesAtMoment branchesAtMoment;
-    private Integer expirationSelect;
+    private Integer validThruSelect;
     private Integer subSystemRoleConditionsSelect;
     private Integer bizTranRoleConditionsSelect;
     private BizTranRoles bizTranRoles;
@@ -65,10 +65,10 @@ class Oa11010InitPresenter {
     /**
      * 有効期限選択のＳｅｔ
      *
-     * @param expirationSelect 有効期限選択
+     * @param validThruSelect 有効期限選択
      */
-    public void setExpirationSelect(Integer expirationSelect) {
-        this.expirationSelect = expirationSelect;
+    public void setValidThruSelect(Integer validThruSelect) {
+        this.validThruSelect = validThruSelect;
     }
     /**
      * サブシステムロール条件選択のＳｅｔ
@@ -108,7 +108,7 @@ class Oa11010InitPresenter {
         // 店舗リスト
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
         // 有効期限選択
-        vo.setExpirationSelect(expirationSelect);
+        vo.setValidThruSelect(validThruSelect);
         // サブシステムロール条件選択
         vo.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         // サブシステムロールリスト
@@ -118,7 +118,7 @@ class Oa11010InitPresenter {
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
             subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
-            subSystemRoleVo.setExpirationSelect(0);
+            subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }
         vo.setSubSystemRoleList(subSystemRoleVoList);
@@ -134,7 +134,7 @@ class Oa11010InitPresenter {
             bizTranRoleVo.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
             bizTranRoleVo.setBizTranRoleName(bizTranRole.getBizTranRoleName());
             bizTranRoleVo.setSubSystemCode(bizTranRole.getSubSystemCode());
-            bizTranRoleVo.setExpirationSelect(0);
+            bizTranRoleVo.setValidThruSelect(0);
             bizTranRoleVoList.add(bizTranRoleVo);
         }
         vo.setBizTranRoleList(bizTranRoleVoList);

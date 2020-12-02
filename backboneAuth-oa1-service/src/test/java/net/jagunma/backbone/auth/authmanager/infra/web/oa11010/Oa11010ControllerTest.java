@@ -86,12 +86,12 @@ class Oa11010ControllerTest {
     private final String mailAddress = null;
     private final Boolean availableStatus0 = null;
     private final Boolean availableStatus1 = null;
-    private final Integer expirationSelect = 0;
-    private final LocalDate expirationStatusDate = null;
-    private final LocalDate expirationStartDateFrom = null;
-    private final LocalDate expirationStartDateTo = null;
-    private final LocalDate expirationEndDateFrom = null;
-    private final LocalDate expirationEndDateTo = null;
+    private final Integer validThruSelect = 0;
+    private final LocalDate validThruStatusDate = null;
+    private final LocalDate validThruStartDateFrom = null;
+    private final LocalDate validThruStartDateTo = null;
+    private final LocalDate validThruEndDateFrom = null;
+    private final LocalDate validThruEndDateTo = null;
     private Integer subSystemRoleConditionsSelect = 1;
     private final Integer bizTranRoleConditionsSelect = 1;
     private final String bizTranRoleSubSystemCode = null;
@@ -246,12 +246,12 @@ class Oa11010ControllerTest {
         oa11010Vo.setMailAddress(mailAddress);
         oa11010Vo.setAvailableStatus0(availableStatus0);
         oa11010Vo.setAvailableStatus1(availableStatus1);
-        oa11010Vo.setExpirationSelect(expirationSelect);
-        oa11010Vo.setExpirationStatusDate(expirationStatusDate);
-        oa11010Vo.setExpirationStartDateFrom(expirationStartDateFrom);
-        oa11010Vo.setExpirationStartDateTo(expirationStartDateTo);
-        oa11010Vo.setExpirationEndDateFrom(expirationEndDateFrom);
-        oa11010Vo.setExpirationEndDateTo(expirationEndDateTo);
+        oa11010Vo.setValidThruSelect(validThruSelect);
+        oa11010Vo.setValidThruStatusDate(validThruStatusDate);
+        oa11010Vo.setValidThruStartDateFrom(validThruStartDateFrom);
+        oa11010Vo.setValidThruStartDateTo(validThruStartDateTo);
+        oa11010Vo.setValidThruEndDateFrom(validThruEndDateFrom);
+        oa11010Vo.setValidThruEndDateTo(validThruEndDateTo);
         oa11010Vo.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         List<Oa11010SubSystemRoleVo> subSystemRoleVoList = newArrayList();
         for(SubSystemRole subSystemRole : SubSystemRole.values()) {
@@ -259,7 +259,7 @@ class Oa11010ControllerTest {
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
             subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
-            subSystemRoleVo.setExpirationSelect(0);
+            subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }
         oa11010Vo.setSubSystemRoleList(subSystemRoleVoList);
@@ -273,7 +273,7 @@ class Oa11010ControllerTest {
             bizTranRoleVo.setBizTranRoleCode(bizTranRole.getBizTranRoleCode());
             bizTranRoleVo.setBizTranRoleName(bizTranRole.getBizTranRoleName());
             bizTranRoleVo.setSubSystemCode(bizTranRole.getSubSystemCode());
-            bizTranRoleVo.setExpirationSelect(0);
+            bizTranRoleVo.setValidThruSelect(0);
             oa11010BizTranRoleVoList.add(bizTranRoleVo);
         }
         oa11010Vo.setBizTranRoleList(oa11010BizTranRoleVoList);
@@ -471,9 +471,9 @@ class Oa11010ControllerTest {
         // 期待値
         String expectedViewName = "oa11010";
         Oa11010SearchResponseVo expectedVo = new Oa11010SearchResponseVo();
-        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_expiration_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_expiration_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_expiration_date\">2020/01/01～9999/12/31</tr>"
-            + "<tr class=\"oaex_operator_table_operator_yu001009\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"></td><td class=\"oaex_operator_account_lock\"></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\"></td><td class=\"oaex_operator_operator_name\"></td><td class=\"oaex_operator_expiration_date\"></td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_expiration_date\"></td><td class=\"oaex_operator_biztran_role_code\">YS0000</td><td class=\"oaex_operator_biztran_role_name\">野菜メインメニュー</td><td class=\"oaex_operator_biztran_role_expiration_date\">2020/01/01～9999/12/31</tr>"
-            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_expiration_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_expiration_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_expiration_date\"></td></tr>"
+        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_validThru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_validThru_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_validThru_date\">2020/01/01～9999/12/31</tr>"
+            + "<tr class=\"oaex_operator_table_operator_yu001009\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"></td><td class=\"oaex_operator_account_lock\"></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\"></td><td class=\"oaex_operator_operator_name\"></td><td class=\"oaex_operator_validThru_date\"></td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_validThru_date\"></td><td class=\"oaex_operator_biztran_role_code\">YS0000</td><td class=\"oaex_operator_biztran_role_name\">野菜メインメニュー</td><td class=\"oaex_operator_biztran_role_validThru_date\">2020/01/01～9999/12/31</tr>"
+            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_validThru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_validThru_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_validThru_date\"></td></tr>"
         );
         expectedVo.setPagination("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>"
             + "<li class=\"active\" th:remove=\"all\"><a href=\"#!\">1</a></li>"

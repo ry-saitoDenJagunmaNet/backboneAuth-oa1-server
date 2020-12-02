@@ -29,8 +29,8 @@ class OperatorTest {
         String operatorCode = "yu001009";
         String operatorName = "ｙｕ００１００９";
         String mailAddress = "001.001.001.001";
-        LocalDate expirationStartDate = LocalDate.of(2020, 1, 1);
-        LocalDate expirationEndDate = LocalDate.of(9999, 12, 31);
+        LocalDate validThruStartDate = LocalDate.of(2020, 1, 1);
+        LocalDate validThruEndDate = LocalDate.of(9999, 12, 31);
         Boolean isDeviceAuth = false;
         Long jaId = 6L;
         String jaCode = "006";
@@ -47,8 +47,8 @@ class OperatorTest {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             jaId,
             jaCode,
@@ -64,8 +64,8 @@ class OperatorTest {
         assertThat(operator.getOperatorCode()).isEqualTo(operatorCode);
         assertThat(operator.getOperatorName()).isEqualTo(operatorName);
         assertThat(operator.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(operator.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(operator.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(operator.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(operator.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(operator.getIsDeviceAuth()).isEqualTo(isDeviceAuth);
         assertThat(operator.getJaId()).isEqualTo(jaId);
         assertThat(operator.getJaCode()).isEqualTo(jaCode);

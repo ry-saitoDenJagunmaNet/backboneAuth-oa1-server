@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 class SearchOperatorValidatorTest {
 
     // 実行既定値
-    private LocalDate expirationStartDateMoreOrEqual = null;
-    private LocalDate expirationStartDateLessOrEqual = null;
-    private LocalDate expirationEndDateMoreOrEqual = null;
-    private LocalDate expirationEndDateLessOrEqual = null;
+    private LocalDate validThruStartDateMoreOrEqual = null;
+    private LocalDate validThruStartDateLessOrEqual = null;
+    private LocalDate validThruEndDateMoreOrEqual = null;
+    private LocalDate validThruEndDateLessOrEqual = null;
     private List<OparatorSearchSubSystemRoleRequest> oparatorSearchSubSystemRoleRequestList = null;
     private List<OparatorSearchBizTranRoleRequest> oparatorSearchBizTranRoleRequestList = null;
     private LocalDate accountLockOccurredDateFrom = null;
@@ -39,17 +39,17 @@ class SearchOperatorValidatorTest {
     private OperatorSearchRequest createRequest() {
         return new OperatorSearchRequest() {
             @Override
-            public LocalDateCriteria getExpirationStartDateCriteria() {
+            public LocalDateCriteria getValidThruStartDateCriteria() {
                 LocalDateCriteria criteria = new LocalDateCriteria();
-                criteria.setMoreOrEqual(expirationStartDateMoreOrEqual);
-                criteria.setLessOrEqual(expirationStartDateLessOrEqual);
+                criteria.setMoreOrEqual(validThruStartDateMoreOrEqual);
+                criteria.setLessOrEqual(validThruStartDateLessOrEqual);
                 return criteria;
             }
             @Override
-            public LocalDateCriteria getExpirationEndDateCriteria() {
+            public LocalDateCriteria getValidThruEndDateCriteria() {
                 LocalDateCriteria criteria = new LocalDateCriteria();
-                criteria.setMoreOrEqual(expirationEndDateMoreOrEqual);
-                criteria.setLessOrEqual(expirationEndDateLessOrEqual);
+                criteria.setMoreOrEqual(validThruEndDateMoreOrEqual);
+                criteria.setLessOrEqual(validThruEndDateLessOrEqual);
                 return criteria;
             }
             @Override
@@ -209,10 +209,10 @@ class SearchOperatorValidatorTest {
     void validate_test01() {
 
         // 実行値
-        expirationStartDateMoreOrEqual = LocalDate.of(2020, 10, 1);
-        expirationStartDateLessOrEqual = LocalDate.of(2020, 10, 1);
-        expirationEndDateMoreOrEqual = LocalDate.of(2020, 10, 2);
-        expirationEndDateLessOrEqual = LocalDate.of(2020, 10, 2);
+        validThruStartDateMoreOrEqual = LocalDate.of(2020, 10, 1);
+        validThruStartDateLessOrEqual = LocalDate.of(2020, 10, 1);
+        validThruEndDateMoreOrEqual = LocalDate.of(2020, 10, 2);
+        validThruEndDateLessOrEqual = LocalDate.of(2020, 10, 2);
         List<OparatorSearchSubSystemRoleRequest> searchSubSystemRoleConverterList = newArrayList();
         searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),2,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,3),null,null));
         searchSubSystemRoleConverterList.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,null,null,LocalDate.of(2020,10,4),LocalDate.of(2020,10,4)));
@@ -271,8 +271,8 @@ class SearchOperatorValidatorTest {
     void validate_test03() {
 
         // 実行値
-        expirationStartDateMoreOrEqual = LocalDate.of(2020, 10, 3);
-        expirationStartDateLessOrEqual = LocalDate.of(2020, 10, 2);
+        validThruStartDateMoreOrEqual = LocalDate.of(2020, 10, 3);
+        validThruStartDateLessOrEqual = LocalDate.of(2020, 10, 2);
         OperatorSearchRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -298,8 +298,8 @@ class SearchOperatorValidatorTest {
     void validate_test04() {
 
         // 実行値
-        expirationEndDateMoreOrEqual = LocalDate.of(2020, 11, 30);
-        expirationEndDateLessOrEqual = LocalDate.of(2020, 11, 29);
+        validThruEndDateMoreOrEqual = LocalDate.of(2020, 11, 30);
+        validThruEndDateLessOrEqual = LocalDate.of(2020, 11, 29);
         OperatorSearchRequest request = createRequest();
 
         assertThatThrownBy(() ->

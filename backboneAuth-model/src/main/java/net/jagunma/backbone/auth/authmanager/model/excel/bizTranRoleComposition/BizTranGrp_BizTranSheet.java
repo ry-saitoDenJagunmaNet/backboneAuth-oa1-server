@@ -14,8 +14,8 @@ public class BizTranGrp_BizTranSheet {
     private final String bizTranCode;
     private final String bizTranName;
     private final Boolean isCenterBizTran;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
 
     // コンストラクタ
     BizTranGrp_BizTranSheet(
@@ -26,8 +26,8 @@ public class BizTranGrp_BizTranSheet {
         String bizTranCode,
         String bizTranName,
         Boolean isCenterBizTran,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate) {
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate) {
 
         this.rowno = rowno;
         this.subSystemName = subSystemName;
@@ -36,8 +36,8 @@ public class BizTranGrp_BizTranSheet {
         this.bizTranCode = bizTranCode;
         this.bizTranName = bizTranName;
         this.isCenterBizTran = isCenterBizTran;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
     }
 
     // ファクトリーメソッド
@@ -49,8 +49,8 @@ public class BizTranGrp_BizTranSheet {
         String bizTranCode,
         String bizTranName,
         Boolean isCenterBizTran,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate) {
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate) {
 
         return new BizTranGrp_BizTranSheet(
             rowno,
@@ -60,8 +60,8 @@ public class BizTranGrp_BizTranSheet {
             bizTranCode,
             bizTranName,
             isCenterBizTran,
-            expirationStartDate,
-            expirationEndDate);
+            validThruStartDate,
+            validThruEndDate);
     }
 
     // Getter
@@ -86,10 +86,10 @@ public class BizTranGrp_BizTranSheet {
     public Boolean getIsCenterBizTran() {
         return isCenterBizTran;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
 }

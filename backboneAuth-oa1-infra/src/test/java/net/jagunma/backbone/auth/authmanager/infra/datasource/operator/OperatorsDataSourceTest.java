@@ -107,8 +107,8 @@ class OperatorsDataSourceTest {
         String operatorCode,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
@@ -121,8 +121,8 @@ class OperatorsDataSourceTest {
         entity.setOperatorCode(operatorCode);
         entity.setOperatorName(operatorName);
         entity.setMailAddress(mailAddress);
-        entity.setExpirationStartDate(expirationStartDate);
-        entity.setExpirationEndDate(expirationEndDate);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
         entity.setIsDeviceAuth(isDeviceAuth);
         entity.setJaId(jaId);
         entity.setJaCode(jaCode);
@@ -181,8 +181,8 @@ class OperatorsDataSourceTest {
                 entity.getOperatorCode(),
                 entity.getOperatorName(),
                 entity.getMailAddress(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getIsDeviceAuth(),
                 entity.getJaId(),
                 entity.getJaCode(),
