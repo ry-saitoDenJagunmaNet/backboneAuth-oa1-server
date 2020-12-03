@@ -276,7 +276,7 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    未セッチェック  変更事由
+     *    未セットチェック  変更事由
      *
      *  ●検証事項
      *  ・エラー発生
