@@ -224,22 +224,22 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         for (SuspendBizTran suspendBizTran : suspendBizTrans.getValues()) {
             Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
             searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
-            if (!Strings2.isEmpty(suspendBizTran.getJaCode())){
+            if (Strings2.isNotEmpty(suspendBizTran.getJaCode())){
                 searchResultVo.setJaCode(suspendBizTran.getJaAtMoment().getJaAttribute().getJaCode().getValue());
                 searchResultVo.setJaName(suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             }
-            if (!Strings2.isEmpty(suspendBizTran.getBranchCode())) {
+            if (Strings2.isNotEmpty(suspendBizTran.getBranchCode())) {
                 searchResultVo.setBranchCode(suspendBizTran.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue());
                 searchResultVo.setBranchName(suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
             }
-            if (!Strings2.isEmpty(suspendBizTran.getSubSystemCode())) {
+            if (Strings2.isNotEmpty(suspendBizTran.getSubSystemCode())) {
                 searchResultVo.setSubSystemName(SubSystem.codeOf(suspendBizTran.getSubSystemCode()).getName());
             }
-            if (!Strings2.isEmpty(suspendBizTran.getBizTranGrpCode())) {
+            if (Strings2.isNotEmpty(suspendBizTran.getBizTranGrpCode())) {
                 searchResultVo.setBizTranGrpCode(suspendBizTran.getBizTranGrp().getBizTranGrpCode());
                 searchResultVo.setBizTranGrpName(suspendBizTran.getBizTranGrp() .getBizTranGrpName());
             }
-            if (!Strings2.isEmpty(suspendBizTran.getBizTranCode())) {
+            if (Strings2.isNotEmpty(suspendBizTran.getBizTranCode())) {
                 searchResultVo.setBizTranCode(suspendBizTran.getBizTran().getBizTranCode());
                 searchResultVo.setBizTranName(suspendBizTran.getBizTran().getBizTranName());
             }

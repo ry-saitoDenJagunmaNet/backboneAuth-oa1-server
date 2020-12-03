@@ -26,6 +26,7 @@ import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
 import net.jagunma.backbone.shared.application.ja.JaAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.strings2.Strings2;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
@@ -73,8 +74,9 @@ class SuspendBizTransDataSourceTest {
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTranEntity> createSuspendBizTranEntityList() {
         List<SuspendBizTranEntity> list = newArrayList();
-        list.add(createSuspendBizTranEntity(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01",null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
+        list.add(createSuspendBizTranEntity(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01","",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
         list.add(createSuspendBizTranEntity(2L,"","",SubSystem.販売_畜産.getCode(),"","AN0001",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
+        list.add(createSuspendBizTranEntity(3L,null,null,null,null,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
         return list;
     }
     // 一時取引抑止データ作成
@@ -294,17 +296,17 @@ class SuspendBizTransDataSourceTest {
         for(SuspendBizTranEntity entity : suspendBizTranEntityList) {
             expectedSuspendBizTranList.add(SuspendBizTran.createFrom(
                 entity.getSuspendBizTranId(),
-                entity.getJaCode(),
-                entity.getBranchCode(),
-                entity.getSubSystemCode(),
-                entity.getBizTranGrpCode(),
-                entity.getBizTranCode(),
+                (Strings2.isNull(entity.getJaCode()))? "" : entity.getJaCode(),
+                (Strings2.isNull(entity.getBranchCode()))? "" : entity.getBranchCode(),
+                (Strings2.isNull(entity.getSubSystemCode()))? "" : entity.getSubSystemCode(),
+                (Strings2.isNull(entity.getBizTranGrpCode()))? "" : entity.getBizTranGrpCode(),
+                (Strings2.isNull(entity.getBizTranCode()))? "" : entity.getBizTranCode(),
                 entity.getSuspendStartDate(),
                 entity.getSuspendEndDate(),
                 entity.getSuspendReason(),
                 entity.getRecordVersion(),
-                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaCode())).findFirst().orElse(null),
-                branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchCode())).findFirst().orElse(null),
+                jaAtMomentList.stream().filter(j->j.getJaAttribute().getJaCode().getValue().equals(entity.getJaCode())).findFirst().orElse(null),
+                branchAtMomentList.stream().filter(b->b.getBranchAttribute().getBranchCode().getValue().equals(entity.getBranchCode())).findFirst().orElse(null),
                 SubSystem.codeOf(entity.getSubSystemCode()),
                 bizTranGrpList.stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
                 bizTranList.stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));
@@ -370,17 +372,17 @@ class SuspendBizTransDataSourceTest {
         for(SuspendBizTranEntity entity : suspendBizTranEntityList) {
             expectedSuspendBizTranList.add(SuspendBizTran.createFrom(
                 entity.getSuspendBizTranId(),
-                entity.getJaCode(),
-                entity.getBranchCode(),
-                entity.getSubSystemCode(),
-                entity.getBizTranGrpCode(),
-                entity.getBizTranCode(),
+                (Strings2.isNull(entity.getJaCode()))? "" : entity.getJaCode(),
+                (Strings2.isNull(entity.getBranchCode()))? "" : entity.getBranchCode(),
+                (Strings2.isNull(entity.getSubSystemCode()))? "" : entity.getSubSystemCode(),
+                (Strings2.isNull(entity.getBizTranGrpCode()))? "" : entity.getBizTranGrpCode(),
+                (Strings2.isNull(entity.getBizTranCode()))? "" : entity.getBizTranCode(),
                 entity.getSuspendStartDate(),
                 entity.getSuspendEndDate(),
                 entity.getSuspendReason(),
                 entity.getRecordVersion(),
-                jaAtMomentList.stream().filter(j->j.getIdentifier().equals(entity.getJaCode())).findFirst().orElse(null),
-                branchAtMomentList.stream().filter(b->b.getIdentifier().equals(entity.getBranchCode())).findFirst().orElse(null),
+                jaAtMomentList.stream().filter(j->j.getJaAttribute().getJaCode().getValue().equals(entity.getJaCode())).findFirst().orElse(null),
+                branchAtMomentList.stream().filter(b->b.getBranchAttribute().getBranchCode().getValue().equals(entity.getBranchCode())).findFirst().orElse(null),
                 SubSystem.codeOf(entity.getSubSystemCode()),
                 bizTranGrpList.stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
                 bizTranList.stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));

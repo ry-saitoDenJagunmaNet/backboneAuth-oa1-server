@@ -57,13 +57,15 @@ public class BizTranGrp_BizTransDataSource implements BizTranGrp_BizTransReposit
 
         // 取引群検索
         BizTranCriteria bizTranCriteria = new BizTranCriteria();
+        bizTranCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
         bizTranCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
         BizTrans bizTrans = bizTransRepository.selectBy(bizTranCriteria, Orders.empty());
 
         // 取引グループ_取引割当群検索
         BizTranGrp_BizTranEntityCriteria entityCriteria = new BizTranGrp_BizTranEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
         entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria());
+        entityCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
 
         List<BizTranGrp_BizTran> list = newArrayList();
         for (BizTranGrp_BizTranEntity entity : bizTranGrp_BizTranEntityDao.findBy(entityCriteria, orders)) {

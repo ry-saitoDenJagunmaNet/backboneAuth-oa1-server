@@ -84,7 +84,7 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
 
         // jaAtMomentの検索
         JaAtMomentCriteria jaAtMomentCriteria = new JaAtMomentCriteria();
-        if (!Strings2.isEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
+        if (Strings2.isNotEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
             jaAtMomentCriteria.getJaAttributeCriteria().getJaCodeCriteria().setEqualTo(
                 JaCode.of(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo()));
         }
@@ -94,10 +94,10 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
 
         // branchAtMomentの検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-        if (!Strings2.isEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
+        if (Strings2.isNotEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
             branchAtMomentCriteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo()));
         }
-        if (!Strings2.isEmpty(suspendBizTranCriteria.getBranchCodeCriteria().getEqualTo())) {
+        if (Strings2.isNotEmpty(suspendBizTranCriteria.getBranchCodeCriteria().getEqualTo())) {
             branchAtMomentCriteria.getBranchAttributeCriteria().getBranchCodeCriteria().setEqualTo(
                 BranchCode.of(suspendBizTranCriteria.getBranchCodeCriteria().getEqualTo()));
         }
@@ -122,17 +122,17 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
         for (SuspendBizTranEntity entity : suspendBizTranEntityList) {
             list.add(SuspendBizTran.createFrom(
                 entity.getSuspendBizTranId(),
-                entity.getJaCode(),
-                entity.getBranchCode(),
-                entity.getSubSystemCode(),
-                entity.getBizTranGrpCode(),
-                entity.getBizTranCode(),
+                (Strings2.isNull(entity.getJaCode()))? "" : entity.getJaCode(),
+                (Strings2.isNull(entity.getBranchCode()))? "" : entity.getBranchCode(),
+                (Strings2.isNull(entity.getSubSystemCode()))? "" : entity.getSubSystemCode(),
+                (Strings2.isNull(entity.getBizTranGrpCode()))? "" : entity.getBizTranGrpCode(),
+                (Strings2.isNull(entity.getBizTranCode()))? "" : entity.getBizTranCode(),
                 entity.getSuspendStartDate(),
                 entity.getSuspendEndDate(),
                 entity.getSuspendReason(),
                 entity.getRecordVersion(),
-                jasAtMoment.getValue().stream().filter(b->b.getJaAttribute().getJaCode().equals(entity.getJaCode())).findFirst().orElse(null),
-                branchesAtMoment.getValue().stream().filter(b->b.getBranchAttribute().getBranchCode().equals(entity.getBranchCode())).findFirst().orElse(null),
+                jasAtMoment.getValue().stream().filter(b->b.getJaAttribute().getJaCode().getValue().equals(entity.getJaCode())).findFirst().orElse(null),
+                branchesAtMoment.getValue().stream().filter(b->b.getBranchAttribute().getBranchCode().getValue().equals(entity.getBranchCode())).findFirst().orElse(null),
                 SubSystem.codeOf(entity.getSubSystemCode()),
                 bizTranGrps.getValues().stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
                 bizTrans.getValues().stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));

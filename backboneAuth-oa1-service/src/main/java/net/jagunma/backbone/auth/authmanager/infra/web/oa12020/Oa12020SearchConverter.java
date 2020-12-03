@@ -33,7 +33,9 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
      */
     public StringCriteria getJaCodeCriteria() {
         StringCriteria criteria = new StringCriteria();
-        criteria.setEqualTo(vo.getJaCode());
+        if (Strings2.isNotEmpty(vo.getJaCode())) {
+            criteria.setEqualTo(vo.getJaCode());
+        }
         return criteria;
     }
     /**
@@ -43,7 +45,9 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
      */
     public StringCriteria getBranchCodeCriteria() {
         StringCriteria criteria = new StringCriteria();
-        criteria.setEqualTo(vo.getBranchCode());
+        if (Strings2.isNotEmpty(vo.getBranchCode())) {
+            criteria.setEqualTo(vo.getBranchCode());
+        }
         return criteria;
     }
     /**
@@ -65,7 +69,9 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
      */
     public StringCriteria getBizTranGrpCodeCriteria() {
         StringCriteria criteria = new StringCriteria();
-        criteria.setEqualTo(vo.getBizTranGrpCode());
+        if (Strings2.isNotEmpty(vo.getBizTranGrpCode())) {
+            criteria.setEqualTo(vo.getBizTranGrpCode());
+        }
         return criteria;
     }
     /**
@@ -75,7 +81,9 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
      */
     public StringCriteria getBizTranCodeCriteria() {
         StringCriteria criteria = new StringCriteria();
-        criteria.setEqualTo(vo.getBizTranCode());
+        if (Strings2.isNotEmpty(vo.getBizTranCode())) {
+            criteria.setEqualTo(vo.getBizTranCode());
+        }
         return criteria;
     }
     /**
