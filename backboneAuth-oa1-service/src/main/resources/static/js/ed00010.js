@@ -18,7 +18,7 @@ function edex_initialize() {
 /**
  * サインインボタンクリックイベントです。
  */
-function edex_signinBtn_onClick() {
+function edex_signInBtn_onClick() {
 	location.href = "./oa00000.html";
 }
 
@@ -31,19 +31,19 @@ function edex_mode_onChange() {
 	let mode = oa_getRadioCheckedValue("mode");
 	if (mode == "0") {
 		// 初期認証
-		for (let signin of document.querySelectorAll(".edex_signin")) {
-			signin.style.display = "block"; 
+		for (let signIn of document.querySelectorAll(".edex_sign_in")) {
+			signIn.style.display = "block";
 		} 
-		for (let resignin of document.querySelectorAll(".edex_resignin")) {
-			resignin.style.display = "none"; 
+		for (let reSignIn of document.querySelectorAll(".edex_re_sign_in")) {
+			reSignIn.style.display = "none";
 		} 
 	} else if (mode == "1") {
 		// 継続再認証
-		for (let signin of document.querySelectorAll(".edex_signin")) {
-			signin.style.display = "none"; 
+		for (let signIn of document.querySelectorAll(".edex_sign_in")) {
+			signIn.style.display = "none";
 		} 
-		for (let resignin of document.querySelectorAll(".edex_resignin")) {
-			resignin.style.display = "block"; 
+		for (let reSignIn of document.querySelectorAll(".edex_re_sign_in")) {
+			reSignIn.style.display = "block";
 		} 
 	}
 }

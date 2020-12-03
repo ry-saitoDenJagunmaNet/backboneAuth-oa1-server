@@ -13,6 +13,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.common.util.strings2.Strings2;
 
 /**
  * OA12020 一時取引抑止<一覧> Response Presenter
@@ -24,11 +25,11 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
      */
     private final int PAGE_SIZE = 10;
 
-    private Long jaId;
-    private Long  branchId;
+    private String jaCode;
+    private String  branchCode;
     private String  subSystemCode;
-    private Long  bizTranGrpId;
-    private Long  bizTranId;
+    private String  bizTranGrpCode;
+    private String  bizTranCode;
     private Integer suspendConditionsSelect;
     private LocalDate suspendStatusDate;
     private LocalDate suspendStatusStartDateFrom;
@@ -43,11 +44,11 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
     // コンストラクタ
     public Oa12020Presenter() {}
     Oa12020Presenter(Oa12020Vo vo) {
-        this.jaId = vo.getJaId();
-        this.branchId = vo.getBranchId();
+        this.jaCode = vo.getJaCode();
+        this.branchCode = vo.getBranchCode();
         this.subSystemCode = vo.getSubSystemCode();
-        this.bizTranGrpId = vo.getBizTranGrpId();
-        this.bizTranId = vo.getBizTranId();
+        this.bizTranGrpCode = vo.getBizTranGrpCode();
+        this.bizTranCode = vo.getBizTranCode();
         this.suspendConditionsSelect = vo.getSuspendConditionsSelect();
         this.suspendStatusDate = vo.getSuspendStatusDate();
         this.suspendStatusStartDateFrom = vo.getSuspendStatusStartDateFrom();
@@ -64,20 +65,20 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
     }
 
     /**
-     * ＪＡIDのＳｅｔ
+     * ＪＡコ－ドのＳｅｔ
      *
-     * @param jaId ＪＡID
+     * @param jaCode ＪＡコード
      */
-    public void setJaId(Long jaId) {
-        this.jaId = jaId;
+    public void setJaCode(String jaCode) {
+        this.jaCode = jaCode;
     }
     /**
-     * 店舗IDのＳｅｔ
+     * 店舗コードのＳｅｔ
      *
-     * @param branchId 店舗ID
+     * @param branchCode 店舗コード
      */
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
     /**
      * サブシステムコードのＳｅｔ
@@ -88,20 +89,20 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         this.subSystemCode = subSystemCode;
     }
     /**
-     * 取引グループIDのＳｅｔ
+     * 取引グループコードのＳｅｔ
      *
-     * @param bizTranGrpId 取引グループID
+     * @param bizTranGrpCode 取引グループコ－ド
      */
-    public void setBizTranGrpId(Long bizTranGrpId) {
-        this.bizTranGrpId = bizTranGrpId;
+    public void setBizTranGrpCode(String bizTranGrpCode) {
+        this.bizTranGrpCode = bizTranGrpCode;
     }
     /**
-     * 取引IDのＳｅｔ
+     * 取引コードのＳｅｔ
      *
-     * @param bizTranId 取引ID
+     * @param bizTranCode 取引コード
      */
-    public void setBizTranId(Long bizTranId) {
-        this.bizTranId = bizTranId;
+    public void setBizTranCode(String bizTranCode) {
+        this.bizTranCode = bizTranCode;
     }
     /**
      * 抑止期間条件選択のＳｅｔ
@@ -193,11 +194,11 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
      */
     public void bindTo(Oa12020Vo vo) {
 
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusDate(suspendStatusDate);
         vo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -223,22 +224,22 @@ class Oa12020Presenter implements SuspendBizTranSearchResponse {
         for (SuspendBizTran suspendBizTran : suspendBizTrans.getValues()) {
             Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
             searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
-            if (suspendBizTran.getJaId() != null){
+            if (!Strings2.isEmpty(suspendBizTran.getJaCode())){
                 searchResultVo.setJaCode(suspendBizTran.getJaAtMoment().getJaAttribute().getJaCode().getValue());
                 searchResultVo.setJaName(suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             }
-            if (suspendBizTran.getBranchId() != null) {
+            if (!Strings2.isEmpty(suspendBizTran.getBranchCode())) {
                 searchResultVo.setBranchCode(suspendBizTran.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue());
                 searchResultVo.setBranchName(suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
             }
-            if (suspendBizTran.getSubSystemCode() != null) {
+            if (!Strings2.isEmpty(suspendBizTran.getSubSystemCode())) {
                 searchResultVo.setSubSystemName(SubSystem.codeOf(suspendBizTran.getSubSystemCode()).getName());
             }
-            if (suspendBizTran.getBizTranGrpId() != null) {
+            if (!Strings2.isEmpty(suspendBizTran.getBizTranGrpCode())) {
                 searchResultVo.setBizTranGrpCode(suspendBizTran.getBizTranGrp().getBizTranGrpCode());
                 searchResultVo.setBizTranGrpName(suspendBizTran.getBizTranGrp() .getBizTranGrpName());
             }
-            if (suspendBizTran.getBizTranId() != null) {
+            if (!Strings2.isEmpty(suspendBizTran.getBizTranCode())) {
                 searchResultVo.setBizTranCode(suspendBizTran.getBizTran().getBizTranCode());
                 searchResultVo.setBizTranName(suspendBizTran.getBizTran().getBizTranName());
             }

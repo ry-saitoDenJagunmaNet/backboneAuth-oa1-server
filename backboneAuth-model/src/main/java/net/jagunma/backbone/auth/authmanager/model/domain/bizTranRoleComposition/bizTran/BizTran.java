@@ -12,8 +12,8 @@ public class BizTran {
     private final String bizTranCode;
     private final String bizTranName;
     private final Boolean isCenterBizTran;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
     private final String subSystemCode;
     private final Integer recordVersion;
     private final SubSystem subSystem;
@@ -24,8 +24,8 @@ public class BizTran {
         String bizTranCode,
         String bizTranName,
         Boolean isCenterBizTran,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         String subSystemCode,
         Integer recordVersion,
         SubSystem subSystem) {
@@ -34,8 +34,8 @@ public class BizTran {
         this.bizTranCode = bizTranCode;
         this.bizTranName = bizTranName;
         this.isCenterBizTran = isCenterBizTran;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
         this.subSystemCode = subSystemCode;
         this.recordVersion = recordVersion;
         this.subSystem = subSystem;
@@ -47,8 +47,8 @@ public class BizTran {
         String bizTranCode,
         String bizTranName,
         Boolean isCenterBizTran,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         String subSystemCode,
         Integer recordVersion,
         SubSystem subSystem) {
@@ -58,8 +58,8 @@ public class BizTran {
             bizTranCode,
             bizTranName,
             isCenterBizTran,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             subSystemCode,
             recordVersion,
             subSystem);
@@ -78,11 +78,11 @@ public class BizTran {
     public Boolean getIsCenterBizTran() {
         return isCenterBizTran;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
     public String getSubSystemCode() {
         return subSystemCode;

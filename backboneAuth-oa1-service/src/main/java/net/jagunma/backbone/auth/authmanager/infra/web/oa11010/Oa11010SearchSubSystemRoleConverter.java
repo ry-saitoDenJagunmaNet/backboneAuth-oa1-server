@@ -11,34 +11,34 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
     private final Boolean subSystemRoleSelected;
     private final String subSystemRoleCode;
     private final String subSystemRoleName;
-    private final Integer expirationSelect;
-    private final LocalDate expirationStatusDate;
-    private final LocalDate expirationStartDateFrom;
-    private final LocalDate expirationStartDateTo;
-    private final LocalDate expirationEndDateFrom;
-    private final LocalDate expirationEndDateTo;
+    private final Integer validThruSelect;
+    private final LocalDate validThruStatusDate;
+    private final LocalDate validThruStartDateFrom;
+    private final LocalDate validThruStartDateTo;
+    private final LocalDate validThruEndDateFrom;
+    private final LocalDate validThruEndDateTo;
 
     // コンストラクタ
     Oa11010SearchSubSystemRoleConverter(
         Boolean subSystemRoleSelected,
         String subSystemRoleCode,
         String subSystemRoleName,
-        Integer expirationSelect,
-        LocalDate expirationStatusDate,
-        LocalDate expirationStartDateFrom,
-        LocalDate expirationStartDateTo,
-        LocalDate expirationEndDateFrom,
-        LocalDate expirationEndDateTo) {
+        Integer validThruSelect,
+        LocalDate validThruStatusDate,
+        LocalDate validThruStartDateFrom,
+        LocalDate validThruStartDateTo,
+        LocalDate validThruEndDateFrom,
+        LocalDate validThruEndDateTo) {
 
         this.subSystemRoleSelected = subSystemRoleSelected;
         this.subSystemRoleCode = subSystemRoleCode;
         this.subSystemRoleName = subSystemRoleName;
-        this.expirationSelect = expirationSelect;
-        this.expirationStatusDate = expirationStatusDate;
-        this.expirationStartDateFrom = expirationStartDateFrom;
-        this.expirationStartDateTo = expirationStartDateTo;
-        this.expirationEndDateFrom = expirationEndDateFrom;
-        this.expirationEndDateTo = expirationEndDateTo;
+        this.validThruSelect = validThruSelect;
+        this.validThruStatusDate = validThruStatusDate;
+        this.validThruStartDateFrom = validThruStartDateFrom;
+        this.validThruStartDateTo = validThruStartDateTo;
+        this.validThruEndDateFrom = validThruEndDateFrom;
+        this.validThruEndDateTo = validThruEndDateTo;
     }
 
     // ファクトリーメソッド
@@ -46,23 +46,23 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
         Boolean subSystemRoleSelected,
         String subSystemRoleCode,
         String subSystemRoleName,
-        Integer expirationSelect,
-        LocalDate expirationStatusDate,
-        LocalDate expirationStartDateFrom,
-        LocalDate expirationStartDateTo,
-        LocalDate expirationEndDateFrom,
-        LocalDate expirationEndDateTo) {
+        Integer validThruSelect,
+        LocalDate validThruStatusDate,
+        LocalDate validThruStartDateFrom,
+        LocalDate validThruStartDateTo,
+        LocalDate validThruEndDateFrom,
+        LocalDate validThruEndDateTo) {
 
         return new Oa11010SearchSubSystemRoleConverter(
             subSystemRoleSelected,
             subSystemRoleCode,
             subSystemRoleName,
-            expirationSelect,
-            expirationStatusDate,
-            expirationStartDateFrom,
-            expirationStartDateTo,
-            expirationEndDateFrom,
-            expirationEndDateTo);
+            validThruSelect,
+            validThruStatusDate,
+            validThruStartDateFrom,
+            validThruStartDateTo,
+            validThruEndDateFrom,
+            validThruEndDateTo);
     }
 
     /**
@@ -94,47 +94,47 @@ public class Oa11010SearchSubSystemRoleConverter implements OparatorSearchSubSys
      *
      * @return 有効期限選択
      */
-    public Integer getExpirationSelect() {
-        return expirationSelect;
+    public Integer getValidThruSelect() {
+        return validThruSelect;
     }
     /**
      * 状態指定日のＧｅｔ
      *
      * @return 状態指定日
      */
-    public LocalDate getExpirationStatusDate() {
-        return expirationStatusDate;
+    public LocalDate getValidThruStatusDate() {
+        return validThruStatusDate;
     }
     /**
      * 条件指定日開始（開始日）のＧｅｔ
      *
      * @return 条件指定日開始（開始日）
      */
-    public LocalDate getExpirationStartDateFrom() {
-        return expirationStartDateFrom;
+    public LocalDate getValidThruStartDateFrom() {
+        return validThruStartDateFrom;
     }
     /**
      * 条件指定日開始（終了日）のＧｅｔ
      *
      * @return 条件指定日開始（終了日）
      */
-    public LocalDate getExpirationStartDateTo() {
-        return expirationStartDateTo;
+    public LocalDate getValidThruStartDateTo() {
+        return validThruStartDateTo;
     }
     /**
      * 条件指定日終了（開始日）のＧｅｔ
      *
      * @return 条件指定日終了（開始日）
      */
-    public LocalDate getExpirationEndDateFrom() {
-        return expirationEndDateFrom;
+    public LocalDate getValidThruEndDateFrom() {
+        return validThruEndDateFrom;
     }
     /**
      * 条件指定日終了（終了日）のＧｅｔ
      *
      * @return 条件指定日終了（終了日）
      */
-    public LocalDate getExpirationEndDateTo() {
-        return expirationEndDateTo;
+    public LocalDate getValidThruEndDateTo() {
+        return validThruEndDateTo;
     }
 }

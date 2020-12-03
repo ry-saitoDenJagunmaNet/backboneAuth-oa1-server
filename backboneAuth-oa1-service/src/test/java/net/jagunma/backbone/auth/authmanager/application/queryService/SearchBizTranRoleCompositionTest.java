@@ -144,8 +144,8 @@ class SearchBizTranRoleCompositionTest {
                 bizTranGrp_BizTran.getBizTran().getBizTranCode(),
                 bizTranGrp_BizTran.getBizTran().getBizTranName(),
                 bizTranGrp_BizTran.getBizTran().getIsCenterBizTran(),
-                bizTranGrp_BizTran.getBizTran().getExpirationStartDate(),
-                bizTranGrp_BizTran.getBizTran().getExpirationEndDate()));
+                bizTranGrp_BizTran.getBizTran().getValidThruStartDate(),
+                bizTranGrp_BizTran.getBizTran().getValidThruEndDate()));
         }
 
         // テスト対象クラス生成

@@ -35,8 +35,8 @@ class OperatorForStoreDataSourceTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Boolean isDeviceAuth = true;   private Boolean isDeviceAuthBefore = false;
     private Long jaId = 6L;
     private String jaCode = "006";
@@ -73,8 +73,8 @@ class OperatorForStoreDataSourceTest {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             jaId,
             jaCode,
             branchId,
@@ -88,8 +88,8 @@ class OperatorForStoreDataSourceTest {
             operatorId,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             branchId,
             branchCode,
@@ -141,8 +141,8 @@ class OperatorForStoreDataSourceTest {
                 entity.setOperatorCode(operatorCode);
                 entity.setOperatorName(operatorName);
                 entity.setMailAddress(mailAddress);
-                entity.setExpirationStartDate(expirationStartDate);
-                entity.setExpirationEndDate(expirationEndDate);
+                entity.setValidThruStartDate(validThruStartDate);
+                entity.setValidThruEndDate(validThruEndDate);
 
                 entity.setJaId(jaId);
                 entity.setJaCode(jaCode);
@@ -390,8 +390,8 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setOperatorCode(operatorCode);
         expectedEntity.setOperatorName(operatorName);
         expectedEntity.setMailAddress(mailAddress);
-        expectedEntity.setExpirationStartDate(expirationStartDate);
-        expectedEntity.setExpirationEndDate(expirationEndDate);
+        expectedEntity.setValidThruStartDate(validThruStartDate);
+        expectedEntity.setValidThruEndDate(validThruEndDate);
         expectedEntity.setIsDeviceAuth(isDeviceAuthBefore);
         expectedEntity.setJaId(jaId);
         expectedEntity.setJaCode(jaCode);
@@ -437,8 +437,8 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setOperatorCode(operatorCode);
         expectedEntity.setOperatorName(operatorName);
         expectedEntity.setMailAddress(mailAddress);
-        expectedEntity.setExpirationStartDate(expirationStartDate);
-        expectedEntity.setExpirationEndDate(expirationEndDate);
+        expectedEntity.setValidThruStartDate(validThruStartDate);
+        expectedEntity.setValidThruEndDate(validThruEndDate);
         expectedEntity.setIsDeviceAuth(isDeviceAuth);
         expectedEntity.setJaId(jaId);
         expectedEntity.setJaCode(jaCode);

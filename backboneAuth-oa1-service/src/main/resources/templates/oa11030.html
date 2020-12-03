@@ -106,8 +106,8 @@
 				<div class="row">
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="expiration_start_date" name="expirationStartDate" class="validate datepicker" value="2020/04/01" th:value="${form.expirationStartDate}"></input>
-							<label for="expiration_start_date">（開始日）</label>
+							<input type="text" id="valid_thru_start_date" name="validThruStartDate" class="validate datepicker" value="2020/04/01" th:value="${form.validThruStartDate}"></input>
+							<label for="valid_thru_start_date">（開始日）</label>
 						</div>
 					</div>
 					<div class="col s1">
@@ -115,8 +115,8 @@
 					</div>
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="expiration_end_date" name="expirationEndDate" class="validate datepicker" value="2021/03/31" th:value="${form.expirationEndDate}"></input>
-							<label for="expiration_end_date">（終了日）</label>
+							<input type="text" id="valid_thru_end_date" name="validThruEndDate" class="validate datepicker" value="2021/03/31" th:value="${form.validThruEndDate}"></input>
+							<label for="valid_thru_end_date">（終了日）</label>
 						</div>
 					</div>
 				</div>
@@ -244,7 +244,7 @@
 								<thead>
 									<tr>
 										<th class="oaex_subsystem_role_table_name">付与ロール</th>
-										<th class="oaex_subsystem_role_table_expiration">有効期限</th>
+										<th class="oaex_subsystem_role_table_valid_thru">有効期限</th>
 									</tr>
 								</thead>
 							</table>
@@ -256,11 +256,11 @@
 							<tbody>
 								<tr th:each="itemrow, iterStat : *{form.Oa11030SubSystemRoleTableVoList}">
 									<td class="oaex_subsystem_role_table_name" th:text="${itemrow.roleName}"></td>
-									<td class="oaex_subsystem_role_table_expiration" th:text="${itemrow.expirationDate}"></td>
+									<td class="oaex_subsystem_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
 								<tr th:remove="all">
 									<td class="oaex_subsystem_role_table_name">JA管理者</td>
-									<td class="oaex_subsystem_role_table_expiration">2020/04/01 ～ 9999/12/31</td>
+									<td class="oaex_subsystem_role_table_valid_thru">2020/04/01 ～ 9999/12/31</td>
 								</tr>
 								<tr th:remove="all"><td>業務統括者（購買）</td><td>2020/05/01 ～ 9999/12/31</td></tr>
 								<tr th:remove="all"><td>業務統括者（販売・野菜）</td><td>2020/06/01 ～ 9999/12/31</td></tr>
@@ -293,7 +293,7 @@
 								<thead>
 									<tr>
 										<th class="oaex_biztran_role_table_name_th">付与ロール</th>
-										<th class="oaex_biztran_role_table_expiration_th">有効期限</th>
+										<th class="oaex_biztran_role_table_valid_thru_th">有効期限</th>
 									</tr>
 								</thead>
 							</table>
@@ -306,12 +306,12 @@
 								<tr th:each="itemrow, iterStat : *{form.Oa11030BizTranRoleTableVoList}">
 									<td class="oaex_biztran_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_biztran_role_table_name" th:text="${itemrow.roleName}"></td>
-									<td class="oaex_biztran_role_table_expiration" th:text="${itemrow.expirationDate}"></td>
+									<td class="oaex_biztran_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
 								<tr th:remove="all">
 									<td class="oaex_biztran_role_table_code">KBAG01</td>
 									<td class="oaex_biztran_role_table_name">（購買）購買業務基本</td>
-									<td class="oaex_biztran_role_table_expiration">2020/04/01 ～ 9999/12/31</td>
+									<td class="oaex_biztran_role_table_valid_thru">2020/04/01 ～ 9999/12/31</td>
 								</tr>
 								<tr th:remove="all"><td>KBAG02</td><td>（購買）本所業務</td><td>2020/04/01 ～ 9999/12/31</td></tr>
 								<tr th:remove="all"><td>KBAG03</td><td>（購買）本所管理業務</td><td>2020/04/01 ～ 9999/12/31</td></tr>

@@ -48,8 +48,8 @@ public class BizTransDataSource implements BizTransRepository {
                 entity.getBizTranCode(),
                 entity.getBizTranName(),
                 entity.getIsCenterBizTran(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getSubSystemCode(),
                 entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())
@@ -75,8 +75,8 @@ public class BizTransDataSource implements BizTransRepository {
                 entity.getBizTranCode(),
                 entity.getBizTranName(),
                 entity.getIsCenterBizTran(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getSubSystemCode(),
                 entity.getRecordVersion(),
                 SubSystem.codeOf(entity.getSubSystemCode())

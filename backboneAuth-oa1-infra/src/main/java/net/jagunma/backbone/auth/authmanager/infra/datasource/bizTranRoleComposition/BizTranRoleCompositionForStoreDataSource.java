@@ -126,8 +126,8 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             entity.setBizTranCode(bizTran.getBizTranCode());
             entity.setBizTranName(bizTran.getBizTranName());
             entity.setIsCenterBizTran(bizTran.getIsCenterBizTran());
-            entity.setExpirationStartDate(bizTran.getExpirationStartDate());
-            entity.setExpirationEndDate(bizTran.getExpirationStartDate());
+            entity.setValidThruStartDate(bizTran.getValidThruStartDate());
+            entity.setValidThruEndDate(bizTran.getValidThruStartDate());
             entity.setSubSystemCode(bizTran.getSubSystemCode());
             bizTranEntityDao.insert(entity);
 
@@ -136,8 +136,8 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
                 entity.getBizTranCode(),
                 entity.getBizTranName(),
                 entity.getIsCenterBizTran(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getSubSystemCode(),
                 entity.getRecordVersion(),
                 null));

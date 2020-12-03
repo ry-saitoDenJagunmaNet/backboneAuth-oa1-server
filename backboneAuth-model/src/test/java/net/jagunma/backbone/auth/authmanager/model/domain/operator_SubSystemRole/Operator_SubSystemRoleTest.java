@@ -30,16 +30,16 @@ class Operator_SubSystemRoleTest {
         Long operator_SubSystemRoleId = 1234L;
         Long operatorId = 19L;
         String subSystemRoleCode = "JaAdmin";
-        LocalDate expirationStartDate = LocalDate.of(2020,1,1);
-        LocalDate expirationEndDate = LocalDate.of(9999,12,31);
+        LocalDate validThruStartDate = LocalDate.of(2020,1,1);
+        LocalDate validThruEndDate = LocalDate.of(9999,12,31);
         Integer recordVersion = 1;
         SubSystemRole subSystemRole = SubSystemRole.業務統括者_購買;
 
         String operatorCode = "yu001010";
         String operatorName = "ｙｕ００１０１０";
         String mailAddress = "001.001.001.001";
-        LocalDate operatorExpirationStartDate = LocalDate.of(2020, 1, 1);
-        LocalDate operatorExpirationEndDate = LocalDate.of(9999, 12, 31);
+        LocalDate operatorValidThruStartDate = LocalDate.of(2020, 1, 1);
+        LocalDate operatorValidThruEndDate = LocalDate.of(9999, 12, 31);
         Boolean isDeviceAuth = false;
         Long jaId = 6L;
         String jaCode = "006";
@@ -53,8 +53,8 @@ class Operator_SubSystemRoleTest {
             operatorCode,
             operatorName,
             mailAddress,
-            operatorExpirationStartDate,
-            operatorExpirationEndDate,
+            operatorValidThruStartDate,
+            operatorValidThruEndDate,
             isDeviceAuth,
             jaId,
             jaCode,
@@ -69,8 +69,8 @@ class Operator_SubSystemRoleTest {
             operator_SubSystemRoleId,
             operatorId,
             subSystemRoleCode,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             recordVersion,
             operator,
             subSystemRole);
@@ -80,8 +80,8 @@ class Operator_SubSystemRoleTest {
         assertThat(operator_SubSystemRole.getOperator_SubSystemRoleId()).isEqualTo(operator_SubSystemRoleId);
         assertThat(operator_SubSystemRole.getOperatorId()).isEqualTo(operatorId);
         assertThat(operator_SubSystemRole.getSubSystemRoleCode()).isEqualTo(subSystemRoleCode);
-        assertThat(operator_SubSystemRole.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(operator_SubSystemRole.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(operator_SubSystemRole.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(operator_SubSystemRole.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(operator_SubSystemRole.getRecordVersion()).isEqualTo(recordVersion);
         assertThat(operator_SubSystemRole.getOperator()).usingRecursiveComparison().isEqualTo(operator);
         assertThat(operator_SubSystemRole.getSubSystemRole()).usingRecursiveComparison().isEqualTo(subSystemRole);

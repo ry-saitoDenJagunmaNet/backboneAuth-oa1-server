@@ -12,25 +12,25 @@ public class Oa12020Vo extends BaseOfResponseVo {
     private static final long serialVersionUID = 1L;
 
     /**
-     * ＪＡID
+     * ＪＡコード
      */
-    private Long jaId;
+    private String jaCode;
     /**
-     * 店舗ID
+     * 店舗コード
      */
-    private Long branchId;
+    private String branchCode;
     /**
      * サブシステムコード
      */
     private String subSystemCode;
     /**
-     * 取引グループID
+     * 取引グループコード
      */
-    private Long bizTranGrpId;
+    private String bizTranGrpCode;
     /**
-     * 取引ID
+     * 取引コード
      */
-    private Long bizTranId;
+    private String bizTranCode;
     /**
      * 抑止期間条件選択
      */
@@ -73,17 +73,17 @@ public class Oa12020Vo extends BaseOfResponseVo {
     private Integer paginationLastPageNo;
 
     // Getter／Setter
-    public Long getJaId() {
-        return jaId;
+    public String getJaCode() {
+        return jaCode;
     }
-    public void setJaId(Long jaId) {
-        this.jaId = jaId;
+    public void setJaCode(String jaCode) {
+        this.jaCode = jaCode;
     }
-    public Long getBranchId() {
-        return branchId;
+    public String getBranchCode() {
+        return branchCode;
     }
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
+    public void setBranchCode(String branchCode) {
+        this.branchCode = branchCode;
     }
     public String getSubSystemCode() {
         return subSystemCode;
@@ -91,17 +91,17 @@ public class Oa12020Vo extends BaseOfResponseVo {
     public void setSubSystemCode(String subSystemCode) {
         this.subSystemCode = subSystemCode;
     }
-    public Long getBizTranGrpId() {
-        return bizTranGrpId;
+    public String getBizTranGrpCode() {
+        return bizTranGrpCode;
     }
-    public void setBizTranGrpId(Long bizTranGrpId) {
-        this.bizTranGrpId = bizTranGrpId;
+    public void setBizTranGrpCode(String bizTranGrpCode) {
+        this.bizTranGrpCode = bizTranGrpCode;
     }
-    public Long getBizTranId() {
-        return bizTranId;
+    public String getBizTranCode() {
+        return bizTranCode;
     }
-    public void setBizTranId(Long bizTranId) {
-        this.bizTranId = bizTranId;
+    public void setBizTranCode(String bizTranCode) {
+        this.bizTranCode = bizTranCode;
     }
     public Integer getSuspendConditionsSelect() {
         return suspendConditionsSelect;

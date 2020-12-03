@@ -29,13 +29,13 @@ public interface OperatorEntryRequest {
      *
      * @return 有効期限開始日
      */
-    LocalDate getExpirationStartDate();
+    LocalDate getValidThruStartDate();
     /**
      * 有効期限終了日のＧｅｔ
      *
      * @return 有効期限終了日
      */
-    LocalDate getExpirationEndDate();
+    LocalDate getValidThruEndDate();
     /**
      * 店舗IDのＧｅｔ
      *

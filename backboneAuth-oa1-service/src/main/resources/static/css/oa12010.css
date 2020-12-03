@@ -2,6 +2,8 @@
  * OA12010 取引ロール編成インポート＆エクスポート
  */
 
+div.oaex_importfile_hide_textbox {display: none;}
+
 /* メッセージ表示エリア */
 #message_table {
 	overflow-y: auto;

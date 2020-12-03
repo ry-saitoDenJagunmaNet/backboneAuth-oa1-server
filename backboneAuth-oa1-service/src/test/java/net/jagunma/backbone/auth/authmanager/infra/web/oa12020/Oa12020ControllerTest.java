@@ -103,7 +103,8 @@ class Oa12020ControllerTest {
         SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(new BranchAtMomentRepository() {
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                return null;
+                List<BranchAtMoment> list = createBranchAtMomentList().stream().filter(b->b.getJaAtMoment().getJaAttribute().getJaCode().getValue().equals(criteria.getNarrowedJaCodeCriteria().getEqualTo().getValue())).collect(Collectors.toList());
+                return BranchesAtMoment.of(list);
             }
             @Override
             public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
@@ -164,7 +165,7 @@ class Oa12020ControllerTest {
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> cresteSuspendBizTran() {
         List<SuspendBizTran> list = newArrayList();
-        list.add(SuspendBizTran.createFrom(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,100001L,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
+        list.add(SuspendBizTran.createFrom(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01","AN0001",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
             createJaAtMomentList().stream().filter(j->j.getIdentifier().equals(6L)).findFirst().orElse(null),
             createBranchAtMomentList().stream().filter(b->b.getIdentifier().equals(33L)).findFirst().orElse(null),
             SubSystem.販売_畜産,
@@ -172,7 +173,7 @@ class Oa12020ControllerTest {
             createBizTran(100001L)));
         list.add(SuspendBizTran.createFrom(2L,null,null,null,null,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),null,1,
             null,null,null,null,null));
-        list.add(SuspendBizTran.createFrom(3L,6L,null,null,null,null,null,null,null,1,
+        list.add(SuspendBizTran.createFrom(3L,"006",null,null,null,null,null,null,null,1,
             createJaAtMoment(6L,"006","ＪＡ００６"),
             null,null,null,null));
         return list;
@@ -212,7 +213,7 @@ class Oa12020ControllerTest {
     private BranchAtMoment createBranchAtMoment(Long branchId, String branchCode, String branchName, Long jaId) {
         return BranchAtMoment.builder()
             .withIdentifier(branchId)
-            .withJaAtMoment(createJaAtMomentList().stream().filter(j->j.getJaAttribute().equals(jaId)).findFirst().orElse(null))
+            .withJaAtMoment(createJaAtMomentList().stream().filter(j->j.getIdentifier().equals(jaId)).findFirst().orElse(null))
             .withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of(branchCode)).withName(branchName).build())
             .build();
     }
@@ -605,16 +606,16 @@ class Oa12020ControllerTest {
         Oa12020Controller oa12020Controller = createOa12020Controller(-2);
 
         // 実行値
-        Long jaId = 6L;
+        String jaCode = "006";
         ModelMap model = new ModelMap();
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
+        vo.setJaCode(jaCode);
 
         // 期待値
         String expectedItemsSourceName = "oa12020::ajaxSelectBranch";
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
         expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BranchAtMoment branchAtMoment : createBranchAtMomentList().stream().filter(b-> jaId.equals(b.getJaAtMoment().getJaAttribute())).collect(Collectors.toList())) {
+        for (BranchAtMoment branchAtMoment : createBranchAtMomentList().stream().filter(b-> jaCode.equals(b.getJaAtMoment().getJaAttribute().getJaCode().getValue())).collect(Collectors.toList())) {
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 branchAtMoment.getIdentifier(), branchAtMoment.getBranchAttribute().getBranchCode().getValue(), branchAtMoment.getBranchAttribute().getName()
             ));

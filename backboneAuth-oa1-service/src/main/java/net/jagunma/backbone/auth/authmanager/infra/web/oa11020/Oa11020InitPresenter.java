@@ -63,8 +63,8 @@ class Oa11020InitPresenter {
         vo.setOperatorCode6(null);
         vo.setOperatorName(null);
         vo.setMailAddress(null);
-        vo.setExpirationStartDate(null);
-        vo.setExpirationEndDate(null);
+        vo.setValidThruStartDate(null);
+        vo.setValidThruEndDate(null);
         vo.setChangeCause(null);
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMomentForBranchItemsSource).getValue());
         vo.setPassword(null);

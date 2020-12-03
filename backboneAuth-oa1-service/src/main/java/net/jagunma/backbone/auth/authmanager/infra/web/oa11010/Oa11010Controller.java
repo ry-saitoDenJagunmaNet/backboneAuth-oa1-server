@@ -154,7 +154,7 @@ public class Oa11010Controller extends BaseOfController {
         presenter.setBranchesAtMoment(
             searchBranchAtMoment.selectBy(AuditInfoHolder.getJa().getIdentifier()));
         // 有効期限選択
-        presenter.setExpirationSelect(0);
+        presenter.setValidThruSelect(0);
         // サブシステムロール初期選択
         presenter.setSubSystemRoleConditionsSelect(1);
         // サブシステムロールリスト

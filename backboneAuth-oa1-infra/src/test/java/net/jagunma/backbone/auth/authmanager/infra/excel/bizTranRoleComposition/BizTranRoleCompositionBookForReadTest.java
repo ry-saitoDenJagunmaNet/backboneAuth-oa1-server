@@ -66,9 +66,9 @@ class BizTranRoleCompositionBookForReadTest {
             cell = row.createCell(5);
             cell.setCellValue(item.getIsCenterBizTran()? 1: 0);
             cell = row.createCell(6);
-            cell.setCellValue(item.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            cell.setCellValue(item.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             cell = row.createCell(7);
-            cell.setCellValue(item.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            cell.setCellValue(item.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             rowIndex++;
         }
 

@@ -14,8 +14,8 @@ class OperatorEntryPackTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Long jaId = 6L;
     private String jaCode = "006";
     private Long branchId = 1L;
@@ -28,8 +28,8 @@ class OperatorEntryPackTest {
      *      String operatorCode,
      *      String operatorName,
      *      String mailAddress,
-     *      LocalDate expirationStartDate,
-     *      LocalDate expirationEndDate,
+     *      LocalDate validThruStartDate,
+     *      LocalDate validThruEndDate,
      *      Long jaId,
      *      String jaCode,
      *      Long branchId,
@@ -52,8 +52,8 @@ class OperatorEntryPackTest {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             jaId,
             jaCode,
             branchId,
@@ -66,8 +66,8 @@ class OperatorEntryPackTest {
         assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(operatorCode);
         assertThat(operatorEntryPack.getOperatorName()).isEqualTo(operatorName);
         assertThat(operatorEntryPack.getMailAddress()).isEqualTo(mailAddress);
-        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(expirationStartDate);
-        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(expirationEndDate);
+        assertThat(operatorEntryPack.getValidThruStartDate()).isEqualTo(validThruStartDate);
+        assertThat(operatorEntryPack.getValidThruEndDate()).isEqualTo(validThruEndDate);
         assertThat(operatorEntryPack.getJaId()).isEqualTo(jaId);
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(jaCode);
         assertThat(operatorEntryPack.getBranchId()).isEqualTo(branchId);

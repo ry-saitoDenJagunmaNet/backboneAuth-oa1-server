@@ -55,7 +55,7 @@ class Oa12020PresenterTest {
     private List<SuspendBizTran> createSuspendBizTranList() {
         List<SuspendBizTran> list = newArrayList();
         list.add(SuspendBizTran.createFrom(
-            1L,jaId,branchId,SubSystem.販売_畜産.getCode(),bizTranGrpId,bizTranId,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
+            1L,jaCode,branchCode,SubSystem.販売_畜産.getCode(),bizTranGrpCode,bizTranCode,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
             createJaAtMoment(),
             createBranchAtMoment(),
             SubSystem.販売_畜産,
@@ -63,7 +63,7 @@ class Oa12020PresenterTest {
             BizTran.createFrom(bizTranId,bizTranCode,bizTranName,false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産)
         ));
         list.add(SuspendBizTran.createFrom(
-            2L,null,null,null,null,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
+            2L,"","","","","",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
             null,
             null,
             null,
@@ -89,11 +89,11 @@ class Oa12020PresenterTest {
     // 実行値作成
     private Oa12020Presenter createPresenter() {
         Oa12020Presenter presenter = new Oa12020Presenter();
-        presenter.setJaId(jaId);
-        presenter.setBranchId(branchId);
+        presenter.setJaCode(jaCode);
+        presenter.setBranchCode(branchCode);
         presenter.setSubSystemCode(subSystemCode);
-        presenter.setBizTranGrpId(bizTranGrpId);
-        presenter.setBizTranId(bizTranId);
+        presenter.setBizTranGrpCode(bizTranGrpCode);
+        presenter.setBizTranCode(bizTranCode);
         presenter.setSuspendConditionsSelect(suspendConditionsSelect);
         presenter.setSuspendStatusDate(suspendStatusDate);
         presenter.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -141,11 +141,11 @@ class Oa12020PresenterTest {
 
         // 期待値
         Oa12020Vo expectedVo = new Oa12020Vo();
-        expectedVo.setJaId(jaId);
-        expectedVo.setBranchId(branchId);
+        expectedVo.setJaCode(jaCode);
+        expectedVo.setBranchCode(branchCode);
         expectedVo.setSubSystemCode(subSystemCode);
-        expectedVo.setBizTranGrpId(bizTranGrpId);
-        expectedVo.setBizTranId(bizTranId);
+        expectedVo.setBizTranGrpCode(bizTranGrpCode);
+        expectedVo.setBizTranCode(bizTranCode);
         expectedVo.setSuspendConditionsSelect(suspendConditionsSelect);
         expectedVo.setSuspendStatusDate(suspendStatusDate);
         expectedVo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -182,11 +182,11 @@ class Oa12020PresenterTest {
 
         // 期待値
         Oa12020Vo expectedVo = new Oa12020Vo();
-        expectedVo.setJaId(jaId);
-        expectedVo.setBranchId(branchId);
+        expectedVo.setJaCode(jaCode);
+        expectedVo.setBranchCode(branchCode);
         expectedVo.setSubSystemCode(subSystemCode);
-        expectedVo.setBizTranGrpId(bizTranGrpId);
-        expectedVo.setBizTranId(bizTranId);
+        expectedVo.setBizTranGrpCode(bizTranGrpCode);
+        expectedVo.setBizTranCode(bizTranCode);
         expectedVo.setSuspendConditionsSelect(suspendConditionsSelect);
         expectedVo.setSuspendStatusDate(suspendStatusDate);
         expectedVo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -263,11 +263,11 @@ class Oa12020PresenterTest {
 
         // 実行値
         Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaId(jaId);
-        vo.setBranchId(branchId);
+        vo.setJaCode(jaCode);
+        vo.setBranchCode(branchCode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpId(bizTranGrpId);
-        vo.setBizTranId(bizTranId);
+        vo.setBizTranGrpCode(bizTranGrpCode);
+        vo.setBizTranCode(bizTranCode);
         vo.setSuspendConditionsSelect(suspendConditionsSelect);
         vo.setSuspendStatusDate(suspendStatusDate);
         vo.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);
@@ -280,11 +280,11 @@ class Oa12020PresenterTest {
 
         // 期待値
         Oa12020Presenter expectedPresenter = new Oa12020Presenter();
-        expectedPresenter.setJaId(jaId);
-        expectedPresenter.setBranchId(branchId);
+        expectedPresenter.setJaCode(jaCode);
+        expectedPresenter.setBranchCode(branchCode);
         expectedPresenter.setSubSystemCode(subSystemCode);
-        expectedPresenter.setBizTranGrpId(bizTranGrpId);
-        expectedPresenter.setBizTranId(bizTranId);
+        expectedPresenter.setBizTranGrpCode(bizTranGrpCode);
+        expectedPresenter.setBizTranCode(bizTranCode);
         expectedPresenter.setSuspendConditionsSelect(suspendConditionsSelect);
         expectedPresenter.setSuspendStatusDate(suspendStatusDate);
         expectedPresenter.setSuspendStatusStartDateFrom(suspendStatusStartDateFrom);

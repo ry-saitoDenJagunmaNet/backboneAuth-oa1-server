@@ -33,8 +33,8 @@ class UpdateOperatorValidator {
         // 未セットチェック
         Preconditions.checkNotNull(request.getOperatorId(), () -> new GunmaRuntimeException("EOA13002", "オペレーターID"));
         Preconditions.checkNotEmpty(request.getOperatorName(), () -> new GunmaRuntimeException("EOA13002", "オペレーター名"));
-        Preconditions.checkNotNull(request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（開始日）"));
-        Preconditions.checkNotNull(request.getExpirationEndDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（終了日）"));
+        Preconditions.checkNotNull(request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（開始日）"));
+        Preconditions.checkNotNull(request.getValidThruEndDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（終了日）"));
         Preconditions.checkNotNull(request.getIsDeviceAuth(), () -> new GunmaRuntimeException("EOA13002", "機器認証"));
         Preconditions.checkNotNull(request.getBranchId(), () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
         Preconditions.checkNotEmpty(request.getChangeCause(), () -> new GunmaRuntimeException("EOA13002", "変更事由"));
@@ -52,6 +52,6 @@ class UpdateOperatorValidator {
         Preconditions.checkNonNegative(request.getAvailableStatus().getCode(), () -> new GunmaRuntimeException("EOA13007", "利用可否状態"));
 
         // 範囲指定不正チェック
-        Preconditions.checkMax(request.getExpirationEndDate(), request.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
+        Preconditions.checkMax(request.getValidThruEndDate(), request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
     }
 }

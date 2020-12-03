@@ -88,8 +88,8 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
             String bizTranCode = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_CODE);
             String bizTranName = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_NAME);
             Integer centerBizTran = ExcelUtil.getInteger(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_CENTER_BIZTRAN);
-            String expirationStartDate = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_STARTDATE);
-            String expirationEndDate = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_ENDDATE);
+            String validThruStartDate = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_VALIDTHRU_STARTDATE);
+            String validThruEndDate = ExcelUtil.getString(sheet, i, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_VALIDTHRU_ENDDATE);
 
             bizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(
                 i+1,
@@ -99,8 +99,8 @@ public class BizTranRoleCompositionBookForRead implements BizTranRoleComposition
                 bizTranCode,
                 bizTranName,
                 centerBizTran == 1,
-                LocalDate.parse(expirationStartDate, DateTimeFormatter.ofPattern("yyyy/MM/dd")),
-                LocalDate.parse(expirationEndDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))));
+                LocalDate.parse(validThruStartDate, DateTimeFormatter.ofPattern("yyyy/MM/dd")),
+                LocalDate.parse(validThruEndDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))));
         }
     }
 }

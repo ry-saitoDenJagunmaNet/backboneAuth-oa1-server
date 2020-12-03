@@ -153,8 +153,8 @@ public class BizTranRoleCompositionBookForWrite implements
             getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_CODE).setCellValue(bizTranGrp_BizTranSheet.getBizTranCode());
             getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_BIZTRAN_NAME).setCellValue(bizTranGrp_BizTranSheet.getBizTranName());
             getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_CENTER_BIZTRAN).setCellValue(bizTranGrp_BizTranSheet.getIsCenterBizTran()? 1 : 0);
-            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_STARTDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_EXPIRATION_ENDDATE).setCellValue(bizTranGrp_BizTranSheet.getExpirationEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_VALIDTHRU_STARTDATE).setCellValue(bizTranGrp_BizTranSheet.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            getCell(row, BizTranRoleCompositionConstants.INDEX_OF_SHEET2_VALIDTHRU_ENDDATE).setCellValue(bizTranGrp_BizTranSheet.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
 
             rowIndex++;
         }

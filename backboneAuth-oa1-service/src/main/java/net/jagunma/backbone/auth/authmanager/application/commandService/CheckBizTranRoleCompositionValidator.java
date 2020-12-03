@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -15,21 +16,21 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * 取引ロール編成エクスポートExcel 登録サービス Validator
+ * 取引ロール編成エクスポートExcel Import登録サービス Validator
  */
-public class StoreBizTranRoleCompositionValidator {
+public class CheckBizTranRoleCompositionValidator {
 
-    private final BizTranRoleCompositionImportRequest request;
+    private final BizTranRoleCompositionImportCheckRequest request;
 
     // コンストラクタ
-    StoreBizTranRoleCompositionValidator(BizTranRoleCompositionImportRequest request) {
+    CheckBizTranRoleCompositionValidator(BizTranRoleCompositionImportCheckRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static StoreBizTranRoleCompositionValidator with(
-        BizTranRoleCompositionImportRequest request) {
-        return new StoreBizTranRoleCompositionValidator(request);
+    public static CheckBizTranRoleCompositionValidator with(
+        BizTranRoleCompositionImportCheckRequest request) {
+        return new CheckBizTranRoleCompositionValidator(request);
     }
 
     /**
@@ -182,12 +183,12 @@ public class StoreBizTranRoleCompositionValidator {
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
             }
-            if (bizTranGrp_BizTransSheet.getExpirationStartDate() == null) {
+            if (bizTranGrp_BizTransSheet.getValidThruStartDate() == null) {
                 messageArgs.set(2, "有効期限From");
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
             }
-            if (bizTranGrp_BizTransSheet.getExpirationEndDate() == null) {
+            if (bizTranGrp_BizTransSheet.getValidThruEndDate() == null) {
                 messageArgs.set(2, "有効期限To");
                 list.add(MessageDto.createFrom("EOA13103", messageArgs));
                 continue;
@@ -217,8 +218,8 @@ public class StoreBizTranRoleCompositionValidator {
                 b.getBizTranCode().equals(bizTranGrp_BizTransSheet.getBizTranCode()) &&
                     (!b.getBizTranName().equals(bizTranGrp_BizTransSheet.getBizTranName()) ||
                         !b.getIsCenterBizTran().equals(bizTranGrp_BizTransSheet.getIsCenterBizTran()) ||
-                        !b.getExpirationStartDate().equals(bizTranGrp_BizTransSheet.getExpirationStartDate()) ||
-                        !b.getExpirationEndDate().equals(bizTranGrp_BizTransSheet.getExpirationEndDate())) &&
+                        !b.getValidThruStartDate().equals(bizTranGrp_BizTransSheet.getValidThruStartDate()) ||
+                        !b.getValidThruEndDate().equals(bizTranGrp_BizTransSheet.getValidThruEndDate())) &&
                     b.getRowno().compareTo(bizTranGrp_BizTransSheet.getRowno()) > 0).count() > 0) {
                 messageArgs.set(2, "取引");
                 list.add(MessageDto.createFrom("EOA13105", messageArgs));

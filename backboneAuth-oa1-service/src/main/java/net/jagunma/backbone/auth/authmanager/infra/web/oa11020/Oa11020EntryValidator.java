@@ -35,8 +35,8 @@ class Oa11020EntryValidator {
         Preconditions.checkNotNull(vo.getBranchId(), () -> new GunmaRuntimeException("EOA14002", "店舗", "選択"));
         Preconditions.checkNotEmpty(vo.getOperatorCode6(), () -> new GunmaRuntimeException("EOA14002", "オペレーターコード（下6桁）", "入力"));
         Preconditions.checkNotEmpty(vo.getOperatorName(), () -> new GunmaRuntimeException("EOA14002", "オペレーター名", "入力"));
-        Preconditions.checkNotNull(vo.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA14002", "有効期限（開始日）", "入力"));
-        Preconditions.checkNotNull(vo.getExpirationEndDate(), () -> new GunmaRuntimeException("EOA14002", "有効期限（終了日）", "入力"));
+        Preconditions.checkNotNull(vo.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA14002", "有効期限（開始日）", "入力"));
+        Preconditions.checkNotNull(vo.getValidThruEndDate(), () -> new GunmaRuntimeException("EOA14002", "有効期限（終了日）", "入力"));
         Preconditions.checkNotEmpty(vo.getChangeCause(), () -> new GunmaRuntimeException("EOA14002", "変更事由", "入力"));
 
         // 桁数チェック
@@ -55,6 +55,6 @@ class Oa11020EntryValidator {
         }
 
         // 範囲指定不正チェック
-        Preconditions.checkMax(vo.getExpirationEndDate(), vo.getExpirationStartDate(), () -> new GunmaRuntimeException("EOA14008", "有効期限"));
+        Preconditions.checkMax(vo.getValidThruEndDate(), vo.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA14008", "有効期限"));
     }
 }

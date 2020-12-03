@@ -16,9 +16,9 @@
 .oaex_granted_role_table_code {min-width: 70px; width: 10%;}
 .oaex_granted_role_table_name {min-width: 280px; width: 55%;}
 
-.oaex_granted_role_table_expiration_th {min-width: 240px; width: 35%;}
-.oaex_granted_role_table_expiration {min-width: 240px; width: 35%;}
-.oaex_granted_role_table_expiration input[type=text] {
+.oaex_granted_role_table_valid_thru_th {min-width: 240px; width: 35%;}
+.oaex_granted_role_table_valid_thru {min-width: 240px; width: 35%;}
+.oaex_granted_role_table_valid_thru input[type=text] {
 	width: 45% !important;
 	margin: 0px !important;
 }

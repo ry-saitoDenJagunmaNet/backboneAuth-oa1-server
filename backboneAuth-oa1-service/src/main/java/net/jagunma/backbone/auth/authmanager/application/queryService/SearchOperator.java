@@ -241,31 +241,31 @@ public class SearchOperator {
         LocalDate defaultFromDate = LocalDate.of(1,1,1);
         LocalDate defaultToDate = LocalDate.of(9999,12,31);
 
-        if (subSystemRoleRequest.getExpirationSelect() == null) { return true; }
+        if (subSystemRoleRequest.getValidThruSelect() == null) { return true; }
 
-        if (subSystemRoleRequest.getExpirationSelect() == 0) {
+        if (subSystemRoleRequest.getValidThruSelect() == 0) {
             // 指定なし
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode())).count() != 0;
-        } else if (subSystemRoleRequest.getExpirationSelect() == 1) {
+        } else if (subSystemRoleRequest.getValidThruSelect() == 1) {
             // 状態指定日
-            if (subSystemRoleRequest.getExpirationStatusDate() == null) { return true; }
+            if (subSystemRoleRequest.getValidThruStatusDate() == null) { return true; }
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    o.getExpirationStartDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate().compareTo(subSystemRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
-        } else if (subSystemRoleRequest.getExpirationSelect() == 2) {
+                    o.getValidThruStartDate().compareTo(subSystemRoleRequest.getValidThruStatusDate()) <= 0 &&
+                    o.getValidThruEndDate().compareTo(subSystemRoleRequest.getValidThruStatusDate()) >= 0).count() != 0;
+        } else if (subSystemRoleRequest.getValidThruSelect() == 2) {
             // 条件指定
-            LocalDate expirationStartDateFrom = (subSystemRoleRequest.getExpirationStartDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getExpirationStartDateFrom();
-            LocalDate expirationStartDateTo = (subSystemRoleRequest.getExpirationStartDateTo() == null)? defaultToDate : subSystemRoleRequest.getExpirationStartDateTo();
-            LocalDate expirationEndDateFrom = (subSystemRoleRequest.getExpirationEndDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getExpirationEndDateFrom();
-            LocalDate expirationEndtDateTo = (subSystemRoleRequest.getExpirationEndDateTo() == null)? defaultToDate : subSystemRoleRequest.getExpirationEndDateTo();
+            LocalDate validThruStartDateFrom = (subSystemRoleRequest.getValidThruStartDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getValidThruStartDateFrom();
+            LocalDate validThruStartDateTo = (subSystemRoleRequest.getValidThruStartDateTo() == null)? defaultToDate : subSystemRoleRequest.getValidThruStartDateTo();
+            LocalDate validThruEndDateFrom = (subSystemRoleRequest.getValidThruEndDateFrom() == null)? defaultFromDate : subSystemRoleRequest.getValidThruEndDateFrom();
+            LocalDate validThruEndtDateTo = (subSystemRoleRequest.getValidThruEndDateTo() == null)? defaultToDate : subSystemRoleRequest.getValidThruEndDateTo();
             return operatorSubSystemRoleList.stream().filter(o ->
                 o.getSubSystemRoleCode().equals(subSystemRoleRequest.getSubSystemRoleCode()) &&
-                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
-                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
-                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
-                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
+                    (o.getValidThruStartDate().compareTo(validThruStartDateFrom) >= 0 ||
+                        o.getValidThruStartDate().compareTo(validThruStartDateTo) <= 0) &&
+                    (o.getValidThruEndDate().compareTo(validThruEndDateFrom) >= 0 ||
+                        o.getValidThruEndDate().compareTo(validThruEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
@@ -326,31 +326,31 @@ public class SearchOperator {
         LocalDate defaultFromDate = LocalDate.of(1,1,1);
         LocalDate defaultToDate = LocalDate.of(9999,12,31);
 
-        if (bizTranRoleRequest.getExpirationSelect() == null) { return true; }
+        if (bizTranRoleRequest.getValidThruSelect() == null) { return true; }
 
-        if (bizTranRoleRequest.getExpirationSelect() == 0) {
+        if (bizTranRoleRequest.getValidThruSelect() == 0) {
             // 指定なし
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId())).count() != 0;
-        } else if (bizTranRoleRequest.getExpirationSelect() == 1) {
+        } else if (bizTranRoleRequest.getValidThruSelect() == 1) {
             // 状態指定日
-            if (bizTranRoleRequest.getExpirationStatusDate() == null) { return true; }
+            if (bizTranRoleRequest.getValidThruStatusDate() == null) { return true; }
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    o.getExpirationStartDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) <= 0 &&
-                    o.getExpirationEndDate().compareTo(bizTranRoleRequest.getExpirationStatusDate()) >= 0).count() != 0;
-        } else if (bizTranRoleRequest.getExpirationSelect() == 2) {
+                    o.getValidThruStartDate().compareTo(bizTranRoleRequest.getValidThruStatusDate()) <= 0 &&
+                    o.getValidThruEndDate().compareTo(bizTranRoleRequest.getValidThruStatusDate()) >= 0).count() != 0;
+        } else if (bizTranRoleRequest.getValidThruSelect() == 2) {
             // 条件指定
-            LocalDate expirationStartDateFrom = (bizTranRoleRequest.getExpirationStartDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getExpirationStartDateFrom();
-            LocalDate expirationStartDateTo = (bizTranRoleRequest.getExpirationStartDateTo() == null)? defaultToDate : bizTranRoleRequest.getExpirationStartDateTo();
-            LocalDate expirationEndDateFrom = (bizTranRoleRequest.getExpirationEndDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getExpirationEndDateFrom();
-            LocalDate expirationEndtDateTo = (bizTranRoleRequest.getExpirationEndDateTo() == null)? defaultToDate : bizTranRoleRequest.getExpirationEndDateTo();
+            LocalDate validThruStartDateFrom = (bizTranRoleRequest.getValidThruStartDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getValidThruStartDateFrom();
+            LocalDate validThruStartDateTo = (bizTranRoleRequest.getValidThruStartDateTo() == null)? defaultToDate : bizTranRoleRequest.getValidThruStartDateTo();
+            LocalDate validThruEndDateFrom = (bizTranRoleRequest.getValidThruEndDateFrom() == null)? defaultFromDate : bizTranRoleRequest.getValidThruEndDateFrom();
+            LocalDate validThruEndtDateTo = (bizTranRoleRequest.getValidThruEndDateTo() == null)? defaultToDate : bizTranRoleRequest.getValidThruEndDateTo();
             return operatorBizTranRoleList.stream().filter(o ->
                 o.getBizTranRoleId().equals(bizTranRoleRequest.getBizTranRoleId()) &&
-                    (o.getExpirationStartDate().compareTo(expirationStartDateFrom) >= 0 ||
-                        o.getExpirationStartDate().compareTo(expirationStartDateTo) <= 0) &&
-                    (o.getExpirationEndDate().compareTo(expirationEndDateFrom) >= 0 ||
-                        o.getExpirationEndDate().compareTo(expirationEndtDateTo) <= 0)).count() != 0;
+                    (o.getValidThruStartDate().compareTo(validThruStartDateFrom) >= 0 ||
+                        o.getValidThruStartDate().compareTo(validThruStartDateTo) <= 0) &&
+                    (o.getValidThruEndDate().compareTo(validThruEndDateFrom) >= 0 ||
+                        o.getValidThruEndDate().compareTo(validThruEndtDateTo) <= 0)).count() != 0;
         }
 
         return true;
@@ -563,11 +563,11 @@ public class SearchOperator {
         criteria.getMailAddressCriteria().assignFrom(
             (request.getMailAddressCriteria() == null)? new StringCriteria() : request.getMailAddressCriteria());
         // 有効期限開始
-        criteria.getExpirationStartDateCriteria().assignFrom(
-            (request.getExpirationStartDateCriteria() == null)? new LocalDateCriteria() : request.getExpirationStartDateCriteria());
+        criteria.getValidThruStartDateCriteria().assignFrom(
+            (request.getValidThruStartDateCriteria() == null)? new LocalDateCriteria() : request.getValidThruStartDateCriteria());
         // 有効期限開始
-        criteria.getExpirationEndDateCriteria().assignFrom(
-            (request.getExpirationEndDateCriteria() == null)? new LocalDateCriteria() : request.getExpirationEndDateCriteria());
+        criteria.getValidThruEndDateCriteria().assignFrom(
+            (request.getValidThruEndDateCriteria() == null)? new LocalDateCriteria() : request.getValidThruEndDateCriteria());
         // ＪＡID
         if (request.getJaIdCriteria() != null && request.getJaIdCriteria().getEqualTo() != null) {
             criteria.getJaIdentifierCriteria().setEqualTo(request.getJaIdCriteria().getEqualTo());

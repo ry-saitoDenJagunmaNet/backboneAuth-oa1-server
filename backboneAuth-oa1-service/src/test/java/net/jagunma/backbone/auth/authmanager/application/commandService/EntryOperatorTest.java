@@ -36,8 +36,8 @@ class EntryOperatorTest {
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Long branchId = 1L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
@@ -57,12 +57,12 @@ class EntryOperatorTest {
                 return mailAddress;
             }
             @Override
-            public LocalDate getExpirationStartDate() {
-                return expirationStartDate;
+            public LocalDate getValidThruStartDate() {
+                return validThruStartDate;
             }
             @Override
-            public LocalDate getExpirationEndDate() {
-                return expirationEndDate;
+            public LocalDate getValidThruEndDate() {
+                return validThruEndDate;
             }
             @Override
             public Long getBranchId() {
@@ -250,8 +250,8 @@ class EntryOperatorTest {
         assertThat(operatorEntryPack.getOperatorCode()).isEqualTo(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix() + request.getOperatorCode6());
         assertThat(operatorEntryPack.getOperatorName()).isEqualTo(request.getOperatorName());
         assertThat(operatorEntryPack.getMailAddress()).isEqualTo(request.getMailAddress());
-        assertThat(operatorEntryPack.getExpirationStartDate()).isEqualTo(request.getExpirationStartDate());
-        assertThat(operatorEntryPack.getExpirationEndDate()).isEqualTo(request.getExpirationEndDate());
+        assertThat(operatorEntryPack.getValidThruStartDate()).isEqualTo(request.getValidThruStartDate());
+        assertThat(operatorEntryPack.getValidThruEndDate()).isEqualTo(request.getValidThruEndDate());
         assertThat(operatorEntryPack.getJaId()).isEqualTo(AuditInfoHolder.getJa().getIdentifier());
         assertThat(operatorEntryPack.getJaCode()).isEqualTo(AuditInfoHolder.getJa().getJaAttribute().getJaCode().getValue());
         assertThat(operatorEntryPack.getBranchId()).isEqualTo(request.getBranchId());

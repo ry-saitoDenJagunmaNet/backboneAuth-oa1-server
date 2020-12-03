@@ -13,8 +13,8 @@ public class Operator {
     private final String operatorCode;
     private final String operatorName;
     private final String mailAddress;
-    private final LocalDate expirationStartDate;
-    private final LocalDate expirationEndDate;
+    private final LocalDate validThruStartDate;
+    private final LocalDate validThruEndDate;
     private final Boolean isDeviceAuth;
     private final Long jaId;
     private final String jaCode;
@@ -30,8 +30,8 @@ public class Operator {
         String operatorCode,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
@@ -45,8 +45,8 @@ public class Operator {
         this.operatorCode = operatorCode;
         this.operatorName = operatorName;
         this.mailAddress = mailAddress;
-        this.expirationStartDate = expirationStartDate;
-        this.expirationEndDate = expirationEndDate;
+        this.validThruStartDate = validThruStartDate;
+        this.validThruEndDate = validThruEndDate;
         this.isDeviceAuth = isDeviceAuth;
         this.jaId = jaId;
         this.jaCode = jaCode;
@@ -63,8 +63,8 @@ public class Operator {
         String operatorCode,
         String operatorName,
         String mailAddress,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Boolean isDeviceAuth,
         Long jaId,
         String jaCode,
@@ -79,8 +79,8 @@ public class Operator {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             jaId,
             jaCode,
@@ -104,11 +104,11 @@ public class Operator {
     public String getMailAddress() {
         return mailAddress;
     }
-    public LocalDate getExpirationStartDate() {
-        return expirationStartDate;
+    public LocalDate getValidThruStartDate() {
+        return validThruStartDate;
     }
-    public LocalDate getExpirationEndDate() {
-        return expirationEndDate;
+    public LocalDate getValidThruEndDate() {
+        return validThruEndDate;
     }
     public Boolean getIsDeviceAuth() {
         return isDeviceAuth;

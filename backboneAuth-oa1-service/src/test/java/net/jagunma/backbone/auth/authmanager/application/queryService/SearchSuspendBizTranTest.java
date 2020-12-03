@@ -44,7 +44,7 @@ class SearchSuspendBizTranTest {
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> createSuspendBizTranList() {
         List<SuspendBizTran> list = newArrayList();
-        list.add(SuspendBizTran.createFrom(1L,6L,33L,SubSystem.販売_畜産.getCode(),10001L,100001L,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"×××により緊急抑止",1,
+        list.add(SuspendBizTran.createFrom(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01","AN0001",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"×××により緊急抑止",1,
             createJaAtMoment().stream().filter(j->j.getIdentifier().equals(33L)).findFirst().orElse(null),
             createBranchAtMoment().stream().filter(j->j.getIdentifier().equals(6L)).findFirst().orElse(null),
             SubSystem.販売_畜産,
@@ -101,24 +101,24 @@ class SearchSuspendBizTranTest {
     private SuspendBizTranSearchRequest createSuspendBizTranSearchRequest() {
         return new SuspendBizTranSearchRequest() {
             @Override
-            public LongCriteria getJaIdCriteria() {
-                return new LongCriteria();
+            public StringCriteria getJaCodeCriteria() {
+                return new StringCriteria();
             }
             @Override
-            public LongCriteria getBranchIdCriteria() {
-                return new LongCriteria();
+            public StringCriteria getBranchCodeCriteria() {
+                return new StringCriteria();
             }
             @Override
             public StringCriteria getSubSystemCodeCriteria() {
                 return new StringCriteria();
             }
             @Override
-            public LongCriteria getBizTranGrpIdCriteria() {
-                return new LongCriteria();
+            public StringCriteria getBizTranGrpCodeCriteria() {
+                return new StringCriteria();
             }
             @Override
-            public LongCriteria getBizTranIdCriteria() {
-                return new LongCriteria();
+            public StringCriteria getBizTranCodeCriteria() {
+                return new StringCriteria();
             }
             @Override
             public LocalDateCriteria getSuspendStartDateCriteria() {
@@ -142,19 +142,19 @@ class SearchSuspendBizTranTest {
                 actualSuspendBizTrans = suspendBizTrans;
             }
             @Override
-            public void setJaId(Long jaId) {
+            public void setJaCode(String jaCode) {
             }
             @Override
-            public void setBranchId(Long branchId) {
+            public void setBranchCode(String branchCode) {
             }
             @Override
             public void setSubSystemCode(String subSystemCode) {
             }
             @Override
-            public void setBizTranGrpId(Long bizTranGrpId) {
+            public void setBizTranGrpCode(String bizTranGrpCode) {
             }
             @Override
-            public void setBizTranId(Long bizTranId) {
+            public void setBizTranCode(String bizTranCode) {
             }
             @Override
             public void setSuspendConditionsSelect(Integer suspendConditionsSelect) {

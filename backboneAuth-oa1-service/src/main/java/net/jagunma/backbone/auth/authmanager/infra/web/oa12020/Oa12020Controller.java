@@ -11,9 +11,9 @@ import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa12060.Oa12060Controller;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
@@ -64,7 +64,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes(types=Oa12020Vo.class)
 public class Oa12020Controller extends BaseOfController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Oa12060Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Oa12020Controller.class);
     private final SearchSuspendBizTran searchSuspendBizTran;
     private final SearchJaAtMoment searchJaAtMoment;
     private final SearchBranchAtMoment searchBranchAtMoment;
@@ -186,7 +186,7 @@ public class Oa12020Controller extends BaseOfController {
     }
 
     /**
-     * ＪＡコンボボックスのtemsSourceを取得します
+     * ＪＡコンボボックスのItemsSourceを取得します
      *
      * @param model モデル
      * @param vo    View Model（form json）
@@ -200,7 +200,7 @@ public class Oa12020Controller extends BaseOfController {
     }
 
     /**
-     * 店舗コンボボックスのtemsSourceを取得します
+     * 店舗コンボボックスのItemsSourceを取得します
      *
      * @param model モデル
      * @param vo    View Model（form json）
@@ -210,15 +210,15 @@ public class Oa12020Controller extends BaseOfController {
     public String getBranchItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBranchItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
-        if (vo.getJaId() != null) {
-            list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaId())).getValue();
+        if (vo.getJaCode() != null) {
+            list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaCode())).getValue();
         }
         model.addAttribute("selectAjaxItems", list);
         return "oa12020::ajaxSelectBranch";
     }
 
     /**
-     * サブシステムコンボボックスのtemsSourceを取得します
+     * サブシステムコンボボックスのItemsSourceを取得します
      *
      * @param model モデル
      * @param vo    View Model（form json）
@@ -232,7 +232,7 @@ public class Oa12020Controller extends BaseOfController {
     }
 
     /**
-     * 取引グループコンボボックスのtemsSourceを取得します
+     * 取引グループコンボボックスのItemsSourceを取得します
      *
      * @param model モデル
      * @param vo    View Model（form json）
@@ -252,7 +252,7 @@ public class Oa12020Controller extends BaseOfController {
     }
 
     /**
-     * 取引コンボボックスのtemsSourceを取得します
+     * 取引コンボボックスのItemsSourceを取得します
      *
      * @param model モデル
      * @param vo    View Model（form json）
@@ -263,10 +263,14 @@ public class Oa12020Controller extends BaseOfController {
         LOGGER.debug("######## getBizTranItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
         if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
-            BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
-            criteria.getBizTranGrpIdCriteria().setEqualTo(vo.getBizTranGrpId());
-            criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
-            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(criteria, Orders.empty());
+            BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
+            bizTranGrpCriteria.getBizTranGrpCodeCriteria().setEqualTo(vo.getBizTranGrpCode());
+            BizTranGrps BizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty());
+
+            BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria = new BizTranGrp_BizTranCriteria();
+            bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrps.getValues().get(0).getBizTranGrpId());
+            bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
+            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
             List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
             list = SelectOptionItemsSource.createFrom(bizTranList).getValue();
         }

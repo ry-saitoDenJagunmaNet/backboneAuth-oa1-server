@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12020;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.util.strings2.Strings2;
 
@@ -28,23 +27,23 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
     }
 
     /**
-     * ＪＡID検索条件のＧｅｔ
+     * ＪＡコード検索条件のＧｅｔ
      *
-     * @return ＪＡID検索条件
+     * @return ＪＡコード検索条件
      */
-    public LongCriteria getJaIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getJaId());
+    public StringCriteria getJaCodeCriteria() {
+        StringCriteria criteria = new StringCriteria();
+        criteria.setEqualTo(vo.getJaCode());
         return criteria;
     }
     /**
-     * 店舗ID検索条件のＧｅｔ
+     * 店舗コード検索条件のＧｅｔ
      *
-     * @return 店舗ID検索条件
+     * @return 店舗コード検索条件
      */
-    public LongCriteria getBranchIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getBranchId());
+    public StringCriteria getBranchCodeCriteria() {
+        StringCriteria criteria = new StringCriteria();
+        criteria.setEqualTo(vo.getBranchCode());
         return criteria;
     }
     /**
@@ -60,23 +59,23 @@ class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
         return criteria;
     }
     /**
-     * 取引グループID検索条件のＧｅｔ
+     * 取引グループコード検索条件のＧｅｔ
      *
-     * @return 取引グループID検索条件
+     * @return 取引グループコード検索条件
      */
-    public LongCriteria getBizTranGrpIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getBizTranGrpId());
+    public StringCriteria getBizTranGrpCodeCriteria() {
+        StringCriteria criteria = new StringCriteria();
+        criteria.setEqualTo(vo.getBizTranGrpCode());
         return criteria;
     }
     /**
-     * 取引ID検索条件のＧｅｔ
+     * 取引コード検索条件のＧｅｔ
      *
-     * @return 取引ID検索条件
+     * @return 取引コード検索条件
      */
-    public LongCriteria getBizTranIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getBizTranId());
+    public StringCriteria getBizTranCodeCriteria() {
+        StringCriteria criteria = new StringCriteria();
+        criteria.setEqualTo(vo.getBizTranCode());
         return criteria;
     }
     /**

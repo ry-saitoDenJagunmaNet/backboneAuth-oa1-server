@@ -52,16 +52,16 @@ public class SearchSuspendBizTran {
     SuspendBizTranCriteria createSuspendBizTranCriteria(SuspendBizTranSearchRequest request) {
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
 
-        // ＪＡID
-        criteria.getJaIdCriteria().assignFrom(request.getJaIdCriteria());
-        // 店舗ID
-        criteria.getBranchIdCriteria().assignFrom(request.getBranchIdCriteria());
-        // サブシステムID
+        // ＪＡコード
+        criteria.getJaCodeCriteria().assignFrom(request.getJaCodeCriteria());
+        // 店舗コード
+        criteria.getBranchCodeCriteria().assignFrom(request.getBranchCodeCriteria());
+        // サブシステムコード
         criteria.getSubSystemCodeCriteria().assignFrom(request.getSubSystemCodeCriteria());
-        // 取引グループID
-        criteria.getBizTranGrpIdCriteria().assignFrom(request.getBizTranGrpIdCriteria());
-        // 取引ID
-        criteria.getBizTranIdCriteria().assignFrom(request.getBizTranIdCriteria());
+        // 取引グループコード
+        criteria.getBizTranGrpCodeCriteria().assignFrom(request.getBizTranGrpCodeCriteria());
+        // 取引コード
+        criteria.getBizTranCodeCriteria().assignFrom(request.getBizTranCodeCriteria());
         // 抑止期間開始日
         criteria.getSuspendStartDateCriteria().assignFrom(request.getSuspendStartDateCriteria());
         // 抑止期間終了日

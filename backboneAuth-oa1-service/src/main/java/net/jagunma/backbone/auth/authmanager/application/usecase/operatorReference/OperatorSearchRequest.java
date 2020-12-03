@@ -17,8 +17,8 @@ public interface OperatorSearchRequest {
     StringCriteria getOperatorCodeCriteria();
     StringCriteria getOperatorNameCriteria();
     StringCriteria getMailAddressCriteria();
-    LocalDateCriteria getExpirationStartDateCriteria();
-    LocalDateCriteria getExpirationEndDateCriteria();
+    LocalDateCriteria getValidThruStartDateCriteria();
+    LocalDateCriteria getValidThruEndDateCriteria();
     BooleanCriteria getIsDeviceAuthCriteria();
     LongCriteria getJaIdCriteria();
     LongCriteria getBranchIdCriteria();

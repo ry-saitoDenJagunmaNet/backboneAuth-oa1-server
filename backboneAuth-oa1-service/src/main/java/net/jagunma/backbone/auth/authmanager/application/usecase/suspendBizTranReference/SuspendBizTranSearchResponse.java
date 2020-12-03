@@ -9,29 +9,17 @@ import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.Suspend
 public interface SuspendBizTranSearchResponse {
 
     /**
-     * ＪＡIDのＳｅｔ
+     * ＪＡコ－ドのＳｅｔ
      *
-     * @param jaId ＪＡID
+     * @param jaCode ＪＡコード
      */
-    void setJaId(Long jaId);
-//    /**
-//     * JasAtMomentのＳｅｔ
-//     *
-//     * @param jasAtMoment JasAtMoment
-//     */
-//    void setJasAtMoment(JasAtMoment jasAtMoment);
+    void setJaCode(String jaCode);
     /**
-     * 店舗IDのＳｅｔ
+     * 店舗コードのＳｅｔ
      *
-     * @param branchId 店舗ID
+     * @param branchCode 店舗コード
      */
-    void setBranchId(Long branchId);
-//    /**
-//     * BranchesAtMomentのＳｅｔ
-//     *
-//     * @param branchesAtMoment BranchesAtMoment
-//     */
-//    void setBranchesAtMoment(BranchesAtMoment branchesAtMoment);
+    void setBranchCode(String branchCode);
     /**
      * サブシステムコードのＳｅｔ
      *
@@ -39,29 +27,17 @@ public interface SuspendBizTranSearchResponse {
      */
     void setSubSystemCode(String subSystemCode);
     /**
-     * 取引グループIDのＳｅｔ
+     * 取引グループコードのＳｅｔ
      *
-     * @param bizTranGrpId 取引グループID
+     * @param bizTranGrpCode 取引グループコ－ド
      */
-    void setBizTranGrpId(Long bizTranGrpId);
-//    /**
-//     * 取引グループ群のＳｅｔ
-//     *
-//     * @param bizTranGrps 取引グループ群
-//     */
-//    void setBizTranGrps(BizTranGrps bizTranGrps);
+    void setBizTranGrpCode(String bizTranGrpCode);
     /**
-     * 取引IDのＳｅｔ
+     * 取引コードのＳｅｔ
      *
-     * @param bizTranId 取引ID
+     * @param bizTranCode 取引コード
      */
-    void setBizTranId(Long bizTranId);
-//    /**
-//     * 取引群のＳｅｔ
-//     *
-//     * @param bizTrans 取引群
-//     */
-//    void setBizTrans(BizTrans bizTrans);
+    void setBizTranCode(String bizTranCode);
     /**
      * 抑止期間条件選択のＳｅｔ
      *

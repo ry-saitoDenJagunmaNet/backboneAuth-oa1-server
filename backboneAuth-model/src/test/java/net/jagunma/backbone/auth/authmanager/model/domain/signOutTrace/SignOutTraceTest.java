@@ -35,8 +35,8 @@ class SignOutTraceTest {
         String operatorCode = "yu001009";
         String operatorName = "ｙｕ００１００９";
         String mailAddress = "001.001.001.001";
-        LocalDate expirationStartDate = LocalDate.of(2020, 1, 1);
-        LocalDate expirationEndDate = LocalDate.of(9999, 12, 31);
+        LocalDate validThruStartDate = LocalDate.of(2020, 1, 1);
+        LocalDate validThruEndDate = LocalDate.of(9999, 12, 31);
         Boolean isDeviceAuth = false;
         Long jaId = 6L;
         String jaCode = "006";
@@ -50,8 +50,8 @@ class SignOutTraceTest {
             operatorCode,
             operatorName,
             mailAddress,
-            expirationStartDate,
-            expirationEndDate,
+            validThruStartDate,
+            validThruEndDate,
             isDeviceAuth,
             jaId,
             jaCode,

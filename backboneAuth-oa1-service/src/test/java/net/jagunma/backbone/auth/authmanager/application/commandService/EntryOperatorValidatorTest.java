@@ -19,8 +19,8 @@ class EntryOperatorValidatorTest {
     private String operatorCode6 = "123456";
     private String operatorName = "オペレーター名";
     private String mailAddress = "test@den.jagunma.net";
-    private LocalDate expirationStartDate = LocalDate.of(2020, 9, 1);
-    private LocalDate expirationEndDate = LocalDate.of(2020, 9, 30);
+    private LocalDate validThruStartDate = LocalDate.of(2020, 9, 1);
+    private LocalDate validThruEndDate = LocalDate.of(2020, 9, 30);
     private Long branchId = 101L;
     private String changeCause = "新職員の入組による登録";
     private String password = "PaSsWoRd";
@@ -40,12 +40,12 @@ class EntryOperatorValidatorTest {
                 return mailAddress;
             }
             @Override
-            public LocalDate getExpirationStartDate() {
-                return expirationStartDate;
+            public LocalDate getValidThruStartDate() {
+                return validThruStartDate;
             }
             @Override
-            public LocalDate getExpirationEndDate() {
-                return expirationEndDate;
+            public LocalDate getValidThruEndDate() {
+                return validThruEndDate;
             }
             @Override
             public Long getBranchId() {
@@ -176,7 +176,7 @@ class EntryOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test04() {
         // 実行値
-        expirationStartDate = null;
+        validThruStartDate = null;
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -202,7 +202,7 @@ class EntryOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test05() {
         // 実行値
-        expirationEndDate = null;
+        validThruEndDate = null;
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->
@@ -595,7 +595,7 @@ class EntryOperatorValidatorTest {
     @Tag(TestSize.SMALL)
     void validate_Test20() {
         // 実行値
-        expirationEndDate = LocalDate.of(2020, 8, 31);
+        validThruEndDate = LocalDate.of(2020, 8, 31);
         OperatorEntryRequest request = createRequest();
 
         assertThatThrownBy(() ->

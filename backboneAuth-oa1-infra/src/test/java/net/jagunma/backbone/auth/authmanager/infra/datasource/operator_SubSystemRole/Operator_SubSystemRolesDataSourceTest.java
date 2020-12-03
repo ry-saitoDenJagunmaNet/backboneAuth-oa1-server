@@ -92,8 +92,8 @@ class Operator_SubSystemRolesDataSourceTest {
         Long operator_SubSystemRoleId,
         Long operatorId,
         String subSystemRoleCode,
-        LocalDate expirationStartDate,
-        LocalDate expirationEndDate,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
         Long createdBy,
         LocalDateTime createdAt,
         String createdIpAddress,
@@ -106,8 +106,8 @@ class Operator_SubSystemRolesDataSourceTest {
         entity.setOperator_SubSystemRoleId(operator_SubSystemRoleId);
         entity.setOperatorId(operatorId);
         entity.setSubSystemRoleCode(subSystemRoleCode);
-        entity.setExpirationStartDate(expirationStartDate);
-        entity.setExpirationEndDate(expirationEndDate);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
         entity.setCreatedBy(createdBy);
         entity.setCreatedAt(createdAt);
         entity.setCreatedIpAddress(createdIpAddress);
@@ -164,8 +164,8 @@ class Operator_SubSystemRolesDataSourceTest {
                 entity.getOperator_SubSystemRoleId(),
                 entity.getOperatorId(),
                 entity.getSubSystemRoleCode(),
-                entity.getExpirationStartDate(),
-                entity.getExpirationEndDate(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
                 SubSystemRole.codeOf(entity.getSubSystemRoleCode())

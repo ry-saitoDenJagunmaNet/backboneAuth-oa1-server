@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
@@ -16,20 +15,12 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.common.ddd.model.orders.Orders;
-import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,16 +36,10 @@ public class StoreBizTranRoleComposition {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12010Controller.class);
 
     private final BizTranRoleCompositionRepositoryForStore bizTranRoleCompositionRepositoryForStore;
-    private final BizTranRolesRepository bizTranRolesRepository;
-    private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
 
     // コンストラクタ
-    public StoreBizTranRoleComposition(BizTranRoleCompositionRepositoryForStore bizTranRoleCompositionRepositoryForStore,
-        BizTranRolesRepository bizTranRolesRepository,
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository) {
+    public StoreBizTranRoleComposition(BizTranRoleCompositionRepositoryForStore bizTranRoleCompositionRepositoryForStore) {
         this.bizTranRoleCompositionRepositoryForStore = bizTranRoleCompositionRepositoryForStore;
-        this.bizTranRolesRepository = bizTranRolesRepository;
-        this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
     }
 
     /**
@@ -66,19 +51,7 @@ public class StoreBizTranRoleComposition {
     public void execute(BizTranRoleCompositionImportRequest request,
         BizTranRoleCompositionImportResponse response) {
 
-        // パラメーターの検証
-        StoreBizTranRoleCompositionValidator validator = StoreBizTranRoleCompositionValidator.with(request);
-        validator.validate();
-        // インポートテータのチェック
-        List<MessageDto> messageDtoList = validator.checkExcelImport();
-        if (messageDtoList.size() > 0) {
-            response.setMessageDtoList(messageDtoList);
-            throw new GunmaRuntimeException("EOA13001");
-        }
-
-        // オペレータ取引ロール割当の関連チェック
-        response.setMessageDtoList(checkOperator_BizTranRoleRelation(request));
-
+        // サブシステム名からサブシステムコードを取得
         String subSystemCode = SubSystem.nameOf(request.getBizTranGrp_BizTransSheet().getValues().get(0).getSubSystemName()).getCode();
 
         List<BizTran> bizTranList = newArrayList();
@@ -107,45 +80,6 @@ public class StoreBizTranRoleComposition {
     }
 
     /**
-     * オペレータ取引ロール割当の関連チェックを行います
-     *  削除対象の取引ロールを使用している オペレータ取引ロール割当 をチェックします
-     *
-     * @param request 取引ロール編成インポートExcel 登録サービス Request
-     * @return メッセージシスト
-     */
-    List<MessageDto> checkOperator_BizTranRoleRelation(BizTranRoleCompositionImportRequest request) {
-
-        List<MessageDto> messageDtoList = newArrayList();
-
-        // 取引ロール検索（登録前）
-        BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
-        bizTranRoleCriteria.getSubSystemCodeCriteria().setEqualTo(request.getSubSystemCode());
-        BizTranRoles bizTranRoles = bizTranRolesRepository.selectBy(bizTranRoleCriteria, Orders.empty());
-
-        // 登録前取引ロールで取引ロール編成に無い取引ロールを削除対象とする
-        List<Long> bizTranRoleIdList = newArrayList();
-        for (BizTranRole bizTranRole : bizTranRoles.getValues()) {
-            if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(
-                b->b.getBizTranRoleCode().equals(bizTranRole.getBizTranRoleCode())).count() == 0) {
-                bizTranRoleIdList.add(bizTranRole.getBizTranRoleId());
-            }
-        }
-
-        // オペレーター_取引ロール割当検索
-        if (bizTranRoleIdList.size() > 0) {
-            Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
-            operator_BizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
-            Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria, Orders.empty());
-            for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-                messageDtoList.add(MessageDto.createFrom("WOA13107",
-                    newArrayList(operator_BizTranRole.getOperator().getOperatorCode(),operator_BizTranRole.getBizTranRole().getBizTranRoleCode())));
-            }
-        }
-
-        return messageDtoList;
-    }
-
-    /**
      * 登録データ（取引、取引グループ）を作成します
      *
      * @param request                取引ロール編成インポートExcel 登録サービス Request
@@ -171,8 +105,8 @@ public class StoreBizTranRoleComposition {
                     bizTranGrp_BizTranSheet.getBizTranCode(),
                     bizTranGrp_BizTranSheet.getBizTranName(),
                     bizTranGrp_BizTranSheet.getIsCenterBizTran(),
-                    bizTranGrp_BizTranSheet.getExpirationStartDate(),
-                    bizTranGrp_BizTranSheet.getExpirationEndDate(),
+                    bizTranGrp_BizTranSheet.getValidThruStartDate(),
+                    bizTranGrp_BizTranSheet.getValidThruEndDate(),
                     subSystemCode,
                     null,
                     null));
