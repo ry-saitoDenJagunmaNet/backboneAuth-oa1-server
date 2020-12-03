@@ -12,8 +12,9 @@ import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSo
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
@@ -69,6 +70,7 @@ public class Oa12020Controller extends BaseOfController {
     private final SearchJaAtMoment searchJaAtMoment;
     private final SearchBranchAtMoment searchBranchAtMoment;
     private final BizTranGrpsRepository bizTranGrpsRepository;
+    private final BizTranGrpRepository bizTranGrpRepository;
     private final BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository;
 
     // コンストラクタ
@@ -76,12 +78,14 @@ public class Oa12020Controller extends BaseOfController {
         SearchJaAtMoment searchJaAtMoment,
         SearchBranchAtMoment searchBranchAtMoment,
         BizTranGrpsRepository bizTranGrpsRepository,
+        BizTranGrpRepository bizTranGrpRepository,
         BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository) {
 
         this.searchSuspendBizTran = searchSuspendBizTran;
         this.searchJaAtMoment = searchJaAtMoment;
         this.searchBranchAtMoment = searchBranchAtMoment;
         this.bizTranGrpsRepository = bizTranGrpsRepository;
+        this.bizTranGrpRepository = bizTranGrpRepository;
         this.bizTranGrp_BizTransRepository = bizTranGrp_BizTransRepository;
     }
 
@@ -210,7 +214,7 @@ public class Oa12020Controller extends BaseOfController {
     public String getBranchItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBranchItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
-        if (vo.getJaCode() != null) {
+        if (Strings2.isNotEmpty(vo.getJaCode())) {
             list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaCode())).getValue();
         }
         model.addAttribute("selectAjaxItems", list);
@@ -262,14 +266,18 @@ public class Oa12020Controller extends BaseOfController {
     public String getBizTranItemsSource(ModelMap model, Oa12020Vo vo) {
         LOGGER.debug("######## getBizTranItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
+        BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria = new BizTranGrp_BizTranCriteria();
         if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
-            BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-            bizTranGrpCriteria.getBizTranGrpCodeCriteria().setEqualTo(vo.getBizTranGrpCode());
-            BizTranGrps BizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty());
-
-            BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria = new BizTranGrp_BizTranCriteria();
-            bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrps.getValues().get(0).getBizTranGrpId());
             bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
+
+            if (Strings2.isNotEmpty(vo.getBizTranGrpCode())) {
+                // 取引グループコードから取引グループIDを取得
+                BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
+                bizTranGrpCriteria.getBizTranGrpCodeCriteria().setEqualTo(vo.getBizTranGrpCode());
+                BizTranGrp BizTranGrp = bizTranGrpRepository.findOneBy(bizTranGrpCriteria);
+                bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrp.getBizTranGrpId());
+            }
+
             BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
             List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
             list = SelectOptionItemsSource.createFrom(bizTranList).getValue();

@@ -36,7 +36,7 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div id="jaSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectJa(title='ＪＡ',id='ja',name='jaId',selectedValue=${form.jaId})" th:fragment="ajaxSelectJa"></div>
+						<div th:replace="include/ajaxSelectController::ajaxSelectJaForCode(title='ＪＡ',id='ja',name='jaCode',selectedValue=${form.jaCode})" th:fragment="ajaxSelectJa"></div>
 					</div>
 					<div class="input-field" th:remove="all">
 						<select id="ja" name="jaid" class="validate" onchange="oaex_ja_onChange()">
@@ -65,7 +65,7 @@
 			<div class="row oa_optional">
 				<div class="col s6">
 					<div id="branchSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBranch(title='店舗',id='branch',name='branchId',selectedValue=${form.branchId})" th:fragment="ajaxSelectBranch"></div>
+						<div th:replace="include/ajaxSelectController::ajaxSelectBranchForCode(title='店舗',id='branch',name='branchCode',selectedValue=${form.branchCode})" th:fragment="ajaxSelectBranch"></div>
 					</div>
 					<div class="input-field" th:remove="all">
 						<select id="tempo" name="branchId" class="validate">
@@ -105,7 +105,7 @@
 				<!-- 取引グループ -->
 				<div class="col s4">
 					<div id="bizTranGrpSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranGrp(title='取引グループ',id='bizTranGrp',name='bizTranGrpId',selectedValue=${form.bizTranGrpId})" th:fragment="ajaxSelectBizTranGrp"></div>
+						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranGrpForCode(title='取引グループ',id='bizTranGrp',name='bizTranGrpCode',selectedValue=${form.bizTranGrpCode})" th:fragment="ajaxSelectBizTranGrp"></div>
 					</div>
 					<div class="input-field" th:remove="all">
 						<select id="biztran_grp" name="bizTranGrpId" class="validate" onchange="oaex_biztran_grp_onChange()">
@@ -116,7 +116,7 @@
 				<!-- 取引 -->
 				<div class="col s5">
 					<div id="bizTranSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBizTran(title='取引',id='bizTran',name='bizTranId',selectedValue=${form.bizTranId})" th:fragment="ajaxSelectBizTran"></div>
+						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranForCode(title='取引',id='bizTran',name='bizTranCode',selectedValue=${form.bizTranCode})" th:fragment="ajaxSelectBizTran"></div>
 					</div>
 					<div class="input-field" th:remove="all">
 						<select id="biztran" class="validate" onchange="oaex_biztran_onChange()">
