@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -8,12 +9,21 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 
 public class BaseOfOperatorSearchResponse {
 
+    protected Operator operator;
     protected Operators operators;
     protected AccountLocks accountLocks;
     protected Operator_SubSystemRoles operator_SubSystemRoles;
     protected Operator_BizTranRoles operator_BizTranRoles;
     protected OperatorHistoryHeaders operatorHistoryHeaders;
 
+    /**
+     * オペレーターのＳｅｔ
+     *
+     * @param operator オペレーター
+     */
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
     /**
      * オペレーター群のＳｅｔ
      *

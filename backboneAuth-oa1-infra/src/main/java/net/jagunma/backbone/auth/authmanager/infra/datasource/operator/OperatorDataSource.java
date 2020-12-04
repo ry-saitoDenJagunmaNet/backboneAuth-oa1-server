@@ -1,35 +1,29 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
-
-import java.util.List;
-import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
-import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.ddd.model.values.buisiness.datetime.TargetDate;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import org.springframework.stereotype.Component;
 
 /**
- * オペレーター群検索
+ * オペレーター検索
  */
 @Component
-public class OperatorsDataSource implements OperatorsRepository {
+public class OperatorDataSource implements OperatorRepository {
 
     private final OperatorEntityDao oeratorEntityDao;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
     // コンストラクタ
-    OperatorsDataSource(OperatorEntityDao oeratorEntityDao,
+    OperatorDataSource(OperatorEntityDao oeratorEntityDao,
         BranchAtMomentRepository branchAtMomentRepository) {
 
         this.oeratorEntityDao = oeratorEntityDao;
@@ -37,13 +31,19 @@ public class OperatorsDataSource implements OperatorsRepository {
     }
 
     /**
-     * オペレーター群の検索を行います
+     * オペレーターの検索を行います
      *
      * @param operatorCriteria オペレーターの検索条件
-     * @param orders           オーダー指定
-     * @return オペレーター群
+     * @return オペレーター
      */
-    public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+    public Operator findOneBy(OperatorCriteria operatorCriteria) {
+
+        // Branch検索
+        BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
+        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(operatorCriteria.getJaIdentifierCriteria().getEqualTo());
+        branchAtMomentCriteria.setTargetDate(TargetDate.now());
+        branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
+        BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(branchAtMomentCriteria);
 
         // オペレーター検索
         OperatorEntityCriteria entityCriteria = new OperatorEntityCriteria();
@@ -59,35 +59,22 @@ public class OperatorsDataSource implements OperatorsRepository {
         entityCriteria.getBranchIdCriteria().assignFrom(operatorCriteria.getBranchIdCriteria());
         entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
         entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
-        List<OperatorEntity> operatorEntity = oeratorEntityDao.findBy(entityCriteria, orders);
 
-        // BranchesAtMoment検索
-        BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-        branchAtMomentCriteria.getIdentifierCriteria().getIncludes().addAll(
-            operatorEntity.stream().map(OperatorEntity::getBranchId).distinct().collect(Collectors.toList()));
-        branchAtMomentCriteria.setTargetDate(TargetDate.now());
-        branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(branchAtMomentCriteria, Orders.empty());
-
-        List<Operator> list = newArrayList();
-        for (OperatorEntity entity : oeratorEntityDao.findBy(entityCriteria, orders)) {
-            list.add(Operator.createFrom(
-                entity.getOperatorId(),
-                entity.getOperatorCode(),
-                entity.getOperatorName(),
-                entity.getMailAddress(),
-                entity.getValidThruStartDate(),
-                entity.getValidThruEndDate(),
-                entity.getIsDeviceAuth(),
-                entity.getJaId(),
-                entity.getJaCode(),
-                entity.getBranchId(),
-                entity.getBranchCode(),
-                AvailableStatus.codeOf(entity.getAvailableStatus()),
-                entity.getRecordVersion(),
-                branchesAtMoment.getValue().stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
-            ));
-        }
-        return Operators.createFrom(list);
+        OperatorEntity entity = oeratorEntityDao.findOneBy(entityCriteria);
+        return Operator.createFrom(
+            entity.getOperatorId(),
+            entity.getOperatorCode(),
+            entity.getOperatorName(),
+            entity.getMailAddress(),
+            entity.getValidThruStartDate(),
+            entity.getValidThruEndDate(),
+            entity.getIsDeviceAuth(),
+            entity.getJaId(),
+            entity.getJaCode(),
+            entity.getBranchId(),
+            entity.getBranchCode(),
+            AvailableStatus.codeOf(entity.getAvailableStatus()),
+            entity.getRecordVersion(),
+            branchAtMoment);
     }
 }

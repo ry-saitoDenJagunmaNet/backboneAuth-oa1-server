@@ -49,29 +49,26 @@ public class Operator_BizTranRolesDataSource implements Operator_BizTranRolesRep
      */
     public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
 
-        // オペレーター群の検索
-        OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().assignFrom(operator_BizTranRoleCriteria.getOperatorIdCriteria());
-        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
-
-        // オペレーター_取引ロール割当群検索
+        // オペレーター_取引ロール割当群の検索
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
         entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
-        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
-
-        List<Operator_BizTranRoleEntity> OperatorBizTranRoleList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
-
-        // オペレーター_取引ロール割当から取引ロールIDリストを取得
-        List<Long> bizTranRoleIdList = OperatorBizTranRoleList.stream().
-            map(Operator_BizTranRoleEntity::getBizTranRoleId).distinct().collect(Collectors.toList());
+        entityCriteria.getOperatorIdCriteria().assignFrom(operator_BizTranRoleCriteria.getOperatorIdCriteria());
+        List<Operator_BizTranRoleEntity> Operator_BizTranRoleEntityList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
         // 取引ロール群の検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
-        bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(bizTranRoleIdList);
+        bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(
+            Operator_BizTranRoleEntityList.stream().map(Operator_BizTranRoleEntity::getBizTranRoleId).distinct().collect(Collectors.toList()));
         BizTranRoles bizTranRoles = bizTranRolesRepository.selectBy(bizTranRoleCriteria, Orders.empty());
 
+        // オペレーター群の検索
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
+        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(
+            Operator_BizTranRoleEntityList.stream().map(Operator_BizTranRoleEntity::getOperatorId).distinct().collect(Collectors.toList()));
+        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
+
         List<Operator_BizTranRole> list = newArrayList();
-        for (Operator_BizTranRoleEntity entity : OperatorBizTranRoleList) {
+        for (Operator_BizTranRoleEntity entity : Operator_BizTranRoleEntityList) {
             list.add(Operator_BizTranRole.createFrom(
                 entity.getOperator_BizTranRoleId(),
                 entity.getOperatorId(),

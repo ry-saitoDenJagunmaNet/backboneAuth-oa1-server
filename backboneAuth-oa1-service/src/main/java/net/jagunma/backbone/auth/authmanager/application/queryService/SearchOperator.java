@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,12 +11,14 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
@@ -53,16 +56,12 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
 /**
- * オペレータリスト検索サービス
+ * オペレータ検索サービス
  */
 @Service
 public class SearchOperator {
 
-    // オペレーターIDリスト
-    private List<Long> operatorIdList;
-    // オペレーターコードリスト
-    private List<String> operatorCodeList;
-
+    private final OperatorRepository operatorRepository;
     private final OperatorsRepository operatorsRepository;
     private final AccountLocksRepository accountLocksRepository;
     private final PasswordHistoriesRepository passwordHistoriesRepository;
@@ -73,7 +72,8 @@ public class SearchOperator {
     private final OperatorHistoryHeadersRepository operatorHistoryHeadersRepository;
 
     // コンストラクタ
-    public SearchOperator(OperatorsRepository operatorsRepository,
+    public SearchOperator(OperatorRepository operatorRepository,
+        OperatorsRepository operatorsRepository,
         AccountLocksRepository accountLocksRepository,
         PasswordHistoriesRepository passwordHistoriesRepository,
         SignInTracesRepository signInTracesRepository,
@@ -82,6 +82,7 @@ public class SearchOperator {
         Operator_BizTranRolesRepository operator_BizTranRolesRepository,
         OperatorHistoryHeadersRepository operatorHistoryHeadersRepository) {
 
+        this.operatorRepository = operatorRepository;
         this.operatorsRepository = operatorsRepository;
         this.accountLocksRepository = accountLocksRepository;
         this.passwordHistoriesRepository = passwordHistoriesRepository;
@@ -93,10 +94,10 @@ public class SearchOperator {
     }
 
     /**
-     * オペレーター群を検索します
+     * オペレーターを検索します
      *
-     * @param request  オペレーターリスト参照サービス Request
-     * @param response オペレーターリスト参照サービス Response
+     * @param request  オペレーター検索 Request
+     * @param response オペレーター検索 Response
      */
     public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
 
@@ -105,70 +106,126 @@ public class SearchOperator {
 
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
+        Operator operator = operatorRepository.findOneBy(createOperatorCriteria(request));
+
+        // オペレーターIDリスト
+        List<Long> operatorIdList = new ArrayList<Long>(Arrays.asList(operator.getOperatorId()));
+        // オペレーターコードリスト
+        List<String> operatorCodeList = new ArrayList<String>(Arrays.asList(operator.getOperatorCode()));
+
+        // オペレーター_サブシステムロール割当群検索
+        Operator_SubSystemRoles operator_SubSystemRoles = searchOperator_SubSystemRoles(operatorIdList);
+        // オペレーター_取引ロール割当群検索
+        Operator_BizTranRoles operator_BizTranRoles = searchOperator_BizTranRoles(operatorIdList);
+        // アカウントロック群検索
+        AccountLocks AccountLocks = searchAccountLocks(operatorIdList);
+        // パスワード履歴群検索
+        PasswordHistories passwordHistories = searchPasswordHistories(operatorIdList);
+        // サインイン証跡群検索
+        SignInTraces signInTraces =  searchSignInTraces(operatorCodeList);
+        // サインアウト証跡群検索
+        SignOutTraces signOutTraces = searchSignOutTraces(operatorIdList);
+        // オペレーター履歴ヘッダー群検索
+        OperatorHistoryHeaders operatorHistoryHeaders = searchOperatorHistoryHeaders(operatorIdList);
+
+        // オペレーター_サブシステムロール割当の検索条件判定
+        List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+        if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRoleList)) { return; }
+        // オペレーター_取引ロール割当の検索条件判定
+        List<Operator_BizTranRole> operator_BizTranRoleList = operator_BizTranRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
+        if (!conditionsOperatorBizTranRole(request, operator_BizTranRoleList)) { return; }
+        // アカウントロックの検索条件の検索条件判定
+        AccountLock accountLock = AccountLocks.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
+        if (!conditionsAccountLock(request, accountLock)) { return; }
+        // サインイン証跡の検索条件判定
+        SignInTrace signInTrace = signInTraces.getValues().stream().filter(a->a.getOperatorCode().equals(operator.getOperatorCode())).findFirst().orElse(null);
+        if (!conditionsSignInTrace(request, signInTrace)) { return; }
+        // サインアウトの検索条件判定
+        SignOutTrace signOutTrace = signOutTraces.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
+        if (!conditionsSignOutTrace(request, signOutTrace)) { return; }
+        // パスワード履歴の検索条件の検索条件判定
+        PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
+        if (!conditionsPasswordHistory(request, passwordHistory)) { return; }
+
+        response.setOperator(operator);
+        response.setOperator_SubSystemRoles(operator_SubSystemRoles);
+        response.setOperator_BizTranRoles(operator_BizTranRoles);
+        response.setAccountLocks(AccountLocks);
+        response.setOperatorHistoryHeaders(operatorHistoryHeaders);
+    }
+
+    /**
+     * オペレーター群を検索します
+     *
+     * @param request  オペレーター検索 Request
+     * @param response オペレーター群検索 Response
+     */
+    public void execute(OperatorSearchRequest request, OperatorsSearchResponse response) {
+
+        // パラメーターの検証
+        SearchOperatorValidator.with(request).validate();
+
+        // オペレーター検索
+        Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
         Operators operators = operatorsRepository.selectBy(createOperatorCriteria(request), orders);
 
-        // オペレーターIDおよびオペレーターコードのリストを設定
-        setOperatorIdAndCodeList(operators);
+        // オペレーターIDリスト
+        List<Long> operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
+        // オペレーターコードリスト
+        List<String> operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
 
-        // オペレーター_サブシステムロール割当検索
-        Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(createOperator_SubSystemRoleCriteria(),
-            Orders.empty().addOrder("OperatorId"));
-        // オペレーター_取引ロール割当検索
-        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(createOperator_BizTranRoleCriteria(),
-            Orders.empty().addOrder("OperatorId"));
-        // アカウントロック検索
-        AccountLocks AccountLocks = accountLocksRepository.selectBy(createAccountLockCriteria(),
-            Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
-        // パスワード履歴検索
-        PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(createPasswordHistoryCriteria(),
-            Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
-        // サインイン証跡検索
-        SignInTraces signInTraces =  signInTracesRepository.selectBy(createSignInTraceCriteria(),
-            Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
-        // サインアウト証跡
-        SignOutTraces signOutTraces = signOutTracesRepository.selectBy(createSignOutTraceCriteria(),
-            Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
-        // オペレーター履歴ヘッダー
-        OperatorHistoryHeaders operatorHistoryHeaders = operatorHistoryHeadersRepository.selectBy(createOperatorHistoryHeaderCriteria(),
-            Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
+        // オペレーター_サブシステムロール割当群検索
+        Operator_SubSystemRoles operator_SubSystemRoles = searchOperator_SubSystemRoles(operatorIdList);
+        // オペレーター_取引ロール割当群検索
+        Operator_BizTranRoles operator_BizTranRoles = searchOperator_BizTranRoles(operatorIdList);
+        // アカウントロック群検索
+        AccountLocks AccountLocks = searchAccountLocks(operatorIdList);
+        // パスワード履歴群検索
+        PasswordHistories passwordHistories = searchPasswordHistories(operatorIdList);
+        // サインイン証跡群検索
+        SignInTraces signInTraces =  searchSignInTraces(operatorCodeList);
+        // サインアウト証跡群検索
+        SignOutTraces signOutTraces = searchSignOutTraces(operatorIdList);
+        // オペレーター履歴ヘッダー群検索
+        OperatorHistoryHeaders operatorHistoryHeaders = searchOperatorHistoryHeaders(operatorIdList);
 
         List<Operator> removeOperator = newArrayList();
         for (Operator operator : operators.getValues()) {
-            // オペレーター_サブシステムロール割当検索
+            // オペレーター_サブシステムロール割当の検索条件判定
             List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
             if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRoleList)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;
             }
-            // オペレーター_取引ロール割当検索
+            // オペレーター_取引ロール割当の検索条件判定
             List<Operator_BizTranRole> operator_BizTranRoleList = operator_BizTranRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
             if (!conditionsOperatorBizTranRole(request, operator_BizTranRoleList)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;
             }
-            // アカウントロックの検索条件判定
+            // アカウントロックの検索条件の検索条件判定
             AccountLock accountLock = AccountLocks.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
             if (!conditionsAccountLock(request, accountLock)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;
             }
-            // サインイン証跡検索
+            // サインイン証跡の検索条件判定
             SignInTrace signInTrace = signInTraces.getValues().stream().filter(a->a.getOperatorCode().equals(operator.getOperatorCode())).findFirst().orElse(null);
             if (!conditionsSignInTrace(request, signInTrace)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
                 continue;
             }
-            // サインアウト証跡
+            // サインアウトの検索条件判定
             SignOutTrace signOutTrace = signOutTraces.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
             if (!conditionsSignOutTrace(request, signOutTrace)) {
                 // 削除対象を退避
                 removeOperator.add(operator);
             }
-            // パスワード履歴の検索条件判定
+            // パスワード履歴の検索条件の検索条件判定
             PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
             if (!conditionsPasswordHistory(request, passwordHistory)) {
                 // 削除対象を退避
@@ -548,7 +605,7 @@ public class SearchOperator {
      * @param request オペレーターリスト参照サービス Request
      * @return オペレータ検索条件
      */
-    OperatorCriteria createOperatorCriteria(OperatorSearchRequest request) {
+    private OperatorCriteria createOperatorCriteria(OperatorSearchRequest request) {
         OperatorCriteria criteria = new OperatorCriteria();
         // オペレーターID
         criteria.getOperatorIdCriteria().assignFrom(
@@ -585,90 +642,98 @@ public class SearchOperator {
         return criteria;
     }
 
-    /**
-     * オペレーターIDおよびオペレーターコードのリストを設定します
-     *
-     * @param operators オペレーター群
-     */
-    void setOperatorIdAndCodeList(Operators operators) {
-        operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
-        operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
-    }
+//    /**
+//     * オペレーターIDおよびオペレーターコードのリストを設定します
+//     *
+//     * @param operators オペレーター群
+//     */
+//    void setOperatorIdAndCodeList(Operators operators) {
+//        operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
+//        operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
+//    }
 
     /**
-     * アカウントロック検索条件を作成します
+     * オペレーター_サブシステムロール割当を群検索します
      *
-     * @return アカウントロック検索条件
+     * @param operatorIdList オペレーターIDリスト
+     * @return オペレーター_サブシステムロール割当群
      */
-    AccountLockCriteria createAccountLockCriteria() {
-        AccountLockCriteria criteria = new AccountLockCriteria();
-        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
-    }
-
-    /**
-     * パスワード履歴検索条件を作成します
-     *
-     * @return パスワード履歴検索条件
-     */
-    PasswordHistoryCriteria createPasswordHistoryCriteria() {
-        PasswordHistoryCriteria criteria = new PasswordHistoryCriteria();
-        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
-    }
-
-    /**
-     * サインイン証跡検索条件を作成します
-     *
-     * @return サインイン証跡検索条件
-     */
-    SignInTraceCriteria createSignInTraceCriteria() {
-        SignInTraceCriteria criteria = new SignInTraceCriteria();
-        criteria.getOperatorCodeCriteria().getIncludes().addAll(operatorCodeList);
-        return criteria;
-    }
-
-    /**
-     * サインアウト証跡検索条件を作成します
-     *
-     * @return サインアウト証跡検索条件
-     */
-    SignOutTraceCriteria createSignOutTraceCriteria() {
-        SignOutTraceCriteria criteria = new SignOutTraceCriteria();
-        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
-    }
-
-    /**
-     * オペレーター_サブシステムロール割当検索条件を作成します
-     *
-     * @return オペレーター_サブシステムロール割当検索条件
-     */
-    Operator_SubSystemRoleCriteria createOperator_SubSystemRoleCriteria() {
+    private  Operator_SubSystemRoles searchOperator_SubSystemRoles(List<Long> operatorIdList) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
+        return operator_SubSystemRolesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
     }
 
     /**
-     * オペレーター_取引ロール割当検索条件を作成します
+     * オペレーター_取引ロール割当群を検索します
      *
-     * @return オペレーター_取引ロール割当検索条件
+     * @param operatorIdList オペレーターIDリスト
+     * @return オペレーター_取引ロール割当群
      */
-    Operator_BizTranRoleCriteria createOperator_BizTranRoleCriteria() {
+    private Operator_BizTranRoles searchOperator_BizTranRoles(List<Long> operatorIdList) {
         Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
+        return operator_BizTranRolesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
     }
 
     /**
-     * オペレーター履歴ヘッダー検索条件を作成します
+     * アカウントロック群を検索します
      *
-     * @return オペレーター履歴ヘッダー検索条件
+     * @param operatorIdList オペレーターIDリスト
+     * @return アカウントロック群
      */
-    OperatorHistoryHeaderCriteria createOperatorHistoryHeaderCriteria() {
+    private AccountLocks searchAccountLocks(List<Long> operatorIdList) {
+        AccountLockCriteria criteria = new AccountLockCriteria();
+        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
+        return accountLocksRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
+    }
+
+    /**
+     * パスワード履歴群を検索します
+     *
+     * @param operatorIdList オペレーターIDリスト
+     * @return パスワード履歴群
+     */
+    private PasswordHistories searchPasswordHistories(List<Long> operatorIdList) {
+        PasswordHistoryCriteria criteria = new PasswordHistoryCriteria();
+        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
+        return passwordHistoriesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
+    }
+
+    /**
+     * サインイン証跡群を検索します
+     *
+     * @param operatorCodeList オペレーターコードリスト
+     * @return サインイン証跡群
+     */
+    private SignInTraces searchSignInTraces(List<String> operatorCodeList) {
+        SignInTraceCriteria criteria = new SignInTraceCriteria();
+        criteria.getOperatorCodeCriteria().getIncludes().addAll(operatorCodeList);
+        return signInTracesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
+    }
+
+    /**
+     * サインアウト証跡群を検索します
+     *
+     * @param operatorIdList オペレーターIDリスト
+     * @return サインアウト証跡群
+     */
+    private SignOutTraces searchSignOutTraces(List<Long> operatorIdList) {
+        SignOutTraceCriteria criteria = new SignOutTraceCriteria();
+        criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
+        return signOutTracesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
+    }
+
+    /**
+     * オペレーター履歴ヘッダー検索群を検索します
+     *
+     * @param operatorIdList オペレーターIDリスト
+     * @return オペレーター履歴ヘッダー群
+     */
+    private OperatorHistoryHeaders searchOperatorHistoryHeaders(List<Long> operatorIdList) {
         OperatorHistoryHeaderCriteria criteria = new OperatorHistoryHeaderCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return criteria;
+        return operatorHistoryHeadersRepository.selectBy(criteria,
+            Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
     }
 }

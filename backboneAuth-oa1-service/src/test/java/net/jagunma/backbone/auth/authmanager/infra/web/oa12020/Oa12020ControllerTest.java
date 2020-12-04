@@ -252,6 +252,20 @@ class Oa12020ControllerTest {
     }
 
     /**
+     * 戻り値の型に合わせてキャスト
+     *
+     * @param obj キャスト対象オブジェクト
+     * @param <T> 戻り値の型Generics
+     * @return キャスト後オブジェクト
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T autoCast(Object obj) {
+        T castObj = (T) obj;
+        return castObj;
+    }
+
+
+    /**
      * {@link Oa12020Controller#get(Model)}テスト
      *  ●パターン
      *    正常
@@ -592,7 +606,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getJaItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        //List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -626,7 +641,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -666,7 +682,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -705,7 +722,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getSubSystemItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -739,7 +757,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -779,7 +798,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -813,7 +833,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -853,7 +874,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
@@ -895,7 +917,8 @@ class Oa12020ControllerTest {
 
         // 実行
         String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
+        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
 
         // 結果検証
         assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);

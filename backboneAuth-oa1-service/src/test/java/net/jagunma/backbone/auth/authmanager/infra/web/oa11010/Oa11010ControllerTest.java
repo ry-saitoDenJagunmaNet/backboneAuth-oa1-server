@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBran
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
@@ -27,6 +28,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
@@ -122,6 +124,12 @@ class Oa11010ControllerTest {
 
     // テスト対象クラス生成
     private Oa11010Controller createOa11010Controller() {
+        OperatorRepository operatorRepository = new OperatorRepository() {
+            @Override
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+                return null;
+            }
+        };
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
@@ -187,6 +195,7 @@ class Oa11010ControllerTest {
             }
         };
         SearchOperator searchOperator = new SearchOperator(
+            operatorRepository,
             operatorsRepository,
             accountLocksRepository,
             passwordHistoriesRepository,
@@ -195,7 +204,7 @@ class Oa11010ControllerTest {
             operator_SubSystemRolesRepository,
             operator_BizTranRolesRepository,
             operatorHistoryHeadersRepository) {
-            public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
+            public void execute(OperatorSearchRequest request, OperatorsSearchResponse response) {
                 // request.getJaIdCriteria().getEqualTo() == -1 の場合：RuntimeException を発生させる
                 if (request.getJaIdCriteria().getEqualTo() == -1) {
                     throw new RuntimeException();
