@@ -1,21 +1,21 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 
 /**
- * オペレーター参照サービス Response
+ * オペレーター群参照サービス Response
  */
-public interface OperatorSearchResponse {
+public interface OperatorsSearchResponse {
     /**
-     * オペレーターのＳｅｔ
+     * オペレーター群のＳｅｔ
      *
-     * @param operator オペレーター
+     * @param operators オペレーター群
      */
-    void setOperator(Operator operator);
+    void setOperators(Operators operators);
     /**
      * アカウントロック群のＳｅｔ
      *

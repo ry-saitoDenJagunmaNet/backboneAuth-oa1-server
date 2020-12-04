@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
@@ -19,7 +19,7 @@ import net.jagunma.common.values.model.branch.BranchAtMoment;
 /**
  * OA11010 オペレーター＜一覧＞検索サービス Response Presenter
  */
-class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements OperatorSearchResponse {
+class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements OperatorsSearchResponse {
 
     /**
      * オペレーター一覧の１ページ当たりの行数
