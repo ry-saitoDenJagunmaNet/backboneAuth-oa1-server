@@ -89,7 +89,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
 
         StringBuilder html = new StringBuilder();
 
-        html.append(String.format("<tr class=\"oaex_operator_table_operator_%s oaex_th_operator_table_row\" onclick=\"oaex_operator_table_onClick(this);\">",
+        html.append(String.format("<tr class=\"oaex_operator_table_operator_%s oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\">",
             operator.getOperatorCode()));
 
         // 利用可否
@@ -113,7 +113,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
             operator.getOperatorCode(),operator.getBranchId()));
         html.append(String.format("<td class=\"oaex_operator_operator_name\">%s</td>", operator.getOperatorName()));
         // オペレーター有効期限
-        html.append(String.format("<td class=\"oaex_operator_validThru_date\">%s～%s</td>",
+        html.append(String.format("<td class=\"oaex_operator_valid_thru_date\">%s～%s</td>",
             formatLocalDate(operator.getValidThruStartDate()), formatLocalDate(operator.getValidThruEndDate())));
 
         // サブシステムロール
@@ -151,7 +151,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
                 html.append(String.format("<td class=\"oaex_operator_subsystem_role\">%s</td>",
                     operatorSubSystemRole.getSubSystemRole().getName()));
                 // サブシステムロール有効期限
-                html.append(String.format("<td class=\"oaex_operator_subsystem_role_validThru_date\">%s～%s</td>",
+                html.append(String.format("<td class=\"oaex_operator_subsystem_role_valid_thru_date\">%s～%s</td>",
                     formatLocalDate(operatorSubSystemRole.getValidThruStartDate()),
                     formatLocalDate(operatorSubSystemRole.getValidThruEndDate())));
 
@@ -215,7 +215,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         html.append(String.format("<td class=\"oaex_operator_biztran_role_name\">%s</td>",
             operatorBizTranRole.getBizTranRole().getBizTranRoleName()));
         // 取引ロール有効期限
-        html.append(String.format("<td class=\"oaex_operator_biztran_role_validThru_date\">%s～%s",
+        html.append(String.format("<td class=\"oaex_operator_biztran_role_valid_thru_date\">%s～%s",
             formatLocalDate(operatorBizTranRole.getValidThruStartDate()),
             formatLocalDate(operatorBizTranRole.getValidThruEndDate())));
         html.append("</tr>");
@@ -234,7 +234,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         StringBuffer html = new StringBuffer();
 
         // 店舗、オペレーターに空セル（td）を設定
-        html.append(String.format("<tr class=\"oaex_operator_table_operator_%s\" onclick=\"oaex_operator_table_onClick(this);\">",
+        html.append(String.format("<tr class=\"oaex_operator_table_operator_%s\" onclick=\"oaex_operatorTable_onClick(this);\">",
             operatorCode));
         // 利用可否
         html.append("<td class=\"oaex_operator_available_status\"></td>");
@@ -247,7 +247,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         html.append("<td class=\"oaex_operator_operator_code\"></td>");
         html.append("<td class=\"oaex_operator_operator_name\"></td>");
         // オペレーター有効期限
-        html.append("<td class=\"oaex_operator_validThru_date\"></td>");
+        html.append("<td class=\"oaex_operator_valid_thru_date\"></td>");
 
         return html.toString();
     }
@@ -264,7 +264,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         // サブシステムロール
         html.append("<td class=\"oaex_operator_subsystem_role\"></td>");
         // サブシステムロール有効期限
-        html.append("<td class=\"oaex_operator_subsystem_role_validThru_date\"></td>");
+        html.append("<td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td>");
 
         return html.toString();
     }
@@ -282,7 +282,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         html.append("<td class=\"oaex_operator_biztran_role_code\"></td>");
         html.append("<td class=\"oaex_operator_biztran_role_name\"></td>");
         // 取引ロール有効期限
-        html.append("<td class=\"oaex_operator_biztran_role_validThru_date\"></td>");
+        html.append("<td class=\"oaex_operator_biztran_role_valid_thru_date\"></td>");
         html.append("</tr>");
 
         return html.toString();
