@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordChangeRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordResetRequest;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
@@ -47,14 +48,10 @@ public class UpdatePassword {
         checkNotDeviceAuthPassword(request.getOperatorId());
 
         // パスワード履歴の生成を行います
-        PasswordHistory passwordHistory = PasswordHistory.createFrom(
-            null,
+        PasswordHistory passwordHistory = createPasswordHistory(
             request.getOperatorId(),
-            LocalDateTime.now(),
             request.getPassword(),
-            PasswordChangeType.管理者によるリセット,
-            null,
-            null);
+            PasswordChangeType.管理者によるリセット);
 
         // パスワードの格納を行います
         passwordHistoryRepositoryForStore.store(passwordHistory);
@@ -78,14 +75,10 @@ public class UpdatePassword {
         checkPastGenerationsPassword(request);
 
         // パスワード履歴の生成を行います
-        PasswordHistory passwordHistory = PasswordHistory.createFrom(
-            null,
+        PasswordHistory passwordHistory = createPasswordHistory(
             request.getOperatorId(),
-            LocalDateTime.now(),
             request.getNewPassword(),
-            PasswordChangeType.ユーザーによる変更,
-            null,
-            null);
+            PasswordChangeType.ユーザーによる変更);
 
         // パスワードの格納を行います
         passwordHistoryRepositoryForStore.store(passwordHistory);
@@ -144,5 +137,25 @@ public class UpdatePassword {
 
             counter ++;
         }
+    }
+
+    /**
+     * パスワード履歴の生成を行います
+     *
+     * @param operatorId オペレーターID
+     * @param password パスワード
+     * @param passwordChangeType 変更種別
+     * @return パスワード履歴
+     */
+    PasswordHistory createPasswordHistory(Long operatorId, String password, PasswordChangeType passwordChangeType) {
+
+        return PasswordHistory.createFrom(
+            null,
+            operatorId,
+            LocalDateTime.now(),
+            password,
+            passwordChangeType,
+            null,
+            null);
     }
 }
