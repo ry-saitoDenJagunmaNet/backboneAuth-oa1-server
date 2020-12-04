@@ -47,9 +47,6 @@ class UpdatePasswordTest {
         return PasswordHistories.createFrom(passwordHistoryList);
     }
 
-    // 検証値
-    private PasswordHistory actualModel;
-
     private PasswordResetRequest createPasswordResetRequest() {
         return new PasswordResetRequest() {
             @Override
@@ -93,7 +90,7 @@ class UpdatePasswordTest {
         PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore = new PasswordHistoryRepositoryForStore() {
             @Override
             public void store(PasswordHistory passwordHistory) {
-                actualModel = passwordHistory;
+
             }
         };
         PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
@@ -153,87 +150,6 @@ class UpdatePasswordTest {
             // 実行
             updatePassword.execute(request))
             .doesNotThrowAnyException();
-    }
-
-    /**
-     * {@link UpdatePassword#execute(PasswordResetRequest request)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・PasswordHistoryへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void execute_test1_ResetRequest() {
-        // テスト対象クラス生成
-        UpdatePassword updatePassword = createUpdatePassword();
-
-        // 実行値
-        PasswordResetRequest request = createPasswordResetRequest();
-
-        // 期待値
-        PasswordHistory expectedModel = PasswordHistory.createFrom(
-            null,
-            operatorId,
-            LocalDateTime.now(),
-            password,
-            PasswordChangeType.管理者によるリセット,
-            null,
-            null);
-
-        // 実行
-        updatePassword.execute(request);
-
-        // 結果検証
-        assertThat(actualModel.getPasswordHistoryId()).isEqualTo(expectedModel.getPasswordHistoryId());
-        assertThat(actualModel.getOperatorId()).isEqualTo(expectedModel.getOperatorId());
-        assertThat(actualModel.getPassword()).isEqualTo(expectedModel.getPassword());
-        assertThat(actualModel.getPasswordChangeType()).isEqualTo(expectedModel.getPasswordChangeType());
-        assertThat(actualModel.getRecordVersion()).isEqualTo(expectedModel.getRecordVersion());
-        assertThat(actualModel.getOperator()).isEqualTo(expectedModel.getOperator());
-    }
-
-    /**
-     * {@link UpdatePassword#execute(PasswordChangeRequest request)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・PasswordHistoryへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void execute_test1_ChangeRequest() {
-        // テスト対象クラス生成
-        UpdatePassword updatePassword = createUpdatePassword();
-
-        // 実行値
-        PasswordChangeRequest request = createPasswordChangeRequest();
-        passwordLastTime = oldPassword;
-
-        // 期待値
-        PasswordHistory expectedModel = PasswordHistory.createFrom(
-            null,
-            operatorId,
-            LocalDateTime.now(),
-            password,
-            PasswordChangeType.ユーザーによる変更,
-            null,
-            null);
-
-        // 実行
-        updatePassword.execute(request);
-
-        // 結果検証
-        assertThat(actualModel.getPasswordHistoryId()).isEqualTo(expectedModel.getPasswordHistoryId());
-        assertThat(actualModel.getOperatorId()).isEqualTo(expectedModel.getOperatorId());
-        assertThat(actualModel.getPassword()).isEqualTo(expectedModel.getPassword());
-        assertThat(actualModel.getPasswordChangeType()).isEqualTo(expectedModel.getPasswordChangeType());
-        assertThat(actualModel.getRecordVersion()).isEqualTo(expectedModel.getRecordVersion());
-        assertThat(actualModel.getOperator()).isEqualTo(expectedModel.getOperator());
     }
 
     /**
@@ -319,5 +235,43 @@ class UpdatePasswordTest {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA12004");
             });
+    }
+
+    /**
+     * {@link UpdatePassword#createPasswordHistory(Long operatorId, String password, PasswordChangeType passwordChangeType)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordHistoryへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void createPasswordHistory_test() {
+        // テスト対象クラス生成
+        UpdatePassword updatePassword = createUpdatePassword();
+
+        // 期待値
+        PasswordHistory expectedModel = PasswordHistory.createFrom(
+            null,
+            operatorId,
+            LocalDateTime.now(),
+            password,
+            PasswordChangeType.管理者によるリセット,
+            null,
+            null);
+
+        // 実行
+        PasswordHistory passwordHistory = updatePassword.createPasswordHistory(operatorId, password, PasswordChangeType.管理者によるリセット);
+
+        // 結果検証
+        assertThat(passwordHistory.getPasswordHistoryId()).isEqualTo(expectedModel.getPasswordHistoryId());
+        assertThat(passwordHistory.getOperatorId()).isEqualTo(expectedModel.getOperatorId());
+        assertThat(passwordHistory.getChangeDateTime().toLocalDate().equals(expectedModel.getChangeDateTime().toLocalDate()));
+        assertThat(passwordHistory.getPassword()).isEqualTo(expectedModel.getPassword());
+        assertThat(passwordHistory.getPasswordChangeType()).isEqualTo(expectedModel.getPasswordChangeType());
+        assertThat(passwordHistory.getRecordVersion()).isEqualTo(expectedModel.getRecordVersion());
+        assertThat(passwordHistory.getOperator()).isEqualTo(expectedModel.getOperator());
     }
 }
