@@ -1,12 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAttribute;

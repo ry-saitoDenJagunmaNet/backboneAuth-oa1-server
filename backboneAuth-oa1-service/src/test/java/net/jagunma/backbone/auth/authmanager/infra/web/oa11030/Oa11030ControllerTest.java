@@ -29,8 +29,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntry
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
@@ -117,8 +115,6 @@ class Oa11030ControllerTest {
 
     // オペレーター系
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, validThruStartDate, validThruEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, branchAtMoment);
-    private List<Operator> OperatorList= newArrayList(operator);
-    private Operators operators = Operators.createFrom(OperatorList);
 
     // 店舗群AtMoment
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
