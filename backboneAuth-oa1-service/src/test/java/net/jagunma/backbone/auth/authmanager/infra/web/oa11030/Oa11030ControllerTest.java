@@ -26,6 +26,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
@@ -163,9 +164,9 @@ class Oa11030ControllerTest {
     // テスト対象クラス生成
     private Oa11030Controller createOa11030Controller() {
 
-        OperatorsRepository operatorsRepository = new OperatorsRepository() {
+        OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operators selectBy(OperatorCriteria OperatorCriteria, Orders orders) {
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
         };
@@ -216,7 +217,7 @@ class Oa11030ControllerTest {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorsRepository, accountLocksRepository, passwordHistoriesRepository, signInTracesRepository, signOutTracesRepository, operator_SubSystemRolesRepository, operator_BizTranRolesRepository, operatorHistoryHeadersRepository) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, accountLocksRepository, passwordHistoriesRepository, signInTracesRepository, signOutTracesRepository, operator_SubSystemRolesRepository, operator_BizTranRolesRepository, operatorHistoryHeadersRepository) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる
@@ -227,7 +228,7 @@ class Oa11030ControllerTest {
                 if(request.getOperatorIdCriteria().getEqualTo().equals(12L)) {
                     throw new RuntimeException();
                 }
-                response.setOperators(operators);
+                response.setOperator(operator);
                 response.setAccountLocks(accountLocks);
                 response.setOperator_SubSystemRoles(operator_SubSystemRoles);
                 response.setOperator_BizTranRoles(operator_BizTranRoles);

@@ -45,8 +45,6 @@ class Ed01010InitPresenterTest {
 
     // オペレーター系
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, null, null, null, null, jaId, jaCode, branchId, branchCode, null, null, branchAtMoment);
-    private List<Operator> OperatorList= newArrayList(operator);
-    private Operators operators = Operators.createFrom(OperatorList);
 
     // モード
     private String mode = "";
@@ -69,7 +67,7 @@ class Ed01010InitPresenterTest {
         vo.setMode(mode);
         vo.setOperatorId(operatorId);
         Ed01010InitPresenter presenter = new Ed01010InitPresenter();
-        presenter.setOperators(operators);
+        presenter.setOperator(operator);
 
         // 期待値
         Ed01010Vo expectedVo = new Ed01010Vo();
@@ -80,40 +78,6 @@ class Ed01010InitPresenterTest {
         expectedVo.setOldPassword(null);
         expectedVo.setNewPassword(null);
         expectedVo.setConfirmPassword(null);
-
-        // 実行
-        presenter.bindTo(vo);
-
-        // 結果検証
-        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
-    }
-
-    /**
-     * {@link Ed01010InitPresenter#bindTo(Ed01010Vo vo)}テスト
-     *  ●パターン
-     *    正常
-     *    （オペレーター なし）
-     *
-     *  ●検証事項
-     *  ・Voへのセット
-     *    （空）
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void bindTo_test1() {
-        // 実行値
-        Ed01010Vo vo = new Ed01010Vo();
-        mode = "Reset";
-        vo.setMode(mode);
-        vo.setOperatorId(operatorId);
-        Ed01010InitPresenter presenter = new Ed01010InitPresenter();
-        presenter.setOperators(Operators.createFrom(newArrayList()));
-
-        // 期待値
-        Ed01010Vo expectedVo = new Ed01010Vo();
-        expectedVo.setMode(mode);
-        expectedVo.setOperatorId(operatorId);
 
         // 実行
         presenter.bindTo(vo);
