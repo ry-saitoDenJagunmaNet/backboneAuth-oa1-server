@@ -1,9 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.UpdatePassword;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
@@ -14,8 +12,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
@@ -64,8 +60,6 @@ class Ed01010ControllerTest {
 
     // オペレーター系
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, null, null, null, null, jaId, jaCode, branchId, branchCode, null, null, branchAtMoment);
-    private List<Operator> OperatorList= newArrayList(operator);
-    private Operators operators = Operators.createFrom(OperatorList);
 
     // モード
     private String mode = "";

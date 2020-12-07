@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
