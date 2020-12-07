@@ -25,12 +25,7 @@ class Ed01010InitPresenter extends BaseOfOperatorSearchResponse implements Opera
      */
     public void bindTo(Ed01010Vo vo) {
 
-        if (operators.getValues().size() == 0) {
-            return;
-        }
-
-        Operator operator = operators.getValues().get(0);
-        BranchAtMoment branchAtMoment = operators.getValues().get(0).getBranchAtMoment();
+        BranchAtMoment branchAtMoment = operator.getBranchAtMoment();
 
         vo.setJa(operator.getJaCode() + " " + branchAtMoment.getJaAtMoment().getJaAttribute().getName());
         vo.setOperatorId(operator.getOperatorId());

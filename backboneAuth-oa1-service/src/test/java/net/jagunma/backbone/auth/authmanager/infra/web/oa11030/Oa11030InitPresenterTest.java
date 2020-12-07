@@ -75,8 +75,6 @@ class Oa11030InitPresenterTest {
 
     // オペレーター系
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, mailAddress, validThruStartDate, validThruEndDate, isDeviceAuth, jaId, jaCode, branchId, branchCode, availableStatus, recordVersion, branchAtMoment);
-    private List<Operator> OperatorList= newArrayList(operator);
-    private Operators operators = Operators.createFrom(OperatorList);
 
     // 店舗群AtMoment
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
@@ -133,7 +131,7 @@ class Oa11030InitPresenterTest {
         // 実行値
         Oa11030Vo vo = new Oa11030Vo();
         Oa11030InitPresenter presenter = new Oa11030InitPresenter();
-        presenter.setOperators(operators);
+        presenter.setOperator(operator);
         presenter.setAccountLocks(accountLocks);
         presenter.setOperator_SubSystemRoles(operator_SubSystemRoles);
         presenter.setOperator_BizTranRoles(operator_BizTranRoles);
@@ -190,35 +188,6 @@ class Oa11030InitPresenterTest {
      * {@link Oa11030InitPresenter#bindTo(Oa11030Vo vo)}テスト
      *  ●パターン
      *    正常
-     *    （オペレーター なし）
-     *
-     *  ●検証事項
-     *  ・Voへのセット
-     *    （空）
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void bindTo_test1() {
-        // 実行値
-        Oa11030Vo vo = new Oa11030Vo();
-        Oa11030InitPresenter presenter = new Oa11030InitPresenter();
-        presenter.setOperators(Operators.createFrom(newArrayList()));
-
-        // 期待値
-        Oa11030Vo expectedVo = new Oa11030Vo();
-
-        // 実行
-        presenter.bindTo(vo);
-
-        // 結果検証
-        assertThat(vo).usingRecursiveComparison().isEqualTo(expectedVo);
-    }
-
-    /**
-     * {@link Oa11030InitPresenter#bindTo(Oa11030Vo vo)}テスト
-     *  ●パターン
-     *    正常
      *    （アカウントロック なし）
      *    （オペレーター_サブシステムロール割当履歴 なし）
      *    （オペレーター_取引ロール割当履歴 なし）
@@ -229,11 +198,11 @@ class Oa11030InitPresenterTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void bindTo_test2() {
+    void bindTo_test1() {
         // 実行値
         Oa11030Vo vo = new Oa11030Vo();
         Oa11030InitPresenter presenter = new Oa11030InitPresenter();
-        presenter.setOperators(operators);
+        presenter.setOperator(operator);
         presenter.setAccountLocks(AccountLocks.createFrom(newArrayList()));
         presenter.setOperator_SubSystemRoles(Operator_SubSystemRoles.createFrom(newArrayList()));
         presenter.setOperator_BizTranRoles(Operator_BizTranRoles.createFrom(newArrayList()));

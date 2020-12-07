@@ -13,6 +13,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
@@ -77,13 +78,13 @@ class Ed01010ControllerTest {
     // テスト対象クラス生成
     private Ed01010Controller createEd01010Controller() {
 
-        OperatorsRepository operatorsRepository = new OperatorsRepository() {
+        OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operators selectBy(OperatorCriteria OperatorCriteria, Orders orders) {
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorsRepository, null, null, null, null, null, null, null) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null, null) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる
@@ -94,7 +95,7 @@ class Ed01010ControllerTest {
                 if(request.getOperatorIdCriteria().getEqualTo().equals(12L)) {
                     throw new RuntimeException();
                 }
-                response.setOperators(operators);
+                response.setOperator(operator);
             }
         };
 

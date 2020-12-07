@@ -11,7 +11,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsS
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubSystemRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
@@ -46,12 +45,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
      */
     public void bindTo(Oa11030Vo vo) {
 
-        if (operators.getValues().size() == 0) {
-            return;
-        }
-
-        Operator operator = operators.getValues().get(0);
-        BranchAtMoment branchAtMoment = operators.getValues().get(0).getBranchAtMoment();
+        BranchAtMoment branchAtMoment = operator.getBranchAtMoment();
         OperatorHistoryHeader operatorHistoryHeader = operatorHistoryHeaders.getValues().get(0);
 
         vo.setOperatorId(operator.getOperatorId());
