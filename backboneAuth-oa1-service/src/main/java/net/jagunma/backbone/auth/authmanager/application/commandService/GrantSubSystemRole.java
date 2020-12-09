@@ -3,8 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.AllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
@@ -38,7 +38,7 @@ public class GrantSubSystemRole {
         Operator_SubSystemRoles operator_SubSystemRoles = createOperator_SubSystemRoles(request);
 
         // オペレーター_サブシステムロール割当群の登録を行います
-        operator_SubSystemRoleRepositoryForStore.store(operator_SubSystemRoles);
+        operator_SubSystemRoleRepositoryForStore.store(operator_SubSystemRoles, request.getChangeCause());
 
     }
 
@@ -51,9 +51,9 @@ public class GrantSubSystemRole {
     Operator_SubSystemRoles createOperator_SubSystemRoles(SubSystemRoleGrantRequest request) {
         List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
 
-        List<AllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();
+        List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();
 
-        for (AllocateSubSystemRole allocateSubSystemRole : allocateSubSystemRoleList) {
+        for (SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole : allocateSubSystemRoleList) {
 
             Operator_SubSystemRole operator_SubSystemRole = Operator_SubSystemRole.createFrom(
                 null,
