@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.AllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
@@ -38,8 +38,8 @@ class GrantSubSystemRoleValidator {
         Preconditions.checkNotEmpty(request.getAllocateSubSystemRoleList(), () -> new GunmaRuntimeException("EOA13002", "割当対象サブシステムロールリスト"));
         Preconditions.checkNotEmpty(request.getChangeCause(), () -> new GunmaRuntimeException("EOA13002", "変更事由"));
 
-        List<AllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();
-        for (AllocateSubSystemRole allocateSubSystemRole : allocateSubSystemRoleList) {
+        List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();
+        for (SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole : allocateSubSystemRoleList) {
             // 未セットチェック
             Preconditions.checkNotNull(allocateSubSystemRole.getSubSystemRole(), () -> new GunmaRuntimeException("EOA13002", "サブシステムロール"));
             Preconditions.checkNotNull(allocateSubSystemRole.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13002", "有効期限（開始日）"));

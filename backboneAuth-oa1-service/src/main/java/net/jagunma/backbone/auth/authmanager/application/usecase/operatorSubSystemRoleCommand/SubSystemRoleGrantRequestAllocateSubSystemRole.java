@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
  * サブシステムロール付与サービス Request
  * 割当対象サブシステムロール
  */
-public interface AllocateSubSystemRole {
+public interface SubSystemRoleGrantRequestAllocateSubSystemRole {
     /**
      * サブシステムロールのＧｅｔ
      *

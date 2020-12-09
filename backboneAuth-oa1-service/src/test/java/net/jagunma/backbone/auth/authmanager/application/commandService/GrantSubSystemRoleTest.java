@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.AllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
@@ -21,7 +21,7 @@ class GrantSubSystemRoleTest {
 
     // 実行既定値
     private Long operatorId = 123456L;
-    private List<AllocateSubSystemRole> allocateSubSystemRoleList = newArrayList();
+    private List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = newArrayList();
     private SubSystemRole subSystemRole1 = SubSystemRole.JA管理者;
     private SubSystemRole subSystemRole2 = SubSystemRole.業務統括者_購買;
     private SubSystemRole subSystemRole3 = SubSystemRole.業務統括者_販売_青果;
@@ -46,7 +46,7 @@ class GrantSubSystemRoleTest {
                 return operatorId;
             }
             @Override
-            public List<AllocateSubSystemRole> getAllocateSubSystemRoleList() {
+            public List<SubSystemRoleGrantRequestAllocateSubSystemRole> getAllocateSubSystemRoleList() {
                 return allocateSubSystemRoleList;
             }
             @Override
@@ -56,9 +56,9 @@ class GrantSubSystemRoleTest {
         };
     }
 
-    private List<AllocateSubSystemRole> createAllocateSubSystemRoleList() {
+    private List<SubSystemRoleGrantRequestAllocateSubSystemRole> createAllocateSubSystemRoleList() {
 
-        AllocateSubSystemRole allocateSubSystemRole1 = new AllocateSubSystemRole() {
+        SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole1 = new SubSystemRoleGrantRequestAllocateSubSystemRole() {
             @Override
             public SubSystemRole getSubSystemRole() {
                 return subSystemRole1;
@@ -72,7 +72,7 @@ class GrantSubSystemRoleTest {
                 return validThruEndDate1;
             }
         };
-        AllocateSubSystemRole allocateSubSystemRole2 = new AllocateSubSystemRole() {
+        SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole2 = new SubSystemRoleGrantRequestAllocateSubSystemRole() {
             @Override
             public SubSystemRole getSubSystemRole() {
                 return subSystemRole2;
@@ -86,7 +86,7 @@ class GrantSubSystemRoleTest {
                 return validThruEndDate2;
             }
         };
-        AllocateSubSystemRole allocateSubSystemRole3 = new AllocateSubSystemRole() {
+        SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole3 = new SubSystemRoleGrantRequestAllocateSubSystemRole() {
             @Override
             public SubSystemRole getSubSystemRole() {
                 return subSystemRole3;
@@ -100,7 +100,7 @@ class GrantSubSystemRoleTest {
                 return validThruEndDate3;
             }
         };
-        AllocateSubSystemRole allocateSubSystemRole4 = new AllocateSubSystemRole() {
+        SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole4 = new SubSystemRoleGrantRequestAllocateSubSystemRole() {
             @Override
             public SubSystemRole getSubSystemRole() {
                 return subSystemRole4;
@@ -114,7 +114,7 @@ class GrantSubSystemRoleTest {
                 return validThruEndDate4;
             }
         };
-        AllocateSubSystemRole allocateSubSystemRole5 = new AllocateSubSystemRole() {
+        SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole5 = new SubSystemRoleGrantRequestAllocateSubSystemRole() {
             @Override
             public SubSystemRole getSubSystemRole() {
                 return subSystemRole5;

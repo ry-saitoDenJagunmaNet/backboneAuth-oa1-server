@@ -17,7 +17,7 @@ public interface SubSystemRoleGrantRequest {
      *
      * @return 割当対象サブシステムロールリスト
      */
-    List<AllocateSubSystemRole> getAllocateSubSystemRoleList();
+    List<SubSystemRoleGrantRequestAllocateSubSystemRole> getAllocateSubSystemRoleList();
     /**
      * 変更事由のＧｅｔ
      *
