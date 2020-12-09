@@ -34,8 +34,8 @@ class Ed01010ChangeConverterTest {
         // 実行値
         Ed01010Vo vo = new Ed01010Vo();
         vo.setMode(mode);
-        vo.setJa(ja);
         vo.setOperatorId(operatorId);
+        vo.setJa(ja);
         vo.setOperator(operator);
         vo.setOldPassword(oldPassword);
         vo.setNewPassword(newPassword);
