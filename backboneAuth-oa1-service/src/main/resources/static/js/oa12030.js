@@ -1,3 +1,83 @@
+/** Thymeleaf で起動時のみ実行 **/
+/**
+ * 画面Loadイベントです。
+ */
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	// ＪＡ ItemSourceの取得
+	oa_th_getJaItemsSourceForCode("jaSelect", "ja_code", "ja");
+
+	// サブシステム ItemSourceの取得
+	oa_th_getSubSystemItemsSource("subSystemSelect", "subSystem_code", "subSystem");
+
+	// Changeイベントの追加
+//	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
+//	document.getElementById("subSystem").addEventListener("change", (event) => {oaex_th_subsystem_onChange();});
+//	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+
+	// selectの初期化
+	oa_initSelect();
+
+	if (document.getElementById("ja").value.length > 0) {oaex_th_ja_onChange();}
+	if (document.getElementById("subSystem").value.length > 0) {oaex_th_subsystem_onChange();}
+}
+
+/**
+ * JAの変更イベントです。
+ */
+function oaex_th_ja_onChange() {
+	let jaCode = document.getElementById("ja").value;
+	// 店舗 ItemSourceの取得
+	oa_th_getBranchItemsSourceForCode(jaCode, "branchSelect", "branch_code", "branch");
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+/**
+ * サブシステムの変更イベントです。
+ */
+function oaex_th_subsystem_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
+	// 取引グループ ItemSourceの取得
+	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpTable", "bizTran_grp_code", "bizTranGrp");
+	document.getElementById("biztran_grp_table").style.visibility = "visible";
+	// 取引 ItemSourceの取得
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranSelect", "bizTran_code", "bizTran");
+
+	// Changeイベントの追加
+//	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+/**
+ * 取引グループの変更イベントです。
+ */
+function oaex_th_biztran_grp_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
+	let bizTranGrpCode = document.getElementById("bizTranGrp").value;
+	// 取引 ItemSourceの取得
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranSelect", "bizTran_code", "bizTran");
+
+	// selectの初期化
+	oa_initSelect();
+}
+
+/**
+ * 検索ボタンクリックイベントです。
+ */
+function oaex_th_searchBtn_onClick(pageNo) {
+	document.getElementById("pageNo").value = pageNo;
+	document.forms[0].action = "search";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+
+
 /**
  * 画面Loadイベントです。
  */

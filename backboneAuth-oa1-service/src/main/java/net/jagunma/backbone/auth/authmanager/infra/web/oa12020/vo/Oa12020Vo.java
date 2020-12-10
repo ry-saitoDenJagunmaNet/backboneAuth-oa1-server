@@ -5,7 +5,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
 
 /**
- * OA12010 View Object
+ * OA12020 View Object
  */
 public class Oa12020Vo extends BaseOfResponseVo {
 

@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class OperatorDataSource implements OperatorRepository {
 
-    private final OperatorEntityDao oeratorEntityDao;
+    private final OperatorEntityDao operatorEntityDao;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
     // コンストラクタ
-    OperatorDataSource(OperatorEntityDao oeratorEntityDao,
+    OperatorDataSource(OperatorEntityDao operatorEntityDao,
         BranchAtMomentRepository branchAtMomentRepository) {
 
-        this.oeratorEntityDao = oeratorEntityDao;
+        this.operatorEntityDao = operatorEntityDao;
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
@@ -60,7 +60,7 @@ public class OperatorDataSource implements OperatorRepository {
         entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
         entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
 
-        OperatorEntity entity = oeratorEntityDao.findOneBy(entityCriteria);
+        OperatorEntity entity = operatorEntityDao.findOneBy(entityCriteria);
         return Operator.createFrom(
             entity.getOperatorId(),
             entity.getOperatorCode(),

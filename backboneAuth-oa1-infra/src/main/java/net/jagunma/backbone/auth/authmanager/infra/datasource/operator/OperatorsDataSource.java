@@ -25,14 +25,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class OperatorsDataSource implements OperatorsRepository {
 
-    private final OperatorEntityDao oeratorEntityDao;
+    private final OperatorEntityDao operatorEntityDao;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
     // コンストラクタ
-    OperatorsDataSource(OperatorEntityDao oeratorEntityDao,
+    OperatorsDataSource(OperatorEntityDao operatorEntityDao,
         BranchAtMomentRepository branchAtMomentRepository) {
 
-        this.oeratorEntityDao = oeratorEntityDao;
+        this.operatorEntityDao = operatorEntityDao;
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
@@ -59,7 +59,7 @@ public class OperatorsDataSource implements OperatorsRepository {
         entityCriteria.getBranchIdCriteria().assignFrom(operatorCriteria.getBranchIdCriteria());
         entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
         entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
-        List<OperatorEntity> operatorEntity = oeratorEntityDao.findBy(entityCriteria, orders);
+        List<OperatorEntity> operatorEntity = operatorEntityDao.findBy(entityCriteria, orders);
 
         // BranchesAtMoment検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
@@ -70,7 +70,7 @@ public class OperatorsDataSource implements OperatorsRepository {
         BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(branchAtMomentCriteria, Orders.empty());
 
         List<Operator> list = newArrayList();
-        for (OperatorEntity entity : oeratorEntityDao.findBy(entityCriteria, orders)) {
+        for (OperatorEntity entity : operatorEntityDao.findBy(entityCriteria, orders)) {
             list.add(Operator.createFrom(
                 entity.getOperatorId(),
                 entity.getOperatorCode(),

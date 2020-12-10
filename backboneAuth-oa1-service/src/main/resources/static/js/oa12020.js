@@ -6,10 +6,10 @@ function oaex_th_onload() {
 	_isThymeleaf = true;
 
 	// ＪＡ ItemSourceの取得
-	document.getElementById("jaSelect").innerHTML = oa_th_getItemsSource("getJaItemsSource", document.forms[0]);
+	oa_th_getJaItemsSourceForCode("jaSelect", "ja_code", "ja");
 
 	// サブシステム ItemSourceの取得
-	document.getElementById("subSystemSelect").innerHTML = oa_th_getItemsSource("getSubSystemItemsSource", document.forms[0]);
+	oa_th_getSubSystemItemsSource("subSystemSelect", "subSystem_code", "subSystem");
 
 	// Changeイベントの追加
 	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
@@ -32,8 +32,9 @@ function oaex_th_onload() {
  * JAの変更イベントです。
  */
 function oaex_th_ja_onChange() {
+	let jaCode = document.getElementById("ja").value;
 	// 店舗 ItemSourceの取得
-	document.getElementById("branchSelect").innerHTML = oa_th_getItemsSource("getBranchItemsSource", document.forms[0]);
+	oa_th_getBranchItemsSourceForCode(jaCode, "branchSelect", "branch_code", "branch");
 
 	// selectの初期化
 	oa_initSelect();
@@ -43,10 +44,11 @@ function oaex_th_ja_onChange() {
  * サブシステムの変更イベントです。
  */
 function oaex_th_subsystem_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
 	// 取引グループ ItemSourceの取得
-	document.getElementById("bizTranGrpSelect").innerHTML = oa_th_getItemsSource("getBizTranGrpItemsSource", document.forms[0]);
+	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpSelect", "bizTran_grp_code", "bizTranGrp");
 	// 取引 ItemSourceの取得
-	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranSelect", "bizTran_code", "bizTran");
 
 	// Changeイベントの追加
 	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
@@ -59,8 +61,10 @@ function oaex_th_subsystem_onChange() {
  * 取引グループの変更イベントです。
  */
 function oaex_th_biztran_grp_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
+	let bizTranGrpCode = document.getElementById("bizTranGrp").value;
 	// 取引 ItemSourceの取得
-	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranSelect", "bizTran_code", "bizTran");
 
 	// selectの初期化
 	oa_initSelect();
