@@ -49,17 +49,17 @@ public class Oa11030Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11030Controller.class);
 
-    private final SearchOperator searchOperator;
     private final UpdateOperator updateOperator;
+    private final SearchOperator searchOperator;
     private final SearchBranchAtMoment searchBranchAtMoment;
 
     // コンストラクタ
     public Oa11030Controller(
-        SearchOperator searchOperator,
         UpdateOperator updateOperator,
+        SearchOperator searchOperator,
         SearchBranchAtMoment searchBranchAtMoment) {
-        this.searchOperator = searchOperator;
         this.updateOperator = updateOperator;
+        this.searchOperator = searchOperator;
         this.searchBranchAtMoment = searchBranchAtMoment;
     }
 

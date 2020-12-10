@@ -274,7 +274,7 @@ class Oa11030ControllerTest {
             }
         };
 
-        return new Oa11030Controller(searchOperator, updateOperator, searchBranchAtMoment);
+        return new Oa11030Controller(updateOperator, searchOperator, searchBranchAtMoment);
     }
 
     // Oa11030Vo作成
