@@ -55,5 +55,7 @@ class Oa11040InitPresenter extends BaseOfOperatorSearchResponse implements Opera
             oa11040UnallocateRoleTableVoList.add(oa11040UnallocateRoleTableVo);
         }
         vo.setOa11040UnallocateRoleTableVoList(oa11040UnallocateRoleTableVoList);
+
+        vo.setChangeCausePlaceholder(operatorHistoryHeaders.getValues().get(0).getChangeCause());
     }
 }
