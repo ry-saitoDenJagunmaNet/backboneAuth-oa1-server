@@ -539,7 +539,7 @@ class Oa11030ControllerTest {
     }
 
     /**
-     * {@link Oa11030Controller#get(Long operatorId, Model model)}テスト
+     * {@link Oa11030Controller#update(Model model, Oa11030Vo vo)}テスト
      *  ●パターン
      *    例外（OptimisticLockingFailureException）発生
      *
