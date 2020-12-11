@@ -20,7 +20,7 @@ public class GrantSubSystemRole {
 
     private final Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore;
 
-    public GrantSubSystemRole( Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore) {
+    public GrantSubSystemRole(Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore) {
         this.operator_SubSystemRoleRepositoryForStore = operator_SubSystemRoleRepositoryForStore;
     }
 
