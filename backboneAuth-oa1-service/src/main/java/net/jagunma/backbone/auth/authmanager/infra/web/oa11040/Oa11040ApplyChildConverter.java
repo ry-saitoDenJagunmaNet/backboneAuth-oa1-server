@@ -33,7 +33,7 @@ class Oa11040ApplyChildConverter implements SubSystemRoleGrantRequestAllocateSub
      */
     public SubSystemRole getSubSystemRole() {
         return SubSystemRole.codeOf(vo.getRoleCode());
-    };
+    }
     /**
      * 有効期限開始日のＧｅｔ
      *
