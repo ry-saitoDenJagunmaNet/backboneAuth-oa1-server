@@ -1,12 +1,12 @@
 /* 未付与ロールテーブルの非表示状態CSSクラスID */
-const _RIGHT_TABLE_HIDDEN = "oaex_not_granted_role_table_hidden_row";
+const _RIGHT_TABLE_HIDDEN = "oaex_unallocate_role_table_hidden_row";
 
 /**
  * 画面Loadイベントです。
  */
 window.onload = function() {
 	// 未付与ロールテーブルを初期非表示
-	oaex_initHiddenNotGrantedRoleList();
+	oaex_initHiddenUnallocateRoleList();
 }
 
 /**
@@ -14,17 +14,17 @@ window.onload = function() {
  * 付与ロールテーブルへ追加
  */
 function oaex_moveAdditionBtn_onClick() {
-	let grantedRoleTable = document.getElementById("granted_role_table");
-	let notGrantedRoleTable = document.getElementById("not_granted_role_table");
-	for(let i = 0; i < notGrantedRoleTable.rows.length; i++){
-		let tableRow = notGrantedRoleTable.rows[i];
+	let allocateRoleTable = document.getElementById("allocate_role_table");
+	let unallocateRoleTable = document.getElementById("unallocate_role_table");
+	for(let i = 0; i < unallocateRoleTable.rows.length; i++){
+		let tableRow = unallocateRoleTable.rows[i];
 		// 選択行を定義したCSSクラスで判定
 		if (tableRow.classList.contains(_TABLE_ROW_SELECTED1)
 				&& tableRow.classList.contains(_TABLE_ROW_SELECTED2)){
 			// 新規行を追加
-			let newRow = grantedRoleTable.insertRow();
+			let newRow = allocateRoleTable.insertRow();
 			// template行を適用
-			newRow.innerHTML = grantedRoleTable.rows[0].cloneNode(true).innerHTML;
+			newRow.innerHTML = allocateRoleTable.rows[0].cloneNode(true).innerHTML;
 			// 追加行にクリックイベントを追加
 			newRow.addEventListener('click', function(event) {
 				oa_setTableRowSelected(this);
@@ -36,9 +36,9 @@ function oaex_moveAdditionBtn_onClick() {
 			newRow.cells[0].innerText = tableRow.cells[0].innerText;
 			newRow.cells[1].innerText = tableRow.cells[1].innerText;
 			// 選択行非表示
-			notGrantedRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
+			unallocateRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
-			oaex_setSelectRow(notGrantedRoleTable, i);
+			oaex_setSelectRow(unallocateRoleTable, i);
 			return; 
 		}
 	}
@@ -49,29 +49,29 @@ function oaex_moveAdditionBtn_onClick() {
  * 付与ロールテーブルから削除
  */
 function oaex_moveRemovalBtn_onClick() {
-	let grantedRoleTable = document.getElementById("granted_role_table");
-	let notGrantedRoleTable = document.getElementById("not_granted_role_table");
-	for(let i = 1; i < grantedRoleTable.rows.length; i++) {
-		let tableRow = grantedRoleTable.rows[i];
+	let allocateRoleTable = document.getElementById("allocate_role_table");
+	let unallocateRoleTable = document.getElementById("unallocate_role_table");
+	for(let i = 1; i < allocateRoleTable.rows.length; i++) {
+		let tableRow = allocateRoleTable.rows[i];
 		// 選択行を定義したCSSクラスで判定
 		for(let j = 0; j < tableRow.classList.length; j++) {
 			let rowclass = tableRow.classList[j];
 			// 選択行
 			if (tableRow.classList.contains(_TABLE_ROW_SELECTED1)
 					&& tableRow.classList.contains(_TABLE_ROW_SELECTED2)){
-				for(let k = 0; k < notGrantedRoleTable.rows.length; k++) {
+				for(let k = 0; k < unallocateRoleTable.rows.length; k++) {
 					// 選択行と同じコードの未付与ロールを再表示
-					if (notGrantedRoleTable.rows[k].cells[0].innerText == tableRow.cells[0].innerText) {
-						notGrantedRoleTable.rows[k].classList.remove(_RIGHT_TABLE_HIDDEN);
+					if (unallocateRoleTable.rows[k].cells[0].innerText == tableRow.cells[0].innerText) {
+						unallocateRoleTable.rows[k].classList.remove(_RIGHT_TABLE_HIDDEN);
 					}
 				}
 				//選択行削除
-				grantedRoleTable.deleteRow(i);
+				allocateRoleTable.deleteRow(i);
 				// 有効行を選択状態
-				if (i <= grantedRoleTable.rows.length - 1) {
-					oa_setDataTableRowSelected(grantedRoleTable.rows[i]);
+				if (i <= allocateRoleTable.rows.length - 1) {
+					oa_setDataTableRowSelected(allocateRoleTable.rows[i]);
 				} else {
-					oa_setDataTableRowSelected(grantedRoleTable.rows[i-1]);
+					oa_setDataTableRowSelected(allocateRoleTable.rows[i-1]);
 				}
 
 				return; 
@@ -145,13 +145,13 @@ function oaex_setSelectRow(objTable, rowNo) {
  * 未付与ロール一リストの付与したロール行を非表示にします。
  * 初期表示時に付与したサブシステムロールを未付与ロール一覧から非表示
  */
-function oaex_initHiddenNotGrantedRoleList() {
-	let grantedRoleTable = document.getElementById("granted_role_table");
-	let notGrantedRoleTable = document.getElementById("not_granted_role_table");
-	for (let grantedRoleTableRow of grantedRoleTable.rows) {
-		for (let notGrantedRoleTableRow of notGrantedRoleTable.rows) {
-			if (notGrantedRoleTableRow.cells[0].innerText == grantedRoleTableRow.cells[0].innerText ) {
-				notGrantedRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
+function oaex_initHiddenUnallocateRoleList() {
+	let allocateRoleTable = document.getElementById("allocate_role_table");
+	let unallocateRoleTable = document.getElementById("unallocate_role_table");
+	for (let allocateRoleTableRow of allocateRoleTable.rows) {
+		for (let unallocateRoleTableRow of unallocateRoleTable.rows) {
+			if (unallocateRoleTableRow.cells[0].innerText == allocateRoleTableRow.cells[0].innerText ) {
+				unallocateRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
 			}
 		}
 	}

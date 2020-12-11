@@ -6,20 +6,20 @@
 	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
 	<link rel="stylesheet" href="../static/css/common.css"/>
 	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa11050.css"/>
+	<link rel="stylesheet" href="../static/css/oa11040.css"/>
 	<script src="../static/materialize/js/materialize.min.js"></script>
 	<script src="../static/js/common.js"></script>
 	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa11050.js"></script>
+	<script src="../static/js/oa11040.js"></script>
 </head>
 <body>
 	<!-- モーダルダイアログ用定義 -->
 	<script>oa_getMassageDialog();</script>
 	<!-- 左に表示するメニュー用定義 -->
-	<script>oa_getSidenav("oa11050");</script>
+	<script>oa_getSidenav("oa11040");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11050", "サブシステムロール付与");</script>
+		<script>oa_getHeader("oa11040", "サブシステムロール付与");</script>
 	</header>
 
 	<!-- main定義 -->
@@ -40,7 +40,7 @@
 					<div class="input-field">
 						<input type="text" id="operator" readonly="readonly" value="OP006027 前橋小太郎"></input>
 						<label for="operator">オペレーター</label>
-					</div>	
+					</div>
 				</div>
 			</div>
 		</section>
@@ -63,25 +63,25 @@
 				<!-- 付与ロールテーブル -->
 				<div class="col s7">
 					<div class="oa_table_head_dflex">
-						<div id="granted_role_table_head" class="oa_table_head_flex">
+						<div id="allocate_role_table_head" class="oa_table_head_flex">
 							<table>
 								<thead>
 									<tr>
-										<th class="oaex_granted_role_name">付与ロール</th>
-										<th class="oaex_granted_role_valid_thru">有効期限</th>
+										<th class="oaex_allocate_role_name">付与ロール</th>
+										<th class="oaex_allocate_role_valid_thru">有効期限</th>
 									</tr>
 								</thead>
 							</table>
 						</div>
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
-					<div class="oaex_granted_role_table" onScroll="oa_linkageScrollX(this, 'granted_role_table_head')">
-						<table id="granted_role_table" class="highlight">
+					<div class="oaex_allocate_role_table" onScroll="oa_linkageScrollX(this, 'allocate_role_table_head')">
+						<table id="allocate_role_table" class="highlight">
 							<tbody>
-								<tr class="oaex_granted_role_table_template_row" onclick="oa_setTableRowSelected(this)"> 
-									<td class="oaex_granted_role_code"></td>
-									<td class="oaex_granted_role_name"></td>
-									<td class="oaex_granted_role_valid_thru">
+								<tr class="oaex_allocate_role_table_template_row" onclick="oa_setTableRowSelected(this)">
+									<td class="oaex_allocate_role_code"></td>
+									<td class="oaex_allocate_role_name"></td>
+									<td class="oaex_allocate_role_valid_thru">
 										<div class="input-field">
 											<input type="text" class="datepicker" value=""></input>
 										</div>
@@ -92,9 +92,9 @@
 									</td>
 								</tr>
 								<tr onclick="oa_setTableRowSelected(this)">
-									<td class="oaex_granted_role_code">2110</td>
-									<td class="oaex_granted_role_name">業務統括者（販売・青果）</td>
-									<td class="oaex_granted_role_valid_thru">
+									<td class="oaex_allocate_role_code">2110</td>
+									<td class="oaex_allocate_role_name">業務統括者（販売・青果）</td>
+									<td class="oaex_allocate_role_valid_thru">
 										<div class="input-field">
 											<input type="text" class="datepicker" value="2020/04/01"></input>
 										</div>
@@ -116,25 +116,25 @@
 				<!-- 未付与ロールテーブル -->
 				<div class="col s4">
 					<div class="oa_table_head_dflex">
-						<div id="not_granted_role_table_head" class="oa_table_head_flex">
+						<div id="unallocate_role_table_head" class="oa_table_head_flex">
 							<table>
 								<thead>
-									<tr><th class="oaex_not_granted_role_name">未付与ロール</th></tr>
+									<tr><th class="oaex_unallocate_role_name">未付与ロール</th></tr>
 								</thead>
 							</table>
 						</div>
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
-					<div class="oaex_not_granted_role_table" onScroll="oa_linkageScrollX(this, 'not_granted_role_table_head')">
-						<table id="not_granted_role_table" class="highlight">
+					<div class="oaex_unallocate_role_table" onScroll="oa_linkageScrollX(this, 'unallocate_role_table_head')">
+						<table id="unallocate_role_table" class="highlight">
 							<tbody>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">0000</td><td class="oaex_not_granted_role_name">JA管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">1000</td><td class="oaex_not_granted_role_name">業務統括者（購買）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">2110</td><td class="oaex_not_granted_role_name">業務統括者（販売・青果）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">2120</td><td class="oaex_not_granted_role_name">業務統括者（販売・花卉）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">2210</td><td class="oaex_not_granted_role_name">業務統括者（販売・米）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">2220</td><td class="oaex_not_granted_role_name">業務統括者（販売・麦）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_not_granted_role_code">2300</td><td class="oaex_not_granted_role_name">業務統括者（販売・畜産）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">0000</td><td class="oaex_unallocate_role_name">JA管理者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">1000</td><td class="oaex_unallocate_role_name">業務統括者（購買）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2110</td><td class="oaex_unallocate_role_name">業務統括者（販売・青果）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2120</td><td class="oaex_unallocate_role_name">業務統括者（販売・花卉）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2210</td><td class="oaex_unallocate_role_name">業務統括者（販売・米）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2220</td><td class="oaex_unallocate_role_name">業務統括者（販売・麦）</td></tr>
+								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2300</td><td class="oaex_unallocate_role_name">業務統括者（販売・畜産）</td></tr>
 							</tbody>
 						</table>
 					</div>
