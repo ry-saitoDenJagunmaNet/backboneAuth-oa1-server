@@ -1,5 +1,5 @@
 /**
- * 画面 Loadイベントです。
+ * 画面 Loadイベントです
  */
 function oaex_th_onload() {
 	_isThymeleaf = true;
@@ -10,14 +10,14 @@ function oaex_th_onload() {
 }
 
 /**
- * 閉じるボタン クリックイベントです。
+ * 閉じるボタン Clickイベントです
  */
 function oaex_closeBtn_onClick() {
 	oa_transferForm("oa00000");
 }
 
 /**
- * 更新ボタン クリックイベントです。
+ * 更新ボタン Clickイベントです
  */
 function oaex_updateBtn_onClick() {
 	if (_isThymeleaf) {
@@ -33,7 +33,7 @@ function oaex_th_updateBtn_onClick() {
 }
 
 /**
- * ロック状態 変更時のイベントです。
+ * ロック状態 Changeイベントです
  */
 function oaex_accountLockStatus_onChange() {
 	let accountLockStatus = document.getElementById("account_lock_status");
