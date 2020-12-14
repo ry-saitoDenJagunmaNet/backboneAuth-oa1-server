@@ -1,20 +1,17 @@
-package net.jagunma.backbone.auth.authmanager.infra.web.oa11030;
+package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
-import net.jagunma.backbone.auth.authmanager.application.commandService.UpdateOperator;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
+import net.jagunma.backbone.auth.authmanager.application.commandService.GrantSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
-import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * OA11030 コントローラー
+ * OA11040 コントローラー
  *
  * <pre>
  * -------------------------------------------------
@@ -31,36 +28,33 @@ import org.springframework.web.bind.annotation.RequestParam;
  * サブシステム：OA 基幹系認証管理サブシステム
  * 機能グループID：OA1
  * 機能グループ名：管理WEB
- * 機能ID：OA11030
+ * 機能ID：OA11040
  * 機能名：オペレーター更新
- * サービスID：OA11030
- * サービス名：OA11030サービス
+ * サービスID：OA11040
+ * サービス名：OA11040サービス
  * -------------------------------------------------
  * </pre>
  */
 @SystemInfo(id = "O", name = "業務共通システム")
 @SubSystemInfo(id = "OA", name = "基幹系認証管理サブシステム")
 @FeatureGroupInfo(id = "OA1", name = "管理WEB")
-@FeatureInfo(id = "OA11030", name = "オペレーター更新")
-@ServiceInfo(id = "OA11030", name = "OA11030サービス")
+@FeatureInfo(id = "OA11040", name = "サブシステムロール付与")
+@ServiceInfo(id = "OA11040", name = "OA11040サービス")
 @Controller
-@RequestMapping(path = "oa11030")
-public class Oa11030Controller extends BaseOfController {
+@RequestMapping(path = "oa11040")
+public class Oa11040Controller extends BaseOfController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Oa11030Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Oa11040Controller.class);
 
-    private final UpdateOperator updateOperator;
+    private final GrantSubSystemRole grantSubSystemRole;
     private final SearchOperator searchOperator;
-    private final SearchBranchAtMoment searchBranchAtMoment;
 
     // コンストラクタ
-    public Oa11030Controller(
-        UpdateOperator updateOperator,
-        SearchOperator searchOperator,
-        SearchBranchAtMoment searchBranchAtMoment) {
-        this.updateOperator = updateOperator;
+    public Oa11040Controller(
+        GrantSubSystemRole grantSubSystemRole,
+        SearchOperator searchOperator) {
+        this.grantSubSystemRole = grantSubSystemRole;
         this.searchOperator = searchOperator;
-        this.searchBranchAtMoment = searchBranchAtMoment;
     }
 
     /**
@@ -75,26 +69,25 @@ public class Oa11030Controller extends BaseOfController {
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
-        Oa11030Vo vo = new Oa11030Vo();
+        Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);
 
         try {
-            Oa11030InitConverter converter = Oa11030InitConverter.with(vo);
-            Oa11030InitPresenter presenter = new Oa11030InitPresenter();
-            presenter.setBranchesAtMomentForBranchItemsSource(searchBranchAtMoment.selectBy(AuditInfoHolder.getJa().getIdentifier()));
+            Oa11040InitConverter converter = Oa11040InitConverter.with(vo);
+            Oa11040InitPresenter presenter = new Oa11040InitPresenter();
 
             searchOperator.execute(converter, presenter);
 
             presenter.bindTo(vo);
 
             model.addAttribute("form", vo);
-            return "oa11030";
+            return "oa11040";
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa11030";
+            return "oa11040";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);
@@ -104,36 +97,29 @@ public class Oa11030Controller extends BaseOfController {
     }
 
     /**
-     * 更新処理を行います
+     * 適用処理を行います
      *
      * @param model モデル
      * @param vo ViewObject
      * @return view名
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(Model model, Oa11030Vo vo) {
+    public String apply(Model model, Oa11040Vo vo) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
         try {
-
-            Oa11030UpdateConverter converter = Oa11030UpdateConverter.with(vo);
-
-            updateOperator.execute(converter);
+            Oa11040ApplyConverter converter = Oa11040ApplyConverter.with(vo);
+            grantSubSystemRole.execute(converter);
 
             model.addAttribute("form", vo);
-            return "oa11030"; // ToDo: 遷移制御
+            return "oa11040"; // ToDo: 遷移制御
 
-        } catch (OptimisticLockingFailureException ole) {
-            // 楽観的ロック
-            vo.setExceptionMessage(ole);
-            model.addAttribute("form", vo);
-            return "oa19999";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-            return "oa11030";
+            return "oa11040";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
             vo.setExceptionMessage(re);

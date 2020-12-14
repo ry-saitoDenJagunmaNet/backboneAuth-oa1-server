@@ -129,8 +129,8 @@ class Ed01010ControllerTest {
         Ed01010Vo vo = new Ed01010Vo();
 
         vo.setMode(mode);
-        vo.setJa(jaCode + " " + jaName);
         vo.setOperatorId(operatorId);
+        vo.setJa(jaCode + " " + jaName);
         vo.setOperator(operatorCode + " " + operatorName);
         vo.setOldPassword(oldPassword);
         vo.setNewPassword(newPassword);

@@ -274,7 +274,7 @@ class Oa11030ControllerTest {
             }
         };
 
-        return new Oa11030Controller(searchOperator, updateOperator, searchBranchAtMoment);
+        return new Oa11030Controller(updateOperator, searchOperator, searchBranchAtMoment);
     }
 
     // Oa11030Vo作成
@@ -505,7 +505,7 @@ class Oa11030ControllerTest {
     }
 
     /**
-     * {@link Oa11030Controller#get(Long operatorId, Model model)}テスト
+     * {@link Oa11030Controller#update(Model model, Oa11030Vo vo)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -539,7 +539,7 @@ class Oa11030ControllerTest {
     }
 
     /**
-     * {@link Oa11030Controller#get(Long operatorId, Model model)}テスト
+     * {@link Oa11030Controller#update(Model model, Oa11030Vo vo)}テスト
      *  ●パターン
      *    例外（OptimisticLockingFailureException）発生
      *
