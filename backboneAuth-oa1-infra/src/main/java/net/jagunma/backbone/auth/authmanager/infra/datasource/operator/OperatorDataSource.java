@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class OperatorDataSource implements OperatorRepository {
 
-    private final OperatorEntityDao operatorEntityDao;
+    private final OperatorEntityDao oeratorEntityDao;
     private final BranchAtMomentRepository branchAtMomentRepository;
 
     // コンストラクタ
-    OperatorDataSource(OperatorEntityDao operatorEntityDao,
+    OperatorDataSource(OperatorEntityDao oeratorEntityDao,
         BranchAtMomentRepository branchAtMomentRepository) {
 
-        this.operatorEntityDao = operatorEntityDao;
+        this.oeratorEntityDao = oeratorEntityDao;
         this.branchAtMomentRepository = branchAtMomentRepository;
     }
 
@@ -37,13 +37,6 @@ public class OperatorDataSource implements OperatorRepository {
      * @return オペレーター
      */
     public Operator findOneBy(OperatorCriteria operatorCriteria) {
-
-        // Branch検索
-        BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(operatorCriteria.getJaIdentifierCriteria().getEqualTo());
-        branchAtMomentCriteria.setTargetDate(TargetDate.now());
-        branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(branchAtMomentCriteria);
 
         // オペレーター検索
         OperatorEntityCriteria entityCriteria = new OperatorEntityCriteria();
@@ -59,8 +52,15 @@ public class OperatorDataSource implements OperatorRepository {
         entityCriteria.getBranchIdCriteria().assignFrom(operatorCriteria.getBranchIdCriteria());
         entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
         entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
+        OperatorEntity entity = oeratorEntityDao.findOneBy(entityCriteria);
 
-        OperatorEntity entity = operatorEntityDao.findOneBy(entityCriteria);
+        // Branch検索
+        BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
+        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(entity.getJaId());
+        branchAtMomentCriteria.setTargetDate(TargetDate.now());
+        branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
+        BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(branchAtMomentCriteria);
+
         return Operator.createFrom(
             entity.getOperatorId(),
             entity.getOperatorCode(),
