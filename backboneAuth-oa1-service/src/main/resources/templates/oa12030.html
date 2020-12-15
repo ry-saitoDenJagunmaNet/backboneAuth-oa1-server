@@ -46,7 +46,7 @@
 				</div>
 				<div class="col s6">
 					<div id="jaSelect">
-						<div th:replace="include/formElements::selectJaForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
+						<div th:replace="include/formElements::selectForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
 					</div>
 					<input type="hidden" id="ja_code" th:value="${form.jaCode}"/>
 					<div class="input-field" th:remove="all">
@@ -82,7 +82,7 @@
 				</div>
 				<div class="col s6">
 					<div id="branchSelect">
-						<div th:replace="include/formElements::selectBranchForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
+						<div th:replace="include/formElements::selectForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
 					</div>
 					<input type="hidden" id="branch_code" th:value="${form.branchCode}"/>
 					<div class="input-field" th:remove="all">
@@ -109,7 +109,7 @@
 						<span>サブシステム</span>
 					</label>
 					<div id="subSystemSelect">
-						<div th:replace="include/formElements::selectSubSystem(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
+						<div th:replace="include/formElements::selectForCode(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
 					</div>
 					<input type="hidden" id="subSystem_code" th:value="${form.subSystemCode}"/>
 					<div class="input-field" th:remove="all">
@@ -132,7 +132,7 @@
 					</label>
 					<div class="oaex_biztran_grp_table">
 						<div id="bizTranGrpTable">
-							<div th:replace="include/formElements::tableBizTranGrpForCode(id='biztran_grp_table',name='bizTranGrpCode')" th:fragment="ajaxSelectBizTranGrp"></div>
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_grp_table',name='bizTranGrpCode',tdCodeClass='oaex_biztran_grp_code',tdNameClass='oaex_biztran_grp_name')" th:fragment="ajaxSelectBizTranGrp"></div>
 						</div>
 						<input type="hidden" id="bizTran_grp_code" th:value="${form.bizTranGrpCode}"/>
 						<table id="biztran_grp_table" class="highlight" th:remove="all">
@@ -172,8 +172,8 @@
 						<span>取引</span>
 					</label>
 					<div class="oaex_biztran_table">
-						<div id="bizTranSelect">
-							<div th:replace="include/formElements::selectBizTranForCode(title='取引',id='bizTran',name='bizTranCode')" th:fragment="ajaxSelectBizTran"></div>
+						<div id="bizTranTable">
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_table',name='bizTranCode',tdCodeClass='oaex_biztran_code',tdNameClass='oaex_biztran_name')" th:fragment="ajaxSelectBizTran"></div>
 						</div>
 						<input type="hidden" id="bizTran_code" th:value="${form.bizTranCode}"/>
 						<table id="biztran_table" class="highlight" th:remove="all">

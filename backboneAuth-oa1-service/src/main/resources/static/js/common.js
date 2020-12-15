@@ -76,16 +76,13 @@ function oa_th_getLocationPathname() {
  * ＪＡSelectタグのItemsSourceを取得します。
  *  （formElements.htmlのincludeコントロール使用用）
  * @param {String} toElementId          include ID
- * @param {String} selectValueElementId Selectコントロールの選択価（バインディング受け取り）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
  * @param {String} selectElementId      SelectコントロールID
  */
 function oa_th_getJaItemsSourceForCode(toElementId, selectValueElementId, selectElementId) {
-	let param = "viewName="+oa_th_getLocationPathname();
+	let param = "viewId="+oa_th_getLocationPathname();
 	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getJaItemsSource", param);
-	let selectValue = document.getElementById(selectValueElementId).value;
-	if (selectValue != "") {
-		document.getElementById(selectElementId).value = selectValue;
-	}
+	oa_th_setSelected(selectValueElementId, selectElementId);
 }
 
 /**
@@ -93,33 +90,27 @@ function oa_th_getJaItemsSourceForCode(toElementId, selectValueElementId, select
  *  （formElements.htmlのincludeコントロール使用用）
  * @param {String} jaCode               ＪＡコード
  * @param {String} toElementId          include ID
- * @param {String} selectValueElementId 画面load時のSelectコントロール選択価（バインディング受け取り用hidden項目）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
  * @param {String} selectElementId      SelectコントロールID
  */
 function oa_th_getBranchItemsSourceForCode(jaCode, toElementId, selectValueElementId, selectElementId) {
-	let param = "viewName="+oa_th_getLocationPathname();
+	let param = "viewId="+oa_th_getLocationPathname();
 	param = param+"&jaCode="+jaCode;
 	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBranchItemsSource", param);
-	let selectValue = document.getElementById(selectValueElementId).value;
-	if (selectValue != "") {
-		document.getElementById(selectElementId).value = selectValue;
-	}
+	oa_th_setSelected(selectValueElementId, selectElementId);
 }
 
 /**
  * サブシステムSelectタグのItemsSourceを取得します。
  *  （formElements.htmlのincludeコントロール使用用）
  * @param {String} toElementId          include ID
- * @param {String} selectValueElementId 画面load時のSelectコントロール選択価（バインディング受け取り用hidden項目）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
  * @param {String} selectElementId      SelectコントロールID
  */
 function oa_th_getSubSystemItemsSource(toElementId, selectValueElementId, selectElementId) {
-	let param = "viewName="+oa_th_getLocationPathname();
+	let param = "viewId="+oa_th_getLocationPathname();
 	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getSubSystemItemsSource", param);
-	let selectValue = document.getElementById(selectValueElementId).value;
-	if (selectValue != "") {
-		document.getElementById(selectElementId).value = selectValue;
-	}
+	oa_th_setSelected(selectValueElementId, selectElementId);
 }
 
 /**
@@ -127,17 +118,20 @@ function oa_th_getSubSystemItemsSource(toElementId, selectValueElementId, select
  *  （formElements.htmlのincludeコントロール使用用）
  * @param {String} subSystemCode        サブシステムコード
  * @param {String} toElementId          include ID
- * @param {String} selectValueElementId 画面load時のSelectコントロール選択価（バインディング受け取り用hidden項目）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
  * @param {String} selectElementId      SelectコントロールID
+ * @param {String} firstRowStatus       最初の空行挿入
  */
-function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selectValueElementId, selectElementId) {
-	let param = "viewName="+oa_th_getLocationPathname();
+function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
+	let param = "viewId="+oa_th_getLocationPathname();
 	param = param+"&subSystemCode="+subSystemCode;
-	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranGrpItemsSource", param);
-	let selectValue = document.getElementById(selectValueElementId).value;
-	if (selectValue != "") {
-		document.getElementById(selectElementId).value = selectValue;
+	if (firstRowStatus == null) {
+		param = param+"&firstRowStatus=null";
+	} else {
+		param = param+"&firstRowStatus="+firstRowStatus;
 	}
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranGrpItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
 }
 
 /**
@@ -146,16 +140,34 @@ function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selec
  * @param {String} subSystemCode        サブシステムコード
  * @param {String} bizTranGrpCode       取引グループコード
  * @param {String} toElementId          include ID
- * @param {String} selectValueElementId 画面load時のSelectコントロール選択価（バインディング受け取り用hidden項目）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ * @param {String} firstRowStatus       最初の空行挿入
+ */
+function oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	param = param+"&subSystemCode="+subSystemCode+"&bizTranGrpCode="+bizTranGrpCode;
+	if (firstRowStatus == null) {
+		param = param+"&firstRowStatus=null";
+	} else {
+		param = param+"&firstRowStatus="+firstRowStatus;
+	}
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * Selectタグ,選択用Tableタグの対象行を選択状態にします。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
  * @param {String} selectElementId      SelectコントロールID
  */
-function oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, toElementId, selectValueElementId, selectElementId) {
-	let param = "viewName="+oa_th_getLocationPathname();
-	param = param+"&subSystemCode="+subSystemCode+"&bizTranGrpCode="+bizTranGrpCode;
-	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranItemsSource", param);
-	let selectValue = document.getElementById(selectValueElementId).value;
-	if (selectValue != "") {
-		document.getElementById(selectElementId).value = selectValue;
+function oa_th_setSelected(selectValueElementId, selectElementId) {
+	if (selectValueElementId.length > 0) {
+		let selectValue = document.getElementById(selectValueElementId).value;
+		if (selectValue != "") {
+			document.getElementById(selectElementId).value = selectValue;
+		}
 	}
 }
 

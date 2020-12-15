@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTran
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
- * 一時取引抑止群検索サービス Request
+ * 一時取引抑止検索サービス Request
  */
 public interface SuspendBizTranSearchRequest {
 

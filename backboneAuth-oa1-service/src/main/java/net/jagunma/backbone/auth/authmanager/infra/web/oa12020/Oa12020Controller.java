@@ -130,7 +130,7 @@ public class Oa12020Controller extends BaseOfController {
             setSessionVo(argVo);
 
             Oa12020SearchConverter converter = Oa12020SearchConverter.with(argVo);
-            // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているため元のvo値が無いため）
+            // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているが、元のvo値が無いため）
             Oa12020Presenter presenter = Oa12020Presenter.with(argVo);
 
             // 一時取引抑止検索

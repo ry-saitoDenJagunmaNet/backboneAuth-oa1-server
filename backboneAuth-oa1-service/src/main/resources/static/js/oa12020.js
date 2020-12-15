@@ -33,6 +33,9 @@ function oaex_th_onload() {
  */
 function oaex_th_ja_onChange() {
 	let jaCode = document.getElementById("ja").value;
+	if (jaCode != document.getElementById("ja_code").value) {
+		document.getElementById("branch_code").value = "";
+	}
 	// 店舗 ItemSourceの取得
 	oa_th_getBranchItemsSourceForCode(jaCode, "branchSelect", "branch_code", "branch");
 
@@ -45,10 +48,14 @@ function oaex_th_ja_onChange() {
  */
 function oaex_th_subsystem_onChange() {
 	let subSystemCode = document.getElementById("subSystem").value;
+	if (subSystemCode != document.getElementById("subSystem_code").value) {
+		document.getElementById("bizTran_grp_code").value = "";
+		document.getElementById("bizTran_code").value = "";
+	}
 	// 取引グループ ItemSourceの取得
-	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpSelect", "bizTran_grp_code", "bizTranGrp");
+	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpSelect", "bizTran_grp_code", "bizTranGrp", "");
 	// 取引 ItemSourceの取得
-	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranSelect", "bizTran_code", "bizTran");
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranSelect", "bizTran_code", "bizTran", "");
 
 	// Changeイベントの追加
 	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
@@ -63,8 +70,11 @@ function oaex_th_subsystem_onChange() {
 function oaex_th_biztran_grp_onChange() {
 	let subSystemCode = document.getElementById("subSystem").value;
 	let bizTranGrpCode = document.getElementById("bizTranGrp").value;
+	if (bizTranGrpCode != "" && bizTranGrpCode != document.getElementById("bizTran_grp_code").value) {
+		document.getElementById("bizTran_code").value = "";
+	}
 	// 取引 ItemSourceの取得
-	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranSelect", "bizTran_code", "bizTran");
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranSelect", "bizTran_code", "bizTran", "");
 
 	// selectの初期化
 	oa_initSelect();

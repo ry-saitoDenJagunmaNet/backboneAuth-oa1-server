@@ -71,11 +71,12 @@ public class SelectOptionItemsSource {
      * 取引グループ群（BizTranGrps）から作成します
      *
      * @param bizTranGrps 取引グループ群
+     * @param firstRow    最初の空行挿入
      * @return 取引グループコンボボックス選択肢群
      */
-    public static SelectOptionItemsSource createFrom(BizTranGrps bizTranGrps) {
+    public static SelectOptionItemsSource createFrom(BizTranGrps bizTranGrps, Boolean firstRow) {
         List<SelectOptionItemSource> list = newArrayList();
-        list.add(SelectOptionItemSource.empty());
+        if (!firstRow) {list.add(SelectOptionItemSource.empty());}
         for (BizTranGrp bizTranGrp : bizTranGrps.getValues()) {
             list.add(new SelectOptionItemSource(
                 bizTranGrp.getBizTranGrpId(),
@@ -84,6 +85,16 @@ public class SelectOptionItemsSource {
             ));
         }
         return new SelectOptionItemsSource(list);
+    }
+
+    /**
+     * 取引グループ群（BizTranGrps）から作成します
+     *
+     * @param bizTranGrps 取引グループ群
+     * @return 取引グループコンボボックス選択肢群
+     */
+    public static SelectOptionItemsSource createFrom(BizTranGrps bizTranGrps) {
+        return createFrom(bizTranGrps, true);
     }
 
     /**
@@ -103,7 +114,27 @@ public class SelectOptionItemsSource {
 //            ));
 //        }
 //        return new SelectOptionItemsSource(list);
-        return createFrom(bizTrans.getValues());
+        return createFrom(bizTrans.getValues(), true);
+    }
+
+    /**
+     * 取引リスト（List<BizTran>）から作成します
+     *
+     * @param bizTranList 取引リスト
+     * @param firstRow    最初の空行挿入
+     * @return 取引コンボボックス選択肢群
+     */
+    public static SelectOptionItemsSource createFrom(List<BizTran> bizTranList, Boolean firstRow) {
+        List<SelectOptionItemSource> list = newArrayList();
+        if (!firstRow) {list.add(SelectOptionItemSource.empty());}
+        for (BizTran bizTran : bizTranList) {
+            list.add(new SelectOptionItemSource(
+                bizTran.getBizTranId(),
+                bizTran.getBizTranCode(),
+                bizTran.getBizTranName()
+            ));
+        }
+        return new SelectOptionItemsSource(list);
     }
 
     /**
@@ -113,16 +144,7 @@ public class SelectOptionItemsSource {
      * @return 取引コンボボックス選択肢群
      */
     public static SelectOptionItemsSource createFrom(List<BizTran> bizTranList) {
-        List<SelectOptionItemSource> list = newArrayList();
-        list.add(SelectOptionItemSource.empty());
-        for (BizTran bizTran : bizTranList) {
-            list.add(new SelectOptionItemSource(
-                bizTran.getBizTranId(),
-                bizTran.getBizTranCode(),
-                bizTran.getBizTranName()
-            ));
-        }
-        return new SelectOptionItemsSource(list);
+        return createFrom(bizTranList, true);
     }
 
     /**

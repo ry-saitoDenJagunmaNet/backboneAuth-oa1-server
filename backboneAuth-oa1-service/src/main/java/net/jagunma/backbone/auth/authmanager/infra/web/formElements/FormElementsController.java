@@ -2,10 +2,8 @@ package net.jagunma.backbone.auth.authmanager.infra.web.formElements;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchJaAtMoment;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
@@ -29,10 +27,8 @@ import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.strings2.Strings2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,27 +84,28 @@ public class FormElementsController {
     /**
      * ＪＡコンボボックスのItemsSourceを取得します
      *
-     * @param viewName view名
-     * @param model モデル
+     * @param viewId viewID
+     * @param model  モデル
      * @return ＪＡコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getJaItemsSource", method = RequestMethod.GET)
-    public String getJaItemsSource(@RequestParam("viewName") String viewName, ModelMap model) {
+    public String getJaItemsSource(@RequestParam("viewId") String viewId, ModelMap model) {
 
         LOGGER.debug("######## getJaItemsSource START");
         model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(searchJaAtMoment.selectBy()).getValue());
-        return viewName+"::ajaxSelectJa";
+        return viewId+"::ajaxSelectJa";
     }
 
     /**
      * 店舗コンボボックスのItemsSourceを取得します
      *
+     * @param viewId viewID
      * @param jaCode ＪＡコード
      * @param model  モデル
      * @return 店舗コンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBranchItemsSource", method = RequestMethod.GET)
-    public String getBranchItemsSource(@RequestParam("viewName") String viewName,
+    public String getBranchItemsSource(@RequestParam("viewId") String viewId,
         @RequestParam("jaCode") String jaCode, ModelMap model) {
 
         LOGGER.debug("######## getBranchItemsSource START");
@@ -117,33 +114,37 @@ public class FormElementsController {
             list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(jaCode)).getValue();
         }
         model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBranch";
+        return viewId+"::ajaxSelectBranch";
     }
 
     /**
      * サブシステムコンボボックスのItemsSourceを取得します
      *
-     * @param model モデル
+     * @param viewId viewID
+     * @param model  モデル
      * @return サブシステムコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getSubSystemItemsSource", method = RequestMethod.GET)
-    public String getSubSystemItemsSource(@RequestParam("viewName") String viewName, ModelMap model) {
+    public String getSubSystemItemsSource(@RequestParam("viewId") String viewId, ModelMap model) {
 
         LOGGER.debug("######## getSubSystemItemsSource START");
         model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
-        return "oa12020::ajaxSelectSubSystem";
+        return viewId+"::ajaxSelectSubSystem";
     }
 
     /**
      * 取引グループコンボボックスのItemsSourceを取得します
      *
-     * @param subSystemCode サブシステムコード
-     * @param model         モデル
+     * @param viewId          viewID
+     * @param subSystemCode  サブシステムコード
+     * @param firstRowStatus 最初の空行挿入
+     * @param model          モデル
      * @return 取引グループコンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBizTranGrpItemsSource", method = RequestMethod.GET)
-    public String getBizTranGrpItemsSource(@RequestParam("viewName") String viewName,
-        @RequestParam("subSystemCode") String subSystemCode, ModelMap model) {
+    public String getBizTranGrpItemsSource(@RequestParam("viewId") String viewId,
+        @RequestParam("subSystemCode") String subSystemCode,
+        @RequestParam("firstRowStatus") String firstRowStatus, ModelMap model) {
 
         LOGGER.debug("######## getBizTranGrpItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
@@ -151,24 +152,27 @@ public class FormElementsController {
             BizTranGrpCriteria criteria = new BizTranGrpCriteria();
             criteria.getSubSystemCodeCriteria().setEqualTo(subSystemCode);
             list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders
-                .empty())).getValue();
+                .empty()), ("null".equals(firstRowStatus))).getValue();
         }
         model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBizTranGrp";
+        return viewId+"::ajaxSelectBizTranGrp";
     }
 
     /**
      * 取引コンボボックスのItemsSourceを取得します
      *
+     * @param viewId          viewID
      * @param subSystemCode  サブシステムコード
      * @param bizTranGrpCode 取引グループコード
+     * @param firstRowStatus 最初の空行挿入
      * @param model         モデル
      * @return 取引コンボボックスのItemsSource
      */
     @RequestMapping(value = "/getBizTranItemsSource", method = RequestMethod.GET)
-    public String getBizTranItemsSource(@RequestParam("viewName") String viewName,
+    public String getBizTranItemsSource(@RequestParam("viewId") String viewId,
         @RequestParam("subSystemCode") String subSystemCode,
-        @RequestParam("bizTranGrpCode") String bizTranGrpCode, ModelMap model) {
+        @RequestParam("bizTranGrpCode") String bizTranGrpCode,
+        @RequestParam("firstRowStatus") String firstRowStatus, ModelMap model) {
 
         LOGGER.debug("######## getBizTranItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
@@ -190,6 +194,6 @@ public class FormElementsController {
             list = SelectOptionItemsSource.createFrom(bizTranList).getValue();
         }
         model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBizTran";
+        return viewId+"::ajaxSelectBizTran";
     }
 }

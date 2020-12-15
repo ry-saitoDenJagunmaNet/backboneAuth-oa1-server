@@ -7,63 +7,182 @@ function oaex_th_onload() {
 
 	// ＪＡ ItemSourceの取得
 	oa_th_getJaItemsSourceForCode("jaSelect", "ja_code", "ja");
-
 	// サブシステム ItemSourceの取得
 	oa_th_getSubSystemItemsSource("subSystemSelect", "subSystem_code", "subSystem");
 
 	// Changeイベントの追加
-//	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
-//	document.getElementById("subSystem").addEventListener("change", (event) => {oaex_th_subsystem_onChange();});
-//	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
+	document.getElementById("subSystem").addEventListener("change", (event) => {oaex_th_subsystem_onChange();});
 
 	// selectの初期化
 	oa_initSelect();
 
 	if (document.getElementById("ja").value.length > 0) {oaex_th_ja_onChange();}
 	if (document.getElementById("subSystem").value.length > 0) {oaex_th_subsystem_onChange();}
+
+	// 取引グループテーブルを表示
+	for(let nodes of document.getElementsByClassName("oaex_biztran_grp_table")) {
+		nodes.style.visibility = "visible";
+	}
+	// 取引テーブルを表示
+	for(let nodes of document.getElementsByClassName("oaex_biztran_table")) {
+		nodes.style.visibility = "visible";
+	}
 }
 
 /**
  * JAの変更イベントです。
  */
 function oaex_th_ja_onChange() {
+
+	// 選択値を保持
 	let jaCode = document.getElementById("ja").value;
+	document.getElementById("ja_code").value = jaCode;
+//	document.getElementById("branch_code").value = "";
+
 	// 店舗 ItemSourceの取得
 	oa_th_getBranchItemsSourceForCode(jaCode, "branchSelect", "branch_code", "branch");
 
+	// Changeイベントの追加
+	document.getElementById("branch").addEventListener("change", (event) => {oaex_th_branch_onChange();});
+
 	// selectの初期化
 	oa_initSelect();
+}
+
+/**
+ * 店舗の変更イベントです。
+ */
+function oaex_th_branch_onChange() {
+
+	// 選択値を保持
+	let branchCode = document.getElementById("branch").value;
+	document.getElementById("branch_code").value = branchCode;
 }
 
 /**
  * サブシステムの変更イベントです。
  */
 function oaex_th_subsystem_onChange() {
-	let subSystemCode = document.getElementById("subSystem").value;
-	// 取引グループ ItemSourceの取得
-	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpTable", "bizTran_grp_code", "bizTranGrp");
-	document.getElementById("biztran_grp_table").style.visibility = "visible";
-	// 取引 ItemSourceの取得
-	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranSelect", "bizTran_code", "bizTran");
 
-	// Changeイベントの追加
-//	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
+	// 選択値を保持
+	let subSystemCode = document.getElementById("subSystem").value;
+	document.getElementById("subSystem_code").value = subSystemCode;
+//	document.getElementById("bizTran_grp_code").value = "";
+//	document.getElementById("bizTran_code").value = "";
+
+	if (subSystemCode.length > 0) {
+		// サブシステムチェックボックスのチェックON
+		document.getElementById("subsystem_check").checked = true;
+		oaex_subsystem_check_onChange();
+
+		// 取引グループ ItemSourceの取得
+		oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrpTable", "", "bizTranGrp", "");
+		// 取引グループ行のClickイベント追加
+		for (let row of document.getElementById("biztran_grp_table").rows) {
+			row.addEventListener("click", (event) => {oaex_th_biztran_grp_onSelectChange(row);});
+		}
+		// 取引グループチェックボックスのチェックOFF
+		document.getElementById("biztran_grp_check").checked = false;
+		oaex_biztran_grp_check_onChange();
+
+		// 取引 ItemSourceの取得
+		oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTranTable", "", "bizTran");
+		// 取引行のClickイベント追加
+		for (let row of document.getElementById("biztran_table").rows) {
+			row.addEventListener("click", (event) => {oaex_th_biztran_onSelectChange(row);});
+		}
+		// 取引チェックボックスのチェックOFF
+		document.getElementById("biztran_check").checked = false;
+		oaex_biztran_check_onChange();
+	} else {
+		// サブシステムチェックボックスのチェックOFF
+		document.getElementById("subsystem_check").checked = false;
+		oaex_subsystem_check_onChange();
+		//　取引グループテーブル、取引テーブルを非表示
+		for(let nodes of document.getElementsByClassName("oaex_biztran_grp_table")) {
+			nodes.style.visibility = "collapse";
+		}
+		for(let nodes of document.getElementsByClassName("oaex_biztran_table")) {
+			nodes.style.visibility = "collapse";
+		}
+	}
+
 
 	// selectの初期化
 	oa_initSelect();
+	// 取引グループ初期選択
+	for (let row of document.getElementById("biztran_grp_table").rows) {
+		if (document.getElementById("bizTran_grp_code").value == row.cells[0].innerHTML) {
+			oaex_th_biztran_grp_onSelectChange(row);
+			document.getElementById("bizTran_grp_code").value = row.cells[0].innerHTML;
+		}
+	}
+	// 取引初期選択
+	for (let row of document.getElementById("biztran_table").rows) {
+		if (document.getElementById("bizTran_code").value == row.cells[0].innerHTML) {
+			oaex_th_biztran_onSelectChange(row);
+			document.getElementById("bizTran_code").value = row.cells[0].innerHTML;
+		}
+	}
 }
 
 /**
  * 取引グループの変更イベントです。
  */
-function oaex_th_biztran_grp_onChange() {
-	let subSystemCode = document.getElementById("subSystem").value;
-	let bizTranGrpCode = document.getElementById("bizTranGrp").value;
-	// 取引 ItemSourceの取得
-	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranSelect", "bizTran_code", "bizTran");
+function oaex_th_biztran_grp_onSelectChange(thisRow) {
 
-	// selectの初期化
-	oa_initSelect();
+	// 選択行の背景を変更
+	oa_setTableRowSelected(thisRow);
+
+	// 選択値を保持
+	let bizTranGrpCode = thisRow.cells[0].innerHTML;
+	document.getElementById("bizTran_grp_code").value = bizTranGrpCode;
+	let subSystemCode = document.getElementById("subSystem").value;
+
+	// 取引 ItemSourceの取得
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTranTable", "", "bizTran");
+	// 取引行のClickイベント追加
+	for (let row of document.getElementById("biztran_table").rows) {
+		row.addEventListener("click", (event) => {oaex_th_biztran_onSelectChange(row);});
+	}
+
+	let biztranGrpTable = document.getElementById("biztran_grp_table");
+	let biztranGrpTableSelIx = oa_getTableSelectedRowIndex(biztranGrpTable);
+	if (biztranGrpTableSelIx == 0) {
+		// 1行目（「指定なし」行）選択時
+		// 取引チェックボックスのチェックON
+		document.getElementById("biztran_check").checked = true;
+		oaex_biztran_check_onChange();
+	} else {
+		// 取引グループチェックボックスのチェックON
+		document.getElementById("biztran_grp_check").checked = true;
+		oaex_biztran_grp_check_onChange();
+	}
+}
+
+/**
+ * 取引の変更イベントです。
+ */
+function oaex_th_biztran_onSelectChange(thisRow) {
+
+	// 選択行の背景を変更
+	oa_setTableRowSelected(thisRow);
+
+	// 選択値を保持
+	document.getElementById("bizTran_grp_code").value = thisRow.cells[0].innerHTML;
+
+
+	let bizTranCode = thisRow.cells[0].innerHTML;
+	document.getElementById("bizTran_code").value = bizTranCode;
+
+	let biztranTable = document.getElementById("biztran_table");
+	let biztranTableSelIx = oa_getTableSelectedRowIndex(biztranTable);
+	if (biztranTableSelIx > 0) {
+		// 取引チェックボックスのチェックON
+		document.getElementById("biztran_check").checked = true;
+		oaex_biztran_check_onChange();
+	}
 }
 
 /**
@@ -490,12 +609,12 @@ function oaex_biztran_check_onChange() {
 	let colNode = thisNode.parentNode.parentNode;
 	oaex_setRequired(colNode, thisNode.checked);
 
-	// 取引テーブル
-	let biztranTable = document.getElementById("biztran_table");
+//	// 取引テーブル
+//	let biztranTable = document.getElementById("biztran_table");
 
 	if (thisNode.checked) {
 		// 取引グループチェックボックスのチェックOFF（取引グループと取引は排他関係）
-		document.getElementById("biztran_grp_check").checked = false;	
+		document.getElementById("biztran_grp_check").checked = false;
 		oaex_biztran_grp_check_onChange();
 	}
 }
