@@ -39,20 +39,7 @@ public class OperatorDataSource implements OperatorRepository {
     public Operator findOneBy(OperatorCriteria operatorCriteria) {
 
         // オペレーター検索
-        OperatorEntityCriteria entityCriteria = new OperatorEntityCriteria();
-        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
-        entityCriteria.getOperatorCodeCriteria().assignFrom(operatorCriteria.getOperatorCodeCriteria());
-        entityCriteria.getOperatorNameCriteria().assignFrom(operatorCriteria.getOperatorNameCriteria());
-        entityCriteria.getMailAddressCriteria().assignFrom(operatorCriteria.getMailAddressCriteria());
-        entityCriteria.getValidThruStartDateCriteria().assignFrom(operatorCriteria.getValidThruStartDateCriteria());
-        entityCriteria.getValidThruEndDateCriteria().assignFrom(operatorCriteria.getValidThruEndDateCriteria());
-        entityCriteria.getIsDeviceAuthCriteria().assignFrom(operatorCriteria.getIsDeviceAuthCriteria());
-        entityCriteria.getJaIdCriteria().setEqualTo(operatorCriteria.getJaIdentifierCriteria().getEqualTo());
-        entityCriteria.getJaCodeCriteria().assignFrom(operatorCriteria.getJaCodeCriteria());
-        entityCriteria.getBranchIdCriteria().assignFrom(operatorCriteria.getBranchIdCriteria());
-        entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
-        entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
-        OperatorEntity entity = oeratorEntityDao.findOneBy(entityCriteria);
+        OperatorEntity entity = oeratorEntityDao.findOneBy(convertCriteria(operatorCriteria));
 
         // Branch検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
@@ -77,4 +64,40 @@ public class OperatorDataSource implements OperatorRepository {
             entity.getRecordVersion(),
             branchAtMoment);
     }
+
+    /**
+     * オペレーターの存在チェックを行います
+     *
+     * @param operatorCriteria オペレーターの検索条件
+     * @return オペレーターの有無
+     */
+    public boolean existsBy(OperatorCriteria operatorCriteria) {
+
+        // オペレーター検索
+        return oeratorEntityDao.existsBy(convertCriteria(operatorCriteria));
+    }
+
+    /**
+     * オペレーターEntityCriteriaへ変換します
+     *
+     * @param operatorCriteria オペレーターの検索条件
+     * @return オペレーターEntityCriteria
+     */
+    private OperatorEntityCriteria convertCriteria(OperatorCriteria operatorCriteria) {
+        OperatorEntityCriteria entityCriteria = new OperatorEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().assignFrom(operatorCriteria.getOperatorIdCriteria());
+        entityCriteria.getOperatorCodeCriteria().assignFrom(operatorCriteria.getOperatorCodeCriteria());
+        entityCriteria.getOperatorNameCriteria().assignFrom(operatorCriteria.getOperatorNameCriteria());
+        entityCriteria.getMailAddressCriteria().assignFrom(operatorCriteria.getMailAddressCriteria());
+        entityCriteria.getValidThruStartDateCriteria().assignFrom(operatorCriteria.getValidThruStartDateCriteria());
+        entityCriteria.getValidThruEndDateCriteria().assignFrom(operatorCriteria.getValidThruEndDateCriteria());
+        entityCriteria.getIsDeviceAuthCriteria().assignFrom(operatorCriteria.getIsDeviceAuthCriteria());
+        entityCriteria.getJaIdCriteria().setEqualTo(operatorCriteria.getJaIdentifierCriteria().getEqualTo());
+        entityCriteria.getJaCodeCriteria().assignFrom(operatorCriteria.getJaCodeCriteria());
+        entityCriteria.getBranchIdCriteria().assignFrom(operatorCriteria.getBranchIdCriteria());
+        entityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
+        entityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
+        return entityCriteria;
+    }
+
 }

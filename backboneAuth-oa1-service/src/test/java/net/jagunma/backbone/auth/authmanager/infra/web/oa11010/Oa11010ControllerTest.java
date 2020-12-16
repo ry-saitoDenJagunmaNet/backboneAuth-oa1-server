@@ -129,6 +129,10 @@ class Oa11010ControllerTest {
             public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return true;
+            }
         };
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override

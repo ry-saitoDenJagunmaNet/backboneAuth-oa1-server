@@ -165,6 +165,10 @@ class Oa11030ControllerTest {
             public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
+            }
         };
         AccountLocksRepository accountLocksRepository = new AccountLocksRepository() {
             @Override
