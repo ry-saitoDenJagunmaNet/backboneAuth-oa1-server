@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator_SubSystemRole;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -37,6 +38,9 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
     private String createdIpAddress = "100.100.100.100";
     private Integer recordVersion = 1;
 
+    // 検証値
+    Operator_SubSystemRoleEntityCriteria actualCriteria;
+
     // テスト対象クラス生成
     private Operator_SubSystemRolesForStoreDataSource createOperator_SubSystemRolesForStoreDataSource() {
         Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao = new Operator_SubSystemRoleEntityDao() {
@@ -50,17 +54,20 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
                 return 0;
             }
             @Override
+            public int forceDelete(Operator_SubSystemRoleEntityCriteria criteria) {
+                actualCriteria = criteria;
+                return 0;
+            }
+            @Override
             public List<Operator_SubSystemRoleEntity> findAll(Orders orders) {
                 return null;
             }
             @Override
-            public Operator_SubSystemRoleEntity findOneBy(
-                Operator_SubSystemRoleEntityCriteria criteria) {
+            public Operator_SubSystemRoleEntity findOneBy(Operator_SubSystemRoleEntityCriteria criteria) {
                 return null;
             }
             @Override
-            public List<Operator_SubSystemRoleEntity> findBy(
-                Operator_SubSystemRoleEntityCriteria criteria, Orders orders) {
+            public List<Operator_SubSystemRoleEntity> findBy(Operator_SubSystemRoleEntityCriteria criteria, Orders orders) {
                 return null;
             }
             @Override
@@ -77,10 +84,6 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
             }
             @Override
             public int delete(Operator_SubSystemRoleEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(Operator_SubSystemRoleEntityCriteria criteria) {
                 return 0;
             }
             @Override
@@ -126,6 +129,32 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
             // 実行
             operator_SubSystemRolesForStoreDataSource.store(operator_SubSystemRoles, changeCause))
             .doesNotThrowAnyException();
+    }
+
+    /**
+     * {@link Operator_SubSystemRolesForStoreDataSource#deleteOperator_SubSystemRole(Long operatorId)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・EntityCriteriaへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void deleteOperator_SubSystemRole_test() {
+        // テスト対象クラス生成
+        Operator_SubSystemRolesForStoreDataSource operator_SubSystemRolesForStoreDataSource = createOperator_SubSystemRolesForStoreDataSource();
+
+        // 期待値
+        Operator_SubSystemRoleEntityCriteria expectedCriteria = new Operator_SubSystemRoleEntityCriteria();
+        expectedCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+
+        // 実行
+        operator_SubSystemRolesForStoreDataSource.deleteOperator_SubSystemRole(operatorId);
+
+        // 結果検証 //Todo:福田継承 元にメソッド追加依頼
+        assertThat(toStringHelper(actualCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedCriteria).defaultConfig().toString());
     }
 
     /**

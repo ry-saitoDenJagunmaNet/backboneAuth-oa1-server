@@ -2,15 +2,17 @@
 const _RIGHT_TABLE_HIDDEN = "oaex_unallocate_role_table_hidden_row";
 
 /**
- * 画面Loadイベントです。
+ * 画面 Loadイベントです
  */
-window.onload = function() {
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
 	// 未付与ロールテーブルを初期非表示
 	oaex_initHiddenUnallocateRoleList();
 }
 
 /**
- * （◀）移動ボタンクリックイベントです。
+ * （◀）移動ボタン Clickイベントです
  * 付与ロールテーブルへ追加
  */
 function oaex_moveAdditionBtn_onClick() {
@@ -25,7 +27,7 @@ function oaex_moveAdditionBtn_onClick() {
 			let newRow = allocateRoleTable.insertRow();
 			// template行を適用
 			newRow.innerHTML = allocateRoleTable.rows[0].cloneNode(true).innerHTML;
-			// 追加行にクリックイベントを追加
+			// 追加行にClickイベントを追加
 			newRow.addEventListener('click', function(event) {
 				oa_setTableRowSelected(this);
 			});
@@ -45,7 +47,7 @@ function oaex_moveAdditionBtn_onClick() {
 }
 
 /**
- * （▶）移動ボタンクリックイベントです。
+ * （▶）移動ボタン Clickイベントです
  * 付与ロールテーブルから削除
  */
 function oaex_moveRemovalBtn_onClick() {
@@ -81,31 +83,30 @@ function oaex_moveRemovalBtn_onClick() {
 }
 
 /**
- * 適用ボタンクリックイベントです。
- */
-function oaex_applyBtn_onClick() {
-	oa_showAlert("適用しました。");
-}
-
-/**
- * 閉じるボタンクリックイベントです。
+ * 閉じるボタン Clickイベントです
  */
 function oaex_closeBtn_onClick() {
-	oa_showConfirm("変更内容が適用されていません。\n画面を閉じてよろしいですか？", oaex_closeBtn_onClick_confirmReturn);
+	oa_transferForm("oa00000");
 }
 
 /**
- * 閉じるボタンで表示したダイアログを閉じるイベントです。
- * @param {Boolean} rtn true
+ * 適用ボタン Clickイベントです
  */
-function oaex_closeBtn_onClick_confirmReturn(rtn) {
-	if (rtn) {
-		oa_transferForm("oa11010");
+function oaex_applyBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_applyBtn_onClick();
+		return;
 	}
+	oa_showAlert("適用しました。");
+}
+function oaex_th_applyBtn_onClick() {
+	document.forms[0].action = "apply";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
 }
 
 /**
- * 表示有効行を選択状態にします。
+ * 表示有効行を選択状態にします
  * @param {TableObject} objTable 対象テーブル
  * @param {*} rowNo 元の選択行
  */
@@ -142,7 +143,7 @@ function oaex_setSelectRow(objTable, rowNo) {
 }
 
 /**
- * 未付与ロール一リストの付与したロール行を非表示にします。
+ * 未付与ロール一リストの付与したロール行を非表示にします
  * 初期表示時に付与したサブシステムロールを未付与ロール一覧から非表示
  */
 function oaex_initHiddenUnallocateRoleList() {

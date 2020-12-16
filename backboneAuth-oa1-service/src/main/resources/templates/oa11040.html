@@ -1,35 +1,44 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>サブシステムロール付与 | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa11040.css"/>
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa11040.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+	<link rel="stylesheet" href="../static/css/oa11040.css" th:href="@{/css/oa11040.css}"/>
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa11040.js" th:src="@{/js/oa11040.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_th_onload();">
+<form>
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<div th:replace="include/messageDialog :: messageDialog"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa11040");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11040", "サブシステムロール付与");</script>
+		<script th:remove="all">oa_getHeader("oa11040", "サブシステムロール付与");</script>
+		<div th:replace="include/header :: header (id='oa11040', title='サブシステムロール付与')"></div>
 	</header>
 
 	<!-- main定義 -->
 	<main>	
 		<section>
+			<!-- Hidden項目 -->
+			<div>
+				<input type="hidden" id="operator_id" name="operatorId" th:value="${form.operatorId}"></input>
+			</div>
 			<!-- ＪＡ -->
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="ja" readonly="readonly" value="006 JA前橋"></input>
+						<input type="text" id="ja" name="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
 					</div>
 				</div>
@@ -38,7 +47,7 @@
 			<div class="row oa_readonly">
 				<div class="col s6">
 					<div class="input-field">
-						<input type="text" id="operator" readonly="readonly" value="OP006027 前橋小太郎"></input>
+						<input type="text" id="operator" name="operator" readonly="readonly" value="OP006027 前橋小太郎" th:value="${form.operator}"></input>
 						<label for="operator">オペレーター</label>
 					</div>
 				</div>
@@ -91,7 +100,20 @@
 										</div>
 									</td>
 								</tr>
-								<tr onclick="oa_setTableRowSelected(this)">
+								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040AllocateRoleTableVoList}">
+									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
+									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
+									<td class="oaex_allocate_role_valid_thru">
+										<div class="input-field">
+											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+										</div>
+										<span>～</span>
+										<div class="input-field">
+											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+										</div>
+									</td>
+								</tr>
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
 									<td class="oaex_allocate_role_code">2110</td>
 									<td class="oaex_allocate_role_name">業務統括者（販売・青果）</td>
 									<td class="oaex_allocate_role_valid_thru">
@@ -128,6 +150,12 @@
 					<div class="oaex_unallocate_role_table" onScroll="oa_linkageScrollX(this, 'unallocate_role_table_head')">
 						<table id="unallocate_role_table" class="highlight">
 							<tbody>
+								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040UnallocateRoleTableVoList}">
+									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
+									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
+								</tr>
+							</tbody>
+							<tbody th:remove="all">
 								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">0000</td><td class="oaex_unallocate_role_name">JA管理者</td></tr>
 								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">1000</td><td class="oaex_unallocate_role_name">業務統括者（購買）</td></tr>
 								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2110</td><td class="oaex_unallocate_role_name">業務統括者（販売・青果）</td></tr>
@@ -147,7 +175,7 @@
 			<div class="row oa_required">
 				<div class="col s7">
 					<div class="input-field">
-						<input type="text" id="change_cause" class="validate" placeholder="業務統括者（販売・青果）に昇格／業務統括者（販売・花卉）も兼務…"></input>
+						<input type="text" id="change_cause" name="changeCause" class="validate" value="" placeholder="業務統括者（販売・青果）に昇格／業務統括者（販売・花卉）も兼務…" th:value="${form.changeCause}" th:placeholder="${form.changeCausePlaceholder}"></input>
 						<label for="change_cause">変更事由</label>
 					</div>
 				</div>
@@ -155,7 +183,7 @@
 		</section>
 		<br>
 	</main>
-		
+
 	<!-- footer定義 -->
 	<footer>
 		<div class="row">
@@ -167,6 +195,6 @@
 			</div>
 		</div>
 	</footer>
-
+</form>
 </body>
 </html>

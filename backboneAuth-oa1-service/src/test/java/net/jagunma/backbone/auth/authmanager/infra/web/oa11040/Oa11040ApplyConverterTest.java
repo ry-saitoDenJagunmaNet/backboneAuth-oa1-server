@@ -97,4 +97,33 @@ class Oa11040ApplyConverterTest {
         assertThat(converter.getAllocateSubSystemRoleList()).usingRecursiveComparison().isEqualTo(createOa11040ApplyChildConverterList());
         assertThat(converter.getChangeCause()).isEqualTo(changeCause);
     }
+
+    /**
+     * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
+     *  ●パターン
+     *    正常
+     *    （割当対象サブシステムロールなし）
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test1() {
+        // 実行値
+        Oa11040Vo vo = new Oa11040Vo();
+        vo.setOperatorId(operatorId);
+        vo.setOa11040AllocateRoleTableVoList(null);
+        vo.setChangeCause(changeCause);
+
+        // 実行
+        Oa11040ApplyConverter converter = Oa11040ApplyConverter.with(vo);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11040ApplyConverter);
+        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
+        assertThat(converter.getAllocateSubSystemRoleList()).usingRecursiveComparison().isEqualTo(newArrayList());
+        assertThat(converter.getChangeCause()).isEqualTo(changeCause);
+    }
 }

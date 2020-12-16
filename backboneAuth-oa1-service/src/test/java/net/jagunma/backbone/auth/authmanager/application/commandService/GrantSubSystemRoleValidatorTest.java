@@ -213,58 +213,6 @@ class GrantSubSystemRoleValidatorTest {
     /**
      * {@link GrantSubSystemRoleValidator#validate()}テスト
      *  ●パターン
-     *    未セットチェック  割当対象サブシステムロールリスト
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test03() {
-        // 実行値
-        allocateSubSystemRoleList = null;
-        SubSystemRoleGrantRequest request = createRequest();
-
-        assertThatThrownBy(() ->
-            // 実行
-            GrantSubSystemRoleValidator.with(request).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
-                assertThat(e.getArgs()).containsSequence("割当対象サブシステムロールリスト");
-            });
-    }
-
-    /**
-     * {@link GrantSubSystemRoleValidator#validate()}テスト
-     *  ●パターン
-     *    未セットチェック  割当対象サブシステムロールリスト
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test04() {
-        // 実行値
-        allocateSubSystemRoleList = newArrayList();
-        SubSystemRoleGrantRequest request = createRequest();
-
-        assertThatThrownBy(() ->
-            // 実行
-            GrantSubSystemRoleValidator.with(request).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
-                assertThat(e.getArgs()).containsSequence("割当対象サブシステムロールリスト");
-            });
-    }
-
-    /**
-     * {@link GrantSubSystemRoleValidator#validate()}テスト
-     *  ●パターン
      *    未セッチェック  変更事由
      *
      *  ●検証事項
@@ -273,7 +221,7 @@ class GrantSubSystemRoleValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test05() {
+    void validate_Test03() {
         // 実行値
         changeCause = null;
         allocateSubSystemRoleList = createAllocateSubSystemRoleList();
@@ -300,7 +248,7 @@ class GrantSubSystemRoleValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test06() {
+    void validate_Test04() {
         // 実行値
         subSystemRole1 = null;
         allocateSubSystemRoleList = createAllocateSubSystemRoleList();
@@ -327,9 +275,9 @@ class GrantSubSystemRoleValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test07() {
+    void validate_Test05() {
         // 実行値
-        validThruStartDate2 = null;
+        validThruStartDate1 = null;
         allocateSubSystemRoleList = createAllocateSubSystemRoleList();
         SubSystemRoleGrantRequest request = createRequest();
 
@@ -354,9 +302,9 @@ class GrantSubSystemRoleValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test08() {
+    void validate_Test06() {
         // 実行値
-        validThruEndDate3 = null;
+        validThruEndDate1 = null;
         allocateSubSystemRoleList = createAllocateSubSystemRoleList();
         SubSystemRoleGrantRequest request = createRequest();
 
@@ -381,10 +329,10 @@ class GrantSubSystemRoleValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test09() {
+    void validate_Test07() {
         // 実行値
-        validThruStartDate4 = LocalDate.of(2020, 10, 30);
-        validThruEndDate4 = LocalDate.of(2020, 10, 1);
+        validThruStartDate1 = LocalDate.of(2020, 10, 30);
+        validThruEndDate1 = LocalDate.of(2020, 10, 1);
         allocateSubSystemRoleList = createAllocateSubSystemRoleList();
         SubSystemRoleGrantRequest request = createRequest();
 

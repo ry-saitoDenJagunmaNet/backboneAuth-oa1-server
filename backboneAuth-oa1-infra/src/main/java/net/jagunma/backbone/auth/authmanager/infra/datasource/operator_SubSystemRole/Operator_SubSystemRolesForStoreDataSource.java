@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
+import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntityDao;
 import org.springframework.stereotype.Component;
 
@@ -38,11 +39,26 @@ public class Operator_SubSystemRolesForStoreDataSource implements Operator_SubSy
      */
     public void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
 
+        // オペレーター_サブシステムロール割当のデリートを行います
+        deleteOperator_SubSystemRole(operator_SubSystemRoles.getValues().get(0).getOperatorId());
+
         // オペレーター_サブシステムロール割当のインサートを行います
         List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = insertOperator_SubSystemRole(operator_SubSystemRoles);
 
         // オペレーター履歴パックの格納を行います
         operatorHistoryPackRepositoryForStore.store(operator_SubSystemRoles.getValues().get(0).getOperatorId(), operator_SubSystemRoleEntityList.get(0).getCreatedAt(), changeCause);
+    }
+
+    /**
+     * オペレーター_サブシステムロール割当のデリートを行います
+     *
+     * @param operatorId オペレーターID
+     */
+    void deleteOperator_SubSystemRole(Long operatorId) {
+        Operator_SubSystemRoleEntityCriteria operator_SubSystemRoleEntityCriteria = new Operator_SubSystemRoleEntityCriteria();
+        operator_SubSystemRoleEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+
+        operator_SubSystemRoleEntityDao.forceDelete(operator_SubSystemRoleEntityCriteria);
     }
 
     /**
