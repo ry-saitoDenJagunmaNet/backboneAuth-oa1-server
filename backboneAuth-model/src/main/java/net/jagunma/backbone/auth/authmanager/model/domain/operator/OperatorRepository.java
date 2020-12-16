@@ -1,7 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator;
 
-import net.jagunma.common.ddd.model.orders.Orders;
-
 /**
  * オペレーター検索
  */
@@ -14,4 +12,11 @@ public interface OperatorRepository {
      * @return オペレーター
      */
     Operator findOneBy(OperatorCriteria operatorCriteria);
+    /**
+     * オペレーターの存在チェックを行います
+     *
+     * @param operatorCriteria オペレーターの検索条件
+     * @return オペレーターの有無
+     */
+    boolean existsBy(OperatorCriteria operatorCriteria);
 }

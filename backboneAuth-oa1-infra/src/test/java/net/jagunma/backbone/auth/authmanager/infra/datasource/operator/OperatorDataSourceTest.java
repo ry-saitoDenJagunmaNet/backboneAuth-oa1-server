@@ -52,6 +52,10 @@ class OperatorDataSourceTest {
                 return createOperatorEntity();
             }
             @Override
+            public boolean existsBy(OperatorEntityCriteria criteria) {
+                return true;
+            }
+            @Override
             public List<OperatorEntity> findBy(OperatorEntityCriteria criteria, Orders orders) {
                 return null;
             }
@@ -192,5 +196,31 @@ class OperatorDataSourceTest {
 
         // 結果検証
         assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
+    }
+
+    /**
+     * {@link OperatorDataSource#existsBy(OperatorCriteria)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void existsBy_test0() {
+
+        // 実行値
+        OperatorCriteria criteria = new OperatorCriteria();
+
+        // テスト対象クラス生成
+        OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
+            createBranchAtMomentRepository());
+
+        // 実行
+        boolean actualResult = operatorDataSource.existsBy(criteria);
+
+        // 結果検証
+        assertThat(actualResult).isEqualTo(true);
     }
 }
