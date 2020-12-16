@@ -125,6 +125,10 @@ class SearchOperatorTest {
             public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return createOperatorList().stream().filter(o->o.getOperatorId().equals(operatorId)).findFirst().orElse(null);
             }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return true;
+            }
         };
         OperatorsRepository operatorsRepository = new OperatorsRepository() {
             @Override

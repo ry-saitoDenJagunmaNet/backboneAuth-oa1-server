@@ -77,6 +77,10 @@ class Ed01010ControllerTest {
             public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
+            }
         };
         SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null, null) {
             @Override
