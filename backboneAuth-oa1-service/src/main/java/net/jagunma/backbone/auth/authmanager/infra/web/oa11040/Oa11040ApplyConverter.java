@@ -42,13 +42,16 @@ class Oa11040ApplyConverter implements SubSystemRoleGrantRequest {
      * @return 割当対象サブシステムロールリスト
      */
     public List<SubSystemRoleGrantRequestAllocateSubSystemRole> getAllocateSubSystemRoleList() {
+        if (vo.getOa11040AllocateRoleTableVoList() == null) {
+            return newArrayList();
+        }
         List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = newArrayList();
         List<Oa11040AllocateRoleTableVo> oa11040AllocateRoleTableVoList = vo.getOa11040AllocateRoleTableVoList();
         for (Oa11040AllocateRoleTableVo oa11040AllocateRoleTableVo : oa11040AllocateRoleTableVoList) {
             Oa11040ApplyChildConverter oa11040ApplyChildConverter = Oa11040ApplyChildConverter.with(oa11040AllocateRoleTableVo);
             allocateSubSystemRoleList.add(oa11040ApplyChildConverter);
         }
-      return allocateSubSystemRoleList;
+        return allocateSubSystemRoleList;
     }
     /**
      * 変更事由のＧｅｔ

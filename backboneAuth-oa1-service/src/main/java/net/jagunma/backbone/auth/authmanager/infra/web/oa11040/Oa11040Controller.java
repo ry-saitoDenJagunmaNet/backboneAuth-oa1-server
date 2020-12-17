@@ -103,7 +103,7 @@ public class Oa11040Controller extends BaseOfController {
      * @param vo ViewObject
      * @return view名
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public String apply(Model model, Oa11040Vo vo) {
         // ToDo: テストサインイン情報セット
         setAuthInf();

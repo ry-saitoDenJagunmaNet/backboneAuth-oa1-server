@@ -34,8 +34,6 @@ class GrantSubSystemRoleValidator {
 
         // 未セットチェック
         Preconditions.checkNotNull(request.getOperatorId(), () -> new GunmaRuntimeException("EOA13002", "オペレーターID"));
-        Preconditions.checkNotNull(request.getAllocateSubSystemRoleList(), () -> new GunmaRuntimeException("EOA13002", "割当対象サブシステムロールリスト"));
-        Preconditions.checkNotEmpty(request.getAllocateSubSystemRoleList(), () -> new GunmaRuntimeException("EOA13002", "割当対象サブシステムロールリスト"));
         Preconditions.checkNotEmpty(request.getChangeCause(), () -> new GunmaRuntimeException("EOA13002", "変更事由"));
 
         List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();

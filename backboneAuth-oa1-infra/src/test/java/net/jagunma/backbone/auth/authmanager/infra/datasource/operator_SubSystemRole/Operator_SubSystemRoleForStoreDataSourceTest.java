@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator_SubSystemRole;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -36,6 +37,9 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
     private LocalDateTime createdAt = LocalDateTime.of(2020, 10, 30,1,2,3);
     private String createdIpAddress = "100.100.100.100";
     private Integer recordVersion = 1;
+
+    // 検証値
+    Operator_SubSystemRoleEntityCriteria actualOperator_SubSystemRoleEntityCriteria;
 
     // テスト対象クラス生成
     private Operator_SubSystemRoleForStoreDataSource createOperator_SubSystemRoleForStoreDataSource() {
@@ -79,6 +83,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
             }
             @Override
             public int forceDelete(Operator_SubSystemRoleEntityCriteria criteria) {
+                actualOperator_SubSystemRoleEntityCriteria = criteria;
                 return 0;
             }
             @Override
@@ -124,6 +129,32 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
             // 実行
             operator_SubSystemRoleForStoreDataSource.store(operator_SubSystemRoles, changeCause))
             .doesNotThrowAnyException();
+    }
+
+    /**
+     * {@link Operator_SubSystemRoleForStoreDataSource#deleteOperator_SubSystemRole(Long operatorId)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・EntityCriteriaへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void deleteOperator_SubSystemRole_test() {
+        // テスト対象クラス生成
+        Operator_SubSystemRoleForStoreDataSource operator_SubSystemRoleForStoreDataSource = createOperator_SubSystemRoleForStoreDataSource();
+
+        // 期待値
+        Operator_SubSystemRoleEntityCriteria expectedCriteria = new Operator_SubSystemRoleEntityCriteria();
+        expectedCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+
+        // 実行
+        operator_SubSystemRoleForStoreDataSource.deleteOperator_SubSystemRole(operatorId);
+
+        // 結果検証 // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualOperator_SubSystemRoleEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedCriteria).defaultConfig().toString());
     }
 
     /**

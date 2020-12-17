@@ -34,6 +34,10 @@ public class Oa11040Vo extends BaseOfResponseVo {
      * 変更事由
      */
     private String changeCause;
+    /**
+     * 変更事由プレースホルダー
+     */
+    private String changeCausePlaceholder;
 
     // Getter
     public String getJa() {
@@ -54,6 +58,9 @@ public class Oa11040Vo extends BaseOfResponseVo {
     public String getChangeCause() {
         return changeCause;
     }
+    public String getChangeCausePlaceholder() {
+        return changeCausePlaceholder;
+    }
 
     // Setter
     public void setJa(String ja) {
@@ -73,5 +80,8 @@ public class Oa11040Vo extends BaseOfResponseVo {
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;
+    }
+    public void setChangeCausePlaceholder(String changeCausePlaceholder) {
+        this.changeCausePlaceholder = changeCausePlaceholder;
     }
 }
