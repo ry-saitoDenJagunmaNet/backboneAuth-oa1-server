@@ -43,7 +43,7 @@ class Oa11040ApplyConverterTest {
         for (int i = 0; i < subSystemRoleList.size(); i++) {
             Oa11040AllocateRoleTableVo oa11040AllocateRoleTableVo = new Oa11040AllocateRoleTableVo();
             oa11040AllocateRoleTableVo.setRoleCode(subSystemRoleList.get(i).getCode());
-            oa11040AllocateRoleTableVo.setRoleName(subSystemRoleList.get(i).getName());
+            oa11040AllocateRoleTableVo.setRoleName(subSystemRoleList.get(i).getDisplayName());
             oa11040AllocateRoleTableVo.setValidThruStartDate(validThruStartDateList.get(i));
             oa11040AllocateRoleTableVo.setValidThruEndDate(validThruEndDateList.get(i));
             oa11040AllocateRoleTableVoList.add(oa11040AllocateRoleTableVo);
@@ -60,7 +60,7 @@ class Oa11040ApplyConverterTest {
         for (int i = 0; i < subSystemRoleList.size(); i++) {
             Oa11040AllocateRoleTableVo vo = new Oa11040AllocateRoleTableVo();
             vo.setRoleCode(subSystemRoleList.get(i).getCode());
-            vo.setRoleName(subSystemRoleList.get(i).getName());
+            vo.setRoleName(subSystemRoleList.get(i).getDisplayName());
             vo.setValidThruStartDate(validThruStartDateList.get(i));
             vo.setValidThruEndDate(validThruEndDateList.get(i));
             Oa11040ApplyChildConverter oa11040ApplyChildConverter = Oa11040ApplyChildConverter.with(vo);
