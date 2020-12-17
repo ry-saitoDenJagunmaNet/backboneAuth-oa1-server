@@ -36,7 +36,7 @@ public class BizTranGrpsDataSource implements BizTranGrpsRepository {
      */
     public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
 
-        // 取引グループ運検索
+        // 取引グループ群検索
         BizTranGrpEntityCriteria entityCriteria = new BizTranGrpEntityCriteria();
         entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrpCriteria.getBizTranGrpIdCriteria());
         entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrpCriteria.getSubSystemCodeCriteria());

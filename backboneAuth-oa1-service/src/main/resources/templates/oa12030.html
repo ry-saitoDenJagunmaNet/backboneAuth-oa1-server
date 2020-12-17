@@ -1,40 +1,55 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
 	<title>一時取引抑止登録 | 基幹系認証管理システム</title>
-	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css"/>
-	<link rel="stylesheet" href="../static/css/common.css"/>
-	<link rel="stylesheet" href="../static/css/sidenav.css"/>
-	<link rel="stylesheet" href="../static/css/oa12030.css"/>
-	<script src="../static/materialize/js/materialize.min.js"></script>
-	<script src="../static/js/common.js"></script>
-	<script src="../static/js/sidenav.js"></script>
-	<script src="../static/js/oa12030.js"></script>
+	<link rel="stylesheet" href="../static/materialize/css/materialize.min.css" th:href="@{/materialize/css/materialize.min.css}"/>
+	<link rel="stylesheet" href="../static/css/common.css" th:href="@{/css/common.css}"/>
+	<link rel="stylesheet" href="../static/css/sidenav.css" th:href="@{/css/sidenav.css}"/>
+	<link rel="stylesheet" href="../static/css/oa12030.css" th:href="@{/css/oa12030.css}"/>
+	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
+	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
+	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
+	<script src="../static/js/oa12030.js" th:src="@{/js/oa12030.js}"></script>
 </head>
-<body>
+<body th:onLoad="oaex_th_onload();">
+<form>
+	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
+	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"/>
 	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<!-- 共通部品用定義 -->
+	<div th:replace="include/commonParts :: commonParts"></div>
 	<!-- 左に表示するメニュー用定義 -->
 	<script>oa_getSidenav("oa12030");</script>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa12030", "一時取引抑止登録");</script>
+		<script th:remove="all">oa_getHeader("oa12030", "一時取引抑止登録");</script>
+		<div th:replace="include/header :: header (id='oa12030', title='一時取引抑止登録')"></div>
 	</header>
 
 	<!-- main定義 -->
 	<main>
 		<section>
+			<!-- Hidden項目 -->
+			<div>
+				<input type="hidden" id="suspend_bizTran_id" name="suspendBizTranId" th:value="${form.suspendBizTranId}"/>
+				<input type="hidden" id="record_version" name="recordVersion" th:value="${form.recordVersion}"/>
+			</div>
 			<!-- ＪＡ -->
 			<div class="row oa_optional">
 				<div class="col s1">
 					<label>
-						<input type="checkbox" id="ja_check" onchange="oaex_ja_check_onChange()"></input>
+						<input type="checkbox" id="ja_check" onchange="oaex_ja_check_onChange()"/>
 						<span></span>
 					</label>
 				</div>
 				<div class="col s6">
-					<div class="input-field">
+					<div id="ja_select">
+						<div th:replace="include/formElements::selectForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
+					</div>
+					<input type="hidden" id="ja_code" th:value="${form.jaCode}"/>
+					<div class="input-field" th:remove="all">
 						<select id="ja" class="validate" onchange="oaex_ja_onChange()">
 							<option value=""></option>
 							<option value="002">ＪＡ赤城たちばな</option>
@@ -61,13 +76,17 @@
 			<div class="row oa_optional">
 				<div class="col s1">
 					<label>
-						<input type="checkbox" id="tempo_check" onchange="oaex_tempo_check_onChange()"></input>
+						<input type="checkbox" id="branch_check" onchange="oaex_tempo_check_onChange()"/>
 						<span></span>
 					</label>
 				</div>
 				<div class="col s6">
-					<div class="input-field">
-						<select id="tempo" class="validate" onchange="oaex_tempo_onChange()">
+					<div id="branch_select">
+						<div th:replace="include/formElements::selectForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
+					</div>
+					<input type="hidden" id="branch_code" th:value="${form.branchCode}"/>
+					<div class="input-field" th:remove="all">
+						<select id="branch" class="validate" onchange="oaex_tempo_onChange()">
 							<option value=""></option>
 							<option value="001">本所</option>
 							<option value="002">○○○支所</option>
@@ -86,27 +105,37 @@
 				<!-- サブシステム -->
 				<div class="col s3 oa_optional">
 					<label>
-						<input type="checkbox" id="subsystem_check" onchange="oaex_subsystem_check_onChange()"></input>
+						<input type="checkbox" id="subSystem_check" onchange="oaex_subsystem_check_onChange()"/>
 						<span>サブシステム</span>
 					</label>
-					<select id="subsystem" class="validate" onchange="oaex_subsystem_onChange()">
-						<option value=""></option>
-						<option value="KB">購買</option>
-						<option value="YS">販売・青果</option>
-						<option value="YF">販売・花卉</option>
-						<option value="HK">販売・米</option>
-						<option value="HM">販売・麦</option>
-						<option value="AN">販売・畜産</option>
-					</select>
+					<div id="subSystem_select">
+						<div th:replace="include/formElements::selectForCode(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
+					</div>
+					<input type="hidden" id="subSystem_code" th:value="${form.subSystemCode}"/>
+					<div class="input-field" th:remove="all">
+						<select id="subsystem" class="validate" onchange="oaex_subsystem_onChange()">
+							<option value=""></option>
+							<option value="KB">購買</option>
+							<option value="YS">販売・青果</option>
+							<option value="YF">販売・花卉</option>
+							<option value="HK">販売・米</option>
+							<option value="HM">販売・麦</option>
+							<option value="AN">販売・畜産</option>
+						</select>
+					</div>
 				</div>
 				<!-- 取引グループ -->
 				<div class="col s4 oa_optional">
 					<label>
-						<input type="checkbox" id="biztran_grp_check" onchange="oaex_biztran_grp_check_onChange()"></input>
+						<input type="checkbox" id="biztran_grp_check" onchange="oaex_biztran_grp_check_onChange()"/>
 						<span>取引グループ</span>
 					</label>
 					<div class="oaex_biztran_grp_table">
-						<table id="biztran_grp_table" class="highlight">
+						<div id="bizTranGrpTable">
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_grp_table',tdCodeClass='oaex_biztran_grp_code',tdNameClass='oaex_biztran_grp_name')" th:fragment="ajaxSelectBizTranGrp"></div>
+						</div>
+						<input type="hidden" id="bizTran_grp_code" name="bizTranGrpCode" th:value="${form.bizTranGrpCode}"/>
+						<table id="biztran_grp_table" class="highlight" th:remove="all">
 							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td colspan="2">指定なし</td></tr>
 							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG01</td><td class="oaex_biztran_grp_name">購買メニュー</td></tr>
 							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG03</td><td class="oaex_biztran_grp_name">共通入力支援</td></tr>
@@ -139,11 +168,15 @@
 				<!-- 取引 -->
 				<div class="col s5 oa_optional">
 					<label>
-						<input type="checkbox" id="biztran_check" onchange="oaex_biztran_check_onChange()"></input>
+						<input type="checkbox" id="biztran_check" onchange="oaex_biztran_check_onChange()"/>
 						<span>取引</span>
 					</label>
 					<div class="oaex_biztran_table">
-						<table id="biztran_table" class="highlight">
+						<div id="bizTranTable">
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_table',tdCodeClass='oaex_biztran_code',tdNameClass='oaex_biztran_name')" th:fragment="ajaxSelectBizTran"></div>
+						</div>
+						<input type="hidden" id="bizTran_code" name="bizTranCode" th:value="${form.bizTranCode}"/>
+						<table id="biztran_table" class="highlight" th:remove="all">
 							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0000</td><td class="oaex_biztran_name">購買メインメニュー</td></tr>
 							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0020</td><td class="oaex_biztran_name">購買支所用メニュー</td></tr>
 							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0021</td><td class="oaex_biztran_name">窓口入金支所用メニュー</td></tr>
@@ -261,7 +294,7 @@
 				<div class="row">
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="valid_thru_start_date" class="validate datepicker"></input>
+							<input type="text" id="valid_thru_start_date" name="suspendStartDate" class="validate datepicker" th:value="${form.suspendStartDate}"></input>
 							<label for="valid_thru_start_date">（開始日）</label>
 						</div>
 					</div>
@@ -270,7 +303,7 @@
 					</div>
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="valid_thru_end_date" class="validate datepicker"></input>
+							<input type="text" id="valid_thru_end_date" name="suspendEndDate" class="validate datepicker" th:value="${form.suspendEndDate}"></input>
 							<label for="valid_thru_end_date">（終了日）</label>
 						</div>
 					</div>
@@ -282,7 +315,7 @@
 			<div class="row oa_required">
 				<div class="col s7">
 					<div class="input-field">
-						<input type="text" id="suspend_reason" class="validate" value=""></input>
+						<input type="text" id="suspend_reason" name="suspendReason" class="validate" value="" th:value="${form.suspendReason}"></input>
 						<label for="suspend_reason">抑止理由</label>
 					</div>
 				</div>
@@ -301,11 +334,12 @@
 				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
 			<div class="col s5 offset-s4">
-				<a class="btn waves-effect waves-light" href="javascript:oaex_deleteBtn_onClick();">削除</a>
+				<a th:if="${!#strings.isEmpty(form.suspendBizTranId)}" class="btn waves-effect waves-light" href="javascript:oaex_deleteBtn_onClick();">削除</a>
 				&nbsp;&nbsp;&nbsp;
-				<a class="btn waves-effect waves-light" href="javascript:oaex_entryBtn_onClick();">登録</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_storeBtn_onClick();" th:text="${#strings.isEmpty(form.suspendBizTranId)}? '登録' : '更新'">登録</a>
 			</div>
 		</div>
 	</footer>
+</form>
 </body>
 </html>

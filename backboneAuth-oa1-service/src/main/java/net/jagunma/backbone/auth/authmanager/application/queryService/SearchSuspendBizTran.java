@@ -1,8 +1,12 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchResponse;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
@@ -14,19 +18,49 @@ import org.springframework.stereotype.Service;
 public class SearchSuspendBizTran {
 
     private final SuspendBizTransRepository suspendBizTransRepository;
+    private final SuspendBizTranRepository suspendBizTranRepository;
 
     // コンストラクタ
-    public SearchSuspendBizTran(SuspendBizTransRepository suspendBizTransRepository) {
+    public SearchSuspendBizTran(SuspendBizTransRepository suspendBizTransRepository,
+        SuspendBizTranRepository suspendBizTranRepository) {
+
         this.suspendBizTransRepository = suspendBizTransRepository;
+        this.suspendBizTranRepository = suspendBizTranRepository;
+    }
+
+    /**
+     * 一時取引抑止を検索します
+     *
+     * @param request  一時取引抑止検索サービス Request
+     * @param response 一時取引抑止検索サービス Response
+     */
+    public void execute(SuspendBizTranSearchRequest request, SuspendBizTranSearchResponse response) {
+
+        // 検索条件作成
+        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
+        criteria.getSuspendBizTranIdCriteria().assignFrom(request.getSuspendBizTranIdCriteria());
+
+        // 一時取引抑止検索
+        SuspendBizTran suspendBizTran = suspendBizTranRepository.findOneBy(criteria);
+        response.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
+        response.setJaCode(suspendBizTran.getJaCode());
+        response.setBranchCode(suspendBizTran.getBranchCode());
+        response.setSubSystemCode(suspendBizTran.getSubSystemCode());
+        response.setBizTranGrpCode(suspendBizTran.getBizTranGrpCode());
+        response.setBizTranCode(suspendBizTran.getBizTranCode());
+        response.setSuspendStartDate(suspendBizTran.getSuspendStartDate());
+        response.setSuspendEndDate(suspendBizTran.getSuspendEndDate());
+        response.setSuspendReason(suspendBizTran.getSuspendReason());
+        response.setRecordVersion(suspendBizTran.getRecordVersion());
     }
 
     /**
      * 一時取引抑止群を検索します
      *
-     * @param request  一時取引抑止<一覧>検索サービス Request
-     * @param response 一時取引抑止<一覧>検索サービス Response
+     * @param request  一時取引抑止群検索サービス Request
+     * @param response 一時取引抑止群検索サービス Response
      */
-    public void execute(SuspendBizTranSearchRequest request, SuspendBizTranSearchResponse response) {
+    public void execute(SuspendBizTransSearchRequest request, SuspendBizTransSearchResponse response) {
 
         // パラメーターの検証
         SearchSuspendBizTranValidator.with(request).validate();
@@ -49,7 +83,8 @@ public class SearchSuspendBizTran {
      * @param request 一時取引抑止<一覧>検索サービス Request
      * @return 一時取引抑止検索条件
      */
-    SuspendBizTranCriteria createSuspendBizTranCriteria(SuspendBizTranSearchRequest request) {
+    SuspendBizTranCriteria createSuspendBizTranCriteria(SuspendBizTransSearchRequest request) {
+
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
 
         // ＪＡコード

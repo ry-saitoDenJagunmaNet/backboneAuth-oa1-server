@@ -9,6 +9,7 @@ window.addEventListener('load', function() {
 	if (message != null && message.length > 0) {
 		oa_showAlert(message);
 	}
+	document.getElementById("message").value = "";
 })
 
 /**
@@ -48,30 +49,124 @@ function oa_th_sendFormData(url, formObj) {
  * @param {String} url リクエスト先URL
  * @param {Json} formObj リクエスト送信するFORMオブジェクト
  */
-function oa_th_getItemsSource(url, formObj) {
+function oa_th_getItemsSource(url, param) {
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, false);
-	xhr.send(new FormData(formObj));
+	xhr.open("GET", url + "?" + param, false);
+	xhr.send();
 
 	if(xhr.readyState === 4 && xhr.status === 200) {
 		// 正常
-//		let result = JSON.parse(xhr.responseText);
-//		//if (typeof result.message !== "undefined" && result.message != null && result.message.length > 0) {
-//		if (result.message != null && result.message.length > 0) {
-//			oa_showAlert(result.message);
-//			return xhr;
-//		}
-//		if (result.errorMessage != null && result.errorMessage.length > 0) {
-//			oa_showAlert(result.errorMessage+result.stackTrace);
-//			return xhr;
-//		}
 		return xhr.response;
 
 	} else {
 		// 異常
-		//alert(xhr.responseText);
 		oa_showAlert(xhr.responseText);
 		return null;
+	}
+}
+
+/**
+ * 表示formのpath名を取得します。
+ */
+function oa_th_getLocationPathname() {
+	let pathname = location.pathname;
+	return pathname.substring(1, pathname.indexOf("/", 1));
+}
+
+/**
+ * ＪＡSelectタグのItemsSourceを取得します。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} toElementId          include ID
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ */
+function oa_th_getJaItemsSourceForCode(toElementId, selectValueElementId, selectElementId) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getJaItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * 店舗SelectタグのItemsSourceを取得します。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} jaCode               ＪＡコード
+ * @param {String} toElementId          include ID
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ */
+function oa_th_getBranchItemsSourceForCode(jaCode, toElementId, selectValueElementId, selectElementId) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	param = param+"&jaCode="+jaCode;
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBranchItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * サブシステムSelectタグのItemsSourceを取得します。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} toElementId          include ID
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ */
+function oa_th_getSubSystemItemsSource(toElementId, selectValueElementId, selectElementId) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getSubSystemItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * 取引グループSelectタグのItemsSourceを取得します。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} subSystemCode        サブシステムコード
+ * @param {String} toElementId          include ID
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ * @param {String} firstRowStatus       最初の空行挿入
+ */
+function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	param = param+"&subSystemCode="+subSystemCode;
+	if (firstRowStatus != null) {
+		// 1行目に空行を挿入
+		param = param+"&firstRowStatus="+firstRowStatus;
+	}
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranGrpItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * 取引SelectタグのItemsSourceを取得します。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} subSystemCode        サブシステムコード
+ * @param {String} bizTranGrpCode       取引グループコード
+ * @param {String} toElementId          include ID
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ * @param {String} firstRowStatus       最初の空行挿入
+ */
+function oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
+	let param = "viewId="+oa_th_getLocationPathname();
+	param = param+"&subSystemCode="+subSystemCode+"&bizTranGrpCode="+bizTranGrpCode;
+	if (firstRowStatus != null) {
+		// 1行目に空行を挿入
+		param = param+"&firstRowStatus="+firstRowStatus;
+	}
+	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranItemsSource", param);
+	oa_th_setSelected(selectValueElementId, selectElementId);
+}
+
+/**
+ * Selectタグ,選択用Tableタグの対象行を選択状態にします。
+ *  （formElements.htmlのincludeコントロール使用用）
+ * @param {String} selectValueElementId 画面load時のSelectコントロール選択値（バインディング受け取り用hidden項目）
+ * @param {String} selectElementId      SelectコントロールID
+ */
+function oa_th_setSelected(selectValueElementId, selectElementId) {
+	if (selectValueElementId.length > 0) {
+		let selectValue = document.getElementById(selectValueElementId).value;
+		if (selectValue != "") {
+			document.getElementById(selectElementId).value = selectValue;
+		}
 	}
 }
 

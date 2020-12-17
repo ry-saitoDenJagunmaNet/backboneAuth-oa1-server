@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020SearchResultVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
@@ -18,7 +18,7 @@ import net.jagunma.common.util.strings2.Strings2;
 /**
  * OA12020 一時取引抑止<一覧> Response Presenter
  */
-class Oa12020Presenter implements SuspendBizTranSearchResponse {
+class Oa12020Presenter implements SuspendBizTransSearchResponse {
 
     /**
      *一時取引抑止一覧の１ページ当たりの行数

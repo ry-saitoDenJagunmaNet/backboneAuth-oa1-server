@@ -6,10 +6,10 @@ function oaex_th_onload() {
 	_isThymeleaf = true;
 
 	// ＪＡ ItemSourceの取得
-	document.getElementById("jaSelect").innerHTML = oa_th_getItemsSource("getJaItemsSource", document.forms[0]);
+	oa_th_getJaItemsSourceForCode("ja_select", "ja_code", "ja");
 
 	// サブシステム ItemSourceの取得
-	document.getElementById("subSystemSelect").innerHTML = oa_th_getItemsSource("getSubSystemItemsSource", document.forms[0]);
+	oa_th_getSubSystemItemsSource("subSystem_select", "subSystem_code", "subSystem");
 
 	// Changeイベントの追加
 	document.getElementById("ja").addEventListener("change", (event) => {oaex_th_ja_onChange();});
@@ -32,8 +32,12 @@ function oaex_th_onload() {
  * JAの変更イベントです。
  */
 function oaex_th_ja_onChange() {
+	let jaCode = document.getElementById("ja").value;
+	if (jaCode != document.getElementById("ja_code").value) {
+		document.getElementById("branch_code").value = "";
+	}
 	// 店舗 ItemSourceの取得
-	document.getElementById("branchSelect").innerHTML = oa_th_getItemsSource("getBranchItemsSource", document.forms[0]);
+	oa_th_getBranchItemsSourceForCode(jaCode, "branch_select", "branch_code", "branch");
 
 	// selectの初期化
 	oa_initSelect();
@@ -43,10 +47,15 @@ function oaex_th_ja_onChange() {
  * サブシステムの変更イベントです。
  */
 function oaex_th_subsystem_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
+	if (subSystemCode != document.getElementById("subSystem_code").value) {
+		document.getElementById("bizTran_grp_code").value = "";
+		document.getElementById("bizTran_code").value = "";
+	}
 	// 取引グループ ItemSourceの取得
-	document.getElementById("bizTranGrpSelect").innerHTML = oa_th_getItemsSource("getBizTranGrpItemsSource", document.forms[0]);
+	oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, "bizTranGrp_select", "bizTran_grp_code", "bizTranGrp", "");
 	// 取引 ItemSourceの取得
-	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, "", "bizTran_select", "bizTran_code", "bizTran", "");
 
 	// Changeイベントの追加
 	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
@@ -59,8 +68,13 @@ function oaex_th_subsystem_onChange() {
  * 取引グループの変更イベントです。
  */
 function oaex_th_biztran_grp_onChange() {
+	let subSystemCode = document.getElementById("subSystem").value;
+	let bizTranGrpCode = document.getElementById("bizTranGrp").value;
+	if (bizTranGrpCode != "" && bizTranGrpCode != document.getElementById("bizTran_grp_code").value) {
+		document.getElementById("bizTran_code").value = "";
+	}
 	// 取引 ItemSourceの取得
-	document.getElementById("bizTranSelect").innerHTML = oa_th_getItemsSource("getBizTranItemsSource", document.forms[0]);
+	oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, "bizTran_select", "bizTran_code", "bizTran", "");
 
 	// selectの初期化
 	oa_initSelect();
@@ -96,7 +110,7 @@ function oaex_initialize() {
 	document.getElementById("tempo").selectedIndex = 0;
 	oa_setDisabled("tempo", true);
 	// サブシステム
-	document.getElementById("subsystem").selectedIndex = 0;
+	document.getElementById("subSystem").selectedIndex = 0;
 	// 取引グループ
 	oaex_setBiztranGrpOption();
 	document.getElementById("biztran_grp").selectedIndex = 0;
@@ -256,7 +270,7 @@ let biztran_data = [
 function oaex_setBiztranGrpOption() {
 	let biztranGrp = document.getElementById("biztran_grp");
 	let biztranGrpVal = biztranGrp.value;
-	let subsystemVal = document.getElementById("subsystem").value;
+	let subsystemVal = document.getElementById("subSystem").value;
 
 	// クリア
 	while(biztranGrp.lastChild)
@@ -293,7 +307,7 @@ function oaex_setBiztranGrpOption() {
 function oaex_setBiztranOption() {
 	let biztran = document.getElementById("biztran");
 	let biztranVal = biztran.value;
-	let subsystemVal = document.getElementById("subsystem").value;
+	let subsystemVal = document.getElementById("subSystem").value;
 	let biztranGrpVal = document.getElementById("biztran_grp").value;
 
 	// クリア

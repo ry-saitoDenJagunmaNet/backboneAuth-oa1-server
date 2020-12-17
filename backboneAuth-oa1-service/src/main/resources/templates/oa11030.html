@@ -292,26 +292,26 @@
 							<table>
 								<thead>
 									<tr>
-										<th class="oaex_biztran_role_table_name_th">付与ロール</th>
-										<th class="oaex_biztran_role_table_valid_thru_th">有効期限</th>
+										<th class="oaex_bizTran_role_table_name_th">付与ロール</th>
+										<th class="oaex_bizTran_role_table_valid_thru_th">有効期限</th>
 									</tr>
 								</thead>
 							</table>
 						</div>
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
-					<div class="oaex_biztran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_table_head')">
+					<div class="oaex_bizTran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_table_head')">
 						<table id="biztran_role_table" class="highlight">
 							<tbody>
 								<tr th:each="itemrow, iterStat : *{form.oa11030BizTranRoleTableVoList}">
-									<td class="oaex_biztran_role_table_code" th:text="${itemrow.roleCode}"></td>
-									<td class="oaex_biztran_role_table_name" th:text="${itemrow.roleName}"></td>
-									<td class="oaex_biztran_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
+									<td class="oaex_bizTran_role_table_code" th:text="${itemrow.roleCode}"></td>
+									<td class="oaex_bizTran_role_table_name" th:text="${itemrow.roleName}"></td>
+									<td class="oaex_bizTran_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
 								<tr th:remove="all">
-									<td class="oaex_biztran_role_table_code">KBAG01</td>
-									<td class="oaex_biztran_role_table_name">（購買）購買業務基本</td>
-									<td class="oaex_biztran_role_table_valid_thru">2020/04/01 ～ 9999/12/31</td>
+									<td class="oaex_bizTran_role_table_code">KBAG01</td>
+									<td class="oaex_bizTran_role_table_name">（購買）購買業務基本</td>
+									<td class="oaex_bizTran_role_table_valid_thru">2020/04/01 ～ 9999/12/31</td>
 								</tr>
 								<tr th:remove="all"><td>KBAG02</td><td>（購買）本所業務</td><td>2020/04/01 ～ 9999/12/31</td></tr>
 								<tr th:remove="all"><td>KBAG03</td><td>（購買）本所管理業務</td><td>2020/04/01 ～ 9999/12/31</td></tr>

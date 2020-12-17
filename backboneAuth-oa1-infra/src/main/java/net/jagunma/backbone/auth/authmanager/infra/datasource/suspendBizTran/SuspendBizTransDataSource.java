@@ -120,6 +120,7 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
         BizTrans bizTrans = bizTransRepository.selectBy(bizTranCriteria, Orders.empty());
 
         for (SuspendBizTranEntity entity : suspendBizTranEntityList) {
+            // stream().sorted()でnull項目があると例外になるためBlankに置き換える
             list.add(SuspendBizTran.createFrom(
                 entity.getSuspendBizTranId(),
                 (Strings2.isNull(entity.getJaCode()))? "" : entity.getJaCode(),
