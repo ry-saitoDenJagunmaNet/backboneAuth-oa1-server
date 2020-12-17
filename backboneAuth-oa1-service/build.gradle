@@ -33,7 +33,7 @@ dependencies {
     api( "net.jagunma.common2020:jagunma-common-server:${commonServerVersion}"){
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
     }
-    api "org.seasar.doma:doma-core:${domaVersion}"
+    api "org.seasar.doma:doma-core:${domaCoreVersion}"
     implementation("org.springframework.boot:spring-boot-starter-aop")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     api 'org.springframework.boot:spring-boot-starter-jdbc'

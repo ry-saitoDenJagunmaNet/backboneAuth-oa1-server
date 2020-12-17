@@ -28,7 +28,7 @@ dependencies {
     }
     implementation "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
     testImplementation project(":backboneAuth-oa1-remoting-mock")
-    implementation "org.seasar.doma:doma-core:${domaVersion}"
+    implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
     runtimeOnly "com.microsoft.sqlserver:mssql-jdbc:${mssqlJdbcVersion}"
     annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
