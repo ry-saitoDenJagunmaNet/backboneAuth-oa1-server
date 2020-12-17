@@ -62,7 +62,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
             Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
-            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
+            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
             oa11030SubSystemRoleTableVo.setValidThruDate(
                 operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));

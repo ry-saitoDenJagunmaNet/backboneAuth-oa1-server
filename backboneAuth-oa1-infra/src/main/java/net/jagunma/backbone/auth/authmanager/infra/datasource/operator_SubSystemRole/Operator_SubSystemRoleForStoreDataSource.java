@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
  * オペレーター_サブシステムロール割当群格納
  */
 @Component
-public class Operator_SubSystemRolesForStoreDataSource implements Operator_SubSystemRoleRepositoryForStore {
+public class Operator_SubSystemRoleForStoreDataSource implements Operator_SubSystemRoleRepositoryForStore {
 
     private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
     private final OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore;
 
     // コンストラクタ
-    public Operator_SubSystemRolesForStoreDataSource(
+    public Operator_SubSystemRoleForStoreDataSource(
         Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
         OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore) {
 

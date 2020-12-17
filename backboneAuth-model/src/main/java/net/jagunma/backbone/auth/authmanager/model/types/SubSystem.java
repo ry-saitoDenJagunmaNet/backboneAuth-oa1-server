@@ -1,5 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.model.types;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * サブシステムの列挙型
  */
@@ -13,12 +16,12 @@ public enum SubSystem {
     UnKnown("", "未定義", 7);
 
     private final String code;
-    private final String name;
+    private final String displayName;
     private final Integer displaySortOrder;
 
-    private SubSystem(String code, String name, Integer displaySortOrder) {
+    private SubSystem(String code, String displayName, Integer displaySortOrder) {
         this.code = code;
-        this.name = name;
+        this.displayName = displayName;
         this.displaySortOrder = displaySortOrder;
     }
 
@@ -30,11 +33,11 @@ public enum SubSystem {
         return code;
     }
     /**
-     * 名称のＧｅｔ
-     * @return 名称
+     * 表示名称のＧｅｔ
+     * @return 表示名称
      */
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
     /**
      * 表示順のＧｅｔ
@@ -67,7 +70,7 @@ public enum SubSystem {
      */
     public static SubSystem nameOf(String name) {
         for (SubSystem enumItem : values()) {
-            if (enumItem.name.equals(name)) {
+            if (enumItem.displayName.equals(name)) {
                 return enumItem;
             }
         }

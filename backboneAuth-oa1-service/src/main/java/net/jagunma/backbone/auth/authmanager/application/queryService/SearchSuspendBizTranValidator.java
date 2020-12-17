@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
@@ -9,15 +9,15 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
  */
 public class SearchSuspendBizTranValidator {
 
-    private final SuspendBizTranSearchRequest request;
+    private final SuspendBizTransSearchRequest request;
 
     // コンストラクタ
-    SearchSuspendBizTranValidator(SuspendBizTranSearchRequest request) {
+    SearchSuspendBizTranValidator(SuspendBizTransSearchRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static SearchSuspendBizTranValidator with(SuspendBizTranSearchRequest request) {
+    public static SearchSuspendBizTranValidator with(SuspendBizTransSearchRequest request) {
         return new SearchSuspendBizTranValidator(request);
     }
 

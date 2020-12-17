@@ -165,6 +165,10 @@ class Oa11030ControllerTest {
             public Operator findOneBy(OperatorCriteria operatorCriteria) {
                 return null;
             }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
+            }
         };
         AccountLocksRepository accountLocksRepository = new AccountLocksRepository() {
             @Override
@@ -308,7 +312,7 @@ class Oa11030ControllerTest {
 
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoleList) {
             Oa11030SubSystemRoleTableVo tableVo = new Oa11030SubSystemRoleTableVo();
-            tableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
+            tableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
             tableVo.setValidThruDate(
                 operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));

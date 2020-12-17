@@ -9,12 +9,12 @@ public enum SignInCause {
     UnKnown((short) -1, "未定義");
 
     private final short code;
-    private final String name;
+    private final String displayName;
 
     // コンストラクタ
-    private SignInCause(short code, String name) {
+    private SignInCause(short code, String displayName) {
         this.code = code;
-        this.name = name;
+        this.displayName = displayName;
     }
 
     /**
@@ -25,11 +25,11 @@ public enum SignInCause {
         return code;
     }
     /**
-     * 名称のＧｅｔ
-     * @return 名称
+     * 表示名称のＧｅｔ
+     * @return 表示名称
      */
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
     /**

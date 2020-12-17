@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator_SubSystemRole;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
-import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -20,7 +19,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Operator_SubSystemRolesForStoreDataSourceTest {
+class Operator_SubSystemRoleForStoreDataSourceTest {
 
     // 実行既定値
     private Long operator_SubSystemRoleId = 1L;
@@ -45,20 +44,6 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
     private Operator_SubSystemRolesForStoreDataSource createOperator_SubSystemRolesForStoreDataSource() {
         Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao = new Operator_SubSystemRoleEntityDao() {
             @Override
-            public int insert(Operator_SubSystemRoleEntity entity) {
-                entity.setOperator_SubSystemRoleId(operator_SubSystemRoleId++);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
-            public int forceDelete(Operator_SubSystemRoleEntityCriteria criteria) {
-                actualCriteria = criteria;
-                return 0;
-            }
-            @Override
             public List<Operator_SubSystemRoleEntity> findAll(Orders orders) {
                 return null;
             }
@@ -75,6 +60,15 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
                 return 0;
             }
             @Override
+            public int insert(Operator_SubSystemRoleEntity entity) {
+                entity.setOperator_SubSystemRoleId(operator_SubSystemRoleId++);
+                entity.setCreatedBy(createdBy);
+                entity.setCreatedAt(createdAt);
+                entity.setCreatedIpAddress(createdIpAddress);
+                entity.setRecordVersion(recordVersion);
+                return 0;
+            }
+            @Override
             public int update(Operator_SubSystemRoleEntity entity) {
                 return 0;
             }
@@ -84,6 +78,10 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
             }
             @Override
             public int delete(Operator_SubSystemRoleEntity entity) {
+                return 0;
+            }
+            @Override
+            public int forceDelete(Operator_SubSystemRoleEntityCriteria criteria) {
                 return 0;
             }
             @Override
@@ -105,13 +103,13 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
             }
         };
 
-        return new Operator_SubSystemRolesForStoreDataSource(
+        return new Operator_SubSystemRoleForStoreDataSource(
             operator_SubSystemRoleEntityDao,
             operatorHistoryPackRepositoryForStore);
     }
 
     /**
-     * {@link Operator_SubSystemRolesForStoreDataSource#store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause)}テスト
+     * {@link Operator_SubSystemRoleForStoreDataSource#store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause)}テスト
      *  ●パターン
      *    正常
      *
@@ -123,11 +121,11 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void store_test() {
         // テスト対象クラス生成
-        Operator_SubSystemRolesForStoreDataSource operator_SubSystemRolesForStoreDataSource = createOperator_SubSystemRolesForStoreDataSource();
+        Operator_SubSystemRoleForStoreDataSource operator_SubSystemRoleForStoreDataSource = createOperator_SubSystemRoleForStoreDataSource();
 
         assertThatCode(() ->
             // 実行
-            operator_SubSystemRolesForStoreDataSource.store(operator_SubSystemRoles, changeCause))
+            operator_SubSystemRoleForStoreDataSource.store(operator_SubSystemRoles, changeCause))
             .doesNotThrowAnyException();
     }
 
@@ -158,7 +156,7 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
     }
 
     /**
-     * {@link Operator_SubSystemRolesForStoreDataSource#insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles)}テスト
+     * {@link Operator_SubSystemRoleForStoreDataSource#insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -170,7 +168,7 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
     @Tag(TestSize.SMALL)
     void insertOperator_SubSystemRole_test() {
         // テスト対象クラス生成
-        Operator_SubSystemRolesForStoreDataSource operator_SubSystemRolesForStoreDataSource = createOperator_SubSystemRolesForStoreDataSource();
+        Operator_SubSystemRoleForStoreDataSource operator_SubSystemRoleForStoreDataSource = createOperator_SubSystemRoleForStoreDataSource();
 
         // 期待値
         List<Operator_SubSystemRoleEntity> expectedEntityList = newArrayList();
@@ -195,7 +193,7 @@ class Operator_SubSystemRolesForStoreDataSourceTest {
         operator_SubSystemRoleId = 1L;
 
         // 実行
-        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = operator_SubSystemRolesForStoreDataSource.insertOperator_SubSystemRole(operator_SubSystemRoles);
+        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = operator_SubSystemRoleForStoreDataSource.insertOperator_SubSystemRole(operator_SubSystemRoles);
 
         // 結果検証
         assertThat(operator_SubSystemRoleEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);

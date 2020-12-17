@@ -38,7 +38,7 @@ class Oa11040InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
             Oa11040AllocateRoleTableVo oa11040AllocateRoleTableVo = new Oa11040AllocateRoleTableVo();
             oa11040AllocateRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
-            oa11040AllocateRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
+            oa11040AllocateRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
             oa11040AllocateRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
             oa11040AllocateRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
             oa11040AllocateRoleTableVoList.add(oa11040AllocateRoleTableVo);
@@ -51,7 +51,7 @@ class Oa11040InitPresenter extends BaseOfOperatorSearchResponse implements Opera
 
             Oa11040UnallocateRoleTableVo oa11040UnallocateRoleTableVo = new Oa11040UnallocateRoleTableVo();
             oa11040UnallocateRoleTableVo.setRoleCode(subSystemRole.getCode());
-            oa11040UnallocateRoleTableVo.setRoleName(subSystemRole.getName());
+            oa11040UnallocateRoleTableVo.setRoleName(subSystemRole.getDisplayName());
             oa11040UnallocateRoleTableVoList.add(oa11040UnallocateRoleTableVo);
         }
         vo.setOa11040UnallocateRoleTableVoList(oa11040UnallocateRoleTableVoList);

@@ -1,39 +1,18 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12020;
 
-import static net.jagunma.common.util.collect.Lists2.newArrayList;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchJaAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import net.jagunma.common.util.strings2.Strings2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,26 +46,10 @@ public class Oa12020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12020Controller.class);
     private final SearchSuspendBizTran searchSuspendBizTran;
-    private final SearchJaAtMoment searchJaAtMoment;
-    private final SearchBranchAtMoment searchBranchAtMoment;
-    private final BizTranGrpsRepository bizTranGrpsRepository;
-    private final BizTranGrpRepository bizTranGrpRepository;
-    private final BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository;
 
     // コンストラクタ
-    Oa12020Controller(SearchSuspendBizTran searchSuspendBizTran,
-        SearchJaAtMoment searchJaAtMoment,
-        SearchBranchAtMoment searchBranchAtMoment,
-        BizTranGrpsRepository bizTranGrpsRepository,
-        BizTranGrpRepository bizTranGrpRepository,
-        BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository) {
-
+    Oa12020Controller(SearchSuspendBizTran searchSuspendBizTran ) {
         this.searchSuspendBizTran = searchSuspendBizTran;
-        this.searchJaAtMoment = searchJaAtMoment;
-        this.searchBranchAtMoment = searchBranchAtMoment;
-        this.bizTranGrpsRepository = bizTranGrpsRepository;
-        this.bizTranGrpRepository = bizTranGrpRepository;
-        this.bizTranGrp_BizTransRepository = bizTranGrp_BizTransRepository;
     }
 
     /**
@@ -167,7 +130,7 @@ public class Oa12020Controller extends BaseOfController {
             setSessionVo(argVo);
 
             Oa12020SearchConverter converter = Oa12020SearchConverter.with(argVo);
-            // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているため元のvo値が無いため）
+            // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているが、元のvo値が無いため）
             Oa12020Presenter presenter = Oa12020Presenter.with(argVo);
 
             // 一時取引抑止検索
@@ -187,103 +150,6 @@ public class Oa12020Controller extends BaseOfController {
             model.addAttribute("form", vo);
             return "oa19999";
         }
-    }
-
-    /**
-     * ＪＡコンボボックスのItemsSourceを取得します
-     *
-     * @param model モデル
-     * @param vo    View Model（form json）
-     * @return ＪＡコンボボックスのItemsSource
-     */
-    @RequestMapping(value = "/getJaItemsSource", method = RequestMethod.POST)
-    public String getJaItemsSource(ModelMap model, Oa12020Vo vo) {
-        LOGGER.debug("######## getJaItemsSource START");
-        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(searchJaAtMoment.selectBy()).getValue());
-        return "oa12020::ajaxSelectJa";
-    }
-
-    /**
-     * 店舗コンボボックスのItemsSourceを取得します
-     *
-     * @param model モデル
-     * @param vo    View Model（form json）
-     * @return 店舗コンボボックスのItemsSource
-     */
-    @RequestMapping(value = "/getBranchItemsSource", method = RequestMethod.POST)
-    public String getBranchItemsSource(ModelMap model, Oa12020Vo vo) {
-        LOGGER.debug("######## getBranchItemsSource START");
-        List<SelectOptionItemSource> list = newArrayList();
-        if (Strings2.isNotEmpty(vo.getJaCode())) {
-            list = SelectOptionItemsSource.createFrom(searchBranchAtMoment.selectBy(vo.getJaCode())).getValue();
-        }
-        model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBranch";
-    }
-
-    /**
-     * サブシステムコンボボックスのItemsSourceを取得します
-     *
-     * @param model モデル
-     * @param vo    View Model（form json）
-     * @return サブシステムコンボボックスのItemsSource
-     */
-    @RequestMapping(value = "/getSubSystemItemsSource", method = RequestMethod.POST)
-    public String getSubSystemItemsSource(ModelMap model, Oa12020Vo vo) {
-        LOGGER.debug("######## getSubSystemItemsSource START");
-        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
-        return "oa12020::ajaxSelectSubSystem";
-    }
-
-    /**
-     * 取引グループコンボボックスのItemsSourceを取得します
-     *
-     * @param model モデル
-     * @param vo    View Model（form json）
-     * @return 取引グループコンボボックスのItemsSource
-     */
-    @RequestMapping(value = "/getBizTranGrpItemsSource", method = RequestMethod.POST)
-    public String getBizTranGrpItemsSource(ModelMap model, Oa12020Vo vo) {
-        LOGGER.debug("######## getBizTranGrpItemsSource START");
-        List<SelectOptionItemSource> list = newArrayList();
-        if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
-            BizTranGrpCriteria criteria = new BizTranGrpCriteria();
-            criteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
-            list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders.empty())).getValue();
-        }
-        model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBizTranGrp";
-    }
-
-    /**
-     * 取引コンボボックスのItemsSourceを取得します
-     *
-     * @param model モデル
-     * @param vo    View Model（form json）
-     * @return 取引コンボボックスのItemsSource
-     */
-    @RequestMapping(value = "/getBizTranItemsSource", method = RequestMethod.POST)
-    public String getBizTranItemsSource(ModelMap model, Oa12020Vo vo) {
-        LOGGER.debug("######## getBizTranItemsSource START");
-        List<SelectOptionItemSource> list = newArrayList();
-        BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria = new BizTranGrp_BizTranCriteria();
-        if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
-            bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria().setEqualTo(vo.getSubSystemCode());
-
-            if (Strings2.isNotEmpty(vo.getBizTranGrpCode())) {
-                // 取引グループコードから取引グループIDを取得
-                BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-                bizTranGrpCriteria.getBizTranGrpCodeCriteria().setEqualTo(vo.getBizTranGrpCode());
-                BizTranGrp BizTranGrp = bizTranGrpRepository.findOneBy(bizTranGrpCriteria);
-                bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrp.getBizTranGrpId());
-            }
-
-            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
-            List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
-            list = SelectOptionItemsSource.createFrom(bizTranList).getValue();
-        }
-        model.addAttribute("selectAjaxItems", list);
-        return "oa12020::ajaxSelectBizTran";
     }
 
     /**
