@@ -45,7 +45,7 @@
 					</label>
 				</div>
 				<div class="col s6">
-					<div id="jaSelect">
+					<div id="ja_select">
 						<div th:replace="include/formElements::selectForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
 					</div>
 					<input type="hidden" id="ja_code" th:value="${form.jaCode}"/>
@@ -76,17 +76,17 @@
 			<div class="row oa_optional">
 				<div class="col s1">
 					<label>
-						<input type="checkbox" id="tempo_check" onchange="oaex_tempo_check_onChange()"/>
+						<input type="checkbox" id="branch_check" onchange="oaex_tempo_check_onChange()"/>
 						<span></span>
 					</label>
 				</div>
 				<div class="col s6">
-					<div id="branchSelect">
+					<div id="branch_select">
 						<div th:replace="include/formElements::selectForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
 					</div>
 					<input type="hidden" id="branch_code" th:value="${form.branchCode}"/>
 					<div class="input-field" th:remove="all">
-						<select id="tempo" class="validate" onchange="oaex_tempo_onChange()">
+						<select id="branch" class="validate" onchange="oaex_tempo_onChange()">
 							<option value=""></option>
 							<option value="001">本所</option>
 							<option value="002">○○○支所</option>
@@ -105,10 +105,10 @@
 				<!-- サブシステム -->
 				<div class="col s3 oa_optional">
 					<label>
-						<input type="checkbox" id="subsystem_check" onchange="oaex_subsystem_check_onChange()"/>
+						<input type="checkbox" id="subSystem_check" onchange="oaex_subsystem_check_onChange()"/>
 						<span>サブシステム</span>
 					</label>
-					<div id="subSystemSelect">
+					<div id="subSystem_select">
 						<div th:replace="include/formElements::selectForCode(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
 					</div>
 					<input type="hidden" id="subSystem_code" th:value="${form.subSystemCode}"/>
@@ -132,9 +132,9 @@
 					</label>
 					<div class="oaex_biztran_grp_table">
 						<div id="bizTranGrpTable">
-							<div th:replace="include/formElements::selectTableForCode(id='biztran_grp_table',name='bizTranGrpCode',tdCodeClass='oaex_biztran_grp_code',tdNameClass='oaex_biztran_grp_name')" th:fragment="ajaxSelectBizTranGrp"></div>
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_grp_table',tdCodeClass='oaex_biztran_grp_code',tdNameClass='oaex_biztran_grp_name')" th:fragment="ajaxSelectBizTranGrp"></div>
 						</div>
-						<input type="hidden" id="bizTran_grp_code" th:value="${form.bizTranGrpCode}"/>
+						<input type="hidden" id="bizTran_grp_code" name="bizTranGrpCode" th:value="${form.bizTranGrpCode}"/>
 						<table id="biztran_grp_table" class="highlight" th:remove="all">
 							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td colspan="2">指定なし</td></tr>
 							<tr onclick="oaex_biztran_grp_onSelectChange(this)"><td class="oaex_biztran_grp_code">KBTG01</td><td class="oaex_biztran_grp_name">購買メニュー</td></tr>
@@ -173,9 +173,9 @@
 					</label>
 					<div class="oaex_biztran_table">
 						<div id="bizTranTable">
-							<div th:replace="include/formElements::selectTableForCode(id='biztran_table',name='bizTranCode',tdCodeClass='oaex_biztran_code',tdNameClass='oaex_biztran_name')" th:fragment="ajaxSelectBizTran"></div>
+							<div th:replace="include/formElements::selectTableForCode(id='biztran_table',tdCodeClass='oaex_biztran_code',tdNameClass='oaex_biztran_name')" th:fragment="ajaxSelectBizTran"></div>
 						</div>
-						<input type="hidden" id="bizTran_code" th:value="${form.bizTranCode}"/>
+						<input type="hidden" id="bizTran_code" name="bizTranCode" th:value="${form.bizTranCode}"/>
 						<table id="biztran_table" class="highlight" th:remove="all">
 							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0000</td><td class="oaex_biztran_name">購買メインメニュー</td></tr>
 							<tr onclick="oaex_biztran_onSelectChange(this)"><td class="oaex_biztran_table_biztran_grp_code">KBTG01</td><td class="oaex_biztran_code">KB0020</td><td class="oaex_biztran_name">購買支所用メニュー</td></tr>
@@ -334,9 +334,9 @@
 				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
 			<div class="col s5 offset-s4">
-				<a class="btn waves-effect waves-light" href="javascript:oaex_deleteBtn_onClick();">削除</a>
+				<a th:if="${!#strings.isEmpty(form.suspendBizTranId)}" class="btn waves-effect waves-light" href="javascript:oaex_deleteBtn_onClick();">削除</a>
 				&nbsp;&nbsp;&nbsp;
-				<a class="btn waves-effect waves-light" href="javascript:oaex_entryBtn_onClick();">登録</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_storeBtn_onClick();" th:text="${#strings.isEmpty(form.suspendBizTranId)}? '登録' : '更新'">登録</a>
 			</div>
 		</div>
 	</footer>

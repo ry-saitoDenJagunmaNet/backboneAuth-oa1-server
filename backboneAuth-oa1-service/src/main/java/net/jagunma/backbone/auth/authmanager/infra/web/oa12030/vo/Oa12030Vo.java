@@ -51,6 +51,7 @@ public class Oa12030Vo extends BaseOfResponseVo {
      */
     private Integer recordVersion;
 
+
     // Getter／Setter
     public Long getSuspendBizTranId() {
         return suspendBizTranId;

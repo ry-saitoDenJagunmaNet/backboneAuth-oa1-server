@@ -9,6 +9,7 @@ window.addEventListener('load', function() {
 	if (message != null && message.length > 0) {
 		oa_showAlert(message);
 	}
+	document.getElementById("message").value = "";
 })
 
 /**
@@ -125,9 +126,8 @@ function oa_th_getSubSystemItemsSource(toElementId, selectValueElementId, select
 function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
 	let param = "viewId="+oa_th_getLocationPathname();
 	param = param+"&subSystemCode="+subSystemCode;
-	if (firstRowStatus == null) {
-		param = param+"&firstRowStatus=null";
-	} else {
+	if (firstRowStatus != null) {
+		// 1行目に空行を挿入
 		param = param+"&firstRowStatus="+firstRowStatus;
 	}
 	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranGrpItemsSource", param);
@@ -147,9 +147,8 @@ function oa_th_getBizTranGrpItemsSourceForCode(subSystemCode, toElementId, selec
 function oa_th_getBizTranItemsSourceForCode(subSystemCode, bizTranGrpCode, toElementId, selectValueElementId, selectElementId, firstRowStatus) {
 	let param = "viewId="+oa_th_getLocationPathname();
 	param = param+"&subSystemCode="+subSystemCode+"&bizTranGrpCode="+bizTranGrpCode;
-	if (firstRowStatus == null) {
-		param = param+"&firstRowStatus=null";
-	} else {
+	if (firstRowStatus != null) {
+		// 1行目に空行を挿入
 		param = param+"&firstRowStatus="+firstRowStatus;
 	}
 	document.getElementById(toElementId).innerHTML = oa_th_getItemsSource("../FormElements/getBizTranItemsSource", param);

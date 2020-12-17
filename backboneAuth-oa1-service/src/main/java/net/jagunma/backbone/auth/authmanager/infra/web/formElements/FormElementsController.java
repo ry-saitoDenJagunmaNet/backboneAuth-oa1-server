@@ -33,15 +33,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-// Todo: コメント内容再調整
 /**
  * FormElements コントローラ
  *
  * <pre>
  * -------------------------------------------------
  * システム：O 業務共通システム
- * サブシステム：?? 基幹系認証管理共通システム
- * 機能グループID：???
+ * サブシステム：OA 基幹系認証管理サブシステム
+ * 機能グループID：OA1
  * 機能グループ名：管理WEB
  * 機能ID：FormElements
  * 機能名：共通フォーム要素
@@ -144,15 +143,18 @@ public class FormElementsController {
     @RequestMapping(value = "/getBizTranGrpItemsSource", method = RequestMethod.GET)
     public String getBizTranGrpItemsSource(@RequestParam("viewId") String viewId,
         @RequestParam("subSystemCode") String subSystemCode,
-        @RequestParam("firstRowStatus") String firstRowStatus, ModelMap model) {
+        @RequestParam(name="firstRowStatus", required=false) String firstRowStatus, ModelMap model) {
 
         LOGGER.debug("######## getBizTranGrpItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
         if (Strings2.isNotEmpty(subSystemCode)) {
             BizTranGrpCriteria criteria = new BizTranGrpCriteria();
             criteria.getSubSystemCodeCriteria().setEqualTo(subSystemCode);
-            list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders
-                .empty()), ("null".equals(firstRowStatus))).getValue();
+            list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders.empty()),
+                (!Strings2.isNull(firstRowStatus))).getValue();
+        }
+        if (Strings2.isNotEmpty(firstRowStatus)) {
+            list.get(0).setName(firstRowStatus);
         }
         model.addAttribute("selectAjaxItems", list);
         return viewId+"::ajaxSelectBizTranGrp";
@@ -172,7 +174,7 @@ public class FormElementsController {
     public String getBizTranItemsSource(@RequestParam("viewId") String viewId,
         @RequestParam("subSystemCode") String subSystemCode,
         @RequestParam("bizTranGrpCode") String bizTranGrpCode,
-        @RequestParam("firstRowStatus") String firstRowStatus, ModelMap model) {
+        @RequestParam(name="firstRowStatus", required=false) String firstRowStatus, ModelMap model) {
 
         LOGGER.debug("######## getBizTranItemsSource START");
         List<SelectOptionItemSource> list = newArrayList();
@@ -191,7 +193,10 @@ public class FormElementsController {
             BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
             List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(
                 BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
-            list = SelectOptionItemsSource.createFrom(bizTranList).getValue();
+            list = SelectOptionItemsSource.createFrom(bizTranList, (!Strings2.isNull(firstRowStatus))).getValue();
+        }
+        if (Strings2.isNotEmpty(firstRowStatus)) {
+            list.get(0).setName(firstRowStatus);
         }
         model.addAttribute("selectAjaxItems", list);
         return viewId+"::ajaxSelectBizTran";

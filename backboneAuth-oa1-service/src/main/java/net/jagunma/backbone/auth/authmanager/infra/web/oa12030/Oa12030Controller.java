@@ -1,5 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12030;
 
+import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySuspendBizTran;
+import net.jagunma.backbone.auth.authmanager.application.commandService.UpdateSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.Oa12020Controller;
@@ -46,11 +48,19 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class Oa12030Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12020Controller.class);
+
     private final SearchSuspendBizTran searchSuspendBizTran;
+    private final EntrySuspendBizTran entrySuspendBizTran;
+    private final UpdateSuspendBizTran updateSuspendBizTran;
 
     // コンストラクタ
-    Oa12030Controller(SearchSuspendBizTran searchSuspendBizTran) {
+    Oa12030Controller(SearchSuspendBizTran searchSuspendBizTran,
+        EntrySuspendBizTran entrySuspendBizTran,
+        UpdateSuspendBizTran updateSuspendBizTran) {
+
         this.searchSuspendBizTran = searchSuspendBizTran;
+        this.entrySuspendBizTran = entrySuspendBizTran;
+        this.updateSuspendBizTran = updateSuspendBizTran;
     }
 
     /**
@@ -61,21 +71,83 @@ public class Oa12030Controller extends BaseOfController {
      * @return view名
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public String get(@RequestParam("suspendBizTranId") Long suspendBizTranId, Model model) {
+    public String get(@RequestParam(name="suspendBizTranId", required = false) Long suspendBizTranId, Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
         LOGGER.debug("get START");
 
         Oa12030Vo vo = new Oa12030Vo();
-        vo.setSuspendBizTranId(suspendBizTranId);
+
+        try {
+            if (suspendBizTranId != null) {
+                vo.setSuspendBizTranId(suspendBizTranId);
+            }
+            Oa12030Converter converter = Oa12030Converter.with(vo);
+            Oa12030Presenter presenter = new Oa12030Presenter();
+            if (suspendBizTranId != null) {
+                searchSuspendBizTran.execute(converter, presenter);
+            }
+
+            presenter.bindTo(vo);
+            model.addAttribute("form", vo);
+            return "oa12030";
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "oa12030";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+    }
+
+    @RequestMapping(value = "/entry", method = RequestMethod.POST)
+    public String entry(Model model, Oa12030Vo vo) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+        LOGGER.debug("entry START");
 
         try {
             Oa12030Converter converter = Oa12030Converter.with(vo);
             Oa12030Presenter presenter = new Oa12030Presenter();
-            searchSuspendBizTran.execute(converter, presenter);
+            entrySuspendBizTran.execute(converter);
 
+            vo = new Oa12030Vo();
             presenter.bindTo(vo);
             model.addAttribute("form", vo);
+
+            return "oa12030";
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "oa12030";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(Model model, Oa12030Vo vo) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+        LOGGER.debug("update START");
+
+        try {
+            Oa12030Converter converter = Oa12030Converter.with(vo);
+            Oa12030Presenter presenter = new Oa12030Presenter();
+            updateSuspendBizTran.execute(converter);
+
+            vo = new Oa12030Vo();
+            presenter.bindTo(vo);
+            model.addAttribute("form", vo);
+
             return "oa12030";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合

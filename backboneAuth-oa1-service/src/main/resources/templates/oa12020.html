@@ -35,7 +35,7 @@
 			<!-- ＪＡ -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div id="jaSelect">
+					<div id="ja_select">
 						<div th:replace="include/formElements::selectForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
 					</div>
 					<input type="hidden" id="ja_code" th:value="${form.jaCode}"/>
@@ -65,7 +65,7 @@
 			<!-- 店舗 -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div id="branchSelect">
+					<div id="branch_select">
 						<div th:replace="include/formElements::selectForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
 					</div>
 					<input type="hidden" id="branch_code" th:value="${form.branchCode}"/>
@@ -88,7 +88,7 @@
 			<div class="row oa_optional">
 				<!-- サブシステム -->
 				<div class="col s3">
-					<div id="subSystemSelect">
+					<div id="subSystem_select">
 						<div th:replace="include/formElements::selectForCode(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
 					</div>
 					<input type="hidden" id="subSystem_code" th:value="${form.subSystemCode}"/>
@@ -107,7 +107,7 @@
 				</div>
 				<!-- 取引グループ -->
 				<div class="col s4">
-					<div id="bizTranGrpSelect">
+					<div id="bizTranGrp_select">
 						<div th:replace="include/formElements::selectForCode(title='取引グループ',id='bizTranGrp',name='bizTranGrpCode')" th:fragment="ajaxSelectBizTranGrp"></div>
 					</div>
 					<input type="hidden" id="bizTran_grp_code" th:value="${form.bizTranGrpCode}"/>
@@ -119,7 +119,7 @@
 				</div>
 				<!-- 取引 -->
 				<div class="col s5">
-					<div id="bizTranSelect">
+					<div id="bizTran_select">
 						<div th:replace="include/formElements::selectForCode(title='取引',id='bizTran',name='bizTranCode')" th:fragment="ajaxSelectBizTran"></div>
 					</div>
 					<input type="hidden" id="bizTran_code" th:value="${form.bizTranCode}"/>
