@@ -32,7 +32,7 @@ class Oa11040ApplyChildConverterTest {
         // 実行値
         Oa11040AllocateRoleTableVo vo = new Oa11040AllocateRoleTableVo();
         vo.setRoleCode(subSystemRole.getCode());
-        vo.setRoleName(subSystemRole.getName());
+        vo.setRoleName(subSystemRole.getDisplayName());
         vo.setValidThruStartDate(validThruStartDate);
         vo.setValidThruEndDate(validThruEndDate);
 
