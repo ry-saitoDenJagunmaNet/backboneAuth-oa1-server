@@ -18,13 +18,13 @@ public enum SubSystemRole {
     UnKnown("", "未定義", null);
 
     private final String code;
-    private final String name;
+    private final String displayName;
     private final List<SubSystem> subSystemList;
 
     // コンストラクタ
-    private SubSystemRole(String code, String name, List<SubSystem> subSystemList) {
+    private SubSystemRole(String code, String displayName, List<SubSystem> subSystemList) {
         this.code = code;
-        this.name = name;
+        this.displayName = displayName;
         this.subSystemList = subSystemList;
     }
 
@@ -36,11 +36,11 @@ public enum SubSystemRole {
         return code;
     }
     /**
-     * 名称のＧｅｔ
-     * @return 名称
+     * 表示名称のＧｅｔ
+     * @return 表示名称
      */
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
     /**
      * サブシステムリストのＧｅｔ
