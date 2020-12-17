@@ -339,7 +339,7 @@ class Oa12020ControllerTest {
             searchResultVo.setJaName((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             searchResultVo.setBranchCode((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchCode());
             searchResultVo.setBranchName((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
-            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getName());
+            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getDisplayName());
             searchResultVo.setBizTranGrpCode((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrpCode());
             searchResultVo.setBizTranGrpName((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpName());
             searchResultVo.setBizTranCode((suspendBizTran.getBizTran() == null)? null : suspendBizTran.getBizTranCode());
@@ -462,7 +462,7 @@ class Oa12020ControllerTest {
             searchResultVo.setJaName((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             searchResultVo.setBranchCode((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchCode());
             searchResultVo.setBranchName((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
-            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getName());
+            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getDisplayName());
             searchResultVo.setBizTranGrpCode((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrpCode());
             searchResultVo.setBizTranGrpName((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpName());
             searchResultVo.setBizTranCode((suspendBizTran.getBizTran() == null)? null : suspendBizTran.getBizTranCode());

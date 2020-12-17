@@ -271,7 +271,7 @@ class Oa11010ControllerTest {
             if (subSystemRole.getCode().length() == 0) { continue; }
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
-            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
+            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getDisplayName());
             subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }

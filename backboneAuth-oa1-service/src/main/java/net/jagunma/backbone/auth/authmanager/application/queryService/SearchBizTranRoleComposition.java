@@ -60,7 +60,7 @@ public class SearchBizTranRoleComposition {
         for (BizTranRole_BizTranGrp bizTranRole_BizTranGrp : bizTranRole_BizTranGrps.getValues()) {
             bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(
                 bizTranRole_BizTranGrpSheetList.size(),
-                SubSystem.codeOf(bizTranRole_BizTranGrp.getSubSystemCode()).getName(),
+                SubSystem.codeOf(bizTranRole_BizTranGrp.getSubSystemCode()).getDisplayName(),
                 bizTranRole_BizTranGrp.getBizTranRole().getBizTranRoleCode(),
                 bizTranRole_BizTranGrp.getBizTranRole().getBizTranRoleName(),
                 bizTranRole_BizTranGrp.getBizTranGrp().getBizTranGrpCode(),
@@ -79,7 +79,7 @@ public class SearchBizTranRoleComposition {
         for (BizTranGrp_BizTran bizTranGrp_BizTran : bizTranGrp_BizTrans.getValues()) {
             BizTranGrp_BizTranSheetList.add(BizTranGrp_BizTranSheet.createFrom(
                 BizTranGrp_BizTranSheetList.size(),
-                SubSystem.codeOf(bizTranGrp_BizTran.getSubSystemCode()).getName(),
+                SubSystem.codeOf(bizTranGrp_BizTran.getSubSystemCode()).getDisplayName(),
                 bizTranGrp_BizTran.getBizTranGrp().getBizTranGrpCode(),
                 bizTranGrp_BizTran.getBizTranGrp().getBizTranGrpName(),
                 bizTranGrp_BizTran.getBizTran().getBizTranCode(),

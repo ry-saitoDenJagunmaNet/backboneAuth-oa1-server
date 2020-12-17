@@ -32,19 +32,19 @@ class StoreBizTranRoleCompositionTest {
     // 取引ロール－取引グループ編成データ作成
     private List<BizTranRole_BizTranGrpSheet> createBizTranRole_BizTranGrpSheetList() {
         List<BizTranRole_BizTranGrpSheet> list = newArrayList();
-        list.add(BizTranRole_BizTranGrpSheet.createFrom(2, SubSystem.販売_畜産.getName(),"ANAG01","（畜産）取引全般","ANTG01","データ入力取引グループ"));
-        list.add(BizTranRole_BizTranGrpSheet.createFrom(3, SubSystem.販売_畜産.getName(),"ANAG01","（畜産）取引全般","ANTG02","精算取引グループ"));
-        list.add(BizTranRole_BizTranGrpSheet.createFrom(4, SubSystem.販売_畜産.getName(),"ANAG02","（畜産）維持管理担当者","ANTG02","精算取引グループ"));
-        list.add(BizTranRole_BizTranGrpSheet.createFrom(5, SubSystem.販売_畜産.getName(),"ANAG98","（畜産）センター維持管理担当者","ANTG10","センター維持管理グループ"));
+        list.add(BizTranRole_BizTranGrpSheet.createFrom(2, SubSystem.販売_畜産.getDisplayName(),"ANAG01","（畜産）取引全般","ANTG01","データ入力取引グループ"));
+        list.add(BizTranRole_BizTranGrpSheet.createFrom(3, SubSystem.販売_畜産.getDisplayName(),"ANAG01","（畜産）取引全般","ANTG02","精算取引グループ"));
+        list.add(BizTranRole_BizTranGrpSheet.createFrom(4, SubSystem.販売_畜産.getDisplayName(),"ANAG02","（畜産）維持管理担当者","ANTG02","精算取引グループ"));
+        list.add(BizTranRole_BizTranGrpSheet.createFrom(5, SubSystem.販売_畜産.getDisplayName(),"ANAG98","（畜産）センター維持管理担当者","ANTG10","センター維持管理グループ"));
         return list;
     }
     // 取引グループ－取引編成データ作成
     private List<BizTranGrp_BizTranSheet> createBizTranGrp_BizTranSheetList() {
         List<BizTranGrp_BizTranSheet> list  = newArrayList();
-        list.add(BizTranGrp_BizTranSheet.createFrom(2,SubSystem.販売_畜産.getName(),"ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        list.add(BizTranGrp_BizTranSheet.createFrom(3,SubSystem.販売_畜産.getName(),"ANTG01","データ入力取引グループ","AN1510","精算取消",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        list.add(BizTranGrp_BizTranSheet.createFrom(4,SubSystem.販売_畜産.getName(),"ANTG02","精算取引グループ","AN1510","精算取消",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
-        list.add(BizTranGrp_BizTranSheet.createFrom(5,SubSystem.販売_畜産.getName(),"ANTG10","センター維持管理グループ","AN3500","データ提供メニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
+        list.add(BizTranGrp_BizTranSheet.createFrom(2,SubSystem.販売_畜産.getDisplayName(),"ANTG01","データ入力取引グループ","AN0001","畜産メインメニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
+        list.add(BizTranGrp_BizTranSheet.createFrom(3,SubSystem.販売_畜産.getDisplayName(),"ANTG01","データ入力取引グループ","AN1510","精算取消",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
+        list.add(BizTranGrp_BizTranSheet.createFrom(4,SubSystem.販売_畜産.getDisplayName(),"ANTG02","精算取引グループ","AN1510","精算取消",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
+        list.add(BizTranGrp_BizTranSheet.createFrom(5,SubSystem.販売_畜産.getDisplayName(),"ANTG10","センター維持管理グループ","AN3500","データ提供メニュー",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31)));
         return list;
     }
     // 取引ロール編成登録の作成
