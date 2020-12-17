@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
@@ -230,11 +230,15 @@ class SuspendBizTransDataSourceTest {
         };
     }
     // 取引グループRepositoryの作成
-    private BizTranGrpsRepository createBizTranGrpsRepository() {
-        return new BizTranGrpsRepository() {
+    private BizTranGrpRepository createBizTranGrpRepository() {
+        return new BizTranGrpRepository() {
             @Override
             public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
                 return BizTranGrps.createFrom(createBizTranGrp());
+            }
+            @Override
+            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+                return null;
             }
             @Override
             public BizTranGrps selectAll(Orders orders) {
@@ -243,11 +247,15 @@ class SuspendBizTransDataSourceTest {
         };
     }
     // 取引Repositoryの作成
-    private BizTransRepository createBizTransRepository() {
-        return new BizTransRepository() {
+    private BizTranRepository createBizTranRepository() {
+        return new BizTranRepository() {
             @Override
             public BizTrans selectBy(BizTranCriteria bizTranCriteria, Orders orders) {
                 return BizTrans.createFrom(createBizTran());
+            }
+            @Override
+            public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
+                return null;
             }
             @Override
             public BizTrans selectAll(Orders orders) {
@@ -284,8 +292,8 @@ class SuspendBizTransDataSourceTest {
             createSuspendBizTranEntityDao(),
             createJaAtMomentRepository(),
             createBranchAtMomentRepository(),
-            createBizTranGrpsRepository(),
-            createBizTransRepository());
+            createBizTranGrpRepository(),
+            createBizTranRepository());
 
         // 期待値
         List<JaAtMoment> jaAtMomentList = createJaAtMomentList();
@@ -360,8 +368,8 @@ class SuspendBizTransDataSourceTest {
             createSuspendBizTranEntityDao(),
             createJaAtMomentRepository(),
             createBranchAtMomentRepository(),
-            createBizTranGrpsRepository(),
-            createBizTransRepository());
+            createBizTranGrpRepository(),
+            createBizTranRepository());
 
         // 期待値
         List<JaAtMoment> jaAtMomentList = createJaAtMomentList();
@@ -429,8 +437,8 @@ class SuspendBizTransDataSourceTest {
             createSuspendBizTranEntityDao(),
             createJaAtMomentRepository(),
             createBranchAtMomentRepository(),
-            createBizTranGrpsRepository(),
-            createBizTransRepository());
+            createBizTranGrpRepository(),
+            createBizTranRepository());
 
         // 期待値
         List<BranchAtMoment> branchAtMomentList = createBranchAtMomentList();

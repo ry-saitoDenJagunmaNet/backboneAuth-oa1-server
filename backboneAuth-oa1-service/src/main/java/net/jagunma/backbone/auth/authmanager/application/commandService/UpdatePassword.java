@@ -3,9 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordChangeRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordResetRequest;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
@@ -24,13 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UpdatePassword {
 
     private final PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore;
-    private final PasswordHistoriesRepository passwordHistoriesRepository;
+    private final PasswordHistoryRepository passwordHistoryRepository;
 
     public UpdatePassword(
         PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore,
-        PasswordHistoriesRepository passwordHistoriesRepository) {
+        PasswordHistoryRepository passwordHistoryRepository) {
         this.passwordHistoryRepositoryForStore = passwordHistoryRepositoryForStore;
-        this.passwordHistoriesRepository = passwordHistoriesRepository;
+        this.passwordHistoryRepository = passwordHistoryRepository;
     }
 
     /**
@@ -94,7 +93,8 @@ public class UpdatePassword {
 
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
-        PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+        PasswordHistories passwordHistories = passwordHistoryRepository
+            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
 
         if (passwordHistories.getValues().get(0).getPasswordChangeType().equals(PasswordChangeType.機器認証パスワード)) {
             throw new GunmaRuntimeException("EOA12002");
@@ -114,7 +114,8 @@ public class UpdatePassword {
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(request.getOperatorId());
         passwordHistoryCriteria.getChangeTypeCriteria().setNotEqualTo(PasswordChangeType.機器認証パスワード.getCode());
 
-        PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+        PasswordHistories passwordHistories = passwordHistoryRepository
+            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
 
         int counter = 0;
         for (PasswordHistory passwordHistory : passwordHistories.getValues()) {

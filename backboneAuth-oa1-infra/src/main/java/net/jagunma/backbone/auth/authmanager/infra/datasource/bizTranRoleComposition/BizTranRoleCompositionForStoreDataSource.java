@@ -12,7 +12,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleComposition;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleCompositionRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
@@ -49,7 +49,7 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
     private final BizTranEntityDao bizTranEntityDao;
     private final BizTranRole_BizTranGrpEntityDao bizTranRole_BizTranGrpEntityDao;
     private final BizTranGrp_BizTranEntityDao bizTranGrp_BizTranEntityDao;
-    private final BizTranRolesRepository bizTranRolesRepository;
+    private final BizTranRoleRepository bizTranRoleRepository;
 
     // コンストラクタ
     BizTranRoleCompositionForStoreDataSource(
@@ -58,14 +58,14 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         BizTranEntityDao bizTranEntityDao,
         BizTranRole_BizTranGrpEntityDao bizTranRole_BizTranGrpEntityDao,
         BizTranGrp_BizTranEntityDao bizTranGrp_BizTranEntityDao,
-        BizTranRolesRepository bizTranRolesRepository) {
+        BizTranRoleRepository bizTranRoleRepository) {
 
         this.bizTranRoleEntityDao = bizTranRoleEntityDao;
         this.bizTranGrpEntityDao = bizTranGrpEntityDao;
         this.bizTranEntityDao = bizTranEntityDao;
         this.bizTranRole_BizTranGrpEntityDao = bizTranRole_BizTranGrpEntityDao;
         this.bizTranGrp_BizTranEntityDao = bizTranGrp_BizTranEntityDao;
-        this.bizTranRolesRepository = bizTranRolesRepository;
+        this.bizTranRoleRepository = bizTranRoleRepository;
     }
 
     /**
@@ -228,7 +228,7 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         // 取引ロール検索（登録前）
         BizTranRoleCriteria criteria = new BizTranRoleCriteria();
         criteria.getSubSystemCodeCriteria().setEqualTo(bizTranRoles.getValues().get(0).getSubSystemCode());
-        BizTranRoles bizTranRolesBefore = bizTranRolesRepository.selectBy(criteria, Orders.empty());
+        BizTranRoles bizTranRolesBefore = bizTranRoleRepository.selectBy(criteria, Orders.empty());
 
         // 取引ロール更新／追加
         List<BizTranRole> returnList = newArrayList();

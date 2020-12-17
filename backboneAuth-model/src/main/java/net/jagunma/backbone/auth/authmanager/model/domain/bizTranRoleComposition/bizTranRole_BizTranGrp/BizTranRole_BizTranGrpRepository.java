@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleCompositio
 
 import net.jagunma.common.ddd.model.orders.Orders;
 
-public interface BizTranRole_BizTranGrpsRepository {
+public interface BizTranRole_BizTranGrpRepository {
 
     /**
      * 取引ロール_取引グループ割当群の条件検索を行います

@@ -9,8 +9,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRole.Operator_SubSystemRoleEntityCriteria;
@@ -22,13 +22,13 @@ import org.springframework.stereotype.Component;
  * オペレーター_サブシステムロール割当群検索
  */
 @Component
-public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRolesRepository {
+public class Operator_SubSystemRoleDataSource implements Operator_SubSystemRoleRepository {
 
     private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
     private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
-    Operator_SubSystemRolesDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
+    Operator_SubSystemRoleDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
         OperatorsRepository operatorsRepository) {
 
         this.operator_SubSystemRoleEntityDao = operator_SubSystemRoleEntityDao;
@@ -42,8 +42,7 @@ public class Operator_SubSystemRolesDataSource implements Operator_SubSystemRole
      * @param orders                         オーダー指定
      * @return オペレーター_サブシステムロール割当群
      */
-    public Operator_SubSystemRoles selectBy(
-        Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
+    public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
 
         // オペレーター_サブシステムロール割当群の検索
         Operator_SubSystemRoleEntityCriteria entityCriteria = new Operator_SubSystemRoleEntityCriteria();

@@ -11,13 +11,13 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -76,8 +76,8 @@ class SearchBizTranRoleCompositionTest {
     }
 
     // 取引ロール_取引グループ割当群検索作成
-    private BizTranRole_BizTranGrpsRepository createBizTranRole_BizTranGrpsRepository() {
-        return new BizTranRole_BizTranGrpsRepository() {
+    private BizTranRole_BizTranGrpRepository createBizTranRole_BizTranGrpsRepository() {
+        return new BizTranRole_BizTranGrpRepository() {
             @Override
             public BizTranRole_BizTranGrps selectBy(BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria, Orders orders) {
                 return BizTranRole_BizTranGrps.createFrom(createBizTranRole_BizTranGrpList());
@@ -89,11 +89,15 @@ class SearchBizTranRoleCompositionTest {
         };
     }
     // 取引グループ_取引割当群検索作成
-    private BizTranGrp_BizTransRepository createBizTranGrp_BizTransRepository() {
-        return new BizTranGrp_BizTransRepository() {
+    private BizTranGrp_BizTranRepository createBizTranGrp_BizTranRepository() {
+        return new BizTranGrp_BizTranRepository() {
             @Override
             public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
                 return BizTranGrp_BizTrans.createFrom(createBizTranGrp_BizTranList());
+            }
+            @Override
+            public BizTranGrp_BizTran findOneBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria) {
+                return null;
             }
             @Override
             public BizTranGrp_BizTrans selectAll(Orders orders) {
@@ -151,7 +155,7 @@ class SearchBizTranRoleCompositionTest {
         // テスト対象クラス生成
         SearchBizTranRoleComposition searchBizTranRoleComposition = new SearchBizTranRoleComposition(
             createBizTranRole_BizTranGrpsRepository(),
-            createBizTranGrp_BizTransRepository());
+            createBizTranGrp_BizTranRepository());
 
         // 実行
         searchBizTranRoleComposition.execute(createBizTranRoleCompositionExportRequest(),

@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleCompositio
 import net.jagunma.common.ddd.model.orders.Orders;
 
 /**
- * 取引ロール群検索
+ * 取引ロール検索
  */
-public interface BizTranRolesRepository {
+public interface BizTranRoleRepository {
 
     /**
      * 取引ロール群の条件検索を行います

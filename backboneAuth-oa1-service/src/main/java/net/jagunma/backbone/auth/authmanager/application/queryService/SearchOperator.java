@@ -15,7 +15,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
@@ -23,27 +23,27 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
@@ -63,34 +63,34 @@ public class SearchOperator {
 
     private final OperatorRepository operatorRepository;
     private final OperatorsRepository operatorsRepository;
-    private final AccountLocksRepository accountLocksRepository;
-    private final PasswordHistoriesRepository passwordHistoriesRepository;
-    private final SignInTracesRepository signInTracesRepository;
-    private final SignOutTracesRepository signOutTracesRepository;
-    private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
-    private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
-    private final OperatorHistoryHeadersRepository operatorHistoryHeadersRepository;
+    private final AccountLockRepository accountLockRepository;
+    private final PasswordHistoryRepository passwordHistoryRepository;
+    private final SignInTraceRepository signInTraceRepository;
+    private final SignOutTraceRepository signOutTraceRepository;
+    private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
+    private final Operator_BizTranRoleRepository operator_BizTranRoleRepository;
+    private final OperatorHistoryHeaderRepository operatorHistoryHeaderRepository;
 
     // コンストラクタ
     public SearchOperator(OperatorRepository operatorRepository,
         OperatorsRepository operatorsRepository,
-        AccountLocksRepository accountLocksRepository,
-        PasswordHistoriesRepository passwordHistoriesRepository,
-        SignInTracesRepository signInTracesRepository,
-        SignOutTracesRepository signOutTracesRepository,
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository,
-        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository) {
+        AccountLockRepository accountLockRepository,
+        PasswordHistoryRepository passwordHistoryRepository,
+        SignInTraceRepository signInTraceRepository,
+        SignOutTraceRepository signOutTraceRepository,
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository,
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository,
+        OperatorHistoryHeaderRepository operatorHistoryHeaderRepository) {
 
         this.operatorRepository = operatorRepository;
         this.operatorsRepository = operatorsRepository;
-        this.accountLocksRepository = accountLocksRepository;
-        this.passwordHistoriesRepository = passwordHistoriesRepository;
-        this.signInTracesRepository = signInTracesRepository;
-        this.signOutTracesRepository = signOutTracesRepository;
-        this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
-        this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
-        this.operatorHistoryHeadersRepository = operatorHistoryHeadersRepository;
+        this.accountLockRepository = accountLockRepository;
+        this.passwordHistoryRepository = passwordHistoryRepository;
+        this.signInTraceRepository = signInTraceRepository;
+        this.signOutTraceRepository = signOutTraceRepository;
+        this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
+        this.operator_BizTranRoleRepository = operator_BizTranRoleRepository;
+        this.operatorHistoryHeaderRepository = operatorHistoryHeaderRepository;
     }
 
     /**
@@ -661,7 +661,7 @@ public class SearchOperator {
     private  Operator_SubSystemRoles searchOperator_SubSystemRoles(List<Long> operatorIdList) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return operator_SubSystemRolesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
+        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
     }
 
     /**
@@ -673,7 +673,7 @@ public class SearchOperator {
     private Operator_BizTranRoles searchOperator_BizTranRoles(List<Long> operatorIdList) {
         Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return operator_BizTranRolesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
+        return operator_BizTranRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
     }
 
     /**
@@ -685,7 +685,7 @@ public class SearchOperator {
     private AccountLocks searchAccountLocks(List<Long> operatorIdList) {
         AccountLockCriteria criteria = new AccountLockCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return accountLocksRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
+        return accountLockRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
     }
 
     /**
@@ -697,7 +697,7 @@ public class SearchOperator {
     private PasswordHistories searchPasswordHistories(List<Long> operatorIdList) {
         PasswordHistoryCriteria criteria = new PasswordHistoryCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return passwordHistoriesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
+        return passwordHistoryRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
     }
 
     /**
@@ -709,7 +709,7 @@ public class SearchOperator {
     private SignInTraces searchSignInTraces(List<String> operatorCodeList) {
         SignInTraceCriteria criteria = new SignInTraceCriteria();
         criteria.getOperatorCodeCriteria().getIncludes().addAll(operatorCodeList);
-        return signInTracesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
+        return signInTraceRepository.selectBy(criteria, Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
     }
 
     /**
@@ -721,7 +721,7 @@ public class SearchOperator {
     private SignOutTraces searchSignOutTraces(List<Long> operatorIdList) {
         SignOutTraceCriteria criteria = new SignOutTraceCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return signOutTracesRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
+        return signOutTraceRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
     }
 
     /**
@@ -733,7 +733,7 @@ public class SearchOperator {
     private OperatorHistoryHeaders searchOperatorHistoryHeaders(List<Long> operatorIdList) {
         OperatorHistoryHeaderCriteria criteria = new OperatorHistoryHeaderCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return operatorHistoryHeadersRepository.selectBy(criteria,
+        return operatorHistoryHeaderRepository.selectBy(criteria,
             Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
     }
 }

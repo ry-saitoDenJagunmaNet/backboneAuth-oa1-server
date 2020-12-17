@@ -9,9 +9,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepos
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
@@ -33,7 +33,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
     private final OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore;
     private final PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore;
     private final OperatorRepository operatorRepository;
-    private final PasswordHistoriesRepository passwordHistoriesRepository;
+    private final PasswordHistoryRepository passwordHistoryRepository;
 
     // コンストラクタ
     public OperatorForStoreDataSource(
@@ -41,13 +41,13 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
         OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore,
         PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore,
         OperatorRepository operatorRepository,
-        PasswordHistoriesRepository passwordHistoriesRepository) {
+        PasswordHistoryRepository passwordHistoryRepository) {
 
         this.operatorEntityDao = operatorEntityDao;
         this.operatorHistoryPackRepositoryForStore = operatorHistoryPackRepositoryForStore;
         this.passwordHistoryRepositoryForStore = passwordHistoryRepositoryForStore;
         this.operatorRepository = operatorRepository;
-        this.passwordHistoriesRepository = passwordHistoriesRepository;
+        this.passwordHistoryRepository = passwordHistoryRepository;
     }
 
     /**
@@ -216,7 +216,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
 
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
-        PasswordHistories passwordHistories = passwordHistoriesRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+        PasswordHistories passwordHistories = passwordHistoryRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
 
         if (isDeviceAuth) {
             // 前回の「パスワード」と 「変更種別」機器認証パスワード を補完

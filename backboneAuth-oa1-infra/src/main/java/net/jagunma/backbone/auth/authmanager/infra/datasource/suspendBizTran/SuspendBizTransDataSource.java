@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
@@ -41,21 +41,21 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
     private final SuspendBizTranEntityDao suspendBizTranEntityDao;
     private final JaAtMomentRepository jaAtMomentRepository;
     private final BranchAtMomentRepository branchAtMomentRepository;
-    private final BizTranGrpsRepository bizTranGrpsRepository;
-    private final BizTransRepository bizTransRepository;
+    private final BizTranGrpRepository bizTranGrpRepository;
+    private final BizTranRepository bizTranRepository;
 
     // コンストラクタ
     SuspendBizTransDataSource(SuspendBizTranEntityDao suspendBizTranEntityDao,
         JaAtMomentRepository jaAtMomentRepository,
         BranchAtMomentRepository branchAtMomentRepository,
-        BizTranGrpsRepository bizTranGrpsRepository,
-        BizTransRepository bizTransRepository) {
+        BizTranGrpRepository bizTranGrpRepository,
+        BizTranRepository bizTranRepository) {
 
         this.suspendBizTranEntityDao = suspendBizTranEntityDao;
         this.jaAtMomentRepository = jaAtMomentRepository;
         this.branchAtMomentRepository = branchAtMomentRepository;
-        this.bizTranGrpsRepository = bizTranGrpsRepository;
-        this.bizTransRepository = bizTransRepository;
+        this.bizTranGrpRepository = bizTranGrpRepository;
+        this.bizTranRepository = bizTranRepository;
     }
 
     /**
@@ -110,14 +110,14 @@ public class SuspendBizTransDataSource implements SuspendBizTransRepository {
         bizTranGrpCriteria .getBizTranGrpCodeCriteria().getIncludes().addAll(
             suspendBizTranEntityList.stream().map(SuspendBizTranEntity::getBizTranGrpCode).filter(
                 Objects::nonNull).distinct().collect(Collectors.toList()));
-        BizTranGrps bizTranGrps = bizTranGrpsRepository.selectBy(bizTranGrpCriteria, Orders.empty());
+        BizTranGrps bizTranGrps = bizTranGrpRepository.selectBy(bizTranGrpCriteria, Orders.empty());
 
         // 取引の検索
         BizTranCriteria bizTranCriteria = new BizTranCriteria();
         bizTranCriteria.getBizTranCodeCriteria().getIncludes().addAll(
             suspendBizTranEntityList.stream().map(SuspendBizTranEntity::getBizTranCode).filter(
                 Objects::nonNull).distinct().collect(Collectors.toList()));
-        BizTrans bizTrans = bizTransRepository.selectBy(bizTranCriteria, Orders.empty());
+        BizTrans bizTrans = bizTranRepository.selectBy(bizTranCriteria, Orders.empty());
 
         for (SuspendBizTranEntity entity : suspendBizTranEntityList) {
             // stream().sorted()でnull項目があると例外になるためBlankに置き換える

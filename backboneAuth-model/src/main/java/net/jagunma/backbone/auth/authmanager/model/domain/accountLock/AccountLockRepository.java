@@ -5,7 +5,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 /**
  * アカウントロック群検索
  */
-public interface AccountLocksRepository {
+public interface AccountLockRepository {
 
     /**
      * アカウントロック群の条件検索を行います

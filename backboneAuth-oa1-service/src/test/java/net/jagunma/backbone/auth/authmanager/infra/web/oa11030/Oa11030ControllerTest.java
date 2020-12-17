@@ -21,7 +21,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
@@ -32,24 +32,24 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdat
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
@@ -170,54 +170,58 @@ class Oa11030ControllerTest {
                 return false;
             }
         };
-        AccountLocksRepository accountLocksRepository = new AccountLocksRepository() {
+        AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
             public AccountLocks selectBy(AccountLockCriteria accountLockrCriteria, Orders orders) {
                 return null;
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository(){
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository(){
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria,
                 Orders orders) {
                 return null;
             }
         };
-        SignInTracesRepository signInTracesRepository = new SignInTracesRepository() {
+        SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
             @Override
             public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
                 return null;
             }
         };
-        SignOutTracesRepository signOutTracesRepository = new SignOutTracesRepository() {
+        SignOutTraceRepository signOutTraceRepository = new SignOutTraceRepository() {
             @Override
             public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria,
                 Orders orders) {
                 return null;
             }
         };
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(
                 Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
                 return null;
             }
         };
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
             @Override
             public Operator_BizTranRoles selectBy(
                 Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 return null;
             }
         };
-        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository = new OperatorHistoryHeadersRepository() {
+        OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
             @Override
             public OperatorHistoryHeaders selectBy(
                 OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, accountLocksRepository, passwordHistoriesRepository, signInTracesRepository, signOutTracesRepository, operator_SubSystemRolesRepository, operator_BizTranRolesRepository, operatorHistoryHeadersRepository) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null,
+            accountLockRepository,
+            passwordHistoryRepository, signInTraceRepository, signOutTraceRepository,
+            operator_SubSystemRoleRepository, operator_BizTranRoleRepository,
+            operatorHistoryHeaderRepository) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる

@@ -24,7 +24,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class SignInTracesDataSourceTest {
+class SignInTraceDataSourceTest {
 
     // 実行既定値
     // サインイン証跡Daoの作成
@@ -139,7 +139,7 @@ class SignInTracesDataSourceTest {
     }
 
     /**
-     * {@link SignInTracesDataSource#selectBy(SignInTraceCriteria,Orders)}のテスト
+     * {@link SignInTraceDataSource#selectBy(SignInTraceCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -155,7 +155,7 @@ class SignInTracesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        SignInTracesDataSource signInTracesDataSource = new SignInTracesDataSource(
+        SignInTraceDataSource signInTraceDataSource = new SignInTraceDataSource(
             createSignInTraceEntityDao(),
             createOperatorsRepository());
 
@@ -175,7 +175,7 @@ class SignInTracesDataSourceTest {
         }
 
         // 実行
-        SignInTraces actualSignInTraces = signInTracesDataSource.selectBy(criteria, orders);
+        SignInTraces actualSignInTraces = signInTraceDataSource.selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualSignInTraces.getValues().size(); i++) {
