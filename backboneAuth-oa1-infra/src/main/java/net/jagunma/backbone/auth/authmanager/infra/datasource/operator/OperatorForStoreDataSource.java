@@ -1,7 +1,10 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
 import java.time.LocalDateTime;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
@@ -28,20 +31,23 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
 
     private final OperatorEntityDao operatorEntityDao;
     private final OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore;
-    private final PasswordHistoriesRepository passwordHistoriesRepository;
     private final PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore;
+    private final OperatorRepository operatorRepository;
+    private final PasswordHistoriesRepository passwordHistoriesRepository;
 
     // コンストラクタ
     public OperatorForStoreDataSource(
         OperatorEntityDao operatorEntityDao,
         OperatorHistoryPackRepositoryForStore operatorHistoryPackRepositoryForStore,
-        PasswordHistoriesRepository passwordHistoriesRepository,
-        PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore) {
+        PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore,
+        OperatorRepository operatorRepository,
+        PasswordHistoriesRepository passwordHistoriesRepository) {
 
         this.operatorEntityDao = operatorEntityDao;
         this.operatorHistoryPackRepositoryForStore = operatorHistoryPackRepositoryForStore;
-        this.passwordHistoriesRepository = passwordHistoriesRepository;
         this.passwordHistoryRepositoryForStore = passwordHistoryRepositoryForStore;
+        this.operatorRepository = operatorRepository;
+        this.passwordHistoriesRepository = passwordHistoriesRepository;
     }
 
     /**
@@ -92,11 +98,11 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
      * @param operatorCode オペレーターコード
      */
     void checkAlreadyExists(String operatorCode) {
-        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
 
-        operatorEntityCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
+        operatorCriteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
 
-        if (operatorEntityDao.countBy(operatorEntityCriteria) > 0 ) {
+        if (operatorRepository.existsBy(operatorCriteria)) {
             throw new GunmaRuntimeException("EOA11001", "オペレーターコード", operatorCode);
         }
     }
@@ -107,13 +113,13 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
      * @return 有無
      */
     Boolean isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack) {
-        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
 
-        operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorUpdatePack.getOperatorId());
+        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorUpdatePack.getOperatorId());
 
-        OperatorEntity operatorEntity = operatorEntityDao.findOneBy(operatorEntityCriteria);
+        Operator operator = operatorRepository.findOneBy(operatorCriteria);
 
-        if (operatorEntity.getIsDeviceAuth() != operatorUpdatePack.getIsDeviceAuth()) {
+        if (operator.getIsDeviceAuth() != operatorUpdatePack.getIsDeviceAuth()) {
             return true;
         }
 
@@ -184,19 +190,19 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
      */
     PasswordHistory storePasswordHistory(Long operatorId, LocalDateTime changeDateTime, String password, PasswordChangeType passwordChangeType) {
 
-       PasswordHistory passwordHistory = PasswordHistory.createFrom(
-           null,
-           operatorId,
-           changeDateTime,
-           password,
-           passwordChangeType,
-           null,
-           null);
+        PasswordHistory passwordHistory = PasswordHistory.createFrom(
+            null,
+            operatorId,
+            changeDateTime,
+            password,
+            passwordChangeType,
+            null,
+            null);
 
-       passwordHistoryRepositoryForStore.store(passwordHistory);
+        passwordHistoryRepositoryForStore.store(passwordHistory);
 
-       return passwordHistory;
-   }
+        return passwordHistory;
+    }
     /**
      * パスワード履歴の格納を行います
      *
