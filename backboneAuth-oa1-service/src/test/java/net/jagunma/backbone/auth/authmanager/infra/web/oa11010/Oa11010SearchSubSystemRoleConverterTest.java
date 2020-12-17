@@ -26,7 +26,7 @@ class Oa11010SearchSubSystemRoleConverterTest {
         // 実行既定値
         Boolean subSystemRoleSelected = true;
         String subSystemRoleCode = SubSystemRole.JA管理者.getCode();
-        String subSystemRoleName = SubSystemRole.JA管理者.getName();
+        String subSystemRoleName = SubSystemRole.JA管理者.getDisplayName();
         Integer validThruSelect = 2;
         LocalDate validThruStatusDate = LocalDate.of(2020, 10, 1);
         LocalDate validThruStartDateFrom = LocalDate.of(2020, 10, 2);

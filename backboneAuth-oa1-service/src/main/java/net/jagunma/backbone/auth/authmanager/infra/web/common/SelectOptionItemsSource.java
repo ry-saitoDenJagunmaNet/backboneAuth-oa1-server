@@ -156,7 +156,7 @@ public class SelectOptionItemsSource {
             list.add(new SelectOptionItemSource(
                 null,
                 subSystem.getCode(),
-                subSystem.getName()
+                subSystem.getDisplayName()
             ));
         }
         return new SelectOptionItemsSource(list);

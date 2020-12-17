@@ -504,9 +504,9 @@ class SearchOperatorTest {
     // サブシステムローロール検索条件作成
     private List<Oa11010SearchSubSystemRoleConverter> createOa11010SearchSubSystemRoleConverterList() {
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
         return list;
     }
 
@@ -991,8 +991,8 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 1;  //AND
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
         subSystemRoleList = list;
 
         // 期待値
@@ -1138,9 +1138,9 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1178,7 +1178,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1213,7 +1213,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1248,7 +1248,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));

@@ -45,11 +45,11 @@ public class CheckBizTranRoleCompositionValidator {
 
         // サブシステムチェック
         if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
-            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getDisplayName())).count() > 0) {
             throw new GunmaRuntimeException("EOA13102", "[取引ロール－取引グループ編成]シート");
         }
         if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
-            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getDisplayName())).count() > 0) {
             throw new GunmaRuntimeException("EOA13102", "[取引グループ－取引編成]シート");
         }
     }

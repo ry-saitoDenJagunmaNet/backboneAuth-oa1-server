@@ -39,7 +39,7 @@ class Oa11010SearchConverterTest {
         Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
         subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.JA管理者.getCode());
-        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.JA管理者.getName());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.JA管理者.getDisplayName());
         subSystemRoleVo.setValidThruSelect(1);
         subSystemRoleVo.setValidThruStatusDate(LocalDate.of(2020, 10, 1));
         subSystemRoleVo.setValidThruStartDateFrom(LocalDate.of(2020, 10, 2));
@@ -50,7 +50,7 @@ class Oa11010SearchConverterTest {
         subSystemRoleVo = new Oa11010SubSystemRoleVo();
         subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_青果.getCode());
-        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_青果.getName());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_青果.getDisplayName());
         subSystemRoleVo.setValidThruSelect(2);
         subSystemRoleVo.setValidThruStatusDate(LocalDate.of(2020, 10, 6));
         subSystemRoleVo.setValidThruStartDateFrom(LocalDate.of(2020, 10, 7));
@@ -61,7 +61,7 @@ class Oa11010SearchConverterTest {
         subSystemRoleVo = new Oa11010SubSystemRoleVo();
         subSystemRoleVo.setSubSystemRoleSelected(true);
         subSystemRoleVo.setSubSystemRoleCode(SubSystemRole.業務統括者_販売_米.getCode());
-        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_米.getName());
+        subSystemRoleVo.setSubSystemRoleName(SubSystemRole.業務統括者_販売_米.getDisplayName());
         subSystemRoleVo.setValidThruSelect(0);
         subSystemRoleVo.setValidThruStatusDate(null);
         subSystemRoleVo.setValidThruStartDateFrom(null);

@@ -149,7 +149,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
                 firstRow = false;
                 // サブシステムロール
                 html.append(String.format("<td class=\"oaex_operator_subsystem_role\">%s</td>",
-                    operatorSubSystemRole.getSubSystemRole().getName()));
+                    operatorSubSystemRole.getSubSystemRole().getDisplayName()));
                 // サブシステムロール有効期限
                 html.append(String.format("<td class=\"oaex_operator_subsystem_role_valid_thru_date\">%s～%s</td>",
                     formatLocalDate(operatorSubSystemRole.getValidThruStartDate()),

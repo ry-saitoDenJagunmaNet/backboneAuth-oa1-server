@@ -233,7 +233,7 @@ class Oa12020Presenter implements SuspendBizTransSearchResponse {
                 searchResultVo.setBranchName(suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
             }
             if (Strings2.isNotEmpty(suspendBizTran.getSubSystemCode())) {
-                searchResultVo.setSubSystemName(SubSystem.codeOf(suspendBizTran.getSubSystemCode()).getName());
+                searchResultVo.setSubSystemName(SubSystem.codeOf(suspendBizTran.getSubSystemCode()).getDisplayName());
             }
             if (Strings2.isNotEmpty(suspendBizTran.getBizTranGrpCode())) {
                 searchResultVo.setBizTranGrpCode(suspendBizTran.getBizTranGrp().getBizTranGrpCode());

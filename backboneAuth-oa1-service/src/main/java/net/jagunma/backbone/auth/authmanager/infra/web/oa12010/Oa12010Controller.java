@@ -171,7 +171,7 @@ public class Oa12010Controller extends BaseOfController {
         String exportExcelFilename =  EXPORT_EXCEL_FILE_NAME;
         if (Strings2.isNotEmpty(vo.getSubSystemCode())) {
             exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_CONNECTOR;
-            exportExcelFilename = exportExcelFilename + SubSystem.codeOf(vo.getSubSystemCode()).getName();
+            exportExcelFilename = exportExcelFilename + SubSystem.codeOf(vo.getSubSystemCode()).getDisplayName();
             exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_SUBSYSTEM;
         }
         exportExcelFilename = exportExcelFilename + EXPORT_EXCEL_FILE_EXTENSION;
