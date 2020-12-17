@@ -9,7 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepo
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityDao;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Component;
  * サインイン証跡群検索
  */
 @Component
-public class SignInTracesDataSource implements SignInTracesRepository {
+public class SignInTraceDataSource implements SignInTraceRepository {
 
     private final SignInTraceEntityDao signInTraceEntityDao;
     private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
-    SignInTracesDataSource(SignInTraceEntityDao signInTraceEntityDao,
+    SignInTraceDataSource(SignInTraceEntityDao signInTraceEntityDao,
         OperatorsRepository operatorsRepository) {
 
         this.signInTraceEntityDao = signInTraceEntityDao;

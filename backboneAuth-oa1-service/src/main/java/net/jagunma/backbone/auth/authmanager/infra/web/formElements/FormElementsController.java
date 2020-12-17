@@ -12,11 +12,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -62,22 +61,19 @@ public class FormElementsController {
 
     private final SearchJaAtMoment searchJaAtMoment;
     private final SearchBranchAtMoment searchBranchAtMoment;
-    private final BizTranGrpsRepository bizTranGrpsRepository;
     private final BizTranGrpRepository bizTranGrpRepository;
-    private final BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository;
+    private final BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository;
 
     // コンストラクタ
     FormElementsController(SearchJaAtMoment searchJaAtMoment,
         SearchBranchAtMoment searchBranchAtMoment,
-        BizTranGrpsRepository bizTranGrpsRepository,
         BizTranGrpRepository bizTranGrpRepository,
-        BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository) {
+        BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository) {
 
         this.searchJaAtMoment = searchJaAtMoment;
         this.searchBranchAtMoment = searchBranchAtMoment;
-        this.bizTranGrpsRepository = bizTranGrpsRepository;
         this.bizTranGrpRepository = bizTranGrpRepository;
-        this.bizTranGrp_BizTransRepository = bizTranGrp_BizTransRepository;
+        this.bizTranGrp_BizTranRepository = bizTranGrp_BizTranRepository;
     }
 
     /**
@@ -150,7 +146,7 @@ public class FormElementsController {
         if (Strings2.isNotEmpty(subSystemCode)) {
             BizTranGrpCriteria criteria = new BizTranGrpCriteria();
             criteria.getSubSystemCodeCriteria().setEqualTo(subSystemCode);
-            list = SelectOptionItemsSource.createFrom(bizTranGrpsRepository.selectBy(criteria, Orders.empty()),
+            list = SelectOptionItemsSource.createFrom(bizTranGrpRepository.selectBy(criteria, Orders.empty()),
                 (!Strings2.isNull(firstRowStatus))).getValue();
         }
         if (Strings2.isNotEmpty(firstRowStatus)) {
@@ -190,7 +186,7 @@ public class FormElementsController {
                 bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrp.getBizTranGrpId());
             }
 
-            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTransRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
+            BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTranRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
             List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(
                 BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
             list = SelectOptionItemsSource.createFrom(bizTranList, (!Strings2.isNull(firstRowStatus))).getValue();

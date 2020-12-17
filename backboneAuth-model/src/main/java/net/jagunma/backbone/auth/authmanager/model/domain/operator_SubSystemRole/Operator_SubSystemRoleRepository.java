@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRol
 import net.jagunma.common.ddd.model.orders.Orders;
 
 /**
- * オペレーター_サブシステムロール割当群検索
+ * オペレーター_サブシステムロール割当検索
  */
-public interface Operator_SubSystemRolesRepository {
+public interface Operator_SubSystemRoleRepository {
 
     /**
      * オペレーター_サブシステムロール割当群の条件検索を行います

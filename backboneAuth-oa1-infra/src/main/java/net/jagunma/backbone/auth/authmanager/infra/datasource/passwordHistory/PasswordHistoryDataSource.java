@@ -3,12 +3,11 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.passwordHistory;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
@@ -22,13 +21,13 @@ import org.springframework.stereotype.Component;
  * パスワード履歴群検索
  */
 @Component
-public class PasswordHistoriesDataSource implements PasswordHistoriesRepository {
+public class PasswordHistoryDataSource implements PasswordHistoryRepository {
 
     private final PasswordHistoryEntityDao passwordHistoryEntityDao;
     private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
-    PasswordHistoriesDataSource(PasswordHistoryEntityDao passwordHistoryEntityDao,
+    PasswordHistoryDataSource(PasswordHistoryEntityDao passwordHistoryEntityDao,
         OperatorsRepository operatorsRepository) {
 
         this.passwordHistoryEntityDao = passwordHistoryEntityDao;

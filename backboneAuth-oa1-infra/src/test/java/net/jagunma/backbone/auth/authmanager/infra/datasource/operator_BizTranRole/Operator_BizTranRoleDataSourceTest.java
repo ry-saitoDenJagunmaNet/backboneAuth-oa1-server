@@ -9,7 +9,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
@@ -27,7 +27,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Operator_BizTranRolesDataSourceTest {
+class Operator_BizTranRoleDataSourceTest {
 
     // 実行既定値
     // オペレーター_取引ロールDaoの作成
@@ -139,8 +139,8 @@ class Operator_BizTranRolesDataSourceTest {
         return Operators.createFrom(list);
     }
     // 取引ロールRepositoryの作成
-    private BizTranRolesRepository createBizTranRolesRepository() {
-        return new BizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRolesRepository() {
+        return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
                 return createBizTranRoles();
@@ -161,7 +161,7 @@ class Operator_BizTranRolesDataSourceTest {
     }
 
     /**
-     * {@link Operator_BizTranRolesDataSource#selectBy(Operator_BizTranRoleCriteria,Orders)}のテスト
+     * {@link Operator_BizTranRoleDataSource#selectBy(Operator_BizTranRoleCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -177,7 +177,7 @@ class Operator_BizTranRolesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        Operator_BizTranRolesDataSource operator_BizTranRolesDataSource = new Operator_BizTranRolesDataSource(
+        Operator_BizTranRoleDataSource operator_BizTranRoleDataSource = new Operator_BizTranRoleDataSource(
             createOperator_BizTranRoleEntityDao(),
             createOperatorsRepository(),
             createBizTranRolesRepository());
@@ -199,7 +199,8 @@ class Operator_BizTranRolesDataSourceTest {
         }
 
         // 実行
-        Operator_BizTranRoles actualOperator_BizTranRoles = operator_BizTranRolesDataSource.selectBy(criteria, orders);
+        Operator_BizTranRoles actualOperator_BizTranRoles = operator_BizTranRoleDataSource
+            .selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {

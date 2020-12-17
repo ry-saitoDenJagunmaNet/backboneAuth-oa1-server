@@ -23,7 +23,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Operator_SubSystemRolesDataSourceTest {
+class Operator_SubSystemRoleDataSourceTest {
 
     // 実行既定値
     // オペレーター_サブシステムロールDaoの作成
@@ -136,7 +136,7 @@ class Operator_SubSystemRolesDataSourceTest {
     }
 
     /**
-     * {@link Operator_SubSystemRolesDataSource#selectBy(Operator_SubSystemRoleCriteria,Orders)}のテスト
+     * {@link Operator_SubSystemRoleDataSource#selectBy(Operator_SubSystemRoleCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -152,7 +152,7 @@ class Operator_SubSystemRolesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        Operator_SubSystemRolesDataSource operator_SubSystemRolesDataSource = new Operator_SubSystemRolesDataSource(
+        Operator_SubSystemRoleDataSource operator_SubSystemRolesDataSource = new Operator_SubSystemRoleDataSource(
             createOperator_SubSystemRoleEntityDao(),
             createOperatorsRepository());
 

@@ -8,9 +8,11 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
@@ -228,6 +230,14 @@ class SuspendBizTranDataSourceTest {
             public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
                 return createBizTranGrp();
             }
+            @Override
+            public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public BizTranGrps selectAll(Orders orders) {
+                return null;
+            }
         };
     }
     // 取引Repositoryの作成
@@ -236,6 +246,14 @@ class SuspendBizTranDataSourceTest {
             @Override
             public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
                 return createBizTran();
+            }
+            @Override
+            public BizTrans selectBy(BizTranCriteria bizTranCriteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public BizTrans selectAll(Orders orders) {
+                return null;
             }
         };
     }

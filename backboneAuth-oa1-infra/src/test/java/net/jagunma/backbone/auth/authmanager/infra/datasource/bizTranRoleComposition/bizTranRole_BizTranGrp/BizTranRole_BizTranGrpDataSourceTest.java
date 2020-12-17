@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
@@ -25,7 +25,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class BizTranRole_BizTranGrpsDataSourceTest {
+class BizTranRole_BizTranGrpDataSourceTest {
 
     // 実行既定値
     // 取引ロール_取引グループ割当Daoの作成
@@ -121,8 +121,8 @@ class BizTranRole_BizTranGrpsDataSourceTest {
     }
 
     // 取引ロ－ルRepositoryの作成
-    private BizTranRolesRepository createBizTranRolesRepository() {
-        return new BizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRolesRepository() {
+        return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
                 return createBizTranRoles();
@@ -142,8 +142,8 @@ class BizTranRole_BizTranGrpsDataSourceTest {
         return BizTranRoles.createFrom(list);
     }
     // 取引グループRepositoryの作成
-    private BizTranGrpsRepository createBizTranGrpsRepository() {
-        return new BizTranGrpsRepository() {
+    private BizTranGrpRepository createBizTranGrpRepository() {
+        return new BizTranGrpRepository() {
             @Override
             public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
                 return createBizTranGrps();
@@ -151,6 +151,10 @@ class BizTranRole_BizTranGrpsDataSourceTest {
             @Override
             public BizTranGrps selectAll(Orders orders) {
                 return createBizTranGrps();
+            }
+            @Override
+            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+                return null;
             }
         };
     }
@@ -164,7 +168,7 @@ class BizTranRole_BizTranGrpsDataSourceTest {
     }
 
     /**
-     * {@link BizTranRole_BizTranGrpsDataSource#selectBy(BizTranRole_BizTranGrpCriteria,Orders)}のテスト
+     * {@link BizTranRole_BizTranGrpDataSource#selectBy(BizTranRole_BizTranGrpCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -180,10 +184,10 @@ class BizTranRole_BizTranGrpsDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        BizTranRole_BizTranGrpsDataSource bizTranRole_BizTranGrpsDataSource = new BizTranRole_BizTranGrpsDataSource(
+        BizTranRole_BizTranGrpDataSource bizTranRole_BizTranGrpDataSource = new BizTranRole_BizTranGrpDataSource(
             createBizTranRole_BizTranGrpEntityDao(),
             createBizTranRolesRepository(),
-            createBizTranGrpsRepository());
+            createBizTranGrpRepository());
 
         // 期待値
         List<BizTranRole_BizTranGrp> expectedBizTranRole_BizTranGrpList = newArrayList();
@@ -200,7 +204,8 @@ class BizTranRole_BizTranGrpsDataSourceTest {
         }
 
         // 実行
-        BizTranRole_BizTranGrps actualBizTranRole_BizTranGrps = bizTranRole_BizTranGrpsDataSource.selectBy(criteria, orders);
+        BizTranRole_BizTranGrps actualBizTranRole_BizTranGrps = bizTranRole_BizTranGrpDataSource
+            .selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualBizTranRole_BizTranGrps.getValues().size(); i++) {
@@ -210,7 +215,7 @@ class BizTranRole_BizTranGrpsDataSourceTest {
     }
 
     /**
-     * {@link BizTranRole_BizTranGrpsDataSource#selectAll(Orders)}のテスト
+     * {@link BizTranRole_BizTranGrpDataSource#selectAll(Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -225,10 +230,10 @@ class BizTranRole_BizTranGrpsDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        BizTranRole_BizTranGrpsDataSource bizTranRole_BizTranGrpsDataSource = new BizTranRole_BizTranGrpsDataSource(
+        BizTranRole_BizTranGrpDataSource bizTranRole_BizTranGrpDataSource = new BizTranRole_BizTranGrpDataSource(
             createBizTranRole_BizTranGrpEntityDao(),
             createBizTranRolesRepository(),
-            createBizTranGrpsRepository());
+            createBizTranGrpRepository());
 
         // 期待値
         List<BizTranRole_BizTranGrp> expectedBizTranRole_BizTranGrpList = newArrayList();
@@ -245,7 +250,7 @@ class BizTranRole_BizTranGrpsDataSourceTest {
         }
 
         // 実行
-        BizTranRole_BizTranGrps actualBizTranRole_BizTranGrps = bizTranRole_BizTranGrpsDataSource.selectAll(orders);
+        BizTranRole_BizTranGrps actualBizTranRole_BizTranGrps = bizTranRole_BizTranGrpDataSource.selectAll(orders);
 
         // 結果検証
         for(int i = 0; i < actualBizTranRole_BizTranGrps.getValues().size(); i++) {

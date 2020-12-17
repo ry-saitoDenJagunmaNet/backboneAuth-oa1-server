@@ -5,7 +5,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 /**
  * サインアウト証跡群検索
  */
-public interface SignOutTracesRepository {
+public interface SignOutTraceRepository {
 
     /**
      * サインアウト証跡群の条件検索を行います

@@ -1,12 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
@@ -14,13 +10,13 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleComp
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
@@ -28,10 +24,6 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.orders.Orders;
-import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.exception.GunmaRuntimeException;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 
 class CheckBizTranRoleCompositionTest {
 
@@ -99,8 +91,8 @@ class CheckBizTranRoleCompositionTest {
         return list;
     }
     // 取引ロール群検索の作成
-    private BizTranRolesRepository createBizTranRolesRepository(Boolean isBizTranRoleDeleteTest) {
-        return new BizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRoleRepository(Boolean isBizTranRoleDeleteTest) {
+        return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
                 List<BizTranRole> list = createBizTranRoleList();
@@ -117,8 +109,8 @@ class CheckBizTranRoleCompositionTest {
         };
     }
     // オペレーター_取引ロール割当群検索の作成
-    private Operator_BizTranRolesRepository createOperator_BizTranRolesRepository() {
-        return new Operator_BizTranRolesRepository() {
+    private Operator_BizTranRoleRepository createOperator_BizTranRoleRepository() {
+        return new Operator_BizTranRoleRepository() {
             @Override
             public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 return Operator_BizTranRoles.createFrom(createOperator_BizTranRoleList().stream().filter(o->

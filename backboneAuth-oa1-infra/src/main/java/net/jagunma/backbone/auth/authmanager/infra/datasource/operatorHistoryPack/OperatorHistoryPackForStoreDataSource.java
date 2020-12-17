@@ -8,11 +8,11 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.Op
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
@@ -37,9 +37,9 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
     private final OperatorEntityDao operatorEntityDao;
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
     private final OperatorHistoryEntityDao operatorHistoryEntityDao;
-    private final Operator_SubSystemRolesRepository operator_SubSystemRolesRepository;
+    private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
     private final Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao;
-    private final Operator_BizTranRolesRepository operator_BizTranRolesRepository;
+    private final Operator_BizTranRoleRepository operator_BizTranRoleRepository;
     private final Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao;
 
     // コンストラクタ
@@ -47,17 +47,17 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
         OperatorEntityDao operatorEntityDao,
         OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
         OperatorHistoryEntityDao operatorHistoryEntityDao,
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository,
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository,
         Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao,
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository,
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository,
         Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao) {
 
         this.operatorEntityDao = operatorEntityDao;
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
         this.operatorHistoryEntityDao = operatorHistoryEntityDao;
-        this.operator_SubSystemRolesRepository = operator_SubSystemRolesRepository;
+        this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
         this.operator_SubSystemRoleHistoryEntityDao = operator_SubSystemRoleHistoryEntityDao;
-        this.operator_BizTranRolesRepository = operator_BizTranRolesRepository;
+        this.operator_BizTranRoleRepository = operator_BizTranRoleRepository;
         this.operator_BizTranRoleHistoryEntityDao = operator_BizTranRoleHistoryEntityDao;
     }
 
@@ -158,7 +158,7 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
         // 現在の割当を取得
         Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
         operator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRolesRepository.selectBy(operator_SubSystemRoleCriteria,
+        Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRoleRepository.selectBy(operator_SubSystemRoleCriteria,
             Orders.empty().addOrder("Operator_SubSystemRoleId"));
 
         // インサート
@@ -188,7 +188,7 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
         // 現在の割当を取得
         Operator_BizTranRoleCriteria operator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
         operator_BizTranRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRolesRepository.selectBy(operator_BizTranRoleCriteria,
+        Operator_BizTranRoles operator_BizTranRoles = operator_BizTranRoleRepository.selectBy(operator_BizTranRoleCriteria,
             Orders.empty().addOrder("operator_BizTranRoleId"));
 
         // インサート

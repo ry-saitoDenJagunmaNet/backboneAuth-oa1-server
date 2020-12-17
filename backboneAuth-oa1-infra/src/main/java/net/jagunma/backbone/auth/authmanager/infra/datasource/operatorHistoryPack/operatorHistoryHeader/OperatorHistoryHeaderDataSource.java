@@ -9,7 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Component;
  * オペレーター履歴ヘッダー群検索
  */
 @Component
-public class OperatorHistoryHeadersDataSource implements OperatorHistoryHeadersRepository {
+public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRepository {
 
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
     private final OperatorsDataSource operatorsDataSource;
 
     // コンストラクタ
-    OperatorHistoryHeadersDataSource(OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
+    OperatorHistoryHeaderDataSource(OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
         OperatorsDataSource operatorsDataSource) {
 
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;

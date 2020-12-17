@@ -17,7 +17,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class BizTranRolesDataSourceTest {
+class BizTranRoleDataSourceTest {
 
     // 実行既定値
     // 取引ロールDaoの作成
@@ -111,7 +111,7 @@ class BizTranRolesDataSourceTest {
     }
 
     /**
-     * {@link BizTranRolesDataSource#selectBy(BizTranRoleCriteria,Orders)}のテスト
+     * {@link BizTranRoleDataSource#selectBy(BizTranRoleCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -127,7 +127,7 @@ class BizTranRolesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        BizTranRolesDataSource bizTranRolesDataSource = new BizTranRolesDataSource(createBizTranRoleEntityDao());
+        BizTranRoleDataSource bizTranRoleDataSource = new BizTranRoleDataSource(createBizTranRoleEntityDao());
 
         // 期待値
         List<BizTranRole> expectedBizTranGrpList = newArrayList();
@@ -142,7 +142,7 @@ class BizTranRolesDataSourceTest {
         }
 
         // 実行
-        BizTranRoles actualBizTranRoles = bizTranRolesDataSource.selectBy(criteria, orders);
+        BizTranRoles actualBizTranRoles = bizTranRoleDataSource.selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualBizTranRoles.getValues().size(); i++) {
@@ -152,7 +152,7 @@ class BizTranRolesDataSourceTest {
     }
 
     /**
-     * {@link BizTranRolesDataSource#selectAll(Orders)}のテスト
+     * {@link BizTranRoleDataSource#selectAll(Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -167,7 +167,7 @@ class BizTranRolesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        BizTranRolesDataSource bizTranRolesDataSource = new BizTranRolesDataSource(createBizTranRoleEntityDao());
+        BizTranRoleDataSource bizTranRoleDataSource = new BizTranRoleDataSource(createBizTranRoleEntityDao());
 
         // 期待値
         List<BizTranRole> expectedBizTranGrpList = newArrayList();
@@ -182,7 +182,7 @@ class BizTranRolesDataSourceTest {
         }
 
         // 実行
-        BizTranRoles actualBizTranRoles = bizTranRolesDataSource.selectAll(orders);
+        BizTranRoles actualBizTranRoles = bizTranRoleDataSource.selectAll(orders);
 
         // 結果検証
         for(int i = 0; i < actualBizTranRoles.getValues().size(); i++) {

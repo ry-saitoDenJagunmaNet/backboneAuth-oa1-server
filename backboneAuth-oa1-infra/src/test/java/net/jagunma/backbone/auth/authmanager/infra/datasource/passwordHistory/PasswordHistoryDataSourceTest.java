@@ -23,7 +23,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class PasswordHistoriesDataSourceTest {
+class PasswordHistoryDataSourceTest {
 
     // 実行既定値
     // パスワード履歴Daoの作成
@@ -136,7 +136,7 @@ class PasswordHistoriesDataSourceTest {
     }
 
     /**
-     * {@link PasswordHistoriesDataSource#selectBy(PasswordHistoryCriteria,Orders)}のテスト
+     * {@link PasswordHistoryDataSource#selectBy(PasswordHistoryCriteria,Orders)}のテスト
      *  ●パターン
      *    正常
      *
@@ -152,7 +152,7 @@ class PasswordHistoriesDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        PasswordHistoriesDataSource passwordHistoriesDataSource = new PasswordHistoriesDataSource(
+        PasswordHistoryDataSource passwordHistoryDataSource = new PasswordHistoryDataSource(
             createPasswordHistoryEntityDao(),
             createOperatorsRepository());
 
@@ -171,7 +171,8 @@ class PasswordHistoriesDataSourceTest {
         }
 
         // 実行
-        PasswordHistories actualPasswordHistories = passwordHistoriesDataSource.selectBy(criteria, orders);
+        PasswordHistories actualPasswordHistories = passwordHistoryDataSource
+            .selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualPasswordHistories.getValues().size(); i++) {

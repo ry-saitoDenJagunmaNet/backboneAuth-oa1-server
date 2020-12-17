@@ -6,7 +6,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Component;
  * アカウントロック群検索
  */
 @Component
-public class AccountLocksDataSource implements AccountLocksRepository {
+public class AccountLockDataSource implements AccountLockRepository {
 
     private final AccountLockEntityDao accountLockEntityDao;
     private final OperatorsRepository operatorsRepository;
 
     // コンストラクタ
-    AccountLocksDataSource(AccountLockEntityDao accountLockEntityDao,
+    AccountLockDataSource(AccountLockEntityDao accountLockEntityDao,
         OperatorsRepository operatorsRepository) {
 
         this.accountLockEntityDao = accountLockEntityDao;

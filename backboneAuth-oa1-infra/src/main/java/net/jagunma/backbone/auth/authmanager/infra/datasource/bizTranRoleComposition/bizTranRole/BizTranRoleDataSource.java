@@ -5,8 +5,8 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.bizTranRole.BizTranRoleEntityCriteria;
@@ -15,15 +15,15 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Component;
 
 /**
- * 取引ロール群検索
+ * 取引ロール検索
  */
 @Component
-public class BizTranRolesDataSource implements BizTranRolesRepository {
+public class BizTranRoleDataSource implements BizTranRoleRepository {
 
     private final BizTranRoleEntityDao bizTranRoleEntityDao;
 
     // コンストラクタ
-    BizTranRolesDataSource(BizTranRoleEntityDao bizTranRoleEntityDao) {
+    BizTranRoleDataSource(BizTranRoleEntityDao bizTranRoleEntityDao) {
         this.bizTranRoleEntityDao = bizTranRoleEntityDao;
     }
 
