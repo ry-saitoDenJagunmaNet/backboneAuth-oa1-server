@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
@@ -116,11 +116,19 @@ class SignOutTraceDataSourceTest {
     }
 
     // オペレータRepositoryの作成
-    private OperatorsRepository createOperatorsRepository() {
-        return new OperatorsRepository() {
+    private OperatorRepository createOperatorRepository() {
+        return new OperatorRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return createOperators();
+            }
+            @Override
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+                return null;
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
             }
         };
     }
@@ -152,7 +160,7 @@ class SignOutTraceDataSourceTest {
         // テスト対象クラス生成
         SignOutTraceDataSource signOutTraceDataSource = new SignOutTraceDataSource(
             createSignOutTraceEntityDao(),
-            createOperatorsRepository());
+            createOperatorRepository());
 
         // 期待値
         Operators operators = createOperators();

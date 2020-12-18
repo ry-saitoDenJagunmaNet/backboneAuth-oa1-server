@@ -14,36 +14,35 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.common.ddd.model.criterias.BooleanCriteria;
@@ -62,7 +61,6 @@ import org.springframework.stereotype.Service;
 public class SearchOperator {
 
     private final OperatorRepository operatorRepository;
-    private final OperatorsRepository operatorsRepository;
     private final AccountLockRepository accountLockRepository;
     private final PasswordHistoryRepository passwordHistoryRepository;
     private final SignInTraceRepository signInTraceRepository;
@@ -73,7 +71,6 @@ public class SearchOperator {
 
     // コンストラクタ
     public SearchOperator(OperatorRepository operatorRepository,
-        OperatorsRepository operatorsRepository,
         AccountLockRepository accountLockRepository,
         PasswordHistoryRepository passwordHistoryRepository,
         SignInTraceRepository signInTraceRepository,
@@ -83,7 +80,6 @@ public class SearchOperator {
         OperatorHistoryHeaderRepository operatorHistoryHeaderRepository) {
 
         this.operatorRepository = operatorRepository;
-        this.operatorsRepository = operatorsRepository;
         this.accountLockRepository = accountLockRepository;
         this.passwordHistoryRepository = passwordHistoryRepository;
         this.signInTraceRepository = signInTraceRepository;
@@ -167,7 +163,7 @@ public class SearchOperator {
 
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
-        Operators operators = operatorsRepository.selectBy(createOperatorCriteria(request), orders);
+        Operators operators = operatorRepository.selectBy(createOperatorCriteria(request), orders);
 
         // オペレーターIDリスト
         List<Long> operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());

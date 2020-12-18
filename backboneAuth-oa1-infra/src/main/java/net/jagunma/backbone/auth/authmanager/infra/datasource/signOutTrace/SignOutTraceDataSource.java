@@ -4,12 +4,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.signOutTrace.SignOutTraceEntityDao;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class SignOutTraceDataSource implements SignOutTraceRepository {
 
     private final SignOutTraceEntityDao signOutTraceEntityDao;
-    private final OperatorsRepository operatorsRepository;
+    private final OperatorRepository operatorRepository;
 
     // コンストラクタ
     SignOutTraceDataSource(SignOutTraceEntityDao signOutTraceEntityDao,
-        OperatorsRepository operatorsRepository) {
+        OperatorRepository operatorRepository) {
 
         this.signOutTraceEntityDao = signOutTraceEntityDao;
-        this.operatorsRepository = operatorsRepository;
+        this.operatorRepository = operatorRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ public class SignOutTraceDataSource implements SignOutTraceRepository {
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().assignFrom(signOutTraceCriteria.getOperatorIdCriteria());
-        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインアウト証跡群検索
         SignOutTraceEntityCriteria entityCriteria = new SignOutTraceEntityCriteria();

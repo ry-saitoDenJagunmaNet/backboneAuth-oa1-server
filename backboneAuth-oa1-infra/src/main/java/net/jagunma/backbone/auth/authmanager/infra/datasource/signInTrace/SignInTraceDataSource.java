@@ -4,12 +4,12 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityDao;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class SignInTraceDataSource implements SignInTraceRepository {
 
     private final SignInTraceEntityDao signInTraceEntityDao;
-    private final OperatorsRepository operatorsRepository;
+    private final OperatorRepository operatorRepository;
 
     // コンストラクタ
     SignInTraceDataSource(SignInTraceEntityDao signInTraceEntityDao,
-        OperatorsRepository operatorsRepository) {
+        OperatorRepository operatorRepository) {
 
         this.signInTraceEntityDao = signInTraceEntityDao;
-        this.operatorsRepository = operatorsRepository;
+        this.operatorRepository = operatorRepository;
     }
 
     /**
@@ -45,7 +45,7 @@ public class SignInTraceDataSource implements SignInTraceRepository {
         // オペレーター群の検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorCodeCriteria().assignFrom(signInTraceCriteria.getOperatorCodeCriteria());
-        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorRepository.selectBy(operatorCriteria, Orders.empty());
 
         // サインイン証跡群検索
         SignInTraceEntityCriteria entityCriteria = new SignInTraceEntityCriteria();

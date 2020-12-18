@@ -12,6 +12,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
@@ -81,8 +82,12 @@ class Ed01010ControllerTest {
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
+            }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null, null) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる

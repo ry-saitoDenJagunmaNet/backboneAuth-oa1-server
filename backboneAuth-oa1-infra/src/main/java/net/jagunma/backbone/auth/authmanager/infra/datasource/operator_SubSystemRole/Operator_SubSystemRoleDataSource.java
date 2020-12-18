@@ -5,8 +5,8 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
@@ -25,14 +25,14 @@ import org.springframework.stereotype.Component;
 public class Operator_SubSystemRoleDataSource implements Operator_SubSystemRoleRepository {
 
     private final Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao;
-    private final OperatorsRepository operatorsRepository;
+    private final OperatorRepository operatorRepository;
 
     // コンストラクタ
     Operator_SubSystemRoleDataSource(Operator_SubSystemRoleEntityDao operator_SubSystemRoleEntityDao,
-        OperatorsRepository operatorsRepository) {
+        OperatorRepository operatorRepository) {
 
         this.operator_SubSystemRoleEntityDao = operator_SubSystemRoleEntityDao;
-        this.operatorsRepository = operatorsRepository;
+        this.operatorRepository = operatorRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class Operator_SubSystemRoleDataSource implements Operator_SubSystemRoleR
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(
             operator_SubSystemRoleEntityList.stream().map(Operator_SubSystemRoleEntity::getOperatorId).distinct().collect(Collectors.toList()));
-        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorRepository.selectBy(operatorCriteria, Orders.empty());
 
         List<Operator_SubSystemRole> list = newArrayList();
         for (Operator_SubSystemRoleEntity entity : operator_SubSystemRoleEntityList) {

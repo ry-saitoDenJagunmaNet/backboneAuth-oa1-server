@@ -5,15 +5,15 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntity;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator_BizTranRole.Operator_BizTranRoleEntityDao;
@@ -27,16 +27,16 @@ import org.springframework.stereotype.Component;
 public class Operator_BizTranRoleDataSource implements Operator_BizTranRoleRepository {
 
     private final Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao;
-    private final OperatorsRepository operatorsRepository;
+    private final OperatorRepository operatorRepository;
     private final BizTranRoleRepository bizTranRoleRepository;
 
     // コンストラクタ
     Operator_BizTranRoleDataSource(Operator_BizTranRoleEntityDao operator_BizTranRoleEntityDao,
-        OperatorsRepository operatorsRepository,
+        OperatorRepository operatorRepository,
         BizTranRoleRepository bizTranRoleRepository) {
 
         this.operator_BizTranRoleEntityDao = operator_BizTranRoleEntityDao;
-        this.operatorsRepository = operatorsRepository;
+        this.operatorRepository = operatorRepository;
         this.bizTranRoleRepository = bizTranRoleRepository;
     }
 
@@ -65,7 +65,7 @@ public class Operator_BizTranRoleDataSource implements Operator_BizTranRoleRepos
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(
             Operator_BizTranRoleEntityList.stream().map(Operator_BizTranRoleEntity::getOperatorId).distinct().collect(Collectors.toList()));
-        Operators operators = operatorsRepository.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorRepository.selectBy(operatorCriteria, Orders.empty());
 
         List<Operator_BizTranRole> list = newArrayList();
         for (Operator_BizTranRoleEntity entity : Operator_BizTranRoleEntityList) {
