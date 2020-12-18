@@ -4,18 +4,18 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityDao;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
@@ -34,31 +34,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPackRepositoryForStore {
 
-    private final OperatorEntityDao operatorEntityDao;
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
     private final OperatorHistoryEntityDao operatorHistoryEntityDao;
-    private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
     private final Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao;
-    private final Operator_BizTranRoleRepository operator_BizTranRoleRepository;
     private final Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao;
+    private final OperatorRepository operatorRepository;
+    private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
+    private final Operator_BizTranRoleRepository operator_BizTranRoleRepository;
 
     // コンストラクタ
     public OperatorHistoryPackForStoreDataSource(
-        OperatorEntityDao operatorEntityDao,
         OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
         OperatorHistoryEntityDao operatorHistoryEntityDao,
-        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository,
         Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao,
-        Operator_BizTranRoleRepository operator_BizTranRoleRepository,
-        Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao) {
+        Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao,
+        OperatorRepository operatorRepository,
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository,
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository) {
 
-        this.operatorEntityDao = operatorEntityDao;
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
         this.operatorHistoryEntityDao = operatorHistoryEntityDao;
-        this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
         this.operator_SubSystemRoleHistoryEntityDao = operator_SubSystemRoleHistoryEntityDao;
-        this.operator_BizTranRoleRepository = operator_BizTranRoleRepository;
         this.operator_BizTranRoleHistoryEntityDao = operator_BizTranRoleHistoryEntityDao;
+        this.operatorRepository = operatorRepository;
+        this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
+        this.operator_BizTranRoleRepository = operator_BizTranRoleRepository;
     }
 
     /**
@@ -70,14 +70,14 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
      */
     public void store(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
 
-        // オペレーターエンティティを取得します
-        OperatorEntity operatorEntity = getOperatorEntity(operatorId);
+        // オペレーターを取得します
+        Operator operator = getOperator(operatorId);
 
         // オペレーター履歴ヘッダーのインサートを行います
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = insertOperatorHistoryHeader(operatorId, changeDateTime, changeCause);
 
         // オペレーター履歴のインサートを行います
-        insertOperatorHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorEntity);
+        insertOperatorHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operator);
 
         // オペレーター_サブシステムロール割当履歴のインサートを行います
         insertOperator_SubSystemRoleHistory(operatorHistoryHeaderEntity.getOperatorHistoryId(), operatorHistoryHeaderEntity.getOperatorId());
@@ -88,17 +88,17 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
     }
 
     /**
-     * オペレーターエンティティを取得します
+     * オペレーターを取得します
      *
      * @param operatorId オペレーターID
-     * @return オペレーターエンティティ
+     * @return オペレーター
      */
-    OperatorEntity getOperatorEntity(Long operatorId) {
-        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+    Operator getOperator(Long operatorId) {
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
 
-        operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
-        return operatorEntityDao.findOneBy(operatorEntityCriteria);
+        return operatorRepository.findOneBy(operatorCriteria);
     }
 
     /**
@@ -125,20 +125,13 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
      * オペレーター履歴のインサートを行います
      *
      * @param operatorHistoryId オペレーター履歴ID
-     * @param operatorEntity オペレーターエンティティ
+     * @param operator オペレーター
      * @return オペレーター履歴エンティティ
      */
-    OperatorHistoryEntity insertOperatorHistory(Long operatorHistoryId, OperatorEntity operatorEntity) {
+    OperatorHistoryEntity insertOperatorHistory(Long operatorHistoryId, Operator operator) {
 
-        OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
+        OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operator).execute();
         operatorHistoryEntity.setOperatorHistoryId(operatorHistoryId);
-        operatorHistoryEntity.setCreatedBy(null);
-        operatorHistoryEntity.setCreatedAt(null);
-        operatorHistoryEntity.setCreatedIpAddress(null);
-        operatorHistoryEntity.setUpdatedBy(null);
-        operatorHistoryEntity.setUpdatedAt(null);
-        operatorHistoryEntity.setUpdatedIpAddress(null);
-        operatorHistoryEntity.setRecordVersion(null);
 
         operatorHistoryEntityDao.insert(operatorHistoryEntity);
 
