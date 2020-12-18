@@ -137,7 +137,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・EntityCriteriaへのセット
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -147,14 +147,14 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
         Operator_SubSystemRoleForStoreDataSource operator_SubSystemRoleForStoreDataSource = createOperator_SubSystemRoleForStoreDataSource();
 
         // 期待値
-        Operator_SubSystemRoleEntityCriteria expectedCriteria = new Operator_SubSystemRoleEntityCriteria();
-        expectedCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Operator_SubSystemRoleEntityCriteria expectedOperator_SubSystemRoleEntityCriteria = new Operator_SubSystemRoleEntityCriteria();
+        expectedOperator_SubSystemRoleEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
         // 実行
         operator_SubSystemRoleForStoreDataSource.deleteOperator_SubSystemRole(operatorId);
 
         // 結果検証 // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperator_SubSystemRoleEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedCriteria).defaultConfig().toString());
+        assertThat(toStringHelper(actualOperator_SubSystemRoleEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleEntityCriteria).defaultConfig().toString());
     }
 
     /**
