@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
@@ -122,11 +122,19 @@ class Operator_BizTranRoleDataSourceTest {
         return entity;
     }
     // オペレータRepositoryの作成
-    private OperatorsRepository createOperatorsRepository() {
-        return new OperatorsRepository() {
+    private OperatorRepository createOperatorRepository() {
+        return new OperatorRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return createOperators();
+            }
+            @Override
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+                return null;
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
             }
         };
     }
@@ -179,7 +187,7 @@ class Operator_BizTranRoleDataSourceTest {
         // テスト対象クラス生成
         Operator_BizTranRoleDataSource operator_BizTranRoleDataSource = new Operator_BizTranRoleDataSource(
             createOperator_BizTranRoleEntityDao(),
-            createOperatorsRepository(),
+            createOperatorRepository(),
             createBizTranRolesRepository());
 
         // 期待値

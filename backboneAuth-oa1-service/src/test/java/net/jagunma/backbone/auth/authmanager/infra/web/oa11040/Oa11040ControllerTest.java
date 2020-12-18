@@ -17,6 +17,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
@@ -137,6 +138,10 @@ class Oa11040ControllerTest {
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
+            }
         };
         Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
@@ -150,7 +155,7 @@ class Oa11040ControllerTest {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, operator_SubSystemRoleRepository, null,
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, operator_SubSystemRoleRepository, null,
             operatorHistoryHeaderRepository) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {

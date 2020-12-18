@@ -14,6 +14,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCrite
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
@@ -234,6 +235,10 @@ class OperatorForStoreDataSourceTest {
                 } else {
                     return true;    // checkAlreadyExists_test時
                 }
+            }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
             }
         };
         PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {

@@ -11,8 +11,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLoc
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
@@ -116,11 +116,19 @@ class AccountLockDataSourceTest {
         return entity;
     }
     // オペレータRepositoryの作成
-    private OperatorsRepository createOperatorsRepository() {
-        return new OperatorsRepository() {
+    private OperatorRepository createOperatorRepository() {
+        return new OperatorRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return createOperators();
+            }
+            @Override
+            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+                return null;
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
             }
         };
     }
@@ -152,7 +160,7 @@ class AccountLockDataSourceTest {
 
         // テスト対象クラス生成
         AccountLockDataSource accountLockDataSource = new AccountLockDataSource(createAccountLockEntityDao(),
-            createOperatorsRepository());
+            createOperatorRepository());
 
         // 期待値
         Operators operators = createOperators();

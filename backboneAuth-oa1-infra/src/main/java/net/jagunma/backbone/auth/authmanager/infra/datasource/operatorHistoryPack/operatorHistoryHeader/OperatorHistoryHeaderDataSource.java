@@ -3,13 +3,13 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operatorHistoryPa
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorsDataSource;
+import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorDataSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
@@ -23,14 +23,14 @@ import org.springframework.stereotype.Component;
 public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRepository {
 
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
-    private final OperatorsDataSource operatorsDataSource;
+    private final OperatorDataSource operatorDataSource;
 
     // コンストラクタ
     OperatorHistoryHeaderDataSource(OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
-        OperatorsDataSource operatorsDataSource) {
+        OperatorDataSource operatorDataSource) {
 
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
-        this.operatorsDataSource = operatorsDataSource;
+        this.operatorDataSource = operatorDataSource;
     }
 
     /**
@@ -45,7 +45,7 @@ public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRep
         // オペレーターの検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
         operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operatorHistoryHeaderCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorsDataSource.selectBy(operatorCriteria, Orders.empty());
+        Operators operators = operatorDataSource.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター履歴ヘッダー群検索
         OperatorHistoryHeaderEntityCriteria entityCriteria = new OperatorHistoryHeaderEntityCriteria();

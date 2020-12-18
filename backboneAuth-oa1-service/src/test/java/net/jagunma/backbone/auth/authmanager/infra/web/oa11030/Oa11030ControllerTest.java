@@ -29,6 +29,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntry
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
@@ -169,6 +170,10 @@ class Oa11030ControllerTest {
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
+            }
         };
         AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
@@ -217,7 +222,7 @@ class Oa11030ControllerTest {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null,
+        SearchOperator searchOperator = new SearchOperator(operatorRepository,
             accountLockRepository,
             passwordHistoryRepository, signInTraceRepository, signOutTraceRepository,
             operator_SubSystemRoleRepository, operator_BizTranRoleRepository,
