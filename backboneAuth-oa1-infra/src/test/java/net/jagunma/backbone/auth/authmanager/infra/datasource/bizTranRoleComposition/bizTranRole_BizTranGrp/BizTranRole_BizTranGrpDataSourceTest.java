@@ -121,7 +121,7 @@ class BizTranRole_BizTranGrpDataSourceTest {
     }
 
     // 取引ロ－ルRepositoryの作成
-    private BizTranRoleRepository createBizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRoleRepository() {
         return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
@@ -186,7 +186,7 @@ class BizTranRole_BizTranGrpDataSourceTest {
         // テスト対象クラス生成
         BizTranRole_BizTranGrpDataSource bizTranRole_BizTranGrpDataSource = new BizTranRole_BizTranGrpDataSource(
             createBizTranRole_BizTranGrpEntityDao(),
-            createBizTranRolesRepository(),
+            createBizTranRoleRepository(),
             createBizTranGrpRepository());
 
         // 期待値
@@ -232,7 +232,7 @@ class BizTranRole_BizTranGrpDataSourceTest {
         // テスト対象クラス生成
         BizTranRole_BizTranGrpDataSource bizTranRole_BizTranGrpDataSource = new BizTranRole_BizTranGrpDataSource(
             createBizTranRole_BizTranGrpEntityDao(),
-            createBizTranRolesRepository(),
+            createBizTranRoleRepository(),
             createBizTranGrpRepository());
 
         // 期待値

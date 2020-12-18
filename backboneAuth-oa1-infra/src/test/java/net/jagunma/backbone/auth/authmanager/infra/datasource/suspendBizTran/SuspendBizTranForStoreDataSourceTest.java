@@ -9,6 +9,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntity;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityCriteria;
@@ -201,6 +202,11 @@ class SuspendBizTranForStoreDataSourceTest {
                         (subSystemCode == null)? null : SubSystem.codeOf(subSystemCode),
                         (bizTranGrpId == null)? null : createBizTranGrp(),
                         (bizTranId == null)? null : createBizTran());
+                }
+
+                @Override
+                public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) {
+                    return null;
                 }
             });
     }

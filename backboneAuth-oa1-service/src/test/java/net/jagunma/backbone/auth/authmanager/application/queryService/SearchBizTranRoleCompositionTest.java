@@ -76,7 +76,7 @@ class SearchBizTranRoleCompositionTest {
     }
 
     // 取引ロール_取引グループ割当群検索作成
-    private BizTranRole_BizTranGrpRepository createBizTranRole_BizTranGrpsRepository() {
+    private BizTranRole_BizTranGrpRepository createBizTranRole_BizTranGrpRepository() {
         return new BizTranRole_BizTranGrpRepository() {
             @Override
             public BizTranRole_BizTranGrps selectBy(BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria, Orders orders) {
@@ -154,7 +154,7 @@ class SearchBizTranRoleCompositionTest {
 
         // テスト対象クラス生成
         SearchBizTranRoleComposition searchBizTranRoleComposition = new SearchBizTranRoleComposition(
-            createBizTranRole_BizTranGrpsRepository(),
+            createBizTranRole_BizTranGrpRepository(),
             createBizTranGrp_BizTranRepository());
 
         // 実行

@@ -1,13 +1,12 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchSuspendBizTran {
 
-    private final SuspendBizTransRepository suspendBizTransRepository;
     private final SuspendBizTranRepository suspendBizTranRepository;
 
     // コンストラクタ
-    public SearchSuspendBizTran(SuspendBizTransRepository suspendBizTransRepository,
-        SuspendBizTranRepository suspendBizTranRepository) {
-
-        this.suspendBizTransRepository = suspendBizTransRepository;
+    public SearchSuspendBizTran(SuspendBizTranRepository suspendBizTranRepository) {
         this.suspendBizTranRepository = suspendBizTranRepository;
     }
 
@@ -74,7 +69,7 @@ public class SearchSuspendBizTran {
             .addOrder("subSystemDisplaySortOrder")
             .addOrder("bizTranGrpCode")
             .addOrder("bizTranCode");
-        response.setSuspendBizTrans(suspendBizTransRepository.selectBy(createSuspendBizTranCriteria(request), orders));
+        response.setSuspendBizTrans(suspendBizTranRepository.selectBy(createSuspendBizTranCriteria(request), orders));
     }
 
     /**

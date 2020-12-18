@@ -160,7 +160,7 @@ class Operator_SubSystemRoleDataSourceTest {
         Orders orders = Orders.empty();
 
         // テスト対象クラス生成
-        Operator_SubSystemRoleDataSource operator_SubSystemRolesDataSource = new Operator_SubSystemRoleDataSource(
+        Operator_SubSystemRoleDataSource operator_SubSystemRoleDataSource = new Operator_SubSystemRoleDataSource(
             createOperator_SubSystemRoleEntityDao(),
             createOperatorRepository());
 
@@ -181,7 +181,7 @@ class Operator_SubSystemRoleDataSourceTest {
         }
 
         // 実行
-        Operator_SubSystemRoles actualOperator_SubSystemRoles = operator_SubSystemRolesDataSource.selectBy(criteria, orders);
+        Operator_SubSystemRoles actualOperator_SubSystemRoles = operator_SubSystemRoleDataSource.selectBy(criteria, orders);
 
         // 結果検証
         for(int i = 0; i < actualOperator_SubSystemRoles.getValues().size(); i++) {

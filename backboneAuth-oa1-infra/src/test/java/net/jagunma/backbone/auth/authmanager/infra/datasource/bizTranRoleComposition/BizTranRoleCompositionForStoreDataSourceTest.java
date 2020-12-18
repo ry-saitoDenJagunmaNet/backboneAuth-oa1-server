@@ -308,7 +308,7 @@ class BizTranRoleCompositionForStoreDataSourceTest {
         };
     }
     // 取引ロールRepositoryの作成
-    private BizTranRoleRepository createBizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRoleRepository() {
         return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
@@ -388,7 +388,7 @@ class BizTranRoleCompositionForStoreDataSourceTest {
             createBizTranEntityDao(),
             createBizTranRole_BizTranGrpEntityDao(),
             createBizTranGrp_BizTranEntityDao(),
-            createBizTranRolesRepository());
+            createBizTranRoleRepository());
 
         // 結果検証
         assertThatCode(() ->

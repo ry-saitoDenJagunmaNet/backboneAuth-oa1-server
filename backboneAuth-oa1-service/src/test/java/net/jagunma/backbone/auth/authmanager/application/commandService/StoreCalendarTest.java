@@ -11,6 +11,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCrite
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
+import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,7 @@ import org.junit.jupiter.api.Test;
 class StoreCalendarTest {
 
     // 実行既定値
-    private CalendarRepository createCalendarsRepository() {
+    private CalendarRepository createCalendarRepository() {
         // 変更前想定ののカレンダー（1休日、2休日、3営業日）
         List<Calendar> list = newArrayList();
         list.add(Calendar.createFrom(1l, CalendarType.経済システム稼働カレンダー, null, true, false, null, 1));
@@ -29,6 +31,22 @@ class StoreCalendarTest {
             @Override
             public Calendar findOneBy(CalendarCriteria calendarCriteria) {
                 return list.stream().filter(c->c.getCalendarId() == calendarCriteria.getCalendarIdCriteria().getEqualTo()).findFirst().orElse(null);
+            }
+            @Override
+            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public Calendars selectBy(CalendarCriteria calendarCriteria) {
+                return null;
+            }
+            @Override
+            public Calendars selectAll(Orders orders) {
+                return null;
+            }
+            @Override
+            public Calendars selectAll() {
+                return null;
             }
         };
     }
@@ -68,7 +86,7 @@ class StoreCalendarTest {
                     .isEqualTo(expectedList.stream().filter(c->c.getCalendarId() == calendar.getCalendarId()).findFirst().orElse(null));
                 return calendar;
             }
-        }, createCalendarsRepository());
+        }, createCalendarRepository());
 
         // 実行
         int result = storeCalendar.execute(new CalendarStoreRequest() {
@@ -109,7 +127,7 @@ class StoreCalendarTest {
                 assertThat("updateが呼び出されました").isNull();
                 return null;
             }
-        }, createCalendarsRepository());
+        }, createCalendarRepository());
 
         // 実行
         int result = storeCalendar.execute(new CalendarStoreRequest() {
@@ -146,7 +164,7 @@ class StoreCalendarTest {
                 assertThat("updateが呼び出されました").isNull();
                 return null;
             }
-        }, createCalendarsRepository());
+        }, createCalendarRepository());
 
         // 実行
         int result = storeCalendar.execute(new CalendarStoreRequest() {
