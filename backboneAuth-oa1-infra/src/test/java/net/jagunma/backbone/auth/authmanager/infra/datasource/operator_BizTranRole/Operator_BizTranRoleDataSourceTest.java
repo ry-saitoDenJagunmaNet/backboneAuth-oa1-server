@@ -147,7 +147,7 @@ class Operator_BizTranRoleDataSourceTest {
         return Operators.createFrom(list);
     }
     // 取引ロールRepositoryの作成
-    private BizTranRoleRepository createBizTranRolesRepository() {
+    private BizTranRoleRepository createBizTranRoleRepository() {
         return new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
@@ -188,7 +188,7 @@ class Operator_BizTranRoleDataSourceTest {
         Operator_BizTranRoleDataSource operator_BizTranRoleDataSource = new Operator_BizTranRoleDataSource(
             createOperator_BizTranRoleEntityDao(),
             createOperatorRepository(),
-            createBizTranRolesRepository());
+            createBizTranRoleRepository());
 
         // 期待値
         Operators operators = createOperators();

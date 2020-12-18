@@ -1,13 +1,17 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
@@ -24,6 +28,10 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
 class CheckBizTranRoleCompositionTest {
 
@@ -118,9 +126,9 @@ class CheckBizTranRoleCompositionTest {
             }
         };
     }
-    // 取引ロール編成インポート＆エクスポート Excel 登録サービス Requestの作成
-    private BizTranRoleCompositionImportRequest createBizTranRoleCompositionImportRequest() {
-        return new BizTranRoleCompositionImportRequest() {
+    // 取引ロール編成インポート＆エクスポート Excel Import登録チェック Requestの作成
+    private BizTranRoleCompositionImportCheckRequest createBizTranRoleCompositionImportCheckRequest() {
+        return new BizTranRoleCompositionImportCheckRequest() {
             @Override
             public String getSubSystemCode() {
                 return subSystemCode;
@@ -136,118 +144,130 @@ class CheckBizTranRoleCompositionTest {
         };
     }
     // 取引ロール編成インポート＆エクスポート Excel 登録サービス Responseの作成
-    private BizTranRoleCompositionImportResponse createBizTranRoleCompositionImportResponse() {
-        return new BizTranRoleCompositionImportResponse() {
+    private BizTranRoleCompositionImportCheckResponse createBizTranRoleCompositionImportCheckResponse() {
+        return new BizTranRoleCompositionImportCheckResponse() {
             @Override
             public void setMessageDtoList(List<MessageDto> messageDtoList) {
                 actualMessageDtoList = messageDtoList;
             }
+            @Override
+            public void setImportfileView(String importfileView) {
+            }
+            @Override
+            public void setStatus(String status) {
+            }
         };
     }
 
-//    /**
-//     * {@link  StoreBizTranRoleComposition#execute(BizTranRoleCompositionImportRequest,BizTranRoleCompositionImportResponse)}のテスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・正常終了
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void execute_test0() {
-//
-//        // 期待値
-//        List<MessageDto> expectedMessageDtoList = newArrayList();
-//
-//        // テスト対象クラス生成
-//        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
-//            createBizTranRolesRepository(false),
-//            createOperator_BizTranRolesRepository());
-//
-//        // 実行値
-//        BizTranRoleCompositionImportRequest request = createBizTranRoleCompositionImportRequest();
-//        BizTranRoleCompositionImportResponse response = createBizTranRoleCompositionImportResponse();
-//
-//        assertThatCode(() ->
-//            // 実行
-//            checkBizTranRoleComposition.execute(request, response))
-//            .doesNotThrowAnyException();
-//    }
+    /**
+     * {@link  CheckBizTranRoleComposition#execute(BizTranRoleCompositionImportCheckRequest, BizTranRoleCompositionImportCheckResponse)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test0() {
 
-//    /**
-//     * {@link  StoreBizTranRoleComposition#execute(BizTranRoleCompositionImportRequest,BizTranRoleCompositionImportResponse)}のテスト
-//     *  ●パターン
-//     *    正常
-//     *    ・取引ロールの削除対象があり、メッセージが出力される
-//     *
-//     *  ●検証事項
-//     *  ・正常終了
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void execute_test1() {
-//
-//        // 期待値
-//        List<MessageDto> expectedMessageDtoList = newArrayList();
-//        expectedMessageDtoList.add(MessageDto.createFrom("WOA13107","",Arrays.asList("yu001011", "ANAG99")));
-//
-//        // テスト対象クラス生成
-//        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
-//            createBizTranRolesRepository(true),
-//            createOperator_BizTranRolesRepository());
-//
-//        // 実行
-//        checkBizTranRoleComposition.execute(createBizTranRoleCompositionImportRequest(),
-//            createBizTranRoleCompositionImportResponse());
-//
-//        // 結果検証
-//        assertThat(actualMessageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
-//        for(int i = 0; i < actualMessageDtoList.size(); i++) {
-//            assertThat(actualMessageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
-//                .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
-//            assertThat(actualMessageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
-//                .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
-//        }
-//    }
+        // 期待値
+        List<MessageDto> expectedMessageDtoList = newArrayList();
 
-//    /**
-//     * {@link  StoreBizTranRoleComposition#execute(BizTranRoleCompositionImportRequest,BizTranRoleCompositionImportResponse)}のテスト
-//     *  ●パターン
-//     *    インポートデータ不正
-//     *
-//     *  ●検証事項
-//     *  ・エラー発生
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void execute_test2() {
-//
-//        // 実行値
-//        bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(4,SubSystem.販売_畜産.getName(),"","エラ－データ","ANTG10","センター維持管理グループ"));
-//
-//        // 期待値
-//        List<MessageDto> expectedMessageDtoList = newArrayList();
-//        expectedMessageDtoList.add(MessageDto.createFrom("EOA13103","",Arrays.asList("[取引ロール－取引グループ編成]シート", "4", "取引ロールコード")));
-//
-//        // テスト対象クラス生成
-//        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
-//            createBizTranRolesRepository(false),
-//            createOperator_BizTranRolesRepository());
-//
-//        // 実行 & 結果検証
-//        assertThatThrownBy(() ->
-//            checkBizTranRoleComposition.execute(createBizTranRoleCompositionImportRequest(),
-//                createBizTranRoleCompositionImportResponse()))
-//            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-//                assertThat(e.getMessageCode()).isEqualTo("EOA13001");
-//            });
-//        assertThat(actualMessageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
-//        for(int i = 0; i < actualMessageDtoList.size(); i++) {
-//            assertThat(actualMessageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
-//                .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
-//            assertThat(actualMessageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
-//                .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
-//        }
-//    }
+        // テスト対象クラス生成
+        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
+            createBizTranRoleRepository(false),
+            createOperator_BizTranRoleRepository());
+
+        // 実行値
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
+        BizTranRoleCompositionImportCheckResponse response = createBizTranRoleCompositionImportCheckResponse();
+
+        assertThatCode(() ->
+            // 実行
+            checkBizTranRoleComposition.execute(request, response))
+            .doesNotThrowAnyException();
+    }
+
+    /**
+     * {@link  CheckBizTranRoleComposition#execute(BizTranRoleCompositionImportCheckRequest, BizTranRoleCompositionImportCheckResponse)}のテスト
+     *  ●パターン
+     *    正常
+     *    ・取引ロールの削除対象があり、メッセージが出力される
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test1() {
+
+        // 期待値
+        List<MessageDto> expectedMessageDtoList = newArrayList();
+        expectedMessageDtoList.add(MessageDto.createFrom("WOA13107","",Arrays.asList("yu001011", "ANAG99")));
+
+        // テスト対象クラス生成
+        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
+            createBizTranRoleRepository(true),
+            createOperator_BizTranRoleRepository());
+
+        // 実行値
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
+        BizTranRoleCompositionImportCheckResponse response = createBizTranRoleCompositionImportCheckResponse();
+
+        // 実行
+        checkBizTranRoleComposition.execute(request, response);
+
+        // 結果検証
+        assertThat(actualMessageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
+        for(int i = 0; i < actualMessageDtoList.size(); i++) {
+            assertThat(actualMessageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
+                .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
+            assertThat(actualMessageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
+        }
+    }
+
+    /**
+     * {@link  CheckBizTranRoleComposition#execute(BizTranRoleCompositionImportCheckRequest, BizTranRoleCompositionImportCheckResponse)}のテスト
+     *  ●パターン
+     *    インポートデータ不正
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test2() {
+
+        // 実行値
+        bizTranRole_BizTranGrpSheetList.add(BizTranRole_BizTranGrpSheet.createFrom(4,SubSystem.販売_畜産.getDisplayName(),"","エラ－データ","ANTG10","センター維持管理グループ"));
+
+        // 期待値
+        List<MessageDto> expectedMessageDtoList = newArrayList();
+        expectedMessageDtoList.add(MessageDto.createFrom("EOA13103","",Arrays.asList("[取引ロール－取引グループ編成]シート", "4", "取引ロールコード")));
+
+        // テスト対象クラス生成
+        CheckBizTranRoleComposition checkBizTranRoleComposition = new CheckBizTranRoleComposition(
+            createBizTranRoleRepository(false),
+            createOperator_BizTranRoleRepository());
+
+        // 実行値
+        BizTranRoleCompositionImportCheckRequest request = createBizTranRoleCompositionImportCheckRequest();
+        BizTranRoleCompositionImportCheckResponse response = createBizTranRoleCompositionImportCheckResponse();
+
+        // 実行 & 結果検証
+        assertThatThrownBy(() ->
+            checkBizTranRoleComposition.execute(request, response))
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                assertThat(e.getMessageCode()).isEqualTo("EOA13001");
+            });
+        assertThat(actualMessageDtoList.size()).isEqualTo(expectedMessageDtoList.size());
+        for(int i = 0; i < actualMessageDtoList.size(); i++) {
+            assertThat(actualMessageDtoList.get(i).getMessageCode()).as(i + 1 + "レコード目でエラー")
+                .isEqualTo(expectedMessageDtoList.get(i).getMessageCode());
+            assertThat(actualMessageDtoList.get(i).getMessageArgs()).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedMessageDtoList.get(i).getMessageArgs());
+        }
+    }
 }

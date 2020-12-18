@@ -17,7 +17,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.Suspend
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -47,13 +46,11 @@ class Oa12020ControllerTest {
     private Oa12020Controller createOa12020Controller(Integer throwExceptio) {
         // 一時取引抑止群検索の作成
         SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(
-            new SuspendBizTransRepository() {
-                @Override
-                public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) { return null; }
-            },
             new SuspendBizTranRepository() {
                 @Override
                 public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) { return null; }
+                @Override
+                public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) { return null; }
             }) {
             public void execute(SuspendBizTransSearchRequest request, SuspendBizTransSearchResponse response) {
                 if (throwExceptio == null) {
@@ -102,7 +99,7 @@ class Oa12020ControllerTest {
 //            }
 //        };
 //        // 取引グループ群検索の作成
-//        BizTranGrpsRepository bizTranGrpsRepository = new BizTranGrpsRepository() {
+//        BizTranGrpRepository bizTranGrpRepository = new BizTranGrpRepository() {
 //            @Override
 //            public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
 //                return BizTranGrps.createFrom(createBizTranGrpList());
@@ -120,7 +117,7 @@ class Oa12020ControllerTest {
 //            }
 //        };
 //        // 取引グループ_取引割当群検索の作成
-//        BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository = new BizTranGrp_BizTransRepository() {
+//        BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository = new BizTranGrp_BizTranRepository() {
 //            @Override
 //            public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
 //                List<BizTranGrp_BizTran> list = newArrayList();

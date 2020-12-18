@@ -15,7 +15,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.Suspend
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
@@ -98,21 +97,16 @@ class SearchSuspendBizTranTest {
         list.add(BizTran.createFrom(100002L,"AN1110","前日処理照会",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return list;
     }
-    // 一時取引抑止群検索生成
-    private SuspendBizTransRepository createSuspendBizTransRepository() {
-        return new SuspendBizTransRepository() {
-            @Override
-            public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria,Orders orders) {
-                return SuspendBizTrans.createFrom(suspendBizTranList);
-            }
-        };
-    }
     // 一時取引抑止検索生成
     private SuspendBizTranRepository createSuspendBizTranRepository() {
         return new SuspendBizTranRepository() {
             @Override
             public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) {
                 return suspendBizTranList.get(0);
+            }
+            @Override
+            public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) {
+                return SuspendBizTrans.createFrom(suspendBizTranList);
             }
         };
     }
@@ -270,8 +264,7 @@ class SearchSuspendBizTranTest {
     void execute_test0() {
 
         // テスト対象クラス生成
-        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTransRepository(),
-            createSuspendBizTranRepository());
+        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTranRepository());
 
         // 期待値
         List<SuspendBizTran> expectedSuspendBizTranList = suspendBizTranList;
@@ -305,8 +298,7 @@ class SearchSuspendBizTranTest {
         suspendBizTranList = newArrayList();
 
         // テスト対象クラス生成
-        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTransRepository(),
-            createSuspendBizTranRepository());
+        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTranRepository());
 
         // 実行
         searchSuspendBizTran.execute(
@@ -331,8 +323,7 @@ class SearchSuspendBizTranTest {
     void execute_test2() {
 
         // テスト対象クラス生成
-        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTransRepository(),
-            createSuspendBizTranRepository());
+        SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(createSuspendBizTranRepository());
 
         // 期待値
         List<SuspendBizTran> expectedSuspendBizTranList = suspendBizTranList;
