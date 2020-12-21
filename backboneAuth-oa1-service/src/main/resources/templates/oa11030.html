@@ -49,23 +49,26 @@
 				<div class="col s6">
 					<div class="input-field">
 						<select id="branch" name="branchId" class="validate" th:value="${form.branchId}">
+							<!-- th using -->
+							<!--/*/
 							<option th:each="item : ${form.branchItemsSource}"
 									th:value="${item.id}"
 									th:text="${item.name}"
 									th:selected="${item.id == form.branchId}"></option>
-							<option value="" th:remove="all"></option>
-							<option value="001" th:remove="all">本所</option>
-							<option value="002" th:remove="all">○○○支所</option>
-							<option value="003" th:remove="all">△△センター</option>
-							<option value="004" th:remove="all">□□□□店</option>
-							<option value="005" th:remove="all">××××館</option>
+							/*/-->
+							<option th:remove="all" value=""></option>
+							<option th:remove="all" value="001">本所</option>
+							<option th:remove="all" value="002">○○○支所</option>
+							<option th:remove="all" value="003">△△センター</option>
+							<option th:remove="all" value="004">□□□□店</option>
+							<option th:remove="all" value="005">××××館</option>
 						</select>
 						<label>店舗</label>
-					</div>
-					<div th:each="item, itemStat : ${form.branchItemsSource}">
-						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].id'" th:value="${item.id}"/>
-						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].code'" th:value="${item.code}"/>
-						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].name'" th:value="${item.name}"/>
+						<div th:each="item, itemStat : ${form.branchItemsSource}">
+							<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].id'" th:value="${item.id}"/>
+							<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].code'" th:value="${item.code}"/>
+							<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].name'" th:value="${item.name}"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -254,12 +257,13 @@
 					<div class="oaex_subsystem_role_table" onScroll="oa_linkageScrollX(this, 'subsystem_role_table_head')">
 						<table id="subsystem_role_table" class="highlight">
 							<tbody>
-								<!-- th using /*/
+								<!-- th using -->
+								<!--/*/
 								<tr th:each="itemrow, iterStat : *{form.oa11030SubSystemRoleTableVoList}">
 									<td class="oaex_subsystem_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_subsystem_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
-								/*/ -->
+								/*/-->
 								<tr th:remove="all">
 									<td class="oaex_subsystem_role_table_name">JA管理者</td>
 									<td class="oaex_subsystem_role_table_valid_thru">2020/04/01 ～ 9999/12/31</td>
@@ -305,13 +309,14 @@
 					<div class="oaex_biztran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_table_head')">
 						<table id="biztran_role_table" class="highlight">
 							<tbody>
-								<!-- th using /*/
+								<!-- th using -->
+								<!--/*/
 								<tr th:each="itemrow, iterStat : *{form.oa11030BizTranRoleTableVoList}">
 									<td class="oaex_biztran_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_biztran_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_biztran_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
-								/*/ -->
+								/*/-->
 								<tr th:remove="all">
 									<td class="oaex_biztran_role_table_code">KBAG01</td>
 									<td class="oaex_biztran_role_table_name">（購買）購買業務基本</td>
