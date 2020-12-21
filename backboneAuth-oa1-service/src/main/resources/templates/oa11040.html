@@ -100,6 +100,7 @@
 										</div>
 									</td>
 								</tr>
+								<!-- th using /*/
 								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040AllocateRoleTableVoList}">
 									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
@@ -113,6 +114,7 @@
 										</div>
 									</td>
 								</tr>
+								/*/ -->
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
 									<td class="oaex_allocate_role_code">2110</td>
 									<td class="oaex_allocate_role_name">業務統括者（販売・青果）</td>
@@ -149,12 +151,14 @@
 					</div>
 					<div class="oaex_unallocate_role_table" onScroll="oa_linkageScrollX(this, 'unallocate_role_table_head')">
 						<table id="unallocate_role_table" class="highlight">
+							<!-- th using /*/
 							<tbody>
 								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040UnallocateRoleTableVoList}">
 									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
 								</tr>
 							</tbody>
+							/*/ -->
 							<tbody th:remove="all">
 								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">0000</td><td class="oaex_unallocate_role_name">JA管理者</td></tr>
 								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">1000</td><td class="oaex_unallocate_role_name">業務統括者（購買）</td></tr>
