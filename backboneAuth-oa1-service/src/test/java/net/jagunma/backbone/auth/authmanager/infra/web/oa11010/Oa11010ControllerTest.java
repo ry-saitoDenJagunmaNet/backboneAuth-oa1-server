@@ -115,6 +115,7 @@ class Oa11010ControllerTest {
     private final Boolean signintraceSignOut = null;
     private final Short[] signintraceSignInResult = null;
     private int pageNo = 0;
+    private String responseMethod = null;
     private final String GunmaRuntimeExceptionMessageCode = "EOA14002";
     private final String GunmaRuntimeExceptionMessageArg1 = "JAID";
     private final String GunmaRuntimeExceptionMessageArg2 = "正しく設定";
@@ -306,6 +307,7 @@ class Oa11010ControllerTest {
         oa11010Vo.setSignintraceSignOut(signintraceSignOut);
         oa11010Vo.setSignintraceSignInResult(signintraceSignInResult);
         oa11010Vo.setPageNo(pageNo);
+        oa11010Vo.setResponseMethod(responseMethod);
         return oa11010Vo;
     }
 
@@ -480,9 +482,9 @@ class Oa11010ControllerTest {
         // 期待値
         String expectedViewName = "oa11010";
         Oa11010SearchResponseVo expectedVo = new Oa11010SearchResponseVo();
-        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_valid_thru_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
+        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"18\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_valid_thru_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
             + "<tr class=\"oaex_operator_table_operator_yu001009\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"></td><td class=\"oaex_operator_account_lock\"></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\"></td><td class=\"oaex_operator_operator_name\"></td><td class=\"oaex_operator_valid_thru_date\"></td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\">YS0000</td><td class=\"oaex_operator_biztran_role_name\">野菜メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
-            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_valid_thru_date\"></td></tr>"
+            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"19\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_valid_thru_date\"></td></tr>"
         );
         expectedVo.setPagination("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>"
             + "<li class=\"active\" th:remove=\"all\"><a href=\"#!\">1</a></li>"
@@ -561,4 +563,65 @@ class Oa11010ControllerTest {
         assertThat(actualVo.getStatusCode().toString()).isEqualTo(statusCode);
         assertThat(actualVo.getBody().getMessageCode()).isEqualTo(expectedMessageCode);
     }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・Voへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test0() {
+
+        // テスト対象クラス生成
+        Oa11010Controller oa11010Controller = createOa11010Controller();
+
+        // 実行値
+        responseMethod = "redirect:/oa11010/assistance";
+        ConcurrentModel model = new ConcurrentModel();
+
+        // 期待値
+        String expectedViewName = "oa11010";
+        ja = jaCode + " " + jaName;
+        Oa11010Vo expectedVo = createOa11010Vo();
+
+        // 実行
+        String actualViewName = oa11010Controller.assistance(responseMethod, model);
+        Oa11010Vo actualVo = (Oa11010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException）発生
+     *
+     *  ●検証事項
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test1() {
+        // getメソッドでGunmaRuntimeExceptionを発生させるテストは不可
+        assertThat(true);
+    }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test2() {
+        // getメソッドでRuntimeExceptionを発生させるテストは不可
+        assertThat(true);
+    }
+
 }
