@@ -12,8 +12,11 @@
 .oaex_allocate_role_table td {
 	padding: 2px 2px;
 }
+.oaex_allocate_role_table_name_th {min-width: 280px; width: 65%;}
 .oaex_allocate_role_table_code {display: none;}
 .oaex_allocate_role_table_name {min-width: 280px; width: 65%;}
+
+.oaex_allocate_role_table_valid_thru_th {min-width: 240px; width: 35%;}
 .oaex_allocate_role_table_valid_thru {min-width: 240px; width: 35%;}
 .oaex_allocate_role_table_valid_thru input[type=text] {
 	width: 45% !important;
@@ -39,6 +42,7 @@
 .oaex_unallocate_role_table td {
 	height: 38px;
 }
+.oaex_unallocate_role_table_name_th {min-width: 280px; width: 100%;}
 .oaex_unallocate_role_table_code {display: none;}
 .oaex_unallocate_role_table_name {min-width: 280px; width: 100%;}
 .oaex_unallocate_role_table_hidden_row {display: none;}
