@@ -55,6 +55,7 @@ class Oa11010InitPresenterTest {
         List<BizTranRole> bizTranRoleList = newArrayList();
         bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX001", "購買管理者", SubSystem.購買.getCode(),1, SubSystem.購買));
         bizTranRoleList.add(BizTranRole.createFrom(1L, "KBXX002", "購買XX担当", SubSystem.購買.getCode(),1, SubSystem.購買));
+        String responseMethodString = "oa11040/copyResponse";
 
         // 実行値
         Oa11010Vo vo = new Oa11010Vo();
@@ -67,6 +68,7 @@ class Oa11010InitPresenterTest {
         presenter.setSubSystemRoleConditionsSelect(subSystemRoleConditionsSelect);
         presenter.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         presenter.setBizTranRoles(BizTranRoles.createFrom(bizTranRoleList));
+        presenter.setResponseMethod(responseMethodString);
 
         // 期待値
         Oa11010Vo expectedVo = new Oa11010Vo();
@@ -98,6 +100,7 @@ class Oa11010InitPresenterTest {
             bizTranRoleVoList.add(bizTranRoleVo);
         }
         expectedVo.setBizTranRoleList(bizTranRoleVoList);
+        expectedVo.setResponseMethod(responseMethodString);
 
         // 実行
         presenter.bindTo(vo);
