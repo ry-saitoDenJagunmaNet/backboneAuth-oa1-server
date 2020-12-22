@@ -53,7 +53,7 @@
 				</div>
 			</div>
 		</section>
-		
+
 		<section>
 			<div class="row">
 				<!-- テーブルタイトル-->
@@ -66,7 +66,7 @@
 				</div>
 			</div>
 		</section>
-		
+
 		<section>
 			<div class="row">
 				<!-- 付与ロールテーブル -->
@@ -75,10 +75,10 @@
 						<div id="allocate_role_table_head" class="oa_table_head_flex">
 							<table>
 								<thead>
-									<tr>
-										<th class="oaex_allocate_role_name">付与ロール</th>
-										<th class="oaex_allocate_role_valid_thru">有効期限</th>
-									</tr>
+								<tr>
+									<th class="oaex_allocate_role_table_name">付与ロール</th>
+									<th class="oaex_allocate_role_table_valid_thru">有効期限</th>
+								</tr>
 								</thead>
 							</table>
 						</div>
@@ -87,48 +87,48 @@
 					<div class="oaex_allocate_role_table" onScroll="oa_linkageScrollX(this, 'allocate_role_table_head')">
 						<table id="allocate_role_table" class="highlight">
 							<tbody>
-								<tr class="oaex_allocate_role_table_template_row" onclick="oa_setTableRowSelected(this)">
-									<td class="oaex_allocate_role_code"></td>
-									<td class="oaex_allocate_role_name"></td>
-									<td class="oaex_allocate_role_valid_thru">
-										<div class="input-field">
-											<input type="text" class="datepicker" value=""></input>
-										</div>
-										<span>～</span>
-										<div class="input-field">
-											<input type="text" class="datepicker" value=""></input>
-										</div>
-									</td>
-								</tr>
-								<!-- th using -->
-								<!--/*/
-								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040AllocateRoleTableVoList}">
-									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
-									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
-									<td class="oaex_allocate_role_valid_thru">
-										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
-										</div>
-										<span>～</span>
-										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
-										</div>
-									</td>
-								</tr>
-								/*/-->
-								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
-									<td class="oaex_allocate_role_code">2110</td>
-									<td class="oaex_allocate_role_name">業務統括者（販売・青果）</td>
-									<td class="oaex_allocate_role_valid_thru">
-										<div class="input-field">
-											<input type="text" class="datepicker" value="2020/04/01"></input>
-										</div>
-										<span>～</span>
-										<div class="input-field">
-											<input type="text" class="datepicker" value="9999/12/31"></input>
-										</div>
-									</td>
-								</tr>
+							<tr class="oaex_allocate_role_table_template_row" onclick="oa_setTableRowSelected(this)">
+								<td class="oaex_allocate_role_table_code"></td>
+								<td class="oaex_allocate_role_table_name"></td>
+								<td class="oaex_allocate_role_table_valid_thru">
+									<div class="input-field">
+										<input type="text" class="datepicker" value=""></input>
+									</div>
+									<span>～</span>
+									<div class="input-field">
+										<input type="text" class="datepicker" value=""></input>
+									</div>
+								</td>
+							</tr>
+							<!-- th using -->
+							<!--/*/
+							<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040AllocateRoleTableVoList}">
+								<td class="oaex_allocate_role_table_code" th:text="${itemrow.roleCode}"></td>
+								<td class="oaex_allocate_role_table_name" th:text="${itemrow.roleName}"></td>
+								<td class="oaex_allocate_role_table_valid_thru">
+									<div class="input-field">
+										<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+									</div>
+									<span>～</span>
+									<div class="input-field">
+										<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+									</div>
+								</td>
+							</tr>
+							/*/-->
+							<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
+								<td class="oaex_allocate_role_table_code">2110</td>
+								<td class="oaex_allocate_role_table_name">業務統括者（販売・青果）</td>
+								<td class="oaex_allocate_role_table_valid_thru">
+									<div class="input-field">
+										<input type="text" class="datepicker" value="2020/04/01"></input>
+									</div>
+									<span>～</span>
+									<div class="input-field">
+										<input type="text" class="datepicker" value="9999/12/31"></input>
+									</div>
+								</td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
@@ -144,7 +144,7 @@
 						<div id="unallocate_role_table_head" class="oa_table_head_flex">
 							<table>
 								<thead>
-									<tr><th class="oaex_unallocate_role_name">未付与ロール</th></tr>
+								<tr><th class="oaex_unallocate_role_table_name">未付与ロール</th></tr>
 								</thead>
 							</table>
 						</div>
@@ -156,19 +156,19 @@
 							<!--/*/
 							<tbody>
 								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040UnallocateRoleTableVoList}">
-									<td class="oaex_unallocate_role_code" th:text="${itemrow.roleCode}"></td>
-									<td class="oaex_unallocate_role_name" th:text="${itemrow.roleName}"></td>
+									<td class="oaex_unallocate_role_table_code" th:text="${itemrow.roleCode}"></td>
+									<td class="oaex_unallocate_role_table_name" th:text="${itemrow.roleName}"></td>
 								</tr>
 							</tbody>
 							/*/-->
 							<tbody th:remove="all">
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">0000</td><td class="oaex_unallocate_role_name">JA管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">1000</td><td class="oaex_unallocate_role_name">業務統括者（購買）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2110</td><td class="oaex_unallocate_role_name">業務統括者（販売・青果）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2120</td><td class="oaex_unallocate_role_name">業務統括者（販売・花卉）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2210</td><td class="oaex_unallocate_role_name">業務統括者（販売・米）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2220</td><td class="oaex_unallocate_role_name">業務統括者（販売・麦）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_code">2300</td><td class="oaex_unallocate_role_name">業務統括者（販売・畜産）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">0000</td><td class="oaex_unallocate_role_table_name">JA管理者</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">1000</td><td class="oaex_unallocate_role_table_name">業務統括者（購買）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">2110</td><td class="oaex_unallocate_role_table_name">業務統括者（販売・青果）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">2120</td><td class="oaex_unallocate_role_table_name">業務統括者（販売・花卉）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">2210</td><td class="oaex_unallocate_role_table_name">業務統括者（販売・米）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">2220</td><td class="oaex_unallocate_role_table_name">業務統括者（販売・麦）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unallocate_role_table_code">2300</td><td class="oaex_unallocate_role_table_name">業務統括者（販売・畜産）</td></tr>
 							</tbody>
 						</table>
 					</div>
