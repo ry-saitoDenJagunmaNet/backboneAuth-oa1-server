@@ -26,6 +26,7 @@ class Oa11010InitPresenter {
     private Integer subSystemRoleConditionsSelect;
     private Integer bizTranRoleConditionsSelect;
     private BizTranRoles bizTranRoles;
+    private String responseMethod;
 
     // コンストラクタ
     Oa11010InitPresenter() {}
@@ -94,6 +95,14 @@ class Oa11010InitPresenter {
     public void setBizTranRoles(BizTranRoles bizTranRoles) {
         this.bizTranRoles = bizTranRoles;
     }
+    /**
+     * 入力補助として使用する場合の戻り先のＳｅｔ
+     *
+     * @param responseMethod 入力補助として使用する場合の戻り先
+     */
+    public void setResponseMethod(String responseMethod) {
+        this.responseMethod = responseMethod;
+    }
 
     /**
      * voに変換します
@@ -138,5 +147,6 @@ class Oa11010InitPresenter {
             bizTranRoleVoList.add(bizTranRoleVo);
         }
         vo.setBizTranRoleList(bizTranRoleVoList);
+        vo.setResponseMethod(responseMethod);
     }
 }

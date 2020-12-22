@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SearchResponseVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -54,6 +55,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Oa11010Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11010Controller.class);
+
+    // 入力補助画面として起動する場合のリダイレクト文字列
+    public static final String AssistanceMethod = "redirect:/oa11010/assistance";
+    // 入力補助画面として起動する場合のRequestParam文字列
+    public static final String RedirectAttribute = "responseMethod";
 
     private final SearchOperator searchOperator;
     private final SimpleSearchBizTranRole simpleSearchBizTranRole;
@@ -135,6 +141,42 @@ public class Oa11010Controller extends BaseOfController {
             // その他予期せぬ例外が発生した場合
             responseVo.setExceptionMessage(re);
             return new ResponseEntity<>(responseVo, HttpStatus.OK);
+        }
+    }
+
+    /**
+     * 入力補助画面として画面を初期表示します
+     *
+     * @param responseMethod 戻り先画面＆メソッドID
+     * @param model          モデル
+     * @return view名
+     */
+    @RequestMapping(value = "/assistance", method = RequestMethod.GET)
+    public String assistance(@RequestParam(value = RedirectAttribute) String responseMethod, Model model) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+
+        Oa11010Vo vo = new Oa11010Vo();
+        try {
+
+            // InitPresenterの初期化
+            Oa11010InitPresenter presenter = createInitPresenter();
+            presenter.setResponseMethod(responseMethod);
+
+            presenter.bindTo(vo);
+            model.addAttribute("form", vo);
+            return "oa11010";
+
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "oa11010";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            model.addAttribute("form", vo);
+            vo.setExceptionMessage(re);
+            return "oa19999";
         }
     }
 

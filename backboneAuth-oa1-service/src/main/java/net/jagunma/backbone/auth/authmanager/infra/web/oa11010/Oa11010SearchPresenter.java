@@ -110,7 +110,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         }
         // オペレーター
         html.append(String.format("<td class=\"oaex_operator_operator_code\">%s<input type=\"hidden\" value=\"%d\"/></td>",
-            operator.getOperatorCode(),operator.getBranchId()));
+            operator.getOperatorCode(),operator.getOperatorId()));
         html.append(String.format("<td class=\"oaex_operator_operator_name\">%s</td>", operator.getOperatorName()));
         // オペレーター有効期限
         html.append(String.format("<td class=\"oaex_operator_valid_thru_date\">%s～%s</td>",

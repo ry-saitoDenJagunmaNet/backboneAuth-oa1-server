@@ -16,7 +16,7 @@ function oaex_th_onload() {
 		});
 
 	// 有効期限のラジオボタン初期化
-	oaex_validThrusel_onChange();
+	oaex_validThruSel_onChange();
 	// サブシステムロール/取引ロールの指定方法（指定なし/OR/AND）を非表示
 	oaex_collapsible_onCloseEnd();
 	// サブシステムロール有効期限のラジオボタン初期化
@@ -103,6 +103,41 @@ function oaex_th_oa11100Btn_onClick() {
 	return;
 }
 
+/**
+ * 選択ボタンクリックイベントです。
+ */
+function oaex_th_selectBtn_onClick() {
+	let operatorId = oaex_th_getSelectedOperatorId();
+	if (operatorId.length == 0)  {
+		oa_showAlert("オペレーターを選択して下さい。");
+		return;
+	}
+
+	let responseMethod = document.getElementById("response_method").value;
+
+	// オペレーター履歴確認に遷移
+	location.href = "../"+responseMethod+"?operatorId=" + operatorId;
+	return;
+}
+
+/**
+ * 選択したオペレータコードを取得します。
+ */
+function oaex_th_getSelectedOperatorId() {
+	// 選択したオペレータコードを取得
+	let operatorTable = document.getElementById("operator_table");
+	let selectRow = oa_getTableSelectedRowIndex(operatorTable);
+	if (selectRow == -1) {return "";}
+
+	let operatorId = "";
+	for (let cellChildNode of operatorTable.rows[selectRow].cells[4].childNodes) {
+		if (cellChildNode.nodeName.toLowerCase() == "input") {
+			operatorId = cellChildNode.value;
+			break;
+		}
+	}
+	return operatorId;
+}
 
 /** Thymeleafとモックで共用 **/
 /**
@@ -386,5 +421,12 @@ function oaex_viewOperatorTable() {
  * 閉じるボタンクリックイベントです。
  */
 function oaex_closeBtn_onClick() {
+	let responseMethod = document.getElementById("response_method").value;
+	if (responseMethod.length != 0)  {
+		// オペレーター履歴確認に遷移
+		location.href = "../"+responseMethod+"?operatorId=";
+		return;
+	}
+
 	oa_transferForm("oa00000");
 }
