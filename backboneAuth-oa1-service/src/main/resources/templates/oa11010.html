@@ -31,6 +31,10 @@
 	<!-- main定義 -->
 	<main>
 		<section>
+			<!-- Hidden項目 -->
+			<div>
+				<input type="hidden" id="response_method" name="responseMethod" th:value="${form.responseMethod}"/>
+			</div>
 			<!-- ＪＡ -->
 			<div class="row oa_readonly">
 				<div class="col s6">
@@ -47,10 +51,13 @@
 					<div class="input-field">
 						<select id="branch" name="branchId" class="validate"
 								th:value="${form.branchId}">
+							<!-- th using -->
+							<!--/*/
 							<option th:each="item : ${form.branchItemsSource}"
 									th:value="${item.id}"
 									th:text="${item.name}"
 									th:selected="${form.branchId == item.id}"></option>
+							/*/-->
 							<option value="" th:remove="all"></option>
 							<option value="001" th:remove="all">本所</option>
 							<option value="002" th:remove="all">○○○支所</option>
@@ -60,11 +67,14 @@
 						</select>
 						<label>店舗</label>
 					</div>
+					<!-- th using -->
+					<!--/*/
 					<div th:each="item, itemStat : ${form.branchItemsSource}">
 						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].id'" th:value="${item.id}"/>
 						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].code'" th:value="${item.code}"/>
 						<input type="hidden" th:name="'branchItemsSource['+${itemStat.index}+'].name'" th:value="${item.name}"/>
 					</div>
+					/*/-->
 				</div>
 			</div>
 			<!-- オペレーターコード -->
@@ -267,6 +277,8 @@
 								<div class="oaex_subsystem_role_table" onScroll="oa_linkageScrollX(this, 'subsystem_role_head')">
 									<table id="subsystem_role" class="highlight">
 										<tbody>
+											<!-- th using -->
+											<!--/*/
 											<tr th:each="itemrow, iterStat : *{form.subSystemRoleList}">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
@@ -359,7 +371,7 @@
 													</div>
 												</td>
 											</tr>
-
+											/*/-->
 											<tr th:remove="all">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
@@ -640,10 +652,13 @@
 								<div class="input-field">
 									<select id="subsystem_filter" name="subSystemRoleSubSystemCode" class="validate"
 											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_SubsystemFilter_onChange(this)">
+										<!-- th using -->
+										<!--/*/
 										<option th:each="item  : ${form.bizTranRoleSubSystemList}"
 												th:value="${item.code}"
 												th:text="${item.name}"
 												th:selected="${form.bizTranRoleSubSystemCode == item.code}"></option>
+										/*/-->
 										<option value="" th:remove="all"></option>
 										<option value="KB" th:remove="all">購買</option>
 										<option value="YS" th:remove="all">販売・青果</option>
@@ -654,11 +669,14 @@
 									</select>
 									<label></label>
 								</div>
+								<!-- th using -->
+								<!--/*/
 								<div th:each="item, itemStat : ${form.bizTranRoleSubSystemList}">
 									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].id'" th:value="${item.id}"/>
 									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].code'" th:value="${item.code}"/>
 									<input type="hidden" th:name="'bizTranRoleSubSystemList['+${itemStat.index}+'].name'" th:value="${item.name}"/>
 								</div>
+								/*/-->
 							</div>
 						</div>
 					</div>
@@ -685,6 +703,8 @@
 								<div class="oaex_biztran_role_table" onScroll="oa_linkageScrollX(this, 'biztran_role_head')">
 									<table id="biztran_role" class="highlight">
 										<tbody>
+											<!-- th using -->
+											<!--/*/
 											<tr th:each="itemrow, iterStat : *{form.bizTranRoleList}">
 												<td class="oaex_biztran_role_check">
 													<label class="oa_non_label_checkbox">
@@ -694,7 +714,6 @@
 															   th:checked="${itemrow.bizTranRoleSelected}"/>
 														<span></span>
 													</label>
-													<!-- POST用にコード、名称を定義 -->
 													<input type="hidden"
 														   th:field="*{form.bizTranRoleList[__${iterStat.index}__].bizTranRoleId}"></input>
 													<input type="hidden"
@@ -779,8 +798,7 @@
 													</div>
 												</td>
 											</tr>
-
-
+											/*/-->
 											<tr th:remove="all">
 												<td class="oaex_biztran_role_check">
 													<label class="oa_non_label_checkbox">
@@ -1398,7 +1416,7 @@
 
 		<!-- <br> -->
 
-		<section>
+		<section th:if="${#strings.isEmpty(form.responseMethod)}">
 			<div class="row">
 				<div class="col s12">
 
@@ -1410,7 +1428,8 @@
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')" th:remove="all">サブシステムロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')" th:remove="all">取引ロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')" th:remove="all">パスワードリセット</a>
-
+					<!-- th using -->
+					<!--/*/
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_th_oa11100Btn_onClick();">オペレーター履歴確認</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11090')">アカウントロック照会</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11110')">パスワード変更履歴照会</a>
@@ -1419,6 +1438,7 @@
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11050')">サブシステムロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11060')">取引ロール付与</a>
 					<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11040')">パスワードリセット</a>
+					/*/ -->
 				</div>
 			</div>
 		</section>
@@ -1430,10 +1450,13 @@
 			<div class="col s3">
 				<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
-			<div class="col s4 offset-s5">
+			<div th:if="${#strings.isEmpty(form.responseMethod)}" class="col s4 offset-s5">
 				<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11020')">新規</a>
 				&nbsp;&nbsp;&nbsp;
 				<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oa_transferForm('oa11030')">詳細</a>
+			</div>
+			<div th:if="${!#strings.isEmpty(form.responseMethod)}" class="col s4 offset-s5">
+				<a class="btn waves-effect waves-light oa_footer_button" href="javascript:oaex_th_selectBtn_onClick('oa11020')">選択</a>
 			</div>
 		</div>
 	</footer>

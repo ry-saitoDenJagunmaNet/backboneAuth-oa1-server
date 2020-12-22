@@ -181,6 +181,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
      */
     private int pageNo;
 
+    /**
+     * 入力補助として使用する場合の戻り先
+     */
+    private String responseMethod;
+
     // Getter／Setter
     public String getJa() {
         return ja;
@@ -427,5 +432,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     }
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+    public String getResponseMethod() {
+        return responseMethod;
+    }
+    public void setResponseMethod(String responseMethod) {
+        this.responseMethod = responseMethod;
     }
 }
