@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
@@ -22,7 +22,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class SearchSubSystemRoleTest {
+class SearchSubSystemRoleAllocateTest {
 
     // 実行既定値
     private Long targetOperatorId = 123456L;
@@ -57,8 +57,8 @@ class SearchSubSystemRoleTest {
     // 検証値
     private Operator_SubSystemRoles actualOperator_SubSystemRoles;
 
-    private SubSystemSearchRequest createRequest() {
-        return new SubSystemSearchRequest() {
+    private SubSystemRoleAllocateSearchRequest createRequest() {
+        return new SubSystemRoleAllocateSearchRequest() {
             @Override
             public Long getTargetOperatorId() {
                 return targetOperatorId;
@@ -75,8 +75,8 @@ class SearchSubSystemRoleTest {
             }
         };
     }
-    private SubSystemSearchResponse createResponse() {
-        return new SubSystemSearchResponse() {
+    private SubSystemRoleAllocateSearchResponse createResponse() {
+        return new SubSystemRoleAllocateSearchResponse() {
             @Override
             public void setOperator_SubSystemRoles(Operator_SubSystemRoles operator_SubSystemRoles) {
                 actualOperator_SubSystemRoles = operator_SubSystemRoles;
@@ -85,7 +85,7 @@ class SearchSubSystemRoleTest {
     }
 
     // テスト対象クラス生成
-    private SearchSubSystemRole createSearchSubSystemRole() {
+    private SearchSubSystemRoleAllocate createSearchSubSystemRoleAllocate() {
         Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
@@ -96,11 +96,11 @@ class SearchSubSystemRoleTest {
             }
         };
 
-        return new SearchSubSystemRole(operator_SubSystemRoleRepository);
+        return new SearchSubSystemRoleAllocate(operator_SubSystemRoleRepository);
     }
 
     /**
-     * {@link SearchSubSystemRole#execute(SubSystemSearchRequest request, SubSystemSearchResponse response)}テスト
+     * {@link SearchSubSystemRoleAllocate#execute(SubSystemRoleAllocateSearchRequest request, SubSystemRoleAllocateSearchResponse response)}テスト
      *  ●パターン
      *    正常
      *
@@ -113,11 +113,11 @@ class SearchSubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test() {
         // テスト対象クラス生成
-        SearchSubSystemRole searchSubSystemRole = createSearchSubSystemRole();
+        SearchSubSystemRoleAllocate searchSubSystemRoleAllocate = createSearchSubSystemRoleAllocate();
 
         // 実行値
-        SubSystemSearchRequest request = createRequest();
-        SubSystemSearchResponse response = createResponse();
+        SubSystemRoleAllocateSearchRequest request = createRequest();
+        SubSystemRoleAllocateSearchResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -127,7 +127,7 @@ class SearchSubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            searchSubSystemRole.execute(request, response))
+            searchSubSystemRoleAllocate.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -136,7 +136,7 @@ class SearchSubSystemRoleTest {
     }
 
     /**
-     * {@link SearchSubSystemRole#execute(SubSystemSearchRequest request, SubSystemSearchResponse response)}テスト
+     * {@link SearchSubSystemRoleAllocate#execute(SubSystemRoleAllocateSearchRequest request, SubSystemRoleAllocateSearchResponse response)}テスト
      *  ●パターン
      *    正常（サインインオペレーターがセットされていない）
      *
@@ -149,12 +149,12 @@ class SearchSubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test1() {
         // テスト対象クラス生成
-        SearchSubSystemRole searchSubSystemRole = createSearchSubSystemRole();
+        SearchSubSystemRoleAllocate searchSubSystemRoleAllocate = createSearchSubSystemRoleAllocate();
 
         // 実行値
         signInOperatorId = null;
-        SubSystemSearchRequest request = createRequest();
-        SubSystemSearchResponse response = createResponse();
+        SubSystemRoleAllocateSearchRequest request = createRequest();
+        SubSystemRoleAllocateSearchResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -162,7 +162,7 @@ class SearchSubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            searchSubSystemRole.execute(request, response))
+            searchSubSystemRoleAllocate.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -171,7 +171,7 @@ class SearchSubSystemRoleTest {
     }
 
     /**
-     * {@link SearchSubSystemRole#searchOperator_SubSystemRoles(SubSystemSearchRequest request)}テスト
+     * {@link SearchSubSystemRoleAllocate#searchOperator_SubSystemRoles(SubSystemRoleAllocateSearchRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -183,10 +183,10 @@ class SearchSubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void searchOperator_SubSystemRoles_test() {
         // テスト対象クラス生成
-        SearchSubSystemRole searchSubSystemRole = createSearchSubSystemRole();
+        SearchSubSystemRoleAllocate searchSubSystemRoleAllocate = createSearchSubSystemRoleAllocate();
 
         // 実行値
-        SubSystemSearchRequest request = createRequest();
+        SubSystemRoleAllocateSearchRequest request = createRequest();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -195,7 +195,7 @@ class SearchSubSystemRoleTest {
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         // 実行
-        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRole.searchOperator_SubSystemRoles(request);
+        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRoleAllocate.searchOperator_SubSystemRoles(request);
 
         // 結果検証
         assertThat(operator_SubSystemRoles).usingRecursiveComparison().isEqualTo(expectedOperator_SubSystemRoles);

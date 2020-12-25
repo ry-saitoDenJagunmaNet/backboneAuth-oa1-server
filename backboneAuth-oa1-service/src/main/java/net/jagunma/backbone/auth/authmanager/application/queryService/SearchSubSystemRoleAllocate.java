@@ -2,8 +2,8 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
  * オペレーター_サブシステムロール割当検索サービス
  */
 @Service
-public class SearchSubSystemRole {
+public class SearchSubSystemRoleAllocate {
 
     private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
 
     // コンストラクタ
-    public SearchSubSystemRole(Operator_SubSystemRoleRepository operator_SubSystemRoleRepository) {
+    public SearchSubSystemRoleAllocate(Operator_SubSystemRoleRepository operator_SubSystemRoleRepository) {
         this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
     }
 
@@ -29,7 +29,7 @@ public class SearchSubSystemRole {
      * @param request  オペレーター_サブシステムロール割当検索サービス Request
      * @param response オペレーター_サブシステムロール割当検索サービス Response
      */
-    public void execute(SubSystemSearchRequest request, SubSystemSearchResponse response) {
+    public void execute(SubSystemRoleAllocateSearchRequest request, SubSystemRoleAllocateSearchResponse response) {
 
         // オペレーターID に null が含まれていたら処理しない
         if (request.getOperatorIdCriteria().getIncludes().contains(null)) {
@@ -50,7 +50,7 @@ public class SearchSubSystemRole {
      * @param request  オペレーター_サブシステムロール割当検索サービス Request
      * @return オペレーター_サブシステムロール割当群
      */
-    Operator_SubSystemRoles searchOperator_SubSystemRoles(SubSystemSearchRequest request) {
+    Operator_SubSystemRoles searchOperator_SubSystemRoles(SubSystemRoleAllocateSearchRequest request) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().assignFrom(request.getOperatorIdCriteria());
         return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("Operator_SubSystemRoleId"));

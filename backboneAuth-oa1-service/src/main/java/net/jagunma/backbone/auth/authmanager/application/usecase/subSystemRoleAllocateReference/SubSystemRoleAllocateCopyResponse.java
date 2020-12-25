@@ -1,11 +1,11 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 
 /**
  * オペレーター_サブシステムロール割当コピーサービス Response
  */
-public interface SubSystemCopyResponse {
+public interface SubSystemRoleAllocateCopyResponse {
     /**
      * オペレーター_サブシステムロール割当群のＳｅｔ
      *

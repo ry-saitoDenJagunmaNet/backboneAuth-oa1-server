@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.GrantSubSystemRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.CopySubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.queryService.CopySubSystemRoleAllocate;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010Controller;
@@ -52,16 +52,16 @@ public class Oa11040Controller extends BaseOfController {
 
     private final GrantSubSystemRole grantSubSystemRole;
     private final SearchOperator searchOperator;
-    private final CopySubSystemRole copySubSystemRole;
+    private final CopySubSystemRoleAllocate copySubSystemRoleAllocate;
 
     // コンストラクタ
     public Oa11040Controller(
         GrantSubSystemRole grantSubSystemRole,
         SearchOperator searchOperator,
-        CopySubSystemRole copySubSystemRole) {
+        CopySubSystemRoleAllocate copySubSystemRoleAllocate) {
         this.grantSubSystemRole = grantSubSystemRole;
         this.searchOperator = searchOperator;
-        this.copySubSystemRole = copySubSystemRole;
+        this.copySubSystemRoleAllocate = copySubSystemRoleAllocate;
     }
 
     /**
@@ -157,7 +157,7 @@ public class Oa11040Controller extends BaseOfController {
                 Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo.getOperatorId(), selectedOperatorId, AuditInfoHolder.getAuthInf().getOperatorId());
                 Oa11040CopyPresenter presenter = new Oa11040CopyPresenter();
 
-                copySubSystemRole.execute(converter, presenter);
+                copySubSystemRoleAllocate.execute(converter, presenter);
 
                 presenter.bindTo(vo);
             }

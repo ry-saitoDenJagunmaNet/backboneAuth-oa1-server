@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 
