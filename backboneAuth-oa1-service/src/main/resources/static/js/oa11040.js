@@ -12,6 +12,15 @@ function oaex_th_onload() {
 }
 
 /**
+ * コピーボタン Clickイベントです
+ */
+function oaex_th_copyBtn_onClick() {
+	document.forms[0].action = "copy";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+/**
  * （◀）移動ボタン Clickイベントです
  * 付与ロールテーブルへ追加
  */

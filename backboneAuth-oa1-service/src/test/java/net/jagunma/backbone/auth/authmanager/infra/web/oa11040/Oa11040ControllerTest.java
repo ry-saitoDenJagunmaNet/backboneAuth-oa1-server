@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.GrantSubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchCopySubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040UnallocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
@@ -155,8 +158,7 @@ class Oa11040ControllerTest {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, operator_SubSystemRoleRepository, null,
-            operatorHistoryHeaderRepository) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, operator_SubSystemRoleRepository, null, operatorHistoryHeaderRepository) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる
@@ -173,7 +175,14 @@ class Oa11040ControllerTest {
             }
         };
 
-        return new Oa11040Controller(grantSubSystemRole, searchOperator);
+        SearchCopySubSystemRole searchCopySubSystemRole = new SearchCopySubSystemRole(operator_SubSystemRoleRepository) {
+            @Override
+            public void execute(SubSystemSearchCopyRequest request, SubSystemSearchCopyResponse response) {
+
+            }
+        };
+
+        return new Oa11040Controller(grantSubSystemRole, searchOperator, searchCopySubSystemRole);
     }
 
     // Oa11040Vo作成

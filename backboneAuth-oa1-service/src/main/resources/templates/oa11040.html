@@ -62,7 +62,7 @@
 				</div>
 				<!-- コピーボタン -->
 				<div class="col s3 offset-s1">
-					<a class="btn waves-effect waves-light" href="#!">コピー</a>
+					<a class="btn waves-effect waves-light" href="javascript:oaex_th_copyBtn_onClick();">コピー</a>
 				</div>
 			</div>
 		</section>
@@ -107,11 +107,11 @@
 									<td class="oaex_allocate_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_allocate_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:value="${itemrow.validThruStartDate}"></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:value="${itemrow.validThruStartDate}"></input>
 										</div>
 									</td>
 								</tr>
@@ -151,6 +151,13 @@
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
 					<div class="oaex_unallocate_role_table" onScroll="oa_linkageScrollX(this, 'unallocate_role_table_head')">
+						<!-- th using -->
+						<!--/*/
+						<div  th:each="itemrow, iterStat : *{form.oa11040UnallocateRoleTableVoList}">
+							<input type="hidden" th:name="'oa11040UnallocateRoleTableVoList['+${iterStat.index}+'].roleCode'" th:value="${itemrow.roleCode}"/>
+							<input type="hidden" th:name="'oa11040UnallocateRoleTableVoList['+${iterStat.index}+'].roleName'" th:value="${itemrow.roleName}"/>
+						</div>
+						/*/-->
 						<table id="unallocate_role_table" class="highlight">
 							<!-- th using -->
 							<!--/*/
