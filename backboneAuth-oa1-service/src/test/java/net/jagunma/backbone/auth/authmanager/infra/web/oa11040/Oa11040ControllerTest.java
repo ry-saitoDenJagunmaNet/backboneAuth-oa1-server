@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.commandService.GrantSubSystemRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchCopySubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.queryService.CopySubSystemRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040UnallocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
@@ -175,14 +175,14 @@ class Oa11040ControllerTest {
             }
         };
 
-        SearchCopySubSystemRole searchCopySubSystemRole = new SearchCopySubSystemRole(operator_SubSystemRoleRepository) {
+        CopySubSystemRole copySubSystemRole = new CopySubSystemRole(operator_SubSystemRoleRepository) {
             @Override
-            public void execute(SubSystemSearchCopyRequest request, SubSystemSearchCopyResponse response) {
+            public void execute(SubSystemCopyRequest request, SubSystemCopyResponse response) {
 
             }
         };
 
-        return new Oa11040Controller(grantSubSystemRole, searchOperator, searchCopySubSystemRole);
+        return new Oa11040Controller(grantSubSystemRole, searchOperator, copySubSystemRole);
     }
 
     // Oa11040Vo作成

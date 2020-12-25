@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSys
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 
 /**
- * オペレーター_サブシステムロール割当検索＆コピーサービス Response
+ * オペレーター_サブシステムロール割当検索サービス Response
  */
-public interface SubSystemSearchCopyResponse {
+public interface SubSystemSearchResponse {
     /**
      * オペレーター_サブシステムロール割当群のＳｅｔ
      *
