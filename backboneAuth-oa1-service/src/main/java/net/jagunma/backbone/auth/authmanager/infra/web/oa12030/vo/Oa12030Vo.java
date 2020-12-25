@@ -15,21 +15,41 @@ public class Oa12030Vo extends BaseOfResponseVo {
      */
     private Long suspendBizTranId;
     /**
+     * ＪＡチェック
+     */
+    private Boolean jaCheck;
+    /**
      * ＪＡコード
      */
     private String jaCode;
+    /**
+     * 店舗チェック
+     */
+    private Boolean branchCheck;
     /**
      * 店舗コード
      */
     private String branchCode;
     /**
+     * サブシステムチェック
+     */
+    private Boolean subSystemCheck;
+    /**
      * サブシステムコード
      */
     private String subSystemCode;
     /**
+     * 取引グループチェック
+     */
+    private Boolean bizTranGrpCheck;
+    /**
      * 取引グループコード
      */
     private String bizTranGrpCode;
+    /**
+     * 取引チェック
+     */
+    private Boolean bizTranCheck;
     /**
      * 取引コード
      */
@@ -59,11 +79,23 @@ public class Oa12030Vo extends BaseOfResponseVo {
     public void setSuspendBizTranId(Long suspendBizTranId) {
         this.suspendBizTranId = suspendBizTranId;
     }
+    public Boolean getJaCheck() {
+        return jaCheck;
+    }
+    public void setJaCheck(Boolean jaCheck) {
+        this.jaCheck = jaCheck;
+    }
     public String getJaCode() {
         return jaCode;
     }
     public void setJaCode(String jaCode) {
         this.jaCode = jaCode;
+    }
+    public Boolean getBranchCheck() {
+        return branchCheck;
+    }
+    public void setBranchCheck(Boolean branchCheck) {
+        this.branchCheck = branchCheck;
     }
     public String getBranchCode() {
         return branchCode;
@@ -71,17 +103,35 @@ public class Oa12030Vo extends BaseOfResponseVo {
     public void setBranchCode(String branchCode) {
         this.branchCode = branchCode;
     }
+    public Boolean getSubSystemCheck() {
+        return subSystemCheck;
+    }
+    public void setSubSystemCheck(Boolean subSystemCheck) {
+        this.subSystemCheck = subSystemCheck;
+    }
     public String getSubSystemCode() {
         return subSystemCode;
     }
     public void setSubSystemCode(String subSystemCode) {
         this.subSystemCode = subSystemCode;
     }
+    public Boolean getBizTranGrpCheck() {
+        return bizTranGrpCheck;
+    }
+    public void setBizTranGrpCheck(Boolean bizTranGrpCheck) {
+        this.bizTranGrpCheck = bizTranGrpCheck;
+    }
     public String getBizTranGrpCode() {
         return bizTranGrpCode;
     }
     public void setBizTranGrpCode(String bizTranGrpCode) {
         this.bizTranGrpCode = bizTranGrpCode;
+    }
+    public Boolean getBizTranCheck() {
+        return bizTranCheck;
+    }
+    public void setBizTranCheck(Boolean bizTranCheck) {
+        this.bizTranCheck = bizTranCheck;
     }
     public String getBizTranCode() {
         return bizTranCode;

@@ -235,7 +235,7 @@
 			<div class="row">
 				<div class="col s12">
 					<div class="oaex_suspend_biztran_table">
-						<table class="highlight">
+						<table id="suspend_biztran_table" class="highlight">
 							<thead>
 								<tr>
 									<th class="oaex_table_ja_th" colspan="2">ＪＡ</th>
@@ -247,20 +247,24 @@
 									<th class="oaex_table_suspend_reason_th">抑止理由</th>
 								</tr>
 							</thead>
-							<tbody id="suspend_biztran_table">
-							<tr th:each="itemrow, iterStat : *{form.searchResultList}" onclick="oa_setTableRowSelected(this)">
-								<td class="oaex_table_ja_code" th:text="${itemrow.jaCode}"></td>
-								<td class="oaex_table_ja_name" th:text="${itemrow.jaName}"></td>
-								<td class="oaex_table_tempo_code" th:text="${itemrow.branchCode}"></td>
-								<td class="oaex_table_tempo_name" th:text="${itemrow.branchName}"></td>
-								<td class="oaex_table_subsystem" th:text="${itemrow.subSystemName}"></td>
-								<td class="oaex_table_biztran_grp_code" th:text="${itemrow.bizTranGrpCode}"></td>
-								<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
-								<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
-								<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
-								<td class="oaex_table_valid_thru_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
-								<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
-							</tr>
+							<tbody id="suspend_biztran_tbody">
+								<!-- th using -->
+								<!--/*/ 
+								<tr th:each="itemrow, iterStat : *{form.searchResultList}" onclick="oa_setTableRowSelected(this)">
+									<td style="display:none;"><input type="hidden" id="suspend_bizTran_id" th:value="${itemrow.suspendBizTranId}"/></td>
+									<td class="oaex_table_ja_code" th:text="${itemrow.jaCode}"></td>
+									<td class="oaex_table_ja_name" th:text="${itemrow.jaName}"></td>
+									<td class="oaex_table_tempo_code" th:text="${itemrow.branchCode}"></td>
+									<td class="oaex_table_tempo_name" th:text="${itemrow.branchName}"></td>
+									<td class="oaex_table_subsystem" th:text="${itemrow.subSystemName}"></td>
+									<td class="oaex_table_biztran_grp_code" th:text="${itemrow.bizTranGrpCode}"></td>
+									<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
+									<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
+									<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
+									<td class="oaex_table_valid_thru_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
+									<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
+								</tr>
+								/*/-->
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_valid_thru_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>006</td><td>JA前橋</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>合併前のデータ凍結の為のデータ投入抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>007</td><td>JAたかさき</td><td>000</td><td>本所</td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
@@ -315,9 +319,9 @@
 				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
 			<div class="col s5 offset-s4">
-				<a class="btn waves-effect waves-light" href="javascript:oa_transferFormWithParam('oa12030', 'mode=0')">新規</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_newBtn_onClick()">新規</a>
 				&nbsp;&nbsp;&nbsp;
-				<a class="btn waves-effect waves-light" href="javascript:oa_transferFormWithParam('oa12030', 'mode=1')">詳細</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_detailBtn_onClick()">詳細</a>
 			</div>
 		</div>
 	</footer>

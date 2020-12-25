@@ -62,13 +62,27 @@ function oaex_th_ja_onChange() {
 	// 選択値を保持
 	let jaCode = document.getElementById("ja").value;
 	document.getElementById("ja_code").value = jaCode;
-//	document.getElementById("branch_code").value = "";
+	document.getElementById("branch_code").value = "";
+
+	if (jaCode.length > 0) {
+		// ＪＡチェックボックスのチェックON
+		document.getElementById("ja_check").checked = true;
+		oaex_ja_check_onChange();
+	} else {
+		// ＪＡチェックボックスのチェックOFF
+		document.getElementById("ja_check").checked = false;
+		oaex_ja_check_onChange();
+	}
 
 	// 店舗 ItemSourceの取得
 	oa_th_getBranchItemsSourceForCode(jaCode, "branch_select", "branch_code", "branch");
 
 	// Changeイベントの追加
 	document.getElementById("branch").addEventListener("change", (event) => {oaex_th_branch_onChange();});
+
+	// 店舗チェックボックスのチェックOFF
+	document.getElementById("branch_check").checked = false;
+	oaex_tempo_check_onChange();
 
 	// selectの初期化
 	oa_initSelect();
@@ -82,6 +96,15 @@ function oaex_th_branch_onChange() {
 	// 選択値を保持
 	let branchCode = document.getElementById("branch").value;
 	document.getElementById("branch_code").value = branchCode;
+	if (branchCode.length > 0) {
+		// 店舗チェックボックスのチェックON
+		document.getElementById("branch_check").checked = true;
+		oaex_tempo_check_onChange();
+	} else {
+		// 店舗チェックボックスのチェックOFF
+		document.getElementById("branch_check").checked = false;
+		oaex_tempo_check_onChange();
+	}
 }
 
 /**
@@ -92,8 +115,6 @@ function oaex_th_subsystem_onChange() {
 	// 選択値を保持
 	let subSystemCode = document.getElementById("subSystem").value;
 	document.getElementById("subSystem_code").value = subSystemCode;
-//	document.getElementById("bizTran_grp_code").value = "";
-//	document.getElementById("bizTran_code").value = "";
 
 	if (subSystemCode.length > 0) {
 		// サブシステムチェックボックスのチェックON
@@ -138,14 +159,12 @@ function oaex_th_subsystem_onChange() {
 	for (let row of document.getElementById("biztran_grp_table").rows) {
 		if (document.getElementById("bizTran_grp_code").value == row.cells[0].innerHTML) {
 			oaex_th_biztran_grp_onSelectChange(row);
-//			document.getElementById("bizTran_grp_code").value = row.cells[0].innerHTML;
 		}
 	}
 	// 取引初期選択
 	for (let row of document.getElementById("biztran_table").rows) {
 		if (document.getElementById("bizTran_code").value == row.cells[0].innerHTML) {
 			oaex_th_biztran_onSelectChange(row);
-//			document.getElementById("bizTran_code").value = row.cells[0].innerHTML;
 		}
 	}
 }
@@ -218,15 +237,12 @@ function oaex_th_biztran_onSelectChange(thisRow) {
 	}
 }
 
-///**
-// * 検索ボタンクリックイベントです。
-// */
-//function oaex_th_searchBtn_onClick(pageNo) {
-//	document.getElementById("pageNo").value = pageNo;
-//	document.forms[0].action = "search";
-//	document.forms[0].method = "POST";
-//	document.forms[0].submit();
-//}
+/**
+ * 閉じるボタンクリックイベントです。
+ */
+function oaex_th_closeBtn_onClick() {
+	location.href = "../oa12020/backSearch";
+}
 
 /**
  * 登録／更新ボタンクリックイベントです。
@@ -242,6 +258,15 @@ function oaex_th_storeBtn_onClick() {
 	document.forms[0].method = "POST";
 	document.forms[0].submit();
 }
+
+function oaex_th_deleteBtn_onClick() {
+	document.forms[0].action = "delete";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
+
+
+
 
 /**
  * 画面Loadイベントです。
@@ -282,13 +307,13 @@ function oaex_initialize() {
 	// 抑止理由
 	document.getElementById("suspend_reason").value = "";
 
-	// todo: 取引グループ、取引のテーブルをクリア（ほんとはサブシステムが選択されていないと取引グループのテーブルは設定されない）
+	// 取引グループ、取引のテーブルをクリア（ほんとはサブシステムが選択されていないと取引グループのテーブルは設定されない）
 	oa_setTableRowSelectedRemoveAll(document.getElementById("biztran_grp_table"));
 	oa_setTableRowSelectedRemoveAll(document.getElementById("biztran_table"));
 	document.getElementById("biztran_grp_table").style.overflow = "hidden";
 	document.getElementById("biztran_table").style.overflow = "hidden";
 
-	// todo: 新規または詳細の画面の入力制御
+	// 新規または詳細の画面の入力制御
 	let mode = oa_getParam("mode");
 	if (mode == "1") {
 		//　詳細ボタンで遷移
@@ -375,17 +400,17 @@ function oaex_ja_onChange() {
 		oaex_ja_check_onChange();
 
 		// 選択したＪＡで店舗を検索し、店舗を有効にする
-		// todo: ここで、再検索
+		// ここで、再検索
 		document.getElementById("branch").selectedIndex = 0;
 		oa_setDisabled("branch", false);
 		oa_initSelect();
 	} else {
 		// ＪＡチェックボックスのチェックOFF
-		document.getElementById("ja_check").checked = false;	
+		document.getElementById("ja_check").checked = false;
 		oaex_ja_check_onChange();
 
 		// 店舗をクリアし、店舗を無効にする
-		// todo: ここで、クリア
+		// ここで、クリア
 		document.getElementById("branch").selectedIndex = 0;
 		oa_setDisabled("branch", true);
 		oa_initSelect();
@@ -614,7 +639,7 @@ function oaex_biztran_grp_onSelectChange(thisRow) {
 	oa_setTableRowSelected(thisRow);
 
 	// 選択した取引グループで取引をを検索表示する
-	// todo: ここで、全選択解除
+	// ここで、全選択解除
 
 	let biztranGrpTableSelIx = oa_getTableSelectedRowIndex(biztranGrpTable);
 	let biztranTable = document.getElementById("biztran_table");
@@ -714,6 +739,11 @@ function oaex_setRequired(obj, required) {
  * 閉じるボタンクリックイベントです。
  */
 function oaex_closeBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_closeBtn_onClick();
+		return;
+	}
+
 	oa_showConfirm("変更内容が登録されていません。\n画面を閉じてよろしいですか？", oaex_closeBtn_onClick_confirmReturn);
 }
 
@@ -740,6 +770,11 @@ function oaex_deleteBtn_onClick() {
  */
 function oaex_deleteBtn_onClick_confirmReturn(rtn) {
 	if (rtn) {
+		if (_isThymeleaf) {
+			oaex_th_deleteBtn_onClick();
+			return;
+		}
+
 		// 初期化処理
 		oaex_initialize();
 		oa_showAlert("削除しました。");
@@ -754,5 +789,6 @@ function oaex_storeBtn_onClick() {
 		oaex_th_storeBtn_onClick();
 		return;
 	}
+
 	oa_showAlert("登録しました。");
 }

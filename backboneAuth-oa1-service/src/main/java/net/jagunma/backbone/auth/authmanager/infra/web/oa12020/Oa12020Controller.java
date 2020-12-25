@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 /**
  * OA12020コントローラ
@@ -55,14 +56,18 @@ public class Oa12020Controller extends BaseOfController {
     /**
      * 画面を初期表示します
      *
-     * @param model モデル
+     * @param model         モデル
+     * @param sessionStatus セッション処理の通知
      * @return view名
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public String get(Model model) {
+    public String get(Model model, SessionStatus sessionStatus) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
         LOGGER.debug("get START");
+
+        // Session破棄
+        sessionStatus.setComplete();
 
         Oa12020Vo vo = new Oa12020Vo();
         try {
@@ -107,7 +112,7 @@ public class Oa12020Controller extends BaseOfController {
      * @param model モデル
      * @return 一時取引抑止検索結果
      */
-    @RequestMapping(value = "/backSearch", method = RequestMethod.POST)
+    @RequestMapping(value = "/backSearch", method = RequestMethod.GET)
     public String  backSearch(@ModelAttribute("session_vo") Oa12020Vo session_vo, Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();

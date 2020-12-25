@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
 
 /**
- * 一時取引抑止群 検索 Response
+ * 一時取引抑止群検索サービス Response
  */
 public interface SuspendBizTransSearchResponse {
 

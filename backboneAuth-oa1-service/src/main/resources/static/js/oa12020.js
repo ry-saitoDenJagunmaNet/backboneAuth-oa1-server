@@ -17,7 +17,7 @@ function oaex_th_onload() {
 	document.getElementById("bizTranGrp").addEventListener("change", (event) => {oaex_th_biztran_grp_onChange();});
 
 	// テーブル＆ページネーションを表示
-	document.getElementById("suspend_biztran_table").style.visibility = "visible";
+	document.getElementById("suspend_biztran_tbody").style.visibility = "visible";
 	document.getElementById("suspend_biztran_pagination").style.visibility = "visible";
 
 
@@ -90,6 +90,45 @@ function oaex_th_searchBtn_onClick(pageNo) {
 	document.forms[0].submit();
 }
 
+/**
+ * 新規ボタンクリックイベントです。
+ */
+function oaex_th_newBtn_onClick() {
+	location.href = "../oa12030/get";
+	return;
+}
+
+/**
+ * 詳細ボタンクリックイベントです。
+ */
+function oaex_th_detailBtn_onClick() {
+	let suspendBiztranId = oaex_th_getSelectedSuspendBiztranId();
+	if (suspendBiztranId.length == 0)  {
+		oa_showAlert("一時取引抑止を選択して下さい。");
+		return;
+	}
+
+	location.href = "../oa12030/get?suspendBizTranId="+suspendBiztranId;
+}
+
+/**
+ * 選択した一時取引抑止IDを取得します。
+ */
+function oaex_th_getSelectedSuspendBiztranId() {
+	// 選択した一時取引抑止IDを取得
+	let suspendBiztranTable = document.getElementById("suspend_biztran_table");
+	let selectRow = oa_getTableSelectedRowIndex(suspendBiztranTable);
+	if (selectRow == -1) {return "";}
+
+	let suspendBiztranId = "";
+	for (let cellChildNode of suspendBiztranTable.rows[selectRow].cells[0].childNodes) {
+		if (cellChildNode.nodeName.toLowerCase() == "input") {
+			suspendBiztranId = cellChildNode.value;
+			break;
+		}
+	}
+	return suspendBiztranId;
+}
 
 
 /**
@@ -434,7 +473,7 @@ function oaex_searchBtn_onClick() {
 	}
 
 	// テーブル＆ページネーションを表示
-	document.getElementById("suspend_biztran_table").style.visibility = "visible";
+	document.getElementById("suspend_biztran_tbody").style.visibility = "visible";
 	document.getElementById("suspend_biztran_pagination").style.visibility = "visible";
 }
 
@@ -445,4 +484,29 @@ function oaex_closeBtn_onClick() {
 	oa_transferForm("oa00000");
 }
 
+/**
+ * 新規ボタンクリックイベントです。
+ */
+function oaex_newBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_newBtn_onClick()
+		return;
+	}
+
+	oa_transferFormWithParam('oa12030', 'mode=0');
+	return;
+}
+
+/**
+ * 詳細ボタンクリックイベントです。
+ */
+function oaex_detailBtn_onClick() {
+	if (_isThymeleaf) {
+		oaex_th_detailBtn_onClick()
+		return;
+	}
+
+	oa_transferFormWithParam('oa12030', 'mode=1');
+	return;
+}
 

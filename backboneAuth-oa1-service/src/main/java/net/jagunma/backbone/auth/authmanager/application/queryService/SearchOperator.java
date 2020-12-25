@@ -649,7 +649,7 @@ public class SearchOperator {
 //    }
 
     /**
-     * オペレーター_サブシステムロール割当を群検索します
+     * オペレーター_サブシステムロール割当群を検索します
      *
      * @param operatorIdList オペレーターIDリスト
      * @return オペレーター_サブシステムロール割当群

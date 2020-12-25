@@ -8,7 +8,7 @@ div.oa_collapsible_header {width: 100px;}
 /**
  * 一時取引抑止テーブル
  */
-#suspend_biztran_table {visibility: collapse;}
+#suspend_biztran_tbody {visibility: collapse;}
 #suspend_biztran_pagination {visibility: collapse;}
 .oaex_suspend_biztran_table {
     overflow-x: auto;
