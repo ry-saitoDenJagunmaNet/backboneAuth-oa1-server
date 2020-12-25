@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 

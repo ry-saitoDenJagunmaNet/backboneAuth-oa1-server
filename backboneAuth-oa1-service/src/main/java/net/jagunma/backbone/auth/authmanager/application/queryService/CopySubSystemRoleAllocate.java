@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
  * オペレーター_サブシステムロール割当コピーサービス
  */
 @Service
-public class CopySubSystemRole {
+public class CopySubSystemRoleAllocate {
 
     private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
 
     // コンストラクタ
-    public CopySubSystemRole(Operator_SubSystemRoleRepository operator_SubSystemRoleRepository) {
+    public CopySubSystemRoleAllocate(Operator_SubSystemRoleRepository operator_SubSystemRoleRepository) {
         this.operator_SubSystemRoleRepository = operator_SubSystemRoleRepository;
     }
 
@@ -34,7 +34,7 @@ public class CopySubSystemRole {
      * @param request  オペレーター_サブシステムロール割当コピーサービス Request
      * @param response オペレーター_サブシステムロール割当コピーサービス Response
      */
-    public void execute(SubSystemCopyRequest request, SubSystemCopyResponse response) {
+    public void execute(SubSystemRoleAllocateCopyRequest request, SubSystemRoleAllocateCopyResponse response) {
 
         // オペレーターID に null が含まれていたら処理しない
         if (request.getOperatorIdCriteria().getIncludes().contains(null)) {
@@ -58,7 +58,7 @@ public class CopySubSystemRole {
      * @param request  オペレーター_サブシステムロール割当コピーサービス Request
      * @return オペレーター_サブシステムロール割当群
      */
-    Operator_SubSystemRoles searchOperator_SubSystemRoles(SubSystemCopyRequest request) {
+    Operator_SubSystemRoles searchOperator_SubSystemRoles(SubSystemRoleAllocateCopyRequest request) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().assignFrom(request.getOperatorIdCriteria());
         return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
@@ -71,7 +71,7 @@ public class CopySubSystemRole {
      * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
      * @return オペレーター_サブシステムロール割当群
      */
-    Operator_SubSystemRoles copyAdditionalOperator_SubSystemRoles(SubSystemCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles) {
+    Operator_SubSystemRoles copyAdditionalOperator_SubSystemRoles(SubSystemRoleAllocateCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles) {
         Map<String, Operator_SubSystemRole> targetOperator_SubSystemRoleMap = new HashMap<>();
         Map<String, Operator_SubSystemRole> selectedOperator_SubSystemRoleMap = new HashMap<>();
         Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();

@@ -2,13 +2,13 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyRequest;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
  * OA11040 コピー Converter
  */
-class Oa11040CopyConverter implements SubSystemCopyRequest {
+class Oa11040CopyConverter implements SubSystemRoleAllocateCopyRequest {
 
     /**
      * OA11040 Various OperatorId

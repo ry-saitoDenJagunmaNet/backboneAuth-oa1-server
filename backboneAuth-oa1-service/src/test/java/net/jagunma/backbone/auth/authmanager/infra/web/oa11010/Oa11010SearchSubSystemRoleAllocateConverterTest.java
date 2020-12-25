@@ -9,7 +9,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Oa11010SearchSubSystemRoleConverterTest {
+class Oa11010SearchSubSystemRoleAllocateConverterTest {
 
     /**
      * {@link Oa11010SearchSubSystemRoleConverter}のテスト

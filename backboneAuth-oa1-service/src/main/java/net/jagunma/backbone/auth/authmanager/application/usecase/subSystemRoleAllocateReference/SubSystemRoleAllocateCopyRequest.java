@@ -1,11 +1,11 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference;
 
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
  * オペレーター_サブシステムロール割当コピーサービス Request
  */
-public interface SubSystemCopyRequest {
+public interface SubSystemRoleAllocateCopyRequest {
 
     /**
      * ターゲットオペレーターIDのＧｅｔ

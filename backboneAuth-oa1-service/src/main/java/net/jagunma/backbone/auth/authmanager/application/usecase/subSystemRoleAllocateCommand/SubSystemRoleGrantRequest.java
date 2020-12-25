@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand;
 
 import java.util.List;
 

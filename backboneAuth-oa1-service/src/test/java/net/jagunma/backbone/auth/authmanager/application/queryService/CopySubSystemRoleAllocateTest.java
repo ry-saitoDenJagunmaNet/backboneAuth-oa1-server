@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
@@ -22,7 +22,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class CopySubSystemRoleTest {
+class CopySubSystemRoleAllocateTest {
 
     // 実行既定値
     private Long targetOperatorId = 123456L;
@@ -81,8 +81,8 @@ class CopySubSystemRoleTest {
     // 検証値
     private Operator_SubSystemRoles actualOperator_SubSystemRoles;
 
-    private SubSystemCopyRequest createRequest() {
-        return new SubSystemCopyRequest() {
+    private SubSystemRoleAllocateCopyRequest createRequest() {
+        return new SubSystemRoleAllocateCopyRequest() {
             @Override
             public Long getTargetOperatorId() {
                 return targetOperatorId;
@@ -103,8 +103,8 @@ class CopySubSystemRoleTest {
             }
         };
     }
-    private SubSystemCopyResponse createResponse() {
-        return new SubSystemCopyResponse() {
+    private SubSystemRoleAllocateCopyResponse createResponse() {
+        return new SubSystemRoleAllocateCopyResponse() {
             @Override
             public void setOperator_SubSystemRoles(Operator_SubSystemRoles operator_SubSystemRoles) {
                 actualOperator_SubSystemRoles = operator_SubSystemRoles;
@@ -113,7 +113,7 @@ class CopySubSystemRoleTest {
     }
 
     // テスト対象クラス生成
-    private CopySubSystemRole createCopySubSystemRole() {
+    private CopySubSystemRoleAllocate createCopySubSystemRoleAllocate() {
         Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
@@ -125,11 +125,11 @@ class CopySubSystemRoleTest {
             }
         };
 
-        return new CopySubSystemRole(operator_SubSystemRoleRepository);
+        return new CopySubSystemRoleAllocate(operator_SubSystemRoleRepository);
     }
 
     /**
-     * {@link CopySubSystemRole#execute(SubSystemCopyRequest request, SubSystemCopyResponse response)}テスト
+     * {@link CopySubSystemRoleAllocate#execute(SubSystemRoleAllocateCopyRequest request, SubSystemRoleAllocateCopyResponse response)}テスト
      *  ●パターン
      *    正常
      *
@@ -142,11 +142,11 @@ class CopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test() {
         // テスト対象クラス生成
-        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
+        CopySubSystemRoleAllocate copySubSystemRoleAllocate = createCopySubSystemRoleAllocate();
 
         // 実行値
-        SubSystemCopyRequest request = createRequest();
-        SubSystemCopyResponse response = createResponse();
+        SubSystemRoleAllocateCopyRequest request = createRequest();
+        SubSystemRoleAllocateCopyResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -157,7 +157,7 @@ class CopySubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            copySubSystemRole.execute(request, response))
+            copySubSystemRoleAllocate.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -166,7 +166,7 @@ class CopySubSystemRoleTest {
     }
 
     /**
-     * {@link CopySubSystemRole#execute(SubSystemCopyRequest request, SubSystemCopyResponse response)}テスト
+     * {@link CopySubSystemRoleAllocate#execute(SubSystemRoleAllocateCopyRequest request, SubSystemRoleAllocateCopyResponse response)}テスト
      *  ●パターン
      *    正常（選択オペレーターがセットされていない）
      *
@@ -179,12 +179,12 @@ class CopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test1() {
         // テスト対象クラス生成
-        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
+        CopySubSystemRoleAllocate copySubSystemRoleAllocate = createCopySubSystemRoleAllocate();
 
         // 実行値
         selectedOperatorId = null;
-        SubSystemCopyRequest request = createRequest();
-        SubSystemCopyResponse response = createResponse();
+        SubSystemRoleAllocateCopyRequest request = createRequest();
+        SubSystemRoleAllocateCopyResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -192,7 +192,7 @@ class CopySubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            copySubSystemRole.execute(request, response))
+            copySubSystemRoleAllocate.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -201,7 +201,7 @@ class CopySubSystemRoleTest {
     }
 
     /**
-     * {@link CopySubSystemRole#searchOperator_SubSystemRoles(SubSystemCopyRequest request)}テスト
+     * {@link CopySubSystemRoleAllocate#searchOperator_SubSystemRoles(SubSystemRoleAllocateCopyRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -213,10 +213,10 @@ class CopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void searchOperator_SubSystemRoles_test() {
         // テスト対象クラス生成
-        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
+        CopySubSystemRoleAllocate copySubSystemRoleAllocate = createCopySubSystemRoleAllocate();
 
         // 実行値
-        SubSystemCopyRequest request = createRequest();
+        SubSystemRoleAllocateCopyRequest request = createRequest();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -226,14 +226,14 @@ class CopySubSystemRoleTest {
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         // 実行
-        Operator_SubSystemRoles operator_SubSystemRoles = copySubSystemRole.searchOperator_SubSystemRoles(request);
+        Operator_SubSystemRoles operator_SubSystemRoles = copySubSystemRoleAllocate.searchOperator_SubSystemRoles(request);
 
         // 結果検証
         assertThat(operator_SubSystemRoles).usingRecursiveComparison().isEqualTo(expectedOperator_SubSystemRoles);
     }
 
     /**
-     * {@link CopySubSystemRole#copyAdditionalOperator_SubSystemRoles(SubSystemCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleAllocate#copyAdditionalOperator_SubSystemRoles(SubSystemRoleAllocateCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -245,10 +245,10 @@ class CopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void copyAdditionalOperator_SubSystemRoles_test() {
         // テスト対象クラス生成
-        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
+        CopySubSystemRoleAllocate copySubSystemRoleAllocate = createCopySubSystemRoleAllocate();
 
         // 実行値
-        SubSystemCopyRequest request = createRequest();
+        SubSystemRoleAllocateCopyRequest request = createRequest();
         List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
         operator_SubSystemRoleList.addAll(targetOperator_SubSystemRoleList);
         operator_SubSystemRoleList.addAll(selectedOperator_SubSystemRoleList);
@@ -263,7 +263,7 @@ class CopySubSystemRoleTest {
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         // 実行
-        Operator_SubSystemRoles additionalOperator_SubSystemRoles = copySubSystemRole.copyAdditionalOperator_SubSystemRoles(request, operator_SubSystemRoles);
+        Operator_SubSystemRoles additionalOperator_SubSystemRoles = copySubSystemRoleAllocate.copyAdditionalOperator_SubSystemRoles(request, operator_SubSystemRoles);
 
         // 結果検証
         Orders orders = Orders.empty().addOrder("SubSystemRoleCode");
