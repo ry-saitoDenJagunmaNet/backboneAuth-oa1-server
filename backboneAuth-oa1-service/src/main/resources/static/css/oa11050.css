@@ -1,0 +1,48 @@
+/**
+ * OA11050 取引ロール付与
+ */
+
+/** 
+ * 付与ロールテーブル
+ */
+ .oaex_allocate_role_table {
+	height: 380px;
+	overflow-y: scroll;
+}
+.oaex_allocate_role_table td {
+	padding: 2px 2px;
+}
+.oaex_allocate_role_table_name_th {min-width: 350px; width: 65%;}
+.oaex_allocate_role_table_code {min-width: 70px; width: 10%;}
+.oaex_allocate_role_table_name {min-width: 280px; width: 55%;}
+
+.oaex_allocate_role_table_valid_thru_th {min-width: 240px; width: 35%;}
+.oaex_allocate_role_table_valid_thru {min-width: 240px; width: 35%;}
+.oaex_allocate_role_table_valid_thru input[type=text] {
+	width: 45% !important;
+	margin: 0px !important;
+}
+.oaex_allocate_role_table_template_row {display: none;}
+
+/**
+ * 移動ボタン
+ */
+.oaex_move_btn {
+	margin-top: 40px;
+	text-align: center;
+}
+
+/**
+ * 未付与ロールテーブル
+ */
+.oaex_unallocate_role_table {
+	height: 380px;
+	overflow-y: scroll;
+}
+.oaex_unallocate_role_table td {
+	height: 38px;
+}
+.oaex_unallocate_role_table_name_th {min-width: 350px; width: 100%;}
+.oaex_unallocate_role_table_code {min-width: 70px; width: 20%;}
+.oaex_unallocate_role_table_name {min-width: 280px; width: 80%;}
+.oaex_unallocate_role_table_hidden_row {display: none;}
