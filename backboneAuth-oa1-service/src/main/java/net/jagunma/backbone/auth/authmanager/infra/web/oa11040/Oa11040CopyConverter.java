@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 import java.util.ArrayList;
 import java.util.Arrays;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyRequest;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchConverter;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**

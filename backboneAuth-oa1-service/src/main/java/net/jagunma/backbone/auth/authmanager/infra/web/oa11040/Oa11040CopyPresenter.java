@@ -4,7 +4,6 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
