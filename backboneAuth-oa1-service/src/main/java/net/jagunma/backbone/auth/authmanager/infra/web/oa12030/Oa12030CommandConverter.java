@@ -4,15 +4,13 @@ import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranCommand.SuspendBizTranDeleteRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranCommand.SuspendBizTranEntryRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranCommand.SuspendBizTranUpdateRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
+import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
- * OA12030 一時取引抑止メンテナンス Request Converter
+ * OA12030 一時取引抑止メンテナンス 更新系 Request Converter
  */
-public class Oa12030Converter implements SuspendBizTranSearchRequest,
-    SuspendBizTranEntryRequest, SuspendBizTranUpdateRequest, SuspendBizTranDeleteRequest {
+public class Oa12030CommandConverter implements SuspendBizTranEntryRequest, SuspendBizTranUpdateRequest, SuspendBizTranDeleteRequest {
 
     /**
      * OA12030 View Object
@@ -20,24 +18,13 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
     private final Oa12030Vo vo;
 
     // コンストラクタ
-    Oa12030Converter(Oa12030Vo oa12030Vo) {
+    Oa12030CommandConverter(Oa12030Vo oa12030Vo) {
         vo = oa12030Vo;
     }
 
     // ファクトリーメソッド
-    public static Oa12030Converter with(Oa12030Vo oa12030Vo) {
-        return new Oa12030Converter(oa12030Vo);
-    }
-
-    /**
-     * 一時取引抑止ID検索条件のＧｅｔ
-     *
-     * @return 一時取引抑止ID検索条件
-     */
-    public LongCriteria getSuspendBizTranIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getSuspendBizTranId());
-        return criteria;
+    public static Oa12030CommandConverter with(Oa12030Vo oa12030Vo) {
+        return new Oa12030CommandConverter(oa12030Vo);
     }
 
     /**
@@ -50,12 +37,15 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
     }
 
     /**
-     * JAコードのＧｅｔ
+     * ＪＡコードのＧｅｔ
      *
-     * @return JAコード
+     * @return ＪＡコード
      */
     public String getJaCode() {
-        return vo.getJaCode();
+        if (CheckboxUtil.getSmoother(vo.getJaCheck())) {
+            return vo.getJaCode();
+        }
+        return null;
     }
 
     /**
@@ -64,7 +54,10 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
      * @return 店舗コード
      */
     public String getBranchCode() {
-        return vo.getBranchCode();
+        if (CheckboxUtil.getSmoother(vo.getBranchCheck())) {
+            return vo.getBranchCode();
+        }
+        return null;
     }
 
     /**
@@ -73,7 +66,10 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
      * @return サブシステムコード
      */
     public String getSubSystemCode() {
-        return vo.getSubSystemCode();
+        if (CheckboxUtil.getSmoother(vo.getSubSystemCheck())) {
+            return vo.getSubSystemCode();
+        }
+        return null;
     }
 
     /**
@@ -82,7 +78,10 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
      * @return 取引グループコード
      */
     public String getBizTranGrpCode() {
-        return vo.getBizTranGrpCode();
+        if (CheckboxUtil.getSmoother(vo.getBizTranGrpCheck())) {
+            return vo.getBizTranGrpCode();
+        }
+        return null;
     }
 
     /**
@@ -91,7 +90,10 @@ public class Oa12030Converter implements SuspendBizTranSearchRequest,
      * @return 取引コード
      */
     public String getBizTranCode() {
-        return vo.getBizTranCode();
+        if (CheckboxUtil.getSmoother(vo.getBizTranCheck())) {
+            return vo.getBizTranCode();
+        }
+        return null;
     }
 
     /**

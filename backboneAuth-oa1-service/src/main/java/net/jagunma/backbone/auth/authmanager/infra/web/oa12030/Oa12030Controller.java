@@ -1,5 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12030;
 
+import net.jagunma.backbone.auth.authmanager.application.commandService.DeleteSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.application.commandService.UpdateSuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSuspendBizTran;
@@ -52,15 +53,18 @@ public class Oa12030Controller extends BaseOfController {
     private final SearchSuspendBizTran searchSuspendBizTran;
     private final EntrySuspendBizTran entrySuspendBizTran;
     private final UpdateSuspendBizTran updateSuspendBizTran;
+    private final DeleteSuspendBizTran deleteSuspendBizTran;
 
     // コンストラクタ
     Oa12030Controller(SearchSuspendBizTran searchSuspendBizTran,
         EntrySuspendBizTran entrySuspendBizTran,
-        UpdateSuspendBizTran updateSuspendBizTran) {
+        UpdateSuspendBizTran updateSuspendBizTran,
+        DeleteSuspendBizTran deleteSuspendBizTran) {
 
         this.searchSuspendBizTran = searchSuspendBizTran;
         this.entrySuspendBizTran = entrySuspendBizTran;
         this.updateSuspendBizTran = updateSuspendBizTran;
+        this.deleteSuspendBizTran = deleteSuspendBizTran;
     }
 
     /**
@@ -82,7 +86,7 @@ public class Oa12030Controller extends BaseOfController {
             if (suspendBizTranId != null) {
                 vo.setSuspendBizTranId(suspendBizTranId);
             }
-            Oa12030Converter converter = Oa12030Converter.with(vo);
+            Oa12030InitConverter converter = Oa12030InitConverter.with(vo);
             Oa12030Presenter presenter = new Oa12030Presenter();
             if (suspendBizTranId != null) {
                 searchSuspendBizTran.execute(converter, presenter);
@@ -104,6 +108,13 @@ public class Oa12030Controller extends BaseOfController {
         }
     }
 
+    /**
+     * 一時取引抑止の登録を行います
+     *
+     * @param model モデル
+     * @param vo    ViewObject
+     * @return view名
+     */
     @RequestMapping(value = "/entry", method = RequestMethod.POST)
     public String entry(Model model, Oa12030Vo vo) {
         // ToDo: テストサインイン情報セット
@@ -111,15 +122,11 @@ public class Oa12030Controller extends BaseOfController {
         LOGGER.debug("entry START");
 
         try {
-            Oa12030Converter converter = Oa12030Converter.with(vo);
-            Oa12030Presenter presenter = new Oa12030Presenter();
+            Oa12030CommandConverter converter = Oa12030CommandConverter.with(vo);
             entrySuspendBizTran.execute(converter);
 
-            vo = new Oa12030Vo();
-            presenter.bindTo(vo);
-            model.addAttribute("form", vo);
-
-            return "oa12030";
+            // 一時取引抑止<一覧>に遷移
+            return "redirect:/oa12020/backSearch";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);
@@ -133,6 +140,13 @@ public class Oa12030Controller extends BaseOfController {
         }
     }
 
+    /**
+     * 一時取引抑止の更新を行います
+     *
+     * @param model モデル
+     * @param vo    ViewObject
+     * @return view名
+     */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(Model model, Oa12030Vo vo) {
         // ToDo: テストサインイン情報セット
@@ -140,15 +154,36 @@ public class Oa12030Controller extends BaseOfController {
         LOGGER.debug("update START");
 
         try {
-            Oa12030Converter converter = Oa12030Converter.with(vo);
-            Oa12030Presenter presenter = new Oa12030Presenter();
+            Oa12030CommandConverter converter = Oa12030CommandConverter.with(vo);
             updateSuspendBizTran.execute(converter);
 
-            vo = new Oa12030Vo();
-            presenter.bindTo(vo);
+            // 一時取引抑止<一覧>に遷移
+            return "redirect:/oa12020/backSearch";
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
             model.addAttribute("form", vo);
-
             return "oa12030";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(Model model, Oa12030Vo vo) {
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+        LOGGER.debug("delete START");
+
+        try {
+            Oa12030CommandConverter converter = Oa12030CommandConverter.with(vo);
+            deleteSuspendBizTran.execute(converter);
+
+            // 一時取引抑止<一覧>に遷移
+            return "redirect:/oa12020/backSearch";
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
             vo.setExceptionMessage(gre);

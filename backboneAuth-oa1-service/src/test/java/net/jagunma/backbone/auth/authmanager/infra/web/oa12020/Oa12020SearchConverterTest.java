@@ -121,9 +121,6 @@ class Oa12020SearchConverterTest {
         vo.setSearchResultList(searchResultList);
         vo.setPageNo(pageNo);
 
-        // 期待値
-        LongCriteria expectedJaIdCriteria = new LongCriteria();
-
         // 実行
         Oa12020SearchConverter converter = Oa12020SearchConverter.with(vo);
 

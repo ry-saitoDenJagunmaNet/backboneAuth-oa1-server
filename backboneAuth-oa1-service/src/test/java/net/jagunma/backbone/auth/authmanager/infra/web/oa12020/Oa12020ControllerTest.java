@@ -33,6 +33,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.support.SessionStatus;
 
 class Oa12020ControllerTest {
 
@@ -67,85 +68,19 @@ class Oa12020ControllerTest {
                 }
             };
         };
-//        // searchJaAtMomentの作成
-//        SearchJaAtMoment searchJaAtMoment = new SearchJaAtMoment(new JaAtMomentRepository() {
-//            @Override
-//            public JasAtMoment selectBy(JaAtMomentCriteria criteria, Orders orders) {
-//                return JasAtMoment.of(createJaAtMomentList());
-//            }
-//            @Override
-//            public JaAtMoment findOneBy(JaAtMomentCriteria criteria) {
-//                return null;
-//            }
-//        }) {
-//            public JasAtMoment selectBy() {
-//                return JasAtMoment.of(createJaAtMomentList());
-//            }
-//        };
-//        // SearchBranchAtMomentの作成
-//        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(new BranchAtMomentRepository() {
-//            @Override
-//            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-//                List<BranchAtMoment> list = createBranchAtMomentList().stream().filter(b->b.getJaAtMoment().getJaAttribute().getJaCode().getValue().equals(criteria.getNarrowedJaCodeCriteria().getEqualTo().getValue())).collect(Collectors.toList());
-//                return BranchesAtMoment.of(list);
-//            }
-//            @Override
-//            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-//                return null;
-//            }
-//        }) {
-//            public BranchesAtMoment selectBy(long jaId) {
-//                return BranchesAtMoment.of(createBranchAtMomentList().stream().filter(b-> ((Long)jaId).equals(b.getJaAtMoment().getIdentifier())).collect(Collectors.toList()));
-//            }
-//        };
-//        // 取引グループ群検索の作成
-//        BizTranGrpRepository bizTranGrpRepository = new BizTranGrpRepository() {
-//            @Override
-//            public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
-//                return BizTranGrps.createFrom(createBizTranGrpList());
-//            }
-//            @Override
-//            public BizTranGrps selectAll(Orders orders) {
-//                return null;
-//            }
-//        };
-//        // 取引グループ検索の作成
-//        BizTranGrpRepository bizTranGrpRepository = new BizTranGrpRepository() {
-//            @Override
-//            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
-//                return createBizTranGrpList().stream().filter(b->b.getBizTranGrpCode().equals(bizTranGrpCriteria.getBizTranGrpCodeCriteria().getEqualTo())).findFirst().orElse(null);
-//            }
-//        };
-//        // 取引グループ_取引割当群検索の作成
-//        BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository = new BizTranGrp_BizTranRepository() {
-//            @Override
-//            public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
-//                List<BizTranGrp_BizTran> list = newArrayList();
-//                Integer ix = 0;
-//                List<BizTran> bizTranList = createBizTranList();
-//                for (BizTranGrp bizTranGrp : createBizTranGrpList()) {
-//                    list.add(BizTranGrp_BizTran.createFrom(
-//                        Long.valueOf(ix+1),
-//                        bizTranGrp.getBizTranGrpId(),
-//                        bizTranList.get(ix).getBizTranId(),
-//                        bizTranGrp.getSubSystemCode(),
-//                        1,
-//                        bizTranGrp,
-//                        bizTranList.get(ix),
-//                        bizTranGrp.getSubSystem()
-//                    ));
-//                    ix++;
-//                }
-//                return BizTranGrp_BizTrans.createFrom(list);
-//            }
-//            @Override
-//            public BizTranGrp_BizTrans selectAll(Orders orders) {
-//                return null;
-//            }
-//        };
-
         return new Oa12020Controller(searchSuspendBizTran);
     }
+    // セッション処理の通知の作成
+    private SessionStatus sessionStatus = new SessionStatus() {
+        @Override
+        public void setComplete() {
+
+        }
+        @Override
+        public boolean isComplete() {
+            return false;
+        }
+    };
 
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> cresteSuspendBizTran() {
@@ -242,7 +177,7 @@ class Oa12020ControllerTest {
 
 
     /**
-     * {@link Oa12020Controller#get(Model)}テスト
+     * {@link Oa12020Controller#get(Model, SessionStatus)}テスト
      *  ●パターン
      *    正常
      *
@@ -267,7 +202,7 @@ class Oa12020ControllerTest {
         expectedVo.setPaginationLastPageNo(0);
 
         // 実行
-        String actualViewName = oa12020Controller.get(model);
+        String actualViewName = oa12020Controller.get(model, this.sessionStatus);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証

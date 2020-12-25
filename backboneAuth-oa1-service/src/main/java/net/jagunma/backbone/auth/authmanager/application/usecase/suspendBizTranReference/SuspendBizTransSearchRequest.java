@@ -4,7 +4,7 @@ import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 
 /**
- * 一時取引抑止群検索 Request
+ * 一時取引抑止群検索サービス Request
  */
 public interface SuspendBizTransSearchRequest {
 

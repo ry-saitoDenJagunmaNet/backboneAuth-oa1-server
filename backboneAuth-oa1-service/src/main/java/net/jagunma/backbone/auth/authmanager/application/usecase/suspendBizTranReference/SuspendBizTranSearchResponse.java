@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTran
 import java.time.LocalDate;
 
 /**
- * 一時取引抑止 検索 Response
+ * 一時取引抑止検索サービス Response
  */
 public interface SuspendBizTranSearchResponse {
 
