@@ -3,9 +3,9 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSys
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
- * オペレーター_サブシステムロール割当検索＆コピーサービス Request
+ * オペレーター_サブシステムロール割当コピーサービス Request
  */
-public interface SubSystemSearchCopyRequest {
+public interface SubSystemCopyRequest {
 
     /**
      * ターゲットオペレーターIDのＧｅｔ

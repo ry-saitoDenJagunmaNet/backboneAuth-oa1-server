@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
@@ -12,7 +12,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 /**
  * OA11040 コピー Presenter
  */
-class Oa11040CopyPresenter implements SubSystemSearchCopyResponse {
+class Oa11040CopyPresenter implements SubSystemCopyResponse {
 
     protected Operator_SubSystemRoles operator_SubSystemRoles;
 

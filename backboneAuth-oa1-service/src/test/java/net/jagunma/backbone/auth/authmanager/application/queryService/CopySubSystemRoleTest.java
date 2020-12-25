@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemSearchCopyResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorSubSystemRoleReference.SubSystemCopyResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
@@ -22,7 +22,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class SearchCopySubSystemRoleTest {
+class CopySubSystemRoleTest {
 
     // 実行既定値
     private Long targetOperatorId = 123456L;
@@ -81,8 +81,8 @@ class SearchCopySubSystemRoleTest {
     // 検証値
     private Operator_SubSystemRoles actualOperator_SubSystemRoles;
 
-    private SubSystemSearchCopyRequest createRequest() {
-        return new SubSystemSearchCopyRequest() {
+    private SubSystemCopyRequest createRequest() {
+        return new SubSystemCopyRequest() {
             @Override
             public Long getTargetOperatorId() {
                 return targetOperatorId;
@@ -103,8 +103,8 @@ class SearchCopySubSystemRoleTest {
             }
         };
     }
-    private SubSystemSearchCopyResponse createResponse() {
-        return new SubSystemSearchCopyResponse() {
+    private SubSystemCopyResponse createResponse() {
+        return new SubSystemCopyResponse() {
             @Override
             public void setOperator_SubSystemRoles(Operator_SubSystemRoles operator_SubSystemRoles) {
                 actualOperator_SubSystemRoles = operator_SubSystemRoles;
@@ -113,7 +113,7 @@ class SearchCopySubSystemRoleTest {
     }
 
     // テスト対象クラス生成
-    private SearchCopySubSystemRole createSearchCopySubSystemRole() {
+    private CopySubSystemRole createCopySubSystemRole() {
         Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
@@ -125,11 +125,11 @@ class SearchCopySubSystemRoleTest {
             }
         };
 
-        return new SearchCopySubSystemRole(operator_SubSystemRoleRepository);
+        return new CopySubSystemRole(operator_SubSystemRoleRepository);
     }
 
     /**
-     * {@link SearchCopySubSystemRole#execute(SubSystemSearchCopyRequest request, SubSystemSearchCopyResponse response)}テスト
+     * {@link CopySubSystemRole#execute(SubSystemCopyRequest request, SubSystemCopyResponse response)}テスト
      *  ●パターン
      *    正常
      *
@@ -142,11 +142,11 @@ class SearchCopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test() {
         // テスト対象クラス生成
-        SearchCopySubSystemRole searchCopySubSystemRole = createSearchCopySubSystemRole();
+        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
 
         // 実行値
-        SubSystemSearchCopyRequest request = createRequest();
-        SubSystemSearchCopyResponse response = createResponse();
+        SubSystemCopyRequest request = createRequest();
+        SubSystemCopyResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -157,7 +157,7 @@ class SearchCopySubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            searchCopySubSystemRole.execute(request, response))
+            copySubSystemRole.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -166,7 +166,7 @@ class SearchCopySubSystemRoleTest {
     }
 
     /**
-     * {@link SearchCopySubSystemRole#execute(SubSystemSearchCopyRequest request, SubSystemSearchCopyResponse response)}テスト
+     * {@link CopySubSystemRole#execute(SubSystemCopyRequest request, SubSystemCopyResponse response)}テスト
      *  ●パターン
      *    正常（選択オペレーターがセットされていない）
      *
@@ -179,12 +179,12 @@ class SearchCopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void execute_test1() {
         // テスト対象クラス生成
-        SearchCopySubSystemRole searchCopySubSystemRole = createSearchCopySubSystemRole();
+        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
 
         // 実行値
         selectedOperatorId = null;
-        SubSystemSearchCopyRequest request = createRequest();
-        SubSystemSearchCopyResponse response = createResponse();
+        SubSystemCopyRequest request = createRequest();
+        SubSystemCopyResponse response = createResponse();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -192,7 +192,7 @@ class SearchCopySubSystemRoleTest {
 
         assertThatCode(() ->
             // 実行
-            searchCopySubSystemRole.execute(request, response))
+            copySubSystemRole.execute(request, response))
             .doesNotThrowAnyException();
 
         // 結果検証
@@ -201,7 +201,7 @@ class SearchCopySubSystemRoleTest {
     }
 
     /**
-     * {@link SearchCopySubSystemRole#searchOperator_SubSystemRoles(SubSystemSearchCopyRequest request)}テスト
+     * {@link CopySubSystemRole#searchOperator_SubSystemRoles(SubSystemCopyRequest request)}テスト
      *  ●パターン
      *    正常
      *
@@ -213,10 +213,10 @@ class SearchCopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void searchOperator_SubSystemRoles_test() {
         // テスト対象クラス生成
-        SearchCopySubSystemRole searchCopySubSystemRole = createSearchCopySubSystemRole();
+        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
 
         // 実行値
-        SubSystemSearchCopyRequest request = createRequest();
+        SubSystemCopyRequest request = createRequest();
 
         // 期待値
         List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList();
@@ -226,14 +226,14 @@ class SearchCopySubSystemRoleTest {
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         // 実行
-        Operator_SubSystemRoles operator_SubSystemRoles = searchCopySubSystemRole.searchOperator_SubSystemRoles(request);
+        Operator_SubSystemRoles operator_SubSystemRoles = copySubSystemRole.searchOperator_SubSystemRoles(request);
 
         // 結果検証
         assertThat(operator_SubSystemRoles).usingRecursiveComparison().isEqualTo(expectedOperator_SubSystemRoles);
     }
 
     /**
-     * {@link SearchCopySubSystemRole#copyAdditionalOperator_SubSystemRoles(SubSystemSearchCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRole#copyAdditionalOperator_SubSystemRoles(SubSystemCopyRequest request, Operator_SubSystemRoles operator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -245,10 +245,10 @@ class SearchCopySubSystemRoleTest {
     @Tag(TestSize.SMALL)
     void copyAdditionalOperator_SubSystemRoles_test() {
         // テスト対象クラス生成
-        SearchCopySubSystemRole searchCopySubSystemRole = createSearchCopySubSystemRole();
+        CopySubSystemRole copySubSystemRole = createCopySubSystemRole();
 
         // 実行値
-        SubSystemSearchCopyRequest request = createRequest();
+        SubSystemCopyRequest request = createRequest();
         List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
         operator_SubSystemRoleList.addAll(targetOperator_SubSystemRoleList);
         operator_SubSystemRoleList.addAll(selectedOperator_SubSystemRoleList);
@@ -263,7 +263,7 @@ class SearchCopySubSystemRoleTest {
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         // 実行
-        Operator_SubSystemRoles additionalOperator_SubSystemRoles = searchCopySubSystemRole.copyAdditionalOperator_SubSystemRoles(request, operator_SubSystemRoles);
+        Operator_SubSystemRoles additionalOperator_SubSystemRoles = copySubSystemRole.copyAdditionalOperator_SubSystemRoles(request, operator_SubSystemRoles);
 
         // 結果検証
         Orders orders = Orders.empty().addOrder("SubSystemRoleCode");
