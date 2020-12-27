@@ -27,7 +27,7 @@ public class BaseOfController {
 
     // Http Session
     @Autowired
-    protected HttpSession httpSession;
+    public HttpSession httpSession;
 
     /**
      * Http Sessionにデータを格納します
@@ -58,8 +58,17 @@ public class BaseOfController {
      */
     public Object getSessionAttribute(String id, boolean isRemove) {
         Object value = httpSession.getAttribute(id);
-        if (isRemove) { httpSession.removeAttribute(id); }
+        if (isRemove) { removeSessionAttribute(id); }
         return value;
+    }
+
+    /**
+     * Http Session Session項目を破棄します
+     *
+     * @param id Session Key
+     */
+    public void removeSessionAttribute(String id) {
+        httpSession.removeAttribute(id);
     }
 
 
