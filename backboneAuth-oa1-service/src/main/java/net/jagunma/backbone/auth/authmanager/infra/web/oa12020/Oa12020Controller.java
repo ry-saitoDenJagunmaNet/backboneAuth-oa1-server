@@ -42,10 +42,10 @@ import org.springframework.web.bind.support.SessionStatus;
 @ServiceInfo(id = "OA12020", name = "OA12020サービス")
 @Controller
 @RequestMapping(path = "oa12020")
-@SessionAttributes(types=Oa12020Vo.class)
 public class Oa12020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12020Controller.class);
+    private final String SESSION_KEY = "session_Oa12020Vo";
     private final SearchSuspendBizTran searchSuspendBizTran;
 
     // コンストラクタ
@@ -67,7 +67,7 @@ public class Oa12020Controller extends BaseOfController {
         LOGGER.debug("get START");
 
         // Session破棄
-        sessionStatus.setComplete();
+        removeSessionAttribute(SESSION_KEY);
 
         Oa12020Vo vo = new Oa12020Vo();
         try {
@@ -108,17 +108,35 @@ public class Oa12020Controller extends BaseOfController {
     /**
      * 一時取引抑止メンテナンスから戻った時の一時取引抑止再検索処理を行います
      *
-     * @param session_vo Sessionに退避したViewObject
      * @param model モデル
      * @return 一時取引抑止検索結果
      */
     @RequestMapping(value = "/backSearch", method = RequestMethod.GET)
-    public String  backSearch(@ModelAttribute("session_vo") Oa12020Vo session_vo, Model model) {
+    public String  backSearch(Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
         LOGGER.debug("search START");
 
-        return Search(session_vo, model);
+        Oa12020Vo vo = (Oa12020Vo) getSessionAttribute(SESSION_KEY);
+
+        if (vo != null) {
+            // 一時取引抑止メンテナンス画面の遷移前に一覧検索していたら再検索
+            return Search(vo, model);
+        }
+
+        // 一時取引抑止メンテナンス画面遷移前に一覧検索していない場合
+        try {
+            Oa12020Presenter presenter = createInitPresenter();
+            vo = new Oa12020Vo();
+            presenter.bindTo(vo);
+            model.addAttribute("form", vo);
+            return "oa12020";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
     }
 
     /**
@@ -132,8 +150,6 @@ public class Oa12020Controller extends BaseOfController {
 
         Oa12020Vo vo = new Oa12020Vo();
         try {
-            setSessionVo(argVo);
-
             Oa12020SearchConverter converter = Oa12020SearchConverter.with(argVo);
             // voの検索条件をpresenterに渡す（converterは、criteriaに変換しているが、元のvo値が無いため）
             Oa12020Presenter presenter = Oa12020Presenter.with(argVo);
@@ -142,6 +158,10 @@ public class Oa12020Controller extends BaseOfController {
             searchSuspendBizTran.execute(converter, presenter);
 
             presenter.bindTo(vo);
+
+            // ViewObjectをSessionに格納
+            setSessionAttribute(SESSION_KEY, vo);
+
             model.addAttribute("form", vo);
             return "oa12020";
         } catch (GunmaRuntimeException gre) {
@@ -155,17 +175,6 @@ public class Oa12020Controller extends BaseOfController {
             model.addAttribute("form", vo);
             return "oa19999";
         }
-    }
-
-    /**
-     * SessionにViewObjectの格納を行います
-     *
-     * @param vo ViewObject
-     * @return view名
-     */
-    @ModelAttribute("session_vo")
-    public Oa12020Vo setSessionVo(Oa12020Vo vo) {
-        return vo;
     }
 
     /**

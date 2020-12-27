@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranCommand.SuspendBizTranEntryRequest;
@@ -9,6 +10,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.Suspend
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -118,7 +120,7 @@ class EntrySuspendBizTranTest {
      * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
      *  ●パターン
      *    正常
-     *    ・リクエスト項目未設定（JAコード、店舗コード、サブシステムコード、取引グループコード、取引コード）
+     *    ・リクエスト項目未設定（JAコード）
      *
      *  ●検証事項
      *  ・正常終了
@@ -132,6 +134,40 @@ class EntrySuspendBizTranTest {
 
         // 実行値
         jaCode = null;
+        SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
+
+        assertThatCode(() ->
+            // 実行
+            entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualInsertSuspendBizTran.getJaCode()).isEqualTo(request.getJaCode());
+        assertThat(actualInsertSuspendBizTran.getBranchCode()).isEqualTo(request.getBranchCode());
+        assertThat(actualInsertSuspendBizTran.getSubSystemCode()).isEqualTo(request.getSubSystemCode());
+        assertThat(actualInsertSuspendBizTran.getBizTranGrpCode()).isEqualTo(request.getBizTranGrpCode());
+        assertThat(actualInsertSuspendBizTran.getBizTranCode()).isEqualTo(request.getBizTranCode());
+        assertThat(actualInsertSuspendBizTran.getSuspendStartDate()).isEqualTo(request.getSuspendStartDate());
+        assertThat(actualInsertSuspendBizTran.getSuspendEndDate()).isEqualTo(request.getSuspendEndDate());
+        assertThat(actualInsertSuspendBizTran.getSuspendReason()).isEqualTo(request.getSuspendReason());
+    }
+
+    /**
+     * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
+     *  ●パターン
+     *    正常
+     *    ・リクエスト項目未設定（店舗コード、サブシステムコード、取引グループコード、取引コード）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test3() {
+
+        // テスト対象クラス生成
+        EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
+
+        // 実行値
         branchCode = null;
         subSystemCode = null;
         bizTranGrpCode = null;
@@ -152,4 +188,39 @@ class EntrySuspendBizTranTest {
         assertThat(actualInsertSuspendBizTran.getSuspendEndDate()).isEqualTo(request.getSuspendEndDate());
         assertThat(actualInsertSuspendBizTran.getSuspendReason()).isEqualTo(request.getSuspendReason());
     }
+
+    /**
+     * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
+     *  ●パターン
+     *    正常
+     *    ・リクエスト項目未設定（JAコード、店舗コード、サブシステムコード、取引グループコード、取引コード）
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test4() {
+
+        // テスト対象クラス生成
+        EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
+
+        // 実行値
+        jaCode = null;
+        branchCode = null;
+        subSystemCode = null;
+        bizTranGrpCode = null;
+        bizTranCode = null;
+        SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
+
+        // 結果検証
+        assertThatThrownBy(() ->
+            // 実行
+            entrySuspendBizTran.execute(request))
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA12005");
+            });
+    }
+
 }

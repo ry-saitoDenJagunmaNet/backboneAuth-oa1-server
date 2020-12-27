@@ -31,6 +31,7 @@ import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
@@ -175,6 +176,7 @@ class Oa12020ControllerTest {
         return castObj;
     }
 
+    private final String SESSION_KEY = "session_Oa12020Vo";
 
     /**
      * {@link Oa12020Controller#get(Model, SessionStatus)}テスト
@@ -190,6 +192,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.httpSession = new MockHttpSession();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -254,6 +257,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.httpSession = new MockHttpSession();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -364,7 +368,7 @@ class Oa12020ControllerTest {
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
      *    正常
      *
@@ -377,11 +381,13 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.httpSession = new MockHttpSession();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12020Vo oa12020Vo = new Oa12020Vo();
         oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
 
         // 期待値
         String expectedViewName = "oa12020";
@@ -409,7 +415,7 @@ class Oa12020ControllerTest {
         expectedVo.setPageNo(1);
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -418,43 +424,45 @@ class Oa12020ControllerTest {
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
-     *    例外（RuntimeException）発生
+     *    正常
+     *    ・再検索しない
      *
      *  ●検証事項
-     *  ・戻り値
-     *  ・エラーメッセージのセット
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void backSearch_test1() {
 
         // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-1);
+        Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.httpSession = new MockHttpSession();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        Oa12020Vo oa12020Vo = new Oa12020Vo();
-        oa12020Vo.setPageNo(1);
 
         // 期待値
-        String expectedViewName = "oa19999";
-        String messageCode = "EOA10001";
+        String expectedViewName = "oa12020";
+        Oa12020Vo expectedVo = new Oa12020Vo();
+        expectedVo.setSuspendConditionsSelect(suspendConditionsSelect);
+        expectedVo.setSearchResultList(newArrayList());
+        expectedVo.setPaginationLastPageNo(0);
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo.getMessageCode()).isEqualTo(messageCode);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
-     *    例外（GunmaRuntimeException ）発生
+     *    例外（RuntimeException）発生
      *
      *  ●検証事項
      *  ・戻り値
@@ -465,19 +473,57 @@ class Oa12020ControllerTest {
     void backSearch_test2() {
 
         // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
+        Oa12020Controller oa12020Controller = createOa12020Controller(-1);
+        oa12020Controller.httpSession = new MockHttpSession();
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12020Vo oa12020Vo = new Oa12020Vo();
         oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
+
+        // 期待値
+        String expectedViewName = "oa19999";
+        String messageCode = "EOA10001";
+
+        // 実行
+        String actualViewName = oa12020Controller.backSearch(model);
+        Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(messageCode);
+    }
+
+    /**
+     * {@link Oa12020Controller#backSearch(Model)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException ）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void backSearch_test3() {
+
+        // テスト対象クラス生成
+        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
+        oa12020Controller.httpSession = new MockHttpSession();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        Oa12020Vo oa12020Vo = new Oa12020Vo();
+        oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
 
         // 期待値
         String expectedViewName = "oa12020";
         String messageCode = "EOA10001";
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -486,353 +532,4 @@ class Oa12020ControllerTest {
         assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg1);
     }
 
-//    /**
-//     * {@link Oa12020Controller#getJaItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getJaItemsSource_test0() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectJa";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (JaAtMoment jaAtMoment : createJaAtMomentList()) {
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                jaAtMoment.getIdentifier(), jaAtMoment.getJaAttribute().getJaCode().getValue(), jaAtMoment.getJaAttribute().getName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getJaItemsSource(model, vo);
-//        //List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBranchItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBranchItemsSource_test0() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String jaCode = null;
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setJaCode(jaCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBranch";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBranchItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBranchItemsSource_test1() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String jaCode = "006";
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setJaCode(jaCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBranch";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (BranchAtMoment branchAtMoment : createBranchAtMomentList().stream().filter(b-> jaCode.equals(b.getJaAtMoment().getJaAttribute().getJaCode().getValue())).collect(Collectors.toList())) {
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                branchAtMoment.getIdentifier(), branchAtMoment.getBranchAttribute().getBranchCode().getValue(), branchAtMoment.getBranchAttribute().getName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getSubSystemItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getSubSystemItemsSource_test0() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectSubSystem";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (SubSystem subSystem : SubSystem.values()) {
-//            if (subSystem.getCode().isEmpty()) {continue;}
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                null, subSystem.getCode(), subSystem.getName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getSubSystemItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBizTranGrpItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBizTranGrpItemsSource_test0() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String subSystemCode = null;
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setSubSystemCode(subSystemCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBizTranGrp";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBizTranGrpItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBizTranGrpItemsSource_test1() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String subSystemCode = SubSystem.販売_畜産.getCode();
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setSubSystemCode(subSystemCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBizTranGrp";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (BizTranGrp bizTranGrp : createBizTranGrpList()) {
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                bizTranGrp.getBizTranGrpId(), bizTranGrp.getBizTranGrpCode(), bizTranGrp.getBizTranGrpName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBizTranItemsSource_test0() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String subSystemCode = null;
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setSubSystemCode(subSystemCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBizTranItemsSource_test1() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String subSystemCode = SubSystem.販売_畜産.getCode();
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setSubSystemCode(subSystemCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (BizTran bizTran : createBizTranList()) {
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
-//
-//    /**
-//     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-//     *  ●パターン
-//     *    正常（）
-//     *
-//     *  ●検証事項
-//     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-//     */
-//    @Test
-//    @Tag(TestSize.SMALL)
-//    void getBizTranItemsSource_test2() {
-//
-//        // テスト対象クラス生成
-//        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-//
-//        // 実行値
-//        String subSystemCode = SubSystem.販売_畜産.getCode();
-//        String bizTranGrpCode = "ANTG01";
-//        ModelMap model = new ModelMap();
-//        Oa12020Vo vo = new Oa12020Vo();
-//        vo.setSubSystemCode(subSystemCode);
-//        vo.setBizTranGrpCode(bizTranGrpCode);
-//
-//        // 期待値
-//        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-//        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-//        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-//        for (BizTran bizTran : createBizTranList()) {
-//            expectedItemsSourcelist.add(new SelectOptionItemSource(
-//                bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
-//            ));
-//        }
-//
-//        // 実行
-//        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-////        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-//        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-//
-//        // 結果検証
-//        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-//        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-//    }
 }
