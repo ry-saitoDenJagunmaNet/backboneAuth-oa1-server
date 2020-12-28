@@ -1,6 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.model.types;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +47,18 @@ public enum SubSystem {
      */
     public Integer getDisplaySortOrder() {
         return displaySortOrder;
+    }
+
+    /**
+     * 有効なリストのＧｅｔ
+     * （UnKnownを除いたリスト）
+     *
+     * @return 有効なリスト
+     */
+    public static List<SubSystem> getValidList() {
+        List<SubSystem> list = Arrays.asList(values());
+        return list.stream().filter(s->!s.name().equals("UnKnown"))
+            .sorted(Comparator.comparing(SubSystem::getDisplaySortOrder)).collect(Collectors.toList());
     }
 
     /**
