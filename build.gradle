@@ -25,7 +25,7 @@ buildscript {
         mssqlJdbcVersion = '9.1.1.jre11-preview'
         backboneAuthDaoVersion = '20.0.28'
         sharedDataInterfaceVersion = '20.1.27'
-        sharedDataStubVersion = '20.1.36'
+        sharedDataStubVersion = '20.1.38'
         backboneInterfaceVersion = '20.3.16'
         backboneStubVersion = '20.2.15'
         junitJupiterVersion = '5.7.0'

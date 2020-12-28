@@ -1,5 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.calendar;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * カレンダー種類の列挙型
  */
@@ -32,6 +36,17 @@ public enum CalendarType {
      */
     public String getDisplayName() {
         return displayName;
+    }
+
+    /**
+     * 有効なリストのＧｅｔ
+     * （UnKnownを除いたリスト）
+     *
+     * @return 有効なリスト
+     */
+    public static List<CalendarType> getValidList() {
+        List<CalendarType> list = Arrays.asList(values());
+        return list.stream().filter(s->!s.name().equals("UnKnown")).collect(Collectors.toList());
     }
 
     /**

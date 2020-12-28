@@ -3,12 +3,12 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12060.vo;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 
 /**
  * OA12060 View Object
  */
-public class Oa12060Vo extends BaseOfResponseVo {
+public class Oa12060Vo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 

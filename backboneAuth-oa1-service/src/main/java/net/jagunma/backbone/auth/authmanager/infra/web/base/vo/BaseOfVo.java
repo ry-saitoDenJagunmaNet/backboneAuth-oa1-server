@@ -14,7 +14,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 /**
  * レスポンスの基底クラス
  */
-public class BaseOfResponseVo implements Serializable {
+public class BaseOfVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
