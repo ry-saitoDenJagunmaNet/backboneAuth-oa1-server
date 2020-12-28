@@ -28,8 +28,7 @@ public class BackboneAuthOa1ApplicationLocal {
 
     @Bean("branches")
     public List<Branch> getBranches() {
-        BranchMock.init();
-        return BranchMock.branches;
+        return BranchMock.getMockData();
     }
 
     @Bean("jas")
@@ -39,20 +38,17 @@ public class BackboneAuthOa1ApplicationLocal {
 
     @Bean("banks")
     public List<Bank> getBanks() {
-        BankMock.init();
-        return BankMock.getData();
+        return BankMock.getMockData();
     }
 
     @Bean("bankBranches")
     public List<BankBranch> getBankBranches() {
-        BankBranchMock.init();
-        return BankBranchMock.getData();
+        return BankBranchMock.getMockData();
     }
 
     @Bean("simpleAddresses")
     public List<SimpleAddress> getSimpleAddresses() {
-        SimpleAddressMock.init();
-        return SimpleAddressMock.getData();
+        return SimpleAddressMock.getMockData();
     }
 
     @Bean("prefectures")
@@ -68,14 +64,12 @@ public class BackboneAuthOa1ApplicationLocal {
 
     @Bean("azas")
     public List<Aza> getAzas() {
-        AzasMock.init();
-        return AzasMock.getData();
+        return AzasMock.getMockData();
     }
 
     @Bean("ooAzas")
     public List<OoAza> getOoAza() {
-        OoAzaMock.init();
-        return OoAzaMock.getData();
+        return OoAzaMock.getMockData();
     }
 
     public static void main(String[] args) {
