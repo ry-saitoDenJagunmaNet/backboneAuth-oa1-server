@@ -192,7 +192,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -257,7 +257,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -381,7 +381,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -438,7 +438,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -474,7 +474,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(-1);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -510,7 +510,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-        oa12020Controller.httpSession = new MockHttpSession();
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
