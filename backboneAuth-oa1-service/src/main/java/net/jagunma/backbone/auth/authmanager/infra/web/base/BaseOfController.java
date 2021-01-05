@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
 import javax.servlet.http.HttpSession;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -16,8 +15,6 @@ import net.jagunma.common.values.model.ja.JaCode;
 import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -27,7 +24,16 @@ public class BaseOfController {
 
     // Http Session
     @Autowired
-    public HttpSession httpSession;
+    protected HttpSession httpSession;
+
+    /**
+     * HttpSessionのＳｅｔ
+     *
+     * @param httpSession HttpSession
+     */
+    public void setHttpSession(HttpSession httpSession) {
+        this.httpSession = httpSession;
+    }
 
     /**
      * Http Sessionにデータを格納します

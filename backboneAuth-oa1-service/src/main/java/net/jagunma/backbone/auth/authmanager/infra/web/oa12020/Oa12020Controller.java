@@ -13,10 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 /**
@@ -117,15 +115,16 @@ public class Oa12020Controller extends BaseOfController {
         setAuthInf();
         LOGGER.debug("search START");
 
-        Oa12020Vo vo = (Oa12020Vo) getSessionAttribute(SESSION_KEY);
-
-        if (vo != null) {
-            // 一時取引抑止メンテナンス画面の遷移前に一覧検索していたら再検索
-            return Search(vo, model);
-        }
-
-        // 一時取引抑止メンテナンス画面遷移前に一覧検索していない場合
+        Oa12020Vo vo = new Oa12020Vo();
         try {
+            vo = (Oa12020Vo) getSessionAttribute(SESSION_KEY);
+
+            if (vo != null) {
+                // 一時取引抑止メンテナンス画面の遷移前に一覧検索していたら再検索
+                return Search(vo, model);
+            }
+
+            // 一時取引抑止メンテナンス画面遷移前に一覧検索していない場合
             Oa12020Presenter presenter = createInitPresenter();
             vo = new Oa12020Vo();
             presenter.bindTo(vo);
@@ -133,6 +132,7 @@ public class Oa12020Controller extends BaseOfController {
             return "oa12020";
         } catch (RuntimeException re) {
             // その他予期せぬ例外が発生した場合
+            vo = new Oa12020Vo();
             vo.setExceptionMessage(re);
             model.addAttribute("form", vo);
             return "oa19999";
