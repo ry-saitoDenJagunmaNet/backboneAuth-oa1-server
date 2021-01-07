@@ -105,7 +105,7 @@ class BizTranGrp_BizTranDataSourceTest {
     private BizTranGrpRepository createBizTranGrpRepository() {
         return new BizTranGrpRepository() {
             @Override
-            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+            public BizTranGrp findOneByCode(String bizTranGrpCode) {
                 return createBizTranGrp();
             }
             @Override
@@ -122,7 +122,7 @@ class BizTranGrp_BizTranDataSourceTest {
     private BizTranRepository createBizTranRepository() {
         return new BizTranRepository() {
             @Override
-            public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
+            public BizTran findOneByCode(String bizTranCode) {
                 return createBizTran();
             }
             @Override
@@ -225,102 +225,6 @@ class BizTranGrp_BizTranDataSourceTest {
         list.add(BizTran.createFrom(10000002L,"AN1510","精算取消",false,LocalDate.of(2020,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         list.add(BizTran.createFrom(10000003L,"AN0002","畜産業務（センター）メニュー",true,LocalDate.of(2020,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return BizTrans.createFrom(list);
-    }
-
-    /**
-     * {@link BizTranGrp_BizTranDataSource#findOneBy(BizTranGrp_BizTranCriteria)}のテスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
-
-        // 実行値
-        bizTranGrp_BizTranId = null;
-        bizTranGrpId = null;
-        bizTranGrpCode = null;
-        bizTranGrpName = null;
-        bizTranId = null;
-        bizTranCode = null;
-        bizTranName = null;
-        isCenterBizTran = null;
-        validThruStartDate = null;
-        validThruEndDate = null;
-        subSystemCode = null;
-        createdBy = null;
-        createdAt = null;
-        createdIpAddress = null;
-        updatedBy = null;
-        updatedAt = null;
-        updatedIpAddress = null;
-        recordVersion = null;
-        BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
-
-        // テスト対象クラス生成
-        BizTranGrp_BizTranDataSource bizTranGrp_BizTranDataSource = new BizTranGrp_BizTranDataSource(
-            createBizTranGrp_BizTranEntityDao(),
-            createBizTranGrpRepository(),
-            createBizTranRepository());
-
-        // 期待値
-        BizTranGrp_BizTran expectedBizTranGrp_BizTran = BizTranGrp_BizTran.createFrom(
-            bizTranGrp_BizTranId,
-            bizTranGrpId,
-            bizTranId,
-            subSystemCode,
-            recordVersion,
-            createBizTranGrp(),
-            createBizTran(),
-            SubSystem.codeOf(subSystemCode));
-
-        // 実行
-        BizTranGrp_BizTran actualBizTranGrp_BizTran = bizTranGrp_BizTranDataSource.findOneBy(criteria);
-
-        // 結果検証
-        assertThat(actualBizTranGrp_BizTran).usingRecursiveComparison().isEqualTo(expectedBizTranGrp_BizTran);
-    }
-
-    /**
-     * {@link BizTranGrp_BizTranDataSource#findOneBy(BizTranGrp_BizTranCriteria)}のテスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・正常終了
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
-
-        // 実行値
-        BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
-
-        // テスト対象クラス生成
-        BizTranGrp_BizTranDataSource bizTranGrp_BizTranDataSource = new BizTranGrp_BizTranDataSource(
-            createBizTranGrp_BizTranEntityDao(),
-            createBizTranGrpRepository(),
-            createBizTranRepository());
-
-        // 期待値
-        BizTranGrp_BizTran expectedBizTranGrp_BizTran = BizTranGrp_BizTran.createFrom(
-            bizTranGrp_BizTranId,
-            bizTranGrpId,
-            bizTranId,
-            subSystemCode,
-            recordVersion,
-            createBizTranGrp(),
-            createBizTran(),
-            SubSystem.codeOf(subSystemCode));
-
-        // 実行
-        BizTranGrp_BizTran actualBizTranGrp_BizTran = bizTranGrp_BizTranDataSource.findOneBy(criteria);
-
-        // 結果検証
-        assertThat(actualBizTranGrp_BizTran).usingRecursiveComparison().isEqualTo(expectedBizTranGrp_BizTran);
     }
 
     /**

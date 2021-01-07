@@ -69,7 +69,7 @@ class Oa12060ControllerTest {
         // カレンダー検索リポジトリのスタブ
         CalendarRepository calendarRepository = new CalendarRepository() {
             @Override
-            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+            public Calendar findOneById(Long calendarId) {
                 return null;
             }
             @Override

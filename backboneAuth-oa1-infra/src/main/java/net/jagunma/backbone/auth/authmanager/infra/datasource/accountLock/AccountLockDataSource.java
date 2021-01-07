@@ -17,7 +17,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Component;
 
 /**
- * アカウントロック群検索
+ * アカウントロック検索
  */
 @Component
 public class AccountLockDataSource implements AccountLockRepository {

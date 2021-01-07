@@ -154,6 +154,10 @@ class Oa11040ControllerTest {
         };
         OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
             @Override
+            public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
+            @Override
             public OperatorHistoryHeaders selectBy(OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
                 return null;
             }

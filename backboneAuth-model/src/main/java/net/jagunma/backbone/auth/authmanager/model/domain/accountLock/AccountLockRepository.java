@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.accountLock;
 import net.jagunma.common.ddd.model.orders.Orders;
 
 /**
- * アカウントロック群検索
+ * アカウントロック検索
  */
 public interface AccountLockRepository {
 

@@ -47,10 +47,11 @@ class SuspendBizTranForStoreDataSourceTest {
     private final LocalDate validThruStartDate = LocalDate.of(2010,6,21);
     private final LocalDate validThruEndDate = LocalDate.of(9999,12,31);
     private final String bizTranName = "畜産メインメニュー";
-    private final Integer bizTranRecordVersion  = 1;
+    private final Integer bizTranRecordVersion = 1;
     private final LocalDate suspendStartDate = LocalDate.of(2010,6,21);
     private final LocalDate suspendEndDate = LocalDate.of(9999,12,31);
     private final String suspendReason = "不具合により緊急抑止";
+    private final Integer recordVersion = 1;
 
     private Integer actualDeleteRecordVersion;
     private Long actualDeleteSuspendBizTranId;
@@ -58,7 +59,6 @@ class SuspendBizTranForStoreDataSourceTest {
 
     // 一時取引抑止データ作成
     private SuspendBizTran createSuspendBizTran(
-        Integer recordVersion,
         JaAtMoment jaAtMoment,
         BranchAtMoment branchAtMoment,
         SubSystem subSystem,
@@ -75,7 +75,7 @@ class SuspendBizTranForStoreDataSourceTest {
             this.suspendStartDate,
             this.suspendEndDate,
             this.suspendReason,
-            recordVersion,
+            this.recordVersion,
             jaAtMoment,
             branchAtMoment,
             subSystem,
@@ -194,16 +194,14 @@ class SuspendBizTranForStoreDataSourceTest {
             // 一時取引抑止検索作成
             new SuspendBizTranRepository() {
                 @Override
-                public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) {
+                public SuspendBizTran findOneById(Long suspendBizTranId) {
                     return createSuspendBizTran(
-                        (suspendBizTranId == null)? null : 1,
                         (jaId == null)? null : createJaAtMoment(),
                         (branchId == null)? null : createBranchAtMoment(),
                         (subSystemCode == null)? null : SubSystem.codeOf(subSystemCode),
                         (bizTranGrpId == null)? null : createBizTranGrp(),
                         (bizTranId == null)? null : createBizTran());
                 }
-
                 @Override
                 public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) {
                     return null;
@@ -227,16 +225,15 @@ class SuspendBizTranForStoreDataSourceTest {
         SuspendBizTranForStoreDataSource suspendBizTranForStoreDataSource = createSuspendBizTranForStoreDataSource();
 
         // 実行値
-        SuspendBizTran suspendBizTran = createSuspendBizTran(null,null,null,null,null,null);
+        SuspendBizTran suspendBizTran = createSuspendBizTran(null,null,null,null,null);
 
         // 期待値
-        Integer recordVersion = 1;
         JaAtMoment jaAtMoment = createJaAtMoment();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
         SubSystem subSystem = SubSystem.codeOf(subSystemCode);
         BizTranGrp bizTranGrp = createBizTranGrp();
         BizTran bizTran = createBizTran();
-        SuspendBizTran expectedSuspendBizTran = createSuspendBizTran(recordVersion,jaAtMoment,branchAtMoment,subSystem,bizTranGrp,bizTran);
+        SuspendBizTran expectedSuspendBizTran = createSuspendBizTran(jaAtMoment,branchAtMoment,subSystem,bizTranGrp,bizTran);
 
         // 実行
         SuspendBizTran actualSuspendBizTran = suspendBizTranForStoreDataSource.insert(suspendBizTran);
@@ -261,16 +258,15 @@ class SuspendBizTranForStoreDataSourceTest {
         SuspendBizTranForStoreDataSource suspendBizTranForStoreDataSource = createSuspendBizTranForStoreDataSource();
 
         // 実行値
-        SuspendBizTran suspendBizTran = createSuspendBizTran(1,null,null,null,null,null);
+        SuspendBizTran suspendBizTran = createSuspendBizTran(null,null,null,null,null);
 
         // 期待値
-        Integer recordVersion = 1;
         JaAtMoment jaAtMoment = createJaAtMoment();
         BranchAtMoment branchAtMoment = createBranchAtMoment();
         SubSystem subSystem = SubSystem.codeOf(subSystemCode);
         BizTranGrp bizTranGrp = createBizTranGrp();
         BizTran bizTran = createBizTran();
-        SuspendBizTran expectedSuspendBizTran = createSuspendBizTran(recordVersion,jaAtMoment,branchAtMoment,subSystem,bizTranGrp,bizTran);
+        SuspendBizTran expectedSuspendBizTran = createSuspendBizTran(jaAtMoment,branchAtMoment,subSystem,bizTranGrp,bizTran);
 
         // 実行
         SuspendBizTran actualSuspendBizTran = suspendBizTranForStoreDataSource.update(suspendBizTran);
@@ -295,7 +291,7 @@ class SuspendBizTranForStoreDataSourceTest {
         SuspendBizTranForStoreDataSource suspendBizTranForStoreDataSource = createSuspendBizTranForStoreDataSource();
 
         // 実行値
-        SuspendBizTran suspendBizTran = createSuspendBizTran(1,null,null,null,null,null);
+        SuspendBizTran suspendBizTran = createSuspendBizTran(null,null,null,null,null);
 
         // 期待値
         Integer expectedRecordVersion = 1;

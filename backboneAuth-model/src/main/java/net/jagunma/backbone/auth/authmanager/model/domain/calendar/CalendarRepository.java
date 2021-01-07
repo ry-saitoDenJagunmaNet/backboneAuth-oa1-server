@@ -6,15 +6,16 @@ import net.jagunma.common.ddd.model.orders.Orders;
  * カレンダー検索
  */
 public interface CalendarRepository {
+
     /**
-     * カレンダーの条件検索を行います
+     * カレンダーの検索を行います
      *
-     * @param calendarCriteria カレンダーの検索条件
+     * @param calendarId カレンダーID
      * @return カレンダー
      */
-    Calendar findOneBy(CalendarCriteria calendarCriteria);
+    Calendar findOneById(Long calendarId);
     /**
-     * カレンダーの条件検索を行います
+     * カレンダー群の検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @param orders オーダー指定
@@ -22,21 +23,21 @@ public interface CalendarRepository {
      */
     Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders);
     /**
-     * カレンダーの条件検索を行います
+     * カレンダー群の検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @return カレンダー群
      */
     Calendars selectBy(CalendarCriteria calendarCriteria);
     /**
-     * カレンダーの全件検索を行います
+     * カレンダー群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return カレンダー群
      */
     Calendars selectAll(Orders orders);
     /**
-     * カレンダーの全件検索を行います
+     * カレンダー群の全件検索を行います
      *
      * @return カレンダー群
      */

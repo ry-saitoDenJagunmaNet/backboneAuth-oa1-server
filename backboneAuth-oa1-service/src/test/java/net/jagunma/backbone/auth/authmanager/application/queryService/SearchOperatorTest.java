@@ -195,6 +195,10 @@ class SearchOperatorTest {
         };
         OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
             @Override
+            public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
+            @Override
             public OperatorHistoryHeaders selectBy(OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
                 List<OperatorHistoryHeader> list = createOperatorHistoryHeaderList();
                 if (operatorId != null) {

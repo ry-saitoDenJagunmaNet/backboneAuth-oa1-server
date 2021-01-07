@@ -36,6 +36,68 @@ class BizTranDataSourceTest {
     private String updatedIpAddress = "001.001.001.002";
     private Integer recordVersion = 1;
 
+    // 取引データの作成
+    private BizTranEntity createBizTranEntity() {
+        BizTranEntity entity = new BizTranEntity();
+        entity.setBizTranId(bizTranId);
+        entity.setBizTranCode(bizTranCode);
+        entity.setBizTranName(bizTranName);
+        entity.setIsCenterBizTran(isCenterBizTran);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
+        entity.setSubSystemCode(subSystemCode);
+        entity.setCreatedBy(createdBy);
+        entity.setCreatedAt(createdAt);
+        entity.setCreatedIpAddress(createdIpAddress);
+        entity.setUpdatedBy(updatedBy);
+        entity.setUpdatedAt(updatedAt);
+        entity.setUpdatedIpAddress(updatedIpAddress);
+        entity.setRecordVersion(recordVersion);
+        return entity;
+    }
+    // 取引リストデータの作成
+    private List<BizTranEntity> createBizTranEntityList() {
+        List<BizTranEntity> list = newArrayList();
+        list.add(createBizTranEntity(1L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
+        list.add(createBizTranEntity(2L,"AN1110","前日処理照会",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
+        list.add(createBizTranEntity(3L,"AN0002","畜産業務（センター）メニュー",true,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
+        return list;
+    }
+    // 取引データの作成
+    private BizTranEntity createBizTranEntity(
+        Long bizTranId,
+        String bizTranCode,
+        String bizTranName,
+        Boolean isCenterBizTran,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
+        String subSystemCode,
+        Long createdBy,
+        LocalDateTime createdAt,
+        String createdIpAddress,
+        Long updatedBy,
+        LocalDateTime updatedAt,
+        String updatedIpAddress,
+        Integer recordVersion) {
+
+        BizTranEntity entity = new BizTranEntity();
+        entity.setBizTranId(bizTranId);
+        entity.setBizTranCode(bizTranCode);
+        entity.setBizTranName(bizTranName);
+        entity.setIsCenterBizTran(isCenterBizTran);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
+        entity.setSubSystemCode(subSystemCode);
+        entity.setCreatedBy(createdBy);
+        entity.setCreatedAt(createdAt);
+        entity.setCreatedIpAddress(createdIpAddress);
+        entity.setUpdatedBy(updatedBy);
+        entity.setUpdatedAt(updatedAt);
+        entity.setUpdatedIpAddress(updatedIpAddress);
+        entity.setRecordVersion(recordVersion);
+        return entity;
+    }
+
     // 取引Daoの作成
     private BizTranEntityDao createBizTranEntityDao() {
         return new BizTranEntityDao() {
@@ -89,72 +151,9 @@ class BizTranDataSourceTest {
             }
         };
     }
-    // 取引データ作成
-    private BizTranEntity createBizTranEntity() {
-        BizTranEntity entity = new BizTranEntity();
-        entity.setBizTranId(bizTranId);
-        entity.setBizTranCode(bizTranCode);
-        entity.setBizTranName(bizTranName);
-        entity.setIsCenterBizTran(isCenterBizTran);
-        entity.setValidThruStartDate(validThruStartDate);
-        entity.setValidThruEndDate(validThruEndDate);
-        entity.setSubSystemCode(subSystemCode);
-        entity.setCreatedBy(createdBy);
-        entity.setCreatedAt(createdAt);
-        entity.setCreatedIpAddress(createdIpAddress);
-        entity.setUpdatedBy(updatedBy);
-        entity.setUpdatedAt(updatedAt);
-        entity.setUpdatedIpAddress(updatedIpAddress);
-        entity.setRecordVersion(recordVersion);
-        return entity;
-    }
-
-    // 取引リストデータ作成
-    private List<BizTranEntity> createBizTranEntityList() {
-        List<BizTranEntity> list = newArrayList();
-        list.add(createBizTranEntity(1L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
-        list.add(createBizTranEntity(2L,"AN1110","前日処理照会",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
-        list.add(createBizTranEntity(3L,"AN0002","畜産業務（センター）メニュー",true,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31),"AN",null,null,null,null,null,null,1));
-        return list;
-    }
-    // 取引データ作成
-    private BizTranEntity createBizTranEntity(
-        Long bizTranId,
-        String bizTranCode,
-        String bizTranName,
-        Boolean isCenterBizTran,
-        LocalDate validThruStartDate,
-        LocalDate validThruEndDate,
-        String subSystemCode,
-        Long createdBy,
-        LocalDateTime createdAt,
-        String createdIpAddress,
-        Long updatedBy,
-        LocalDateTime updatedAt,
-        String updatedIpAddress,
-        Integer recordVersion) {
-
-        BizTranEntity entity = new BizTranEntity();
-        entity.setBizTranId(bizTranId);
-        entity.setBizTranCode(bizTranCode);
-        entity.setBizTranName(bizTranName);
-        entity.setIsCenterBizTran(isCenterBizTran);
-        entity.setValidThruStartDate(validThruStartDate);
-        entity.setValidThruEndDate(validThruEndDate);
-        entity.setSubSystemCode(subSystemCode);
-        entity.setCreatedBy(createdBy);
-        entity.setCreatedAt(createdAt);
-        entity.setCreatedIpAddress(createdIpAddress);
-        entity.setUpdatedBy(updatedBy);
-        entity.setUpdatedAt(updatedAt);
-        entity.setUpdatedIpAddress(updatedIpAddress);
-        entity.setRecordVersion(recordVersion);
-        return entity;
-    }
-
 
     /**
-     * {@link BizTranDataSource#findOneBy(BizTranCriteria)}のテスト
+     * {@link BizTranDataSource#findOneByCode(String)}のテスト
      *  ●パターン
      *    正常
      *
@@ -163,7 +162,7 @@ class BizTranDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
+    void findOneByCode_test0() {
 
         // 実行値
         bizTranId = 12345678L;
@@ -180,7 +179,6 @@ class BizTranDataSourceTest {
         updatedAt = null;
         updatedIpAddress = null;
         recordVersion = null;
-        BizTranCriteria criteria = new BizTranCriteria();
 
         // テスト対象クラス生成
         BizTranDataSource bizTranDataSource = new BizTranDataSource(createBizTranEntityDao());
@@ -198,14 +196,14 @@ class BizTranDataSourceTest {
             SubSystem.codeOf(subSystemCode));
 
         // 実行
-        BizTran actualBizTran = bizTranDataSource.findOneBy(criteria);
+        BizTran actualBizTran = bizTranDataSource.findOneByCode(bizTranCode);
 
         // 結果検証
         assertThat(actualBizTran).usingRecursiveComparison().isEqualTo(expectedBizTran);
     }
 
     /**
-     * {@link BizTranDataSource#findOneBy(BizTranCriteria)}のテスト
+     * {@link BizTranDataSource#findOneByCode(String)}のテスト
      *  ●パターン
      *    正常
      *
@@ -214,10 +212,7 @@ class BizTranDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
-
-        // 実行値
-        BizTranCriteria criteria = new BizTranCriteria();
+    void findOneByCode_test1() {
 
         // テスト対象クラス生成
         BizTranDataSource bizTranDataSource = new BizTranDataSource(createBizTranEntityDao());
@@ -235,7 +230,7 @@ class BizTranDataSourceTest {
             SubSystem.codeOf(subSystemCode));
 
         // 実行
-        BizTran actualBizTran = bizTranDataSource.findOneBy(criteria);
+        BizTran actualBizTran = bizTranDataSource.findOneByCode(bizTranCode);
 
         // 結果検証
         assertThat(actualBizTran).usingRecursiveComparison().isEqualTo(expectedBizTran);

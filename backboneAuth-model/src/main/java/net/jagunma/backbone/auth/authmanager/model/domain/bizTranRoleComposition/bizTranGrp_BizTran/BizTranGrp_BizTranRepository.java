@@ -8,14 +8,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface BizTranGrp_BizTranRepository {
 
     /**
-     * 取引グループ_取引割当の条件検索を行います
-     *
-     * @param bizTranGrp_BizTranCriteria 取引グループ_取引割当の検索条件
-     * @return 取引グループ_取引割当
-     */
-    BizTranGrp_BizTran findOneBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria);
-    /**
-     * 取引グループ_取引割当群の条件検索を行います
+     * 取引グループ_取引割当群の検索を行います
      *
      * @param bizTranGrp_BizTranCriteria 取引グループ_取引割当の検索条件
      * @param orders                     オーダー指定

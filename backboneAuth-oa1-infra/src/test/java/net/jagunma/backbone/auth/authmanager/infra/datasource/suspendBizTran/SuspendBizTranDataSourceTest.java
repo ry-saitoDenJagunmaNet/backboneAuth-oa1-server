@@ -324,7 +324,7 @@ class SuspendBizTranDataSourceTest {
     private BizTranGrpRepository createBizTranGrpRepository() {
         return new BizTranGrpRepository() {
             @Override
-            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+            public BizTranGrp findOneByCode(String bizTranGrpCode) {
                 return createBizTranGrp();
             }
             @Override
@@ -341,7 +341,7 @@ class SuspendBizTranDataSourceTest {
     private BizTranRepository createBizTranRepository() {
         return new BizTranRepository() {
             @Override
-            public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
+            public BizTran findOneByCode(String bizTranCode) {
                 return createBizTran();
             }
             @Override
@@ -356,7 +356,7 @@ class SuspendBizTranDataSourceTest {
     }
 
     /**
-     * {@link SuspendBizTranDataSource#findOneBy(SuspendBizTranCriteria)}のテスト
+     * {@link SuspendBizTranDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *
@@ -365,11 +365,7 @@ class SuspendBizTranDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
-
-        // 実行値
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        criteria.getSuspendBizTranIdCriteria().setEqualTo(suspendBizTranId);
+    void findOneById_test0() {
 
         // テスト対象クラス生成
         SuspendBizTranDataSource suspendBizTranDataSource = new SuspendBizTranDataSource(
@@ -399,14 +395,14 @@ class SuspendBizTranDataSourceTest {
         );
 
         // 実行
-        SuspendBizTran actualSuspendBizTran = suspendBizTranDataSource.findOneBy(criteria);
+        SuspendBizTran actualSuspendBizTran = suspendBizTranDataSource.findOneById(suspendBizTranId);
 
         // 結果検証
         assertThat(actualSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedSuspendBizTran);
     }
 
     /**
-     * {@link SuspendBizTranDataSource#findOneBy(SuspendBizTranCriteria)}のテスト
+     * {@link SuspendBizTranDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *    ・検索結果でJAコード、店舗コード、サブシステムコード、取引グループコード、取引コード設定なし
@@ -416,11 +412,9 @@ class SuspendBizTranDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
+    void findOneById_test1() {
 
         // 実行値
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        criteria.getSuspendBizTranIdCriteria().setEqualTo(suspendBizTranId);
         jaCode = null;
         branchCode = null;
         subSystemCode = null;
@@ -459,7 +453,7 @@ class SuspendBizTranDataSourceTest {
         );
 
         // 実行
-        SuspendBizTran actualSuspendBizTran = suspendBizTranDataSource.findOneBy(criteria);
+        SuspendBizTran actualSuspendBizTran = suspendBizTranDataSource.findOneById(suspendBizTranId);
 
         // 結果検証
         assertThat(actualSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedSuspendBizTran);
@@ -658,5 +652,4 @@ class SuspendBizTranDataSourceTest {
                 .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));
         }
     }
-
 }

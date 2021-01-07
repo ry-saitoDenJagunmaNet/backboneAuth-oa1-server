@@ -30,16 +30,14 @@ public class BizTranDataSource implements BizTranRepository {
     /**
      * 取引の検索を行います
      *
-     * @param bizTranCriteria 取引の検索条件
+     * @param bizTranCode 取引コード
      * @return 取引群
      */
-    public BizTran findOneBy(BizTranCriteria bizTranCriteria) {
+    public BizTran findOneByCode(String bizTranCode) {
 
         // 取引検索
         BizTranEntityCriteria entityCriteria = new BizTranEntityCriteria();
-        entityCriteria.getBizTranIdCriteria().assignFrom(bizTranCriteria.getBizTranIdCriteria());
-        entityCriteria.getBizTranCodeCriteria().assignFrom(bizTranCriteria.getBizTranCodeCriteria());
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranCriteria.getSubSystemCodeCriteria());
+        entityCriteria.getBizTranCodeCriteria().setEqualTo(bizTranCode);
 
         BizTranEntity entity = bizTranEntityDao.findOneBy(entityCriteria);
         return BizTran.createFrom(

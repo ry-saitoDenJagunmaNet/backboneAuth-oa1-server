@@ -3,11 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleCompos
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
@@ -40,44 +38,6 @@ public class BizTranGrp_BizTranDataSource implements BizTranGrp_BizTranRepositor
         this.bizTranGrp_BizTranEntityDao = bizTranGrp_BizTranEntityDao;
         this.bizTranGrpRepository = bizTranGrpRepository;
         this.bizTranRepository = bizTranRepository;
-    }
-
-    /**
-     * 取引グループ_取引割当の条件検索を行います
-     *
-     * @param bizTranGrp_BizTranCriteria 取引グループ_取引割当の検索条件
-     * @return 取引グループ_取引割当
-     */
-    public BizTranGrp_BizTran findOneBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria) {
-
-        // 取引グループ検索
-        BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-        bizTranGrpCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria());
-        bizTranGrpCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-        BizTranGrp bizTranGrp = bizTranGrpRepository.findOneBy(bizTranGrpCriteria);
-
-        // 取引検索
-        BizTranCriteria bizTranCriteria = new BizTranCriteria();
-        bizTranCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
-        bizTranCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-        BizTran bizTran = bizTranRepository.findOneBy(bizTranCriteria);
-
-        // 取引グループ_取引割当検索
-        BizTranGrp_BizTranEntityCriteria entityCriteria = new BizTranGrp_BizTranEntityCriteria();
-        entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria());
-        entityCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-
-        BizTranGrp_BizTranEntity entity = bizTranGrp_BizTranEntityDao.findOneBy(entityCriteria);
-        return BizTranGrp_BizTran.createFrom(
-            entity.getBizTranGrp_BizTranId(),
-            entity.getBizTranGrpId(),
-            entity.getBizTranId(),
-            entity.getSubSystemCode(),
-            entity.getRecordVersion(),
-            bizTranGrp,
-            bizTran,
-            SubSystem.codeOf(entity.getSubSystemCode()));
     }
 
     /**

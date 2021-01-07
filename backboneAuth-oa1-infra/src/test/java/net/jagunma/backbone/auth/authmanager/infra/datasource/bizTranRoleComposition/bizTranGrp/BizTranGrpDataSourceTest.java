@@ -139,7 +139,7 @@ class BizTranGrpDataSourceTest {
     }
 
     /**
-     * {@link BizTranGrpDataSource#findOneBy(BizTranGrpCriteria)}のテスト
+     * {@link BizTranGrpDataSource#findOneByCode(String)}のテスト
      *  ●パターン
      *    正常
      *
@@ -148,7 +148,7 @@ class BizTranGrpDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
+    void findOneByCode_test0() {
 
         // 実行値
         bizTranGrpId = null;
@@ -162,7 +162,6 @@ class BizTranGrpDataSourceTest {
         updatedAt = null;
         updatedIpAddress = null;
         recordVersion = null;
-        BizTranGrpCriteria criteria = new BizTranGrpCriteria();
 
         // テスト対象クラス生成
         BizTranGrpDataSource bizTranGrpDataSource = new BizTranGrpDataSource(createBizTranGrpEntityDao());
@@ -177,14 +176,14 @@ class BizTranGrpDataSourceTest {
             SubSystem.codeOf(subSystemCode));
 
         // 実行
-        BizTranGrp actualBizTranGrp = bizTranGrpDataSource.findOneBy(criteria);
+        BizTranGrp actualBizTranGrp = bizTranGrpDataSource.findOneByCode(bizTranGrpCode);
 
         // 結果検証
         assertThat(actualBizTranGrp).usingRecursiveComparison().isEqualTo(expectedBizTranGrp);
     }
 
     /**
-     * {@link BizTranGrpDataSource#findOneBy(BizTranGrpCriteria)}のテスト
+     * {@link BizTranGrpDataSource#findOneByCode(String)}のテスト
      *  ●パターン
      *    正常
      *
@@ -193,10 +192,7 @@ class BizTranGrpDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
-
-        // 実行値
-        BizTranGrpCriteria criteria = new BizTranGrpCriteria();
+    void findOneByCode_test1() {
 
         // テスト対象クラス生成
         BizTranGrpDataSource bizTranGrpDataSource = new BizTranGrpDataSource(createBizTranGrpEntityDao());
@@ -212,7 +208,7 @@ class BizTranGrpDataSourceTest {
         );
 
         // 実行
-        BizTranGrp actualBizTranGrp = bizTranGrpDataSource.findOneBy(criteria);
+        BizTranGrp actualBizTranGrp = bizTranGrpDataSource.findOneByCode(bizTranGrpCode);
 
         // 結果検証
         assertThat(actualBizTranGrp).usingRecursiveComparison().isEqualTo(expectedBizTranGrp);

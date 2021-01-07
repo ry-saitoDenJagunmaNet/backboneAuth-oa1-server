@@ -3,8 +3,9 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.operatorHistoryPa
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.datasource.operator.OperatorDataSource;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
@@ -13,24 +14,55 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.op
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
+import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Component;
 
 /**
- * オペレーター履歴ヘッダー群検索
+ * オペレーター履歴ヘッダー検索
  */
 @Component
 public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRepository {
 
     private final OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao;
-    private final OperatorDataSource operatorDataSource;
+    private final OperatorRepository operatorRepository;
 
     // コンストラクタ
     OperatorHistoryHeaderDataSource(OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao,
-        OperatorDataSource operatorDataSource) {
+        OperatorRepository operatorRepository) {
 
         this.operatorHistoryHeaderEntityDao = operatorHistoryHeaderEntityDao;
-        this.operatorDataSource = operatorDataSource;
+        this.operatorRepository = operatorRepository;
+    }
+
+    /**
+     * 対象オペレーターで最新のオペレーター履歴ヘッダーの検索を行います
+     *
+     * @param operatorId オペレーターID
+     * @return 対象オペレーターの中で最新のオペレーター履歴ヘッダー
+     */
+    public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+
+        // オペレーターの検索
+        OperatorCriteria operatorCriteria = new OperatorCriteria();
+        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Operator operator = operatorRepository.findOneBy(operatorCriteria);
+
+        // オペレーター履歴ヘッダー検索
+        OperatorHistoryHeaderEntityCriteria entityCriteria = new OperatorHistoryHeaderEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders orders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
+
+        List<OperatorHistoryHeaderEntity> list = operatorHistoryHeaderEntityDao.findBy(entityCriteria, orders);
+        OperatorHistoryHeaderEntity entity = list.get(0);
+
+        return OperatorHistoryHeader.createFrom(
+                entity.getOperatorHistoryId(),
+                entity.getOperatorId(),
+                entity.getChangeDateTime(),
+                entity.getChangeCause(),
+                entity.getRecordVersion(),
+                operator);
     }
 
     /**
@@ -44,11 +76,12 @@ public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRep
 
         // オペレーターの検索
         OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().getIncludes().addAll(operatorHistoryHeaderCriteria.getOperatorIdCriteria().getIncludes());
-        Operators operators = operatorDataSource.selectBy(operatorCriteria, Orders.empty());
+        operatorCriteria.getOperatorIdCriteria().assignFrom(operatorHistoryHeaderCriteria.getOperatorIdCriteria());
+        Operators operators = operatorRepository.selectBy(operatorCriteria, Orders.empty());
 
         // オペレーター履歴ヘッダー群検索
         OperatorHistoryHeaderEntityCriteria entityCriteria = new OperatorHistoryHeaderEntityCriteria();
+        entityCriteria.getOperatorHistoryIdCriteria().assignFrom(operatorHistoryHeaderCriteria.getOperatorHistoryIdCriteria());
         entityCriteria.getOperatorIdCriteria().assignFrom(operatorHistoryHeaderCriteria.getOperatorIdCriteria());
 
         List<OperatorHistoryHeader> list = newArrayList();

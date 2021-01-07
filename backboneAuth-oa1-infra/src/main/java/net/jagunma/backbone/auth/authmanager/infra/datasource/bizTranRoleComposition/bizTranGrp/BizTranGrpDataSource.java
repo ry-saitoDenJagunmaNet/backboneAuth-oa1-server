@@ -28,18 +28,16 @@ public class BizTranGrpDataSource implements BizTranGrpRepository {
     }
 
     /**
-     * 取引グループの条件検索を行います
+     * 取引グループの検索を行います
      *
-     * @param bizTranGrpCriteria 取引グループの検索条件
+     * @param bizTranGrpCode 取引グループコード
      * @return 取引グループ
      */
-    public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+    public BizTranGrp findOneByCode(String bizTranGrpCode) {
 
         // 取引グループ検索
         BizTranGrpEntityCriteria entityCriteria = new BizTranGrpEntityCriteria();
-        entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrpCriteria.getBizTranGrpIdCriteria());
-        entityCriteria.getBizTranGrpCodeCriteria().assignFrom(bizTranGrpCriteria.getBizTranGrpCodeCriteria());
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrpCriteria.getSubSystemCodeCriteria());
+        entityCriteria.getBizTranGrpCodeCriteria().setEqualTo(bizTranGrpCode);
 
         BizTranGrpEntity entity = bizTranGrpEntityDao.findOneBy(entityCriteria);
         return BizTranGrp.createFrom(

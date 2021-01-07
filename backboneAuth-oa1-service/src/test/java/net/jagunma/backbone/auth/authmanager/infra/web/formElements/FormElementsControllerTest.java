@@ -147,8 +147,8 @@ class FormElementsControllerTest {
                 return BizTranGrps.createFrom(createBizTranGrpList());
             }
             @Override
-            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
-                return createBizTranGrpList().stream().filter(b->b.getBizTranGrpCode().equals(bizTranGrpCriteria.getBizTranGrpCodeCriteria().getEqualTo())).findFirst().orElse(null);
+            public BizTranGrp findOneByCode(String bizTranGrpCode) {
+                return createBizTranGrpList().stream().filter(b->b.getBizTranGrpCode().equals(bizTranGrpCode)).findFirst().orElse(null);
             }
             @Override
             public BizTranGrps selectAll(Orders orders) {
@@ -176,10 +176,6 @@ class FormElementsControllerTest {
                     ix++;
                 }
                 return BizTranGrp_BizTrans.createFrom(list);
-            }
-            @Override
-            public BizTranGrp_BizTran findOneBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria) {
-                return null;
             }
             @Override
             public BizTranGrp_BizTrans selectAll(Orders orders) {

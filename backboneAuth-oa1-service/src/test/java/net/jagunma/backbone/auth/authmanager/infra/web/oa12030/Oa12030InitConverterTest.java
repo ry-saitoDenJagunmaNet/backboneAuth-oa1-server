@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.objects2.Objects2;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -33,16 +31,14 @@ class Oa12030InitConverterTest {
         vo.setSuspendBizTranId(suspendBizTranId);
 
         // 期待値
-        LongCriteria expectedJaIdCriteria = new LongCriteria();
-        expectedJaIdCriteria.setEqualTo(suspendBizTranId);
+        Long expectedSuspendBizTranId = suspendBizTranId;
 
         // 実行
         Oa12030InitConverter converter = Oa12030InitConverter.with(vo);
 
         // 結果検証
         assertTrue(converter instanceof Oa12030InitConverter);
-        assertThat(Objects2.toStringHelper(converter.getSuspendBizTranIdCriteria()).defaultConfig().toString()).isEqualTo(
-            Objects2.toStringHelper(expectedJaIdCriteria).defaultConfig().toString());
+        assertThat(converter.getSuspendBizTranId()).isEqualTo(expectedSuspendBizTranId);
     }
 
     /**
@@ -62,15 +58,13 @@ class Oa12030InitConverterTest {
         vo.setSuspendBizTranId(suspendBizTranId);
 
         // 期待値
-        LongCriteria expectedJaIdCriteria = new LongCriteria();
-        expectedJaIdCriteria.setEqualTo(suspendBizTranId);
+        Long expectedSuspendBizTranId = suspendBizTranId;
 
         // 実行
         Oa12030InitConverter converter = Oa12030InitConverter.with(vo);
 
         // 結果検証
         assertTrue(converter instanceof Oa12030InitConverter);
-        assertThat(Objects2.toStringHelper(converter.getSuspendBizTranIdCriteria()).defaultConfig().toString()).isEqualTo(
-            Objects2.toStringHelper(expectedJaIdCriteria).defaultConfig().toString());
+        assertThat(converter.getSuspendBizTranId()).isEqualTo(expectedSuspendBizTranId);
     }
 }

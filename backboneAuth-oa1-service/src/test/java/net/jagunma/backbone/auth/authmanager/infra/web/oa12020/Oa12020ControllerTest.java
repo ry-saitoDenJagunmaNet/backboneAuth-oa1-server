@@ -50,7 +50,9 @@ class Oa12020ControllerTest {
         SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(
             new SuspendBizTranRepository() {
                 @Override
-                public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) { return null; }
+                public SuspendBizTran findOneById(Long suspendBizTranId) {
+                    return null;
+                }
                 @Override
                 public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) { return null; }
             }) {

@@ -1,9 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.suspendBizTran;
 
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepositoryForStore;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntity;
 import net.jagunma.backbone.auth.model.dao.suspendBizTran.SuspendBizTranEntityDao;
 import org.springframework.stereotype.Component;
@@ -46,9 +45,7 @@ public class SuspendBizTranForStoreDataSource implements SuspendBizTranRepositor
 
         suspendBizTranEntityDao.insert(entity);
 
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        criteria.getSuspendBizTranIdCriteria().setEqualTo(entity.getSuspendBizTranId());
-        return suspendBizTranRepository.findOneBy(criteria);
+        return suspendBizTranRepository.findOneById(entity.getSuspendBizTranId());
     }
 
     /**
@@ -74,9 +71,7 @@ public class SuspendBizTranForStoreDataSource implements SuspendBizTranRepositor
 
         suspendBizTranEntityDao.updateExcludeNull(entity);
 
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        criteria.getSuspendBizTranIdCriteria().setEqualTo(entity.getSuspendBizTranId());
-        return suspendBizTranRepository.findOneBy(criteria);
+        return suspendBizTranRepository.findOneById(entity.getSuspendBizTranId());
     }
 
     /**

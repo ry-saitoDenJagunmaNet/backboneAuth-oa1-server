@@ -8,12 +8,12 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface BizTranGrpRepository {
 
     /**
-     * 取引グループの条件検索を行います
+     * 取引グループの検索を行います
      *
-     * @param bizTranGrpCriteria 取引グループの検索条件
+     * @param bizTranGrpCode 取引グループコード
      * @return 取引グループ群
      */
-    BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria);
+    BizTranGrp findOneByCode(String bizTranGrpCode);
     /**
      * 取引グループ群の条件検索を行います
      *

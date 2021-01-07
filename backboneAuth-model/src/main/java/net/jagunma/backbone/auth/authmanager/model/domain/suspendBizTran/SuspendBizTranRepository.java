@@ -8,12 +8,12 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface SuspendBizTranRepository {
 
     /**
-     * 一時取引抑止の条件検索を行います
+     * 一時取引抑止の検索を行います
      *
-     * @param suspendBizTranCriteria  一時取引抑止の検索条件
-     * @return  一時取引抑止
+     * @param suspendBizTranId 一時取引抑止ID
+     * @return 一時取引抑止
      */
-    SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria);
+    SuspendBizTran findOneById(Long suspendBizTranId);
     /**
      * 一時取引抑止群の条件検索を行います
      *
