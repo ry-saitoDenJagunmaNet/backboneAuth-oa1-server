@@ -96,10 +96,6 @@ class SearchBizTranRoleCompositionTest {
                 return BizTranGrp_BizTrans.createFrom(createBizTranGrp_BizTranList());
             }
             @Override
-            public BizTranGrp_BizTran findOneBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria) {
-                return null;
-            }
-            @Override
             public BizTranGrp_BizTrans selectAll(Orders orders) {
                 return null;
             }

@@ -44,7 +44,7 @@ class SearchCalendarTest {
                 return calendars;
             }
             @Override
-            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+            public Calendar findOneById(Long calendarId) {
                 return null;
             }
             @Override

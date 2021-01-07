@@ -1,16 +1,14 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference;
 
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
-
 /**
  * 一時取引抑止検索サービス Request
  */
 public interface SuspendBizTranSearchRequest {
 
     /**
-     * 一時取引抑止ID検索条件のＧｅｔ
+     * 一時取引抑止IDのＧｅｔ
      *
-     * @return 一時取引抑止ID検索条件
+     * @return 一時取引抑止ID
      */
-    LongCriteria getSuspendBizTranIdCriteria();
+    Long getSuspendBizTranId();
 }

@@ -17,7 +17,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.Suspend
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -101,7 +100,7 @@ class SearchSuspendBizTranTest {
     private SuspendBizTranRepository createSuspendBizTranRepository() {
         return new SuspendBizTranRepository() {
             @Override
-            public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) {
+            public SuspendBizTran findOneById(Long suspendBizTranId) {
                 return suspendBizTranList.get(0);
             }
             @Override
@@ -199,8 +198,8 @@ class SearchSuspendBizTranTest {
     private SuspendBizTranSearchRequest createSuspendBizTranSearchRequest() {
         return new SuspendBizTranSearchRequest() {
             @Override
-            public LongCriteria getSuspendBizTranIdCriteria() {
-                return new LongCriteria();
+            public Long getSuspendBizTranId() {
+                return null;
             }
         };
     }

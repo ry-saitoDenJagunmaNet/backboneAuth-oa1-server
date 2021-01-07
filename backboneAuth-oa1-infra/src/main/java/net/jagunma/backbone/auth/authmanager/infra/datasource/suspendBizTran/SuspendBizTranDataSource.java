@@ -65,13 +65,15 @@ public class SuspendBizTranDataSource implements SuspendBizTranRepository {
     /**
      * 一時取引抑止の検索を行います
      *
-     * @param suspendBizTranCriteria 一時取引抑止の検索条件
+     * @param suspendBizTranId 一時取引抑止ID
      * @return 一時取引抑止
      */
-    public SuspendBizTran findOneBy(SuspendBizTranCriteria suspendBizTranCriteria) {
+    public SuspendBizTran findOneById(Long suspendBizTranId) {
 
         // 一時取引抑止の検索
-        SuspendBizTranEntity suspendBizTranEntity = suspendBizTranEntityDao.findOneBy(createSuspendBizTranEntityCriteria(suspendBizTranCriteria));
+        SuspendBizTranEntityCriteria suspendBizTranEntityCriteria = new SuspendBizTranEntityCriteria();
+        suspendBizTranEntityCriteria.getSuspendBizTranIdCriteria().setEqualTo(suspendBizTranId);
+        SuspendBizTranEntity suspendBizTranEntity = suspendBizTranEntityDao.findOneBy(suspendBizTranEntityCriteria);
 
         // jaAtMomentの検索
         JaAtMoment jaAtMoment = null;
@@ -97,17 +99,14 @@ public class SuspendBizTranDataSource implements SuspendBizTranRepository {
         // 取引グループの検索
         BizTranGrp bizTranGrp = null;
         if (Strings2.isNotEmpty(suspendBizTranEntity.getBizTranGrpCode())) {
-            BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-            bizTranGrpCriteria .getBizTranGrpCodeCriteria().setEqualTo(suspendBizTranEntity.getBizTranGrpCode());
-            bizTranGrp = bizTranGrpRepository.findOneBy(bizTranGrpCriteria);
+            bizTranGrp = bizTranGrpRepository.findOneByCode(suspendBizTranEntity.getBizTranGrpCode());
         }
 
         // 取引の検索
         BizTran bizTran = null;
         if (Strings2.isNotEmpty(suspendBizTranEntity.getBizTranCode())) {
             BizTranCriteria bizTranCriteria = new BizTranCriteria();
-            bizTranCriteria .getBizTranCodeCriteria().setEqualTo(suspendBizTranEntity.getBizTranCode());
-            bizTran = bizTranRepository.findOneBy(bizTranCriteria);
+            bizTran = bizTranRepository.findOneByCode(suspendBizTranEntity.getBizTranCode());
         }
 
         return SuspendBizTran.createFrom(

@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12030;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
  * OA12030 一時取引抑止メンテナンス 初期表示 Request Converter
@@ -25,13 +24,11 @@ public class Oa12030InitConverter implements SuspendBizTranSearchRequest {
     }
 
     /**
-     * 一時取引抑止ID検索条件のＧｅｔ
+     * 一時取引抑止IDのＧｅｔ
      *
-     * @return 一時取引抑止ID検索条件
+     * @return 一時取引抑止ID
      */
-    public LongCriteria getSuspendBizTranIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getSuspendBizTranId());
-        return criteria;
+    public Long getSuspendBizTranId() {
+        return vo.getSuspendBizTranId();
     }
 }

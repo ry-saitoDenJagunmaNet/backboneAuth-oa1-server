@@ -29,17 +29,15 @@ public class CalendarDataSource implements CalendarRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います
+     * カレンダーの検索を行います
      *
-     * @param calendarCriteria カレンダーの検索条件
+     * @param calendarId カレンダーID
      * @return カレンダー
      */
-    @Override
-    public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+    public Calendar findOneById(Long calendarId) {
 
         CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
-        entityCriteria.getCalendarIdCriteria().assignFrom(calendarCriteria.getCalendarIdCriteria());
-        entityCriteria.getDateCriteria().assignFrom(calendarCriteria.getDateCriteria());
+        entityCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
 
         CalendarEntity calendarEntity = calendarEntityDao.findOneBy(entityCriteria);
         return calendarEntity == null? null : Calendar.createFrom(
@@ -53,13 +51,12 @@ public class CalendarDataSource implements CalendarRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います
+     * カレンダー群の検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @param orders           オーダー指定
      * @return カレンダー群
      */
-    @Override
     public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
 
         CalendarEntityCriteria entityCriteria = new CalendarEntityCriteria();
@@ -71,34 +68,31 @@ public class CalendarDataSource implements CalendarRepository {
     }
 
     /**
-     * カレンダーの条件検索を行います
+     * カレンダー群の検索を行います
      *
      * @param calendarCriteria カレンダーの検索条件
      * @return カレンダー群
      */
-    @Override
     public Calendars selectBy(CalendarCriteria calendarCriteria) {
         return selectBy(calendarCriteria, defaultOrders);
     }
 
     /**
-     * カレンダーの全件検索を行います
+     * カレンダー群の全件検索を行います
      *
      * @param orders オーダー指定
      * @return カレンダー群
      */
-    @Override
     public Calendars selectAll(Orders orders) {
         List<CalendarEntity> list = calendarEntityDao.findAll(orders);
         return createCalendars(list);
     }
 
     /**
-     * カレンダーの全件検索を行います
+     * カレンダー群の全件検索を行います
      *
      * @return カレンダー群
      */
-    @Override
     public Calendars selectAll() {
         return selectAll(defaultOrders);
     }

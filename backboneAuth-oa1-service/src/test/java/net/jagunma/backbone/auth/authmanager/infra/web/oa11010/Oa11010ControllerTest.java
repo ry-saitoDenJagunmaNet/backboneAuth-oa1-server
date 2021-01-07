@@ -29,6 +29,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
@@ -174,6 +175,10 @@ class Oa11010ControllerTest {
             }
         };
         OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
+            @Override
+            public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
             @Override
             public OperatorHistoryHeaders selectBy(
                 OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {

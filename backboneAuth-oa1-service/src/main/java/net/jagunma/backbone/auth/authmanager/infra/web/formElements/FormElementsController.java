@@ -180,9 +180,7 @@ public class FormElementsController {
 
             if (Strings2.isNotEmpty(bizTranGrpCode)) {
                 // 取引グループコードから取引グループIDを取得
-                BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-                bizTranGrpCriteria.getBizTranGrpCodeCriteria().setEqualTo(bizTranGrpCode);
-                BizTranGrp BizTranGrp = bizTranGrpRepository.findOneBy(bizTranGrpCriteria);
+                BizTranGrp BizTranGrp = bizTranGrpRepository.findOneByCode(bizTranGrpCode);
                 bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().setEqualTo(BizTranGrp.getBizTranGrpId());
             }
 

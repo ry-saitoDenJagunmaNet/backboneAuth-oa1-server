@@ -31,12 +31,8 @@ public class SearchSuspendBizTran {
      */
     public void execute(SuspendBizTranSearchRequest request, SuspendBizTranSearchResponse response) {
 
-        // 検索条件作成
-        SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        criteria.getSuspendBizTranIdCriteria().assignFrom(request.getSuspendBizTranIdCriteria());
-
         // 一時取引抑止検索
-        SuspendBizTran suspendBizTran = suspendBizTranRepository.findOneBy(criteria);
+        SuspendBizTran suspendBizTran = suspendBizTranRepository.findOneById(request.getSuspendBizTranId());
         response.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
         response.setJaCode(suspendBizTran.getJaCode());
         response.setBranchCode(suspendBizTran.getBranchCode());

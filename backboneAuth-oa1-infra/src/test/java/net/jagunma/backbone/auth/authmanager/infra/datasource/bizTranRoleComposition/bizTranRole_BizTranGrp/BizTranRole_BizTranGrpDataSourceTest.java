@@ -153,7 +153,7 @@ class BizTranRole_BizTranGrpDataSourceTest {
                 return createBizTranGrps();
             }
             @Override
-            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
+            public BizTranGrp findOneByCode(String bizTranGrpCode) {
                 return null;
             }
         };

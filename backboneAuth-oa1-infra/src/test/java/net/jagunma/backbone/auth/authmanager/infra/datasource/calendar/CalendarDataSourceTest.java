@@ -127,7 +127,7 @@ class CalendarDataSourceTest {
     }
 
     /**
-     * {@link CalendarDataSource#findOneBy(CalendarCriteria)}のテスト
+     * {@link CalendarDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *
@@ -136,7 +136,7 @@ class CalendarDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
+    void findOneById_test0() {
 
         // 実行値
         Long calendarId = 4L;
@@ -146,8 +146,8 @@ class CalendarDataSourceTest {
         Boolean isManualChange = false;
         Boolean isRelease = true;
         Integer recordVersion = 1;
-        CalendarCriteria calendarCriteria = new CalendarCriteria();
-        calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
@@ -161,14 +161,14 @@ class CalendarDataSourceTest {
             recordVersion);
 
         // 実行
-        Calendar calendar = calendarDataSource.findOneBy(calendarCriteria);
+        Calendar calendar = calendarDataSource.findOneById(calendarId);
 
         // 結果検証
         assertThat(calendar).usingRecursiveComparison().isEqualTo(expectedCalendar);
     }
 
     /**
-     * {@link CalendarDataSource#findOneBy(CalendarCriteria)}のテスト
+     * {@link CalendarDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    対象データ無し
      *
@@ -177,19 +177,19 @@ class CalendarDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
+    void findOneById_test1() {
 
         // 実行値
         Long calendarId = 99999999L;
-        CalendarCriteria calendarCriteria = new CalendarCriteria();
-        calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
         Calendar expectedCalendar = null;
 
         // 実行
-        Calendar calendar = calendarDataSource.findOneBy(calendarCriteria);
+        Calendar calendar = calendarDataSource.findOneById(calendarId);
 
         // 結果検証
         assertThat(calendar).isEqualTo(expectedCalendar);
@@ -212,6 +212,8 @@ class CalendarDataSourceTest {
         CalendarCriteria calendarCriteria = new CalendarCriteria();
         calendarCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(criteriaDate));
         calendarCriteria.getDateCriteria().setTo(LocalDates.getLastDate(criteriaDate));
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
@@ -255,6 +257,8 @@ class CalendarDataSourceTest {
 
         // 実行値
         LocalDate criteriaDate = ymd;
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
