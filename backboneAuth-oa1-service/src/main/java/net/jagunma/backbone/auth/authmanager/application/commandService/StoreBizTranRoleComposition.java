@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 取引ロール編成エクスポートExcel 登録サービス
+ * 取引ロール編成エクスポート登録サービス
  */
 @Service
 @Transactional
@@ -45,8 +45,8 @@ public class StoreBizTranRoleComposition {
     /**
      * 取引ロール編成を登録します
      *
-     * @param request 取引ロール編成インポートExcel 登録サービス Request
-     * @param response 取引ロール編成インポートExcel 登録サービス Response
+     * @param request  取引ロール編成エクスポート登録サービス Request
+     * @param response 取引ロール編成エクスポート登録サービス Response
      */
     public void execute(BizTranRoleCompositionImportRequest request,
         BizTranRoleCompositionImportResponse response) {
@@ -82,7 +82,7 @@ public class StoreBizTranRoleComposition {
     /**
      * 登録データ（取引、取引グループ）を作成します
      *
-     * @param request                取引ロール編成インポートExcel 登録サービス Request
+     * @param request                取引ロール編成エクスポート登録サービス Request
      * @param subSystemCode          サブシステムコード
      * @param bizTranList            取引リスト
      * @param bizTranGrpList         取引グループリスト
@@ -156,7 +156,7 @@ public class StoreBizTranRoleComposition {
     /**
      * 登録データ（取引ロール）を作成します
      *
-     * @param request                    取引ロール編成インポートExcel 登録サービス Request
+     * @param request                    取引ロール編成エクスポート登録サービス Request
      * @param subSystemCode              サブシステムコード
      * @param bizTranRoleList            取引ロールリスト
      * @param bizTranRole_BizTranGrpList 取引ロール_取引グループ割当リスト

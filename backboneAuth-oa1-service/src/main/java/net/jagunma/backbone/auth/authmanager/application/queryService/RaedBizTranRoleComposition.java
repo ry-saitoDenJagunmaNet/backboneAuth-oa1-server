@@ -28,8 +28,8 @@ public class RaedBizTranRoleComposition {
     /**
      * インポートした取引ロール編成Excelから取引ロール編成を読み込みます
      *
-     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Request
-     * @param request 取引ロール編成インポート＆エクスポート Excel Readサービス Response
+     * @param request 取引ロール編成インポートExcel Raedサービス Request
+     * @param request 取引ロール編成インポートExcel Raedサービス Response
      */
     public void execute(BizTranRoleCompositionExcelReadRequest request, BizTranRoleCompositionExcelReadResponse response) {
 

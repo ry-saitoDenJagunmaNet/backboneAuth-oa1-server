@@ -9,7 +9,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Message
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート Excel Importチェックサービス Response Presenter
+ * OA12010 インポートチェック Presenter
  */
 public class Oa12010CompositionImportCheckPresenter implements BizTranRoleCompositionImportCheckResponse {
 

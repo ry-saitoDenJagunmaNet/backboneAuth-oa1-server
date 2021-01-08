@@ -56,7 +56,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
 /**
- * オペレータ検索サービス
+ * オペレーター検索サービス
  */
 @Service
 public class SearchOperator {

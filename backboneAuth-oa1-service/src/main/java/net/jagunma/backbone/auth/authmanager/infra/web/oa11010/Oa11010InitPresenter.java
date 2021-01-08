@@ -14,7 +14,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
- * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
+ * OA11010 初期表示 Presenter
  */
 class Oa11010InitPresenter {
 

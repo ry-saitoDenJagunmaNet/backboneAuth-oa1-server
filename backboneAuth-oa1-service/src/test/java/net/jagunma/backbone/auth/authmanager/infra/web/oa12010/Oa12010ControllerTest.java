@@ -152,7 +152,7 @@ class Oa12010ControllerTest {
                 }
             }
         };
-        // 取引ロール編成エクスポートExcel Weiteサービス
+        // 取引ロール編成エクスポートExcel Writeサービス
         WriteBizTranRoleComposition writeBizTranRoleComposition = new WriteBizTranRoleComposition(
             new BizTranRoleCompositionBookRepositoryForWrite() {
                 @Override

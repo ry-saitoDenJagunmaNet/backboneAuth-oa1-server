@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference;
 
 /**
- * オペレーターリスト参照サービス Request
+ * オペレータ検索サービス Request
  */
 public interface OperatorSearchRequest {
 

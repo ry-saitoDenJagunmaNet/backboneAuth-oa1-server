@@ -34,7 +34,7 @@ class WriteBizTranRoleCompositionTest {
             }
         };
     }
-    // 取引ロール編成インポート＆エクスポート Excel Weiteサービス Request作成
+    // 取引ロール編成インポート＆エクスポート Excel Writeサービス Request作成
     private BizTranRoleCompositionExcelWriteRequest createBizTranRoleCompositionExcelWriteRequest() {
         return new BizTranRoleCompositionExcelWriteRequest() {
             @Override

@@ -2,6 +2,9 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.operatorRefere
 
 import java.time.LocalDate;
 
+/**
+ * オペレーター検索サービス取引ロール Request
+ */
 public interface OparatorSearchBizTranRoleRequest {
 
     /**

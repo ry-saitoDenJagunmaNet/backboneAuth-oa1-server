@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranR
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
 
 /**
- * OA12030 一時取引抑止メンテナンス 初期表示 Request Converter
+ * OA12030 初期表示 Converter
  */
 public class Oa12030InitConverter implements SuspendBizTranSearchRequest {
 

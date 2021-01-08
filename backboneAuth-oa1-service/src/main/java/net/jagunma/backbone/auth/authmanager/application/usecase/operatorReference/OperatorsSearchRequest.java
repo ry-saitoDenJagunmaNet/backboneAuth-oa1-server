@@ -9,7 +9,7 @@ import net.jagunma.common.ddd.model.criterias.ShortCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 
 /**
- * オペレーター群参照サービス Request
+ * オペレーター検索サービス Request
  */
 public interface OperatorsSearchRequest {
 

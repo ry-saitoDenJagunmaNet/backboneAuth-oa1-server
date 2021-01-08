@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
 
 /**
- * OA12030 一時取引抑止メンテナンス 更新系 Request Converter
+ * OA12030 更新系 Converter
  */
 public class Oa12030CommandConverter implements SuspendBizTranEntryRequest, SuspendBizTranUpdateRequest, SuspendBizTranDeleteRequest {
 

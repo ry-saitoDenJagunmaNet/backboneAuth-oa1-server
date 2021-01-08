@@ -19,7 +19,7 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * OA11010 オペレーター＜一覧＞検索サービス Request Converter
+ * OA11010 検索 Converter
  */
 class Oa11010SearchConverter implements OperatorsSearchRequest {
 

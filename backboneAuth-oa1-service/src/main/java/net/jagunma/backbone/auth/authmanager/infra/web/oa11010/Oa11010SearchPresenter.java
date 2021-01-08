@@ -17,7 +17,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 
 /**
- * OA11010 オペレーター＜一覧＞検索サービス Response Presenter
+ * OA11010 検索 Presenter
  */
 class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements OperatorsSearchResponse {
 

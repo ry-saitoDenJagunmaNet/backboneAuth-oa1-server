@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
 /**
- * OA12060 カレンダーメンテナンス反映サービス カレンダー詳細 Request Converter
+ * OA12060 カレンダー詳細 Converter
  */
 public class Oa12060StoreDetailsConverter implements CalendarStoreDetailsRequest {
     private final Long calendarId;

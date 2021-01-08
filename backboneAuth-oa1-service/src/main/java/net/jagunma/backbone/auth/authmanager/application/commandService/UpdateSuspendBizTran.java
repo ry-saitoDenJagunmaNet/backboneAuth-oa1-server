@@ -23,7 +23,7 @@ public class UpdateSuspendBizTran {
     /**
      * 一時取引抑止の更新を行います
      *
-     * @param request
+     * @param request 一時取引抑止更新サービス Request
      */
     public void execute(SuspendBizTranUpdateRequest request) {
 

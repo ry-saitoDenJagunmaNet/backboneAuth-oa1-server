@@ -5,7 +5,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranR
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12030.vo.Oa12030Vo;
 
 /**
- * OA12030 一時取引抑止メンテナンス Response Presenter
+ * OA12030 表示 Presenter
  */
 class Oa12030Presenter implements SuspendBizTranSearchResponse {
 

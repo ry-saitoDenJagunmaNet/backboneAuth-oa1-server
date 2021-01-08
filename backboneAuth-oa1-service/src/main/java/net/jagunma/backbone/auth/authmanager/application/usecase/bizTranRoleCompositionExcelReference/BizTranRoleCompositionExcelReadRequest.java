@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCom
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
- * 取引ロール編成インポート＆エクスポート Excel Readサービス Request
+ * 取引ロール編成インポートExcel Readサービス Request
  */
 public interface BizTranRoleCompositionExcelReadRequest {
 
