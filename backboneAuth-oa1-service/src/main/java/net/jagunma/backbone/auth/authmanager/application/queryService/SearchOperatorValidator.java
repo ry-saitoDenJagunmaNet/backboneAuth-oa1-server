@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
@@ -11,15 +11,15 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
  */
 public class SearchOperatorValidator {
 
-    private final OperatorSearchRequest request;
+    private final OperatorsSearchRequest request;
 
     // コンストラクタ
-    SearchOperatorValidator(OperatorSearchRequest request) {
+    SearchOperatorValidator(OperatorsSearchRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static SearchOperatorValidator with(OperatorSearchRequest request) {
+    public static SearchOperatorValidator with(OperatorsSearchRequest request) {
         return new SearchOperatorValidator(request);
     }
 

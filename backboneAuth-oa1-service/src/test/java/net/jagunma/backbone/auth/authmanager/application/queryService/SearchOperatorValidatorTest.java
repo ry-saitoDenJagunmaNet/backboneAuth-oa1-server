@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchBizTranRoleConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchSubSystemRoleConverter;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
@@ -36,8 +36,8 @@ class SearchOperatorValidatorTest {
     private LocalDate accountLockOccurredDateTo = null;
     private LocalDate signintraceTrydateFrom = null;
     private LocalDate signintraceTrydateTo = null;
-    private OperatorSearchRequest createRequest() {
-        return new OperatorSearchRequest() {
+    private OperatorsSearchRequest createOperatorsSearchRequest() {
+        return new OperatorsSearchRequest() {
             @Override
             public LocalDateCriteria getValidThruStartDateCriteria() {
                 LocalDateCriteria criteria = new LocalDateCriteria();
@@ -76,10 +76,10 @@ class SearchOperatorValidatorTest {
             public LocalDate getSignintraceTrydateTo() {
                 return signintraceTrydateTo;
             }
-            @Override
-            public LongCriteria getOperatorIdCriteria() {
-                return null;
-            }
+//            @Override
+//            public LongCriteria getOperatorIdCriteria() {
+//                return null;
+//            }
             @Override
             public StringCriteria getOperatorCodeCriteria() {
                 return null;
@@ -188,7 +188,7 @@ class SearchOperatorValidatorTest {
     void validate_test00() {
 
         // 実行値
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatCode(() ->
             // 実行
@@ -226,7 +226,7 @@ class SearchOperatorValidatorTest {
         signintraceTrydateTo = LocalDate.of(2020, 10, 8);
         oparatorSearchBizTranRoleRequestList = searchBizTranRoleList;
 
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatCode(() ->
             // 実行
@@ -247,7 +247,7 @@ class SearchOperatorValidatorTest {
     void validate_test02() {
 
         // 実行値
-        OperatorSearchRequest request = null;
+        OperatorsSearchRequest request = null;
 
         assertThatCode(()->
             // 実行
@@ -273,7 +273,7 @@ class SearchOperatorValidatorTest {
         // 実行値
         validThruStartDateMoreOrEqual = LocalDate.of(2020, 10, 3);
         validThruStartDateLessOrEqual = LocalDate.of(2020, 10, 2);
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -300,7 +300,7 @@ class SearchOperatorValidatorTest {
         // 実行値
         validThruEndDateMoreOrEqual = LocalDate.of(2020, 11, 30);
         validThruEndDateLessOrEqual = LocalDate.of(2020, 11, 29);
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -330,7 +330,7 @@ class SearchOperatorValidatorTest {
         list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
         list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
         oparatorSearchSubSystemRoleRequestList = list;
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -360,7 +360,7 @@ class SearchOperatorValidatorTest {
         list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
         list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
         oparatorSearchSubSystemRoleRequestList = list;
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -390,7 +390,7 @@ class SearchOperatorValidatorTest {
         list.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,1),null,null));
         list.add(Oa11010SearchBizTranRoleConverter.with(true,3L,"KBAG03","（購買）本所管理業務","KB",2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),null,null));
         oparatorSearchBizTranRoleRequestList = list;
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -420,7 +420,7 @@ class SearchOperatorValidatorTest {
         list.add(Oa11010SearchBizTranRoleConverter.with(true,2L,"KBAG02","（購買）本所業務","KB",2,null,null,null,LocalDate.of(2020,10,2),LocalDate.of(2020,10,31)));
         list.add(Oa11010SearchBizTranRoleConverter.with(true,3L,"KBAG03","（購買）本所管理業務","KB",2,null,null,null,LocalDate.of(2020,10,3),LocalDate.of(2020,10,2)));
         oparatorSearchBizTranRoleRequestList = list;
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -447,7 +447,7 @@ class SearchOperatorValidatorTest {
         // 実行値
         accountLockOccurredDateFrom = LocalDate.of(2020, 10, 3);
         accountLockOccurredDateTo = LocalDate.of(2020, 10, 2);
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -474,7 +474,7 @@ class SearchOperatorValidatorTest {
         // 実行値
         accountLockOccurredDateFrom = LocalDate.of(2020, 10, 3);
         accountLockOccurredDateTo = LocalDate.of(2020, 10, 2);
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -501,7 +501,7 @@ class SearchOperatorValidatorTest {
         // 実行値
         signintraceTrydateFrom = LocalDate.of(2020, 10, 3);
         signintraceTrydateTo = LocalDate.of(2020, 10, 2);
-        OperatorSearchRequest request = createRequest();
+        OperatorsSearchRequest request = createOperatorsSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行

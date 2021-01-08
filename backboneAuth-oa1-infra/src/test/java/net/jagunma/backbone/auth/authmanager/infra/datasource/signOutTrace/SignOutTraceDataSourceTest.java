@@ -123,7 +123,7 @@ class SignOutTraceDataSourceTest {
                 return createOperators();
             }
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 return null;
             }
             @Override

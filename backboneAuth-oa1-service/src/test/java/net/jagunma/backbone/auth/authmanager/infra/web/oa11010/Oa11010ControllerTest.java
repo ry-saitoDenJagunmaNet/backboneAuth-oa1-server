@@ -9,7 +9,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
@@ -126,7 +126,7 @@ class Oa11010ControllerTest {
     private Oa11010Controller createOa11010Controller() {
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 return null;
             }
             @Override
@@ -209,7 +209,7 @@ class Oa11010ControllerTest {
             operator_SubSystemRoleRepository,
             operator_BizTranRoleRepository,
             operatorHistoryHeaderRepository) {
-            public void execute(OperatorSearchRequest request, OperatorsSearchResponse response) {
+            public void execute(OperatorsSearchRequest request, OperatorsSearchResponse response) {
                 // request.getJaIdCriteria().getEqualTo() == -1 の場合：RuntimeException を発生させる
                 if (request.getJaIdCriteria().getEqualTo() == -1) {
                     throw new RuntimeException();

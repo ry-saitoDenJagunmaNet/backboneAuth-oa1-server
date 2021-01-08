@@ -1,14 +1,12 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 
 /**
  * ED01010 初期表示 Converter
  */
-class Ed01010InitConverter extends BaseOfOperatorSearchConverter implements OperatorSearchRequest {
+class Ed01010InitConverter implements OperatorSearchRequest {
 
     /**
      * ED01010 View Object
@@ -26,13 +24,11 @@ class Ed01010InitConverter extends BaseOfOperatorSearchConverter implements Oper
     }
 
     /**
-     * オペレーターID検索条件のＧｅｔ
+     * オペレーターIDのＧｅｔ
      *
-     * @return オペレーターID検索条件
+     * @return オペレーターID
      */
-    public LongCriteria getOperatorIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.setEqualTo(vo.getOperatorId());
-        return criteria;
+    public Long getOperatorId() {
+        return vo.getOperatorId();
     }
 }

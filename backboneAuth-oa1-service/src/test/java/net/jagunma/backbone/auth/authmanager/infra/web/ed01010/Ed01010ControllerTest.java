@@ -75,7 +75,7 @@ class Ed01010ControllerTest {
 
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 return null;
             }
             @Override
@@ -90,12 +90,12 @@ class Ed01010ControllerTest {
         SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
-                // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorIdCriteria().getEqualTo().equals(11L)) {
+                // request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if(request.getOperatorId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワードの確認入力"));
                 }
-                // request.getOperatorIdCriteria().getEqualTo().equals(12L) の場合：RuntimeException を発生させる
-                if(request.getOperatorIdCriteria().getEqualTo().equals(12L)) {
+                // request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
+                if(request.getOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
                 response.setOperator(operator);

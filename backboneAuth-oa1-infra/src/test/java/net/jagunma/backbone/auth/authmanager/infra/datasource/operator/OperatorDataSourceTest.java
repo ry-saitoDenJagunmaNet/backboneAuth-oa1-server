@@ -233,7 +233,7 @@ class OperatorDataSourceTest {
     }
 
     /**
-     * {@link OperatorDataSource#findOneBy(OperatorCriteria)}のテスト
+     * {@link OperatorDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *
@@ -242,10 +242,7 @@ class OperatorDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
-
-        // 実行値
-        OperatorCriteria criteria = new OperatorCriteria();
+    void findOneById_test0() {
 
         // テスト対象クラス生成
         OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
@@ -269,7 +266,7 @@ class OperatorDataSourceTest {
             createBranchAtMoment());
 
         // 実行
-        Operator actualOperator = operatorDataSource.findOneBy(criteria);
+        Operator actualOperator = operatorDataSource.findOneById(operatorId);
 
         // 結果検証
         assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
@@ -294,11 +291,14 @@ class OperatorDataSourceTest {
         OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
             createBranchAtMomentRepository());
 
+        // 期待値
+        boolean expected = true;
+
         // 実行
         boolean actualResult = operatorDataSource.existsBy(criteria);
 
         // 結果検証
-        assertThat(actualResult).isEqualTo(true);
+        assertThat(actualResult).isEqualTo(expected);
     }
 
     /**

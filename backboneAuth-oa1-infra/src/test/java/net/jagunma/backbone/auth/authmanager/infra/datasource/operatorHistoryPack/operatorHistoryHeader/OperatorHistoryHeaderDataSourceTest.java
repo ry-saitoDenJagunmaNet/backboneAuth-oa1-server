@@ -174,8 +174,8 @@ class OperatorHistoryHeaderDataSourceTest {
     private OperatorRepository createOperatorRepository() {
         return new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
-                return operatorList.stream().filter(o->o.getOperatorId().equals(operatorCriteria.getOperatorIdCriteria().getEqualTo())).findFirst().orElse(null);
+            public Operator findOneById(Long operatorId) {
+                return operatorList.stream().filter(o->o.getOperatorId().equals(operatorId)).findFirst().orElse(null);
             }
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
