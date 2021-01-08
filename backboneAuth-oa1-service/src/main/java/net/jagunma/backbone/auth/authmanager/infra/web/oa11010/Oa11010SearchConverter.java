@@ -6,9 +6,8 @@ import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.util.CheckboxUtil;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010BizTranRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSystemRoleVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
@@ -22,7 +21,7 @@ import net.jagunma.common.util.strings2.Strings2;
 /**
  * OA11010 オペレーター＜一覧＞検索サービス Request Converter
  */
-class Oa11010SearchConverter extends BaseOfOperatorSearchConverter implements OperatorSearchRequest {
+class Oa11010SearchConverter implements OperatorsSearchRequest {
 
     /**
      * OA11010 View Object

@@ -75,6 +75,7 @@ class OperatorForStoreDataSourceTest {
     OperatorEntityCriteria actualOperatorEntityCriteria;
     PasswordHistoryCriteria actualPasswordHistoryCriteria;
     Orders actualPasswordHistoryOrders;
+    Long actualOperatorId;
 
     // オペレーターエントリーパック生成
     private OperatorEntryPack createOperatorEntryPack() {
@@ -208,11 +209,11 @@ class OperatorForStoreDataSourceTest {
         };
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 // update_test()時, isChangeDeviceAuth_testX()時
-                actualOperatorCriteria = operatorCriteria;
+                actualOperatorId = operatorId;
                 return Operator.createFrom(
-                    operatorCriteria.getOperatorIdCriteria().getEqualTo(),
+                    operatorId,
                     operatorCode,
                     operatorName,
                     mailAddress,
@@ -364,16 +365,14 @@ class OperatorForStoreDataSourceTest {
 
         // 期待値
         Boolean expectedValue = true;
-        OperatorCriteria expectedOperatorCriteria = new OperatorCriteria();
-        expectedOperatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Long expectedOperatorId = operatorId;
 
         // 実行
         boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
 
         // 結果検証
         assertThat(actualValue).isEqualTo(expectedValue);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperatorCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorCriteria).defaultConfig().toString());
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
     /**
      * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
@@ -398,16 +397,14 @@ class OperatorForStoreDataSourceTest {
 
         // 期待値
         Boolean expectedValue = false;
-        OperatorCriteria expectedOperatorCriteria = new OperatorCriteria();
-        expectedOperatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Long expectedOperatorId = operatorId;
 
         // 実行
         boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
 
         // 結果検証
         assertThat(actualValue).isEqualTo(expectedValue);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperatorCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorCriteria).defaultConfig().toString());
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
 
     /**

@@ -40,13 +40,15 @@ public class OperatorDataSource implements OperatorRepository {
     /**
      * オペレーターの検索を行います
      *
-     * @param operatorCriteria オペレーターの検索条件
+     * @param operatorId オペレーターID
      * @return オペレーター
      */
-    public Operator findOneBy(OperatorCriteria operatorCriteria) {
+    public Operator findOneById(Long operatorId) {
 
         // オペレーター検索
-        OperatorEntity entity = operatorEntityDao.findOneBy(convertCriteria(operatorCriteria));
+        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
+        operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        OperatorEntity entity = operatorEntityDao.findOneBy(operatorEntityCriteria);
 
         // Branch検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
@@ -148,5 +150,4 @@ public class OperatorDataSource implements OperatorRepository {
         operatorEntityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
         return operatorEntityCriteria;
     }
-
 }

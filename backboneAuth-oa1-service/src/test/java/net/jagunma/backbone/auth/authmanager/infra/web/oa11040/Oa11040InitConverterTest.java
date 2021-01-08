@@ -34,6 +34,6 @@ class Oa11040InitConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Oa11040InitConverter);
-        assertThat(converter.getOperatorIdCriteria().getEqualTo()).isEqualTo(operatorId);
+        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
     }
 }

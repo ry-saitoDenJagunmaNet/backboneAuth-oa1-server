@@ -113,11 +113,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
      * @return 有無
      */
     Boolean isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack) {
-        OperatorCriteria operatorCriteria = new OperatorCriteria();
-
-        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorUpdatePack.getOperatorId());
-
-        Operator operator = operatorRepository.findOneBy(operatorCriteria);
+        Operator operator = operatorRepository.findOneById(operatorUpdatePack.getOperatorId());
 
         if (operator.getIsDeviceAuth() != operatorUpdatePack.getIsDeviceAuth()) {
             return true;

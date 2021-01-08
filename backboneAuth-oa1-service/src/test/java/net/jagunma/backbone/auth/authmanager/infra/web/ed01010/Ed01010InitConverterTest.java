@@ -34,6 +34,6 @@ class Ed01010InitConverterTest {
 
         // 結果検証
         assertTrue(converter instanceof Ed01010InitConverter);
-        assertThat(converter.getOperatorIdCriteria().getEqualTo()).isEqualTo(operatorId);
+        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
     }
 }

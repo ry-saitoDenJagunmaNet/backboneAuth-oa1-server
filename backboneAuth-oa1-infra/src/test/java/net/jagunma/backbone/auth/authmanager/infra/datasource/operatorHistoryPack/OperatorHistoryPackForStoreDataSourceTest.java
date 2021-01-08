@@ -97,6 +97,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
     Orders actualOperator_SubSystemRoleOrders;
     Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
     Orders actualOperator_BizTranRoleOrders;
+    Long actualOperatorId;
 
     // テスト対象クラス生成
     private OperatorHistoryPackForStoreDataSource createOperatorHistoryPackForStoreDataSource() {
@@ -331,10 +332,10 @@ class OperatorHistoryPackForStoreDataSourceTest {
         };
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
-                actualOperatorCriteria = operatorCriteria;
+            public Operator findOneById(Long operatorId) {
+                actualOperatorId = operatorId;
                 return Operator.createFrom(
-                    operatorCriteria.getOperatorIdCriteria().getEqualTo(),
+                    operatorId,
                     operatorCode,
                     operatorName,
                     mailAddress,
@@ -438,16 +439,14 @@ class OperatorHistoryPackForStoreDataSourceTest {
             availableStatus,
             recordVersion,
             null);
-        OperatorCriteria expectedOperatorCriteria = new OperatorCriteria();
-        expectedOperatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Long expectedOperatorId = operatorId;
 
         // 実行
         Operator operator = operatorHistoryPackForStoreDataSource.getOperator(operatorId);
 
         // 結果検証
         assertThat(operator).usingRecursiveComparison().isEqualTo(expectedOperator);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperatorCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorCriteria).defaultConfig().toString());
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
 
     /**

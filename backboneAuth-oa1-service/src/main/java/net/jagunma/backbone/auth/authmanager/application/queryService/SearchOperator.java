@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
@@ -97,12 +98,11 @@ public class SearchOperator {
      */
     public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
 
-        // パラメーターの検証
-        SearchOperatorValidator.with(request).validate();
+//        // パラメーターの検証
+//        SearchOperatorValidator.with(request).validate();
 
         // オペレーター検索
-        Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
-        Operator operator = operatorRepository.findOneBy(createOperatorCriteria(request));
+        Operator operator = operatorRepository.findOneById(request.getOperatorId());
 
         // オペレーターIDリスト
         List<Long> operatorIdList = new ArrayList<Long>(Arrays.asList(operator.getOperatorId()));
@@ -124,25 +124,6 @@ public class SearchOperator {
         // オペレーター履歴ヘッダー群検索
         OperatorHistoryHeaders operatorHistoryHeaders = searchOperatorHistoryHeaders(operatorIdList);
 
-        // オペレーター_サブシステムロール割当の検索条件判定
-        List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
-        if (!conditionsOperatorSubSystemRole(request, operator_SubSystemRoleList)) { return; }
-        // オペレーター_取引ロール割当の検索条件判定
-        List<Operator_BizTranRole> operator_BizTranRoleList = operator_BizTranRoles.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).collect(Collectors.toList());
-        if (!conditionsOperatorBizTranRole(request, operator_BizTranRoleList)) { return; }
-        // アカウントロックの検索条件の検索条件判定
-        AccountLock accountLock = AccountLocks.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-        if (!conditionsAccountLock(request, accountLock)) { return; }
-        // サインイン証跡の検索条件判定
-        SignInTrace signInTrace = signInTraces.getValues().stream().filter(a->a.getOperatorCode().equals(operator.getOperatorCode())).findFirst().orElse(null);
-        if (!conditionsSignInTrace(request, signInTrace)) { return; }
-        // サインアウトの検索条件判定
-        SignOutTrace signOutTrace = signOutTraces.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-        if (!conditionsSignOutTrace(request, signOutTrace)) { return; }
-        // パスワード履歴の検索条件の検索条件判定
-        PasswordHistory passwordHistory = passwordHistories.getValues().stream().filter(a->a.getOperatorId().equals(operator.getOperatorId())).findFirst().orElse(null);
-        if (!conditionsPasswordHistory(request, passwordHistory)) { return; }
-
         response.setOperator(operator);
         response.setOperator_SubSystemRoles(operator_SubSystemRoles);
         response.setOperator_BizTranRoles(operator_BizTranRoles);
@@ -156,7 +137,7 @@ public class SearchOperator {
      * @param request  オペレーター検索 Request
      * @param response オペレーター群検索 Response
      */
-    public void execute(OperatorSearchRequest request, OperatorsSearchResponse response) {
+    public void execute(OperatorsSearchRequest request, OperatorsSearchResponse response) {
 
         // パラメーターの検証
         SearchOperatorValidator.with(request).validate();
@@ -246,7 +227,7 @@ public class SearchOperator {
      * @param operatorSubSystemRoleList オペレーター_サブシステムロール割当
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsOperatorSubSystemRole(OperatorSearchRequest request, List<Operator_SubSystemRole> operatorSubSystemRoleList) {
+    boolean conditionsOperatorSubSystemRole(OperatorsSearchRequest request, List<Operator_SubSystemRole> operatorSubSystemRoleList) {
 
         if (request.getSubSystemRoleList() == null) { return true; }
         if (request.getSubSystemRoleConditionsSelect() == null) { return true; }
@@ -331,7 +312,7 @@ public class SearchOperator {
      * @param operatorBizTranRoleList オペレーター_取引割当
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsOperatorBizTranRole(OperatorSearchRequest request, List<Operator_BizTranRole> operatorBizTranRoleList) {
+    boolean conditionsOperatorBizTranRole(OperatorsSearchRequest request, List<Operator_BizTranRole> operatorBizTranRoleList) {
 
         if (request.getBizTranRoleList() == null) { return true; }
         if (request.getBizTranRoleConditionsSelect() == null) { return true; }
@@ -416,7 +397,7 @@ public class SearchOperator {
      * @param accountLock アカウントロック
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsAccountLock(OperatorSearchRequest request, AccountLock accountLock) {
+    boolean conditionsAccountLock(OperatorsSearchRequest request, AccountLock accountLock) {
 
         // アカウントロック　最終ロック・アンロック発生日の条件
         if (request.getAccountLockOccurredDateFrom() != null ||
@@ -468,7 +449,7 @@ public class SearchOperator {
      * @param passwordHistory パスワード履歴
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsPasswordHistory(OperatorSearchRequest request, PasswordHistory passwordHistory) {
+    boolean conditionsPasswordHistory(OperatorsSearchRequest request, PasswordHistory passwordHistory) {
 
         // パスワード履歴　最終パスワード変更日の条件
         boolean passwordHistoryCheck = false;
@@ -535,7 +516,7 @@ public class SearchOperator {
      * @param signInTrace サインイン証跡
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsSignInTrace(OperatorSearchRequest request, SignInTrace signInTrace) {
+    boolean conditionsSignInTrace(OperatorsSearchRequest request, SignInTrace signInTrace) {
 
         // サインイン証跡　最終サインイン試行日の条件
         if (request.getSignintraceTrydateFrom() != null ||
@@ -585,7 +566,7 @@ public class SearchOperator {
      * @param signOutTrace サインアウト証跡
      * @return true:検索対象、false:検索対象外
      */
-    boolean conditionsSignOutTrace(OperatorSearchRequest request, SignOutTrace signOutTrace) {
+    boolean conditionsSignOutTrace(OperatorsSearchRequest request, SignOutTrace signOutTrace) {
 
         // サインアウト証跡　最終サインオペレーションの条件
         if (request.getSignintraceSignOut() != null && request.getSignintraceSignOut()) {
@@ -601,11 +582,8 @@ public class SearchOperator {
      * @param request オペレーターリスト参照サービス Request
      * @return オペレータ検索条件
      */
-    private OperatorCriteria createOperatorCriteria(OperatorSearchRequest request) {
+    private OperatorCriteria createOperatorCriteria(OperatorsSearchRequest request) {
         OperatorCriteria criteria = new OperatorCriteria();
-        // オペレーターID
-        criteria.getOperatorIdCriteria().assignFrom(
-            (request.getOperatorIdCriteria() == null)? new LongCriteria() : request.getOperatorIdCriteria());
         // オペレーターコード
         criteria.getOperatorCodeCriteria().assignFrom(
             (request.getOperatorCodeCriteria() == null)? new StringCriteria() : request.getOperatorCodeCriteria());
@@ -637,16 +615,6 @@ public class SearchOperator {
 
         return criteria;
     }
-
-//    /**
-//     * オペレーターIDおよびオペレーターコードのリストを設定します
-//     *
-//     * @param operators オペレーター群
-//     */
-//    void setOperatorIdAndCodeList(Operators operators) {
-//        operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());
-//        operatorCodeList = operators.getValues().stream().map(Operator::getOperatorCode).collect(Collectors.toList());
-//    }
 
     /**
      * オペレーター_サブシステムロール割当群を検索します

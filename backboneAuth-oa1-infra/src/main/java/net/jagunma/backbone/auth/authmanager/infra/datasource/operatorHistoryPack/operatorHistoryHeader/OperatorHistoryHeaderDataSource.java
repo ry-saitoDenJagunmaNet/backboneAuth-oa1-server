@@ -44,9 +44,7 @@ public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRep
     public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
 
         // オペレーターの検索
-        OperatorCriteria operatorCriteria = new OperatorCriteria();
-        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Operator operator = operatorRepository.findOneBy(operatorCriteria);
+        Operator operator = operatorRepository.findOneById(operatorId);
 
         // オペレーター履歴ヘッダー検索
         OperatorHistoryHeaderEntityCriteria entityCriteria = new OperatorHistoryHeaderEntityCriteria();

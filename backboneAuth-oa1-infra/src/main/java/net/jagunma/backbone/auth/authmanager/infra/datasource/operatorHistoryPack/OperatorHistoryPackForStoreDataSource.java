@@ -5,7 +5,6 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
@@ -94,11 +93,7 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
      * @return オペレーター
      */
     Operator getOperator(Long operatorId) {
-        OperatorCriteria operatorCriteria = new OperatorCriteria();
-
-        operatorCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-
-        return operatorRepository.findOneBy(operatorCriteria);
+        return operatorRepository.findOneById(operatorId);
     }
 
     /**
