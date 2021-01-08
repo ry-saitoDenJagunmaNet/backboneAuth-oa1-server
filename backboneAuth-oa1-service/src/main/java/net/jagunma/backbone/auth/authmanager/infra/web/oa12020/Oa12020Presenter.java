@@ -16,7 +16,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * OA12020 一時取引抑止<一覧> Response Presenter
+ * OA12020 表示 Presenter
  */
 class Oa12020Presenter implements SuspendBizTransSearchResponse {
 

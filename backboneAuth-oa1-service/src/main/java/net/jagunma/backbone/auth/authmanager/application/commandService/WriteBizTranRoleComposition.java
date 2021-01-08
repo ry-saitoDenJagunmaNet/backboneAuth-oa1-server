@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import org.springframework.stereotype.Service;
 
 /**
- * 取引ロール編成エクスポートExcel Weiteサービス
+ * 取引ロール編成エクスポートExcel Writeサービス
  */
 @Service
 public class WriteBizTranRoleComposition {
@@ -22,8 +22,8 @@ public class WriteBizTranRoleComposition {
     /**
      * エクスポートする取引ロール編成Excelを書き出します
      *
-     * @param request  取引ロール編成エクスポートExcel Weiteサービス Request
-     * @param response 取引ロール編成エクスポートExcel Weiteサービス Response
+     * @param request  取引ロール編成エクスポートExcel Writeサービス Request
+     * @param response 取引ロール編成エクスポートExcel Writeサービス Response
      */
     public void execute(BizTranRoleCompositionExcelWriteRequest request, BizTranRoleCompositionExcelWriteResponse response) {
 

@@ -7,7 +7,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.O
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 
 /**
- * オペレーター群参照サービス Response
+ * オペレーター参照サービス Response
  */
 public interface OperatorsSearchResponse {
     /**

@@ -6,7 +6,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.excel.ExcelContainer;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート Excel Readサービス Request Converter
+ * OA12010 Excel Read Converter
  */
 public class Oa12010CompositionExcelReadConverter implements
     BizTranRoleCompositionExcelReadRequest {

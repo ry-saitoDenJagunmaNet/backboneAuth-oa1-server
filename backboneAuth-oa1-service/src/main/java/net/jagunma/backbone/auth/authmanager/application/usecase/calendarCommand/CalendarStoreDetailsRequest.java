@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.calendarComman
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 
 /**
- * カレンダーメンテナンス反映サービス カレンダー詳細 Request
+ * カレンダー適用サービス カレンダー詳細 Request
  */
 public interface CalendarStoreDetailsRequest {
     /**

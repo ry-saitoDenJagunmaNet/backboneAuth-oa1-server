@@ -19,7 +19,7 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Service;
 
 /**
- * 取引ロール編成エクスポートExcel Import登録チェックサービス
+ * 取引ロール編成エクスポートExcelインポートチェックサービス
  */
 @Service
 public class CheckBizTranRoleComposition {
@@ -37,8 +37,8 @@ public class CheckBizTranRoleComposition {
     /**
      * 取引ロール編成をチェックします
      *
-     * @param request 取引ロール編成インポートExcel Importチェックサービス Request
-     * @param response 取引ロール編成インポートExcel Importチェックサービス Response
+     * @param request  取引ロール編成エクスポートExcelインポートチェックサービス Request
+     * @param response 取引ロール編成エクスポートExcelインポートチェックサービス Response
      */
     public void execute(BizTranRoleCompositionImportCheckRequest request,
         BizTranRoleCompositionImportCheckResponse response) {
@@ -63,7 +63,7 @@ public class CheckBizTranRoleComposition {
      * オペレータ取引ロール割当の関連チェックを行います
      *  削除対象の取引ロールを使用している オペレータ取引ロール割当 をチェックします
      *
-     * @param request 取引ロール編成インポートExcel Importチェックサービス Request
+     * @param request 取引ロール編成エクスポートExcelインポートチェックサービス Request
      * @return メッセージシスト
      */
     List<MessageDto> checkOperator_BizTranRoleRelation(BizTranRoleCompositionImportCheckRequest request) {

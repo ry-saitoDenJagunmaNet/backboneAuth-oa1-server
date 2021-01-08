@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
 /**
- * 取引ロール編成インポート＆エクスポート Excel Impotyチェックサービス Request
+ * 取引ロール編成エクスポートExcelインポートチェックサービス Request
  */
 public interface BizTranRoleCompositionImportCheckRequest {
 

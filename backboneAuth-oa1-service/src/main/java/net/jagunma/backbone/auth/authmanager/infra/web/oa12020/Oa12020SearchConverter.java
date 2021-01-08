@@ -7,7 +7,7 @@ import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * OA12010 一時取引抑止<一覧> 検索 Request Converter
+ * OA12020 検索 Converter
  */
 class Oa12020SearchConverter implements SuspendBizTransSearchRequest {
 

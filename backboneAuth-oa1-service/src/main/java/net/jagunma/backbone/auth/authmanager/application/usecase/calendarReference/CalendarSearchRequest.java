@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.calendarRefere
 import java.time.LocalDate;
 
 /**
- * カレンダーメンテナンス検索サービス Request
+ * カレンダー検索サービス Request
  */
 public interface CalendarSearchRequest {
     /**

@@ -148,7 +148,7 @@ public class Oa12010Controller extends BaseOfController {
             Oa12010CompositionExportPresenter searchPresenter = new Oa12010CompositionExportPresenter();
             searchBizTranRoleComposition.execute(searchConverter, searchPresenter);
 
-            // Excel Weite
+            // Excel Write
             Oa12010CompositionExcelWriteConverter writeConverter = searchPresenter.converterTo();
             Oa12010CompositionExcelWritePresenter writehPresenter = new Oa12010CompositionExcelWritePresenter();
             writeBizTranRoleComposition.execute(writeConverter, writehPresenter);
