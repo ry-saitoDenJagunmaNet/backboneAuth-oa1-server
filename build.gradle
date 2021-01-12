@@ -23,7 +23,7 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.12.0'
         mssqlJdbcVersion = '9.1.1.jre11-preview'
-        backboneAuthDaoVersion = '20.0.28'
+        backboneAuthDaoVersion = '20.0.29'
         sharedDataInterfaceVersion = '20.1.28'
         sharedDataStubVersion = '22.0.1'
         backboneInterfaceVersion = '22.0.1'
@@ -50,6 +50,13 @@ plugins {
 repositories {
     maven {
         url mavenRepo_libsRelease
+        credentials {
+            username mavenRepo_userName
+            password mavenRepo_password
+        }
+    }
+    maven {
+        url mavenRepo_libsSnapshot
         credentials {
             username mavenRepo_userName
             password mavenRepo_password
