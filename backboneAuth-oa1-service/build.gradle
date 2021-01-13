@@ -21,6 +21,7 @@ jar {
 dependencies {
     implementation project(':backboneAuth-model')
     implementation project(':backboneAuth-oa1-infra')
+    implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
     testImplementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation project(':backboneAuth-oa1-mock')
 
