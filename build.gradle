@@ -12,8 +12,8 @@ buildscript {
         assertjVersion = '3.18.1'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '22.0.2'
-        commonCommonVersion = '22.0.3'
+        commonServerVersion = '22.0.3'
+        commonCommonVersion = '22.0.4'
         commonUtilsVersion = '22.0.3'
         commonFaoVersion = '20.0.118'
         jacsonDatabindVersion = '2.11.3'
@@ -22,7 +22,7 @@ buildscript {
         sf4jApiVersion = '1.7.30'
         swaggerVersion = '3.0.0'
         domaSpringBootStarterVersion = '1.4.0'
-        jacksonAnnotationVersion = '2.12.0'
+        jacksonAnnotationVersion = '2.12.1'
         mssqlJdbcVersion = '9.1.1.jre11-preview'
         backboneAuthDaoVersion = '20.0.29'
         sharedDataInterfaceVersion = '20.1.28'
@@ -37,8 +37,8 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version "2.4.1"
-    id "io.spring.dependency-management" version "1.0.10.RELEASE"
+    id 'org.springframework.boot' version "2.4.2"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id 'net.researchgate.release' version '2.8.1'
     id 'java'
     id 'maven-publish'
@@ -119,7 +119,7 @@ subprojects {
             }
         }
         dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.4.1")
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.4.2")
         }
     }
     apply plugin: 'java'
