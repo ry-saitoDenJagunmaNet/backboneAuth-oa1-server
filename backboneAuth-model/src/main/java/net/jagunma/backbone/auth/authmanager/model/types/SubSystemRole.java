@@ -2,7 +2,9 @@ package net.jagunma.backbone.auth.authmanager.model.types;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * サブシステムロールの列挙型
@@ -18,13 +20,13 @@ public enum SubSystemRole {
     UnKnown("", "未定義", null);
 
     private final String code;
-    private final String name;
+    private final String displayName;
     private final List<SubSystem> subSystemList;
 
     // コンストラクタ
-    private SubSystemRole(String code, String name, List<SubSystem> subSystemList) {
+    private SubSystemRole(String code, String displayName, List<SubSystem> subSystemList) {
         this.code = code;
-        this.name = name;
+        this.displayName = displayName;
         this.subSystemList = subSystemList;
     }
 
@@ -36,11 +38,11 @@ public enum SubSystemRole {
         return code;
     }
     /**
-     * 名称のＧｅｔ
-     * @return 名称
+     * 表示名称のＧｅｔ
+     * @return 表示名称
      */
-    public String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
     /**
      * サブシステムリストのＧｅｔ
@@ -48,6 +50,17 @@ public enum SubSystemRole {
      */
     public List<SubSystem> getSubSystemList() {
         return subSystemList;
+    }
+
+    /**
+     * 有効なリストのＧｅｔ
+     * （UnKnownを除いたリスト）
+     *
+     * @return 有効なリスト
+     */
+    public static List<SubSystemRole> getValidList() {
+        List<SubSystemRole> list = Arrays.asList(values());
+        return list.stream().filter(s->!s.name().equals("UnKnown")).collect(Collectors.toList());
     }
 
     /**

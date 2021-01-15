@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleComp
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート エクスポート検索 Request Converter
+ * OA12010 エクスポート Converter
  */
 public class Oa12010CompositionExportConverter implements BizTranRoleCompositionExportRequest {
 

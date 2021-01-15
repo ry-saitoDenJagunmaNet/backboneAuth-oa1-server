@@ -14,7 +14,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
- * OA11010 オペレーター＜一覧＞ 画面初期表示 Presenter
+ * OA11010 初期表示 Presenter
  */
 class Oa11010InitPresenter {
 
@@ -26,6 +26,7 @@ class Oa11010InitPresenter {
     private Integer subSystemRoleConditionsSelect;
     private Integer bizTranRoleConditionsSelect;
     private BizTranRoles bizTranRoles;
+    private String responseMethod;
 
     // コンストラクタ
     Oa11010InitPresenter() {}
@@ -94,6 +95,14 @@ class Oa11010InitPresenter {
     public void setBizTranRoles(BizTranRoles bizTranRoles) {
         this.bizTranRoles = bizTranRoles;
     }
+    /**
+     * 入力補助として使用する場合の戻り先のＳｅｔ
+     *
+     * @param responseMethod 入力補助として使用する場合の戻り先
+     */
+    public void setResponseMethod(String responseMethod) {
+        this.responseMethod = responseMethod;
+    }
 
     /**
      * voに変換します
@@ -117,7 +126,7 @@ class Oa11010InitPresenter {
             if (subSystemRole.getCode().length() == 0) { continue; }
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
-            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
+            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getDisplayName());
             subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }
@@ -138,5 +147,6 @@ class Oa11010InitPresenter {
             bizTranRoleVoList.add(bizTranRoleVo);
         }
         vo.setBizTranRoleList(bizTranRoleVoList);
+        vo.setResponseMethod(responseMethod);
     }
 }

@@ -19,7 +19,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepos
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.base.Preconditions;
@@ -68,7 +67,11 @@ class Oa12060ControllerTest {
     }
     private Oa12060Controller createOa12060Controller(String yearMonthString, Boolean isOptimisticLockingFailureException) {
         // カレンダー検索リポジトリのスタブ
-        CalendarsRepository calendarsRepository = new CalendarsRepository() {
+        CalendarRepository calendarRepository = new CalendarRepository() {
+            @Override
+            public Calendar findOneById(Long calendarId) {
+                return null;
+            }
             @Override
             public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
                 return null;
@@ -87,7 +90,7 @@ class Oa12060ControllerTest {
             }
         };
         // カレンダー検索サービスのスタブ
-        SearchCalendar searchCalendar = new SearchCalendar(calendarsRepository) {
+        SearchCalendar searchCalendar = new SearchCalendar(calendarRepository) {
             public void execute(CalendarSearchRequest request, CalendarSearchResponse response) {
                 // yearMonthString = null の場合：RuntimeException を発生させる
                 if (yearMonthString == null) {
@@ -108,13 +111,29 @@ class Oa12060ControllerTest {
                 return null;
             }
         };
-        // カレンダー検索リポジトリのスタブ
-        CalendarRepository calendarRepository = new CalendarRepository() {
-            @Override
-            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
-                return null;
-            }
-        };
+//        // カレンダー検索リポジトリのスタブ
+//        CalendarRepository calendarRepository = new CalendarRepository() {
+//            @Override
+//            public Calendar findOneBy(CalendarCriteria calendarCriteria) {
+//                return null;
+//            }
+//            @Override
+//            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
+//                return null;
+//            }
+//            @Override
+//            public Calendars selectBy(CalendarCriteria calendarCriteria) {
+//                return null;
+//            }
+//            @Override
+//            public Calendars selectAll(Orders orders) {
+//                return null;
+//            }
+//            @Override
+//            public Calendars selectAll() {
+//                return null;
+//            }
+//        };
         // カレンダー適用サービスのスタブ
         StoreCalendar storeCalendar = new StoreCalendar(calendarRepositoryForStore, calendarRepository) {
             public int execute(CalendarStoreRequest request) {

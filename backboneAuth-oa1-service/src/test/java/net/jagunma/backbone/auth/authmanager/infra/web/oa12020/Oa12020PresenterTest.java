@@ -203,7 +203,7 @@ class Oa12020PresenterTest {
             searchResultVo.setJaName((suspendBizTran.getJaAtMoment() == null)? null :  suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             searchResultVo.setBranchCode((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue());
             searchResultVo.setBranchName((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
-            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getName());
+            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getDisplayName());
             searchResultVo.setBizTranGrpCode((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpCode());
             searchResultVo.setBizTranGrpName((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpName());
             searchResultVo.setBizTranCode((suspendBizTran.getBizTran() == null)? null : suspendBizTran.getBizTran().getBizTranCode());

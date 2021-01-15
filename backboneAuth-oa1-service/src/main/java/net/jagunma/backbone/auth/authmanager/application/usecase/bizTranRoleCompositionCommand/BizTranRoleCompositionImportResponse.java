@@ -4,7 +4,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
 
 /**
- * 取引ロール編成インポート＆エクスポート Excel 登録サービス Response
+ * 取引ロール編成エクスポート登録サービス Response
  */
 public interface BizTranRoleCompositionImportResponse {
 

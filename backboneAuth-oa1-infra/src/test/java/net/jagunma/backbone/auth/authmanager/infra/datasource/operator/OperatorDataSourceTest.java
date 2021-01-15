@@ -1,11 +1,13 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
@@ -52,8 +54,12 @@ class OperatorDataSourceTest {
                 return createOperatorEntity();
             }
             @Override
+            public boolean existsBy(OperatorEntityCriteria criteria) {
+                return true;
+            }
+            @Override
             public List<OperatorEntity> findBy(OperatorEntityCriteria criteria, Orders orders) {
-                return null;
+                return createOperatorEntityList();
             }
             @Override
             public List<OperatorEntity> findAll(Orders orders) {
@@ -106,7 +112,7 @@ class OperatorDataSourceTest {
             }
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                return null;
+                return BranchesAtMoment.of(createBranchAtMomentList());
             }
         };
     }
@@ -150,9 +156,84 @@ class OperatorDataSourceTest {
                 .build())
             .build();
     }
+    // BranchAtMomentリストデータ作成
+    private List<BranchAtMoment> createBranchAtMomentList() {
+        List<BranchAtMoment> list = newArrayList();
+        list.add(createBranchAtMoment(33L,"001","００１店舗",6L,"006","ＪＡ００６"));
+        list.add(createBranchAtMoment(34L,"002","００２店舗",6L,"006","ＪＡ００６"));
+        list.add(createBranchAtMoment(35L,"003","００３店舗",6L,"006","ＪＡ００６"));
+        return list;
+    }
+    // BranchAtMomentデータ作成
+    private BranchAtMoment createBranchAtMoment(
+        Long branchId,
+        String branchCode,
+        String branchName,
+        Long jaId,
+        String jaCode,
+        String jaName) {
+
+        JaAtMoment jaAtMoment = JaAtMoment.builder()
+            .withIdentifier(jaId)
+            .withJaAttribute(JaAttribute
+                .builder()
+                .withJaCode(JaCode.of(jaCode))
+                .withName(jaName)
+                .withFormalName("")
+                .withAbbreviatedName("")
+                .build())
+            .build();
+        return BranchAtMoment.builder()
+            .withIdentifier(branchId)
+            .withJaAtMoment(jaAtMoment)
+            .withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般)
+                .withBranchCode(BranchCode.of(branchCode))
+                .withName(branchName)
+                .build())
+            .build();
+    }
+    // オペレーターリストデータ作成
+    private List<OperatorEntity> createOperatorEntityList() {
+        List<OperatorEntity> list = newArrayList();
+        list.add(createOperatorEntity(18L,"yu001009","ｙｕ００１００９","yu001009@aaaaa.net",LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",(short)0));
+        list.add(createOperatorEntity(19L,"yu001010","ｙｕ００１０１０","yu001010@aaaaa.net",LocalDate.of(2020,4,1),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",(short)0));
+        list.add(createOperatorEntity(20L,"yu001011","ｙｕ００１０１１","yu001011@aaaaa.net",LocalDate.of(2020,1,1),LocalDate.of(2020,12,31),true,6L,"006",33L,"001",(short)0));
+        return list;
+    }
+    // オペレーターデータ作成
+    private OperatorEntity createOperatorEntity(
+        Long operatorId,
+        String operatorCode,
+        String operatorName,
+        String mailAddress,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
+        Boolean isDeviceAuth,
+        Long jaId,
+        String jaCode,
+        Long branchId,
+        String branchCode,
+        Short availableStatus) {
+
+        OperatorEntity entity = new OperatorEntity();
+        entity.setOperatorId(operatorId);
+        entity.setOperatorCode(operatorCode);
+        entity.setOperatorName(operatorName);
+        entity.setMailAddress(mailAddress);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
+        entity.setIsDeviceAuth(isDeviceAuth);
+        entity.setJaId(jaId);
+        entity.setJaCode(jaCode);
+        entity.setBranchId(branchId);
+        entity.setBranchCode(branchCode);
+        entity.setAvailableStatus(availableStatus);
+        return entity;
+    }
 
     /**
-     * {@link OperatorDataSource#findOneBy(OperatorCriteria)}のテスト
+     * {@link OperatorDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *
@@ -161,10 +242,7 @@ class OperatorDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
-
-        // 実行値
-        OperatorCriteria criteria = new OperatorCriteria();
+    void findOneById_test0() {
 
         // テスト対象クラス生成
         OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
@@ -188,9 +266,90 @@ class OperatorDataSourceTest {
             createBranchAtMoment());
 
         // 実行
-        Operator actualOperator = operatorDataSource.findOneBy(criteria);
+        Operator actualOperator = operatorDataSource.findOneById(operatorId);
 
         // 結果検証
         assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
+    }
+
+    /**
+     * {@link OperatorDataSource#existsBy(OperatorCriteria)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void existsBy_test0() {
+
+        // 実行値
+        OperatorCriteria criteria = new OperatorCriteria();
+
+        // テスト対象クラス生成
+        OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
+            createBranchAtMomentRepository());
+
+        // 期待値
+        boolean expected = true;
+
+        // 実行
+        boolean actualResult = operatorDataSource.existsBy(criteria);
+
+        // 結果検証
+        assertThat(actualResult).isEqualTo(expected);
+    }
+
+    /**
+     * {@link OperatorDataSource#selectBy(OperatorCriteria, Orders)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void selectBy_test0() {
+
+        // 実行値
+        OperatorCriteria criteria = new OperatorCriteria();
+        Orders orders = Orders.empty();
+
+        // テスト対象クラス生成
+        OperatorDataSource operatorDataSource = new OperatorDataSource(createOperatorEntityDao(),
+            createBranchAtMomentRepository());
+
+        // 期待値
+        List<Operator> expectedOperatorlist = newArrayList();
+        for(OperatorEntity entity : createOperatorEntityList()) {
+            expectedOperatorlist.add(Operator.createFrom(
+                entity.getOperatorId(),
+                entity.getOperatorCode(),
+                entity.getOperatorName(),
+                entity.getMailAddress(),
+                entity.getValidThruStartDate(),
+                entity.getValidThruEndDate(),
+                entity.getIsDeviceAuth(),
+                entity.getJaId(),
+                entity.getJaCode(),
+                entity.getBranchId(),
+                entity.getBranchCode(),
+                AvailableStatus.codeOf(entity.getAvailableStatus()),
+                entity.getRecordVersion(),
+                createBranchAtMomentList().stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
+            ));
+        }
+        Operators expectedOperators = Operators.createFrom(expectedOperatorlist);
+
+        // 実行
+        Operators actualOperators = operatorDataSource.selectBy(criteria, orders);
+
+        // 結果検証
+        for(int i = 0; i < actualOperators.getValues().size(); i++) {
+            assertThat(actualOperators.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedOperators.getValues().get(i));
+        }
     }
 }

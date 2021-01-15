@@ -35,9 +35,10 @@
 			<!-- ＪＡ -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div id="jaSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectJaForCode(title='ＪＡ',id='ja',name='jaCode',selectedValue=${form.jaCode})" th:fragment="ajaxSelectJa"></div>
+					<div id="ja_select">
+						<div th:replace="include/formElements::selectForCode(title='ＪＡ',id='ja',name='jaCode')" th:fragment="ajaxSelectJa"></div>
 					</div>
+					<input type="hidden" id="ja_code" th:value="${form.jaCode}"/>
 					<div class="input-field" th:remove="all">
 						<select id="ja" name="jaid" class="validate" onchange="oaex_ja_onChange()">
 							<option value=""></option>
@@ -64,9 +65,10 @@
 			<!-- 店舗 -->
 			<div class="row oa_optional">
 				<div class="col s6">
-					<div id="branchSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBranchForCode(title='店舗',id='branch',name='branchCode',selectedValue=${form.branchCode})" th:fragment="ajaxSelectBranch"></div>
+					<div id="branch_select">
+						<div th:replace="include/formElements::selectForCode(title='店舗',id='branch',name='branchCode')" th:fragment="ajaxSelectBranch"></div>
 					</div>
+					<input type="hidden" id="branch_code" th:value="${form.branchCode}"/>
 					<div class="input-field" th:remove="all">
 						<select id="tempo" name="branchId" class="validate">
 							<option value=""></option>
@@ -86,9 +88,10 @@
 			<div class="row oa_optional">
 				<!-- サブシステム -->
 				<div class="col s3">
-					<div id="subSystemSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectSubSystem(title='サブシステム',id='subSystem',name='subSystemCode',selectedValue=${form.subSystemCode})" th:fragment="ajaxSelectSubSystem"></div>
+					<div id="subSystem_select">
+						<div th:replace="include/formElements::selectForCode(title='サブシステム',id='subSystem',name='subSystemCode')" th:fragment="ajaxSelectSubSystem"></div>
 					</div>
+					<input type="hidden" id="subSystem_code" th:value="${form.subSystemCode}"/>
 					<div class="input-field" th:remove="all">
 						<select id="subsystem" name="subSystemCode" class="validate" onchange="oaex_subsystem_onChange()">
 							<option value=""></option>
@@ -104,9 +107,10 @@
 				</div>
 				<!-- 取引グループ -->
 				<div class="col s4">
-					<div id="bizTranGrpSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranGrpForCode(title='取引グループ',id='bizTranGrp',name='bizTranGrpCode',selectedValue=${form.bizTranGrpCode})" th:fragment="ajaxSelectBizTranGrp"></div>
+					<div id="bizTranGrp_select">
+						<div th:replace="include/formElements::selectForCode(title='取引グループ',id='bizTranGrp',name='bizTranGrpCode')" th:fragment="ajaxSelectBizTranGrp"></div>
 					</div>
+					<input type="hidden" id="bizTran_grp_code" th:value="${form.bizTranGrpCode}"/>
 					<div class="input-field" th:remove="all">
 						<select id="biztran_grp" name="bizTranGrpId" class="validate" onchange="oaex_biztran_grp_onChange()">
 						</select>
@@ -115,9 +119,10 @@
 				</div>
 				<!-- 取引 -->
 				<div class="col s5">
-					<div id="bizTranSelect">
-						<div th:replace="include/ajaxSelectController::ajaxSelectBizTranForCode(title='取引',id='bizTran',name='bizTranCode',selectedValue=${form.bizTranCode})" th:fragment="ajaxSelectBizTran"></div>
+					<div id="bizTran_select">
+						<div th:replace="include/formElements::selectForCode(title='取引',id='bizTran',name='bizTranCode')" th:fragment="ajaxSelectBizTran"></div>
 					</div>
+					<input type="hidden" id="bizTran_code" th:value="${form.bizTranCode}"/>
 					<div class="input-field" th:remove="all">
 						<select id="biztran" class="validate" onchange="oaex_biztran_onChange()">
 						</select>
@@ -230,7 +235,7 @@
 			<div class="row">
 				<div class="col s12">
 					<div class="oaex_suspend_biztran_table">
-						<table class="highlight">
+						<table id="suspend_biztran_table" class="highlight">
 							<thead>
 								<tr>
 									<th class="oaex_table_ja_th" colspan="2">ＪＡ</th>
@@ -242,20 +247,24 @@
 									<th class="oaex_table_suspend_reason_th">抑止理由</th>
 								</tr>
 							</thead>
-							<tbody id="suspend_biztran_table">
-							<tr th:each="itemrow, iterStat : *{form.searchResultList}" onclick="oa_setTableRowSelected(this)">
-								<td class="oaex_table_ja_code" th:text="${itemrow.jaCode}"></td>
-								<td class="oaex_table_ja_name" th:text="${itemrow.jaName}"></td>
-								<td class="oaex_table_tempo_code" th:text="${itemrow.branchCode}"></td>
-								<td class="oaex_table_tempo_name" th:text="${itemrow.branchName}"></td>
-								<td class="oaex_table_subsystem" th:text="${itemrow.subSystemName}"></td>
-								<td class="oaex_table_biztran_grp_code" th:text="${itemrow.bizTranGrpCode}"></td>
-								<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
-								<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
-								<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
-								<td class="oaex_table_valid_thru_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
-								<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
-							</tr>
+							<tbody id="suspend_biztran_tbody">
+								<!-- th using -->
+								<!--/*/ 
+								<tr th:each="itemrow, iterStat : *{form.searchResultList}" onclick="oa_setTableRowSelected(this)">
+									<td style="display:none;"><input type="hidden" id="suspend_bizTran_id" th:value="${itemrow.suspendBizTranId}"/></td>
+									<td class="oaex_table_ja_code" th:text="${itemrow.jaCode}"></td>
+									<td class="oaex_table_ja_name" th:text="${itemrow.jaName}"></td>
+									<td class="oaex_table_tempo_code" th:text="${itemrow.branchCode}"></td>
+									<td class="oaex_table_tempo_name" th:text="${itemrow.branchName}"></td>
+									<td class="oaex_table_subsystem" th:text="${itemrow.subSystemName}"></td>
+									<td class="oaex_table_biztran_grp_code" th:text="${itemrow.bizTranGrpCode}"></td>
+									<td class="oaex_table_biztran_grp_name" th:text="${itemrow.bizTranGrpName}"></td>
+									<td class="oaex_table_biztran_code" th:text="${itemrow.bizTranCode}"></td>
+									<td class="oaex_table_biztran_name" th:text="${itemrow.bizTranName}"></td>
+									<td class="oaex_table_valid_thru_date" th:text="*{#temporals.format(itemrow.suspendStartDate, 'yyyy/MM/dd')}+'～'+*{#temporals.format(itemrow.suspendEndDate, 'yyyy/MM/dd')}"></td>
+									<td class="oaex_table_suspend_reason" th:text="${itemrow.suspendReason}"></td>
+								</tr>
+								/*/-->
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td class="oaex_table_ja_code"></td><td class="oaex_table_ja_name"></td><td class="oaex_table_tempo_code"></td><td class="oaex_table_tempo_name"></td><td class="oaex_table_subsystem">販売・青果</td><td class="oaex_table_biztran_grp_code"></td><td class="oaex_table_biztran_grp_name"></td><td class="oaex_table_biztran_code">YS3204</td><td class="oaex_table_biztran_name">市況エラー</td><td class="oaex_table_valid_thru_date">2019/04/01～2019/04/20</td><td class="oaex_table_suspend_reason">不具合により緊急抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>006</td><td>JA前橋</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>合併前のデータ凍結の為のデータ投入抑止</td></tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this)"><td>007</td><td>JAたかさき</td><td>000</td><td>本所</td><td></td><td></td><td></td><td></td><td></td><td>2019/04/01～2019/04/20</td><td>NＮＮＮＮＮＮＮＮＮ</td></tr>
@@ -310,9 +319,9 @@
 				<a class="btn waves-effect waves-light" href="javascript:oaex_closeBtn_onClick();">閉じる</a>
 			</div>
 			<div class="col s5 offset-s4">
-				<a class="btn waves-effect waves-light" href="javascript:oa_transferFormWithParam('oa12030', 'mode=0')">新規</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_newBtn_onClick()">新規</a>
 				&nbsp;&nbsp;&nbsp;
-				<a class="btn waves-effect waves-light" href="javascript:oa_transferFormWithParam('oa12030', 'mode=1')">詳細</a>
+				<a class="btn waves-effect waves-light" href="javascript:oaex_detailBtn_onClick()">詳細</a>
 			</div>
 		</div>
 	</footer>

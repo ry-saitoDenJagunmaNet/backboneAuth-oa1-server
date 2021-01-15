@@ -4,6 +4,9 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleComp
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTransSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
+/**
+ * OA12010 インポートチェック Converter
+ */
 public class Oa12010CompositionImportCheckConverter implements BizTranRoleCompositionImportCheckRequest {
 
     private String subSystemCode;

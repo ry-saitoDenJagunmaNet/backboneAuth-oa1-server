@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleSearchBizTranRole {
 
-    private final BizTranRolesRepository bizTranRolesRepository;
+    private final BizTranRoleRepository bizTranRoleRepository;
 
     // コンストラクタ
-    public SimpleSearchBizTranRole(BizTranRolesRepository bizTranRolesRepository) {
-        this.bizTranRolesRepository = bizTranRolesRepository;
+    public SimpleSearchBizTranRole(BizTranRoleRepository bizTranRoleRepository) {
+        this.bizTranRoleRepository = bizTranRoleRepository;
     }
 
     /**
@@ -24,6 +24,6 @@ public class SimpleSearchBizTranRole {
      * @return 取引ロール群
      */
     public BizTranRoles getBizTranRoles() {
-        return bizTranRolesRepository.selectAll(Orders.empty().addOrder("BizTranRoleCode"));
+        return bizTranRoleRepository.selectAll(Orders.empty().addOrder("BizTranRoleCode"));
     }
 }

@@ -2,12 +2,12 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 
 /**
- * OA12010 View Object
+ * OA12020 View Object
  */
-public class Oa12020Vo extends BaseOfResponseVo {
+public class Oa12020Vo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 

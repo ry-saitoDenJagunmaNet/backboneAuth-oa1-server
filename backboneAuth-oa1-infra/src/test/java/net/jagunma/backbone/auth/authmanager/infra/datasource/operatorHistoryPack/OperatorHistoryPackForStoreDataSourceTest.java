@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operatorHistoryPack;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -8,20 +9,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
-import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operatorHistory.OperatorHistoryEntityDao;
@@ -89,79 +91,16 @@ class OperatorHistoryPackForStoreDataSourceTest {
         Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), validThruStartDate, validThruEndDate, recordVersion, null, bizTranRoleList.get(3)));
     private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
+    // 検証値
+    OperatorCriteria actualOperatorCriteria;
+    Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
+    Orders actualOperator_SubSystemRoleOrders;
+    Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
+    Orders actualOperator_BizTranRoleOrders;
+    Long actualOperatorId;
+
     // テスト対象クラス生成
     private OperatorHistoryPackForStoreDataSource createOperatorHistoryPackForStoreDataSource() {
-        OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
-            @Override
-            public OperatorEntity findOneBy(OperatorEntityCriteria criteria) {
-                OperatorEntity entity = new OperatorEntity();
-
-                entity.setOperatorId(criteria.getOperatorIdCriteria().getEqualTo());
-                entity.setOperatorCode(operatorCode);
-                entity.setOperatorName(operatorName);
-                entity.setMailAddress(mailAddress);
-                entity.setValidThruStartDate(validThruStartDate);
-                entity.setValidThruEndDate(validThruEndDate);
-                entity.setIsDeviceAuth(isDeviceAuth);
-                entity.setJaId(jaId);
-                entity.setJaCode(jaCode);
-                entity.setBranchId(branchId);
-                entity.setBranchCode(branchCode);
-                entity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(updatedBy);
-                entity.setUpdatedAt(updatedAt);
-                entity.setUpdatedIpAddress(updatedIpAddress);
-                entity.setRecordVersion(recordVersion);
-                return entity;
-            }
-            @Override
-            public List<OperatorEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
-            public List<OperatorEntity> findBy(OperatorEntityCriteria criteria, Orders orders) {
-                return null;
-            }
-            @Override
-            public int countBy(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int insert(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int update(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int updateExcludeNull(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int delete(OperatorEntity entity) {
-                return 0;
-            }
-            @Override
-            public int forceDelete(OperatorEntityCriteria criteria) {
-                return 0;
-            }
-            @Override
-            public int[] insertBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] updateBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-            @Override
-            public int[] deleteBatch(List<OperatorEntity> entities) {
-                return new int[0];
-            }
-        };
         OperatorHistoryHeaderEntityDao operatorHistoryHeaderEntityDao = new OperatorHistoryHeaderEntityDao() {
             @Override
             public int insert(OperatorHistoryHeaderEntity entity) {
@@ -277,12 +216,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
-            @Override
-            public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
-                return operator_SubSystemRoles;
-            }
-        };
         Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao = new Operator_SubSystemRoleHistoryEntityDao() {
             @Override
             public int insert(Operator_SubSystemRoleHistoryEntity entity) {
@@ -338,12 +271,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
             @Override
             public int[] deleteBatch(List<Operator_SubSystemRoleHistoryEntity> entities) {
                 return new int[0];
-            }
-        };
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
-            @Override
-            public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
-                return operator_BizTranRoles;
             }
         };
         Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao = new Operator_BizTranRoleHistoryEntityDao() {
@@ -403,15 +330,60 @@ class OperatorHistoryPackForStoreDataSourceTest {
                 return new int[0];
             }
         };
+        OperatorRepository operatorRepository = new OperatorRepository() {
+            @Override
+            public Operator findOneById(Long operatorId) {
+                actualOperatorId = operatorId;
+                return Operator.createFrom(
+                    operatorId,
+                    operatorCode,
+                    operatorName,
+                    mailAddress,
+                    validThruStartDate,
+                    validThruEndDate,
+                    isDeviceAuth,
+                    jaId,
+                    jaCode,
+                    branchId,
+                    branchCode,
+                    availableStatus,
+                    recordVersion,
+                    null);
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
+            }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
+            }
+        };
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
+            @Override
+            public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
+                actualOperator_SubSystemRoleCriteria = operator_SubSystemRoleCriteria;
+                actualOperator_SubSystemRoleOrders = orders;
+                return operator_SubSystemRoles;
+            }
+        };
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
+            @Override
+            public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
+                actualOperator_BizTranRoleCriteria = operator_BizTranRoleCriteria;
+                actualOperator_BizTranRoleOrders = orders;
+                return operator_BizTranRoles;
+            }
+        };
 
         return new OperatorHistoryPackForStoreDataSource(
-            operatorEntityDao,
             operatorHistoryHeaderEntityDao,
             operatorHistoryEntityDao,
-            operator_SubSystemRolesRepository,
             operator_SubSystemRoleHistoryEntityDao,
-            operator_BizTranRolesRepository,
-            operator_BizTranRoleHistoryEntityDao);
+            operator_BizTranRoleHistoryEntityDao,
+            operatorRepository,
+            operator_SubSystemRoleRepository,
+            operator_BizTranRoleRepository);
     }
 
     /**
@@ -429,6 +401,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
         // テスト対象クラス生成
         OperatorHistoryPackForStoreDataSource operatorHistoryPackForStoreDataSource = createOperatorHistoryPackForStoreDataSource();
 
+        // Todo: Beans.createAndCopy の enum 対応がされたら再確認
         assertThatCode(() ->
             // 実行
             operatorHistoryPackForStoreDataSource.store(operatorId, createdAt, changeCause))
@@ -436,47 +409,44 @@ class OperatorHistoryPackForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorHistoryPackForStoreDataSource#getOperatorEntity(Long operatorId)}テスト
+     * {@link OperatorHistoryPackForStoreDataSource#getOperator(Long operatorId)}テスト
      *  ●パターン
      *    正常
      *
      *  ●検証事項
-     *  ・Entityへのセット
+     *  ・Modelへのセット
      *
      */
     @Test
     @Tag(TestSize.SMALL)
-    void getOperatorEntity_test() {
+    void getOperator_test() {
         // テスト対象クラス生成
         OperatorHistoryPackForStoreDataSource operatorHistoryPackForStoreDataSource = createOperatorHistoryPackForStoreDataSource();
 
         // 期待値
-        OperatorEntity expectedEntity = new OperatorEntity();
-        expectedEntity.setOperatorId(operatorId);
-        expectedEntity.setOperatorCode(operatorCode);
-        expectedEntity.setOperatorName(operatorName);
-        expectedEntity.setMailAddress(mailAddress);
-        expectedEntity.setValidThruStartDate(validThruStartDate);
-        expectedEntity.setValidThruEndDate(validThruEndDate);
-        expectedEntity.setIsDeviceAuth(isDeviceAuth);
-        expectedEntity.setJaId(jaId);
-        expectedEntity.setJaCode(jaCode);
-        expectedEntity.setBranchId(branchId);
-        expectedEntity.setBranchCode(branchCode);
-        expectedEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(updatedBy);
-        expectedEntity.setUpdatedAt(updatedAt);
-        expectedEntity.setUpdatedIpAddress(updatedIpAddress);
-        expectedEntity.setRecordVersion(recordVersion);
+        Operator expectedOperator = Operator.createFrom(
+            operatorId,
+            operatorCode,
+            operatorName,
+            mailAddress,
+            validThruStartDate,
+            validThruEndDate,
+            isDeviceAuth,
+            jaId,
+            jaCode,
+            branchId,
+            branchCode,
+            availableStatus,
+            recordVersion,
+            null);
+        Long expectedOperatorId = operatorId;
 
         // 実行
-        OperatorEntity operatorEntity = operatorHistoryPackForStoreDataSource.getOperatorEntity(operatorId);
+        Operator operator = operatorHistoryPackForStoreDataSource.getOperator(operatorId);
 
         // 結果検証
-        assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
+        assertThat(operator).usingRecursiveComparison().isEqualTo(expectedOperator);
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
 
     /**
@@ -516,7 +486,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
     }
 
     /**
-     * {@link OperatorHistoryPackForStoreDataSource#insertOperatorHistory(Long operatorHistoryId, OperatorEntity operatorEntity)}テスト
+     * {@link OperatorHistoryPackForStoreDataSource#insertOperatorHistory(Long operatorHistoryId, Operator operator)}テスト
      *  ●パターン
      *    正常
      *
@@ -531,29 +501,25 @@ class OperatorHistoryPackForStoreDataSourceTest {
         OperatorHistoryPackForStoreDataSource operatorHistoryPackForStoreDataSource = createOperatorHistoryPackForStoreDataSource();
 
         // 実行値
-        OperatorEntity operatorEntity = new OperatorEntity();
-        operatorEntity.setOperatorId(operatorId);
-        operatorEntity.setOperatorCode(operatorCode);
-        operatorEntity.setOperatorName(operatorName);
-        operatorEntity.setMailAddress(mailAddress);
-        operatorEntity.setValidThruStartDate(validThruStartDate);
-        operatorEntity.setValidThruEndDate(validThruEndDate);
-        operatorEntity.setIsDeviceAuth(isDeviceAuth);
-        operatorEntity.setJaId(jaId);
-        operatorEntity.setJaCode(jaCode);
-        operatorEntity.setBranchId(branchId);
-        operatorEntity.setBranchCode(branchCode);
-        operatorEntity.setAvailableStatus((availableStatus.equals(AvailableStatus.利用可能))? (short) 0 : (short) 1);
-        operatorEntity.setCreatedBy(createdBy);
-        operatorEntity.setCreatedAt(createdAt);
-        operatorEntity.setCreatedIpAddress(createdIpAddress);
-        operatorEntity.setUpdatedBy(updatedBy);
-        operatorEntity.setUpdatedAt(updatedAt);
-        operatorEntity.setUpdatedIpAddress(updatedIpAddress);
-        operatorEntity.setRecordVersion(recordVersion);
+        Operator operator = Operator.createFrom(
+            operatorId,
+            operatorCode,
+            operatorName,
+            mailAddress,
+            validThruStartDate,
+            validThruEndDate,
+            isDeviceAuth,
+            jaId,
+            jaCode,
+            branchId,
+            branchCode,
+            availableStatus,
+            recordVersion,
+            null);
 
         // 期待値
-        OperatorHistoryEntity expectedEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operatorEntity).execute();
+        // Todo: Beans.createAndCopy の enum 対応がされたら再確認
+        OperatorHistoryEntity expectedEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operator).execute();
         expectedEntity.setOperatorHistoryId(operatorHistoryId);
         expectedEntity.setCreatedBy(createdBy);
         expectedEntity.setCreatedAt(createdAt);
@@ -564,12 +530,11 @@ class OperatorHistoryPackForStoreDataSourceTest {
         expectedEntity.setRecordVersion(recordVersion);
 
         // 実行
-        OperatorHistoryEntity operatorHistoryEntity = operatorHistoryPackForStoreDataSource.insertOperatorHistory(operatorHistoryId, operatorEntity);
+        OperatorHistoryEntity operatorHistoryEntity = operatorHistoryPackForStoreDataSource.insertOperatorHistory(operatorHistoryId, operator);
 
         // 結果検証
         assertThat(operatorHistoryEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
-
 
     /**
      * {@link OperatorHistoryPackForStoreDataSource#insertOperator_SubSystemRoleHistory(Long operatorHistoryId, Long operatorId)}テスト
@@ -602,12 +567,18 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
             expectedEntityList.add(expectedEntity);
         }
+        Operator_SubSystemRoleCriteria expectedOperator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
+        expectedOperator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders expectedOperator_SubSystemRoleOrders = Orders.empty().addOrder("Operator_SubSystemRoleId");
 
         // 実行
         List<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = operatorHistoryPackForStoreDataSource.insertOperator_SubSystemRoleHistory(operatorHistoryId, operatorId);
 
         // 結果検証
         assertThat(operator_SubSystemRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
+        // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualOperator_SubSystemRoleCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleCriteria).defaultConfig().toString());
+        assertThat(toStringHelper(actualOperator_SubSystemRoleOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleOrders).defaultConfig().toString());
     }
 
     /**
@@ -641,11 +612,17 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
             expectedEntityList.add(expectedEntity);
         }
+        Operator_BizTranRoleCriteria expectedOperator_BizTranRoleCriteria = new Operator_BizTranRoleCriteria();
+        expectedOperator_BizTranRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders expectedOperator_BizTranRoleOrders = Orders.empty().addOrder("operator_BizTranRoleId");
 
         // 実行
         List<Operator_BizTranRoleHistoryEntity> Operator_BizTranRoleHistoryEntityList = operatorHistoryPackForStoreDataSource.insertOperator_BizTranRoleHistory(operatorHistoryId, operatorId);
 
         // 結果検証
         assertThat(Operator_BizTranRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
+        // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualOperator_BizTranRoleCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_BizTranRoleCriteria).defaultConfig().toString());
+        assertThat(toStringHelper(actualOperator_BizTranRoleOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_BizTranRoleOrders).defaultConfig().toString());
     }
 }

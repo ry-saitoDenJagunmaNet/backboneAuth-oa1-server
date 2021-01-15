@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.common.util.primitives.LocalDates;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchCalendar {
 
-    private final CalendarsRepository calendarsRepository;
+    private final CalendarRepository calendarRepository;
 
     // コンストラクタ
-    public SearchCalendar(CalendarsRepository calendarsRepository) {
-        this.calendarsRepository = calendarsRepository;
+    public SearchCalendar(CalendarRepository calendarRepository) {
+        this.calendarRepository = calendarRepository;
     }
 
     /**
@@ -32,7 +32,7 @@ public class SearchCalendar {
         SearchCalendarValidator.with(request).validate();
 
         // カレンダー検索
-        response.setCalendars(calendarsRepository.selectBy(createCriteria(request)));
+        response.setCalendars(calendarRepository.selectBy(createCriteria(request)));
         response.setYearMonth(request.getYearMonth());
     }
 

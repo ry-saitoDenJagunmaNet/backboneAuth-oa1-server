@@ -5,7 +5,7 @@ import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpsSheet;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート Excel Weiteサービス Request Converter
+ * OA12010 Excel Write Converter
  */
 public class Oa12010CompositionExcelWriteConverter implements
     BizTranRoleCompositionExcelWriteRequest {

@@ -10,9 +10,9 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarReference.CalendarSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.primitives.LocalDates;
@@ -36,16 +36,20 @@ class SearchCalendarTest {
         }
         return Calendars.createFrom(calendaerList);
     }
-    private CalendarsRepository createCalendarsRepository(Calendars calendars) {
-        // CalendarsRepositoryオブジェクトの作成
-        return new CalendarsRepository() {
-            @Override
-            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
-                return null;
-            }
+    private CalendarRepository createCalendarRepository(Calendars calendars) {
+        // CalendarRepositoryオブジェクトの作成
+        return new CalendarRepository() {
             @Override
             public Calendars selectBy(CalendarCriteria calendarCriteria) {
                 return calendars;
+            }
+            @Override
+            public Calendar findOneById(Long calendarId) {
+                return null;
+            }
+            @Override
+            public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
+                return null;
             }
             @Override
             public Calendars selectAll(Orders orders) {
@@ -83,7 +87,7 @@ class SearchCalendarTest {
         Calendars expectedCalendars = createCalendars();
 
         // テスト対象クラス生成
-        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(createCalendars()));
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarRepository(createCalendars()));
 
         // 実行
         searchCalendar.execute(createCalendarSearchRequest(yearMonth)
@@ -122,7 +126,7 @@ class SearchCalendarTest {
         Calendars expectedCalendars = Calendars.createFrom(newArrayList());
 
         // テスト対象クラス生成
-        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(Calendars.createFrom(newArrayList())));
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarRepository(Calendars.createFrom(newArrayList())));
 
         // 実行
         searchCalendar.execute(createCalendarSearchRequest(yearMonth)
@@ -148,7 +152,7 @@ class SearchCalendarTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・CalendarsRepository.selectByの引数（検索条件：日付範囲）が作成されること
+     *  ・CalendarRepository.selectByの引数（検索条件：日付範囲）が作成されること
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -161,7 +165,7 @@ class SearchCalendarTest {
         expectedCriteria.getDateCriteria().setTo(LocalDates.getLastDate(yearMonth));
 
         // テスト対象クラス生成
-        SearchCalendar searchCalendar = new SearchCalendar(createCalendarsRepository(null));
+        SearchCalendar searchCalendar = new SearchCalendar(createCalendarRepository(null));
 
         // 実行
         CalendarCriteria actual = searchCalendar.createCriteria(createCalendarSearchRequest(yearMonth));

@@ -10,7 +10,7 @@ import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordChangeRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand.PasswordResetRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
@@ -93,14 +93,14 @@ class UpdatePasswordTest {
 
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
                 return createPasswordHistories();
             }
         };
 
-        return new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoriesRepository);
+        return new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoryRepository);
     }
 
     /**

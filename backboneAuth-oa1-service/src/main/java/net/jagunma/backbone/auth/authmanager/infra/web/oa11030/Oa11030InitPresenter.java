@@ -11,11 +11,9 @@ import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsS
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030BizTranRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030SubSystemRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo.Oa11030Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
-import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
@@ -45,12 +43,9 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
      */
     public void bindTo(Oa11030Vo vo) {
 
-        BranchAtMoment branchAtMoment = operator.getBranchAtMoment();
-        OperatorHistoryHeader operatorHistoryHeader = operatorHistoryHeaders.getValues().get(0);
-
         vo.setOperatorId(operator.getOperatorId());
         vo.setRecordVersion(operator.getRecordVersion());
-        vo.setJa(operator.getJaCode() + " " + branchAtMoment.getJaAtMoment().getJaAttribute().getName());
+        vo.setJa(operator.getJaCode() + " " + operator.getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
         vo.setBranchId(operator.getBranchId());
         vo.setOperatorCode(operator.getOperatorCode());
         vo.setOperatorName(operator.getOperatorName());
@@ -60,14 +55,14 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
         vo.setIsDeviceAuth(CheckboxUtil.setSmoother(operator.getIsDeviceAuth()));
         vo.setAvailableStatus(CheckboxUtil.setSmoother((operator.getAvailableStatus().equals(AvailableStatus.利用可能))? true : false));
 
-        vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
+        vo.setChangeCausePlaceholder(operatorHistoryHeaders.getValues().get(0).getChangeCause());
 
         vo.setAccountLockStatus((!accountLocks.getValues().isEmpty())? accountLocks.getValues().get(0).getLockStatus() : 0);
 
         List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
             Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
-            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getName());
+            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
             oa11030SubSystemRoleTableVo.setValidThruDate(
                 operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));

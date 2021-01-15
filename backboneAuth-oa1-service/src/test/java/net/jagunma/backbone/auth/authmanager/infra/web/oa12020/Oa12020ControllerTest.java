@@ -5,54 +5,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchJaAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSuspendBizTran;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
-import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020SearchResultVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpsRepository;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTransRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.backbone.shared.application.branch.BranchAtMomentRepository;
-import net.jagunma.backbone.shared.application.ja.JaAtMomentRepository;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
-import net.jagunma.common.values.model.branch.BranchAtMomentCriteria;
 import net.jagunma.common.values.model.branch.BranchAttribute;
 import net.jagunma.common.values.model.branch.BranchCode;
 import net.jagunma.common.values.model.branch.BranchType;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
-import net.jagunma.common.values.model.ja.JaAtMomentCriteria;
 import net.jagunma.common.values.model.ja.JaAttribute;
 import net.jagunma.common.values.model.ja.JaCode;
-import net.jagunma.common.values.model.ja.JasAtMoment;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.support.SessionStatus;
 
 class Oa12020ControllerTest {
 
@@ -66,11 +48,15 @@ class Oa12020ControllerTest {
     private Oa12020Controller createOa12020Controller(Integer throwExceptio) {
         // 一時取引抑止群検索の作成
         SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(
-            new SuspendBizTransRepository() {
+            new SuspendBizTranRepository() {
+                @Override
+                public SuspendBizTran findOneById(Long suspendBizTranId) {
+                    return null;
+                }
                 @Override
                 public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) { return null; }
             }) {
-            public void execute(SuspendBizTranSearchRequest request, SuspendBizTranSearchResponse response) {
+            public void execute(SuspendBizTransSearchRequest request, SuspendBizTransSearchResponse response) {
                 if (throwExceptio == null) {
                     response.setSuspendBizTrans(SuspendBizTrans.createFrom(cresteSuspendBizTran()));
                     return;
@@ -85,91 +71,19 @@ class Oa12020ControllerTest {
                 }
             };
         };
-        // searchJaAtMomentの作成
-        SearchJaAtMoment searchJaAtMoment = new SearchJaAtMoment(new JaAtMomentRepository() {
-            @Override
-            public JasAtMoment selectBy(JaAtMomentCriteria criteria, Orders orders) {
-                return JasAtMoment.of(createJaAtMomentList());
-            }
-            @Override
-            public JaAtMoment findOneBy(JaAtMomentCriteria criteria) {
-                return null;
-            }
-        }) {
-            public JasAtMoment selectBy() {
-                return JasAtMoment.of(createJaAtMomentList());
-            }
-        };
-        // SearchBranchAtMomentの作成
-        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(new BranchAtMomentRepository() {
-            @Override
-            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                List<BranchAtMoment> list = createBranchAtMomentList().stream().filter(b->b.getJaAtMoment().getJaAttribute().getJaCode().getValue().equals(criteria.getNarrowedJaCodeCriteria().getEqualTo().getValue())).collect(Collectors.toList());
-                return BranchesAtMoment.of(list);
-            }
-            @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) {
-                return null;
-            }
-        }) {
-            public BranchesAtMoment selectBy(long jaId) {
-                return BranchesAtMoment.of(createBranchAtMomentList().stream().filter(b-> ((Long)jaId).equals(b.getJaAtMoment().getIdentifier())).collect(Collectors.toList()));
-            }
-        };
-        // 取引グループ群検索の作成
-        BizTranGrpsRepository bizTranGrpsRepository = new BizTranGrpsRepository() {
-            @Override
-            public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
-                return BizTranGrps.createFrom(createBizTranGrpList());
-            }
-            @Override
-            public BizTranGrps selectAll(Orders orders) {
-                return null;
-            }
-        };
-        // 取引グループ検索の作成
-        BizTranGrpRepository bizTranGrpRepository = new BizTranGrpRepository() {
-            @Override
-            public BizTranGrp findOneBy(BizTranGrpCriteria bizTranGrpCriteria) {
-                return createBizTranGrpList().stream().filter(b->b.getBizTranGrpCode().equals(bizTranGrpCriteria.getBizTranGrpCodeCriteria().getEqualTo())).findFirst().orElse(null);
-            }
-        };
-        // 取引グループ_取引割当群検索の作成
-        BizTranGrp_BizTransRepository bizTranGrp_BizTransRepository = new BizTranGrp_BizTransRepository() {
-            @Override
-            public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
-                List<BizTranGrp_BizTran> list = newArrayList();
-                Integer ix = 0;
-                List<BizTran> bizTranList = createBizTranList();
-                for (BizTranGrp bizTranGrp : createBizTranGrpList()) {
-                    list.add(BizTranGrp_BizTran.createFrom(
-                        Long.valueOf(ix+1),
-                        bizTranGrp.getBizTranGrpId(),
-                        bizTranList.get(ix).getBizTranId(),
-                        bizTranGrp.getSubSystemCode(),
-                        1,
-                        bizTranGrp,
-                        bizTranList.get(ix),
-                        bizTranGrp.getSubSystem()
-                    ));
-                    ix++;
-                }
-                return BizTranGrp_BizTrans.createFrom(list);
-            }
-            @Override
-            public BizTranGrp_BizTrans selectAll(Orders orders) {
-                return null;
-            }
-        };
-
-        return new Oa12020Controller(
-            searchSuspendBizTran,
-            searchJaAtMoment,
-            searchBranchAtMoment,
-            bizTranGrpsRepository,
-            bizTranGrpRepository,
-            bizTranGrp_BizTransRepository);
+        return new Oa12020Controller(searchSuspendBizTran);
     }
+    // セッション処理の通知の作成
+    private SessionStatus sessionStatus = new SessionStatus() {
+        @Override
+        public void setComplete() {
+
+        }
+        @Override
+        public boolean isComplete() {
+            return false;
+        }
+    };
 
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> cresteSuspendBizTran() {
@@ -264,9 +178,10 @@ class Oa12020ControllerTest {
         return castObj;
     }
 
+    private final String SESSION_KEY = "session_Oa12020Vo";
 
     /**
-     * {@link Oa12020Controller#get(Model)}テスト
+     * {@link Oa12020Controller#get(Model, SessionStatus)}テスト
      *  ●パターン
      *    正常
      *
@@ -279,6 +194,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -291,7 +207,7 @@ class Oa12020ControllerTest {
         expectedVo.setPaginationLastPageNo(0);
 
         // 実行
-        String actualViewName = oa12020Controller.get(model);
+        String actualViewName = oa12020Controller.get(model, this.sessionStatus);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -343,6 +259,7 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
@@ -360,7 +277,7 @@ class Oa12020ControllerTest {
             searchResultVo.setJaName((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             searchResultVo.setBranchCode((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchCode());
             searchResultVo.setBranchName((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
-            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getName());
+            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getDisplayName());
             searchResultVo.setBizTranGrpCode((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrpCode());
             searchResultVo.setBizTranGrpName((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpName());
             searchResultVo.setBizTranCode((suspendBizTran.getBizTran() == null)? null : suspendBizTran.getBizTranCode());
@@ -453,7 +370,7 @@ class Oa12020ControllerTest {
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
      *    正常
      *
@@ -466,11 +383,13 @@ class Oa12020ControllerTest {
 
         // テスト対象クラス生成
         Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12020Vo oa12020Vo = new Oa12020Vo();
         oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
 
         // 期待値
         String expectedViewName = "oa12020";
@@ -483,7 +402,7 @@ class Oa12020ControllerTest {
             searchResultVo.setJaName((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaAtMoment().getJaAttribute().getName());
             searchResultVo.setBranchCode((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchCode());
             searchResultVo.setBranchName((suspendBizTran.getBranchAtMoment() == null)? null : suspendBizTran.getBranchAtMoment().getBranchAttribute().getName());
-            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getName());
+            searchResultVo.setSubSystemName((suspendBizTran.getSubSystem() == null)? null : suspendBizTran.getSubSystem().getDisplayName());
             searchResultVo.setBizTranGrpCode((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrpCode());
             searchResultVo.setBizTranGrpName((suspendBizTran.getBizTranGrp() == null)? null : suspendBizTran.getBizTranGrp().getBizTranGrpName());
             searchResultVo.setBizTranCode((suspendBizTran.getBizTran() == null)? null : suspendBizTran.getBizTranCode());
@@ -498,7 +417,7 @@ class Oa12020ControllerTest {
         expectedVo.setPageNo(1);
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -507,43 +426,45 @@ class Oa12020ControllerTest {
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
-     *    例外（RuntimeException）発生
+     *    正常
+     *    ・再検索しない
      *
      *  ●検証事項
-     *  ・戻り値
-     *  ・エラーメッセージのセット
+     *  ・Voへのセット
      */
     @Test
     @Tag(TestSize.SMALL)
     void backSearch_test1() {
 
         // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-1);
+        Oa12020Controller oa12020Controller = createOa12020Controller(null);
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
-        Oa12020Vo oa12020Vo = new Oa12020Vo();
-        oa12020Vo.setPageNo(1);
 
         // 期待値
-        String expectedViewName = "oa19999";
-        String messageCode = "EOA10001";
+        String expectedViewName = "oa12020";
+        Oa12020Vo expectedVo = new Oa12020Vo();
+        expectedVo.setSuspendConditionsSelect(suspendConditionsSelect);
+        expectedVo.setSearchResultList(newArrayList());
+        expectedVo.setPaginationLastPageNo(0);
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
-        assertThat(actualVo.getMessageCode()).isEqualTo(messageCode);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**
-     * {@link Oa12020Controller#backSearch(Oa12020Vo, Model)}テスト
+     * {@link Oa12020Controller#backSearch(Model)}テスト
      *  ●パターン
-     *    例外（GunmaRuntimeException ）発生
+     *    例外（RuntimeException）発生
      *
      *  ●検証事項
      *  ・戻り値
@@ -554,19 +475,57 @@ class Oa12020ControllerTest {
     void backSearch_test2() {
 
         // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
+        Oa12020Controller oa12020Controller = createOa12020Controller(-1);
+        oa12020Controller.setHttpSession(new MockHttpSession());
 
         // 実行値
         ConcurrentModel model = new ConcurrentModel();
         Oa12020Vo oa12020Vo = new Oa12020Vo();
         oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
+
+        // 期待値
+        String expectedViewName = "oa19999";
+        String messageCode = "EOA10001";
+
+        // 実行
+        String actualViewName = oa12020Controller.backSearch(model);
+        Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(messageCode);
+    }
+
+    /**
+     * {@link Oa12020Controller#backSearch(Model)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException ）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void backSearch_test3() {
+
+        // テスト対象クラス生成
+        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
+        oa12020Controller.setHttpSession(new MockHttpSession());
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        Oa12020Vo oa12020Vo = new Oa12020Vo();
+        oa12020Vo.setPageNo(1);
+        oa12020Controller.setSessionAttribute(SESSION_KEY, oa12020Vo);
 
         // 期待値
         String expectedViewName = "oa12020";
         String messageCode = "EOA10001";
 
         // 実行
-        String actualViewName = oa12020Controller.backSearch(oa12020Vo, model);
+        String actualViewName = oa12020Controller.backSearch(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -575,353 +534,4 @@ class Oa12020ControllerTest {
         assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(GunmaRuntimeExceptionMessageArg1);
     }
 
-    /**
-     * {@link Oa12020Controller#getJaItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getJaItemsSource_test0() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectJa";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (JaAtMoment jaAtMoment : createJaAtMomentList()) {
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                jaAtMoment.getIdentifier(), jaAtMoment.getJaAttribute().getJaCode().getValue(), jaAtMoment.getJaAttribute().getName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getJaItemsSource(model, vo);
-        //List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBranchItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchItemsSource_test0() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String jaCode = null;
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaCode(jaCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBranch";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBranchItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBranchItemsSource_test1() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String jaCode = "006";
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setJaCode(jaCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBranch";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BranchAtMoment branchAtMoment : createBranchAtMomentList().stream().filter(b-> jaCode.equals(b.getJaAtMoment().getJaAttribute().getJaCode().getValue())).collect(Collectors.toList())) {
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                branchAtMoment.getIdentifier(), branchAtMoment.getBranchAttribute().getBranchCode().getValue(), branchAtMoment.getBranchAttribute().getName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBranchItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getSubSystemItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getSubSystemItemsSource_test0() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectSubSystem";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (SubSystem subSystem : SubSystem.values()) {
-            if (subSystem.getCode().isEmpty()) {continue;}
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                null, subSystem.getCode(), subSystem.getName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getSubSystemItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBizTranGrpItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBizTranGrpItemsSource_test0() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String subSystemCode = null;
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setSubSystemCode(subSystemCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBizTranGrp";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBizTranGrpItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBizTranGrpItemsSource_test1() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String subSystemCode = SubSystem.販売_畜産.getCode();
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setSubSystemCode(subSystemCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBizTranGrp";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BizTranGrp bizTranGrp : createBizTranGrpList()) {
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                bizTranGrp.getBizTranGrpId(), bizTranGrp.getBizTranGrpCode(), bizTranGrp.getBizTranGrpName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBizTranGrpItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBizTranItemsSource_test0() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String subSystemCode = null;
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setSubSystemCode(subSystemCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBizTranItemsSource_test1() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String subSystemCode = SubSystem.販売_畜産.getCode();
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setSubSystemCode(subSystemCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BizTran bizTran : createBizTranList()) {
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
-
-    /**
-     * {@link Oa12020Controller#getBizTranItemsSource(ModelMap, Oa12020Vo)}テスト
-     *  ●パターン
-     *    正常（）
-     *
-     *  ●検証事項
-     *  ・戻り値（ItemsSource名、SelectOptionItemsSource）
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void getBizTranItemsSource_test2() {
-
-        // テスト対象クラス生成
-        Oa12020Controller oa12020Controller = createOa12020Controller(-2);
-
-        // 実行値
-        String subSystemCode = SubSystem.販売_畜産.getCode();
-        String bizTranGrpCode = "ANTG01";
-        ModelMap model = new ModelMap();
-        Oa12020Vo vo = new Oa12020Vo();
-        vo.setSubSystemCode(subSystemCode);
-        vo.setBizTranGrpCode(bizTranGrpCode);
-
-        // 期待値
-        String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
-        List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BizTran bizTran : createBizTranList()) {
-            expectedItemsSourcelist.add(new SelectOptionItemSource(
-                bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
-            ));
-        }
-
-        // 実行
-        String actualItemsSourceName = oa12020Controller.getBizTranItemsSource(model, vo);
-//        List<SelectOptionItemsSource> actualItemsSourceList = (List<SelectOptionItemsSource>) model.getAttribute("selectAjaxItems");
-        List<SelectOptionItemsSource> actualItemsSourceList = autoCast(model.getAttribute("selectAjaxItems"));
-
-        // 結果検証
-        assertThat(actualItemsSourceName).isEqualTo(expectedItemsSourceName);
-        assertThat(actualItemsSourceList).usingRecursiveComparison().isEqualTo(expectedItemsSourcelist);
-    }
 }

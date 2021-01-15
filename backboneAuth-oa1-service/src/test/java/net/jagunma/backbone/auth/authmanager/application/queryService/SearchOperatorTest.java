@@ -11,43 +11,43 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReferen
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchSubSystemRoleRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchBizTranRoleConverter;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010SearchSubSystemRoleConverter;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
@@ -122,17 +122,19 @@ class SearchOperatorTest {
     private SearchOperator createSearchOperator() {
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 return createOperatorList().stream().filter(o->o.getOperatorId().equals(operatorId)).findFirst().orElse(null);
             }
-        };
-        OperatorsRepository operatorsRepository = new OperatorsRepository() {
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return true;
+            }
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return Operators.createFrom(createOperatorList());
             }
         };
-        AccountLocksRepository accountLocksRepository = new AccountLocksRepository() {
+        AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
             public AccountLocks selectBy(AccountLockCriteria accountLockrCriteria, Orders orders) {
                 List<AccountLock> list = createAccountLockList();
@@ -142,7 +144,7 @@ class SearchOperatorTest {
                 return AccountLocks.createFrom(list);
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
                 List<PasswordHistory> list = createPasswordHistoryList();
@@ -152,7 +154,7 @@ class SearchOperatorTest {
                 return PasswordHistories.createFrom(list);
             }
         };
-        SignInTracesRepository signInTracesRepository = new SignInTracesRepository() {
+        SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
             @Override
             public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
                 List<SignInTrace> list = createSignInTraceList();
@@ -162,7 +164,7 @@ class SearchOperatorTest {
                 return SignInTraces.createFrom(list);
             }
         };
-        SignOutTracesRepository signOutTracesRepository = new SignOutTracesRepository() {
+        SignOutTraceRepository signOutTraceRepository = new SignOutTraceRepository() {
             @Override
             public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
                 List<SignOutTrace> list = createSignOutTraceList();
@@ -172,7 +174,7 @@ class SearchOperatorTest {
                 return SignOutTraces.createFrom(list);
             }
         };
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
                 List<Operator_SubSystemRole> list = createOperator_SubSystemRoleList();
@@ -182,7 +184,7 @@ class SearchOperatorTest {
                 return Operator_SubSystemRoles.createFrom(list);
             }
         };
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
             @Override
             public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 List<Operator_BizTranRole> list = createOperator_BizTranRoleList();
@@ -192,7 +194,11 @@ class SearchOperatorTest {
                 return Operator_BizTranRoles.createFrom(list);
             }
         };
-        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository = new OperatorHistoryHeadersRepository() {
+        OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
+            @Override
+            public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
             @Override
             public OperatorHistoryHeaders selectBy(OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
                 List<OperatorHistoryHeader> list = createOperatorHistoryHeaderList();
@@ -263,14 +269,13 @@ class SearchOperatorTest {
             }
         };
         return new SearchOperator(operatorRepository,
-            operatorsRepository,
-            accountLocksRepository,
-            passwordHistoriesRepository,
-            signInTracesRepository,
-            signOutTracesRepository,
-            operator_SubSystemRolesRepository,
-            operator_BizTranRolesRepository,
-            operatorHistoryHeadersRepository);
+            accountLockRepository,
+            passwordHistoryRepository,
+            signInTraceRepository,
+            signOutTraceRepository,
+            operator_SubSystemRoleRepository,
+            operator_BizTranRoleRepository,
+            operatorHistoryHeaderRepository);
     }
 
     // オペレーターリストデータ作成
@@ -366,9 +371,15 @@ class SearchOperatorTest {
     private OperatorSearchRequest createOperatorSearchRequest(){
         OperatorSearchRequest request = new OperatorSearchRequest() {
             @Override
-            public LongCriteria getOperatorIdCriteria() {
-                return operatorIdCriteria;
+            public Long getOperatorId() {
+                return operatorId;
             }
+        };
+        return request;
+    }
+    // オペレーター群検索リクエスト作成
+    private OperatorsSearchRequest createOperatorsSearchRequest(){
+        OperatorsSearchRequest request = new OperatorsSearchRequest() {
             @Override
             public StringCriteria getOperatorCodeCriteria() {
                 return operatorCodeCriteria;
@@ -500,9 +511,9 @@ class SearchOperatorTest {
     // サブシステムローロール検索条件作成
     private List<Oa11010SearchSubSystemRoleConverter> createOa11010SearchSubSystemRoleConverterList() {
         List<Oa11010SearchSubSystemRoleConverter> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.JA管理者.getCode(),SubSystemRole.JA管理者.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),1,LocalDate.of(2020,1,1),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31),LocalDate.of(2020,1,1),LocalDate.of(9999,12,31)));
         return list;
     }
 
@@ -530,7 +541,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -616,7 +627,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -691,7 +702,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -725,7 +736,6 @@ class SearchOperatorTest {
                             .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoles.getValues().get(i));
                     }
                 }
-
                 @Override
                 public void setOperatorHistoryHeaders(OperatorHistoryHeaders operatorHistoryHeaders) {
                     // 結果検証
@@ -733,7 +743,6 @@ class SearchOperatorTest {
                         assertThat(operatorHistoryHeaders.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                             .usingRecursiveComparison().isEqualTo(expectedOperatorHistoryHeaders.getValues().get(i));
                     }
-
                 }
             });
     }
@@ -769,7 +778,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -844,7 +853,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -922,7 +931,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -987,8 +996,8 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 1;  //AND
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1),LocalDate.of(2020,10,1)));
         subSystemRoleList = list;
 
         // 期待値
@@ -1000,7 +1009,7 @@ class SearchOperatorTest {
         OperatorHistoryHeaders expectedOperatorHistoryHeaders = OperatorHistoryHeaders.createFrom(createOperatorHistoryHeaderList());
 
         // 実行 & 結果検証
-        searchOperator.execute(createOperatorSearchRequest(),
+        searchOperator.execute(createOperatorsSearchRequest(),
             new OperatorsSearchResponse() {
                 @Override
                 public void setOperators(Operators actualOperators) {
@@ -1115,7 +1124,7 @@ class SearchOperatorTest {
 
 
     /**
-     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorsSearchRequest, List<Operator_SubSystemRole> )}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1134,9 +1143,9 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_購買.getCode(),SubSystemRole.業務統括者_購買.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_青果.getCode(),SubSystemRole.業務統括者_販売_青果.getDisplayName(),2,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(1L,18L,SubSystemRole.業務統括者_購買.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1148,14 +1157,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorsSearchRequest(), operatorSubSystemRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorsSearchRequest, List<Operator_SubSystemRole> )}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1174,7 +1183,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),0,null,LocalDate.of(2020,10,1),LocalDate.of(2020,10,31),LocalDate.of(2020,10,1),LocalDate.of(2020,10,31)));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(9999, 12, 31),1,null,null));
@@ -1183,14 +1192,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorsSearchRequest(), operatorSubSystemRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorsSearchRequest, List<Operator_SubSystemRole> )}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1209,7 +1218,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1218,14 +1227,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorsSearchRequest(), operatorSubSystemRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorSearchRequest, List<Operator_SubSystemRole> )}のテスト
+     * {@link SearchOperator#conditionsOperatorSubSystemRole(OperatorsSearchRequest, List<Operator_SubSystemRole> )}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1244,7 +1253,7 @@ class SearchOperatorTest {
         // 実行値
         subSystemRoleConditionsSelect = 2;  //OR
         List<OparatorSearchSubSystemRoleRequest> list = newArrayList();
-        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
+        list.add(Oa11010SearchSubSystemRoleConverter.with(true,SubSystemRole.業務統括者_販売_畜産.getCode(),SubSystemRole.業務統括者_販売_畜産.getDisplayName(),-1,LocalDate.of(2020,10,1),null,null,null,null));
         subSystemRoleList = list;
         List<Operator_SubSystemRole> operatorSubSystemRoleList = newArrayList();
         operatorSubSystemRoleList.add(Operator_SubSystemRole.createFrom(4L,20L,SubSystemRole.業務統括者_販売_畜産.getCode(),LocalDate.of(2020, 1, 1),LocalDate.of(2020, 8, 31),1,null,null));
@@ -1253,14 +1262,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorSearchRequest(), operatorSubSystemRoleList);
+        boolean actual = searchOperator.conditionsOperatorSubSystemRole(createOperatorsSearchRequest(), operatorSubSystemRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorsSearchRequest, List<Operator_BizTranRole>)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1289,14 +1298,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorsSearchRequest(), operatorBizTranRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorsSearchRequest, List<Operator_BizTranRole>)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1324,14 +1333,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorsSearchRequest(), operatorBizTranRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorSearchRequest, List<Operator_BizTranRole>)}のテスト
+     * {@link SearchOperator#conditionsOperatorBizTranRole(OperatorsSearchRequest, List<Operator_BizTranRole>)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1359,14 +1368,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorSearchRequest(), operatorBizTranRoleList);
+        boolean actual = searchOperator.conditionsOperatorBizTranRole(createOperatorsSearchRequest(), operatorBizTranRoleList);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1391,14 +1400,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1423,14 +1432,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1455,14 +1464,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1487,14 +1496,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1519,14 +1528,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsAccountLock(OperatorSearchRequest, AccountLock)}のテスト
+     * {@link SearchOperator#conditionsAccountLock(OperatorsSearchRequest, AccountLock)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1551,14 +1560,14 @@ class SearchOperatorTest {
 
         // 実行
         boolean actual = searchOperator
-            .conditionsAccountLock(createOperatorSearchRequest(), accountLocks);
+            .conditionsAccountLock(createOperatorsSearchRequest(), accountLocks);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1591,14 +1600,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1637,14 +1646,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1679,14 +1688,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1725,14 +1734,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1765,14 +1774,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1798,14 +1807,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1831,14 +1840,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1876,14 +1885,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1921,14 +1930,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -1966,14 +1975,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2003,14 +2012,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2048,14 +2057,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2093,14 +2102,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2138,14 +2147,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsPasswordHistory(OperatorSearchRequest, PasswordHistory)}のテスト
+     * {@link SearchOperator#conditionsPasswordHistory(OperatorsSearchRequest, PasswordHistory)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2183,14 +2192,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorSearchRequest(), passwordHistory);
+        boolean actual = searchOperator.conditionsPasswordHistory(createOperatorsSearchRequest(), passwordHistory);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2224,14 +2233,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2265,14 +2274,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2306,14 +2315,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2338,14 +2347,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2379,14 +2388,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2420,14 +2429,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2460,14 +2469,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2500,14 +2509,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2531,14 +2540,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2571,14 +2580,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2613,14 +2622,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2644,14 +2653,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2685,14 +2694,14 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2717,14 +2726,14 @@ class SearchOperatorTest {
         boolean expected = true;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);
     }
 
     /**
-     * {@link SearchOperator#conditionsSignInTrace(OperatorSearchRequest, SignInTrace)}のテスト
+     * {@link SearchOperator#conditionsSignInTrace(OperatorsSearchRequest, SignInTrace)}のテスト
      *  ●パターン
      *    正常
      *    [検索条件]
@@ -2749,7 +2758,7 @@ class SearchOperatorTest {
         boolean expected = false;
 
         // 実行
-        boolean actual = searchOperator.conditionsSignInTrace(createOperatorSearchRequest(), signInTrace);
+        boolean actual = searchOperator.conditionsSignInTrace(createOperatorsSearchRequest(), signInTrace);
 
         // 結果検証
         assertThat(actual).isEqualTo(expected);

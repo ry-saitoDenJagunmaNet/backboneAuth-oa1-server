@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>form elements</title>
+</head>
+<body>
+	<!-- コンボボックス -->
+	<div class="input-field" th:fragment="selectForCode">
+		<select th:id="${id}" th:name="${name}" th:value="${selectedValue}">
+			<option th:each="item : ${selectAjaxItems}"
+					th:value="${item.code}"
+					th:text="${item.name}"
+					th:selected="${item.code} == ${selectedValue}"></option>
+		</select>
+		<label th:text="${title}"></label>
+	</div>
+
+	<!-- 選択テーブル -->
+	<div th:fragment="selectTableForCode">
+		<table th:id="${id}" class="highlight">
+			<tr th:each="item, iterStat : ${selectAjaxItems}">
+				<td th:if="${!#strings.isEmpty(item.code)}" th:class="${tdCodeClass}" th:text="${item.code}"></td>
+				<td th:colspan="${#strings.isEmpty(item.code)}? 2 : 1" th:class="${tdNameClass}" th:text="${item.name}"></td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>

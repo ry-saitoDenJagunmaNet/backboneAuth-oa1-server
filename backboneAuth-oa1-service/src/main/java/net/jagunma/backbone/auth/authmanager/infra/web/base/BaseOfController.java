@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
-import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.Oa12010Controller;
+import javax.servlet.http.HttpSession;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -15,14 +15,70 @@ import net.jagunma.common.values.model.ja.JaCode;
 import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Controllerの基底クラス
  */
 public class BaseOfController {
 
+    // Http Session
+    @Autowired
+    protected HttpSession httpSession;
+
+    /**
+     * HttpSessionのＳｅｔ
+     *
+     * @param httpSession HttpSession
+     */
+    public void setHttpSession(HttpSession httpSession) {
+        this.httpSession = httpSession;
+    }
+
+    /**
+     * Http Sessionにデータを格納します
+     *
+     * @param id    Session Key
+     * @param value Sessionに格納するデータ
+     */
+    public void setSessionAttribute(String id, Object value) {
+        httpSession.setAttribute(id, value);
+    }
+
+    /**
+     * Http Sessionからデータを取り出します
+     *
+     * @param id Session Key
+     * @return Sessionから取り出したデータ
+     */
+    public Object getSessionAttribute(String id) {
+        return getSessionAttribute(id, true);
+    }
+
+    /**
+     * Http Sessionからデータを取り出します
+     *
+     * @param id       Session Key
+     * @param isRemove データ取り出し後Session項目の破棄（true：破棄）
+     * @return Sessionから取り出したデータ
+     */
+    public Object getSessionAttribute(String id, boolean isRemove) {
+        Object value = httpSession.getAttribute(id);
+        if (isRemove) { removeSessionAttribute(id); }
+        return value;
+    }
+
+    /**
+     * Http Session Session項目を破棄します
+     *
+     * @param id Session Key
+     */
+    public void removeSessionAttribute(String id) {
+        httpSession.removeAttribute(id);
+    }
+
+
+    // ToDo:認証情報（ＰＧ用暫定）
     private static Long defaultJaId = 6L;
     private static String defaultJaCode = "006";
     private static String defaultJaName = "JA前橋市";

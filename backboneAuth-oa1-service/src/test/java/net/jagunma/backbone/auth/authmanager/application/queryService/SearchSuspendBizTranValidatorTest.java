@@ -5,9 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
@@ -26,8 +25,8 @@ class SearchSuspendBizTranValidatorTest {
     private LocalDateCriteria suspendEndDateCriteria = new LocalDateCriteria();
     private final StringCriteria suspendReasonCriteria = new StringCriteria();
     // 一時取引抑止<一覧>検索サービス Request
-    private SuspendBizTranSearchRequest createSuspendBizTranSearchRequest() {
-        return new SuspendBizTranSearchRequest() {
+    private SuspendBizTransSearchRequest createSuspendBizTranSearchRequest() {
+        return new SuspendBizTransSearchRequest() {
             @Override
             public StringCriteria getJaCodeCriteria() {
                 return jaCodeCriteria;
@@ -76,7 +75,7 @@ class SearchSuspendBizTranValidatorTest {
     void validate_test0() {
 
         // 実行値
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatCode(()->
             // 実行
@@ -100,7 +99,7 @@ class SearchSuspendBizTranValidatorTest {
         suspendStartDateCriteria.setLessOrEqual(LocalDate.of(2020,11,2));
         suspendEndDateCriteria.setMoreOrEqual(LocalDate.of(2020,11,3));
         suspendEndDateCriteria.setLessOrEqual(LocalDate.of(2020,11,4));
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatCode(()->
             // 実行
@@ -122,7 +121,7 @@ class SearchSuspendBizTranValidatorTest {
         // 実行値
         suspendStartDateCriteria.setMoreOrEqual(LocalDate.of(2020,11,1));
         suspendEndDateCriteria.setMoreOrEqual(LocalDate.of(2020,11,3));
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatCode(()->
             // 実行
@@ -144,7 +143,7 @@ class SearchSuspendBizTranValidatorTest {
         // 実行値
         suspendStartDateCriteria.setLessOrEqual(LocalDate.of(2020,11,2));
         suspendEndDateCriteria.setLessOrEqual(LocalDate.of(2020,11,4));
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatCode(()->
             // 実行
@@ -164,7 +163,7 @@ class SearchSuspendBizTranValidatorTest {
     void validate_test4() {
 
         // 実行値
-        SuspendBizTranSearchRequest request = null;
+        SuspendBizTransSearchRequest request = null;
 
         assertThatThrownBy(() ->
             // 実行
@@ -190,7 +189,7 @@ class SearchSuspendBizTranValidatorTest {
         // 実行値
         suspendStartDateCriteria.setMoreOrEqual(LocalDate.of(2020,11,2));
         suspendStartDateCriteria.setLessOrEqual(LocalDate.of(2020,11,1));
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行
@@ -217,7 +216,7 @@ class SearchSuspendBizTranValidatorTest {
         // 実行値
         suspendEndDateCriteria.setMoreOrEqual(LocalDate.of(2020,11,4));
         suspendEndDateCriteria.setLessOrEqual(LocalDate.of(2020,11,3));
-        SuspendBizTranSearchRequest request = createSuspendBizTranSearchRequest();
+        SuspendBizTransSearchRequest request = createSuspendBizTranSearchRequest();
 
         assertThatThrownBy(() ->
             // 実行

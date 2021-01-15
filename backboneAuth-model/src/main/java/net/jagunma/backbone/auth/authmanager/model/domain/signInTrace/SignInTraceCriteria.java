@@ -1,15 +1,16 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.signInTrace;
 
+import net.jagunma.backbone.auth.authmanager.model.base.AbstractCriteria;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 
 /**
  * サインイン証跡の検索条件
  */
-public class SignInTraceCriteria {
+public class SignInTraceCriteria extends AbstractCriteria {
 
-    private LongCriteria signInTraceIdCriteria = new LongCriteria();
-    private StringCriteria operatorCodeCriteria = new StringCriteria();
+    private final LongCriteria signInTraceIdCriteria = new LongCriteria();
+    private final StringCriteria operatorCodeCriteria = new StringCriteria();
 
     // Getter
     public LongCriteria getSignInTraceIdCriteria() {

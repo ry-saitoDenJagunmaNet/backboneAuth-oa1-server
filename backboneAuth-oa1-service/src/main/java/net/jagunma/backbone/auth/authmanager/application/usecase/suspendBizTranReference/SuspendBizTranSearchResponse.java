@@ -1,15 +1,20 @@
 package net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTrans;
 
 /**
- * 一時取引抑止<一覧> 検索 Response
+ * 一時取引抑止検索サービス Response
  */
 public interface SuspendBizTranSearchResponse {
 
     /**
-     * ＪＡコ－ドのＳｅｔ
+     * 一時取引抑止IDのＳｅｔ
+     *
+     * @param suspendBizTranId 一時取引抑止ID
+     */
+    void setSuspendBizTranId(Long suspendBizTranId);
+    /**
+     * ＪＡコードのＳｅｔ
      *
      * @param jaCode ＪＡコード
      */
@@ -39,41 +44,17 @@ public interface SuspendBizTranSearchResponse {
      */
     void setBizTranCode(String bizTranCode);
     /**
-     * 抑止期間条件選択のＳｅｔ
+     * 抑止期間開始日のＳｅｔ
      *
-     * @param suspendConditionsSelect 抑止期間条件選択
+     * @param suspendStartDate 抑止期間開始日
      */
-    void setSuspendConditionsSelect(Integer suspendConditionsSelect);
+    void setSuspendStartDate(LocalDate suspendStartDate);
     /**
-     * 抑止期間 状態指定日のＳｅｔ
+     * 抑止期間終了日のＳｅｔ
      *
-     * @param suspendStatusDate 抑止期間 状態指定日
+     * @param suspendEndDate 抑止期間終了日
      */
-    void setSuspendStatusDate(LocalDate suspendStatusDate);
-    /**
-     * 抑止期間 条件指定開始（開始日）のＳｅｔ
-     *
-     * @param suspendStatusStartDateFrom 抑止期間 条件指定開始（開始日）
-     */
-    void setSuspendStatusStartDateFrom(LocalDate suspendStatusStartDateFrom);
-    /**
-     * 抑止期間 条件指定開始（終了日）のＳｅｔ
-     *
-     * @param suspendStatusStartDateTo 抑止期間 条件指定開始（終了日）
-     */
-    void setSuspendStatusStartDateTo(LocalDate suspendStatusStartDateTo);
-    /**
-     * 抑止期間 条件指定終了（開始日）のＳｅｔ
-     *
-     * @param suspendStatusEndDateFrom 抑止期間 条件指定終了（開始日）
-     */
-    void setSuspendStatusEndDateFrom(LocalDate suspendStatusEndDateFrom);
-    /**
-     * 抑止期間 条件指定終了（終了日）のＳｅｔ
-     *
-     * @param suspendStatusEndDateTo 抑止期間 条件指定終了（終了日）
-     */
-    void setSuspendStatusEndDateTo(LocalDate suspendStatusEndDateTo);
+    void setSuspendEndDate(LocalDate suspendEndDate);
     /**
      * 抑止理由のＳｅｔ
      *
@@ -81,16 +62,9 @@ public interface SuspendBizTranSearchResponse {
      */
     void setSuspendReason(String suspendReason);
     /**
-     * 一時取引抑止群のＳｅｔ
+     * レコードバージョンのＳｅｔ
      *
-     * @param suspendBizTrans 一時取引抑止群
+     * @param recordVersion レコードバージョン
      */
-    void setSuspendBizTrans(SuspendBizTrans suspendBizTrans);
-
-    /**
-     * 一時取引抑止一覧表示ページのＳｅｔ
-     *
-     * @param pageNo 一時取引抑止一覧表示ページ
-     */
-    void setPageNo(Integer pageNo);
+    void setRecordVersion(Integer recordVersion);
 }

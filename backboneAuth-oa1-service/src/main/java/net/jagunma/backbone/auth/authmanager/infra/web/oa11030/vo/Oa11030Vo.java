@@ -2,13 +2,13 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11030.vo;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
  * OA11030 ViewObject
  */
-public class Oa11030Vo extends BaseOfResponseVo {
+public class Oa11030Vo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,11 +71,11 @@ public class Oa11030Vo extends BaseOfResponseVo {
     /**
      * サブシステムロールテーブル
      */
-    private List<Oa11030SubSystemRoleTableVo> Oa11030SubSystemRoleTableVoList;
+    private List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList;
     /**
      * 取引ロールテーブル
      */
-    private List<Oa11030BizTranRoleTableVo> Oa11030BizTranRoleTableVoList;
+    private List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList;
 
     /**
      * 店舗コンボボックスItemsSource
@@ -126,10 +126,10 @@ public class Oa11030Vo extends BaseOfResponseVo {
         return accountLockStatus;
     }
     public List<Oa11030SubSystemRoleTableVo> getOa11030SubSystemRoleTableVoList() {
-        return Oa11030SubSystemRoleTableVoList;
+        return oa11030SubSystemRoleTableVoList;
     }
     public List<Oa11030BizTranRoleTableVo> getOa11030BizTranRoleTableVoList() {
-        return Oa11030BizTranRoleTableVoList;
+        return oa11030BizTranRoleTableVoList;
     }
     public List<SelectOptionItemSource> getBranchItemsSource() {
         return branchItemsSource;
@@ -179,10 +179,10 @@ public class Oa11030Vo extends BaseOfResponseVo {
         this.accountLockStatus = accountLockStatus;
     }
     public void setOa11030SubSystemRoleTableVoList(List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList) {
-        Oa11030SubSystemRoleTableVoList = oa11030SubSystemRoleTableVoList;
+        this.oa11030SubSystemRoleTableVoList = oa11030SubSystemRoleTableVoList;
     }
     public void setOa11030BizTranRoleTableVoList(List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList) {
-        Oa11030BizTranRoleTableVoList = oa11030BizTranRoleTableVoList;
+        this.oa11030BizTranRoleTableVoList = oa11030BizTranRoleTableVoList;
     }
     public void setBranchItemsSource(List<SelectOptionItemSource> branchItemsSource) {
         this.branchItemsSource = branchItemsSource;

@@ -6,9 +6,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarType;
+import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendars;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntity;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.calendar.CalendarEntityDao;
@@ -31,6 +33,18 @@ class CalendarDataSourceTest {
             list.add(createCalendarEntity(id++, CalendarType.経済システム稼働カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));
             list.add(createCalendarEntity(id++, CalendarType.信用カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));
             list.add(createCalendarEntity(id++, CalendarType.広域物流カレンダー.getCode(), ymd.withDayOfMonth(i), false, false, true));
+        }
+        return list;
+    }
+    private List<CalendarEntity> createCalendarEntityListForMonth() {
+        // カレンダーデータを作成
+        List<CalendarEntity> list = newArrayList();
+        long id = 1;
+        // 1か月分のデータ作成
+        LocalDate startDay = LocalDates.getFirstDate(ymd);
+        LocalDate lastDay = LocalDates.getLastDate(ymd);
+        for (LocalDate date = startDay; date.isBefore(lastDay.plusDays(1)); date = date.plusDays(1)) {
+            list.add(createCalendarEntity(id++, CalendarType.信用カレンダー.getCode(), date, false, false, true));
         }
         return list;
     }
@@ -62,16 +76,16 @@ class CalendarDataSourceTest {
         // CalendarEntityDaoオブジェクトの作成
         return new CalendarEntityDao() {
             @Override
-            public List<CalendarEntity> findAll(Orders orders) {
-                return null;
-            }
-            @Override
             public CalendarEntity findOneBy(CalendarEntityCriteria criteria) {
                 return createCalendarEntityList().stream().filter(criteria).findFirst().orElse(null);
             }
             @Override
+            public List<CalendarEntity> findAll(Orders orders) {
+                return createCalendarEntityListForMonth();
+            }
+            @Override
             public List<CalendarEntity> findBy(CalendarEntityCriteria criteria, Orders orders) {
-                return null;
+                return createCalendarEntityListForMonth().stream().filter(criteria).collect(Collectors.toList());
             }
             @Override
             public int countBy(CalendarEntityCriteria criteria) {
@@ -113,7 +127,7 @@ class CalendarDataSourceTest {
     }
 
     /**
-     * {@link CalendarDataSource#findOneBy(CalendarCriteria)}のテスト
+     * {@link CalendarDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    正常
      *
@@ -122,7 +136,7 @@ class CalendarDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test0() {
+    void findOneById_test0() {
 
         // 実行値
         Long calendarId = 4L;
@@ -132,8 +146,8 @@ class CalendarDataSourceTest {
         Boolean isManualChange = false;
         Boolean isRelease = true;
         Integer recordVersion = 1;
-        CalendarCriteria calendarCriteria = new CalendarCriteria();
-        calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
@@ -147,14 +161,14 @@ class CalendarDataSourceTest {
             recordVersion);
 
         // 実行
-        Calendar calendar = calendarDataSource.findOneBy(calendarCriteria);
+        Calendar calendar = calendarDataSource.findOneById(calendarId);
 
         // 結果検証
         assertThat(calendar).usingRecursiveComparison().isEqualTo(expectedCalendar);
     }
 
     /**
-     * {@link CalendarDataSource#findOneBy(CalendarCriteria)}のテスト
+     * {@link CalendarDataSource#findOneById(Long)}のテスト
      *  ●パターン
      *    対象データ無し
      *
@@ -163,21 +177,112 @@ class CalendarDataSourceTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void findOneBy_test1() {
+    void findOneById_test1() {
 
         // 実行値
         Long calendarId = 99999999L;
-        CalendarCriteria calendarCriteria = new CalendarCriteria();
-        calendarCriteria.getCalendarIdCriteria().setEqualTo(calendarId);
+
+        // テスト対象クラス生成
         CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
 
         // 期待値
         Calendar expectedCalendar = null;
 
         // 実行
-        Calendar calendar = calendarDataSource.findOneBy(calendarCriteria);
+        Calendar calendar = calendarDataSource.findOneById(calendarId);
 
         // 結果検証
         assertThat(calendar).isEqualTo(expectedCalendar);
+    }
+
+    /**
+     * {@link CalendarDataSource#selectBy(CalendarCriteria)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void selectBy_test0() {
+
+        // 実行値
+        LocalDate criteriaDate = ymd;
+        CalendarCriteria calendarCriteria = new CalendarCriteria();
+        calendarCriteria.getDateCriteria().setFrom(LocalDates.getFirstDate(criteriaDate));
+        calendarCriteria.getDateCriteria().setTo(LocalDates.getLastDate(criteriaDate));
+
+        // テスト対象クラス生成
+        CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
+
+        // 期待値
+        List<CalendarEntity> expectedlist = createCalendarEntityListForMonth().stream().filter(c->
+            c.getDate().compareTo(LocalDates.getFirstDate(criteriaDate)) >= 0 &&
+                c.getDate().compareTo(LocalDates.getLastDate(criteriaDate)) <= 0).collect(Collectors.toList());
+        List<Calendar> expectedCalendarlist = newArrayList();
+        for(CalendarEntity entity : expectedlist) {
+            expectedCalendarlist.add(Calendar.createFrom(
+                entity.getCalendarId(),
+                CalendarType.codeOf(entity.getCalendarType()),
+                entity.getDate(),
+                entity.getIsHoliday(),
+                entity.getIsManualChange(),
+                entity.getIsRelease(),
+                entity.getRecordVersion()));
+        }
+        Calendars expectedCalendars = Calendars.createFrom(expectedCalendarlist);
+
+        // 実行
+        Calendars calendars = calendarDataSource.selectBy(calendarCriteria);
+
+        // 結果検証
+        for(int i = 0; i < calendars.getValues().size(); i++) {
+            assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
+        }
+    }
+
+    /**
+     * {@link CalendarDataSource#selectAll()}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void selectAll_test1() {
+
+        // 実行値
+        LocalDate criteriaDate = ymd;
+
+        // テスト対象クラス生成
+        CalendarDataSource calendarDataSource = new CalendarDataSource(createCalendarEntityDao());
+
+        // 期待値
+        List<CalendarEntity> expectedlist = createCalendarEntityListForMonth();
+        List<Calendar> expectedCalendarlist = newArrayList();
+        for(CalendarEntity entity : expectedlist) {
+            expectedCalendarlist.add(Calendar.createFrom(
+                entity.getCalendarId(),
+                CalendarType.codeOf(entity.getCalendarType()),
+                entity.getDate(),
+                entity.getIsHoliday(),
+                entity.getIsManualChange(),
+                entity.getIsRelease(),
+                entity.getRecordVersion()));
+        }
+        Calendars expectedCalendars = Calendars.createFrom(expectedCalendarlist);
+
+        // 実行
+        Calendars calendars = calendarDataSource.selectAll();
+
+        // 結果検証
+        for(int i = 0; i < calendars.getValues().size(); i++) {
+            assertThat(calendars.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedCalendars.getValues().get(i));
+        }
     }
 }

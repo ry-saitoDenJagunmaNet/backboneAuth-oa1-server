@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OparatorSearchBizTranRoleRequest;
 
 /**
- * OA11010 オペレーター＜一覧＞検索サービス 取引ロール Request Converter
+ * OA11010 検索取引ロール Converter
  */
 public class Oa11010SearchBizTranRoleConverter implements OparatorSearchBizTranRoleRequest {
 

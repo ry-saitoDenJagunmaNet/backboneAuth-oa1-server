@@ -5,7 +5,7 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa12010.vo.Oa12010Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 
 /**
- * OA12010 取引ロール編成インポート＆エクスポート 画面初期表示 Presenter
+ * OA12010 初期表示 Presenter
  */
 public class Oa12010InitPresenter {
 

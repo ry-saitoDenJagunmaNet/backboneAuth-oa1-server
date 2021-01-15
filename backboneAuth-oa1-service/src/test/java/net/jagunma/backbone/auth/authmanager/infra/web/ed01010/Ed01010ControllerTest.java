@@ -12,10 +12,11 @@ import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
@@ -74,19 +75,27 @@ class Ed01010ControllerTest {
 
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
+                return null;
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return false;
+            }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return null;
             }
         };
-        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null, null) {
+        SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
-                // request.getOperatorIdCriteria().getEqualTo().equals(11L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorIdCriteria().getEqualTo().equals(11L)) {
+                // request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if(request.getOperatorId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワードの確認入力"));
                 }
-                // request.getOperatorIdCriteria().getEqualTo().equals(12L) の場合：RuntimeException を発生させる
-                if(request.getOperatorIdCriteria().getEqualTo().equals(12L)) {
+                // request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
+                if(request.getOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
                 response.setOperator(operator);
@@ -98,13 +107,13 @@ class Ed01010ControllerTest {
             public void store(PasswordHistory passwordHistory) {
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
                 return null;
             }
         };
-        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoriesRepository) {
+        UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoryRepository) {
             @Override
             public void execute(PasswordResetRequest request) {
                 // request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
@@ -129,8 +138,8 @@ class Ed01010ControllerTest {
         Ed01010Vo vo = new Ed01010Vo();
 
         vo.setMode(mode);
-        vo.setJa(jaCode + " " + jaName);
         vo.setOperatorId(operatorId);
+        vo.setJa(jaCode + " " + jaName);
         vo.setOperator(operatorCode + " " + operatorName);
         vo.setOldPassword(oldPassword);
         vo.setNewPassword(newPassword);

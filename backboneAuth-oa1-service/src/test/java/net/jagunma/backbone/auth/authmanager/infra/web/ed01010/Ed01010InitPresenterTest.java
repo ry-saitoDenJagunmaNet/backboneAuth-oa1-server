@@ -69,8 +69,8 @@ class Ed01010InitPresenterTest {
         // 期待値
         Ed01010Vo expectedVo = new Ed01010Vo();
         expectedVo.setMode("Change");
-        expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setOperatorId(operatorId);
+        expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setOperator(operatorCode + " " + operatorName);
         expectedVo.setOldPassword(null);
         expectedVo.setNewPassword(null);

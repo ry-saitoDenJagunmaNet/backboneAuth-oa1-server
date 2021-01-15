@@ -1,11 +1,11 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo;
 
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 
 /**
  * ED01010 ViewObject
  */
-public class Ed01010Vo extends BaseOfResponseVo {
+public class Ed01010Vo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 

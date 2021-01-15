@@ -17,7 +17,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 
 /**
- * OA11010 オペレーター＜一覧＞検索サービス Response Presenter
+ * OA11010 検索 Presenter
  */
 class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements OperatorsSearchResponse {
 
@@ -110,7 +110,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         }
         // オペレーター
         html.append(String.format("<td class=\"oaex_operator_operator_code\">%s<input type=\"hidden\" value=\"%d\"/></td>",
-            operator.getOperatorCode(),operator.getBranchId()));
+            operator.getOperatorCode(),operator.getOperatorId()));
         html.append(String.format("<td class=\"oaex_operator_operator_name\">%s</td>", operator.getOperatorName()));
         // オペレーター有効期限
         html.append(String.format("<td class=\"oaex_operator_valid_thru_date\">%s～%s</td>",
@@ -149,7 +149,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
                 firstRow = false;
                 // サブシステムロール
                 html.append(String.format("<td class=\"oaex_operator_subsystem_role\">%s</td>",
-                    operatorSubSystemRole.getSubSystemRole().getName()));
+                    operatorSubSystemRole.getSubSystemRole().getDisplayName()));
                 // サブシステムロール有効期限
                 html.append(String.format("<td class=\"oaex_operator_subsystem_role_valid_thru_date\">%s～%s</td>",
                     formatLocalDate(operatorSubSystemRole.getValidThruStartDate()),

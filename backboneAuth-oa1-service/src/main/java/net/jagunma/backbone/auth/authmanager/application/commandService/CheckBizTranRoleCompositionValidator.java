@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.dto.MessageDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportCheckRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleCompositionCommand.BizTranRoleCompositionImportRequest;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranGrp_BizTranSheet;
 import net.jagunma.backbone.auth.authmanager.model.excel.bizTranRoleComposition.BizTranRole_BizTranGrpSheet;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
@@ -16,7 +15,7 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * 取引ロール編成エクスポートExcel Import登録サービス Validator
+ * 取引ロール編成エクスポートExcelインポートチェックサービス Validator
  */
 public class CheckBizTranRoleCompositionValidator {
 
@@ -45,11 +44,11 @@ public class CheckBizTranRoleCompositionValidator {
 
         // サブシステムチェック
         if (request.getBizTranRole_BizTranGrpsSheet().getValues().stream().filter(b->
-            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getDisplayName())).count() > 0) {
             throw new GunmaRuntimeException("EOA13102", "[取引ロール－取引グループ編成]シート");
         }
         if (request.getBizTranGrp_BizTransSheet().getValues().stream().filter(b->
-            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getName())).count() > 0) {
+            !b.getSubSystemName().equals(SubSystem.codeOf(request.getSubSystemCode()).getDisplayName())).count() > 0) {
             throw new GunmaRuntimeException("EOA13102", "[取引グループ－取引編成]シート");
         }
     }

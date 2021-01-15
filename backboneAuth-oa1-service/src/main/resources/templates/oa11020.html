@@ -44,16 +44,19 @@
 				<div class="col s6">
 					<div class="input-field">
 						<select id="branch" name="branchId" class="validate" th:value="${form.branchId}">
+							<!-- th using -->
+							<!--/*/
 							<option th:each="item : ${form.branchItemsSource}"
 									th:value="${item.id}"
 									th:text="${item.name}"
 									th:selected="${item.id == form.branchId}"></option>
-							<option value="" th:remove="all"></option>
-							<option value="001" th:remove="all">本所</option>
-							<option value="002" th:remove="all">○○○支所</option>
-							<option value="003" th:remove="all">△△センター</option>
-							<option value="004" th:remove="all">□□□□店</option>
-							<option value="005" th:remove="all">××××館</option>
+							/*/-->
+							<option th:remove="all" value=""></option>
+							<option th:remove="all" value="001">本所</option>
+							<option th:remove="all" value="002">○○○支所</option>
+							<option th:remove="all" value="003">△△センター</option>
+							<option th:remove="all" value="004">□□□□店</option>
+							<option th:remove="all" value="005">××××館</option>
 						</select>
 						<label>店舗</label>
 					</div>

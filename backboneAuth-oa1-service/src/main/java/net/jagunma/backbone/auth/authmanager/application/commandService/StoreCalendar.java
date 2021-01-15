@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreDetailsRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.calendarCommand.CalendarStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.Calendar;
-import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.calendar.CalendarRepositoryForStore;
 import org.springframework.stereotype.Service;
@@ -55,9 +54,7 @@ public class StoreCalendar {
                 CalendarStoreDetails.getRecordVersion());
 
             // 稼働/休日が変更になったデータを更新
-            CalendarCriteria criteria = new CalendarCriteria();
-            criteria.getCalendarIdCriteria().setEqualTo(calendar.getCalendarId());
-            Calendar oldClendar = calendarRepository.findOneBy(criteria);
+            Calendar oldClendar = calendarRepository.findOneById(calendar.getCalendarId());
             if (!calendar.getIsHoliday().equals(oldClendar.getIsHoliday())) {
                 calendarRepositoryForStore.update(calendar);
                 reflected++;

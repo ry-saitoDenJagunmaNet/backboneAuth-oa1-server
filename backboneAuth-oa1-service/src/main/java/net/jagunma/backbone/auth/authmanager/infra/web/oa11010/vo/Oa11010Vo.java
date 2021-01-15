@@ -2,13 +2,13 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 
 import java.time.LocalDate;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 
 /**
  * OA11010 View Object
  */
-public class Oa11010Vo extends BaseOfResponseVo {
+public class Oa11010Vo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -180,6 +180,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
      * オペレーター一覧表示ページ
      */
     private int pageNo;
+
+    /**
+     * 入力補助として使用する場合の戻り先
+     */
+    private String responseMethod;
 
     // Getter／Setter
     public String getJa() {
@@ -427,5 +432,11 @@ public class Oa11010Vo extends BaseOfResponseVo {
     }
     public void setPageNo(int pageNo) {
         this.pageNo = pageNo;
+    }
+    public String getResponseMethod() {
+        return responseMethod;
+    }
+    public void setResponseMethod(String responseMethod) {
+        this.responseMethod = responseMethod;
     }
 }

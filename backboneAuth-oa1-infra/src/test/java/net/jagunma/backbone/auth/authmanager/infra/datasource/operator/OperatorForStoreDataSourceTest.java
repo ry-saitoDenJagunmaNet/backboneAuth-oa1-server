@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
+import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -8,19 +9,24 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorEntryPack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorUpdatePack;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.OperatorHistoryPackRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntity;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.operator.OperatorEntityDao;
+import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
@@ -64,8 +70,12 @@ class OperatorForStoreDataSourceTest {
     private PasswordChangeType passwordChangeType2TimesBefore = PasswordChangeType.管理者によるリセット;
     private PasswordHistories passwordHistories;
 
-    // テスト制御用
-    boolean isOperatorEntityUpdated = false;
+    // 検証値
+    OperatorCriteria actualOperatorCriteria;
+    OperatorEntityCriteria actualOperatorEntityCriteria;
+    PasswordHistoryCriteria actualPasswordHistoryCriteria;
+    Orders actualPasswordHistoryOrders;
+    Long actualOperatorId;
 
     // オペレーターエントリーパック生成
     private OperatorEntryPack createOperatorEntryPack() {
@@ -109,41 +119,23 @@ class OperatorForStoreDataSourceTest {
 
     // テスト対象クラス生成
     private OperatorForStoreDataSource createOperatorForStoreDataSource() {
-        OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
-            @Override
-            public int countBy(OperatorEntityCriteria criteria) {
-                // entry系テスト時
-                if (!criteria.getOperatorCodeCriteria().getEqualTo().equals(operatorCode)) {
-                    return 1;
-                }
-                return 0;
-            }
-            @Override
-            public int insert(OperatorEntity entity) {
-                // entry系テスト時
-                entity.setOperatorId(operatorId);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
+            OperatorEntityDao operatorEntityDao = new OperatorEntityDao() {
             @Override
             public List<OperatorEntity> findAll(Orders orders) {
                 return null;
             }
             @Override
             public OperatorEntity findOneBy(OperatorEntityCriteria criteria) {
+                // update_test()時, updateOperator_test()時
+                actualOperatorEntityCriteria = criteria;
                 OperatorEntity entity = new OperatorEntity();
-
-                // update系テスト時
                 entity.setOperatorId(criteria.getOperatorIdCriteria().getEqualTo());
                 entity.setOperatorCode(operatorCode);
                 entity.setOperatorName(operatorName);
                 entity.setMailAddress(mailAddress);
                 entity.setValidThruStartDate(validThruStartDate);
                 entity.setValidThruEndDate(validThruEndDate);
-
+                entity.setIsDeviceAuth(isDeviceAuth);
                 entity.setJaId(jaId);
                 entity.setJaCode(jaCode);
                 entity.setBranchId(branchId);
@@ -152,25 +144,10 @@ class OperatorForStoreDataSourceTest {
                 entity.setCreatedBy(createdBy);
                 entity.setCreatedAt(createdAt);
                 entity.setCreatedIpAddress(createdIpAddress);
-
-                // update系テスト時（updateOperator での update 前の findOneBy）＆（isChangeDeviceAuth）
-                if (!isOperatorEntityUpdated) {
-                    entity.setIsDeviceAuth(isDeviceAuthBefore);
-
-                    entity.setUpdatedBy(null);
-                    entity.setUpdatedAt(null);
-                    entity.setUpdatedIpAddress(null);
-                    entity.setRecordVersion(recordVersion);
-                } else {
-                // update系テスト時（updateOperator での update 後の findOneBy）
-                    entity.setIsDeviceAuth(isDeviceAuth);
-
-                    entity.setUpdatedBy(updatedBy);
-                    entity.setUpdatedAt(updatedAt);
-                    entity.setUpdatedIpAddress(updatedIpAddress);
-                    entity.setRecordVersion(recordVersion + 1);
-                }
-
+                entity.setUpdatedBy(updatedBy);
+                entity.setUpdatedAt(updatedAt);
+                entity.setUpdatedIpAddress(updatedIpAddress);
+                entity.setRecordVersion(recordVersion + 1);
                 return entity;
             }
             @Override
@@ -178,12 +155,25 @@ class OperatorForStoreDataSourceTest {
                 return null;
             }
             @Override
+            public int countBy(OperatorEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(OperatorEntity entity) {
+                // entry_test()時, insertOperator_test()時
+                entity.setOperatorId(operatorId);
+                entity.setCreatedBy(createdBy);
+                entity.setCreatedAt(createdAt);
+                entity.setCreatedIpAddress(createdIpAddress);
+                entity.setRecordVersion(recordVersion);
+                return 0;
+            }
+            @Override
             public int update(OperatorEntity entity) {
                 return 0;
             }
             @Override
             public int updateExcludeNull(OperatorEntity entity) {
-                isOperatorEntityUpdated = true;
                 return 0;
             }
             @Override
@@ -212,23 +202,61 @@ class OperatorForStoreDataSourceTest {
             public void store(Long operatorId, LocalDateTime changeDateTime, String changeCause) {
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
-            @Override
-            public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
-                return passwordHistories;
-            }
-        };
         PasswordHistoryRepositoryForStore passwordHistoryRepositoryForStore = new PasswordHistoryRepositoryForStore() {
             @Override
             public void store(PasswordHistory passwordHistory) {
+            }
+        };
+        OperatorRepository operatorRepository = new OperatorRepository() {
+            @Override
+            public Operator findOneById(Long operatorId) {
+                // update_test()時, isChangeDeviceAuth_testX()時
+                actualOperatorId = operatorId;
+                return Operator.createFrom(
+                    operatorId,
+                    operatorCode,
+                    operatorName,
+                    mailAddress,
+                    validThruStartDate,
+                    validThruEndDate,
+                    isDeviceAuthBefore,
+                    jaId,
+                    jaCode,
+                    branchId,
+                    branchCode,
+                    availableStatus,
+                    recordVersion,
+                    null);
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                actualOperatorCriteria = operatorCriteria;
+                if (operatorCriteria.getOperatorCodeCriteria().getEqualTo().equals(operatorCode)) {
+                    return false;   // entry_test()時
+                } else {
+                    return true;    // checkAlreadyExists_test時
+                }
+            }
+            @Override
+            public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
+                return null;
+            }
+        };
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
+            @Override
+            public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
+                actualPasswordHistoryCriteria = passwordHistoryCriteria;
+                actualPasswordHistoryOrders = orders;
+                return passwordHistories;
             }
         };
 
         return new OperatorForStoreDataSource(
             operatorEntityDao,
             operatorHistoryPackRepositoryForStore,
-            passwordHistoriesRepository,
-            passwordHistoryRepositoryForStore);
+            passwordHistoryRepositoryForStore,
+            operatorRepository,
+            passwordHistoryRepository);
     }
 
     /**
@@ -287,6 +315,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・エラー発生
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -298,6 +327,10 @@ class OperatorForStoreDataSourceTest {
         // 実行値
         String alreadyExistsOperatorCode = "yu999999";
 
+        // 期待値
+        OperatorCriteria expectedOperatorCriteria = new OperatorCriteria();
+        expectedOperatorCriteria.getOperatorCodeCriteria().setEqualTo(alreadyExistsOperatorCode);
+
         assertThatThrownBy(() ->
             // 実行
             operatorForStoreDataSource.checkAlreadyExists(alreadyExistsOperatorCode))
@@ -307,6 +340,8 @@ class OperatorForStoreDataSourceTest {
                 assertThat(e.getArgs()).containsSequence("オペレーターコード");
                 assertThat(e.getArgs()).containsSequence(alreadyExistsOperatorCode);
             });
+        // 結果検証 // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualOperatorCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorCriteria).defaultConfig().toString());
     }
 
     /**
@@ -316,6 +351,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・判定結果
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -329,12 +365,14 @@ class OperatorForStoreDataSourceTest {
 
         // 期待値
         Boolean expectedValue = true;
+        Long expectedOperatorId = operatorId;
 
         // 実行
         boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
 
         // 結果検証
         assertThat(actualValue).isEqualTo(expectedValue);
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
     /**
      * {@link OperatorForStoreDataSource#isChangeDeviceAuth(OperatorUpdatePack operatorUpdatePack)}テスト
@@ -343,6 +381,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・判定結果
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -358,12 +397,14 @@ class OperatorForStoreDataSourceTest {
 
         // 期待値
         Boolean expectedValue = false;
+        Long expectedOperatorId = operatorId;
 
         // 実行
         boolean actualValue = operatorForStoreDataSource.isChangeDeviceAuth(operatorUpdatePack);
 
         // 結果検証
         assertThat(actualValue).isEqualTo(expectedValue);
+        assertThat(actualOperatorId).isEqualTo(expectedOperatorId);
     }
 
     /**
@@ -420,6 +461,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・Entityへのセット
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -452,12 +494,16 @@ class OperatorForStoreDataSourceTest {
         expectedEntity.setUpdatedAt(updatedAt);
         expectedEntity.setUpdatedIpAddress(updatedIpAddress);
         expectedEntity.setRecordVersion(recordVersion + 1);
+        OperatorEntityCriteria expectedOperatorEntityCriteria = new OperatorEntityCriteria();
+        expectedOperatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
         // 実行
         OperatorEntity operatorEntity = operatorForStoreDataSource.updateOperator(operatorUpdatePack);
 
         // 結果検証
         assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
+        // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualOperatorEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorEntityCriteria).defaultConfig().toString());
     }
 
     /**
@@ -499,6 +545,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・modelへのセット
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -519,12 +566,18 @@ class OperatorForStoreDataSourceTest {
             PasswordChangeType.機器認証パスワード,
             null,
             null);
+        PasswordHistoryCriteria expectedPasswordHistoryCriteria = new PasswordHistoryCriteria();
+        expectedPasswordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
 
         // 実行
         PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);
 
         // 結果検証
         assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
+        // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualPasswordHistoryCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryCriteria).defaultConfig().toString());
+        assertThat(toStringHelper(actualPasswordHistoryOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryOrders).defaultConfig().toString());
     }
 
     /**
@@ -534,6 +587,7 @@ class OperatorForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・modelへのセット
+     *  ・Criteriaへのセット
      *
      */
     @Test
@@ -559,11 +613,17 @@ class OperatorForStoreDataSourceTest {
             passwordChangeType2TimesBefore,
             null,
             null);
+        PasswordHistoryCriteria expectedPasswordHistoryCriteria = new PasswordHistoryCriteria();
+        expectedPasswordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
 
         // 実行
         PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);
 
         // 結果検証
         assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
+        // Todo:継承元のメソッド追加後要修正
+        assertThat(toStringHelper(actualPasswordHistoryCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryCriteria).defaultConfig().toString());
+        assertThat(toStringHelper(actualPasswordHistoryOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryOrders).defaultConfig().toString());
     }
 }

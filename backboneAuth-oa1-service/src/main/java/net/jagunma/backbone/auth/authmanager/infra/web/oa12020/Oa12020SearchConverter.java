@@ -1,15 +1,15 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa12020;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTranSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.suspendBizTranReference.SuspendBizTransSearchRequest;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa12020.vo.Oa12020Vo;
 import net.jagunma.common.ddd.model.criterias.LocalDateCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
 import net.jagunma.common.util.strings2.Strings2;
 
 /**
- * OA12010 一時取引抑止<一覧>検索サービス Request Converter
+ * OA12020 検索 Converter
  */
-class Oa12020SearchConverter implements SuspendBizTranSearchRequest {
+class Oa12020SearchConverter implements SuspendBizTransSearchRequest {
 
     /**
      * OA12020 View Object

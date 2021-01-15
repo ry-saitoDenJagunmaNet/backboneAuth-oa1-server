@@ -6,11 +6,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SimpleSearchBizTranRole;
+import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorsSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
@@ -20,37 +19,37 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010SubSyst
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo.Oa11010Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
-import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocksRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorsRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaderRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeaders;
-import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeadersRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRolesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
-import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoriesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTraces;
-import net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace.SignOutTracesRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
@@ -117,6 +116,7 @@ class Oa11010ControllerTest {
     private final Boolean signintraceSignOut = null;
     private final Short[] signintraceSignInResult = null;
     private int pageNo = 0;
+    private String responseMethod = null;
     private final String GunmaRuntimeExceptionMessageCode = "EOA14002";
     private final String GunmaRuntimeExceptionMessageArg1 = "JAID";
     private final String GunmaRuntimeExceptionMessageArg2 = "正しく設定";
@@ -126,53 +126,59 @@ class Oa11010ControllerTest {
     private Oa11010Controller createOa11010Controller() {
         OperatorRepository operatorRepository = new OperatorRepository() {
             @Override
-            public Operator findOneBy(OperatorCriteria operatorCriteria) {
+            public Operator findOneById(Long operatorId) {
                 return null;
             }
-        };
-        OperatorsRepository operatorsRepository = new OperatorsRepository() {
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return true;
+            }
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return null;
             }
         };
-        AccountLocksRepository accountLocksRepository = new AccountLocksRepository() {
+        AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
             public AccountLocks selectBy(AccountLockCriteria accountLockrCriteria, Orders orders) {
                 return null;
             }
         };
-        PasswordHistoriesRepository passwordHistoriesRepository = new PasswordHistoriesRepository() {
+        PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
                 return null;
             }
         };
-        SignInTracesRepository signInTracesRepository = new SignInTracesRepository() {
+        SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
             @Override
             public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
                 return null;
             }
         };
-        SignOutTracesRepository signOutTracesRepository = new SignOutTracesRepository() {
+        SignOutTraceRepository signOutTraceRepository = new SignOutTraceRepository() {
             @Override
             public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
                 return null;
             }
         };
-        Operator_SubSystemRolesRepository operator_SubSystemRolesRepository = new Operator_SubSystemRolesRepository() {
+        Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {
             @Override
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
                 return null;
             }
         };
-        Operator_BizTranRolesRepository operator_BizTranRolesRepository = new Operator_BizTranRolesRepository() {
+        Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
             @Override
             public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 return null;
             }
         };
-        OperatorHistoryHeadersRepository operatorHistoryHeadersRepository = new OperatorHistoryHeadersRepository() {
+        OperatorHistoryHeaderRepository operatorHistoryHeaderRepository = new OperatorHistoryHeaderRepository() {
+            @Override
+            public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
             @Override
             public OperatorHistoryHeaders selectBy(
                 OperatorHistoryHeaderCriteria operatorHistoryHeaderCriteria, Orders orders) {
@@ -196,15 +202,14 @@ class Oa11010ControllerTest {
         };
         SearchOperator searchOperator = new SearchOperator(
             operatorRepository,
-            operatorsRepository,
-            accountLocksRepository,
-            passwordHistoriesRepository,
-            signInTracesRepository,
-            signOutTracesRepository,
-            operator_SubSystemRolesRepository,
-            operator_BizTranRolesRepository,
-            operatorHistoryHeadersRepository) {
-            public void execute(OperatorSearchRequest request, OperatorsSearchResponse response) {
+            accountLockRepository,
+            passwordHistoryRepository,
+            signInTraceRepository,
+            signOutTraceRepository,
+            operator_SubSystemRoleRepository,
+            operator_BizTranRoleRepository,
+            operatorHistoryHeaderRepository) {
+            public void execute(OperatorsSearchRequest request, OperatorsSearchResponse response) {
                 // request.getJaIdCriteria().getEqualTo() == -1 の場合：RuntimeException を発生させる
                 if (request.getJaIdCriteria().getEqualTo() == -1) {
                     throw new RuntimeException();
@@ -221,7 +226,7 @@ class Oa11010ControllerTest {
                 return;
             }
         };
-        BizTranRolesRepository bizTranRolesRepository = new BizTranRolesRepository() {
+        BizTranRoleRepository bizTranRoleRepository = new BizTranRoleRepository() {
             @Override
             public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
                 return null;
@@ -231,7 +236,8 @@ class Oa11010ControllerTest {
                 return null;
             }
         };
-        SimpleSearchBizTranRole simpleSearchBizTranRole = new SimpleSearchBizTranRole(bizTranRolesRepository) {
+        SimpleSearchBizTranRole simpleSearchBizTranRole = new SimpleSearchBizTranRole(
+            bizTranRoleRepository) {
             public BizTranRoles getBizTranRoles() {
                 return createBizTranRoles();
             }
@@ -267,7 +273,7 @@ class Oa11010ControllerTest {
             if (subSystemRole.getCode().length() == 0) { continue; }
             Oa11010SubSystemRoleVo subSystemRoleVo = new Oa11010SubSystemRoleVo();
             subSystemRoleVo.setSubSystemRoleCode(subSystemRole.getCode());
-            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getName());
+            subSystemRoleVo.setSubSystemRoleName(subSystemRole.getDisplayName());
             subSystemRoleVo.setValidThruSelect(0);
             subSystemRoleVoList.add(subSystemRoleVo);
         }
@@ -306,6 +312,7 @@ class Oa11010ControllerTest {
         oa11010Vo.setSignintraceSignOut(signintraceSignOut);
         oa11010Vo.setSignintraceSignInResult(signintraceSignInResult);
         oa11010Vo.setPageNo(pageNo);
+        oa11010Vo.setResponseMethod(responseMethod);
         return oa11010Vo;
     }
 
@@ -480,9 +487,9 @@ class Oa11010ControllerTest {
         // 期待値
         String expectedViewName = "oa11010";
         Oa11010SearchResponseVo expectedVo = new Oa11010SearchResponseVo();
-        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_valid_thru_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
+        expectedVo.setOperatorTable("<tr class=\"oaex_operator_table_operator_yu001009 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_unlock\"></div></td><td class=\"oaex_operator_branch_code\">001</td><td class=\"oaex_operator_branch_name\">店舗001</td><td class=\"oaex_operator_operator_code\">yu001009<input type=\"hidden\" value=\"18\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１００９</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\">業務統括者（購買）</td><td class=\"oaex_operator_subsystem_role_valid_thru_date\">2020/01/01～9999/12/31</td><td class=\"oaex_operator_biztran_role_code\">KB0000</td><td class=\"oaex_operator_biztran_role_name\">購買メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
             + "<tr class=\"oaex_operator_table_operator_yu001009\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"></td><td class=\"oaex_operator_account_lock\"></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\"></td><td class=\"oaex_operator_operator_name\"></td><td class=\"oaex_operator_valid_thru_date\"></td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\">YS0000</td><td class=\"oaex_operator_biztran_role_name\">野菜メインメニュー</td><td class=\"oaex_operator_biztran_role_valid_thru_date\">2020/01/01～9999/12/31</tr>"
-            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"33\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_valid_thru_date\"></td></tr>"
+            + "<tr class=\"oaex_operator_table_operator_yu001010 oaex_th_operator_table_row\" onclick=\"oaex_operatorTable_onClick(this);\"><td class=\"oaex_operator_available_status\"><div class=\"oaex_available_status_possible\"></div></td><td class=\"oaex_operator_account_lock\"><div class=\"oaex_account_lock\"></div></td><td class=\"oaex_operator_branch_code\"></td><td class=\"oaex_operator_branch_name\"></td><td class=\"oaex_operator_operator_code\">yu001010<input type=\"hidden\" value=\"19\"/></td><td class=\"oaex_operator_operator_name\">ｙｕ００１０１０</td><td class=\"oaex_operator_valid_thru_date\">2010/08/17～9999/12/21</td><td class=\"oaex_operator_subsystem_role\"></td><td class=\"oaex_operator_subsystem_role_valid_thru_date\"></td><td class=\"oaex_operator_biztran_role_code\"></td><td class=\"oaex_operator_biztran_role_name\"></td><td class=\"oaex_operator_biztran_role_valid_thru_date\"></td></tr>"
         );
         expectedVo.setPagination("<li class=\"disabled\" th:remove=\"all\"><a href=\"#!\">&lt;</a></li>"
             + "<li class=\"active\" th:remove=\"all\"><a href=\"#!\">1</a></li>"
@@ -561,4 +568,65 @@ class Oa11010ControllerTest {
         assertThat(actualVo.getStatusCode().toString()).isEqualTo(statusCode);
         assertThat(actualVo.getBody().getMessageCode()).isEqualTo(expectedMessageCode);
     }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・Voへのセット
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test0() {
+
+        // テスト対象クラス生成
+        Oa11010Controller oa11010Controller = createOa11010Controller();
+
+        // 実行値
+        responseMethod = "redirect:/oa11010/assistance";
+        ConcurrentModel model = new ConcurrentModel();
+
+        // 期待値
+        String expectedViewName = "oa11010";
+        ja = jaCode + " " + jaName;
+        Oa11010Vo expectedVo = createOa11010Vo();
+
+        // 実行
+        String actualViewName = oa11010Controller.assistance(responseMethod, model);
+        Oa11010Vo actualVo = (Oa11010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException）発生
+     *
+     *  ●検証事項
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test1() {
+        // getメソッドでGunmaRuntimeExceptionを発生させるテストは不可
+        assertThat(true);
+    }
+
+    /**
+     * {@link Oa11010Controller#assistance(String, Model)}のテスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void assistance_test2() {
+        // getメソッドでRuntimeExceptionを発生させるテストは不可
+        assertThat(true);
+    }
+
 }

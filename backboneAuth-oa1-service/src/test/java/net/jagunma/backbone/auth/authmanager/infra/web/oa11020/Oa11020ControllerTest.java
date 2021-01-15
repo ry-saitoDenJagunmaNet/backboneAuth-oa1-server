@@ -129,7 +129,7 @@ class Oa11020ControllerTest {
         // 認証情報
         TestAuditInfoHolder.setAuthInf();
 
-        ja = AuditInfoHolder.getAuthInf().getJaCode() + " " +AuditInfoHolder.getJa().getJaAttribute().getName();
+        ja = AuditInfoHolder.getAuthInf().getJaCode() + " " + AuditInfoHolder.getJa().getJaAttribute().getName();
         operatorCodePrefix = OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix();
     }
 

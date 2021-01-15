@@ -1,11 +1,11 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11010.vo;
 
-import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfResponseVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 
 /**
  * OA11010検索レスポンス
  */
-public class Oa11010SearchResponseVo extends BaseOfResponseVo {
+public class Oa11010SearchResponseVo extends BaseOfVo {
 
     private static final long serialVersionUID = 1L;
 
