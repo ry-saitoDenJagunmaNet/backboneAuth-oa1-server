@@ -23,4 +23,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
     runtimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "redis.clients:jedis:${jedisVersion}"
 }
