@@ -53,6 +53,8 @@ public class Operator_BizTranRoleDataSource implements Operator_BizTranRoleRepos
         Operator_BizTranRoleEntityCriteria entityCriteria = new Operator_BizTranRoleEntityCriteria();
         entityCriteria.getBizTranRoleIdCriteria().assignFrom(operator_BizTranRoleCriteria.getBizTranRoleIdCriteria());
         entityCriteria.getOperatorIdCriteria().assignFrom(operator_BizTranRoleCriteria.getOperatorIdCriteria());
+        entityCriteria.getValidThruStartDateCriteria().assignFrom(operator_BizTranRoleCriteria.getValidThruStartDateCriteria());
+        entityCriteria.getValidThruEndDateCriteria().assignFrom(operator_BizTranRoleCriteria.getValidThruEndDateCriteria());
         List<Operator_BizTranRoleEntity> Operator_BizTranRoleEntityList = operator_BizTranRoleEntityDao.findBy(entityCriteria, orders);
 
         // 取引ロール群の検索

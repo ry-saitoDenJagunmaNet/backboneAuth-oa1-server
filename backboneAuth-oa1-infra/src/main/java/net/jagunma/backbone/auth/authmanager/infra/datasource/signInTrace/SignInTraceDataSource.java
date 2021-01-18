@@ -17,7 +17,7 @@ import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Component;
 
 /**
- * サインイン証跡群検索
+ * サインイン証跡検索
  */
 @Component
 public class SignInTraceDataSource implements SignInTraceRepository {

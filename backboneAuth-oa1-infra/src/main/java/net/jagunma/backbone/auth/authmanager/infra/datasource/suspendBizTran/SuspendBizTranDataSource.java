@@ -3,7 +3,6 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.suspendBizTran;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
@@ -33,6 +32,7 @@ import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMomentCriteria;
 import net.jagunma.common.values.model.ja.JaCode;
+import net.jagunma.common.values.model.ja.JaCodes;
 import net.jagunma.common.values.model.ja.JasAtMoment;
 import org.springframework.stereotype.Component;
 
@@ -144,39 +144,34 @@ public class SuspendBizTranDataSource implements SuspendBizTranRepository {
 
         // jaAtMomentの検索
         JaAtMomentCriteria jaAtMomentCriteria = new JaAtMomentCriteria();
-        if (Strings2.isNotEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
-            jaAtMomentCriteria.getJaAttributeCriteria().getJaCodeCriteria().setEqualTo(
-                JaCode.of(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo()));
-        }
+        List<String> jaCodeList = suspendBizTranEntityList.stream().filter(s -> Strings2.isNotEmpty(s.getJaCode())).map(SuspendBizTranEntity::getJaCode).collect(Collectors.toList());
+        jaAtMomentCriteria.getJaAttributeCriteria().getJaCodeCriteria().getIncludes().addAll(JaCodes.createFrom(jaCodeList).getValue());
         jaAtMomentCriteria.setTargetDate(TargetDate.now());
         jaAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         JasAtMoment jasAtMoment = jaAtMomentRepository.selectBy(jaAtMomentCriteria, Orders.empty());
 
         // branchAtMomentの検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-        if (Strings2.isNotEmpty(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo())) {
-            branchAtMomentCriteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(suspendBizTranCriteria.getJaCodeCriteria().getEqualTo()));
+        List<BranchAtMoment> branchAtMomentList = newArrayList();
+        for (JaAtMoment jaAtMoment : jasAtMoment.getValue()) {
+            branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(jaAtMoment.getIdentifier());
+            branchAtMomentCriteria.setTargetDate(TargetDate.now());
+            branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
+            BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(branchAtMomentCriteria, Orders.empty());
+            branchAtMomentList.addAll(branchesAtMoment.getValue());
         }
-        if (Strings2.isNotEmpty(suspendBizTranCriteria.getBranchCodeCriteria().getEqualTo())) {
-            branchAtMomentCriteria.getBranchAttributeCriteria().getBranchCodeCriteria().setEqualTo(
-                BranchCode.of(suspendBizTranCriteria.getBranchCodeCriteria().getEqualTo()));
-        }
-        branchAtMomentCriteria.setTargetDate(TargetDate.now());
-        branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(branchAtMomentCriteria, Orders.empty());
+        BranchesAtMoment branchesAtMoment = BranchesAtMoment.of(branchAtMomentList);
 
         // 取引グループの検索
         BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
         bizTranGrpCriteria .getBizTranGrpCodeCriteria().getIncludes().addAll(
-            suspendBizTranEntityList.stream().map(SuspendBizTranEntity::getBizTranGrpCode).filter(
-                Objects::nonNull).distinct().collect(Collectors.toList()));
+            suspendBizTranEntityList.stream().filter(s -> Strings2.isNotEmpty(s.getBizTranGrpCode())).map(SuspendBizTranEntity::getBizTranGrpCode).distinct().collect(Collectors.toList()));
         BizTranGrps bizTranGrps = bizTranGrpRepository.selectBy(bizTranGrpCriteria, Orders.empty());
 
         // 取引の検索
         BizTranCriteria bizTranCriteria = new BizTranCriteria();
         bizTranCriteria.getBizTranCodeCriteria().getIncludes().addAll(
-            suspendBizTranEntityList.stream().map(SuspendBizTranEntity::getBizTranCode).filter(
-                Objects::nonNull).distinct().collect(Collectors.toList()));
+            suspendBizTranEntityList.stream().filter(s -> Strings2.isNotEmpty(s.getBizTranCode())).map(SuspendBizTranEntity::getBizTranCode).distinct().collect(Collectors.toList()));
         BizTrans bizTrans = bizTranRepository.selectBy(bizTranCriteria, Orders.empty());
 
         for (SuspendBizTranEntity entity : suspendBizTranEntityList) {
