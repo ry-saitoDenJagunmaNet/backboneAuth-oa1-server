@@ -3,6 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleCompos
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
@@ -49,22 +50,27 @@ public class BizTranRole_BizTranGrpDataSource implements BizTranRole_BizTranGrpR
      */
     public BizTranRole_BizTranGrps selectBy(BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria, Orders orders) {
 
+        // 取引ロール_取引グループ割当群検索
+        BizTranRole_BizTranGrpEntityCriteria entityCriteria = new BizTranRole_BizTranGrpEntityCriteria();
+        entityCriteria.getBizTranRoleIdCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getBizTranRoleIdCriteria());
+        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
+        List<BizTranRole_BizTranGrpEntity> entityList = bizTranRole_BizTranGrpEntityDao.findBy(entityCriteria, orders);
+
         // 取引ロール群検索
         BizTranRoleCriteria bizTranRoleCriteria = new BizTranRoleCriteria();
-        bizTranRoleCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
+        bizTranRoleCriteria.getBizTranRoleIdCriteria().getIncludes().addAll(
+            entityList.stream().map(BizTranRole_BizTranGrpEntity::getBizTranRoleId).distinct().collect(Collectors.toList()));
         BizTranRoles bizTranRoles = bizTranRoleRepository.selectBy(bizTranRoleCriteria, Orders.empty().addOrder("BizTranRoleCode"));
 
         // 取引グループ群検索
         BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-        bizTranGrpCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
+        bizTranGrpCriteria.getBizTranGrpIdCriteria().getIncludes().addAll(
+            entityList.stream().map(BizTranRole_BizTranGrpEntity::getBizTranGrpId).distinct().collect(Collectors.toList()));
         BizTranGrps bizTranGrps = bizTranGrpRepository.selectBy(bizTranGrpCriteria, Orders.empty().addOrder("BizTranGrpCode"));
 
-        // 取引ロール_取引グループ割当群検索
-        BizTranRole_BizTranGrpEntityCriteria entityCriteria = new BizTranRole_BizTranGrpEntityCriteria();
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranRole_BizTranGrpCriteria.getSubSystemCodeCriteria());
 
         List<BizTranRole_BizTranGrp> list = newArrayList();
-        for (BizTranRole_BizTranGrpEntity entity : bizTranRole_BizTranGrpEntityDao.findBy(entityCriteria, orders)) {
+        for (BizTranRole_BizTranGrpEntity entity : entityList) {
             list.add(BizTranRole_BizTranGrp.createFrom(
                 entity.getBizTranRole_BizTranGrpId(),
                 entity.getBizTranRoleId(),

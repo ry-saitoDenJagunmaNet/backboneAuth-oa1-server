@@ -2,6 +2,9 @@ package net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleCompositio
 
 import net.jagunma.common.ddd.model.orders.Orders;
 
+/**
+ * 取引ロール_取引グループ割当検索
+ */
 public interface BizTranRole_BizTranGrpRepository {
 
     /**

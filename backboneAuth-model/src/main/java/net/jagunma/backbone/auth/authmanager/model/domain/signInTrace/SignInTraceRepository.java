@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.signInTrace;
 import net.jagunma.common.ddd.model.orders.Orders;
 
 /**
- * サインイン証跡群検索
+ * サインイン証跡検索
  */
 public interface SignInTraceRepository {
 

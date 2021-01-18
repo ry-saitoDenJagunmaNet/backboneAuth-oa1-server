@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.signOutTrace;
 import net.jagunma.common.ddd.model.orders.Orders;
 
 /**
- * サインアウト証跡群検索
+ * サインアウト証跡検索
  */
 public interface SignOutTraceRepository {
 
