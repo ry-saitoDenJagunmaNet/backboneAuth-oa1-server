@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ public interface SubSystemRoleGrantRequest {
      */
     Long getOperatorId();
     /**
-     * 割当対象サブシステムロールリスト
+     * アサインロールリストのＧｅｔ
      *
-     * @return 割当対象サブシステムロールリスト
+     * @return アサインロールリスト
      */
-    List<SubSystemRoleGrantRequestAllocateSubSystemRole> getAllocateSubSystemRoleList();
+    List<SubSystemRoleGrantRequestAssignRole> getAssignRoleList();
     /**
      * 変更事由のＧｅｔ
      *

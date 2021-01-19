@@ -1,13 +1,13 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 
 /**
  * サブシステムロール付与サービス Request
- * 割当対象サブシステムロール
+ * アサインロール
  */
-public interface SubSystemRoleGrantRequestAllocateSubSystemRole {
+public interface SubSystemRoleGrantRequestAssignRole {
     /**
      * サブシステムロールのＧｅｔ
      *

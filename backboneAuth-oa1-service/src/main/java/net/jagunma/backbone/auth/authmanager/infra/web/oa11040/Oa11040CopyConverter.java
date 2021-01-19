@@ -1,41 +1,44 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateReference.SubSystemRoleAllocateCopyRequest;
-import net.jagunma.common.ddd.model.criterias.LongCriteria;
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
+import java.util.List;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequestAssignRole;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AssignRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 
 /**
  * OA11040 コピー Converter
  */
-class Oa11040CopyConverter implements SubSystemRoleAllocateCopyRequest {
+class Oa11040CopyConverter implements SubSystemRoleGrantedCopyRequest {
 
     /**
-     * OA11040 Various OperatorId
+     * OA11040 ViewObject & OtherItems
      */
-    private final Long targetOperatorId;
-    private final Long selectedOperatorId;
+    private final Oa11040Vo vo;
     private final Long signInOperatorId;
+    private final Long selectedOperatorId;
 
     // コンストラクタ
-    Oa11040CopyConverter(Long targetOperatorId, Long selectedOperatorId, Long signInOperatorId) {
-        this.targetOperatorId = targetOperatorId;
-        this.selectedOperatorId = selectedOperatorId;
+    Oa11040CopyConverter(Oa11040Vo vo, Long signInOperatorId, Long selectedOperatorId) {
+        this.vo = vo;
         this.signInOperatorId = signInOperatorId;
+        this.selectedOperatorId = selectedOperatorId;
     }
 
     // ファクトリーメソッド
-    public static Oa11040CopyConverter with(Long targetOperatorId, Long selectedOperatorId, Long signInOperatorId) {
-        return new Oa11040CopyConverter(targetOperatorId, selectedOperatorId, signInOperatorId);
+    public static Oa11040CopyConverter with(Oa11040Vo vo, Long signInOperatorId, Long selectedOperatorId) {
+        return new Oa11040CopyConverter(vo, signInOperatorId, selectedOperatorId);
     }
 
     /**
-     * ターゲットオペレーターIDのＧｅｔ
+     * サインインオペレーターIDのＧｅｔ
      *
-     * @return ターゲットオペレーターID
+     * @return サインインオペレーターID
      */
-    public Long getTargetOperatorId() {
-        return targetOperatorId;
+    public Long getSignInOperatorId() {
+        return signInOperatorId;
     }
     /**
      * 選択オペレーターIDのＧｅｔ
@@ -46,21 +49,21 @@ class Oa11040CopyConverter implements SubSystemRoleAllocateCopyRequest {
         return selectedOperatorId;
     }
     /**
-     * サインインオペレーターIDのＧｅｔ
+     * アサインロールリストのＧｅｔ
      *
-     * @return サインインオペレーターID
+     * @return アサインロールリスト
      */
-    public Long getSignInOperatorId() {
-        return signInOperatorId;
-    }
-    /**
-     * オペレーターID検索条件のＧｅｔ
-     *
-     * @return オペレーターID検索条件
-     */
-    public LongCriteria getOperatorIdCriteria() {
-        LongCriteria criteria = new LongCriteria();
-        criteria.getIncludes().addAll(new ArrayList<Long>(Arrays.asList(targetOperatorId, selectedOperatorId, signInOperatorId)));
-        return criteria;
+    public List<SubSystemRoleGrantedCopyRequestAssignRole> getAssignRoleList() {
+        if (vo.getOa11040AssignRoleTableVoList() == null) {
+            return newArrayList();
+        }
+
+        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = vo.getOa11040AssignRoleTableVoList();
+        List<SubSystemRoleGrantedCopyRequestAssignRole> assignRoleList = newArrayList();
+        for (Oa11040AssignRoleTableVo oa11040AssignRoleTableVo : oa11040AssignRoleTableVoList) {
+            Oa11040CopyAssignRoleConverter oa11040CopyAssignRoleConverter = Oa11040CopyAssignRoleConverter.with(oa11040AssignRoleTableVo);
+            assignRoleList.add(oa11040CopyAssignRoleConverter);
+        }
+        return assignRoleList;
     }
 }

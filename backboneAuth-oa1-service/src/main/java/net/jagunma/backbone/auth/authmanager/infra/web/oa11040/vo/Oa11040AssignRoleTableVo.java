@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * OA11040 付与ロールテーブル
  */
-public class Oa11040AllocateRoleTableVo {
+public class Oa11040AssignRoleTableVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +25,10 @@ public class Oa11040AllocateRoleTableVo {
      * 有効期限（終了日）
      */
     private LocalDate validThruEndDate;
+    /**
+     * 変更可否
+     */
+    private Boolean isModifiable;
 
     // Getter
     public String getRoleCode() {
@@ -39,6 +43,9 @@ public class Oa11040AllocateRoleTableVo {
     public LocalDate getValidThruEndDate() {
         return validThruEndDate;
     }
+    public Boolean getIsModifiable() {
+        return isModifiable;
+    }
 
     // Setter
     public void setRoleCode(String roleCode) {
@@ -52,5 +59,8 @@ public class Oa11040AllocateRoleTableVo {
     }
     public void setValidThruEndDate(LocalDate validThruEndDate) {
         this.validThruEndDate = validThruEndDate;
+    }
+    public void setIsModifiable(Boolean isModifiable) {
+        this.isModifiable = isModifiable;
     }
 }

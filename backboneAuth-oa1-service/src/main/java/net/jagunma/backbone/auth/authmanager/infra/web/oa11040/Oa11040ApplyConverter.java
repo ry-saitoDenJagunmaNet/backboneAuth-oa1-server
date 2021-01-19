@@ -3,13 +3,13 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequestAssignRole;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AssignRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
 
 /**
- * OA11040 サブシステムロール付与サービス Request Converter
+ * OA11040 適用 Converter
  */
 class Oa11040ApplyConverter implements SubSystemRoleGrantRequest {
 
@@ -37,21 +37,21 @@ class Oa11040ApplyConverter implements SubSystemRoleGrantRequest {
         return vo.getOperatorId();
     }
     /**
-     * 割当対象サブシステムロールリスト
+     * アサインロールリストのＧｅｔ
      *
-     * @return 割当対象サブシステムロールリスト
+     * @return アサインロールリスト
      */
-    public List<SubSystemRoleGrantRequestAllocateSubSystemRole> getAllocateSubSystemRoleList() {
-        if (vo.getOa11040AllocateRoleTableVoList() == null) {
+    public List<SubSystemRoleGrantRequestAssignRole> getAssignRoleList() {
+        if (vo.getOa11040AssignRoleTableVoList() == null) {
             return newArrayList();
         }
-        List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = newArrayList();
-        List<Oa11040AllocateRoleTableVo> oa11040AllocateRoleTableVoList = vo.getOa11040AllocateRoleTableVoList();
-        for (Oa11040AllocateRoleTableVo oa11040AllocateRoleTableVo : oa11040AllocateRoleTableVoList) {
-            Oa11040ApplyChildConverter oa11040ApplyChildConverter = Oa11040ApplyChildConverter.with(oa11040AllocateRoleTableVo);
-            allocateSubSystemRoleList.add(oa11040ApplyChildConverter);
+        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = vo.getOa11040AssignRoleTableVoList();
+        List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
+        for (Oa11040AssignRoleTableVo oa11040AssignRoleTableVo : oa11040AssignRoleTableVoList) {
+            Oa11040ApplyAssignRoleConverter oa11040ApplyAssignRoleConverter = Oa11040ApplyAssignRoleConverter.with(oa11040AssignRoleTableVo);
+            assignRoleList.add(oa11040ApplyAssignRoleConverter);
         }
-        return allocateSubSystemRoleList;
+        return assignRoleList;
     }
     /**
      * 変更事由のＧｅｔ
