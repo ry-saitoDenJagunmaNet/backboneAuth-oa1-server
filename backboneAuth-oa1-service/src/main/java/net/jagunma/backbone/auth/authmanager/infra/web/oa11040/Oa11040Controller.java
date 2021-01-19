@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 
 import net.jagunma.backbone.auth.authmanager.application.commandService.GrantSubSystemRole;
-import net.jagunma.backbone.auth.authmanager.application.queryService.CopySubSystemRoleAllocate;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
+import net.jagunma.backbone.auth.authmanager.application.queryService.CopySubSystemRoleGranted;
+import net.jagunma.backbone.auth.authmanager.application.queryService.SearchSubSystemRoleGranted;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11010.Oa11010Controller;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
@@ -51,17 +51,17 @@ public class Oa11040Controller extends BaseOfController {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa11040Controller.class);
 
     private final GrantSubSystemRole grantSubSystemRole;
-    private final SearchOperator searchOperator;
-    private final CopySubSystemRoleAllocate copySubSystemRoleAllocate;
+    private final SearchSubSystemRoleGranted searchSubSystemRoleGranted;
+    private final CopySubSystemRoleGranted copySubSystemRoleGranted;
 
     // コンストラクタ
     public Oa11040Controller(
         GrantSubSystemRole grantSubSystemRole,
-        SearchOperator searchOperator,
-        CopySubSystemRoleAllocate copySubSystemRoleAllocate) {
+        SearchSubSystemRoleGranted searchSubSystemRoleGranted,
+        CopySubSystemRoleGranted copySubSystemRoleGranted) {
         this.grantSubSystemRole = grantSubSystemRole;
-        this.searchOperator = searchOperator;
-        this.copySubSystemRoleAllocate = copySubSystemRoleAllocate;
+        this.searchSubSystemRoleGranted = searchSubSystemRoleGranted;
+        this.copySubSystemRoleGranted = copySubSystemRoleGranted;
     }
 
     /**
@@ -80,10 +80,10 @@ public class Oa11040Controller extends BaseOfController {
         vo.setOperatorId(operatorId);
 
         try {
-            Oa11040InitConverter converter = Oa11040InitConverter.with(vo);
+            Oa11040InitConverter converter = Oa11040InitConverter.with(vo.getOperatorId(), AuditInfoHolder.getOperator().getIdentifier());
             Oa11040InitPresenter presenter = new Oa11040InitPresenter();
 
-            searchOperator.execute(converter, presenter);
+            searchSubSystemRoleGranted.execute(converter, presenter);
 
             presenter.bindTo(vo);
 
@@ -154,10 +154,10 @@ public class Oa11040Controller extends BaseOfController {
         try {
             if (selectedOperatorId != null) {
 
-                Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo.getOperatorId(), selectedOperatorId, AuditInfoHolder.getAuthInf().getOperatorId());
+                Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, AuditInfoHolder.getAuthInf().getOperatorId(), selectedOperatorId);
                 Oa11040CopyPresenter presenter = new Oa11040CopyPresenter();
 
-                copySubSystemRoleAllocate.execute(converter, presenter);
+                copySubSystemRoleGranted.execute(converter, presenter);
 
                 presenter.bindTo(vo);
             }

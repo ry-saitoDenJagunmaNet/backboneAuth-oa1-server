@@ -3,8 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.commandService;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand.SubSystemRoleGrantRequestAllocateSubSystemRole;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
@@ -49,22 +49,20 @@ public class GrantSubSystemRole {
      * @return オペレーター_サブシステムロール割当群
      */
     Operator_SubSystemRoles createOperator_SubSystemRoles(SubSystemRoleGrantRequest request) {
+        List<SubSystemRoleGrantRequestAssignRole> assignRoleList = request.getAssignRoleList();
+
         List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
-
-        List<SubSystemRoleGrantRequestAllocateSubSystemRole> allocateSubSystemRoleList = request.getAllocateSubSystemRoleList();
-
-        for (SubSystemRoleGrantRequestAllocateSubSystemRole allocateSubSystemRole : allocateSubSystemRoleList) {
+        for (SubSystemRoleGrantRequestAssignRole assignRole : assignRoleList) {
 
             Operator_SubSystemRole operator_SubSystemRole = Operator_SubSystemRole.createFrom(
                 null,
                 request.getOperatorId(),
-                allocateSubSystemRole.getSubSystemRole().getCode(),
-                allocateSubSystemRole.getValidThruStartDate(),
-                allocateSubSystemRole.getValidThruEndDate(),
+                assignRole.getSubSystemRole().getCode(),
+                assignRole.getValidThruStartDate(),
+                assignRole.getValidThruEndDate(),
                 null,
                 null,
-                allocateSubSystemRole.getSubSystemRole()
-                );
+                assignRole.getSubSystemRole());
 
             operator_SubSystemRoleList.add(operator_SubSystemRole);
         }

@@ -1,13 +1,13 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleAllocateCommand;
+package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference;
 
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 
 /**
- * サブシステムロール付与サービス Request
- * 割当対象サブシステムロール
+ * サブシステムロール付与コピーサービス Request
+ * アサインロール
  */
-public interface AllocateSubSystemRole {
+public interface SubSystemRoleGrantedCopyRequestAssignRole {
     /**
      * サブシステムロールのＧｅｔ
      *
@@ -26,4 +26,10 @@ public interface AllocateSubSystemRole {
      * @return 有効期限終了日
      */
     LocalDate getValidThruEndDate();
+    /**
+     * 変更可否のＧｅｔ
+     *
+     * @return 変更可否
+     */
+    Boolean getIsModifiable();
 }

@@ -3,24 +3,69 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AllocateRoleTableVo;
-import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040UnallocateRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAllRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedSearchResponse;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AssignRoleTableVo;
+import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040UnAssignRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
+import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * OA11040 初期表示 Presenter
  */
-class Oa11040InitPresenter extends BaseOfOperatorSearchResponse implements OperatorSearchResponse {
+class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
 
-    private BranchesAtMoment branchesAtMomentForBranchItemsSource;
+    private Long targetOperatorId;
+    private Long signInOperatorId;
+    private List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList;
+    private List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList;
+    private OperatorHistoryHeader operatorHistoryHeader;
 
     // コンストラクタ
     Oa11040InitPresenter() {
+    }
+
+    /**
+     * ターゲットオペレーターIDのＳｅｔ
+     *
+     * @param targetOperatorId ターゲットオペレーターID
+     */
+    public void setTargetOperatorId(Long targetOperatorId) {
+        this.targetOperatorId = targetOperatorId;
+    }
+    /**
+     * サインインオペレーターIDのSｅｔ
+     *
+     * @param signInOperatorId サインインオペレーターID
+     */
+    public void setSignInOperatorId(Long signInOperatorId) {
+        this.signInOperatorId = signInOperatorId;
+    }
+    /**
+     * アサインロールDtoリストのＳｅｔ
+     *
+     * @param assignRoleDtoList アサインロールDtoリスト
+     */
+    public void setAssignRoleDtoList(List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList) {
+        this.assignRoleDtoList = assignRoleDtoList;
+    }
+    /**
+     * 全ロールDtoリストのＳｅｔ
+     *
+     * @param allRoleDtoList 全ロールDtoリスト
+     */
+    public void setAllRoleDtoList(List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList) {
+        this.allRoleDtoList = allRoleDtoList;
+    }
+    /**
+     * オペレーター履歴ヘッダーのＳｅｔ
+     *
+     * @param operatorHistoryHeader オペレーター履歴ヘッダー
+     */
+    public void setOperatorHistoryHeader(OperatorHistoryHeader operatorHistoryHeader) {
+        this.operatorHistoryHeader = operatorHistoryHeader;
     }
 
     /**
@@ -30,32 +75,32 @@ class Oa11040InitPresenter extends BaseOfOperatorSearchResponse implements Opera
      */
     public void bindTo(Oa11040Vo vo) {
 
-        vo.setJa(operator.getJaCode() + " " + operator.getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
-        vo.setOperatorId(operator.getOperatorId());
-        vo.setOperator(operator.getOperatorCode() + " " + operator.getOperatorName());
+        vo.setOperatorId(operatorHistoryHeader.getOperator().getOperatorId());
+        vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
+        vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
 
-        List<Oa11040AllocateRoleTableVo> oa11040AllocateRoleTableVoList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-            Oa11040AllocateRoleTableVo oa11040AllocateRoleTableVo = new Oa11040AllocateRoleTableVo();
-            oa11040AllocateRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
-            oa11040AllocateRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
-            oa11040AllocateRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
-            oa11040AllocateRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
-            oa11040AllocateRoleTableVoList.add(oa11040AllocateRoleTableVo);
+        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = newArrayList();
+        for (SubSystemRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
+            Oa11040AssignRoleTableVo oa11040AssignRoleTableVo = new Oa11040AssignRoleTableVo();
+            oa11040AssignRoleTableVo.setRoleCode(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode());
+            oa11040AssignRoleTableVo.setRoleName(SubSystemRole.codeOf(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode()).getDisplayName());
+            oa11040AssignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_SubSystemRole().getValidThruStartDate());
+            oa11040AssignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_SubSystemRole().getValidThruEndDate());
+            oa11040AssignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
+            oa11040AssignRoleTableVoList.add(oa11040AssignRoleTableVo);
         }
-        vo.setOa11040AllocateRoleTableVoList(oa11040AllocateRoleTableVoList);
+        vo.setOa11040AssignRoleTableVoList(oa11040AssignRoleTableVoList);
 
-        List<Oa11040UnallocateRoleTableVo> oa11040UnallocateRoleTableVoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
-
-            Oa11040UnallocateRoleTableVo oa11040UnallocateRoleTableVo = new Oa11040UnallocateRoleTableVo();
-            oa11040UnallocateRoleTableVo.setRoleCode(subSystemRole.getCode());
-            oa11040UnallocateRoleTableVo.setRoleName(subSystemRole.getDisplayName());
-            oa11040UnallocateRoleTableVoList.add(oa11040UnallocateRoleTableVo);
+        List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList = newArrayList();
+        for (SubSystemRoleGrantedAllRoleDto allRoleDto : allRoleDtoList) {
+            Oa11040UnAssignRoleTableVo oa11040UnAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
+            oa11040UnAssignRoleTableVo.setRoleCode(allRoleDto.getSubSystemRole().getCode());
+            oa11040UnAssignRoleTableVo.setRoleName(allRoleDto.getSubSystemRole().getDisplayName());
+            oa11040UnAssignRoleTableVo.setIsModifiable(allRoleDto.getIsModifiable());
+            oa11040UnAssignRoleTableVoList.add(oa11040UnAssignRoleTableVo);
         }
-        vo.setOa11040UnallocateRoleTableVoList(oa11040UnallocateRoleTableVoList);
+        vo.setOa11040UnAssignRoleTableVoList(oa11040UnAssignRoleTableVoList);
 
-        vo.setChangeCausePlaceholder(operatorHistoryHeaders.getValues().get(0).getChangeCause());
+        vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
     }
 }

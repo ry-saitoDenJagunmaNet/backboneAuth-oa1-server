@@ -25,11 +25,11 @@ public class Oa11040Vo extends BaseOfVo {
     /**
      * 付与ロールテーブル
      */
-    private List<Oa11040AllocateRoleTableVo> oa11040AllocateRoleTableVoList;
+    private List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList;
     /**
      * 未付与ロールテーブル
      */
-    private List<Oa11040UnallocateRoleTableVo> oa11040UnallocateRoleTableVoList;
+    private List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList;
     /**
      * 変更事由
      */
@@ -49,11 +49,11 @@ public class Oa11040Vo extends BaseOfVo {
     public String getOperator() {
         return operator;
     }
-    public List<Oa11040AllocateRoleTableVo> getOa11040AllocateRoleTableVoList() {
-        return oa11040AllocateRoleTableVoList;
+    public List<Oa11040AssignRoleTableVo> getOa11040AssignRoleTableVoList() {
+        return oa11040AssignRoleTableVoList;
     }
-    public List<Oa11040UnallocateRoleTableVo> getOa11040UnallocateRoleTableVoList() {
-        return oa11040UnallocateRoleTableVoList;
+    public List<Oa11040UnAssignRoleTableVo> getOa11040UnAssignRoleTableVoList() {
+        return oa11040UnAssignRoleTableVoList;
     }
     public String getChangeCause() {
         return changeCause;
@@ -72,11 +72,11 @@ public class Oa11040Vo extends BaseOfVo {
     public void setOperator(String operator) {
         this.operator = operator;
     }
-    public void setOa11040AllocateRoleTableVoList(List<Oa11040AllocateRoleTableVo> oa11040AllocateRoleTableVoList) {
-        this.oa11040AllocateRoleTableVoList = oa11040AllocateRoleTableVoList;
+    public void setOa11040AssignRoleTableVoList(List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList) {
+        this.oa11040AssignRoleTableVoList = oa11040AssignRoleTableVoList;
     }
-    public void setOa11040UnallocateRoleTableVoList(List<Oa11040UnallocateRoleTableVo> oa11040UnallocateRoleTableVoList) {
-        this.oa11040UnallocateRoleTableVoList = oa11040UnallocateRoleTableVoList;
+    public void setOa11040UnAssignRoleTableVoList(List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList) {
+        this.oa11040UnAssignRoleTableVoList = oa11040UnAssignRoleTableVoList;
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;

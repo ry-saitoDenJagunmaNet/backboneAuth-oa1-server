@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo;
 /**
  * OA11040 未付与ロールテーブル
  */
-public class Oa11040UnallocateRoleTableVo {
+public class Oa11040UnAssignRoleTableVo {
 
     private static final long serialVersionUID = 1L;
 
@@ -15,6 +15,10 @@ public class Oa11040UnallocateRoleTableVo {
      * ロール名
      */
     private String roleName;
+    /**
+     * 変更可否
+     */
+    private Boolean isModifiable;
 
     // Getter
     public String getRoleCode() {
@@ -23,6 +27,9 @@ public class Oa11040UnallocateRoleTableVo {
     public String getRoleName() {
         return roleName;
     }
+    public Boolean getIsModifiable() {
+        return isModifiable;
+    }
 
     // Setter
     public void setRoleCode(String roleCode) {
@@ -30,5 +37,8 @@ public class Oa11040UnallocateRoleTableVo {
     }
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+    public void setIsModifiable(Boolean isModifiable) {
+        this.isModifiable = isModifiable;
     }
 }
