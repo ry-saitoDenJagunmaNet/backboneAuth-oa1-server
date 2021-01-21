@@ -6,15 +6,15 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleG
 public interface SubSystemRoleGrantedSearchRequest {
 
     /**
-     * ターゲットオペレーターIDのＧｅｔ
-     *
-     * @return ターゲットオペレーターID
-     */
-    Long getTargetOperatorId();
-    /**
      * サインインオペレーターIDのＧｅｔ
      *
      * @return サインインオペレーターID
      */
     Long getSignInOperatorId();
+    /**
+     * ターゲットオペレーターIDのＧｅｔ
+     *
+     * @return ターゲットオペレーターID
+     */
+    Long getTargetOperatorId();
 }

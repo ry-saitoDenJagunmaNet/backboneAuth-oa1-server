@@ -13,18 +13,18 @@ import org.junit.jupiter.api.Test;
 class SearchSubSystemRoleGrantedValidatorTest {
 
     // 実行既定値
+    private Long signInOperatorId = 987654L;
     private Long targetOperatorId = 123456L;
-    private Long signInOperatorId = 234567L;
 
     private SubSystemRoleGrantedSearchRequest createRequest() {
         return new SubSystemRoleGrantedSearchRequest() {
             @Override
-            public Long getTargetOperatorId() {
-                return targetOperatorId;
-            }
-            @Override
             public Long getSignInOperatorId() {
                 return signInOperatorId;
+            }
+            @Override
+            public Long getTargetOperatorId() {
+                return targetOperatorId;
             }
         };
     }
@@ -77,32 +77,6 @@ class SearchSubSystemRoleGrantedValidatorTest {
     /**
      * {@link SearchSubSystemRoleGrantedValidator#validate()}テスト
      *  ●パターン
-     *    未セットチェック  ターゲットオペレーターID
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test02() {
-        // 実行値
-        targetOperatorId = null;
-        SubSystemRoleGrantedSearchRequest request = createRequest();
-
-        assertThatThrownBy(() ->
-            // 実行
-            SearchSubSystemRoleGrantedValidator.with(request).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
-                assertThat(e.getArgs()).containsSequence("ターゲットオペレーターID");
-            });
-    }
-
-    /**
-     * {@link SearchSubSystemRoleGrantedValidator#validate()}テスト
-     *  ●パターン
      *    未セットチェック  サインインオペレーターID
      *
      *  ●検証事項
@@ -111,7 +85,7 @@ class SearchSubSystemRoleGrantedValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test03() {
+    void validate_Test02() {
         // 実行値
         signInOperatorId = null;
         SubSystemRoleGrantedSearchRequest request = createRequest();
@@ -123,6 +97,32 @@ class SearchSubSystemRoleGrantedValidatorTest {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");
                 assertThat(e.getArgs()).containsSequence("サインインオペレーターID");
+            });
+    }
+
+    /**
+     * {@link SearchSubSystemRoleGrantedValidator#validate()}テスト
+     *  ●パターン
+     *    未セットチェック  ターゲットオペレーターID
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test03() {
+        // 実行値
+        targetOperatorId = null;
+        SubSystemRoleGrantedSearchRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            SearchSubSystemRoleGrantedValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
+                assertThat(e.getArgs()).containsSequence("ターゲットオペレーターID");
             });
     }
 }

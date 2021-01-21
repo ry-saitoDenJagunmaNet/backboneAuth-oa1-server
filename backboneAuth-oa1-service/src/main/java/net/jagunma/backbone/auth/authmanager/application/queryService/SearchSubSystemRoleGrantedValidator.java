@@ -31,7 +31,7 @@ class SearchSubSystemRoleGrantedValidator {
         Preconditions.checkNotNull(request, () -> new GunmaRuntimeException("EOA13001"));
 
         // 未セットチェック
-        Preconditions.checkNotNull(request.getTargetOperatorId(), () -> new GunmaRuntimeException("EOA13002", "ターゲットオペレーターID"));
         Preconditions.checkNotNull(request.getSignInOperatorId(), () -> new GunmaRuntimeException("EOA13002", "サインインオペレーターID"));
+        Preconditions.checkNotNull(request.getTargetOperatorId(), () -> new GunmaRuntimeException("EOA13002", "ターゲットオペレーターID"));
     }
 }

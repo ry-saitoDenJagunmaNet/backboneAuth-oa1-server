@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 class Oa11040CopyConverterTest {
 
     // 実行既定値
+    private Long signInOperatorId = 987654L;
     private Long targetOperatorId = 123456L;
     private Long selectedOperatorId = 234567L;
-    private Long signInOperatorId = 345678L;
 
     /**
      * {@link Oa11040CopyConverter#with(Long targetOperatorId, Long selectedOperatorId, Long signInOperatorId)}テスト
