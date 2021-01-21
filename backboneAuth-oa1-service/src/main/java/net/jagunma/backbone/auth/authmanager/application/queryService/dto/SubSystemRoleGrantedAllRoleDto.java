@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 
 /**
- * サブシステムロール付与検索サービス
+ * サブシステムロール付与検索サービス Response
  * 全ロールDto
  */
 public class SubSystemRoleGrantedAllRoleDto {
