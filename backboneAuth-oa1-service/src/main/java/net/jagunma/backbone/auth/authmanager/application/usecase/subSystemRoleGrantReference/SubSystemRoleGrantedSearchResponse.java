@@ -10,17 +10,17 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.op
  */
 public interface SubSystemRoleGrantedSearchResponse {
     /**
-     * ターゲットオペレーターIDのＳｅｔ
-     *
-     * @param targetOperatorId ターゲットオペレーターID
-     */
-    void setTargetOperatorId(Long targetOperatorId);
-    /**
      * サインインオペレーターIDのSｅｔ
      *
      * @param signInOperatorId サインインオペレーターID
      */
     void setSignInOperatorId(Long signInOperatorId);
+    /**
+     * ターゲットオペレーターIDのＳｅｔ
+     *
+     * @param targetOperatorId ターゲットオペレーターID
+     */
+    void setTargetOperatorId(Long targetOperatorId);
     /**
      * アサインロールDtoリストのＳｅｔ
      *

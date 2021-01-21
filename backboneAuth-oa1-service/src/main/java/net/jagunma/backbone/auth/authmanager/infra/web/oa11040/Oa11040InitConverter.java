@@ -10,28 +10,20 @@ class Oa11040InitConverter implements SubSystemRoleGrantedSearchRequest {
     /**
      * OA11040 VariousItems
      */
-    private final Long targetOperatorId;
     private final Long signInOperatorId;
+    private final Long targetOperatorId;
 
     // コンストラクタ
-    Oa11040InitConverter(Long targetOperatorId, Long signInOperatorId) {
-        this.targetOperatorId = targetOperatorId;
+    Oa11040InitConverter(Long signInOperatorId, Long targetOperatorId) {
         this.signInOperatorId = signInOperatorId;
+        this.targetOperatorId = targetOperatorId;
     }
 
     // ファクトリーメソッド
-    public static Oa11040InitConverter with(Long targetOperatorId, Long signInOperatorId) {
-        return new Oa11040InitConverter(targetOperatorId, signInOperatorId);
+    public static Oa11040InitConverter with(Long signInOperatorId, Long targetOperatorId) {
+        return new Oa11040InitConverter(signInOperatorId, targetOperatorId);
     }
 
-    /**
-     * ターゲットオペレーターIDのＧｅｔ
-     *
-     * @return ターゲットオペレーターID
-     */
-    public Long getTargetOperatorId() {
-        return targetOperatorId;
-    }
     /**
      * サインインオペレーターIDのＧｅｔ
      *
@@ -39,5 +31,13 @@ class Oa11040InitConverter implements SubSystemRoleGrantedSearchRequest {
      */
     public Long getSignInOperatorId() {
         return signInOperatorId;
+    }
+    /**
+     * ターゲットオペレーターIDのＧｅｔ
+     *
+     * @return ターゲットオペレーターID
+     */
+    public Long getTargetOperatorId() {
+        return targetOperatorId;
     }
 }

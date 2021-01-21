@@ -48,24 +48,24 @@ public class SearchSubSystemRoleGranted {
         // パラメーターの検証
         SearchSubSystemRoleGrantedValidator.with(request).validate();
 
-        // オペレーター_サブシステムロール割当群を検索します（ターゲットオペレーター）
-        Operator_SubSystemRoles targetOperator_SubSystemRoles = searchOperator_SubSystemRoles(request.getTargetOperatorId());
-
         // オペレーター_サブシステムロール割当群を検索します（サインインオペレーター）
         Operator_SubSystemRoles signInOperator_SubSystemRoles = searchOperator_SubSystemRoles(request.getSignInOperatorId());
+
+        // オペレーター_サブシステムロール割当群を検索します（ターゲットオペレーター）
+        Operator_SubSystemRoles targetOperator_SubSystemRoles = searchOperator_SubSystemRoles(request.getTargetOperatorId());
 
         // オペレーター履歴ヘッダーを検索します
         OperatorHistoryHeader operatorHistoryHeader = searchOperatorHistoryHeader(request.getTargetOperatorId());
 
         // アサインロールDtoリストを作成します
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = createAssignRoleDtoList(targetOperator_SubSystemRoles, signInOperator_SubSystemRoles);
+        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = createAssignRoleDtoList(signInOperator_SubSystemRoles, targetOperator_SubSystemRoles);
 
         // 全ロールDtoリストを作成します
         List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList = createAllRoleDtoList(signInOperator_SubSystemRoles);
 
         // Responseへセット
-        response.setTargetOperatorId(request.getTargetOperatorId());
         response.setSignInOperatorId(request.getSignInOperatorId());
+        response.setTargetOperatorId(request.getTargetOperatorId());
         response.setAssignRoleDtoList(assignRoleDtoList);
         response.setAllRoleDtoList(allRoleDtoList);
         response.setOperatorHistoryHeader(operatorHistoryHeader);
@@ -96,11 +96,11 @@ public class SearchSubSystemRoleGranted {
     /**
      * アサインロールDtoリストを作成します
      *
-     * @param targetOperator_SubSystemRoles ターゲットオペレーターのオペレーター_サブシステムロール割当群
      * @param signInOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
+     * @param targetOperator_SubSystemRoles ターゲットオペレーターのオペレーター_サブシステムロール割当群
      * @return アサインロールDtoリスト
      */
-    List<SubSystemRoleGrantedAssignRoleDto> createAssignRoleDtoList(Operator_SubSystemRoles targetOperator_SubSystemRoles, Operator_SubSystemRoles signInOperator_SubSystemRoles) {
+    List<SubSystemRoleGrantedAssignRoleDto> createAssignRoleDtoList(Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles targetOperator_SubSystemRoles) {
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
         for(Operator_SubSystemRole targetOperator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
