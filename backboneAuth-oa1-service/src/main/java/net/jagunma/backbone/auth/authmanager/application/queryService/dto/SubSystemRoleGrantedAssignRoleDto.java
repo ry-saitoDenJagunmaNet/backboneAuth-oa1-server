@@ -3,7 +3,8 @@ package net.jagunma.backbone.auth.authmanager.application.queryService.dto;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 
 /**
- * サブシステムロール付与検索サービス
+ * サブシステムロール付与検索サービス Response
+ * サブシステムロール付与コピーサービス Response
  * アサインロールDto
  */
 public class SubSystemRoleGrantedAssignRoleDto {
