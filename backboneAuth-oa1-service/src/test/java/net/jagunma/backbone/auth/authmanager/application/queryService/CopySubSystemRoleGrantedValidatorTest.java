@@ -16,7 +16,7 @@ class CopySubSystemRoleGrantedValidatorTest {
 
     // 実行既定値
     private Long signInOperatorId = 987654L;
-    private Long selectedOperatorId = 234567L;
+    private Long selectedOperatorId = 876543L;
 
     private SubSystemRoleGrantedCopyRequest createRequest() {
         return new SubSystemRoleGrantedCopyRequest() {
