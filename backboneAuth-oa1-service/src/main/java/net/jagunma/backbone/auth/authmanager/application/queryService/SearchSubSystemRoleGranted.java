@@ -80,7 +80,7 @@ public class SearchSubSystemRoleGranted {
     Operator_SubSystemRoles searchOperator_SubSystemRoles(Long operatorId) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("Operator_SubSystemRoleId"));
+        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty());
     }
 
     /**
@@ -102,10 +102,10 @@ public class SearchSubSystemRoleGranted {
      */
     List<SubSystemRoleGrantedAssignRoleDto> createAssignRoleDtoList(Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles targetOperator_SubSystemRoles) {
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
-        for(Operator_SubSystemRole targetOperator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for(Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            assignRoleDto.setOperator_SubSystemRole(targetOperator_SubSystemRole);
-            assignRoleDto.setIsModifiable(judgeIsModifiable(targetOperator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+            assignRoleDto.setIsModifiable(judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             assignRoleDtoList.add(assignRoleDto);
         }
         return assignRoleDtoList;
