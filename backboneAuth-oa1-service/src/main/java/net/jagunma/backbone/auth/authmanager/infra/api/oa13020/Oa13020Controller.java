@@ -72,6 +72,6 @@ public class Oa13020Controller {
             return new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity(presenter.getResponse(), HttpStatus.OK);
+        return new ResponseEntity<>(presenter.getResponse(), HttpStatus.OK);
     }
 }

@@ -25,8 +25,9 @@ dependencies {
     testImplementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation project(':backboneAuth-oa1-mock')
 
-    api "net.jagunma.backbone.shared:shared-data-interface:${sharedDataInterfaceVersion}"
-    api "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
+    implementation "net.jagunma.backbone.shared:backboneShared-interface:${backboneSharedVersion}"
+    testImplementation "net.jagunma.backbone.shared:backboneShared-stub:${backboneSharedVersion}"
+//    api "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
     api("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
         exclude group: "net.jagunma.common2020"
         exclude group: "com.microsoft.sqlserver"

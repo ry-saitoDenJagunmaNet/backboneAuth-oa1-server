@@ -169,7 +169,7 @@ class Oa13020ControllerTest {
         for (String key : searchAccessibleMap.keySet()) {
             map.put(key, searchAccessibleMap.get(key));
         }
-        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity(map, HttpStatus.OK);
+        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(map, HttpStatus.OK);
 
         // 実行
         ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
@@ -197,7 +197,7 @@ class Oa13020ControllerTest {
         Oa13020Controller controller = createOa13020Controller();
 
         // 期待値
-        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         // 実行
         ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
