@@ -59,28 +59,28 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
 
         vo.setAccountLockStatus((!accountLocks.getValues().isEmpty())? accountLocks.getValues().get(0).getLockStatus() : 0);
 
-        List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList = newArrayList();
+        List<Oa11030SubSystemRoleTableVo> subSystemRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-            Oa11030SubSystemRoleTableVo oa11030SubSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
-            oa11030SubSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
-            oa11030SubSystemRoleTableVo.setValidThruDate(
+            Oa11030SubSystemRoleTableVo subSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
+            subSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
+            subSystemRoleTableVo.setValidThruDate(
                 operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            oa11030SubSystemRoleTableVoList.add(oa11030SubSystemRoleTableVo);
+            subSystemRoleTableVoList.add(subSystemRoleTableVo);
         }
-        vo.setOa11030SubSystemRoleTableVoList(oa11030SubSystemRoleTableVoList);
+        vo.setSubSystemRoleTableVoList(subSystemRoleTableVoList);
 
-        List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList = newArrayList();
+        List<Oa11030BizTranRoleTableVo> bizTranRoleTableVoList = newArrayList();
         for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-            Oa11030BizTranRoleTableVo oa11030BizTranRoleTableVo = new Oa11030BizTranRoleTableVo();
-            oa11030BizTranRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
-            oa11030BizTranRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
-            oa11030BizTranRoleTableVo.setValidThruDate(
+            Oa11030BizTranRoleTableVo bizTranRoleTableVo = new Oa11030BizTranRoleTableVo();
+            bizTranRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
+            bizTranRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
+            bizTranRoleTableVo.setValidThruDate(
                 operator_BizTranRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_BizTranRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            oa11030BizTranRoleTableVoList.add(oa11030BizTranRoleTableVo);
+            bizTranRoleTableVoList.add(bizTranRoleTableVo);
         }
-        vo.setOa11030BizTranRoleTableVoList(oa11030BizTranRoleTableVoList);
+        vo.setBizTranRoleTableVoList(bizTranRoleTableVoList);
 
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMomentForBranchItemsSource).getValue());
     }
