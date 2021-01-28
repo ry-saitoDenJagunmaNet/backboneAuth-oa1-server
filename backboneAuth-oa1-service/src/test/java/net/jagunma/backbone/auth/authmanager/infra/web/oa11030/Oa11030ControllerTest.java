@@ -98,8 +98,8 @@ class Oa11030ControllerTest {
     private String changeCausePlaceholder = "新職員の入組による登録";
     private AccountLockStatus accountLockStatus = AccountLockStatus.アンロック;
 
-    private List<Oa11030SubSystemRoleTableVo> oa11030SubSystemRoleTableVoList;
-    private List<Oa11030BizTranRoleTableVo> oa11030BizTranRoleTableVoList;
+    private List<Oa11030SubSystemRoleTableVo> subSystemRoleTableVoList;
+    private List<Oa11030BizTranRoleTableVo> bizTranRoleTableVoList;
 
     // ＪＡAtMoment
     private String jaName = "JA前橋市";
@@ -312,8 +312,8 @@ class Oa11030ControllerTest {
         vo.setChangeCause(changeCause);
         vo.setChangeCausePlaceholder(changeCausePlaceholder);
         vo.setAccountLockStatus(accountLockStatus.getCode());
-        vo.setOa11030SubSystemRoleTableVoList(createOa11030SubSystemRoleTableVoList());
-        vo.setOa11030BizTranRoleTableVoList(createOa11030BizTranRoleTableVoList());
+        vo.setSubSystemRoleTableVoList(createOa11030SubSystemRoleTableVoList());
+        vo.setBizTranRoleTableVoList(createOa11030BizTranRoleTableVoList());
         vo.setBranchItemsSource(SelectOptionItemsSource.createFrom(branchesAtMoment).getValue());
 
         return vo;
@@ -321,35 +321,35 @@ class Oa11030ControllerTest {
 
     // Oa11030SubSystemRoleTableVoList作成
     private List<Oa11030SubSystemRoleTableVo> createOa11030SubSystemRoleTableVoList() {
-        List<Oa11030SubSystemRoleTableVo> tableVoList = newArrayList();
+        List<Oa11030SubSystemRoleTableVo> subSystemRoleTableVoList = newArrayList();
 
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoleList) {
-            Oa11030SubSystemRoleTableVo tableVo = new Oa11030SubSystemRoleTableVo();
-            tableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
-            tableVo.setValidThruDate(
+            Oa11030SubSystemRoleTableVo subSystemRoleTableVo = new Oa11030SubSystemRoleTableVo();
+            subSystemRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
+            subSystemRoleTableVo.setValidThruDate(
                 operator_SubSystemRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                 operator_SubSystemRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            tableVoList.add(tableVo);
+            subSystemRoleTableVoList.add(subSystemRoleTableVo);
         }
 
-        return tableVoList;
+        return subSystemRoleTableVoList;
     }
 
     // Oa11030BizTranRoleTableVoList作成
     private List<Oa11030BizTranRoleTableVo> createOa11030BizTranRoleTableVoList() {
-        List<Oa11030BizTranRoleTableVo> tableVoList = newArrayList();
+        List<Oa11030BizTranRoleTableVo> bizTranRoleTableVoList = newArrayList();
 
         for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoleList) {
-            Oa11030BizTranRoleTableVo tableVo = new Oa11030BizTranRoleTableVo();
-            tableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
-            tableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
-            tableVo.setValidThruDate(
+            Oa11030BizTranRoleTableVo bizTranRoleTableVo = new Oa11030BizTranRoleTableVo();
+            bizTranRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
+            bizTranRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
+            bizTranRoleTableVo.setValidThruDate(
                 operator_BizTranRole.getValidThruStartDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " ～ " +
                     operator_BizTranRole.getValidThruEndDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            tableVoList.add(tableVo);
+            bizTranRoleTableVoList.add(bizTranRoleTableVo);
         }
 
-        return tableVoList;
+        return bizTranRoleTableVoList;
     }
 
     /**
