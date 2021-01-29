@@ -191,23 +191,22 @@ class Oa11040ControllerTest {
 
     // Oa11040Vo作成
     private Oa11040Vo createOa11040Vo() {
-        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = newArrayList();
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-            Oa11040AssignRoleTableVo oa11040AssignRoleTableVo = new Oa11040AssignRoleTableVo();
-            oa11040AssignRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
-            oa11040AssignRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
-            oa11040AssignRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
-            oa11040AssignRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
-            oa11040AssignRoleTableVoList.add(oa11040AssignRoleTableVo);
+            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
+            assignRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
+            assignRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
+            assignRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
+            assignRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
+            assignRoleTableVoList.add(assignRoleTableVo);
         }
-        List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList = newArrayList();
+        List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
         for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
             if (subSystemRole.getCode().length() == 0) { continue; }
-
-            Oa11040UnAssignRoleTableVo oa11040UnAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
-            oa11040UnAssignRoleTableVo.setRoleCode(subSystemRole.getCode());
-            oa11040UnAssignRoleTableVo.setRoleName(subSystemRole.getDisplayName());
-            oa11040UnAssignRoleTableVoList.add(oa11040UnAssignRoleTableVo);
+            Oa11040UnAssignRoleTableVo unAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
+            unAssignRoleTableVo.setRoleCode(subSystemRole.getCode());
+            unAssignRoleTableVo.setRoleName(subSystemRole.getDisplayName());
+            unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
 
         Oa11040Vo vo = new Oa11040Vo();
@@ -215,8 +214,8 @@ class Oa11040ControllerTest {
         vo.setOperatorId(operatorId);
         vo.setJa(jaCode + " " + jaName);
         vo.setOperator(operatorCode + " " + operatorName);
-        vo.setOa11040AssignRoleTableVoList(oa11040AssignRoleTableVoList);
-        vo.setOa11040UnAssignRoleTableVoList(oa11040UnAssignRoleTableVoList);
+        vo.setAssignRoleTableVoList(assignRoleTableVoList);
+        vo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
         vo.setChangeCause(changeCause);
         vo.setChangeCausePlaceholder(changeCausePlaceholder);
 

@@ -36,16 +36,16 @@ class Oa11040CopyPresenter implements SubSystemRoleGrantedCopyResponse {
      */
     public void bindTo(Oa11040Vo vo) {
 
-        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = newArrayList();
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (SubSystemRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
-            Oa11040AssignRoleTableVo oa11040AssignRoleTableVo = new Oa11040AssignRoleTableVo();
-            oa11040AssignRoleTableVo.setRoleCode(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode());
-            oa11040AssignRoleTableVo.setRoleName(SubSystemRole.codeOf(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode()).getDisplayName());
-            oa11040AssignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_SubSystemRole().getValidThruStartDate());
-            oa11040AssignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_SubSystemRole().getValidThruEndDate());
-            oa11040AssignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
-            oa11040AssignRoleTableVoList.add(oa11040AssignRoleTableVo);
+            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
+            assignRoleTableVo.setRoleCode(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode());
+            assignRoleTableVo.setRoleName(SubSystemRole.codeOf(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode()).getDisplayName());
+            assignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_SubSystemRole().getValidThruStartDate());
+            assignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_SubSystemRole().getValidThruEndDate());
+            assignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
+            assignRoleTableVoList.add(assignRoleTableVo);
         }
-        vo.setOa11040AssignRoleTableVoList(oa11040AssignRoleTableVoList);
+        vo.setAssignRoleTableVoList(assignRoleTableVoList);
     }
 }

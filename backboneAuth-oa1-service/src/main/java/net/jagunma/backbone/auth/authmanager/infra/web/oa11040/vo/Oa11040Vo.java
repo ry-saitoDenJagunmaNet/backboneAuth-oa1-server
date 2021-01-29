@@ -25,11 +25,11 @@ public class Oa11040Vo extends BaseOfVo {
     /**
      * 付与ロールテーブル
      */
-    private List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList;
+    private List<Oa11040AssignRoleTableVo> assignRoleTableVoList;
     /**
      * 未付与ロールテーブル
      */
-    private List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList;
+    private List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList;
     /**
      * 変更事由
      */
@@ -49,11 +49,11 @@ public class Oa11040Vo extends BaseOfVo {
     public String getOperator() {
         return operator;
     }
-    public List<Oa11040AssignRoleTableVo> getOa11040AssignRoleTableVoList() {
-        return oa11040AssignRoleTableVoList;
+    public List<Oa11040AssignRoleTableVo> getAssignRoleTableVoList() {
+        return assignRoleTableVoList;
     }
-    public List<Oa11040UnAssignRoleTableVo> getOa11040UnAssignRoleTableVoList() {
-        return oa11040UnAssignRoleTableVoList;
+    public List<Oa11040UnAssignRoleTableVo> getUnAssignRoleTableVoList() {
+        return unAssignRoleTableVoList;
     }
     public String getChangeCause() {
         return changeCause;
@@ -72,11 +72,11 @@ public class Oa11040Vo extends BaseOfVo {
     public void setOperator(String operator) {
         this.operator = operator;
     }
-    public void setOa11040AssignRoleTableVoList(List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList) {
-        this.oa11040AssignRoleTableVoList = oa11040AssignRoleTableVoList;
+    public void setAssignRoleTableVoList(List<Oa11040AssignRoleTableVo> assignRoleTableVoList) {
+        this.assignRoleTableVoList = assignRoleTableVoList;
     }
-    public void setOa11040UnAssignRoleTableVoList(List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList) {
-        this.oa11040UnAssignRoleTableVoList = oa11040UnAssignRoleTableVoList;
+    public void setUnAssignRoleTableVoList(List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList) {
+        this.unAssignRoleTableVoList = unAssignRoleTableVoList;
     }
     public void setChangeCause(String changeCause) {
         this.changeCause = changeCause;

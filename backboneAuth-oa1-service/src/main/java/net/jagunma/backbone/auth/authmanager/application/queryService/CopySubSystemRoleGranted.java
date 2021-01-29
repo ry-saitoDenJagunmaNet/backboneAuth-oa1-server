@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +48,7 @@ public class CopySubSystemRoleGranted {
         // オペレーター_サブシステムロール割当群を検索します（選択オペレーター）
         Operator_SubSystemRoles selectedOperator_SubSystemRoles = searchOperator_SubSystemRoles(request.getSelectedOperatorId());
 
-        // アサインロールDtoリストにサインインオペレーターが付与可能なものだけコピー追加します
+        // アサインロールDtoリストにサインインオペレーターが操作可能な選択オペレーターのオペレーター_サブシステムロールをコピー追加します
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = copyAddAssignRoleDtoList(request.getAssignRoleList(), signInOperator_SubSystemRoles, selectedOperator_SubSystemRoles);
 
         // Responseへセット
@@ -62,43 +64,24 @@ public class CopySubSystemRoleGranted {
     Operator_SubSystemRoles searchOperator_SubSystemRoles(Long operatorId) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("Operator_SubSystemRoleId"));
+        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty());
     }
 
     /**
-     * アサインロールDtoリストにサインインオペレーターが付与可能なものだけコピー追加します
+     * アサインロールDtoリストにサインインオペレーターが操作可能な選択オペレーターのオペレーター_サブシステムロールをコピー追加します
      *
      * @param currentAssignRoleList 現在のアサインロールリスト
      * @param signInOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
-     * @param selectedOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
+     * @param selectedOperator_SubSystemRoles 選択オペレーターのオペレーター_サブシステムロール割当群
      * @return コピー追加後のアサインロールDtoリスト
      */
     List<SubSystemRoleGrantedAssignRoleDto> copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles) {
 
-        // 現在のアサインロールリストのコードをList化
-        List<String> currentAssignRoleCodeList = newArrayList();
-        for (SubSystemRoleGrantedCopyRequestAssignRole currentAssignRole : currentAssignRoleList) {
-            currentAssignRoleCodeList.add(currentAssignRole.getSubSystemRole().getCode());
-        }
-        // サインインオペレーターのオペレーター_サブシステムロール割当群をコードをキーにしてMap化
-        Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
-        for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
-            signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-        }
-
-        // 追加するサブシステムロールリストを作成）選択をサインインで篩（ふるい）に掛ける（サインインにないものを除外する）
-        List<Operator_SubSystemRole> additionalOperator_SubSystemRoleList = newArrayList();
-        for(Operator_SubSystemRole selectedOperator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
-            if (signInOperator_SubSystemRoleMap.containsKey(selectedOperator_SubSystemRole.getSubSystemRoleCode())) {
-                additionalOperator_SubSystemRoleList.add(selectedOperator_SubSystemRole);
-            }
-        }
-
-        // 現在のアサインサブシステムロールリストをDtoリスト化
+        // 現在のアサインロールリストをアサインロールDtoリスト化（返却の型にコンバート）
         List<SubSystemRoleGrantedAssignRoleDto> copyAddedAssignRoleDtoList = newArrayList();
         for (SubSystemRoleGrantedCopyRequestAssignRole currentAssignRole : currentAssignRoleList) {
-            SubSystemRoleGrantedAssignRoleDto copyAddedAssignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            copyAddedAssignRoleDto.setOperator_SubSystemRole(Operator_SubSystemRole.createFrom(
+            SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+            assignRoleDto.setOperator_SubSystemRole(Operator_SubSystemRole.createFrom(
                 null,
                 null,
                 currentAssignRole.getSubSystemRole().getCode(),
@@ -107,64 +90,86 @@ public class CopySubSystemRoleGranted {
                 null,
                 null,
                 currentAssignRole.getSubSystemRole()));
-            copyAddedAssignRoleDto.setIsModifiable(currentAssignRole.getIsModifiable());
-            copyAddedAssignRoleDtoList.add(copyAddedAssignRoleDto);
+            assignRoleDto.setIsModifiable(currentAssignRole.getIsModifiable());
+            copyAddedAssignRoleDtoList.add(assignRoleDto);
         }
 
-        // アサインサブシステムロールリストに追加（既に持っているロールは除外）
-        for(Operator_SubSystemRole additionalOperator_SubSystemRole : additionalOperator_SubSystemRoleList) {
-            if (!currentAssignRoleCodeList.contains(additionalOperator_SubSystemRole.getSubSystemRoleCode())) {
-                SubSystemRoleGrantedAssignRoleDto copyAddedAssignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-                copyAddedAssignRoleDto.setOperator_SubSystemRole(Operator_SubSystemRole.createFrom(
-                    additionalOperator_SubSystemRole.getOperator_SubSystemRoleId(),
-                    additionalOperator_SubSystemRole.getOperatorId(),
-                    additionalOperator_SubSystemRole.getSubSystemRoleCode(),
-                    additionalOperator_SubSystemRole.getValidThruStartDate(),
-                    additionalOperator_SubSystemRole.getValidThruEndDate(),
-                    additionalOperator_SubSystemRole.getRecordVersion(),
-                    additionalOperator_SubSystemRole.getOperator(),
-                    additionalOperator_SubSystemRole.getSubSystemRole()));
-                copyAddedAssignRoleDtoList.add(copyAddedAssignRoleDto);
+        // 現在のアサインロールリストのコードをList化（追加除外判定に使用する為）
+        List<String> currentAssignRoleCodeList = newArrayList();
+        for (SubSystemRoleGrantedCopyRequestAssignRole currentAssignRole : currentAssignRoleList) {
+            currentAssignRoleCodeList.add(currentAssignRole.getSubSystemRole().getCode());
+        }
+
+        // アサインロールDtoリストに追加
+        for(Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
+            // サインインオペレーターによる変更可否を判定
+            if (!judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles)) {
+                continue;
             }
+            // 現在のアサインロールリストに存在するロールは除外
+            if (currentAssignRoleCodeList.contains(operator_SubSystemRole.getSubSystemRoleCode())) {
+                continue;
+            }
+
+            SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+            assignRoleDto.setOperator_SubSystemRole(Operator_SubSystemRole.createFrom(
+                operator_SubSystemRole.getOperator_SubSystemRoleId(),
+                operator_SubSystemRole.getOperatorId(),
+                operator_SubSystemRole.getSubSystemRoleCode(),
+                operator_SubSystemRole.getValidThruStartDate(),
+                operator_SubSystemRole.getValidThruEndDate(),
+                operator_SubSystemRole.getRecordVersion(),
+                operator_SubSystemRole.getOperator(),
+                operator_SubSystemRole.getSubSystemRole()));
+            assignRoleDto.setIsModifiable(true);
+
+            copyAddedAssignRoleDtoList.add(assignRoleDto);
         }
 
         return copyAddedAssignRoleDtoList;
-//         現在の割当対象サブシステムロールリストと追加するサブシステムロールリストで
+    }
 
-//        // ターゲットオペレーターのオペレーター_サブシステムロール割当群をコードをキーにしてMap化
-//        Map<String, Operator_SubSystemRole> targetOperator_SubSystemRoleMap = new HashMap<>();
-//        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
-//            targetOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-//        }
+    // ToDo:★staticメソッドで共通化した方がいいか？staticメソッドは使用しない方向か？
+    //  小さい共通のユーティリティ化するのはどうか？
+    //  例えば SubSystemRoleGrantedQueryUtil
+    //  （現在存在するstaticメソッド：static void checkBranchBelongJa）
+    //  例えば OperatorCommandUtil
+    /**
+     * 変更可否を判定します
+     *
+     * @param subSystemRoleCode サブシステムロールコード
+     * @param signInOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
+     * @return 変更可否
+     */
+    boolean judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles) {
+        LocalDate today = LocalDate.now();
 
-//        // サインインオペレーターのオペレーター_サブシステムロール割当群をコードをキーにしてMap化
-//        Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
-//        for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
-//            signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-//        }
+        // サインインオペレーター の オペレーター_サブシステムロール割当群 をコードをキーにしてMap化
+        Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
+        for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
+            signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
+        }
 
-//        // 選択オペレーターのオペレーター_サブシステムロール割当群をコードをキーにしてMap化
-//        Map<String, Operator_SubSystemRole> selectedOperator_SubSystemRoleMap = new HashMap<>();
-//        for (Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
-//            selectedOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-//        }
+        // サインインオペレーター が JA管理者ロール を持っているか
+        if (signInOperator_SubSystemRoleMap.containsKey(SubSystemRole.JA管理者.getCode())) {
+            // 本日時点で有効か
+            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(SubSystemRole.JA管理者.getCode());
+            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
+                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
+                return true;
+            }
+        }
 
-//        // 追加するサブシステムロール）選択をサインインで篩（ふるい）に掛ける（サインインにないものを除外する）
-//        Map<String, Operator_SubSystemRole> additionalOperator_SubSystemRoleMap = new HashMap<>();
-//        for(Map.Entry<String, Operator_SubSystemRole> selectedOperator_SubSystemRoleMapEntry : selectedOperator_SubSystemRoleMap.entrySet()) {
-//            if (signInOperator_SubSystemRoleMap.containsKey(selectedOperator_SubSystemRoleMapEntry.getKey())) {
-//                additionalOperator_SubSystemRoleMap.put(selectedOperator_SubSystemRoleMapEntry.getKey(), selectedOperator_SubSystemRoleMapEntry.getValue());
-//            }
-//        }
+        // サインインオペレーター が 持っているロールか
+        if (signInOperator_SubSystemRoleMap.containsKey(subSystemRoleCode)) {
+            // 本日時点で有効か
+            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(subSystemRoleCode);
+            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
+                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
+                return true;
+            }
+        }
 
-//        // 追加するサブシステムロールをターゲットに追加（ターゲットがすでにもっているものは除外）
-//        for(Map.Entry<String, Operator_SubSystemRole> additionalOperator_SubSystemRoleMapEntry : additionalOperator_SubSystemRoleMap.entrySet()) {
-//            if (!targetOperator_SubSystemRoleMap.containsKey(additionalOperator_SubSystemRoleMapEntry.getKey())) {
-//                targetOperator_SubSystemRoleMap.put(additionalOperator_SubSystemRoleMapEntry.getKey(), additionalOperator_SubSystemRoleMapEntry.getValue());
-//            }
-//        }
-
-//        // Listに変換して返却
-//        return Operator_SubSystemRoles.createFrom(new ArrayList<>(targetOperator_SubSystemRoleMap.values()));
+        return false;
     }
 }

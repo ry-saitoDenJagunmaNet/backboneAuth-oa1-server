@@ -28,19 +28,8 @@ import org.junit.jupiter.api.Test;
 class SearchSubSystemRoleGrantedTest {
 
     // 実行既定値
+    private Long signInOperatorId = 987654L;
     private Long targetOperatorId = 123456L;
-    private Long signInOperatorId = 234567L;
-
-    private SubSystemRole targetSubSystemRole1 = SubSystemRole.業務統括者_購買;
-    private SubSystemRole targetSubSystemRole4 = SubSystemRole.業務統括者_販売_米;
-    private LocalDate targetValidThruStartDate1 = LocalDate.of(2020, 10, 11);
-    private LocalDate targetValidThruStartDate4 = LocalDate.of(2020, 10, 14);
-    private LocalDate targetValidThruEndDate1 = LocalDate.of(2020, 10, 21);
-    private LocalDate targetValidThruEndDate4 = LocalDate.of(2020, 10, 24);
-    private List<Operator_SubSystemRole> targetOperator_SubSystemRoleList = newArrayList(
-        Operator_SubSystemRole.createFrom(null, targetOperatorId, targetSubSystemRole1.getCode(), targetValidThruStartDate1, targetValidThruEndDate1, null, null, targetSubSystemRole1),
-        Operator_SubSystemRole.createFrom(null, targetOperatorId, targetSubSystemRole4.getCode(), targetValidThruStartDate4, targetValidThruEndDate4, null, null, targetSubSystemRole4));
-    private Operator_SubSystemRoles targetOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(targetOperator_SubSystemRoleList);
 
     private SubSystemRole signInSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole signInSubSystemRole1 = SubSystemRole.業務統括者_購買;
@@ -63,8 +52,30 @@ class SearchSubSystemRoleGrantedTest {
     private LocalDate signInValidThruEndDate4 = LocalDate.of(9999, 12, 24);
     private LocalDate signInValidThruEndDate5 = LocalDate.of(9999, 12, 25);
     private LocalDate signInValidThruEndDate6 = LocalDate.of(9999, 12, 26);
-    private List<Operator_SubSystemRole> preOperator_SubSystemRoleList;
     private Operator_SubSystemRoles signInOperator_SubSystemRoles;
+
+    private SubSystemRole targetSubSystemRole0 = SubSystemRole.JA管理者;
+    private SubSystemRole targetSubSystemRole1 = SubSystemRole.業務統括者_購買;
+    private SubSystemRole targetSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
+    private SubSystemRole targetSubSystemRole3 = SubSystemRole.業務統括者_販売_花卉;
+    private SubSystemRole targetSubSystemRole4 = SubSystemRole.業務統括者_販売_米;
+    private SubSystemRole targetSubSystemRole5 = SubSystemRole.業務統括者_販売_麦;
+    private SubSystemRole targetSubSystemRole6 = SubSystemRole.業務統括者_販売_畜産;
+    private LocalDate targetValidThruStartDate0 = LocalDate.of(2020, 10, 10);
+    private LocalDate targetValidThruStartDate1 = LocalDate.of(2020, 10, 11);
+    private LocalDate targetValidThruStartDate2 = LocalDate.of(2020, 10, 12);
+    private LocalDate targetValidThruStartDate3 = LocalDate.of(2020, 10, 13);
+    private LocalDate targetValidThruStartDate4 = LocalDate.of(2020, 10, 14);
+    private LocalDate targetValidThruStartDate5 = LocalDate.of(2020, 10, 15);
+    private LocalDate targetValidThruStartDate6 = LocalDate.of(2020, 10, 16);
+    private LocalDate targetValidThruEndDate0 = LocalDate.of(2020, 10, 20);
+    private LocalDate targetValidThruEndDate1 = LocalDate.of(2020, 10, 21);
+    private LocalDate targetValidThruEndDate2 = LocalDate.of(2020, 10, 22);
+    private LocalDate targetValidThruEndDate3 = LocalDate.of(2020, 10, 23);
+    private LocalDate targetValidThruEndDate4 = LocalDate.of(2020, 10, 24);
+    private LocalDate targetValidThruEndDate5 = LocalDate.of(2020, 10, 25);
+    private LocalDate targetValidThruEndDate6 = LocalDate.of(2020, 10, 26);
+    private Operator_SubSystemRoles targetOperator_SubSystemRoles;
 
     // オペレーター履歴ヘッダー系
     private String changeCause = "業務統括者（販売・青果）に昇格";
@@ -72,8 +83,8 @@ class SearchSubSystemRoleGrantedTest {
 
     // 検証値
     private Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
-    private Long actualTargetOperatorId;
     private Long actualSignInOperatorId;
+    private Long actualTargetOperatorId;
     private List<SubSystemRoleGrantedAssignRoleDto> actualAssignRoleDtoList;
     private List<SubSystemRoleGrantedAllRoleDto> actualAllRoleDtoList;
     private OperatorHistoryHeader actualOperatorHistoryHeader;
@@ -85,11 +96,11 @@ class SearchSubSystemRoleGrantedTest {
             public Operator_SubSystemRoles selectBy(Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria, Orders orders) {
                 actualOperator_SubSystemRoleCriteria = operator_SubSystemRoleCriteria;
 
-                if (operator_SubSystemRoleCriteria.getOperatorIdCriteria().getEqualTo().equals(targetOperatorId)) {
-                    return targetOperator_SubSystemRoles;
-                }
                 if (operator_SubSystemRoleCriteria.getOperatorIdCriteria().getEqualTo().equals(signInOperatorId)) {
                     return signInOperator_SubSystemRoles;
+                }
+                if (operator_SubSystemRoleCriteria.getOperatorIdCriteria().getEqualTo().equals(targetOperatorId)) {
+                    return targetOperator_SubSystemRoles;
                 }
                 return null;
             }
@@ -112,12 +123,12 @@ class SearchSubSystemRoleGrantedTest {
     private SubSystemRoleGrantedSearchRequest createRequest() {
         return new SubSystemRoleGrantedSearchRequest() {
             @Override
-            public Long getTargetOperatorId() {
-                return targetOperatorId;
-            }
-            @Override
             public Long getSignInOperatorId() {
                 return signInOperatorId;
+            }
+            @Override
+            public Long getTargetOperatorId() {
+                return targetOperatorId;
             }
         };
     }
@@ -125,12 +136,12 @@ class SearchSubSystemRoleGrantedTest {
     private SubSystemRoleGrantedSearchResponse createResponse() {
         return new SubSystemRoleGrantedSearchResponse() {
             @Override
-            public void setTargetOperatorId(Long targetOperatorId) {
-                actualTargetOperatorId = targetOperatorId;
+            public void setSignInOperatorId(Long signInOperatorId) {
+               actualSignInOperatorId = signInOperatorId;
             }
             @Override
-            public void setSignInOperatorId(Long signInOperatorId) {
-               actualSignInOperatorId =  signInOperatorId;
+            public void setTargetOperatorId(Long targetOperatorId) {
+                actualTargetOperatorId = targetOperatorId;
             }
             @Override
             public void setAssignRoleDtoList(List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList) {
@@ -149,14 +160,32 @@ class SearchSubSystemRoleGrantedTest {
 
     // サインインオペレーター の オペレーター_サブシステムロール割当群作成
     private Operator_SubSystemRoles createSignInOperator_SubSystemRoles(List<Integer> createNoList) {
-        preOperator_SubSystemRoleList = newArrayList(
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole0.getCode(), signInValidThruStartDate0, signInValidThruEndDate0, null, null, signInSubSystemRole0),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole1.getCode(), signInValidThruStartDate1, signInValidThruEndDate1, null, null, signInSubSystemRole1),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole2.getCode(), signInValidThruStartDate2, signInValidThruEndDate2, null, null, signInSubSystemRole2),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole3.getCode(), signInValidThruStartDate3, signInValidThruEndDate3, null, null, signInSubSystemRole3),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole4.getCode(), signInValidThruStartDate4, signInValidThruEndDate4, null, null, signInSubSystemRole4),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole5.getCode(), signInValidThruStartDate5, signInValidThruEndDate5, null, null, signInSubSystemRole5),
-            Operator_SubSystemRole.createFrom(null, signInOperatorId, signInSubSystemRole6.getCode(), signInValidThruStartDate6, signInValidThruEndDate6, null, null, signInSubSystemRole6));
+        List<Operator_SubSystemRole> preOperator_SubSystemRoleList = newArrayList(
+            Operator_SubSystemRole.createFrom(9000L, signInOperatorId, signInSubSystemRole0.getCode(), signInValidThruStartDate0, signInValidThruEndDate0, 1, null, signInSubSystemRole0),
+            Operator_SubSystemRole.createFrom(9001L, signInOperatorId, signInSubSystemRole1.getCode(), signInValidThruStartDate1, signInValidThruEndDate1, 1, null, signInSubSystemRole1),
+            Operator_SubSystemRole.createFrom(9002L, signInOperatorId, signInSubSystemRole2.getCode(), signInValidThruStartDate2, signInValidThruEndDate2, 1, null, signInSubSystemRole2),
+            Operator_SubSystemRole.createFrom(9003L, signInOperatorId, signInSubSystemRole3.getCode(), signInValidThruStartDate3, signInValidThruEndDate3, 1, null, signInSubSystemRole3),
+            Operator_SubSystemRole.createFrom(9004L, signInOperatorId, signInSubSystemRole4.getCode(), signInValidThruStartDate4, signInValidThruEndDate4, 1, null, signInSubSystemRole4),
+            Operator_SubSystemRole.createFrom(9005L, signInOperatorId, signInSubSystemRole5.getCode(), signInValidThruStartDate5, signInValidThruEndDate5, 1, null, signInSubSystemRole5),
+            Operator_SubSystemRole.createFrom(9006L, signInOperatorId, signInSubSystemRole6.getCode(), signInValidThruStartDate6, signInValidThruEndDate6, 1, null, signInSubSystemRole6));
+
+        List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
+        for (Integer createNo : createNoList) {
+            operator_SubSystemRoleList.add(preOperator_SubSystemRoleList.get(createNo));
+        }
+
+        return Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
+    }
+    // ターゲットオペレーター の オペレーター_サブシステムロール割当群作成
+    private Operator_SubSystemRoles createTargetOperator_SubSystemRoles(List<Integer> createNoList) {
+        List<Operator_SubSystemRole> preOperator_SubSystemRoleList = newArrayList(
+            Operator_SubSystemRole.createFrom(1000L, targetOperatorId, targetSubSystemRole0.getCode(), targetValidThruStartDate0, targetValidThruEndDate0, 1, null, targetSubSystemRole0),
+            Operator_SubSystemRole.createFrom(1001L, targetOperatorId, targetSubSystemRole1.getCode(), targetValidThruStartDate1, targetValidThruEndDate1, 1, null, targetSubSystemRole1),
+            Operator_SubSystemRole.createFrom(1002L, targetOperatorId, targetSubSystemRole2.getCode(), targetValidThruStartDate2, targetValidThruEndDate2, 1, null, targetSubSystemRole2),
+            Operator_SubSystemRole.createFrom(1003L, targetOperatorId, targetSubSystemRole3.getCode(), targetValidThruStartDate3, targetValidThruEndDate3, 1, null, targetSubSystemRole3),
+            Operator_SubSystemRole.createFrom(1004L, targetOperatorId, targetSubSystemRole4.getCode(), targetValidThruStartDate4, targetValidThruEndDate4, 1, null, targetSubSystemRole4),
+            Operator_SubSystemRole.createFrom(1005L, targetOperatorId, targetSubSystemRole5.getCode(), targetValidThruStartDate5, targetValidThruEndDate5, 1, null, targetSubSystemRole5),
+            Operator_SubSystemRole.createFrom(1006L, targetOperatorId, targetSubSystemRole6.getCode(), targetValidThruStartDate6, targetValidThruEndDate6, 1, null, targetSubSystemRole6));
 
         List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList();
         for (Integer createNo : createNoList) {
@@ -184,15 +213,16 @@ class SearchSubSystemRoleGrantedTest {
 
         // 実行値
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
+        targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
         SubSystemRoleGrantedSearchRequest request = createRequest();
         SubSystemRoleGrantedSearchResponse response = createResponse();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole targetOperator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            assignRoleDto.setOperator_SubSystemRole(targetOperator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(targetOperator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
@@ -210,8 +240,8 @@ class SearchSubSystemRoleGrantedTest {
             .doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualTargetOperatorId).isEqualTo(targetOperatorId);
         assertThat(actualSignInOperatorId).isEqualTo(signInOperatorId);
+        assertThat(actualTargetOperatorId).isEqualTo(targetOperatorId);
         assertThat(actualAssignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
         assertThat(actualAllRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAllRoleDtoList);
         assertThat(actualOperatorHistoryHeader).usingRecursiveComparison().isEqualTo(operatorHistoryHeader);
@@ -271,7 +301,7 @@ class SearchSubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles targetOperator_SubSystemRoles, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
+     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles targetOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -287,25 +317,26 @@ class SearchSubSystemRoleGrantedTest {
 
         // 実行値
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
+        targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole targetOperator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            assignRoleDto.setOperator_SubSystemRole(targetOperator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(targetOperator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
         // 実行
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(targetOperator_SubSystemRoles, signInOperator_SubSystemRoles);
+        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(signInOperator_SubSystemRoles, targetOperator_SubSystemRoles);
 
         // 結果検証
         assertThat(assignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
     }
 
     /**
-     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles targetOperator_SubSystemRoles, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
+     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles targetOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （サインインオペレーター の オペレーター_サブシステムロール割当 なし）
@@ -321,26 +352,27 @@ class SearchSubSystemRoleGrantedTest {
         SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
 
         // 実行値
-        signInOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(newArrayList());
+        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList());
+        targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole targetOperator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            assignRoleDto.setOperator_SubSystemRole(targetOperator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(targetOperator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
         // 実行
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(targetOperator_SubSystemRoles, signInOperator_SubSystemRoles);
+        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(signInOperator_SubSystemRoles, targetOperator_SubSystemRoles);
 
         // 結果検証
         assertThat(assignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
     }
 
     /**
-     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles targetOperator_SubSystemRoles, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
+     * {@link SearchSubSystemRoleGranted#createAssignRoleDtoList(Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles targetOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （ターゲットオペレーター の オペレーター_サブシステムロール割当 なし）
@@ -356,14 +388,14 @@ class SearchSubSystemRoleGrantedTest {
         SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
 
         // 実行値
-        targetOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(newArrayList());
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
+        targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList());
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
 
         // 実行
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(targetOperator_SubSystemRoles, signInOperator_SubSystemRoles);
+        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = searchSubSystemRoleGranted.createAssignRoleDtoList(signInOperator_SubSystemRoles, targetOperator_SubSystemRoles);
 
         // 結果検証
         assertThat(assignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
@@ -421,7 +453,7 @@ class SearchSubSystemRoleGrantedTest {
         SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
 
         // 実行値
-        signInOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(newArrayList());
+        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList());
 
         // 期待値
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
