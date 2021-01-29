@@ -59,7 +59,6 @@ class AuthenticationTest {
 
     // 検証値
     private SignInResult actualSignInResult;
-    private Operator actualOperator;
     private String actualOperatorRepository_existsByCode_operatorCode;
     private Long actualPasswordHistoryRepository_latestOneByOperatorId_operatorId;
     private Long actualAccountLockRepository_latestOneByOperatorId_operatorId;
@@ -211,10 +210,6 @@ class AuthenticationTest {
             public void setSignInResult(SignInResult signInResult) {
                 actualSignInResult = signInResult;
             }
-            @Override
-            public void setOperator(Operator operator) {
-                actualOperator = operator;
-            }
         };
     }
 
@@ -225,7 +220,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター、リポジトリの引数
+     *  ・サインイン結果、リポジトリの引数
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -251,7 +246,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
         assertThat(actualOperatorRepository_existsByCode_operatorCode).isEqualTo(expectedOperatorCode);
         assertThat(actualPasswordHistoryRepository_latestOneByOperatorId_operatorId).isEqualTo(expectedOperatorId);
         assertThat(actualAccountLockRepository_latestOneByOperatorId_operatorId).isEqualTo(expectedOperatorId);
@@ -265,7 +259,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -290,7 +284,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -301,7 +294,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -327,7 +320,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -338,7 +330,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -365,7 +357,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -376,7 +367,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -403,7 +394,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -414,7 +404,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -440,7 +430,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -451,7 +440,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -476,7 +465,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -487,7 +475,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -513,7 +501,6 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 
     /**
@@ -524,7 +511,7 @@ class AuthenticationTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・サインイン結果、オペレーター
+     *  ・サインイン結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -549,6 +536,5 @@ class AuthenticationTest {
 
         // 結果検証
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
-        assertThat(actualOperator).usingRecursiveComparison().isEqualTo(expectedOperator);
     }
 }

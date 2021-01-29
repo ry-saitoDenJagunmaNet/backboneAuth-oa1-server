@@ -65,4 +65,13 @@ public enum SignInResult {
         }
         return SignInResult.UnKnown;
     }
+
+    /**
+     * 成功かを判定します
+     *
+     * @return true:成功
+     */
+    public boolean isSuccess() {
+        return this.equals(成功);
+    }
 }

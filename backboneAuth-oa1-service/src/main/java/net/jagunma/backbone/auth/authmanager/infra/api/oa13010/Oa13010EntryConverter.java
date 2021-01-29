@@ -11,34 +11,34 @@ public class Oa13010EntryConverter implements SignInTraceEntryRequest {
 
     private final String tryIpAddress;
     private final String operatorCode;
-    private final Short signInCauseCode;
-    private final Short signInResultCode;
+    private final SignInCause signInCause;
+    private final SignInResult signInResult;
 
     // コンストラクタ
     Oa13010EntryConverter(
         String tryIpAddress,
         String operatorCode,
-        Short signInCauseCode,
-        Short signInResultCode) {
+        SignInCause signInCause,
+        SignInResult signInResult) {
 
         this.tryIpAddress = tryIpAddress;
         this.operatorCode = operatorCode;
-        this.signInCauseCode = signInCauseCode;
-        this.signInResultCode = signInResultCode;
+        this.signInCause = signInCause;
+        this.signInResult = signInResult;
     }
 
     // ファクトリーメソッド
     public static Oa13010EntryConverter of(
         String tryIpAddress,
         String operatorCode,
-        Short signInCauseCode,
-        Short signInResultCode) {
+        SignInCause signInCause,
+        SignInResult signInResult) {
 
         return new Oa13010EntryConverter(
             tryIpAddress,
             operatorCode,
-            signInCauseCode,
-            signInResultCode);
+            signInCause,
+            signInResult);
     }
 
     /**
@@ -63,7 +63,7 @@ public class Oa13010EntryConverter implements SignInTraceEntryRequest {
      * @return サインイン起因
      */
     public SignInCause getSignInCause() {
-        return SignInCause.codeOf(signInCauseCode);
+        return signInCause;
     };
     /**
      * サインイン結果のＧｅｔ
@@ -71,6 +71,6 @@ public class Oa13010EntryConverter implements SignInTraceEntryRequest {
      * @return サインイン結果
      */
     public SignInResult getSignInResult() {
-        return SignInResult.codeOf(signInResultCode);
+        return signInResult;
     };
 }

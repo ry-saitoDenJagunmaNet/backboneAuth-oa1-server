@@ -17,7 +17,7 @@ public class EntrySignInTrace {
     private final SignInTraceRepositoryForStore signInTraceRepositoryForStore;
 
     // コンストラクタ
-    EntrySignInTrace(SignInTraceRepositoryForStore signInTraceRepositoryForStore) {
+    public EntrySignInTrace(SignInTraceRepositoryForStore signInTraceRepositoryForStore) {
         this.signInTraceRepositoryForStore = signInTraceRepositoryForStore;
     }
 
