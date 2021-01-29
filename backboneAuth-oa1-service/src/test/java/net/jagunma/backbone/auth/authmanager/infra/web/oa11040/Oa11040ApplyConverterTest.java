@@ -39,16 +39,16 @@ class Oa11040ApplyConverterTest {
         List<LocalDate> validThruStartDateList = newArrayList(validThruStartDate0, validThruStartDate1, validThruStartDate2, validThruStartDate4, validThruStartDate6);
         List<LocalDate> validThruEndDateList = newArrayList(validThruEndDate0, validThruEndDate1, validThruEndDate2, validThruEndDate4, validThruEndDate6);
 
-        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = newArrayList();
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (int i = 0; i < subSystemRoleList.size(); i++) {
-            Oa11040AssignRoleTableVo oa11040AssignRoleTableVo = new Oa11040AssignRoleTableVo();
-            oa11040AssignRoleTableVo.setRoleCode(subSystemRoleList.get(i).getCode());
-            oa11040AssignRoleTableVo.setRoleName(subSystemRoleList.get(i).getDisplayName());
-            oa11040AssignRoleTableVo.setValidThruStartDate(validThruStartDateList.get(i));
-            oa11040AssignRoleTableVo.setValidThruEndDate(validThruEndDateList.get(i));
-            oa11040AssignRoleTableVoList.add(oa11040AssignRoleTableVo);
+            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
+            assignRoleTableVo.setRoleCode(subSystemRoleList.get(i).getCode());
+            assignRoleTableVo.setRoleName(subSystemRoleList.get(i).getDisplayName());
+            assignRoleTableVo.setValidThruStartDate(validThruStartDateList.get(i));
+            assignRoleTableVo.setValidThruEndDate(validThruEndDateList.get(i));
+            assignRoleTableVoList.add(assignRoleTableVo);
         }
-        return oa11040AssignRoleTableVoList;
+        return assignRoleTableVoList;
     }
 
     private List<Oa11040ApplyAssignRoleConverter> createOa11040ApplyAssignRoleConverterList() {
@@ -85,7 +85,7 @@ class Oa11040ApplyConverterTest {
         // 実行値
         Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);
-        vo.setOa11040AssignRoleTableVoList(createOa11040AssignRoleTableVoList());
+        vo.setAssignRoleTableVoList(createOa11040AssignRoleTableVoList());
         vo.setChangeCause(changeCause);
 
         // 実行
@@ -102,7 +102,7 @@ class Oa11040ApplyConverterTest {
      * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
      *  ●パターン
      *    正常
-     *    （割当対象サブシステムロールなし）
+     *    （割当対象サブシステムロール が ０件）
      *
      *  ●検証事項
      *  ・Converterへのセット
@@ -114,7 +114,7 @@ class Oa11040ApplyConverterTest {
         // 実行値
         Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);
-        vo.setOa11040AssignRoleTableVoList(null);
+        vo.setAssignRoleTableVoList(null);
         vo.setChangeCause(changeCause);
 
         // 実行

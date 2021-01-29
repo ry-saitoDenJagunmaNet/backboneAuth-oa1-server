@@ -129,7 +129,7 @@ public class CopySubSystemRoleGranted {
         return copyAddedAssignRoleDtoList;
     }
 
-    // ToDo:staticメソッドで共通化した方がいいか？staticメソッドは使用しない方向か？
+    // ToDo:★staticメソッドで共通化した方がいいか？staticメソッドは使用しない方向か？
     //  小さい共通のユーティリティ化するのはどうか？
     //  例えば SubSystemRoleGrantedQueryUtil
     //  （現在存在するstaticメソッド：static void checkBranchBelongJa）

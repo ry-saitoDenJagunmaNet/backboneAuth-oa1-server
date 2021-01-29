@@ -155,6 +155,7 @@ public class Oa11040Controller extends BaseOfController {
             if (selectedOperatorId != null) {
 
                 Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, AuditInfoHolder.getAuthInf().getOperatorId(), selectedOperatorId);
+//ToDo:★                Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo.getAssignRoleTableVoList(), AuditInfoHolder.getAuthInf().getOperatorId(), selectedOperatorId);
                 Oa11040CopyPresenter presenter = new Oa11040CopyPresenter();
 
                 copySubSystemRoleGranted.execute(converter, presenter);

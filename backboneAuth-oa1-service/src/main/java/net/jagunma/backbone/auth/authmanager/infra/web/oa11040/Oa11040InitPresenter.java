@@ -79,27 +79,27 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
         vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
         vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
 
-        List<Oa11040AssignRoleTableVo> oa11040AssignRoleTableVoList = newArrayList();
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (SubSystemRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
-            Oa11040AssignRoleTableVo oa11040AssignRoleTableVo = new Oa11040AssignRoleTableVo();
-            oa11040AssignRoleTableVo.setRoleCode(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode());
-            oa11040AssignRoleTableVo.setRoleName(SubSystemRole.codeOf(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode()).getDisplayName());
-            oa11040AssignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_SubSystemRole().getValidThruStartDate());
-            oa11040AssignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_SubSystemRole().getValidThruEndDate());
-            oa11040AssignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
-            oa11040AssignRoleTableVoList.add(oa11040AssignRoleTableVo);
+            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
+            assignRoleTableVo.setRoleCode(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode());
+            assignRoleTableVo.setRoleName(SubSystemRole.codeOf(assignRoleDto.getOperator_SubSystemRole().getSubSystemRoleCode()).getDisplayName());
+            assignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_SubSystemRole().getValidThruStartDate());
+            assignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_SubSystemRole().getValidThruEndDate());
+            assignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
+            assignRoleTableVoList.add(assignRoleTableVo);
         }
-        vo.setOa11040AssignRoleTableVoList(oa11040AssignRoleTableVoList);
+        vo.setAssignRoleTableVoList(assignRoleTableVoList);
 
-        List<Oa11040UnAssignRoleTableVo> oa11040UnAssignRoleTableVoList = newArrayList();
+        List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
         for (SubSystemRoleGrantedAllRoleDto allRoleDto : allRoleDtoList) {
-            Oa11040UnAssignRoleTableVo oa11040UnAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
-            oa11040UnAssignRoleTableVo.setRoleCode(allRoleDto.getSubSystemRole().getCode());
-            oa11040UnAssignRoleTableVo.setRoleName(allRoleDto.getSubSystemRole().getDisplayName());
-            oa11040UnAssignRoleTableVo.setIsModifiable(allRoleDto.getIsModifiable());
-            oa11040UnAssignRoleTableVoList.add(oa11040UnAssignRoleTableVo);
+            Oa11040UnAssignRoleTableVo unAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
+            unAssignRoleTableVo.setRoleCode(allRoleDto.getSubSystemRole().getCode());
+            unAssignRoleTableVo.setRoleName(allRoleDto.getSubSystemRole().getDisplayName());
+            unAssignRoleTableVo.setIsModifiable(allRoleDto.getIsModifiable());
+            unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
-        vo.setOa11040UnAssignRoleTableVoList(oa11040UnAssignRoleTableVoList);
+        vo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
 
         vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
     }
