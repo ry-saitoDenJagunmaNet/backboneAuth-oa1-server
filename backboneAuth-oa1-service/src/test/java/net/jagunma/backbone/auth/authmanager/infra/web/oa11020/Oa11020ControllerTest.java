@@ -87,16 +87,16 @@ class Oa11020ControllerTest {
         EntryOperator entryOperator = new EntryOperator(operatorRepositoryForStore, searchBranchAtMoment) {
             @Override
             public void execute(OperatorEntryRequest request) {
-                // request.getBranchId().equals(11L) の場合：GunmaRuntimeException を発生させる
-                if(request.getBranchId().equals(11L)) {
+                //  request.getBranchId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if (request.getBranchId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
                 }
-                // request.getBranchId().equals(12L) の場合：GunmaRuntimeException を発生させる
-                if(request.getBranchId().equals(12L)) {
+                //  request.getBranchId().equals(12L) の場合：GunmaRuntimeException を発生させる
+                if (request.getBranchId().equals(12L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
                 }
-                // request.getBranchId().equals(13L) の場合：RuntimeException を発生させる
-                if(request.getBranchId().equals(13L)) {
+                //  request.getBranchId().equals(13L) の場合：RuntimeException を発生させる
+                if (request.getBranchId().equals(13L)) {
                     throw new RuntimeException();
                 }
             }

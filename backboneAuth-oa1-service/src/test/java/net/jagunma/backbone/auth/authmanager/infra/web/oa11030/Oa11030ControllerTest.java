@@ -266,12 +266,12 @@ class Oa11030ControllerTest {
             operatorHistoryHeaderRepository) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
-                // request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorId().equals(11L)) {
+                //  request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if (request.getOperatorId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13008", "有効期限開始"));
                 }
-                // request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
-                if(request.getOperatorId().equals(12L)) {
+                //  request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
+                if (request.getOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
                 response.setOperator(operator);
@@ -309,16 +309,16 @@ class Oa11030ControllerTest {
         UpdateOperator updateOperator = new UpdateOperator(operatorRepositoryForStore, searchBranchAtMoment) {
             @Override
             public void execute(OperatorUpdateRequest request) {
-                // request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorId().equals(21L)) {
+                //  request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
+                if (request.getOperatorId().equals(21L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "オペレーターID"));
                 }
-                // request.getOperatorId().equals(22L) の場合：RuntimeException を発生させる
-                if(request.getOperatorId().equals(22L)) {
+                //  request.getOperatorId().equals(22L) の場合：RuntimeException を発生させる
+                if (request.getOperatorId().equals(22L)) {
                     throw new RuntimeException();
                 }
-                // request.getOperatorId().equals(23L) の場合：OptimisticLockingFailureException を発生させる
-                if(request.getOperatorId().equals(23L)) {
+                //  request.getOperatorId().equals(23L) の場合：OptimisticLockingFailureException を発生させる
+                if (request.getOperatorId().equals(23L)) {
                     throw new OptimisticLockingFailureException("楽観的ロック");
                 }
             }
