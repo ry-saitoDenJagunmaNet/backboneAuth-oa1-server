@@ -15,4 +15,11 @@ public interface SignOutTraceRepository {
      * @return サインアウト証跡群
      */
     SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders);
+    /**
+     * 最新オペレーターのサインアウト証跡群の検索を行います
+     *
+     * @param signOutTraceCriteria サインアウト証跡の検索条件
+     * @return サインアウト証跡群
+     */
+    SignOutTraces latestBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders);
 }

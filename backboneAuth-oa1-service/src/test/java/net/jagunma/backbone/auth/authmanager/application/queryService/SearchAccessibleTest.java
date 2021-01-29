@@ -72,7 +72,7 @@ class SearchAccessibleTest {
     private SystemAvailableTimeZoneCriteria actualSystemAvailableTimeZoneCriteria;
     private Orders actualSystemAvailableTimeZoneRepositoryOrders;
 
-    // オペレーター_取引ロール割当データの作成
+    // オペレーター_取引ロール割当データ作成
     private List<Operator_BizTranRole> createOperator_BizTranRoleList() {
         List<Operator_BizTranRole> list = newArrayList();
         list.add(Operator_BizTranRole.createFrom(101L,18L,1l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(1l)));
@@ -80,13 +80,13 @@ class SearchAccessibleTest {
         list.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
         return list;
     }
-    // オペレーターデータの作成
+    // オペレーターデータ作成
     private Operator creatrOperator(Long id) {
         List<Operator> list = newArrayList();
         list.add(Operator.createFrom(18L,"yu001009",null,null,null,null,null,6L,"006",33L,"001",null,null,null));
         return list.stream().filter(b -> b.getOperatorId().equals(id)).findFirst().orElse(null);
     }
-    // 取引ロール割当データの作成
+    // 取引ロール割当データ作成
     private BizTranRole createBizTranRole(Long id) {
         List<BizTranRole> list = newArrayList();
         list.add(BizTranRole.createFrom(1L,"KBAG01","（購買）購買業務基本","KB",1,SubSystem.購買));
@@ -94,7 +94,7 @@ class SearchAccessibleTest {
         list.add(BizTranRole.createFrom(3L,"ANAG02","（畜産）維持管理担当者","AN",1,SubSystem.販売_畜産));
         return list.stream().filter(b -> b.getBizTranRoleId().equals(id)).findFirst().orElse(null);
     }
-    // 取引ロール_取引グループ割当データの作成
+    // 取引ロール_取引グループ割当データ作成
     private List<BizTranRole_BizTranGrp> createBizTranRole_BizTranGrpList() {
         List<BizTranRole_BizTranGrp> list = newArrayList();
         list.add(BizTranRole_BizTranGrp.createFrom(1001L,1L,11L,SubSystem.購買.getCode(),1,createBizTranRole(1L),createBizTranGrp(11L),SubSystem.購買));
@@ -102,7 +102,7 @@ class SearchAccessibleTest {
         list.add(BizTranRole_BizTranGrp.createFrom(1003L,3L,13L,SubSystem.販売_畜産.getCode(),1,createBizTranRole(3L),createBizTranGrp(13L),SubSystem.販売_畜産));
         return list;
     }
-    // 取引グループデータの作成
+    // 取引グループデータ作成
     private BizTranGrp createBizTranGrp(Long id) {
         List<BizTranGrp> list = newArrayList();
         list.add(BizTranGrp.createFrom(11L,"KBTG01","購買メニュー",SubSystem.購買.getCode(),1,SubSystem.購買));
@@ -110,7 +110,7 @@ class SearchAccessibleTest {
         list.add(BizTranGrp.createFrom(13L,"ANTG02","精算取引グループ",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return list.stream().filter(b -> b.getBizTranGrpId().equals(id)).findFirst().orElse(null);
     }
-    // 取引グループ_取引割当データの作成
+    // 取引グループ_取引割当データ作成
     private List<BizTranGrp_BizTran> createBizTranGrp_BizTranList() {
         List<BizTranGrp_BizTran> list = newArrayList();
         list.add(BizTranGrp_BizTran.createFrom(10001L,11L,100001L,SubSystem.購買.getCode(),1,createBizTranGrp(11L),createBizTran(100001L),SubSystem.購買));
@@ -118,11 +118,11 @@ class SearchAccessibleTest {
         list.add(BizTranGrp_BizTran.createFrom(10003L,13L,100003L,SubSystem.販売_畜産.getCode(),1,createBizTranGrp(13L),createBizTran(100003L),SubSystem.販売_畜産));
         return list;
     }
-    // 取引データの作成
+    // 取引データ作成
     private BizTran createBizTran(Long id) {
         return createBizTranList().stream().filter(b -> b.getBizTranId().equals(id)).findFirst().orElse(null);
     }
-    // 取引リストデータの作成
+    // 取引リストデータ作成
     private List<BizTran> createBizTranList() {
         List<BizTran> list = newArrayList();
         list.add(BizTran.createFrom(100001L,"KB0000","購買メインメニュー",false,LocalDate.of(2010,3,11),LocalDate.of(9999,12,31),SubSystem.購買.getCode(),1,SubSystem.購買));
@@ -130,7 +130,7 @@ class SearchAccessibleTest {
         list.add(BizTran.createFrom(100003L,"AN1210","仕切入力",false,LocalDate.of(2010,6,21),LocalDate.of(9999,12,31),SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         return list;
     }
-    // 一時取引抑止リストデータの作成
+    // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> createSuspendBizTranList(String select) {
         List<SuspendBizTran> list = newArrayList();
         if (select.equals("JA")) {
@@ -160,7 +160,7 @@ class SearchAccessibleTest {
         }
         return list;
     }
-    // カレンダーリストデータの作成
+    // カレンダーリストデータ作成
     private List<Calendar> createCalendarList() {
         List<Calendar> list = newArrayList();
         list.add(Calendar.createFrom(1L,CalendarType.天文台カレンダー,LocalDate.now(),true,null,null,1));
@@ -169,7 +169,7 @@ class SearchAccessibleTest {
         list.add(Calendar.createFrom(4L,CalendarType.広域物流カレンダー,LocalDate.now(),true,null,null,1));
         return list;
     }
-    // システム利用可能時間帯リストデータの作成
+    // システム利用可能時間帯リストデータ作成
     private List<SystemAvailableTimeZone> createSystemAvailableTimeZonesList() {
         List<SystemAvailableTimeZone> list = newArrayList();
         String startTime = LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm"));
@@ -183,38 +183,10 @@ class SearchAccessibleTest {
         return list;
     }
 
-
     // 可能取引検索サービス（テスト対象クラス）
     private SearchAccessible createSearchAccessible() {
-        return new SearchAccessible(createOperator_BizTranRoleRepository(),
-            createBizTranRole_BizTranGrpRepository(),
-            createBizTranGrp_BizTranRepository(),
-            createSuspendBizTranRepository(),
-            createCalendarRepository(),
-            createSystemAvailableTimeZoneRepository());
-    }
-    // 可能取引検索サービス Request
-    private AccessibleSearchRequest createAccessibleSearchRequest() {
-        return new AccessibleSearchRequest() {
-            @Override
-            public Long getOperatorId() {
-                return operatorId;
-            }
-        };
-    }
-    // 可能取引検索サービス Response
-    private AccessibleSearchResponse createAccessibleSearchResponse() {
-        return new AccessibleSearchResponse() {
-            @Override
-            public void setSearchAccessibleDtoList(List<SearchAccessibleDto> searchAccessibleDtoList) {
-                actualSearchAccessibleDtoList = searchAccessibleDtoList;
-            }
-        };
-    }
-
-    // オペレーター_取引ロール割当リポジトリのスタブ
-    private Operator_BizTranRoleRepository createOperator_BizTranRoleRepository() {
-        return new Operator_BizTranRoleRepository() {
+        // オペレーター_取引ロール割当リポジトリのスタブ
+        Operator_BizTranRoleRepository bperator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
             @Override
             public Operator_BizTranRoles selectBy(Operator_BizTranRoleCriteria operator_BizTranRoleCriteria, Orders orders) {
                 actualOperator_BizTranRoleCriteria = operator_BizTranRoleCriteria;
@@ -222,10 +194,8 @@ class SearchAccessibleTest {
                 return operator_BizTranRoles;
             }
         };
-    }
-    // 取引ロール_取引グループ割当リポジトリのスタブ
-    private BizTranRole_BizTranGrpRepository createBizTranRole_BizTranGrpRepository() {
-        return new BizTranRole_BizTranGrpRepository() {
+        // 取引ロール_取引グループ割当リポジトリのスタブ
+        BizTranRole_BizTranGrpRepository bizTranRole_BizTranGrpRepository = new BizTranRole_BizTranGrpRepository() {
             @Override
             public BizTranRole_BizTranGrps selectBy(BizTranRole_BizTranGrpCriteria bizTranRole_BizTranGrpCriteria, Orders orders) {
                 actualBizTranRole_BizTranGrpCriteria = bizTranRole_BizTranGrpCriteria;
@@ -237,10 +207,8 @@ class SearchAccessibleTest {
                 return null;
             }
         };
-    }
-    // 取引グループ_取引割当リポジトリのスタブ
-    private BizTranGrp_BizTranRepository createBizTranGrp_BizTranRepository() {
-        return new BizTranGrp_BizTranRepository() {
+        // 取引グループ_取引割当リポジトリのスタブ
+        BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository = new BizTranGrp_BizTranRepository() {
             @Override
             public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
                 actualBizTranGrp_BizTranCriteria = bizTranGrp_BizTranCriteria;
@@ -252,10 +220,8 @@ class SearchAccessibleTest {
                 return null;
             }
         };
-    }
-    // 一時取引抑止リポジトリのスタブ
-    private SuspendBizTranRepository createSuspendBizTranRepository() {
-        return new SuspendBizTranRepository() {
+        // 一時取引抑止リポジトリのスタブ
+        SuspendBizTranRepository suspendBizTranRepository = new SuspendBizTranRepository() {
             @Override
             public SuspendBizTrans selectBy(SuspendBizTranCriteria suspendBizTranCriteria, Orders orders) {
                 actualSuspendBizTranCriteria = suspendBizTranCriteria;
@@ -267,10 +233,8 @@ class SearchAccessibleTest {
                 return null;
             }
         };
-    }
-    // カレンダーリポジトリのスタブ
-    private CalendarRepository createCalendarRepository() {
-        return new CalendarRepository() {
+        // カレンダーリポジトリのスタブ
+        CalendarRepository calendarRepository = new CalendarRepository() {
             @Override
             public Calendars selectBy(CalendarCriteria calendarCriteria, Orders orders) {
                 actualCalendarCriteria = calendarCriteria;
@@ -294,10 +258,8 @@ class SearchAccessibleTest {
                 return null;
             }
         };
-    }
-    // システム利用可能時間帯リポジトリのスタブ
-    private SystemAvailableTimeZoneRepository createSystemAvailableTimeZoneRepository() {
-        return new SystemAvailableTimeZoneRepository() {
+        // システム利用可能時間帯リポジトリのスタブ
+        SystemAvailableTimeZoneRepository systemAvailableTimeZoneRepository = new SystemAvailableTimeZoneRepository() {
             @Override
             public SystemAvailableTimeZones selectBy(SystemAvailableTimeZoneCriteria systemAvailableTimeZoneCriteria, Orders orders) {
                 actualSystemAvailableTimeZoneCriteria = systemAvailableTimeZoneCriteria;
@@ -305,10 +267,35 @@ class SearchAccessibleTest {
                 return systemAvailableTimeZones;
             }
         };
+        return new SearchAccessible(bperator_BizTranRoleRepository,
+            bizTranRole_BizTranGrpRepository,
+            bizTranGrp_BizTranRepository,
+            suspendBizTranRepository,
+            calendarRepository,
+            systemAvailableTimeZoneRepository);
+    }
+    // 可能取引検索サービス Request
+    private AccessibleSearchRequest createAccessibleSearchRequest() {
+        return new AccessibleSearchRequest() {
+            @Override
+            public Long getOperatorId() {
+                return operatorId;
+            }
+        };
+    }
+    // 可能取引検索サービス Response
+    private AccessibleSearchResponse createAccessibleSearchResponse() {
+        return new AccessibleSearchResponse() {
+            @Override
+            public void setSearchAccessibleDtoList(List<SearchAccessibleDto> searchAccessibleDtoList) {
+                actualSearchAccessibleDtoList = searchAccessibleDtoList;
+            }
+        };
     }
 
+
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *
@@ -384,7 +371,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・対象のオペレーター_取引ロール割当０件
@@ -418,7 +405,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・対象の取引ロール_取引グループ割当０件
@@ -452,7 +439,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・対象の取引グループ_取引割当０件
@@ -486,7 +473,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡによる抑止確認
@@ -520,7 +507,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・店舗による抑止確認
@@ -554,7 +541,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・店舗による抑止確認（ＪＡなしの店舗指定で無効）
@@ -599,7 +586,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・サブシステムの抑止確認（ＪＡ、店舗指定の無し）
@@ -647,7 +634,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋サブシステムの抑止確認（店舗指定の無し）
@@ -695,7 +682,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋店舗＋サブシステムの抑止確認
@@ -743,7 +730,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・取引グループの抑止確認（ＪＡ、店舗指定の無し）
@@ -791,7 +778,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋取引グループの抑止確認（店舗指定の無し）
@@ -839,7 +826,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋店舗＋取引グループの抑止確認（
@@ -887,7 +874,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・取引の抑止確認（ＪＡ、店舗指定の無し）
@@ -935,7 +922,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋取引の抑止確認（店舗指定の無し）
@@ -983,7 +970,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・ＪＡ＋店舗＋取引の抑止確認
@@ -1031,7 +1018,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・カレンダーの抑止確認
@@ -1080,7 +1067,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（開始前）
@@ -1133,7 +1120,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（終了後）
@@ -1187,7 +1174,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（対象システム利用可能時間帯なし）
@@ -1227,7 +1214,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（開始時刻未設定）
@@ -1270,7 +1257,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（終了時刻未設定）
@@ -1313,7 +1300,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（開始時刻、終了時刻に"0:00"を設定）
@@ -1370,7 +1357,7 @@ class SearchAccessibleTest {
     }
 
     /**
-     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)} のテスト
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
      *    ・システム利用可能時間帯の抑止確認（開始時刻が時間前、終了時刻に"0:00"を設定）

@@ -98,6 +98,10 @@ class UpdatePasswordTest {
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
                 return createPasswordHistories();
             }
+            @Override
+            public PasswordHistory latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
         };
 
         return new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoryRepository);

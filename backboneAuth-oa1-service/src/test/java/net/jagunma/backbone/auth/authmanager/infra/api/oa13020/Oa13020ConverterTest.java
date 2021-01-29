@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class Oa13020ConverterTest {
 
     /**
-     * {@link Oa13020Converter#of(Long)} のテスト
+     * {@link Oa13020Converter#of(Long)}テスト
      *  ●パターン
      *    通常
      *

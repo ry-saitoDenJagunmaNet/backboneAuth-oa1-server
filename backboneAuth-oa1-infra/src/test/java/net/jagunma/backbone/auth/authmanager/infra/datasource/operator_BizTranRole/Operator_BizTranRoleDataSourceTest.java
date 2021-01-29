@@ -133,6 +133,18 @@ class Operator_BizTranRoleDataSourceTest {
                 return null;
             }
             @Override
+            public Operator findOneByCode(String operatorCode) {
+                return null;
+            }
+            @Override
+            public boolean existsById(Long operatorId) {
+                return false;
+            }
+            @Override
+            public boolean existsByCode(String operatorCode) {
+                return false;
+            }
+            @Override
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }

@@ -126,12 +126,24 @@ class SearchOperatorTest {
                 return createOperatorList().stream().filter(o->o.getOperatorId().equals(operatorId)).findFirst().orElse(null);
             }
             @Override
-            public boolean existsBy(OperatorCriteria operatorCriteria) {
-                return true;
-            }
-            @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return Operators.createFrom(createOperatorList());
+            }
+            @Override
+            public Operator findOneByCode(String operatorCode) {
+                return null;
+            }
+            @Override
+            public boolean existsById(Long operatorId) {
+                return false;
+            }
+            @Override
+            public boolean existsByCode(String operatorCode) {
+                return false;
+            }
+            @Override
+            public boolean existsBy(OperatorCriteria operatorCriteria) {
+                return true;
             }
         };
         AccountLockRepository accountLockRepository = new AccountLockRepository() {
@@ -143,6 +155,14 @@ class SearchOperatorTest {
                 }
                 return AccountLocks.createFrom(list);
             }
+            @Override
+            public boolean existsByOperatorId(Long operatorId) {
+                return false;
+            }
+            @Override
+            public AccountLock latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
         };
         PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
@@ -152,6 +172,10 @@ class SearchOperatorTest {
                     list = list.stream().filter(l->l.getOperatorId().equals(operatorId)).collect(Collectors.toList());
                 }
                 return PasswordHistories.createFrom(list);
+            }
+            @Override
+            public PasswordHistory latestOneByOperatorId(Long operatorId) {
+                return null;
             }
         };
         SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
@@ -163,6 +187,10 @@ class SearchOperatorTest {
                 }
                 return SignInTraces.createFrom(list);
             }
+            @Override
+            public SignInTrace findOneById(Long signInTraceId) {
+                return null;
+            }
         };
         SignOutTraceRepository signOutTraceRepository = new SignOutTraceRepository() {
             @Override
@@ -172,6 +200,10 @@ class SearchOperatorTest {
                     list = list.stream().filter(l->l.getOperatorId().equals(operatorId)).collect(Collectors.toList());
                 }
                 return SignOutTraces.createFrom(list);
+            }
+            @Override
+            public SignOutTraces latestBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
+                return null;
             }
         };
         Operator_SubSystemRoleRepository operator_SubSystemRoleRepository = new Operator_SubSystemRoleRepository() {

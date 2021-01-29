@@ -16,6 +16,7 @@ import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistory
 import net.jagunma.backbone.auth.model.dao.operatorHistoryHeader.OperatorHistoryHeaderEntityDao;
 import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,17 +44,20 @@ public class OperatorHistoryHeaderDataSource implements OperatorHistoryHeaderRep
      */
     public OperatorHistoryHeader latestOneByOperatorId(Long operatorId) {
 
-        // オペレーターの検索
-        Operator operator = operatorRepository.findOneById(operatorId);
-
         // オペレーター履歴ヘッダー検索
         OperatorHistoryHeaderEntityCriteria entityCriteria = new OperatorHistoryHeaderEntityCriteria();
         entityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Orders orders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
-
+        Orders orders = Orders.empty().addOrder("changeDateTime", Order.DESC);
         List<OperatorHistoryHeaderEntity> list = operatorHistoryHeaderEntityDao.findBy(entityCriteria, orders);
-        OperatorHistoryHeaderEntity entity = list.get(0);
 
+        if (list.size() == 0) {
+            throw new GunmaRuntimeException("EOA11002", "オペレーター履歴ヘッダー", "OperatorId="+operatorId.toString());
+        }
+
+        // オペレーターの検索
+        Operator operator = operatorRepository.findOneById(operatorId);
+
+        OperatorHistoryHeaderEntity entity = list.get(0);
         return OperatorHistoryHeader.createFrom(
                 entity.getOperatorHistoryId(),
                 entity.getOperatorId(),

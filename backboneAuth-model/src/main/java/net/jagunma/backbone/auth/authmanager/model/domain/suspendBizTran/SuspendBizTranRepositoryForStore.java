@@ -1,7 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran;
 
-import net.jagunma.backbone.auth.authmanager.model.domain.suspendBizTran.SuspendBizTran;
-
 /**
  * 一時取引抑止格納
  */
