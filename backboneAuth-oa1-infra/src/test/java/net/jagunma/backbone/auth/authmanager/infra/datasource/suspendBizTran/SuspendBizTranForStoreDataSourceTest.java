@@ -133,10 +133,10 @@ class SuspendBizTranForStoreDataSourceTest {
         );
     }
 
-    // 一時取引抑止Dso作成
+    // 一時取引抑止格納クラス作成（テスト対象クラス）
     private SuspendBizTranForStoreDataSource createSuspendBizTranForStoreDataSource() {
         return new SuspendBizTranForStoreDataSource(
-            // 一時取引抑止Dso作成
+            // 一時取引抑止Dsoのスタブ
             new SuspendBizTranEntityDao() {
                 @Override
                 public int insert(SuspendBizTranEntity entity) {
@@ -191,7 +191,7 @@ class SuspendBizTranForStoreDataSourceTest {
                     return new int[0];
                 }
             },
-            // 一時取引抑止検索作成
+            // 一時取引抑止検索リポジトリのスタブ
             new SuspendBizTranRepository() {
                 @Override
                 public SuspendBizTran findOneById(Long suspendBizTranId) {

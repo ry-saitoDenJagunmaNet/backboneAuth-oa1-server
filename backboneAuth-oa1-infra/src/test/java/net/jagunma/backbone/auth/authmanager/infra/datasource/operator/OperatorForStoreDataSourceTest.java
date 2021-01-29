@@ -238,6 +238,18 @@ class OperatorForStoreDataSourceTest {
                 }
             }
             @Override
+            public Operator findOneByCode(String operatorCode) {
+                return null;
+            }
+            @Override
+            public boolean existsById(Long operatorId) {
+                return false;
+            }
+            @Override
+            public boolean existsByCode(String operatorCode) {
+                return false;
+            }
+            @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
                 return null;
             }
@@ -248,6 +260,10 @@ class OperatorForStoreDataSourceTest {
                 actualPasswordHistoryCriteria = passwordHistoryCriteria;
                 actualPasswordHistoryOrders = orders;
                 return passwordHistories;
+            }
+            @Override
+            public PasswordHistory latestOneByOperatorId(Long operatorId) {
+                return null;
             }
         };
 

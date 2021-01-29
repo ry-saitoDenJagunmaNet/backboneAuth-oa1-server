@@ -43,8 +43,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistories;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
@@ -167,6 +169,18 @@ class Oa11030ControllerTest {
                 return null;
             }
             @Override
+            public Operator findOneByCode(String operatorCode) {
+                return null;
+            }
+            @Override
+            public boolean existsById(Long operatorId) {
+                return false;
+            }
+            @Override
+            public boolean existsByCode(String operatorCode) {
+                return false;
+            }
+            @Override
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }
@@ -177,11 +191,23 @@ class Oa11030ControllerTest {
         };
         AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
+            public boolean existsByOperatorId(Long operatorId) {
+                return false;
+            }
+            @Override
+            public AccountLock latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
+            @Override
             public AccountLocks selectBy(AccountLockCriteria accountLockrCriteria, Orders orders) {
                 return null;
             }
         };
         PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository(){
+            @Override
+            public PasswordHistory latestOneByOperatorId(Long operatorId) {
+                return null;
+            }
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria,
                 Orders orders) {
@@ -190,14 +216,21 @@ class Oa11030ControllerTest {
         };
         SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
             @Override
+            public SignInTrace findOneById(Long signInTraceId) {
+                return null;
+            }
+            @Override
             public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
                 return null;
             }
         };
         SignOutTraceRepository signOutTraceRepository = new SignOutTraceRepository() {
             @Override
-            public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria,
-                Orders orders) {
+            public SignOutTraces selectBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public SignOutTraces latestBy(SignOutTraceCriteria signOutTraceCriteria, Orders orders) {
                 return null;
             }
         };

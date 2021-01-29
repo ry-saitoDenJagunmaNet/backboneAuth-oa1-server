@@ -79,6 +79,18 @@ class Ed01010ControllerTest {
                 return null;
             }
             @Override
+            public Operator findOneByCode(String operatorCode) {
+                return null;
+            }
+            @Override
+            public boolean existsById(Long operatorId) {
+                return false;
+            }
+            @Override
+            public boolean existsByCode(String operatorCode) {
+                return false;
+            }
+            @Override
             public boolean existsBy(OperatorCriteria operatorCriteria) {
                 return false;
             }
@@ -110,6 +122,10 @@ class Ed01010ControllerTest {
         PasswordHistoryRepository passwordHistoryRepository = new PasswordHistoryRepository() {
             @Override
             public PasswordHistories selectBy(PasswordHistoryCriteria passwordHistoryCriteria, Orders orders) {
+                return null;
+            }
+            @Override
+            public PasswordHistory latestOneByOperatorId(Long operatorId) {
                 return null;
             }
         };

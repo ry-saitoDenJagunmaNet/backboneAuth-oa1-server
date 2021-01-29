@@ -7,13 +7,16 @@ import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLoc
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
+import net.jagunma.common.ddd.model.orders.Order;
 import net.jagunma.common.ddd.model.orders.Orders;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +34,51 @@ public class AccountLockDataSource implements AccountLockRepository {
 
         this.accountLockEntityDao = accountLockEntityDao;
         this.operatorRepository = operatorRepository;
+    }
+
+    /**
+     * アカウントロックの存在チェックを行います
+     *
+     * @param operatorId オペレーターID
+     * @return アカウントロックの有無
+     */
+    public boolean existsByOperatorId(Long operatorId) {
+
+        // オペレーター検索
+        AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        return accountLockEntityDao.existsBy(entityCriteria);
+    }
+
+    /**
+     * 対象オペレーターで最新のアカウントロックの検索を行います
+     *
+     * @param operatorId オペレーターID
+     * @return 対象オペレーターの中で最新のアカウントロック
+     */
+    public AccountLock latestOneByOperatorId(Long operatorId) {
+
+        // アカウントロック群検索
+        AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();
+        entityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders orders = Orders.empty().addOrder("occurredDateTime", Order.DESC);
+        List<AccountLockEntity> list = accountLockEntityDao.findBy(entityCriteria, orders);
+
+        if (list.size() == 0) {
+            throw new GunmaRuntimeException("EOA11002", "アカウントロック", "OperatorId="+operatorId.toString());
+        }
+
+        // オペレーターの検索
+        Operator operator = operatorRepository.findOneById(operatorId);
+
+        AccountLockEntity entity = list.get(0);
+        return AccountLock.createFrom(
+            entity.getAccountLockId(),
+            entity.getOperatorId(),
+            entity.getOccurredDateTime(),
+            entity.getLockStatus(),
+            entity.getRecordVersion(),
+            operator);
     }
 
     /**

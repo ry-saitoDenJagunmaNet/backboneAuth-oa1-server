@@ -46,32 +46,73 @@ public class OperatorDataSource implements OperatorRepository {
     public Operator findOneById(Long operatorId) {
 
         // オペレーター検索
-        OperatorEntityCriteria operatorEntityCriteria = new OperatorEntityCriteria();
-        operatorEntityCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        OperatorEntity entity = operatorEntityDao.findOneBy(operatorEntityCriteria);
+        OperatorCriteria criteria = new OperatorCriteria();
+        criteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        return findOneBy(criteria);
+    }
+
+    /**
+     * オペレーターの検索を行います
+     *
+     * @param operatorCode オペレーターコ－ド
+     * @return オペレーター
+     */
+    public Operator findOneByCode(String operatorCode) {
+
+        // オペレーター検索
+        OperatorCriteria criteria = new OperatorCriteria();
+        criteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
+        return findOneBy(criteria);
+    }
+
+    /**
+     * オペレーターの検索を行います
+     *
+     * @param operatorCriteria オペレーターの検索条件
+     * @return オペレーター
+     */
+    private Operator findOneBy(OperatorCriteria operatorCriteria) {
+
+        // オペレーター検索
+        OperatorEntity entity = operatorEntityDao.findOneBy(convertCriteria(operatorCriteria));
 
         // Branch検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(entity.getJaId());
+        branchAtMomentCriteria.getIdentifierCriteria().setEqualTo(entity.getBranchId());
+//        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(entity.getJaId());
         branchAtMomentCriteria.setTargetDate(TargetDate.now());
         branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(branchAtMomentCriteria);
 
-        return Operator.createFrom(
-            entity.getOperatorId(),
-            entity.getOperatorCode(),
-            entity.getOperatorName(),
-            entity.getMailAddress(),
-            entity.getValidThruStartDate(),
-            entity.getValidThruEndDate(),
-            entity.getIsDeviceAuth(),
-            entity.getJaId(),
-            entity.getJaCode(),
-            entity.getBranchId(),
-            entity.getBranchCode(),
-            AvailableStatus.codeOf(entity.getAvailableStatus()),
-            entity.getRecordVersion(),
-            branchAtMoment);
+        return operatorCreateFrom(entity, branchAtMoment);
+    }
+
+    /**
+     * オペレーターの存在チェックを行います
+     *
+     * @param operatorId オペレーターID
+     * @return オペレーターの有無
+     */
+    public boolean existsById(Long operatorId) {
+
+        // オペレーター検索
+        OperatorCriteria criteria = new OperatorCriteria();
+        criteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        return existsBy(criteria);
+    }
+
+    /**
+     * オペレーターの存在チェックを行います
+     *
+     * @param operatorCode オペレーターコ－ド
+     * @return オペレーターの有無
+     */
+    public boolean existsByCode(String operatorCode) {
+
+        // オペレーター検索
+        OperatorCriteria criteria = new OperatorCriteria();
+        criteria.getOperatorCodeCriteria().setEqualTo(operatorCode);
+        return existsBy(criteria);
     }
 
     /**
@@ -108,22 +149,24 @@ public class OperatorDataSource implements OperatorRepository {
 
         List<Operator> list = newArrayList();
         for (OperatorEntity entity : operatorEntityList) {
-            list.add(Operator.createFrom(
-                entity.getOperatorId(),
-                entity.getOperatorCode(),
-                entity.getOperatorName(),
-                entity.getMailAddress(),
-                entity.getValidThruStartDate(),
-                entity.getValidThruEndDate(),
-                entity.getIsDeviceAuth(),
-                entity.getJaId(),
-                entity.getJaCode(),
-                entity.getBranchId(),
-                entity.getBranchCode(),
-                AvailableStatus.codeOf(entity.getAvailableStatus()),
-                entity.getRecordVersion(),
-                branchesAtMoment.getValue().stream().filter(b->b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
-            ));
+            list.add(operatorCreateFrom(entity,
+                branchesAtMoment.getValue().stream().filter(b -> b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)));
+//            list.add(Operator.createFrom(
+//                entity.getOperatorId(),
+//                entity.getOperatorCode(),
+//                entity.getOperatorName(),
+//                entity.getMailAddress(),
+//                entity.getValidThruStartDate(),
+//                entity.getValidThruEndDate(),
+//                entity.getIsDeviceAuth(),
+//                entity.getJaId(),
+//                entity.getJaCode(),
+//                entity.getBranchId(),
+//                entity.getBranchCode(),
+//                AvailableStatus.codeOf(entity.getAvailableStatus()),
+//                entity.getRecordVersion(),
+//                branchesAtMoment.getValue().stream().filter(b -> b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
+//            ));
         }
         return Operators.createFrom(list);
     }
@@ -149,5 +192,31 @@ public class OperatorDataSource implements OperatorRepository {
         operatorEntityCriteria.getBranchCodeCriteria().assignFrom(operatorCriteria.getBranchCodeCriteria());
         operatorEntityCriteria.getAvailableStatusCriteria().assignFrom(operatorCriteria.getAvailableStatusCriteria());
         return operatorEntityCriteria;
+    }
+
+    /**
+     * オペレーターを生成します
+     *
+     * @param operatorEntity オペレーターEntity
+     * @param branchAtMoment BranchAtMoment
+     * @return オペレーター
+     */
+    private Operator operatorCreateFrom(OperatorEntity operatorEntity, BranchAtMoment branchAtMoment) {
+
+        return Operator.createFrom(
+            operatorEntity.getOperatorId(),
+            operatorEntity.getOperatorCode(),
+            operatorEntity.getOperatorName(),
+            operatorEntity.getMailAddress(),
+            operatorEntity.getValidThruStartDate(),
+            operatorEntity.getValidThruEndDate(),
+            operatorEntity.getIsDeviceAuth(),
+            operatorEntity.getJaId(),
+            operatorEntity.getJaCode(),
+            operatorEntity.getBranchId(),
+            operatorEntity.getBranchCode(),
+            AvailableStatus.codeOf(operatorEntity.getAvailableStatus()),
+            operatorEntity.getRecordVersion(),
+            branchAtMoment);
     }
 }

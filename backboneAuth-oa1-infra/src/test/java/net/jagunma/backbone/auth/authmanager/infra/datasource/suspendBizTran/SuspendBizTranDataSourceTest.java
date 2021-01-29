@@ -45,35 +45,35 @@ import org.junit.jupiter.api.Test;
 class SuspendBizTranDataSourceTest {
 
     // 実行既定値
-    private Long suspendBizTranId = 12345678L;
-    private Long jaId = 6L;
+    private final Long suspendBizTranId = 12345678L;
+    private final Long jaId = 6L;
     private String jaCode = "006";
-    private String jaName = "ＪＡ００６";
-    private Long branchId = 33L;
+    private final String jaName = "ＪＡ００６";
+    private final Long branchId = 33L;
     private String branchCode = "001";
-    private String branchName = "店舗００１";
+    private final String branchName = "店舗００１";
     private String subSystemCode = SubSystem.販売_畜産.getCode();
-    private Long bizTranGrpId = 10001L;
+    private final Long bizTranGrpId = 10001L;
     private String bizTranGrpCode = "ANTG01";
-    private String bizTranGrpName = "データ入力取引グループ";
-    private Integer bizTranGrpRecordVersion = 1;
-    private Long bizTranId = 100001L;
+    private final String bizTranGrpName = "データ入力取引グループ";
+    private final Integer bizTranGrpRecordVersion = 1;
+    private final Long bizTranId = 100001L;
     private String bizTranCode = "AN0001";
-    private Boolean isCenterBizTran = false;
-    private LocalDate validThruStartDate = LocalDate.of(2010,6,21);
-    private LocalDate validThruEndDate = LocalDate.of(9999,12,31);
-    private String bizTranName = "畜産メインメニュー";
-    private Integer bizTranRecordVersion  = 1;
-    private LocalDate suspendStartDate = LocalDate.of(2020,11,1);
-    private LocalDate suspendEndDate = LocalDate.of(2020,11,30);
-    private String suspendReason = "不具合により緊急抑止";
-    private Long createdBy = 18L;
-    private LocalDateTime createdAt =  LocalDateTime.of(2020,12,1,8,31,12);
-    private String createdIpAddress = "001.001.001.001";
+    private final Boolean isCenterBizTran = false;
+    private final LocalDate validThruStartDate = LocalDate.of(2010,6,21);
+    private final LocalDate validThruEndDate = LocalDate.of(9999,12,31);
+    private final String bizTranName = "畜産メインメニュー";
+    private final Integer bizTranRecordVersion  = 1;
+    private final LocalDate suspendStartDate = LocalDate.of(2020,11,1);
+    private final LocalDate suspendEndDate = LocalDate.of(2020,11,30);
+    private final String suspendReason = "不具合により緊急抑止";
+    private final Long createdBy = 18L;
+    private final LocalDateTime createdAt =  LocalDateTime.of(2020,12,1,8,31,12);
+    private final String createdIpAddress = "001.001.001.001";
     private Long updatedBy = 18L;
     private LocalDateTime updatedAt =  LocalDateTime.of(2020,12,2,9,32,23);
     private String updatedIpAddress = "001.001.001.002";
-    private Integer recordVersion = 1;
+    private final Integer recordVersion = 1;
     private List<SuspendBizTranEntity> suspendBizTranEntityList = createSuspendBizTranEntityList();
 
     // JaAtMomentデータ作成
@@ -145,7 +145,7 @@ class SuspendBizTranDataSourceTest {
         return criteria;
     }
 
-    // 一時取引抑止リストデータ作成
+    // 一時取引抑止Entityリストデータ作成
     private List<SuspendBizTranEntity> createSuspendBizTranEntityList() {
         List<SuspendBizTranEntity> list = newArrayList();
         list.add(createSuspendBizTranEntity(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01","",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
@@ -153,7 +153,7 @@ class SuspendBizTranDataSourceTest {
         list.add(createSuspendBizTranEntity(3L,null,null,null,null,null,LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"抑止理由",18L,LocalDateTime.of(2020,10,31,8,30,12),"001.001.001.001",null,null,null,1));
         return list;
     }
-    // 一時取引抑止データ作成
+    // 一時取引抑止Entityデータ作成
     private SuspendBizTranEntity createSuspendBizTranEntity(
         Long suspendBizTranId,
         String jaCode,
@@ -224,7 +224,7 @@ class SuspendBizTranDataSourceTest {
         return list;
     }
 
-    // 一時取引抑止Repositoryの作成
+    // 一時取引抑止リポジトリのスタブ
     private SuspendBizTranEntityDao createSuspendBizTranEntityDao() {
         return new SuspendBizTranEntityDao() {
             @Override
@@ -294,7 +294,7 @@ class SuspendBizTranDataSourceTest {
             }
         };
     }
-    // JaAtMomentRepositoryの作成
+    // JaAtMomentリポジトリのスタブ
     private JaAtMomentRepository createJaAtMomentRepository() {
         return new JaAtMomentRepository() {
             @Override
@@ -307,7 +307,7 @@ class SuspendBizTranDataSourceTest {
             }
         };
     }
-    // BranchAtMomentRepositoryの作成
+    // BranchAtMomentリポジトリのスタブ
     private BranchAtMomentRepository createBranchAtMomentRepository() {
         return new BranchAtMomentRepository() {
             @Override
@@ -320,7 +320,7 @@ class SuspendBizTranDataSourceTest {
             }
         };
     }
-    // 取引グループRepositoryの作成
+    // 取引グループリポジトリのスタブ
     private BizTranGrpRepository createBizTranGrpRepository() {
         return new BizTranGrpRepository() {
             @Override
@@ -337,7 +337,7 @@ class SuspendBizTranDataSourceTest {
             }
         };
     }
-    // 取引Repositoryの作成
+    // 取引リポジトリのスタブ
     private BizTranRepository createBizTranRepository() {
         return new BizTranRepository() {
             @Override
@@ -356,7 +356,7 @@ class SuspendBizTranDataSourceTest {
     }
 
     /**
-     * {@link SuspendBizTranDataSource#findOneById(Long)}のテスト
+     * {@link SuspendBizTranDataSource#findOneById(Long)}テスト
      *  ●パターン
      *    正常
      *
@@ -402,7 +402,7 @@ class SuspendBizTranDataSourceTest {
     }
 
     /**
-     * {@link SuspendBizTranDataSource#findOneById(Long)}のテスト
+     * {@link SuspendBizTranDataSource#findOneById(Long)}テスト
      *  ●パターン
      *    正常
      *    ・検索結果でJAコード、店舗コード、サブシステムコード、取引グループコード、取引コード設定なし
@@ -460,7 +460,7 @@ class SuspendBizTranDataSourceTest {
     }
 
     /**
-     * {@link SuspendBizTranDataSource#selectBy(SuspendBizTranCriteria,Orders)}のテスト
+     * {@link SuspendBizTranDataSource#selectBy(SuspendBizTranCriteria,Orders)}テスト
      *  ●パターン
      *    正常
      *
@@ -529,9 +529,9 @@ class SuspendBizTranDataSourceTest {
     }
 
     /**
-     * {@link SuspendBizTranDataSource#selectBy(SuspendBizTranCriteria,Orders)}のテスト
+     * {@link SuspendBizTranDataSource#selectBy(SuspendBizTranCriteria,Orders)}テスト
      *  ●パターン
-     *    正常（検索条件なし）
+     *    正常（検索結果0件）
      *
      *  ●検証事項
      *  ・正常終了
@@ -541,91 +541,8 @@ class SuspendBizTranDataSourceTest {
     void selectBy_test1() {
 
         // 実行値
-        jaCode = null;
-        branchCode = null;
-        subSystemCode = null;
-        bizTranGrpCode = null;
-        bizTranCode = null;
-        suspendStartDate = null;
-        suspendEndDate = null;
-        suspendReason = null;
-        SuspendBizTranCriteria criteria = createSuspendBizTranCriteria();
-        Orders orders = Orders.empty()
-            .addOrder("suspendStartDate")
-            .addOrder("suspendEndDate")
-            .addOrder("jaCode")
-            .addOrder("branchCode")
-            .addOrder("subSystemDisplaySortOrder")
-            .addOrder("bizTranGrpCode")
-            .addOrder("bizTranCode");
-
-        // テスト対象クラス生成
-        SuspendBizTranDataSource suspendBizTranDataSource = new SuspendBizTranDataSource(
-            createSuspendBizTranEntityDao(),
-            createJaAtMomentRepository(),
-            createBranchAtMomentRepository(),
-            createBizTranGrpRepository(),
-            createBizTranRepository());
-
-        // 期待値
-        List<JaAtMoment> jaAtMomentList = createJaAtMomentList();
-        List<BranchAtMoment> branchAtMomentList = createBranchAtMomentList();
-        List<BizTranGrp> bizTranGrpList = createBizTranGrpList();
-        List<BizTran> bizTranList = createBizTranList();
-        List<SuspendBizTran> expectedSuspendBizTranList = newArrayList();
-        for(SuspendBizTranEntity entity : suspendBizTranEntityList) {
-            expectedSuspendBizTranList.add(SuspendBizTran.createFrom(
-                entity.getSuspendBizTranId(),
-                (Strings2.isNull(entity.getJaCode()))? "" : entity.getJaCode(),
-                (Strings2.isNull(entity.getBranchCode()))? "" : entity.getBranchCode(),
-                (Strings2.isNull(entity.getSubSystemCode()))? "" : entity.getSubSystemCode(),
-                (Strings2.isNull(entity.getBizTranGrpCode()))? "" : entity.getBizTranGrpCode(),
-                (Strings2.isNull(entity.getBizTranCode()))? "" : entity.getBizTranCode(),
-                entity.getSuspendStartDate(),
-                entity.getSuspendEndDate(),
-                entity.getSuspendReason(),
-                entity.getRecordVersion(),
-                jaAtMomentList.stream().filter(j->j.getJaAttribute().getJaCode().getValue().equals(entity.getJaCode())).findFirst().orElse(null),
-                branchAtMomentList.stream().filter(b->b.getBranchAttribute().getBranchCode().getValue().equals(entity.getBranchCode())).findFirst().orElse(null),
-                SubSystem.codeOf(entity.getSubSystemCode()),
-                bizTranGrpList.stream().filter(b->b.getBizTranGrpCode().equals(entity.getBizTranGrpCode())).findFirst().orElse(null),
-                bizTranList.stream().filter(b->b.getBizTranCode().equals(entity.getBizTranCode())).findFirst().orElse(null)));
-        }
-        expectedSuspendBizTranList = expectedSuspendBizTranList.stream().sorted(orders.toComparator()).collect(Collectors.toList());
-
-        // 実行
-        SuspendBizTrans actualSuspendBizTrans = suspendBizTranDataSource.selectBy(criteria, orders);
-
-        // 結果検証
-        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranList.size());
-        for(int i = 0; i < actualSuspendBizTrans.getValues().size(); i++) {
-            assertThat(actualSuspendBizTrans.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));
-        }
-    }
-
-    /**
-     * {@link SuspendBizTranDataSource#selectBy(SuspendBizTranCriteria,Orders)}のテスト
-     *  ●パターン
-     *    正常（検索結果0件）
-     *
-     *  ●検証事項
-     *  ・正常終了
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void selectBy_test2() {
-
-        // 実行値
         SuspendBizTranCriteria criteria = new SuspendBizTranCriteria();
-        Orders orders = Orders.empty()
-            .addOrder("jaCode")
-            .addOrder("branchCode")
-            .addOrder("subSystemDisplaySortOrder")
-            .addOrder("bizTranGrpCode")
-            .addOrder("bizTranCode")
-            .addOrder("suspendStartDate")
-            .addOrder("suspendEndDate");
+        Orders orders = Orders.empty();
         suspendBizTranEntityList = newArrayList();
 
         // テスト対象クラス生成
@@ -637,19 +554,12 @@ class SuspendBizTranDataSourceTest {
             createBizTranRepository());
 
         // 期待値
-        List<BranchAtMoment> branchAtMomentList = createBranchAtMomentList();
-        List<BizTranGrp> bizTranGrpList = createBizTranGrpList();
-        List<BizTran> bizTranList = createBizTranList();
-        List<SuspendBizTran> expectedSuspendBizTranList = newArrayList();
+        int expectedSuspendBizTranListSize = 0;
 
         // 実行
         SuspendBizTrans actualSuspendBizTrans = suspendBizTranDataSource.selectBy(criteria, orders);
 
         // 結果検証
-        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranList.size());
-        for(int i = 0; i < actualSuspendBizTrans.getValues().size(); i++) {
-            assertThat(actualSuspendBizTrans.getValues().get(i)).as(i + 1 + "レコード目でエラー")
-                .usingRecursiveComparison().isEqualTo(expectedSuspendBizTranList.get(i));
-        }
+        assertThat(actualSuspendBizTrans.getValues().size()).isEqualTo(expectedSuspendBizTranListSize);
     }
 }

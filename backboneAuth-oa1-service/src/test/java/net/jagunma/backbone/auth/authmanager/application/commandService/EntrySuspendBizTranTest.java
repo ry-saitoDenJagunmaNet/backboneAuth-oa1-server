@@ -25,10 +25,13 @@ class EntrySuspendBizTranTest {
     private final LocalDate suspendStartDate = LocalDate.of(2010,6,21);
     private final LocalDate suspendEndDate = LocalDate.of(9999,12,31);
     private final String suspendReason = "合併前のデータ凍結";
+
+    // 検証値
     private SuspendBizTran actualInsertSuspendBizTran;
 
-    // 一時取引抑止登録サービス作成
+    // 一時取引抑止登録サービス作成（テスト対象クラス）
     private EntrySuspendBizTran createEntrySuspendBizTran() {
+        // 一時取引抑止格納リポジトリのスタブ
         SuspendBizTranRepositoryForStore suspendBizTranRepositoryForStore = new SuspendBizTranRepositoryForStore() {
             @Override
             public SuspendBizTran insert(SuspendBizTran suspendBizTran) {
@@ -90,6 +93,7 @@ class EntrySuspendBizTranTest {
      *
      *  ●検証事項
      *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -101,19 +105,30 @@ class EntrySuspendBizTranTest {
         // 実行値
         SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
 
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
         assertThatCode(() ->
             // 実行
             entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualInsertSuspendBizTran.getJaCode()).isEqualTo(request.getJaCode());
-        assertThat(actualInsertSuspendBizTran.getBranchCode()).isEqualTo(request.getBranchCode());
-        assertThat(actualInsertSuspendBizTran.getSubSystemCode()).isEqualTo(request.getSubSystemCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranGrpCode()).isEqualTo(request.getBizTranGrpCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranCode()).isEqualTo(request.getBizTranCode());
-        assertThat(actualInsertSuspendBizTran.getSuspendStartDate()).isEqualTo(request.getSuspendStartDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendEndDate()).isEqualTo(request.getSuspendEndDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendReason()).isEqualTo(request.getSuspendReason());
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
     }
 
     /**
@@ -124,6 +139,7 @@ class EntrySuspendBizTranTest {
      *
      *  ●検証事項
      *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -136,19 +152,177 @@ class EntrySuspendBizTranTest {
         jaCode = null;
         SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
 
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
         assertThatCode(() ->
             // 実行
             entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualInsertSuspendBizTran.getJaCode()).isEqualTo(request.getJaCode());
-        assertThat(actualInsertSuspendBizTran.getBranchCode()).isEqualTo(request.getBranchCode());
-        assertThat(actualInsertSuspendBizTran.getSubSystemCode()).isEqualTo(request.getSubSystemCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranGrpCode()).isEqualTo(request.getBizTranGrpCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranCode()).isEqualTo(request.getBizTranCode());
-        assertThat(actualInsertSuspendBizTran.getSuspendStartDate()).isEqualTo(request.getSuspendStartDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendEndDate()).isEqualTo(request.getSuspendEndDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendReason()).isEqualTo(request.getSuspendReason());
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
+    }
+
+    /**
+     * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
+     *  ●パターン
+     *    正常
+     *    ・リクエスト項目未設定（JAコード、店舗コード）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test3() {
+
+        // テスト対象クラス生成
+        EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
+
+        // 実行値
+        jaCode = null;
+        branchCode = null;
+        SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
+
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
+        assertThatCode(() ->
+            // 実行
+            entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
+    }
+
+    /**
+     * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
+     *  ●パターン
+     *    正常
+     *    ・リクエスト項目未設定（JAコード、店舗コード、サブシステムコード）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test4() {
+
+        // テスト対象クラス生成
+        EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
+
+        // 実行値
+        jaCode = null;
+        branchCode = null;
+        subSystemCode = null;
+        SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
+
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
+        assertThatCode(() ->
+            // 実行
+            entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
+    }
+
+    /**
+     * {@link EntrySuspendBizTran#execute(SuspendBizTranEntryRequest)}テスト
+     *  ●パターン
+     *    正常
+     *    ・リクエスト項目未設定（JAコード、店舗コード、サブシステムコード、引グループコード）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test5() {
+
+        // テスト対象クラス生成
+        EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
+
+        // 実行値
+        jaCode = null;
+        branchCode = null;
+        subSystemCode = null;
+        bizTranGrpCode = null;
+        SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
+
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
+        assertThatCode(() ->
+            // 実行
+            entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
     }
 
     /**
@@ -159,10 +333,11 @@ class EntrySuspendBizTranTest {
      *
      *  ●検証事項
      *  ・正常終了
+     *  ・ForStoreリポジトリの登録引数
      */
     @Test
     @Tag(TestSize.SMALL)
-    void execute_test3() {
+    void execute_test6() {
 
         // テスト対象クラス生成
         EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
@@ -174,19 +349,30 @@ class EntrySuspendBizTranTest {
         bizTranCode = null;
         SuspendBizTranEntryRequest request = createSuspendBizTranEntryRequest();
 
+        // 期待値
+        SuspendBizTran expectedInsertSuspendBizTran = SuspendBizTran.createFrom(
+            null,
+            request.getJaCode(),
+            request.getBranchCode(),
+            request.getSubSystemCode(),
+            request.getBizTranGrpCode(),
+            request.getBizTranCode(),
+            request.getSuspendStartDate(),
+            request.getSuspendEndDate(),
+            request.getSuspendReason(),
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
         assertThatCode(() ->
             // 実行
             entrySuspendBizTran.execute(request)).doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualInsertSuspendBizTran.getJaCode()).isEqualTo(request.getJaCode());
-        assertThat(actualInsertSuspendBizTran.getBranchCode()).isEqualTo(request.getBranchCode());
-        assertThat(actualInsertSuspendBizTran.getSubSystemCode()).isEqualTo(request.getSubSystemCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranGrpCode()).isEqualTo(request.getBizTranGrpCode());
-        assertThat(actualInsertSuspendBizTran.getBizTranCode()).isEqualTo(request.getBizTranCode());
-        assertThat(actualInsertSuspendBizTran.getSuspendStartDate()).isEqualTo(request.getSuspendStartDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendEndDate()).isEqualTo(request.getSuspendEndDate());
-        assertThat(actualInsertSuspendBizTran.getSuspendReason()).isEqualTo(request.getSuspendReason());
+        assertThat(actualInsertSuspendBizTran).usingRecursiveComparison().isEqualTo(expectedInsertSuspendBizTran);
     }
 
     /**
@@ -200,7 +386,7 @@ class EntrySuspendBizTranTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void execute_test4() {
+    void execute_test7() {
 
         // テスト対象クラス生成
         EntrySuspendBizTran entrySuspendBizTran = createEntrySuspendBizTran();
