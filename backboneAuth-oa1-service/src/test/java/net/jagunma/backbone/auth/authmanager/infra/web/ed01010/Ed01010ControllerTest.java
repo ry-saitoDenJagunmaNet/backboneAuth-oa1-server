@@ -102,12 +102,12 @@ class Ed01010ControllerTest {
         SearchOperator searchOperator = new SearchOperator(operatorRepository, null, null, null, null, null, null, null) {
             @Override
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
-                // request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorId().equals(11L)) {
+                //  request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
+                if (request.getOperatorId().equals(11L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワードの確認入力"));
                 }
-                // request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
-                if(request.getOperatorId().equals(12L)) {
+                //  request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
+                if (request.getOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
                 response.setOperator(operator);
@@ -132,15 +132,15 @@ class Ed01010ControllerTest {
         UpdatePassword updatePassword = new UpdatePassword(passwordHistoryRepositoryForStore, passwordHistoryRepository) {
             @Override
             public void execute(PasswordResetRequest request) {
-                // request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
-                if(request.getOperatorId().equals(21L)) {
+                //  request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
+                if (request.getOperatorId().equals(21L)) {
                     Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
                 }
             }
             @Override
             public void execute(PasswordChangeRequest request) {
-                // request.getOperatorId().equals(22L) の場合：RuntimeException を発生させる
-                if(request.getOperatorId().equals(22L)) {
+                //  request.getOperatorId().equals(22L) の場合：RuntimeException を発生させる
+                if (request.getOperatorId().equals(22L)) {
                     throw new RuntimeException();
                 }
             }
