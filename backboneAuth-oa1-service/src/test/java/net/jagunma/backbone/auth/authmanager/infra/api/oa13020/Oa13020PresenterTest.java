@@ -39,7 +39,7 @@ class Oa13020PresenterTest {
      *    通常
      *
      *  ●検証事項
-     *  ・esponseへのセット
+     *  ・responseへのセット
      */
     @Test
     @Tag(TestSize.SMALL)

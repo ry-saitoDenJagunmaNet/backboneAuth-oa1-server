@@ -75,7 +75,6 @@ public class Authentication {
         }
 
         response.setSignInResult(signInResult);
-        response.setOperator(operator);
     }
 
     /**

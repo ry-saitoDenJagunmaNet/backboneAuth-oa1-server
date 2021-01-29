@@ -2,13 +2,13 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
-import net.jagunma.backbone.auth.authmanager.infra.api.oa13020.Oa13020Presenter;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,26 +48,87 @@ public class Oa13010Controller {
         this.entrySignInTrace = entrySignInTrace;
     }
 
-//    /**
-//     * 認証を行います
-//     *
-//     * @param operatorCode オペレータコード
-//     * @param password     パスワード
-//     * @return 認証したオペレーター情報
-//     */
-//    @PostMapping(path = "getAccessible/{operatorCode}/{password}")
-//    @ApiResponses({
-//        @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
-//        @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
-//        @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
-//        @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
-//        @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
-//    public ResponseEntity<OperatorInfoResult> authenticate(@PathVariable("operatorCode") String operatorCode,
-//        @PathVariable("password") String password) {
-//
-//        LOGGER.debug("operatorCode:" + operatorCode);
-//
-//
-//    }
+    /**
+     * サインインを行います
+     *
+     * @param operatorCode オペレータコード
+     * @param password     パスワード
+     * @return 認証結果
+     */
+    @PostMapping(path = "getAccessible/{operatorCode}/{password}")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
+        @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
+        @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
+        @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
+        @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
+    public ResponseEntity<Oa13010SignInResult> signIn(HttpServletRequest request,
+        @PathVariable("operatorCode") String operatorCode,
+        @PathVariable("password") String password) {
 
+        LOGGER.debug("operatorCode:" + operatorCode);
+
+        return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.サインイン);
+    }
+
+    /**
+     * 継続サインインを行います
+     *
+     * @param operatorCode オペレータコード
+     * @param password     パスワード
+     * @return 認証結果
+     */
+    @PostMapping(path = "getAccessible/{operatorCode}/{password}")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
+        @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
+        @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
+        @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
+        @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
+    public ResponseEntity<Oa13010SignInResult> continuedSignIn(HttpServletRequest request,
+        @PathVariable("operatorCode") String operatorCode,
+        @PathVariable("password") String password) {
+
+        LOGGER.debug("operatorCode:" + operatorCode);
+
+        return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.継続サインイン);
+    }
+
+    /**
+     * サインインを行います
+     *
+     * @param operatorCode オペレータコード
+     * @param password     パスワード
+     * @param remoteAddr   リモートIPアドレス
+     * @param signInCause  サインイン起因
+     * @return 認証結果
+     */
+    private ResponseEntity<Oa13010SignInResult> signIn(String operatorCode,
+        String password,
+        String remoteAddr,
+        SignInCause signInCause) {
+
+        try {
+            Oa13010AuthenticationConverter authenticationConverter = Oa13010AuthenticationConverter.of(operatorCode, password);
+            Oa13010AuthenticationPresenter authenticationPresenter = new Oa13010AuthenticationPresenter();
+
+            // 認証
+            authentication.execute(authenticationConverter, authenticationPresenter);
+
+            // サインイン証跡登録
+            Oa13010EntryConverter entryConverter = Oa13010EntryConverter.of(
+                remoteAddr,
+                operatorCode,
+                signInCause,
+                authenticationPresenter.getSignInResult());
+            entrySignInTrace.execute(entryConverter);
+
+            Oa13010SignInResult result = Oa13010SignInResult.createFrom(authenticationPresenter.getSignInResult());
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (RuntimeException re) {
+            //ToDo: 例外時の戻りが不明（APIの戻りの型はこれでよいのか？）
+            //ToDo: catchする例外は RuntimeException でよい？ GunmaRuntimeExceptionは？ 「@ApiResponse」との関係は？
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
