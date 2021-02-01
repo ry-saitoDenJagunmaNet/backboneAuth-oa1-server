@@ -80,7 +80,7 @@ public class Oa11040Controller extends BaseOfController {
         vo.setOperatorId(operatorId);
 
         try {
-            Oa11040InitConverter converter = Oa11040InitConverter.with(vo.getOperatorId(), AuditInfoHolder.getOperator().getIdentifier());
+            Oa11040InitConverter converter = Oa11040InitConverter.with(AuditInfoHolder.getOperator().getIdentifier(), vo.getOperatorId());
             Oa11040InitPresenter presenter = new Oa11040InitPresenter();
 
             searchSubSystemRoleGranted.execute(converter, presenter);
