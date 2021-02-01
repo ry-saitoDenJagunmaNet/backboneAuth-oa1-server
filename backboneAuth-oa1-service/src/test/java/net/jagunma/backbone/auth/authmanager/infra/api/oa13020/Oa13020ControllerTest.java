@@ -41,7 +41,10 @@ class Oa13020ControllerTest {
 
     // 実行既定値
     private Long operatorId = 123456789L;
-    private Map<String, List<String>> searchAccessibleMap = createSearchAccessibleMap();
+    private final Map<String, List<String>> searchAccessibleMap = createSearchAccessibleMap();
+
+    // 兼用値
+    private AccessibleSearchRequest actualAccessibleSearchRequest;
 
     // 可能取引データの作成
     private Map<String, List<String>> createSearchAccessibleMap() {
@@ -132,6 +135,7 @@ class Oa13020ControllerTest {
             systemAvailableTimeZoneRepository) {
 
             public void execute(AccessibleSearchRequest request, AccessibleSearchResponse response) {
+                actualAccessibleSearchRequest = request;
                 // request.getOperatorId() = -1 の場合：RuntimeException を発生させる
                 if (request.getOperatorId().equals(-1L)) {
                     throw new RuntimeException();
@@ -170,12 +174,14 @@ class Oa13020ControllerTest {
             map.put(key, searchAccessibleMap.get(key));
         }
         ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(map, HttpStatus.OK);
+        AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa13020Converter.of(operatorId);
 
         // 実行
         ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
 
         // 結果検証
         assertThat(result).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actualAccessibleSearchRequest).usingRecursiveComparison().isEqualTo(expectedAccessibleSearchRequest);
     }
 
     /**
