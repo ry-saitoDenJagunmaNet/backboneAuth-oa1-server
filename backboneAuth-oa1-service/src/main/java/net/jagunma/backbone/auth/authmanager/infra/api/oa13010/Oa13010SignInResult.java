@@ -7,8 +7,8 @@ import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
  */
 public class Oa13010SignInResult {
 
-    private Short signInResultCode;
-    private String signInResultMessage;
+    private Short signInResultCode = null;
+    private String signInResultMessage = "";
 
     // コンストラクタ
     Oa13010SignInResult(Short signInResultCode,

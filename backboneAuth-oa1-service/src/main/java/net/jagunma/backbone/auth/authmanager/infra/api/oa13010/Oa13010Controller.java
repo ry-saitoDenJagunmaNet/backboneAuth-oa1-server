@@ -55,7 +55,7 @@ public class Oa13010Controller {
      * @param password     パスワード
      * @return 認証結果
      */
-    @PostMapping(path = "getAccessible/{operatorCode}/{password}")
+    @PostMapping(path = "signIn/{operatorCode}/{password}")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
         @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
@@ -78,7 +78,7 @@ public class Oa13010Controller {
      * @param password     パスワード
      * @return 認証結果
      */
-    @PostMapping(path = "getAccessible/{operatorCode}/{password}")
+    @PostMapping(path = "continuedSignIn/{operatorCode}/{password}")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
         @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),

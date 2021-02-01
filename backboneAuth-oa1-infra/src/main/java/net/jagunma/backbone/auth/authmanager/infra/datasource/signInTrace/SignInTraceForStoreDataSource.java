@@ -30,6 +30,7 @@ public class SignInTraceForStoreDataSource implements SignInTraceRepositoryForSt
      * @param signInTrace サインイン証跡
      * @return サインイン証跡
      */
+    @Override
     public SignInTrace insert(SignInTrace signInTrace) {
 
         SignInTraceEntity entity = new SignInTraceEntity();
