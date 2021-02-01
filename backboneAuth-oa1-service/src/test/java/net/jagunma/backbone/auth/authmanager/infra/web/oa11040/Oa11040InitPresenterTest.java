@@ -90,6 +90,59 @@ class Oa11040InitPresenterTest {
     // オペレーター履歴ヘッダー系
     OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.createFrom(null, operatorId, LocalDateTime.of(2020,10,1,0,1,2), changeCausePlaceholder, null, operator);
 
+    private List<SubSystemRoleGrantedAssignRoleDto> createSubSystemRoleGrantedAssignRoleDtoList() {
+        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
+        createOa11040AssignRole(assignRoleDtoList, newArrayList());
+        return assignRoleDtoList;
+    }
+    private List<Oa11040AssignRoleTableVo> createOa11040AssignRoleTableVoList() {
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
+        createOa11040AssignRole(newArrayList(), assignRoleTableVoList);
+        return assignRoleTableVoList;
+    }
+    private void createOa11040AssignRole(List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList, List<Oa11040AssignRoleTableVo> assignRoleTableVoList) {
+        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
+            SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+            assignRoleDto.setIsModifiable(true);
+            assignRoleDtoList.add(assignRoleDto);
+
+            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
+            assignRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
+            assignRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
+            assignRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
+            assignRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
+            assignRoleTableVo.setIsModifiable(true);
+            assignRoleTableVoList.add(assignRoleTableVo);
+        }
+    }
+
+    private List<SubSystemRoleGrantedAllRoleDto> createSubSystemRoleGrantedAllRoleDtoList() {
+        List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList = newArrayList();
+        createAllRole(allRoleDtoList, newArrayList());
+        return allRoleDtoList;
+    }
+    private List<Oa11040UnAssignRoleTableVo> createOa11040UnAssignRoleTableVoList() {
+        List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
+        createAllRole(newArrayList(), unAssignRoleTableVoList);
+        return unAssignRoleTableVoList;
+    }
+    private void createAllRole(List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList, List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList) {
+        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
+            if (subSystemRole.getCode().length() == 0) { continue; }
+            SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
+            allRoleDto.setSubSystemRole(subSystemRole);
+            allRoleDto.setIsModifiable(true);
+            allRoleDtoList.add(allRoleDto);
+
+            Oa11040UnAssignRoleTableVo unAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
+            unAssignRoleTableVo.setRoleCode(subSystemRole.getCode());
+            unAssignRoleTableVo.setRoleName(subSystemRole.getDisplayName());
+            unAssignRoleTableVo.setIsModifiable(true);
+            unAssignRoleTableVoList.add(unAssignRoleTableVo);
+        }
+    }
+
     /**
      * {@link Oa11040InitPresenter#bindTo(Oa11040Vo vo)}テスト
      *  ●パターン
@@ -103,56 +156,21 @@ class Oa11040InitPresenterTest {
     @Tag(TestSize.SMALL)
     void bindTo_test() {
         // 実行値
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
-        for(Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-            SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-            assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(true);
-            assignRoleDtoList.add(assignRoleDto);
-        }
-        List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
-            SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
-            allRoleDto.setSubSystemRole(subSystemRole);
-            allRoleDto.setIsModifiable(true);
-            allRoleDtoList.add(allRoleDto);
-        }
         Oa11040Vo vo = new Oa11040Vo();
         Oa11040InitPresenter presenter = new Oa11040InitPresenter();
         presenter.setSignInOperatorId(signInOperatorId);
         presenter.setTargetOperatorId(operatorId);
-        presenter.setAssignRoleDtoList(assignRoleDtoList);
-        presenter.setAllRoleDtoList(allRoleDtoList);
+        presenter.setAssignRoleDtoList(createSubSystemRoleGrantedAssignRoleDtoList());
+        presenter.setAllRoleDtoList(createSubSystemRoleGrantedAllRoleDtoList());
         presenter.setOperatorHistoryHeader(operatorHistoryHeader);
 
         // 期待値
-        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-            Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
-            assignRoleTableVo.setRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
-            assignRoleTableVo.setRoleName(operator_SubSystemRole.getSubSystemRole().getDisplayName());
-            assignRoleTableVo.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
-            assignRoleTableVo.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
-            assignRoleTableVo.setIsModifiable(true);
-            assignRoleTableVoList.add(assignRoleTableVo);
-        }
-        List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
-            Oa11040UnAssignRoleTableVo unAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
-            unAssignRoleTableVo.setRoleCode(subSystemRole.getCode());
-            unAssignRoleTableVo.setRoleName(subSystemRole.getDisplayName());
-            unAssignRoleTableVo.setIsModifiable(true);
-            unAssignRoleTableVoList.add(unAssignRoleTableVo);
-        }
-
         Oa11040Vo expectedVo = new Oa11040Vo();
         expectedVo.setOperatorId(operatorId);
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setOperator(operatorCode + " " + operatorName);
-        expectedVo.setAssignRoleTableVoList(assignRoleTableVoList);
-        expectedVo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
+        expectedVo.setAssignRoleTableVoList(createOa11040AssignRoleTableVoList());
+        expectedVo.setUnAssignRoleTableVoList(createOa11040UnAssignRoleTableVoList());
         expectedVo.setChangeCause(null);
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
 
@@ -178,27 +196,21 @@ class Oa11040InitPresenterTest {
     @Tag(TestSize.SMALL)
     void bindTo_test1() {
         // 実行値
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
-        List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList = newArrayList();
-
         Oa11040Vo vo = new Oa11040Vo();
         Oa11040InitPresenter presenter = new Oa11040InitPresenter();
         presenter.setSignInOperatorId(signInOperatorId);
         presenter.setTargetOperatorId(operatorId);
-        presenter.setAssignRoleDtoList(assignRoleDtoList);
-        presenter.setAllRoleDtoList(allRoleDtoList);
+        presenter.setAssignRoleDtoList(newArrayList());
+        presenter.setAllRoleDtoList(newArrayList());
         presenter.setOperatorHistoryHeader(operatorHistoryHeader);
 
         // 期待値
-        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
-        List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
-
         Oa11040Vo expectedVo = new Oa11040Vo();
         expectedVo.setOperatorId(operatorId);
         expectedVo.setJa(jaCode + " " + jaName);
         expectedVo.setOperator(operatorCode + " " + operatorName);
-        expectedVo.setAssignRoleTableVoList(assignRoleTableVoList);
-        expectedVo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
+        expectedVo.setAssignRoleTableVoList(newArrayList());
+        expectedVo.setUnAssignRoleTableVoList(newArrayList());
         expectedVo.setChangeCause(null);
         expectedVo.setChangeCausePlaceholder(changeCausePlaceholder);
 
