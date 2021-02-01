@@ -26,9 +26,9 @@ function oaex_th_copyBtn_onClick() {
  */
 function oaex_moveAdditionBtn_onClick() {
 	let assignRoleTable = document.getElementById("assign_role_table");
-	let unassignRoleTable = document.getElementById("unassign_role_table");
-	for(let i = 0; i < unassignRoleTable.rows.length; i++){
-		let tableRow = unassignRoleTable.rows[i];
+	let unAssignRoleTable = document.getElementById("unassign_role_table");
+	for(let i = 0; i < unAssignRoleTable.rows.length; i++){
+		let tableRow = unAssignRoleTable.rows[i];
 		// 選択行を定義したCSSクラスで判定
 		if (tableRow.classList.contains(_TABLE_ROW_SELECTED1)
 				&& tableRow.classList.contains(_TABLE_ROW_SELECTED2)){
@@ -47,9 +47,9 @@ function oaex_moveAdditionBtn_onClick() {
 			newRow.cells[0].innerText = tableRow.cells[0].innerText;
 			newRow.cells[1].innerText = tableRow.cells[1].innerText;
 			// 選択行非表示
-			unassignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
+			unAssignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
-			oaex_setSelectRow(unassignRoleTable, i);
+			oaex_setSelectRow(unAssignRoleTable, i);
 			return; 
 		}
 	}
@@ -61,7 +61,7 @@ function oaex_moveAdditionBtn_onClick() {
  */
 function oaex_moveRemovalBtn_onClick() {
 	let assignRoleTable = document.getElementById("assign_role_table");
-	let unassignRoleTable = document.getElementById("unassign_role_table");
+	let unAssignRoleTable = document.getElementById("unassign_role_table");
 	for(let i = 1; i < assignRoleTable.rows.length; i++) {
 		let tableRow = assignRoleTable.rows[i];
 		// 選択行を定義したCSSクラスで判定
@@ -70,10 +70,10 @@ function oaex_moveRemovalBtn_onClick() {
 			// 選択行
 			if (tableRow.classList.contains(_TABLE_ROW_SELECTED1)
 					&& tableRow.classList.contains(_TABLE_ROW_SELECTED2)){
-				for(let k = 0; k < unassignRoleTable.rows.length; k++) {
+				for(let k = 0; k < unAssignRoleTable.rows.length; k++) {
 					// 選択行と同じコードの未付与ロールを再表示
-					if (unassignRoleTable.rows[k].cells[0].innerText == tableRow.cells[0].innerText) {
-						unassignRoleTable.rows[k].classList.remove(_RIGHT_TABLE_HIDDEN);
+					if (unAssignRoleTable.rows[k].cells[0].innerText == tableRow.cells[0].innerText) {
+						unAssignRoleTable.rows[k].classList.remove(_RIGHT_TABLE_HIDDEN);
 					}
 				}
 				//選択行削除
@@ -157,11 +157,11 @@ function oaex_setSelectRow(objTable, rowNo) {
  */
 function oaex_initHiddenUnAssignRoleList() {
 	let assignRoleTable = document.getElementById("assign_role_table");
-	let unassignRoleTable = document.getElementById("unassign_role_table");
+	let unAssignRoleTable = document.getElementById("unassign_role_table");
 	for (let assignRoleTableRow of assignRoleTable.rows) {
-		for (let unassignRoleTableRow of unassignRoleTable.rows) {
-			if (unassignRoleTableRow.cells[0].innerText == assignRoleTableRow.cells[0].innerText ) {
-				unassignRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
+		for (let unAssignRoleTableRow of unAssignRoleTable.rows) {
+			if (unAssignRoleTableRow.cells[0].innerText == assignRoleTableRow.cells[0].innerText ) {
+				unAssignRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
 			}
 		}
 	}
