@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "oa13010")
-public class Oa13010Controller {
+public class Oa13010Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa13010Controller.class);
 
@@ -62,10 +63,13 @@ public class Oa13010Controller {
         @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
-    public ResponseEntity<Oa13010SignInResult> signIn(HttpServletRequest request,
+    public ResponseEntity<Oa13010SignInResult> signIn(
+        HttpServletRequest request,
         @PathVariable("operatorCode") String operatorCode,
         @PathVariable("password") String password) {
 
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
         LOGGER.debug("operatorCode:" + operatorCode);
 
         return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.サインイン);
@@ -85,10 +89,13 @@ public class Oa13010Controller {
         @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
-    public ResponseEntity<Oa13010SignInResult> continuedSignIn(HttpServletRequest request,
+    public ResponseEntity<Oa13010SignInResult> continuedSignIn(
+        HttpServletRequest request,
         @PathVariable("operatorCode") String operatorCode,
         @PathVariable("password") String password) {
 
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
         LOGGER.debug("operatorCode:" + operatorCode);
 
         return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.継続サインイン);
@@ -103,7 +110,8 @@ public class Oa13010Controller {
      * @param signInCause  サインイン起因
      * @return 認証結果
      */
-    private ResponseEntity<Oa13010SignInResult> signIn(String operatorCode,
+    private ResponseEntity<Oa13010SignInResult> signIn(
+        String operatorCode,
         String password,
         String remoteAddr,
         SignInCause signInCause) {
