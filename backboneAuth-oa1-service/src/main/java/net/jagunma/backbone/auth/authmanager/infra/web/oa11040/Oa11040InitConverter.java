@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGr
 class Oa11040InitConverter implements SubSystemRoleGrantedSearchRequest {
 
     /**
-     * OA11040 VariousItems
+     * OA11040 Various OperatorId
      */
     private final Long signInOperatorId;
     private final Long targetOperatorId;

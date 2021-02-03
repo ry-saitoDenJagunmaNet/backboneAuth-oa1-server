@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.time.LocalDate;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyResponse;
@@ -23,6 +24,7 @@ import org.junit.jupiter.api.Test;
 class CopySubSystemRoleGrantedTest {
 
     // 実行既定値
+    private final SubSystemRoleGrantedQueryUtil subSystemRoleGrantedQueryUtil = new SubSystemRoleGrantedQueryUtil();
     private Long signInOperatorId = 987654L;
     private Long selectedOperatorId = 876543L;
 
@@ -149,7 +151,7 @@ class CopySubSystemRoleGrantedTest {
                         }
                         @Override
                         public Boolean getIsModifiable() {
-                            return copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles);
+                            return subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles);
                         }
                     };
                     assignRoleList.add(assignRole);
@@ -252,14 +254,14 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         SubSystemRoleGrantedAssignRoleDto assignRoleDto;
         Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(1);
         assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
         assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
         expectedAssignRoleDtoList.add(assignRoleDto);
 
         assertThatCode(() ->
@@ -325,14 +327,14 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         SubSystemRoleGrantedAssignRoleDto assignRoleDto;
         Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(1);
         assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
         assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
         expectedAssignRoleDtoList.add(assignRoleDto);
 
         // 実行
@@ -370,14 +372,14 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         SubSystemRoleGrantedAssignRoleDto assignRoleDto;
         Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(0);
         assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
         assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
         expectedAssignRoleDtoList.add(assignRoleDto);
 
         // 実行
@@ -415,7 +417,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -454,7 +456,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -493,7 +495,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -566,7 +568,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -605,7 +607,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -644,7 +646,7 @@ class CopySubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(copySubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
