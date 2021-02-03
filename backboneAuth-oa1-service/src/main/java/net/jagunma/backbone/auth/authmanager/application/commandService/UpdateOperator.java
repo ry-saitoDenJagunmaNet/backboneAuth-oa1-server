@@ -1,5 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
+import net.jagunma.backbone.auth.authmanager.application.commandService.util.OperatorCommandUtil;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepositoryForStore;
@@ -17,6 +18,7 @@ public class UpdateOperator {
 
     private final OperatorRepositoryForStore operatorRepositoryForStore;
     private final SearchBranchAtMoment searchBranchAtMoment;
+    private final OperatorCommandUtil operatorCommandUtil = new OperatorCommandUtil();
 
     public UpdateOperator(OperatorRepositoryForStore operatorRepositoryForStore,
         SearchBranchAtMoment searchBranchAtMoment) {
@@ -39,7 +41,7 @@ public class UpdateOperator {
         BranchAtMoment branchAtMoment = searchBranchAtMoment.findOneBy(request.getBranchId());
 
         // 店舗が当JAに属するかのチェックを行います
-        EntryOperator.checkBranchBelongJa(branchAtMoment);
+        operatorCommandUtil.checkBranchBelongJa(branchAtMoment);
 
         // オペレーターアップデートパックの生成を行います
         OperatorUpdatePack operatorUpdatePack = createOperatorUpdatePack(

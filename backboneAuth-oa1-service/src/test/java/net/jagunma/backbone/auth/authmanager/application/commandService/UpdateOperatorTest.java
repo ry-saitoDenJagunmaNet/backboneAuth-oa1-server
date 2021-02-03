@@ -41,6 +41,45 @@ class UpdateOperatorTest {
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
     private Integer recordVersion = 1;
     private String changeCause = "認証機器使用開始";
+
+    UpdateOperatorTest () {
+        // 認証情報
+        TestAuditInfoHolder.setAuthInf();
+    }
+
+    // テスト対象クラス生成
+    private UpdateOperator createUpdateOperator() {
+        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
+            @Override
+            public void entry(OperatorEntryPack operatorEntryPack) {
+
+            }
+            @Override
+            public void update(OperatorUpdatePack operatorUpdatePack) {
+
+            }
+        };
+
+        BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
+            @Override
+            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) throws BranchNotFoundException {
+                return null;
+            }
+            @Override
+            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
+                return null;
+            }
+        };
+        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
+            public BranchAtMoment findOneBy(long branchId) {
+                return createBranchAtMoment();
+            }
+        };
+
+        return new UpdateOperator(operatorRepositoryForStore, searchBranchAtMoment);
+    }
+
+    // リクエスト生成
     private OperatorUpdateRequest createRequest() {
         return new OperatorUpdateRequest() {
             @Override
@@ -86,39 +125,7 @@ class UpdateOperatorTest {
         };
     }
 
-    // テスト対象クラス生成
-    private UpdateOperator createUpdateOperator() {
-        OperatorRepositoryForStore operatorRepositoryForStore = new OperatorRepositoryForStore() {
-            @Override
-            public void entry(OperatorEntryPack operatorEntryPack) {
-
-            }
-            @Override
-            public void update(OperatorUpdatePack operatorUpdatePack) {
-
-            }
-        };
-
-        BranchAtMomentRepository branchAtMomentRepository = new BranchAtMomentRepository() {
-            @Override
-            public BranchAtMoment findOneBy(BranchAtMomentCriteria criteria) throws BranchNotFoundException {
-                return null;
-            }
-            @Override
-            public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                return null;
-            }
-        };
-        SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(branchAtMomentRepository) {
-            public BranchAtMoment findOneBy(long branchId) {
-                return createBranchAtMoment();
-            }
-        };
-
-        return new UpdateOperator(operatorRepositoryForStore, searchBranchAtMoment);
-    }
-
-    // 店舗AtMoment
+    // 店舗AtMoment生成
     private BranchAtMoment createBranchAtMoment() {
         return BranchAtMoment.builder()
             .withIdentifier(AuditInfoHolder.getBranch().getIdentifier())
@@ -128,15 +135,9 @@ class UpdateOperatorTest {
                     .build())
                 .build())
             .withBranchAttribute(BranchAttribute.builder()
-                .withBranchCode(
-                    BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
+                .withBranchCode(BranchCode.of(AuditInfoHolder.getBranch().getBranchAttribute().getBranchCode().getValue()))
                 .build())
             .build();
-    }
-
-    UpdateOperatorTest () {
-        // 認証情報
-        TestAuditInfoHolder.setAuthInf();
     }
 
     /**
