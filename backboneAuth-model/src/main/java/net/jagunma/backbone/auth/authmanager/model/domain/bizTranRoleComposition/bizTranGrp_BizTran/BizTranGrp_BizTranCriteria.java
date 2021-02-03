@@ -1,13 +1,13 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran;
 
-import net.jagunma.backbone.auth.authmanager.model.base.AbstractCriteria;
 import net.jagunma.common.ddd.model.criterias.LongCriteria;
 import net.jagunma.common.ddd.model.criterias.StringCriteria;
+import net.jagunma.common.ddd.model.entity2.AbstractEntity2Criteria;
 
 /**
  * 取引グループ_取引割当の検索条件
  */
-public class BizTranGrp_BizTranCriteria extends AbstractCriteria {
+public class BizTranGrp_BizTranCriteria extends AbstractEntity2Criteria<BizTranGrp_BizTran> {
 
     private final LongCriteria bizTranGrp_BizTranIdCriteria = new LongCriteria();
     private final LongCriteria bizTranGrpIdCriteria = new LongCriteria();
@@ -27,4 +27,14 @@ public class BizTranGrp_BizTranCriteria extends AbstractCriteria {
     public StringCriteria getSubSystemCodeCriteria() {
         return subSystemCodeCriteria;
     }
+
+    @Override
+    public boolean test(BizTranGrp_BizTran value) {
+        return super.test(value)
+            && bizTranGrp_BizTranIdCriteria.test(value.getBizTranGrp_BizTranId())
+            && bizTranGrpIdCriteria.test(value.getBizTranGrpId())
+            && bizTranIdCriteria.test(value.getBizTranId())
+            && subSystemCodeCriteria.test(value.getSubSystemCode());
+    }
+
 }

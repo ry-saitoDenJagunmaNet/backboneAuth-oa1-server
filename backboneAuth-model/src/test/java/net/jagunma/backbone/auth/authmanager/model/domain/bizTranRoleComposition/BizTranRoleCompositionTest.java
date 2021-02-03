@@ -114,8 +114,8 @@ class BizTranRoleCompositionTest {
         assertTrue(bizTranRoleComposition instanceof BizTranRoleComposition);
         assertThat(bizTranRoleComposition.getBizTrans()).usingRecursiveComparison().isEqualTo(bizTrans);
         assertThat(bizTranRoleComposition.getBizTranGrps()).usingRecursiveComparison().isEqualTo(bizTranGrps);
-        assertThat(bizTranRoleComposition.getBizTranGrp_BizTrans()).usingRecursiveComparison().isEqualTo(bizTranGrp_BizTrans);
+        assertThat(bizTranRoleComposition.getBizTranGrp_BizTrans().getValues()).usingRecursiveComparison().isEqualTo(bizTranGrp_BizTrans.getValues());
         assertThat(bizTranRoleComposition.getBizTranRoles()).usingRecursiveComparison().isEqualTo(bizTranRoles);
-        assertThat(bizTranRoleComposition.getBizTranRole_BizTranGrps()).usingRecursiveComparison().isEqualTo(bizTranRole_BizTranGrps);
+        assertThat(bizTranRoleComposition.getBizTranRole_BizTranGrps().getValues()).usingRecursiveComparison().isEqualTo(bizTranRole_BizTranGrps.getValues());
     }
 }

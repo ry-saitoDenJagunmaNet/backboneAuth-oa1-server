@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRoleRepository;
@@ -30,15 +31,77 @@ import org.junit.jupiter.api.Test;
 class Operator_BizTranRoleDataSourceTest {
 
     // 実行既定値
-    // オペレーター_取引ロールDaoの作成
+    private final List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = createOperator_BizTranRoleEntityList();
+    private final List<Operator> operatorList = createOperatorList();
+    private final List<BizTranRole> bizTranRoleList = createBizTranRoleList();
+
+    // アオペレーター_取引ロール割当リストデータ作成
+    private List<Operator_BizTranRoleEntity> createOperator_BizTranRoleEntityList() {
+        List<Operator_BizTranRoleEntity> list = newArrayList();
+        list.add(createOperator_BizTranRoleEntity(1L,18L,101L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
+        list.add(createOperator_BizTranRoleEntity(2L,19L,102L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
+        list.add(createOperator_BizTranRoleEntity(3L,20L,101L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
+        list.add(createOperator_BizTranRoleEntity(4L,20L,103L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
+        list.add(createOperator_BizTranRoleEntity(5L,20L,102L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
+        return list;
+    }
+    // アオペレーター_取引ロール割当データ作成
+    private Operator_BizTranRoleEntity createOperator_BizTranRoleEntity(
+        Long operator_BizTranRoleId,
+        Long operatorId,
+        Long bizTranRoleId,
+        LocalDate validThruStartDate,
+        LocalDate validThruEndDate,
+        Long createdBy,
+        LocalDateTime createdAt,
+        String createdIpAddress,
+        Long updatedBy,
+        LocalDateTime updatedAt,
+        String updatedIpAddress,
+        Integer recordVersion) {
+
+        Operator_BizTranRoleEntity entity = new Operator_BizTranRoleEntity();
+        entity.setOperator_BizTranRoleId(operator_BizTranRoleId);
+        entity.setOperatorId(operatorId);
+        entity.setBizTranRoleId(bizTranRoleId);
+        entity.setValidThruStartDate(validThruStartDate);
+        entity.setValidThruEndDate(validThruEndDate);
+        entity.setCreatedBy(createdBy);
+        entity.setCreatedAt(createdAt);
+        entity.setCreatedIpAddress(createdIpAddress);
+        entity.setUpdatedBy(updatedBy);
+        entity.setUpdatedAt(updatedAt);
+        entity.setUpdatedIpAddress(updatedIpAddress);
+        entity.setRecordVersion(recordVersion);
+        return entity;
+    }
+    // オペレータリストデータ作成
+    private List<Operator> createOperatorList() {
+        List<Operator> list = newArrayList();
+        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",AvailableStatus.利用可能,1,null));
+        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),true,6L,"006",33L,"001",AvailableStatus.利用可能,1,null));
+        list.add(Operator.createFrom(20L,"yu001011","ｙｕ００１０１１","yu001011@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",AvailableStatus.利用不可,1,null));
+        return list;
+    }
+    // 取引ロールリストデータ作成
+    private List<BizTranRole> createBizTranRoleList() {
+        List<BizTranRole> list = newArrayList();
+        list.add(BizTranRole.createFrom(101L,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranRole.createFrom(102L,"ANAG02","（畜産）維持管理担当者",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        list.add(BizTranRole.createFrom(103L,"ANAG99","（畜産）維持管理責任者",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
+        return list;
+    }
+
+
+    // オペレーター_取引ロールDaoのスタブ
     private Operator_BizTranRoleEntityDao createOperator_BizTranRoleEntityDao() {
         return new Operator_BizTranRoleEntityDao() {
             @Override
-            public List<Operator_BizTranRoleEntity> findBy(Operator_BizTranRoleEntityCriteria criteria, Orders orders) {
-                return createOperator_BizTranRoleEntityList();
+            public List<Operator_BizTranRoleEntity> findAll(Orders orders) {
+                return operator_BizTranRoleEntityList;
             }
             @Override
-            public List<Operator_BizTranRoleEntity> findAll(Orders orders) {
+            public List<Operator_BizTranRoleEntity> findBy(Operator_BizTranRoleEntityCriteria criteria, Orders orders) {
                 return null;
             }
             @Override
@@ -83,50 +146,12 @@ class Operator_BizTranRoleDataSourceTest {
             }
         };
     }
-    // アオペレーター_取引ロール割当リストデータ作成
-    private List<Operator_BizTranRoleEntity> createOperator_BizTranRoleEntityList() {
-        List<Operator_BizTranRoleEntity> list = newArrayList();
-        list.add(createOperator_BizTranRoleEntity(1L,18L,101L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
-        list.add(createOperator_BizTranRoleEntity(2L,19L,102L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
-        list.add(createOperator_BizTranRoleEntity(3L,20L,103L,LocalDate.of(2010,8,23),LocalDate.of(9999,12,31),null,null,null,null,null,null,1));
-        return list;
-    }
-    // アオペレーター_取引ロール割当データ作成
-    private Operator_BizTranRoleEntity createOperator_BizTranRoleEntity(
-        Long operator_BizTranRoleId,
-        Long operatorId,
-        Long bizTranRoleId,
-        LocalDate validThruStartDate,
-        LocalDate validThruEndDate,
-        Long createdBy,
-        LocalDateTime createdAt,
-        String createdIpAddress,
-        Long updatedBy,
-        LocalDateTime updatedAt,
-        String updatedIpAddress,
-        Integer recordVersion) {
-
-        Operator_BizTranRoleEntity entity = new Operator_BizTranRoleEntity();
-        entity.setOperator_BizTranRoleId(operator_BizTranRoleId);
-        entity.setOperatorId(operatorId);
-        entity.setBizTranRoleId(bizTranRoleId);
-        entity.setValidThruStartDate(validThruStartDate);
-        entity.setValidThruEndDate(validThruEndDate);
-        entity.setCreatedBy(createdBy);
-        entity.setCreatedAt(createdAt);
-        entity.setCreatedIpAddress(createdIpAddress);
-        entity.setUpdatedBy(updatedBy);
-        entity.setUpdatedAt(updatedAt);
-        entity.setUpdatedIpAddress(updatedIpAddress);
-        entity.setRecordVersion(recordVersion);
-        return entity;
-    }
-    // オペレータRepositoryの作成
+    // オペレータリポジトリのスタブ
     private OperatorRepository createOperatorRepository() {
         return new OperatorRepository() {
             @Override
             public Operators selectBy(OperatorCriteria operatorCriteria, Orders orders) {
-                return createOperators();
+                return Operators.createFrom(operatorList);
             }
             @Override
             public Operator findOneById(Long operatorId) {
@@ -150,34 +175,18 @@ class Operator_BizTranRoleDataSourceTest {
             }
         };
     }
-    // オペレータ群データ作成
-    private Operators createOperators() {
-        List<Operator> list = newArrayList();
-        list.add(Operator.createFrom(18L,"yu001009","ｙｕ００１００９","yu001009@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",AvailableStatus.利用可能,1,null));
-        list.add(Operator.createFrom(19L,"yu001010","ｙｕ００１０１０","yu001010@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),true,6L,"006",33L,"001",AvailableStatus.利用可能,1,null));
-        list.add(Operator.createFrom(20L,"yu001011","ｙｕ００１０１１","yu001011@aaa.net",LocalDate.of(2010,8,17),LocalDate.of(9999,12,31),false,6L,"006",33L,"001",AvailableStatus.利用不可,1,null));
-        return Operators.createFrom(list);
-    }
-    // 取引ロールRepositoryの作成
+    // 取引ロールリポジトリのスタブ
     private BizTranRoleRepository createBizTranRoleRepository() {
         return new BizTranRoleRepository() {
             @Override
-            public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
-                return createBizTranRoles();
+            public BizTranRoles selectAll(Orders orders) {
+                return BizTranRoles.createFrom(bizTranRoleList);
             }
             @Override
-            public BizTranRoles selectAll(Orders orders) {
+            public BizTranRoles selectBy(BizTranRoleCriteria bizTranRoleCriteria, Orders orders) {
                 return null;
             }
         };
-    }
-    // 取引ロール群データ作成
-    private BizTranRoles createBizTranRoles() {
-        List<BizTranRole> list = newArrayList();
-        list.add(BizTranRole.createFrom(101L,"ANAG01","（畜産）取引全般",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
-        list.add(BizTranRole.createFrom(102L,"ANAG02","（畜産）維持管理担当者",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
-        list.add(BizTranRole.createFrom(103L,"ANAG99","（畜産）維持管理責任者",SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
-        return BizTranRoles.createFrom(list);
     }
 
     /**
@@ -193,8 +202,10 @@ class Operator_BizTranRoleDataSourceTest {
     void selectBy_test0() {
 
         // 実行値
+        Long operatorId = 20L;
         Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
-        Orders orders = Orders.empty();
+        criteria.getOperatorIdCriteria().setEqualTo(operatorId);
+        Orders orders = Orders.empty().addOrder("bizTranRoleId");
 
         // テスト対象クラス生成
         Operator_BizTranRoleDataSource operator_BizTranRoleDataSource = new Operator_BizTranRoleDataSource(
@@ -203,10 +214,57 @@ class Operator_BizTranRoleDataSourceTest {
             createBizTranRoleRepository());
 
         // 期待値
-        Operators operators = createOperators();
-        BizTranRoles bizTranRoles = createBizTranRoles();
         List<Operator_BizTranRole> expectedOperator_BizTranRoleList = newArrayList();
-        for(Operator_BizTranRoleEntity entity : createOperator_BizTranRoleEntityList()) {
+        for(Operator_BizTranRoleEntity entity : operator_BizTranRoleEntityList.stream().sorted(orders.toComparator()).collect(Collectors.toList())) {
+            if (entity.getOperatorId().equals(operatorId)) {
+                expectedOperator_BizTranRoleList.add(Operator_BizTranRole.createFrom(
+                    entity.getOperator_BizTranRoleId(),
+                    entity.getOperatorId(),
+                    entity.getBizTranRoleId(),
+                    entity.getValidThruStartDate(),
+                    entity.getValidThruEndDate(),
+                    entity.getRecordVersion(),
+                    operatorList.stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
+                    bizTranRoleList.stream().filter(b->b.getBizTranRoleId().equals(entity.getBizTranRoleId())).findFirst().orElse(null)));
+            }
+        }
+
+        // 実行
+        Operator_BizTranRoles actualOperator_BizTranRoles = operator_BizTranRoleDataSource.selectBy(criteria, orders);
+
+        // 結果検証
+        assertThat(actualOperator_BizTranRoles.size()).isEqualTo(expectedOperator_BizTranRoleList.size());
+        for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {
+            assertThat(actualOperator_BizTranRoles.getValues().get(i)).as(i + 1 + "レコード目でエラー")
+                .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoleList.get(i));
+        }
+    }
+
+    /**
+     * {@link Operator_BizTranRoleDataSource#selectAll(Orders)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void selectAll_test0() {
+
+        // 実行値
+        Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
+        Orders orders = Orders.empty().addOrder("bizTranRoleId");
+
+        // テスト対象クラス生成
+        Operator_BizTranRoleDataSource operator_BizTranRoleDataSource = new Operator_BizTranRoleDataSource(
+            createOperator_BizTranRoleEntityDao(),
+            createOperatorRepository(),
+            createBizTranRoleRepository());
+
+        // 期待値
+        List<Operator_BizTranRole> expectedOperator_BizTranRoleList = newArrayList();
+        for(Operator_BizTranRoleEntity entity : operator_BizTranRoleEntityList.stream().sorted(orders.toComparator()).collect(Collectors.toList())) {
             expectedOperator_BizTranRoleList.add(Operator_BizTranRole.createFrom(
                 entity.getOperator_BizTranRoleId(),
                 entity.getOperatorId(),
@@ -214,15 +272,15 @@ class Operator_BizTranRoleDataSourceTest {
                 entity.getValidThruStartDate(),
                 entity.getValidThruEndDate(),
                 entity.getRecordVersion(),
-                operators.getValues().stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
-                bizTranRoles.getValues().stream().filter(b->b.getBizTranRoleId().equals(entity.getBizTranRoleId())).findFirst().orElse(null)));
+                operatorList.stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null),
+                bizTranRoleList.stream().filter(b->b.getBizTranRoleId().equals(entity.getBizTranRoleId())).findFirst().orElse(null)));
         }
 
         // 実行
-        Operator_BizTranRoles actualOperator_BizTranRoles = operator_BizTranRoleDataSource
-            .selectBy(criteria, orders);
+        Operator_BizTranRoles actualOperator_BizTranRoles = operator_BizTranRoleDataSource.selectAll(orders);
 
         // 結果検証
+        assertThat(actualOperator_BizTranRoles.size()).isEqualTo(expectedOperator_BizTranRoleList.size());
         for(int i = 0; i < actualOperator_BizTranRoles.getValues().size(); i++) {
             assertThat(actualOperator_BizTranRoles.getValues().get(i)).as(i + 1 + "レコード目でエラー")
                 .usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoleList.get(i));
