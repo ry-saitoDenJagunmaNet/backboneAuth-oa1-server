@@ -43,7 +43,7 @@ class Oa11020InitPresenter {
         this.operatorCodePrefix = operatorCodePrefix;
     }
     /**
-     * 店舗コンボボックスItemsSource の為の 店舗群AtMoment
+     * 店舗コンボボックスItemsSource の為の 店舗群AtMomentのＳｅｔ
      *
      * @param branchesAtMomentForBranchItemsSource
      */
