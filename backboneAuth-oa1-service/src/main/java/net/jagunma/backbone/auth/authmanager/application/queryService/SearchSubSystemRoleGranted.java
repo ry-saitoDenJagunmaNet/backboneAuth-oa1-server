@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAllRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
@@ -28,6 +29,7 @@ public class SearchSubSystemRoleGranted {
 
     private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
     private final OperatorHistoryHeaderRepository operatorHistoryHeaderRepository;
+    private final SubSystemRoleGrantedQueryUtil subSystemRoleGrantedQueryUtil = new SubSystemRoleGrantedQueryUtil();
 
     // コンストラクタ
     public SearchSubSystemRoleGranted(
@@ -105,7 +107,7 @@ public class SearchSubSystemRoleGranted {
         for(Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             assignRoleDtoList.add(assignRoleDto);
         }
         return assignRoleDtoList;
@@ -123,48 +125,9 @@ public class SearchSubSystemRoleGranted {
             if (subSystemRole.getCode().length() == 0) { continue; }
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
-            allRoleDto.setIsModifiable(judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
+            allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
             allRoleDtoList.add(allRoleDto);
         }
         return allRoleDtoList;
-    }
-
-    /**
-     * 変更可否を判定します
-     *
-     * @param subSystemRoleCode サブシステムロールコード
-     * @param signInOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
-     * @return 変更可否
-     */
-    boolean judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles) {
-        LocalDate today = LocalDate.now();
-
-        // サインインオペレーター の オペレーター_サブシステムロール割当群 をコードをキーにしてMap化
-        Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
-        for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
-            signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-        }
-
-        // サインインオペレーター が JA管理者ロール を持っているか
-        if (signInOperator_SubSystemRoleMap.containsKey(SubSystemRole.JA管理者.getCode())) {
-            // 本日時点で有効か
-            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(SubSystemRole.JA管理者.getCode());
-            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
-                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
-                return true;
-            }
-        }
-
-        // サインインオペレーター が 持っているロールか
-        if (signInOperator_SubSystemRoleMap.containsKey(subSystemRoleCode)) {
-            // 本日時点で有効か
-            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(subSystemRoleCode);
-            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
-                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

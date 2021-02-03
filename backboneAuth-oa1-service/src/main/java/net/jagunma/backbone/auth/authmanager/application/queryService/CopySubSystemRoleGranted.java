@@ -2,11 +2,9 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedCopyResponse;
@@ -14,7 +12,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.ddd.model.orders.Orders;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class CopySubSystemRoleGranted {
 
     private final Operator_SubSystemRoleRepository operator_SubSystemRoleRepository;
+    private final SubSystemRoleGrantedQueryUtil subSystemRoleGrantedQueryUtil = new SubSystemRoleGrantedQueryUtil();
 
     // コンストラクタ
     public CopySubSystemRoleGranted(Operator_SubSystemRoleRepository operator_SubSystemRoleRepository) {
@@ -103,7 +101,7 @@ public class CopySubSystemRoleGranted {
         // アサインロールDtoリストに追加
         for(Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
             // サインインオペレーターによる変更可否を判定
-            if (!judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles)) {
+            if (!subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles)) {
                 continue;
             }
             // 現在のアサインロールリストに存在するロールは除外
@@ -127,49 +125,5 @@ public class CopySubSystemRoleGranted {
         }
 
         return copyAddedAssignRoleDtoList;
-    }
-
-    // ToDo:★staticメソッドで共通化した方がいいか？staticメソッドは使用しない方向か？
-    //  小さい共通のユーティリティ化するのはどうか？
-    //  例えば SubSystemRoleGrantedQueryUtil
-    //  （現在存在するstaticメソッド：static void checkBranchBelongJa）
-    //  例えば OperatorCommandUtil
-    /**
-     * 変更可否を判定します
-     *
-     * @param subSystemRoleCode サブシステムロールコード
-     * @param signInOperator_SubSystemRoles サインインオペレーターのオペレーター_サブシステムロール割当群
-     * @return 変更可否
-     */
-    boolean judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles) {
-        LocalDate today = LocalDate.now();
-
-        // サインインオペレーター の オペレーター_サブシステムロール割当群 をコードをキーにしてMap化
-        Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
-        for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
-            signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
-        }
-
-        // サインインオペレーター が JA管理者ロール を持っているか
-        if (signInOperator_SubSystemRoleMap.containsKey(SubSystemRole.JA管理者.getCode())) {
-            // 本日時点で有効か
-            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(SubSystemRole.JA管理者.getCode());
-            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
-                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
-                return true;
-            }
-        }
-
-        // サインインオペレーター が 持っているロールか
-        if (signInOperator_SubSystemRoleMap.containsKey(subSystemRoleCode)) {
-            // 本日時点で有効か
-            Operator_SubSystemRole signInOperator_SubSystemRole = signInOperator_SubSystemRoleMap.get(subSystemRoleCode);
-            if (!(signInOperator_SubSystemRole.getValidThruStartDate().isAfter(today) ||
-                signInOperator_SubSystemRole.getValidThruEndDate().isBefore(today))) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
