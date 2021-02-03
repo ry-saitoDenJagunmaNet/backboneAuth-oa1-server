@@ -1,13 +1,15 @@
 package net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole;
 
 import java.time.LocalDate;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.common.ddd.model.entity2.AbstractEntity2;
 
 /**
  * オペレーター_サブシステムロール割当
  */
-public class Operator_BizTranRole {
+public class Operator_BizTranRole extends AbstractEntity2<Operator_BizTranRole> {
 
     private final Long operator_BizTranRoleId;
     private final Long operatorId;

@@ -3,11 +3,14 @@ package net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleCompositio
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.common.ddd.model.entity2.AbstractEntity2;
 
 /**
  * 取引ロール_取引グループ割当
  */
-public class BizTranRole_BizTranGrp {
+public class BizTranRole_BizTranGrp extends AbstractEntity2<BizTranRole_BizTranGrp> {
+
+    private static final long serialVersionUID = 1L;
 
     private final Long bizTranRole_BizTranGrpId;
     private final Long bizTranRoleId;

@@ -3,10 +3,8 @@ package net.jagunma.backbone.auth.authmanager.infra.datasource.bizTranRoleCompos
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
-import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;
@@ -15,9 +13,9 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.model.dao.bizTranGrp_BizTran.BizTranGrp_BizTranEntity;
-import net.jagunma.backbone.auth.model.dao.bizTranGrp_BizTran.BizTranGrp_BizTranEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.bizTranGrp_BizTran.BizTranGrp_BizTranEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,39 +47,8 @@ public class BizTranGrp_BizTranDataSource implements BizTranGrp_BizTranRepositor
      */
     public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
 
-        // 取引グループ群検索
-        BizTranGrpCriteria bizTranGrpCriteria = new BizTranGrpCriteria();
-        bizTranGrpCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria());
-        bizTranGrpCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-        BizTranGrps bizTranGrps = bizTranGrpRepository.selectBy(bizTranGrpCriteria, Orders.empty());
-
-        // 取引群検索
-        BizTranCriteria bizTranCriteria = new BizTranCriteria();
-        bizTranCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
-        bizTranCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-        BizTrans bizTrans = bizTranRepository.selectBy(bizTranCriteria, Orders.empty());
-
         // 取引グループ_取引割当群検索
-        BizTranGrp_BizTranEntityCriteria entityCriteria = new BizTranGrp_BizTranEntityCriteria();
-        entityCriteria.getBizTranGrpIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria());
-        entityCriteria.getBizTranIdCriteria().assignFrom(bizTranGrp_BizTranCriteria.getBizTranIdCriteria());
-        entityCriteria.getSubSystemCodeCriteria().assignFrom(bizTranGrp_BizTranCriteria.getSubSystemCodeCriteria());
-
-        List<BizTranGrp_BizTran> list = newArrayList();
-        for (BizTranGrp_BizTranEntity entity : bizTranGrp_BizTranEntityDao.findBy(entityCriteria, orders)) {
-            list.add(BizTranGrp_BizTran.createFrom(
-                entity.getBizTranGrp_BizTranId(),
-                entity.getBizTranGrpId(),
-                entity.getBizTranId(),
-                entity.getSubSystemCode(),
-                entity.getRecordVersion(),
-                bizTranGrps.getValues().stream().filter(b->b.getBizTranGrpId().equals(entity.getBizTranGrpId())).findFirst().orElse(null),
-                bizTrans.getValues().stream().filter(b->b.getBizTranId().equals(entity.getBizTranId())).findFirst().orElse(null),
-                SubSystem.codeOf(entity.getSubSystemCode())
-            ));
-        }
-
-        return BizTranGrp_BizTrans.createFrom(list);
+        return selectAll().select(bizTranGrp_BizTranCriteria).sortBy(orders);
     }
 
     /**
@@ -92,15 +59,30 @@ public class BizTranGrp_BizTranDataSource implements BizTranGrp_BizTranRepositor
      */
     public BizTranGrp_BizTrans selectAll(Orders orders) {
 
+        // 取引グループ_取引割当群検索
+        return selectAll().sortBy(orders);
+    }
+
+    /**
+     * 取引グループ_取引割当群の全件検索を行います
+     *
+     * @return 取引グループ_取引割当群
+     */
+    @Cacheable("auth_bizTranGrp_BizTran")
+    public BizTranGrp_BizTrans selectAll() {
+
+        // 取引グループ_取引割当群検索
+        List<BizTranGrp_BizTranEntity> entityList = bizTranGrp_BizTranEntityDao.findAll(Orders.empty());
+
         // 取引グループ群検索
-        BizTranGrps bizTranGrps = bizTranGrpRepository.selectAll(Orders.empty().addOrder("BizTranGrpCode"));
+        BizTranGrps bizTranGrps = bizTranGrpRepository.selectAll(Orders.empty());
 
         // 取引群検索
-        BizTrans bizTrans = bizTranRepository.selectAll(Orders.empty().addOrder("BizTranGrpCode"));
+        BizTrans bizTrans = bizTranRepository.selectAll(Orders.empty());
 
         // 取引グループ_取引割当群検索
         List<BizTranGrp_BizTran> list = newArrayList();
-        for (BizTranGrp_BizTranEntity entity : bizTranGrp_BizTranEntityDao.findAll(orders)) {
+        for (BizTranGrp_BizTranEntity entity : entityList) {
             list.add(BizTranGrp_BizTran.createFrom(
                 entity.getBizTranGrp_BizTranId(),
                 entity.getBizTranGrpId(),
