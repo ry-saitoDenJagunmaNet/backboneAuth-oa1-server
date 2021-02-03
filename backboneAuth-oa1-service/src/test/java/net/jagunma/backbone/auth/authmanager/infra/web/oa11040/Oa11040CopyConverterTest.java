@@ -85,7 +85,6 @@ class Oa11040CopyConverterTest {
 
         // 実行
         Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, signInOperatorId, selectedOperatorId);
-//ToDo:★        Oa11040CopyConverter converter = Oa11040CopyConverter.with(assignRoleTableVoList, signInOperatorId, selectedOperatorId);
 
         // 結果検証
         assertTrue(converter instanceof Oa11040CopyConverter);
@@ -117,7 +116,6 @@ class Oa11040CopyConverterTest {
 
         // 実行
         Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, signInOperatorId, selectedOperatorId);
-//todo:★        Oa11040CopyConverter converter = Oa11040CopyConverter.with(assignRoleTableVoList, signInOperatorId, selectedOperatorId);
 
         // 結果検証
         assertTrue(converter instanceof Oa11040CopyConverter);
