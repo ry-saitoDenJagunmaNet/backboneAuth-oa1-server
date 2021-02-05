@@ -4,7 +4,7 @@
 window.onload = function() {
 	// 初期化処理
 	edex_initialize();
-	// nput-field の初期化
+	// input-field の初期化
 	oa_initInputField();
 }
 
