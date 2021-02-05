@@ -39,18 +39,30 @@ function oaex_moveAdditionBtn_onClick() {
 			// 追加行にClickイベントを追加
 			newRow.addEventListener('click', function(event) {
 				oa_setTableRowSelected(this);
+				oaex_assignRoleTableRow_onClick(this);
 			});
-			// datepicker の初期化
-			oa_initDatepicker();
-		
 			// コード、名称を追加行に設定
 			newRow.cells[0].innerText = tableRow.cells[0].innerText;
 			newRow.cells[1].innerText = tableRow.cells[1].innerText;
+			newRow.cells[2].innerHTML = "<div class='input-field'>" +
+										"	<input type='text' class='datepicker' name='assignRoleTableVoList[" + i + "].validThruStartDate}'></input>" +
+										"</div>" +
+										"<span>～</span>" +
+										"<div class='input-field'>" +
+										"	<input type='text' class='datepicker' name='assignRoleTableVoList[" + i + "].validThruEndDate}'></input>" +
+										"</div>";
+			newRow.cells[3].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleCode' value='" + tableRow.cells[0].innerText + "'></input>";
+			newRow.cells[4].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleName' value='" + tableRow.cells[1].innerText + "'></input>";
+			newRow.cells[5].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[2].innerText + "'></input>";
 			// 選択行非表示
 			unAssignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
 			oaex_setSelectRow(unAssignRoleTable, i);
-			return; 
+			// datepicker の初期化
+			oa_initDatepicker();
+			// input-field の初期化
+			oa_initInputField();
+			return;
 		}
 	}
 }
@@ -165,4 +177,9 @@ function oaex_initHiddenUnAssignRoleList() {
 			}
 		}
 	}
+}
+
+function oaex_assignRoleTableRow_onClick() {
+
+
 }
