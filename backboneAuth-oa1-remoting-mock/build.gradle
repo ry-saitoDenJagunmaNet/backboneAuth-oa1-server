@@ -26,4 +26,5 @@ dependencies {
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
+
 }

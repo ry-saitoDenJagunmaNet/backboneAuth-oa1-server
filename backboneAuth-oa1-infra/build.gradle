@@ -39,6 +39,7 @@ dependencies {
     implementation "org.apache.poi:poi-ooxml:${poiOoxmlVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
     implementation "redis.clients:jedis:${jedisVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDatatypeJsr310Version}"
 
 }
 

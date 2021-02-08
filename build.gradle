@@ -26,13 +26,11 @@ buildscript {
         jacksonAnnotationVersion = '2.12.1'
         mssqlJdbcVersion = '9.1.1.jre11-preview'
         backboneAuthDaoVersion = '20.0.29'
-//        sharedDataInterfaceVersion = '20.1.28'
-//        sharedDataStubVersion = '22.0.1'
         junitJupiterVersion = '5.7.0'
         poiOoxmlVersion = '4.1.2'
         jedisVersion = '3.4.1'
         backboneSharedVersion = '22.2.2'
-
+        jacksonDatatypeJsr310Version = '2.12.1'
     }
 }
 
