@@ -89,11 +89,11 @@ class Oa11020ControllerTest {
             public void execute(OperatorEntryRequest request) {
                 //  request.getBranchId().equals(11L) の場合：GunmaRuntimeException を発生させる
                 if (request.getBranchId().equals(11L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "店舗ID"));
+                    throw new GunmaRuntimeException("EOA13002", "店舗ID");
                 }
                 //  request.getBranchId().equals(12L) の場合：GunmaRuntimeException を発生させる
                 if (request.getBranchId().equals(12L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
+                    throw new GunmaRuntimeException("EOA13002", "パスワード");
                 }
                 //  request.getBranchId().equals(13L) の場合：RuntimeException を発生させる
                 if (request.getBranchId().equals(13L)) {

@@ -104,7 +104,7 @@ class Ed01010ControllerTest {
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 //  request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
                 if (request.getOperatorId().equals(11L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワードの確認入力"));
+                    throw new GunmaRuntimeException("EOA13002", "パスワードの確認入力");
                 }
                 //  request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
                 if (request.getOperatorId().equals(12L)) {
@@ -134,7 +134,7 @@ class Ed01010ControllerTest {
             public void execute(PasswordResetRequest request) {
                 //  request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
                 if (request.getOperatorId().equals(21L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "パスワード"));
+                    throw new GunmaRuntimeException("EOA13002", "パスワード");
                 }
             }
             @Override
