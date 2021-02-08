@@ -268,7 +268,7 @@ class Oa11030ControllerTest {
             public void execute(OperatorSearchRequest request, OperatorSearchResponse response) {
                 //  request.getOperatorId().equals(11L) の場合：GunmaRuntimeException を発生させる
                 if (request.getOperatorId().equals(11L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13008", "有効期限開始"));
+                    throw new GunmaRuntimeException("EOA13008", "有効期限開始");
                 }
                 //  request.getOperatorId().equals(12L) の場合：RuntimeException を発生させる
                 if (request.getOperatorId().equals(12L)) {
@@ -311,7 +311,7 @@ class Oa11030ControllerTest {
             public void execute(OperatorUpdateRequest request) {
                 //  request.getOperatorId().equals(21L) の場合：GunmaRuntimeException を発生させる
                 if (request.getOperatorId().equals(21L)) {
-                    Preconditions.checkNotNull(null, () -> new GunmaRuntimeException("EOA13002", "オペレーターID"));
+                    throw new GunmaRuntimeException("EOA13002", "オペレーターID");
                 }
                 //  request.getOperatorId().equals(22L) の場合：RuntimeException を発生させる
                 if (request.getOperatorId().equals(22L)) {
