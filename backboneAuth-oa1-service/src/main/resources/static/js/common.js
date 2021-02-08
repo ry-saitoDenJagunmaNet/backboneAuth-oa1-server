@@ -667,6 +667,52 @@ function oa_getParam(key) {
 }
 
 /**
+ * テーブル子nodeの項目名Indexを再採番し変更します。
+ * @param {Tablete Element} tableElement TableteタグのElement
+ */
+function oa_renumberItemNameIndexForTableChild(tableElement) {
+	let ix = 0;
+	for(let i = 0; i < tableElement.rows.length; i++){
+		// 行
+		let isNameChengeed = false;
+		for(let j = 0; j < tableElement.rows[i].cells.length; j++){
+			// セル
+			let child = tableElement.rows[i].cells[j].children;
+			for(let k = 0; k < child.length; k++){
+				// セル内の子node
+				isNameChengeed = oa_renumberItemNameIndexForTableChildSubFunction(child[k], ix, isNameChengeed);
+			}
+		}
+		// 行が変更対象に場合インクリメント
+		if (isNameChengeed) { ix++; }
+	}
+}
+/**
+ * テーブル子nodeの項目名Indexを再採番し変更します。（再起用サブルーチン）
+ * @param {Tablete Element} elme TableteタグのElement
+ * @param {int} ix テーブル子nodeの項目名Index
+ * @param {Boolean} 変更対象（true:変更対象）
+ * @return 変更対象（true:変更対象）
+ */
+function oa_renumberItemNameIndexForTableChildSubFunction(elme, ix, isNameChengeed) {
+	// INPUTtタグ＆nameが配列定義（[]）
+	if (elme.tagName == "INPUT") {
+		if (elme.name.length > 0 && elme.name.indexOf('[', 1) > 0 && elme.name.indexOf(']', 1) > 0) {
+			let colS = elme.name.indexOf('[', 0) + 1;
+			let colE = elme.name.indexOf(']', 0);
+			elme.name =  elme.name.substr(0, colS) + ix +  elme.name.substr(colE);
+			isNameChengeed = true;
+		}
+	}
+	// さらに子node
+	let child = elme.children;
+	for(let k = 0; k < child.length; k++){
+		isNameChengeed = oa_renumberItemNameIndexForTableChildSubFunction(child[k], ix, isNameChengeed)
+	}
+	return isNameChengeed;
+}
+
+/**
  * メッセージダイアログを取得（作成）します。
  */
 function oa_getMessageDialog() {
