@@ -683,28 +683,30 @@ function oa_renumberItemNameIndexForTableChild(tableElement) {
 				isNameChengeed = oa_renumberItemNameIndexForTableChildSubFunction(child[k], ix, isNameChengeed);
 			}
 		}
-		// 行が変更対象に場合インクリメント
+		// 行が変更対象の場合インクリメント
 		if (isNameChengeed) { ix++; }
 	}
 }
 /**
- * テーブル子nodeの項目名Indexを再採番し変更します。（再起用サブルーチン）
+ * テーブル子nodeの項目名Indexを再採番し変更します。（再帰用サブルーチン）
  * @param {Tablete Element} elme TableteタグのElement
  * @param {int} ix テーブル子nodeの項目名Index
  * @param {Boolean} 変更対象（true:変更対象）
  * @return 変更対象（true:変更対象）
  */
 function oa_renumberItemNameIndexForTableChildSubFunction(elme, ix, isNameChengeed) {
-	// INPUTtタグ＆nameが配列定義（[]）
+	// INPUTtタグ＆nameに”[]”の記述がある場合のElementが対象
 	if (elme.tagName == "INPUT") {
 		if (elme.name.length > 0 && elme.name.indexOf('[', 1) > 0 && elme.name.indexOf(']', 1) > 0) {
+			// Indexを書き換え
 			let colS = elme.name.indexOf('[', 0) + 1;
 			let colE = elme.name.indexOf(']', 0);
 			elme.name =  elme.name.substr(0, colS) + ix +  elme.name.substr(colE);
+			// 変更があったらtrueを設定
 			isNameChengeed = true;
 		}
 	}
-	// さらに子node
+	// さらに子nodeを処理（再帰）
 	let child = elme.children;
 	for(let k = 0; k < child.length; k++){
 		isNameChengeed = oa_renumberItemNameIndexForTableChildSubFunction(child[k], ix, isNameChengeed)
