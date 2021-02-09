@@ -44,3 +44,9 @@ logging:
     org.seasar.doma: INFO
     net.jagunma: DEBUG
 
+# 基幹系認証のapiサーバー
+backbone:
+  authOa3:
+    scheme: http
+    host: localhost
+    port: 18701

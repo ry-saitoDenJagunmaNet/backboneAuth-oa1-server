@@ -1,6 +1,17 @@
 /**
- * 画面Loadイベントです。
+ * 画面 Loadイベントです。
  */
+function edex_th_onload() {
+	_isThymeleaf = true;
+
+	let displayAtMockupRow = document.getElementById("display_at_mockup_row");
+	displayAtMockupRow.style.display = "none";
+
+	// 初期化処理
+	edex_initialize();
+	// nput-field の初期化
+	oa_initInputField();
+}
 window.onload = function() {
 	// 初期化処理
 	edex_initialize();
@@ -19,9 +30,17 @@ function edex_initialize() {
  * サインインボタンクリックイベントです。
  */
 function edex_signInBtn_onClick() {
+	if (_isThymeleaf) {
+		edex_th_signInBtn_onClick();
+		return;
+	}
 	location.href = "./oa00000.html";
 }
-
+function edex_th_signInBtn_onClick() {
+	document.forms[0].action = "signIn";
+	document.forms[0].method = "POST";
+	document.forms[0].submit();
+}
 
 
 /**

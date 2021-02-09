@@ -174,7 +174,7 @@ class Oa13020ControllerTest {
             map.put(key, searchAccessibleMap.get(key));
         }
         ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(map, HttpStatus.OK);
-        AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa13020Converter.of(operatorId);
+        AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa13020Converter.with(operatorId);
 
         // 実行
         ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);

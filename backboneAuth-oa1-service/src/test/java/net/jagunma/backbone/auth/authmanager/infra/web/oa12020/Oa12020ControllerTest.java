@@ -34,19 +34,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.support.SessionStatus;
 
 class Oa12020ControllerTest {
 
     // 実行 ＆ 期待 既定値
-    private Integer suspendConditionsSelect = 0;
+    private final Integer suspendConditionsSelect = 0;
+    private final String SESSION_KEY = "session_Oa12020Vo";
 
     private final String GunmaRuntimeExceptionMessageCode = "EOA13008";
     private final String GunmaRuntimeExceptionMessageArg1 = "抑止期間開始";
 
     // テスト対象クラス生成
     private Oa12020Controller createOa12020Controller(Integer throwExceptio) {
-        // 一時取引抑止群検索の作成
+        // 一時取引抑止群検索のスタブ
         SearchSuspendBizTran searchSuspendBizTran = new SearchSuspendBizTran(
             new SuspendBizTranRepository() {
                 @Override
@@ -73,17 +73,6 @@ class Oa12020ControllerTest {
         };
         return new Oa12020Controller(searchSuspendBizTran);
     }
-    // セッション処理の通知の作成
-    private SessionStatus sessionStatus = new SessionStatus() {
-        @Override
-        public void setComplete() {
-
-        }
-        @Override
-        public boolean isComplete() {
-            return false;
-        }
-    };
 
     // 一時取引抑止リストデータ作成
     private List<SuspendBizTran> cresteSuspendBizTran() {
@@ -166,22 +155,7 @@ class Oa12020ControllerTest {
     }
 
     /**
-     * 戻り値の型に合わせてキャスト
-     *
-     * @param obj キャスト対象オブジェクト
-     * @param <T> 戻り値の型Generics
-     * @return キャスト後オブジェクト
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T autoCast(Object obj) {
-        T castObj = (T) obj;
-        return castObj;
-    }
-
-    private final String SESSION_KEY = "session_Oa12020Vo";
-
-    /**
-     * {@link Oa12020Controller#get(Model, SessionStatus)}テスト
+     * {@link Oa12020Controller#get(Model)}テスト
      *  ●パターン
      *    正常
      *
@@ -207,7 +181,7 @@ class Oa12020ControllerTest {
         expectedVo.setPaginationLastPageNo(0);
 
         // 実行
-        String actualViewName = oa12020Controller.get(model, this.sessionStatus);
+        String actualViewName = oa12020Controller.get(model);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
 
         // 結果検証
@@ -294,10 +268,12 @@ class Oa12020ControllerTest {
         // 実行
         String actualViewName = oa12020Controller.search(model, oa12020Vo);
         Oa12020Vo actualVo = (Oa12020Vo) model.getAttribute("form");
+        Oa12020Vo actualSessionVo = (Oa12020Vo) oa12020Controller.getSessionAttribute(SESSION_KEY);
 
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+        assertThat(actualSessionVo).usingRecursiveComparison().isEqualTo(expectedVo);
     }
 
     /**

@@ -18,7 +18,7 @@ public class Oa13010SignInResult {
         this.signInResultMessage = signInResultMessage;
     }
 
-    // ファクトリメソッド
+    // ファクトリーメソッド
     public static Oa13010SignInResult createFrom(SignInResult signInResult) {
         return new Oa13010SignInResult(signInResult.getCode(), signInResult.getDisplayName());
     }

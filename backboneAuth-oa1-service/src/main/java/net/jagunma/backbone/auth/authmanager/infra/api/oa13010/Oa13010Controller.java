@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,11 +52,11 @@ public class Oa13010Controller extends BaseOfController {
     /**
      * サインインを行います
      *
-     * @param operatorCode オペレータコード
-     * @param password     パスワード
+     * @param request リクエスト
+     * @param arg     サインイン Arg
      * @return 認証結果
      */
-    @PostMapping(path = "signIn/{operatorCode}/{password}")
+    @PostMapping(path = "/signIn")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
         @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
@@ -65,24 +65,23 @@ public class Oa13010Controller extends BaseOfController {
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
     public ResponseEntity<Oa13010SignInResult> signIn(
         HttpServletRequest request,
-        @PathVariable("operatorCode") String operatorCode,
-        @PathVariable("password") String password) {
+        @RequestBody Oa13010SignInArg arg) {
 
         // ToDo: テストサインイン情報セット
         setAuthInf();
-        LOGGER.debug("operatorCode:" + operatorCode);
 
-        return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.サインイン);
+        // サインイン
+        return signIn(arg, request.getRemoteAddr(), SignInCause.サインイン);
     }
 
     /**
      * 継続サインインを行います
      *
-     * @param operatorCode オペレータコード
-     * @param password     パスワード
+     * @param request リクエスト
+     * @param arg     サインイン Arg
      * @return 認証結果
      */
-    @PostMapping(path = "continuedSignIn/{operatorCode}/{password}")
+    @PostMapping(path = "/continuedSignIn")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
         @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
@@ -91,42 +90,41 @@ public class Oa13010Controller extends BaseOfController {
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
     public ResponseEntity<Oa13010SignInResult> continuedSignIn(
         HttpServletRequest request,
-        @PathVariable("operatorCode") String operatorCode,
-        @PathVariable("password") String password) {
+        @RequestBody Oa13010SignInArg arg) {
 
         // ToDo: テストサインイン情報セット
         setAuthInf();
-        LOGGER.debug("operatorCode:" + operatorCode);
 
-        return signIn(operatorCode, password, request.getRemoteAddr(), SignInCause.継続サインイン);
+        // サインイン
+        return signIn(arg, request.getRemoteAddr(), SignInCause.継続サインイン);
     }
 
     /**
      * サインインを行います
      *
-     * @param operatorCode オペレータコード
-     * @param password     パスワード
-     * @param remoteAddr   リモートIPアドレス
-     * @param signInCause  サインイン起因
+     * @param arg         サインイン Arg
+     * @param remoteAddr  リモートIPアドレス
+     * @param signInCause サインイン起因
      * @return 認証結果
      */
     private ResponseEntity<Oa13010SignInResult> signIn(
-        String operatorCode,
-        String password,
+        Oa13010SignInArg arg,
         String remoteAddr,
         SignInCause signInCause) {
 
+        LOGGER.debug("operatorCode:" + arg.getOperatorCode());
+
         try {
-            Oa13010AuthenticationConverter authenticationConverter = Oa13010AuthenticationConverter.of(operatorCode, password);
+            Oa13010AuthenticationConverter authenticationConverter = Oa13010AuthenticationConverter.with(arg.getOperatorCode(), arg.getPassword());
             Oa13010AuthenticationPresenter authenticationPresenter = new Oa13010AuthenticationPresenter();
 
             // 認証
             authentication.execute(authenticationConverter, authenticationPresenter);
 
             // サインイン証跡登録
-            Oa13010EntryConverter entryConverter = Oa13010EntryConverter.of(
+            Oa13010EntryConverter entryConverter = Oa13010EntryConverter.with(
                 remoteAddr,
-                operatorCode,
+                arg.getOperatorCode(),
                 signInCause,
                 authenticationPresenter.getSignInResult());
             entrySignInTrace.execute(entryConverter);

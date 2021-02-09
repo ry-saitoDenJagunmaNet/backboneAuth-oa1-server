@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class Oa13010AuthenticationConverterTest {
 
     /**
-     * {@link Oa13010AuthenticationConverter#of(String, String)}テスト
+     * {@link Oa13010AuthenticationConverter#with(String, String)}テスト
      *  ●パターン
      *    通常
      *
@@ -26,7 +26,7 @@ class Oa13010AuthenticationConverterTest {
         String password = "PassWord1234";
 
         // 実行
-        Oa13010AuthenticationConverter converter = Oa13010AuthenticationConverter.of(operatorCode, password);
+        Oa13010AuthenticationConverter converter = Oa13010AuthenticationConverter.with(operatorCode, password);
 
         // 結果検証
         assertTrue(converter instanceof Oa13010AuthenticationConverter);

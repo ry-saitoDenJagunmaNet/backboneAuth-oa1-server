@@ -1,7 +1,10 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.formElements;
 
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
@@ -185,8 +188,11 @@ public class FormElementsController {
             }
 
             BizTranGrp_BizTrans bizTranGrp_BizTrans = bizTranGrp_BizTranRepository.selectBy(bizTranGrp_BizTranCriteria, Orders.empty());
-            List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream().map(
-                BizTranGrp_BizTran::getBizTran).collect(Collectors.toList());
+            Comparator<BizTran> comparator = Comparator.comparing(BizTran::getBizTranCode, nullsLast(naturalOrder()));
+            List<BizTran> bizTranList = bizTranGrp_BizTrans.getValues().stream()
+                .map(BizTranGrp_BizTran::getBizTran)
+                .sorted(comparator)
+                .distinct().collect(Collectors.toList());
             list = SelectOptionItemsSource.createFrom(bizTranList, (!Strings2.isNull(firstRowStatus))).getValue();
         }
         if (Strings2.isNotEmpty(firstRowStatus)) {
