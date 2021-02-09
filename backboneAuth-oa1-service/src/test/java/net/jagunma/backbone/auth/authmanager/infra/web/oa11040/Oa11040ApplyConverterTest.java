@@ -105,40 +105,6 @@ class Oa11040ApplyConverterTest {
     @Tag(TestSize.SMALL)
     void with_test1() {
         // 実行値
-        subSystemRole0 = SubSystemRole.UnKnown;
-        subSystemRole1 = SubSystemRole.UnKnown;
-        subSystemRole2 = SubSystemRole.UnKnown;
-        subSystemRole4 = SubSystemRole.UnKnown;
-        subSystemRole6 = SubSystemRole.UnKnown;
-        Oa11040Vo vo = new Oa11040Vo();
-        vo.setOperatorId(operatorId);
-        vo.setAssignRoleTableVoList(createOa11040AssignRoleTableVoList());
-        vo.setChangeCause(changeCause);
-
-        // 実行
-        Oa11040ApplyConverter converter = Oa11040ApplyConverter.with(vo);
-
-        // 結果検証
-        assertTrue(converter instanceof Oa11040ApplyConverter);
-        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
-        assertThat(converter.getAssignRoleList()).usingRecursiveComparison().isEqualTo(newArrayList());
-        assertThat(converter.getChangeCause()).isEqualTo(changeCause);
-    }
-
-    /**
-     * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
-     *  ●パターン
-     *    正常
-     *    （割当対象サブシステムロール が ０件）
-     *
-     *  ●検証事項
-     *  ・Converterへのセット
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void with_test2() {
-        // 実行値
         Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);
         vo.setAssignRoleTableVoList(null);
