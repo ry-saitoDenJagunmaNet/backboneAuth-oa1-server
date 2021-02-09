@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class Oa13020ConverterTest {
 
     /**
-     * {@link Oa13020Converter#of(Long)}テスト
+     * {@link Oa13020Converter#with(Long)}テスト
      *  ●パターン
      *    通常
      *
@@ -25,7 +25,7 @@ class Oa13020ConverterTest {
         Long operatorId = 123456789L;
 
         // 実行
-        Oa13020Converter converter = Oa13020Converter.of(operatorId);
+        Oa13020Converter converter = Oa13020Converter.with(operatorId);
 
         // 結果検証
         assertTrue(converter instanceof Oa13020Converter);

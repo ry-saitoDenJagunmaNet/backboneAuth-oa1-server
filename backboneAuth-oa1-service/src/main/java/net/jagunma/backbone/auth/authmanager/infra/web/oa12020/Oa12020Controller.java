@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 /**
  * OA12020コントローラ
@@ -54,12 +53,11 @@ public class Oa12020Controller extends BaseOfController {
     /**
      * 画面を初期表示します
      *
-     * @param model         モデル
-     * @param sessionStatus セッション処理の通知
+     * @param model モデル
      * @return view名
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public String get(Model model, SessionStatus sessionStatus) {
+    public String get(Model model) {
         // ToDo: テストサインイン情報セット
         setAuthInf();
         LOGGER.debug("get START");

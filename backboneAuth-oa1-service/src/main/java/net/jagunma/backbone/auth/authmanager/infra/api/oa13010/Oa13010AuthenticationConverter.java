@@ -20,7 +20,7 @@ public class Oa13010AuthenticationConverter implements AuthenticationRequest {
     }
 
     // ファクトリーメソッド
-    public static Oa13010AuthenticationConverter of(
+    public static Oa13010AuthenticationConverter with(
         String operatorCode,
         String password) {
 

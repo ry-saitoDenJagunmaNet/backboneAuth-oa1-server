@@ -1,9 +1,12 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.formElements;
 
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBranchAtMoment;
@@ -109,7 +112,7 @@ class FormElementsControllerTest {
 
     // テスト対象クラス生成
     private FormElementsController createFormElementsController() {
-        // searchJaAtMomentの作成
+        // searchJaAtMomentのスタブ
         SearchJaAtMoment searchJaAtMoment = new SearchJaAtMoment(new JaAtMomentRepository() {
             @Override
             public JasAtMoment selectBy(JaAtMomentCriteria criteria, Orders orders) {
@@ -124,7 +127,7 @@ class FormElementsControllerTest {
                 return JasAtMoment.of(createJaAtMomentList());
             }
         };
-        // SearchBranchAtMomentの作成
+        // SearchBranchAtMomentのスタブ
         SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(new BranchAtMomentRepository() {
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
@@ -140,7 +143,7 @@ class FormElementsControllerTest {
                 return BranchesAtMoment.of(createBranchAtMomentList().stream().filter(b-> ((Long)jaId).equals(b.getJaAtMoment().getIdentifier())).collect(Collectors.toList()));
             }
         };
-        // 取引グループ群検索の作成
+        // 取引グループ群検索リポジトリのスタブ
         BizTranGrpRepository bizTranGrpRepository = new BizTranGrpRepository() {
             @Override
             public BizTranGrps selectBy(BizTranGrpCriteria bizTranGrpCriteria, Orders orders) {
@@ -155,7 +158,7 @@ class FormElementsControllerTest {
                 return null;
             }
         };
-        // 取引グループ_取引割当群検索の作成
+        // 取引グループ_取引割当群検索リポジトリのスタブ
         BizTranGrp_BizTranRepository bizTranGrp_BizTranRepository = new BizTranGrp_BizTranRepository() {
             @Override
             public BizTranGrp_BizTrans selectBy(BizTranGrp_BizTranCriteria bizTranGrp_BizTranCriteria, Orders orders) {
@@ -571,7 +574,8 @@ class FormElementsControllerTest {
         // 期待値
         String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        for (BizTran bizTran : createBizTranList()) {
+        Comparator<BizTran> comparator = Comparator.comparing(BizTran::getBizTranCode, nullsLast(naturalOrder()));
+        for (BizTran bizTran : createBizTranList().stream().sorted(comparator).collect(Collectors.toList())) {
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
             ));
@@ -614,7 +618,8 @@ class FormElementsControllerTest {
         // 期待値
         String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
-        for (BizTran bizTran : createBizTranList()) {
+        Comparator<BizTran> comparator = Comparator.comparing(BizTran::getBizTranCode, nullsLast(naturalOrder()));
+        for (BizTran bizTran : createBizTranList().stream().sorted(comparator).collect(Collectors.toList())) {
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
             ));
@@ -658,7 +663,8 @@ class FormElementsControllerTest {
         String expectedItemsSourceName = "oa12020::ajaxSelectBizTran";
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
         expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (BizTran bizTran : createBizTranList()) {
+        Comparator<BizTran> comparator = Comparator.comparing(BizTran::getBizTranCode, nullsLast(naturalOrder()));
+        for (BizTran bizTran : createBizTranList().stream().sorted(comparator).collect(Collectors.toList())) {
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
             ));
@@ -703,7 +709,8 @@ class FormElementsControllerTest {
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
         expectedItemsSourcelist.add(SelectOptionItemSource.empty());
         expectedItemsSourcelist.get(0).setName(firstRowStatus);
-        for (BizTran bizTran : createBizTranList()) {
+        Comparator<BizTran> comparator = Comparator.comparing(BizTran::getBizTranCode, nullsLast(naturalOrder()));
+        for (BizTran bizTran : createBizTranList().stream().sorted(comparator).collect(Collectors.toList())) {
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 bizTran.getBizTranId(), bizTran.getBizTranCode(), bizTran.getBizTranName()
             ));

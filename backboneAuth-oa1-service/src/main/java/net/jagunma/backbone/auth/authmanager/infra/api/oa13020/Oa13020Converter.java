@@ -15,8 +15,7 @@ public class Oa13020Converter implements AccessibleSearchRequest {
     }
 
     // ファクトリーメソッド
-    public static Oa13020Converter of(Long operatorId) {
-        return new Oa13020Converter(operatorId);
+    public static Oa13020Converter with(Long operatorId) {return new Oa13020Converter(operatorId);
     }
 
     /**

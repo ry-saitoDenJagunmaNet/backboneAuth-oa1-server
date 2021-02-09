@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class Oa13010EntryConverterTest {
 
     /**
-     * {@link  Oa13010EntryConverter#of(String, String, SignInCause, SignInResult)}テスト
+     * {@link  Oa13010EntryConverter#with(String, String, SignInCause, SignInResult)}テスト
      *  ●パターン
      *    通常
      *
@@ -30,7 +30,7 @@ class Oa13010EntryConverterTest {
         SignInResult signInResultCode = SignInResult.成功;
 
         // 実行
-        Oa13010EntryConverter converter = Oa13010EntryConverter.of(tryIpAddress,
+        Oa13010EntryConverter converter = Oa13010EntryConverter.with(tryIpAddress,
             operatorCode,
             signInCauseCode,
             signInResultCode);

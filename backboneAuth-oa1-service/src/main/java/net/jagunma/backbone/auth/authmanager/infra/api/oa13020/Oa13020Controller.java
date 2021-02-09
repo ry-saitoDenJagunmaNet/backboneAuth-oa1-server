@@ -63,7 +63,7 @@ public class Oa13020Controller {
 
         Oa13020Presenter presenter = new Oa13020Presenter();
         try {
-            Oa13020Converter converter = Oa13020Converter.of(operatorId);
+            Oa13020Converter converter = Oa13020Converter.with(operatorId);
 
             searchAccessible.execute(converter, presenter);
         } catch (RuntimeException re) {

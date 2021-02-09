@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.types;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import net.jagunma.common.tests.constants.TestSize;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class SignInResultTest {
 
-        /**
+    /**
      * {@link SignInResult#getCode()}テスト
      *  ●パターン
      *    正常
@@ -101,5 +102,43 @@ class SignInResultTest {
         assertThat(SignInResult.codeOf((short) 5)).isEqualTo(SignInResult.拒否_有効期限範囲外);
         assertThat(SignInResult.codeOf((short) -1)).isEqualTo(SignInResult.UnKnown);
         assertThat(SignInResult.codeOf((short) 9)).isEqualTo(SignInResult.UnKnown);
+    }
+
+    /**
+     * {@link SignInResult#isSuccess()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・CalendarTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isSuccess_test0() {
+
+        // 実行
+        SignInResult actual = SignInResult.成功;
+
+        // 実行 & 結果検証
+        assertTrue(actual.isSuccess());
+    }
+
+    /**
+     * {@link SignInResult#isSuccess()}テスト
+     *  ●パターン
+     *    異常
+     *
+     *  ●検証事項
+     *  ・CalendarTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isSuccess_test1() {
+
+        // 実行
+        SignInResult actual = SignInResult.失敗_パスワード誤り;
+
+        // 実行 & 結果検証
+        assertThat(actual.isSuccess()).isEqualTo(false);
     }
 }

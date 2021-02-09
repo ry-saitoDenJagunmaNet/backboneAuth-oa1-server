@@ -28,7 +28,7 @@ public class Oa13010EntryConverter implements SignInTraceEntryRequest {
     }
 
     // ファクトリーメソッド
-    public static Oa13010EntryConverter of(
+    public static Oa13010EntryConverter with(
         String tryIpAddress,
         String operatorCode,
         SignInCause signInCause,
