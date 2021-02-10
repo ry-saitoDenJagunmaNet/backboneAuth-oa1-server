@@ -110,11 +110,11 @@
 									<td class="oaex_assign_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruStartDate}" th:disabled="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}==false"></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruEndDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruEndDate}" th:disabled="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}==false"></input>
 										</div>
 									</td>
 									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></td>
@@ -127,11 +127,11 @@
 									<td class="oaex_assign_role_table_name">業務統括者（販売・青果）</td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input disabled type="text" class="datepicker" value="2020/04/01"></input>
+											<input type="text" class="datepicker" value="2020/04/01" disabled></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input disabled type="text" class="datepicker" value="9999/12/31"></input>
+											<input type="text" class="datepicker" value="9999/12/31" disabled></input>
 										</div>
 									</td>
 									<td style="display:none;"></td>
