@@ -137,7 +137,7 @@ function oaex_moveAddBtn_onClick() {
 				oa_setTableRowSelected(this);
 				oaex_assignRoleTableRow_onClick(this);
 			});
-			// コード、名称を追加行に設定
+			// コード、名称、有効期限(空)、隠しコード、隠し名称、隠し変更可否を追加行に設定
 			newRow.cells[0].innerText = tableRow.cells[0].innerText;
 			newRow.cells[1].innerText = tableRow.cells[1].innerText;
 			newRow.cells[2].innerHTML = "<div class='input-field'>" +
@@ -155,7 +155,7 @@ function oaex_moveAddBtn_onClick() {
 			// 有効行を選択状態
 			oaex_setSelectRow(unAssignRoleTable, i);
 			// 未付与ロールテーブル行 Clickイベントです（移動ボタン(◀)の有効/無効を切り替えます）
-			oaex_unAssignRoleTableRow_onClick(unAssignRoleTable.rows[i+1]);
+			oaex_unAssignRoleTableRow_onClick(unAssignRoleTable.rows[i]);
 			// datepicker の初期化
 			oa_initDatepicker();
 			// input-field の初期化
