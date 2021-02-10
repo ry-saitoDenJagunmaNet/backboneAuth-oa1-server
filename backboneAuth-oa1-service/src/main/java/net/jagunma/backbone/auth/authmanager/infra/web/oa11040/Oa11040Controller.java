@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 機能グループID：OA1
  * 機能グループ名：管理WEB
  * 機能ID：OA11040
- * 機能名：オペレーター更新
+ * 機能名：サブシステムロール付与
  * サービスID：OA11040
  * サービス名：OA11040サービス
  * -------------------------------------------------
