@@ -75,10 +75,6 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
      */
     public void bindTo(Oa11040Vo vo) {
 
-        vo.setOperatorId(operatorHistoryHeader.getOperator().getOperatorId());
-        vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
-        vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
-
         List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (SubSystemRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
             Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
@@ -89,8 +85,6 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
             assignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());
             assignRoleTableVoList.add(assignRoleTableVo);
         }
-        vo.setAssignRoleTableVoList(assignRoleTableVoList);
-
         List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
         for (SubSystemRoleGrantedAllRoleDto allRoleDto : allRoleDtoList) {
             Oa11040UnAssignRoleTableVo unAssignRoleTableVo = new Oa11040UnAssignRoleTableVo();
@@ -99,8 +93,12 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
             unAssignRoleTableVo.setIsModifiable(allRoleDto.getIsModifiable());
             unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
-        vo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
 
+        vo.setOperatorId(operatorHistoryHeader.getOperator().getOperatorId());
+        vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
+        vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
+        vo.setAssignRoleTableVoList(assignRoleTableVoList);
+        vo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
         vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
     }
 }

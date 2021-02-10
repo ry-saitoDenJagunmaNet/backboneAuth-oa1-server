@@ -80,7 +80,7 @@ public class Oa11040Controller extends BaseOfController {
         vo.setOperatorId(operatorId);
 
         try {
-            Oa11040InitConverter converter = Oa11040InitConverter.with(vo.getOperatorId(), AuditInfoHolder.getOperator().getIdentifier());
+            Oa11040InitConverter converter = Oa11040InitConverter.with(AuditInfoHolder.getOperator().getIdentifier(), vo.getOperatorId());
             Oa11040InitPresenter presenter = new Oa11040InitPresenter();
 
             searchSubSystemRoleGranted.execute(converter, presenter);
@@ -155,7 +155,6 @@ public class Oa11040Controller extends BaseOfController {
             if (selectedOperatorId != null) {
 
                 Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, AuditInfoHolder.getAuthInf().getOperatorId(), selectedOperatorId);
-//ToDo:★                Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo.getAssignRoleTableVoList(), AuditInfoHolder.getAuthInf().getOperatorId(), selectedOperatorId);
                 Oa11040CopyPresenter presenter = new Oa11040CopyPresenter();
 
                 copySubSystemRoleGranted.execute(converter, presenter);

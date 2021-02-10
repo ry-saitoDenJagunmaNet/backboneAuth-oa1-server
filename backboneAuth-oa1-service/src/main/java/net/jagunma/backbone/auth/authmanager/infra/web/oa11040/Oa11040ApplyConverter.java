@@ -7,6 +7,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGr
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040AssignRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11040.vo.Oa11040Vo;
+import net.jagunma.common.util.strings2.Strings2;
 
 /**
  * OA11040 適用 Converter
@@ -48,6 +49,7 @@ class Oa11040ApplyConverter implements SubSystemRoleGrantRequest {
         List<Oa11040AssignRoleTableVo> assignRoleTableVoList = vo.getAssignRoleTableVoList();
         List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
         for (Oa11040AssignRoleTableVo assignRoleTableVo : assignRoleTableVoList) {
+            if (Strings2.isEmpty(assignRoleTableVo.getRoleCode())) { continue; }
             Oa11040ApplyAssignRoleConverter oa11040ApplyAssignRoleConverter = Oa11040ApplyAssignRoleConverter.with(assignRoleTableVo);
             assignRoleList.add(oa11040ApplyAssignRoleConverter);
         }

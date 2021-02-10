@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAllRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
+import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedSearchRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantReference.SubSystemRoleGrantedSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.Test;
 class SearchSubSystemRoleGrantedTest {
 
     // 実行既定値
+    private final SubSystemRoleGrantedQueryUtil subSystemRoleGrantedQueryUtil = new SubSystemRoleGrantedQueryUtil();
     private Long signInOperatorId = 987654L;
     private Long targetOperatorId = 123456L;
 
@@ -222,7 +224,7 @@ class SearchSubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
@@ -230,7 +232,7 @@ class SearchSubSystemRoleGrantedTest {
             if (subSystemRole.getCode().length() == 0) { continue; }
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
-            allRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
+            allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
             expectedAllRoleDtoList.add(allRoleDto);
         }
 
@@ -262,13 +264,16 @@ class SearchSubSystemRoleGrantedTest {
         // テスト対象クラス生成
         SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
 
+        // 実行値
+        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(5, 4, 3, 2, 1, 0));
+
         // 期待値
         Operator_SubSystemRoleCriteria expectedCriteria = new Operator_SubSystemRoleCriteria();
-        expectedCriteria.getOperatorIdCriteria().setEqualTo(targetOperatorId);
-        Operator_SubSystemRoles expectedOperator_SubSystemRoles = targetOperator_SubSystemRoles;
+        expectedCriteria.getOperatorIdCriteria().setEqualTo(signInOperatorId);
+        Operator_SubSystemRoles expectedOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0, 1, 2, 3, 4, 5));
 
         // 実行
-        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRoleGranted.searchOperator_SubSystemRoles(targetOperatorId);
+        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRoleGranted.searchOperator_SubSystemRoles(signInOperatorId);
 
         // 結果検証
         assertThat(actualOperator_SubSystemRoleCriteria.toString()).isEqualTo(expectedCriteria.toString());
@@ -324,7 +329,7 @@ class SearchSubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -360,7 +365,7 @@ class SearchSubSystemRoleGrantedTest {
         for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-            assignRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+            assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
 
@@ -425,7 +430,7 @@ class SearchSubSystemRoleGrantedTest {
             if (subSystemRole.getCode().length() == 0) { continue; }
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
-            allRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
+            allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
             expectedAllRoleDtoList.add(allRoleDto);
         }
 
@@ -461,7 +466,7 @@ class SearchSubSystemRoleGrantedTest {
             if (subSystemRole.getCode().length() == 0) { continue; }
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
-            allRoleDto.setIsModifiable(searchSubSystemRoleGranted.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
+            allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
             expectedAllRoleDtoList.add(allRoleDto);
         }
 
@@ -470,113 +475,5 @@ class SearchSubSystemRoleGrantedTest {
 
         // 結果検証
         assertThat(allRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAllRoleDtoList);
-    }
-
-    /**
-     * {@link SearchSubSystemRoleGranted#judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
-     *  ●パターン
-     *    正常
-     *    （サインインオペレーター が JA管理者ロール を持っていて 本日時点で有効）
-     *
-     *  ●検証事項
-     *  ・判定結果
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void judgeIsModifiable_test1() {
-        // テスト対象クラス生成
-        SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
-
-        // 実行値
-        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0, 6));
-
-        // 実行
-        Boolean isModifiable = searchSubSystemRoleGranted.judgeIsModifiable(SubSystemRole.業務統括者_購買.getCode(), signInOperator_SubSystemRoles);
-
-        // 結果検証
-        assertThat(isModifiable).isEqualTo(true);
-    }
-
-    /**
-     * {@link SearchSubSystemRoleGranted#judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
-     *  ●パターン
-     *    正常
-     *    （サインインオペレーター が JA管理者ロール を持っていて 本日時点で無効）
-     *
-     *  ●検証事項
-     *  ・判定結果
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void judgeIsModifiable_test2() {
-        // テスト対象クラス生成
-        SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
-
-        // 実行値
-        signInValidThruEndDate0 = LocalDate.now().minusDays(1);
-        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0, 6));
-
-        // 実行
-        Boolean isModifiable = searchSubSystemRoleGranted.judgeIsModifiable(SubSystemRole.業務統括者_購買.getCode(), signInOperator_SubSystemRoles);
-
-        // 結果検証
-        assertThat(isModifiable).isEqualTo(false);
-    }
-
-    /**
-     * {@link SearchSubSystemRoleGranted#judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
-     *  ●パターン
-     *    正常
-     *    （サインインオペレーター が 該当ロール を持っていて 本日時点で有効）
-     *    （JA管理者ロール は持っていない）
-     *
-     *  ●検証事項
-     *  ・判定結果
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void judgeIsModifiable_test3() {
-        // テスト対象クラス生成
-        SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
-
-        // 実行値
-        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
-
-        // 実行
-        Boolean isModifiable = searchSubSystemRoleGranted.judgeIsModifiable(signInOperator_SubSystemRoles.getValues().get(0).getSubSystemRoleCode(), signInOperator_SubSystemRoles);
-
-        // 結果検証
-        assertThat(isModifiable).isEqualTo(true);
-    }
-
-    /**
-     * {@link SearchSubSystemRoleGranted#judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles)}テスト
-     *  ●パターン
-     *    正常
-     *    （サインインオペレーター が 該当ロール を持っていて 本日時点で無効）
-     *    （JA管理者ロール は持っていない）
-     *
-     *  ●検証事項
-     *  ・判定結果
-     *
-     */
-    @Test
-    @Tag(TestSize.SMALL)
-    void judgeIsModifiable_test4() {
-        // テスト対象クラス生成
-        SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
-
-        // 実行値
-        signInValidThruEndDate1 = LocalDate.now().minusDays(1);
-        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
-
-        // 実行
-        Boolean isModifiable = searchSubSystemRoleGranted.judgeIsModifiable(signInOperator_SubSystemRoles.getValues().get(0).getSubSystemRoleCode(), signInOperator_SubSystemRoles);
-
-        // 結果検証
-        assertThat(isModifiable).isEqualTo(false);
     }
 }

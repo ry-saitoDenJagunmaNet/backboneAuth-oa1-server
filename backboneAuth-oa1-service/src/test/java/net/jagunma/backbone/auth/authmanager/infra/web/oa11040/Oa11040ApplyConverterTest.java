@@ -35,39 +35,32 @@ class Oa11040ApplyConverterTest {
     private String changeCause = "業務統括者（販売・花卉）も兼務";
 
     private List<Oa11040AssignRoleTableVo> createOa11040AssignRoleTableVoList() {
+        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
+        createOa11040AssignRole(assignRoleTableVoList, newArrayList());
+        return assignRoleTableVoList;
+    }
+    private List<Oa11040ApplyAssignRoleConverter> createOa11040ApplyAssignRoleConverterList() {
+        List<Oa11040ApplyAssignRoleConverter> applyAssignRoleConverterList = newArrayList();
+        createOa11040AssignRole(newArrayList(), applyAssignRoleConverterList);
+        return applyAssignRoleConverterList;
+    }
+    private void createOa11040AssignRole(List<Oa11040AssignRoleTableVo> assignRoleTableVoList, List<Oa11040ApplyAssignRoleConverter> applyAssignRoleConverterList) {
         List<SubSystemRole> subSystemRoleList = newArrayList(subSystemRole0, subSystemRole1, subSystemRole2, subSystemRole4, subSystemRole6);
         List<LocalDate> validThruStartDateList = newArrayList(validThruStartDate0, validThruStartDate1, validThruStartDate2, validThruStartDate4, validThruStartDate6);
         List<LocalDate> validThruEndDateList = newArrayList(validThruEndDate0, validThruEndDate1, validThruEndDate2, validThruEndDate4, validThruEndDate6);
 
-        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (int i = 0; i < subSystemRoleList.size(); i++) {
             Oa11040AssignRoleTableVo assignRoleTableVo = new Oa11040AssignRoleTableVo();
             assignRoleTableVo.setRoleCode(subSystemRoleList.get(i).getCode());
             assignRoleTableVo.setRoleName(subSystemRoleList.get(i).getDisplayName());
             assignRoleTableVo.setValidThruStartDate(validThruStartDateList.get(i));
             assignRoleTableVo.setValidThruEndDate(validThruEndDateList.get(i));
+            assignRoleTableVo.setIsModifiable(((i+2) % 2 == 0)? true : false);
             assignRoleTableVoList.add(assignRoleTableVo);
+
+            Oa11040ApplyAssignRoleConverter applyAssignRoleConverter = Oa11040ApplyAssignRoleConverter.with(assignRoleTableVo);
+            applyAssignRoleConverterList.add(applyAssignRoleConverter);
         }
-        return assignRoleTableVoList;
-    }
-
-    private List<Oa11040ApplyAssignRoleConverter> createOa11040ApplyAssignRoleConverterList() {
-        List<SubSystemRole> subSystemRoleList = newArrayList(subSystemRole0, subSystemRole1, subSystemRole2, subSystemRole4, subSystemRole6);
-        List<LocalDate> validThruStartDateList = newArrayList(validThruStartDate0, validThruStartDate1, validThruStartDate2, validThruStartDate4, validThruStartDate6);
-        List<LocalDate> validThruEndDateList = newArrayList(validThruEndDate0, validThruEndDate1, validThruEndDate2, validThruEndDate4, validThruEndDate6);
-
-        List<Oa11040ApplyAssignRoleConverter> oa11040ApplyAssignRoleConverterList = newArrayList();
-        for (int i = 0; i < subSystemRoleList.size(); i++) {
-            Oa11040AssignRoleTableVo vo = new Oa11040AssignRoleTableVo();
-            vo.setRoleCode(subSystemRoleList.get(i).getCode());
-            vo.setRoleName(subSystemRoleList.get(i).getDisplayName());
-            vo.setValidThruStartDate(validThruStartDateList.get(i));
-            vo.setValidThruEndDate(validThruEndDateList.get(i));
-            Oa11040ApplyAssignRoleConverter oa11040ApplyAssignRoleConverter = Oa11040ApplyAssignRoleConverter.with(vo);
-
-            oa11040ApplyAssignRoleConverterList.add(oa11040ApplyAssignRoleConverter);
-        }
-        return oa11040ApplyAssignRoleConverterList;
     }
 
     /**
@@ -111,6 +104,40 @@ class Oa11040ApplyConverterTest {
     @Test
     @Tag(TestSize.SMALL)
     void with_test1() {
+        // 実行値
+        subSystemRole0 = SubSystemRole.UnKnown;
+        subSystemRole1 = SubSystemRole.UnKnown;
+        subSystemRole2 = SubSystemRole.UnKnown;
+        subSystemRole4 = SubSystemRole.UnKnown;
+        subSystemRole6 = SubSystemRole.UnKnown;
+        Oa11040Vo vo = new Oa11040Vo();
+        vo.setOperatorId(operatorId);
+        vo.setAssignRoleTableVoList(createOa11040AssignRoleTableVoList());
+        vo.setChangeCause(changeCause);
+
+        // 実行
+        Oa11040ApplyConverter converter = Oa11040ApplyConverter.with(vo);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11040ApplyConverter);
+        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
+        assertThat(converter.getAssignRoleList()).usingRecursiveComparison().isEqualTo(newArrayList());
+        assertThat(converter.getChangeCause()).isEqualTo(changeCause);
+    }
+
+    /**
+     * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
+     *  ●パターン
+     *    正常
+     *    （割当対象サブシステムロール が ０件）
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test2() {
         // 実行値
         Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);

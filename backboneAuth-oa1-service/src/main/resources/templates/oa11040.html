@@ -87,7 +87,7 @@
 					<div class="oaex_assign_role_table" onScroll="oa_linkageScrollX(this, 'assign_role_table_head')">
 						<table id="assign_role_table" class="highlight">
 							<tbody>
-								<tr class="oaex_assign_role_table_template_row" onclick="oa_setTableRowSelected(this)">
+								<tr class="oaex_assign_role_table_template_row" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
 									<td class="oaex_assign_role_table_code"></td>
 									<td class="oaex_assign_role_table_name"></td>
 									<td class="oaex_assign_role_table_valid_thru">
@@ -99,35 +99,44 @@
 											<input type="text" class="datepicker" value=""></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
 								</tr>
 								<!-- th using -->
 								<!--/*/
-								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040AssignRoleTableVoList}">
+								<tr onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);" th:each="itemrow, iterStat : *{form.assignRoleTableVoList}">
 									<td class="oaex_assign_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_assign_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${itemrow.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruStartDate}"></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${itemrow.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruEndDate}"></input>
 										</div>
 									</td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleName}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}"></input></td>
 								</tr>
 								/*/-->
-								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
 									<td class="oaex_assign_role_table_code">2110</td>
 									<td class="oaex_assign_role_table_name">業務統括者（販売・青果）</td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" value="2020/04/01"></input>
+											<input disabled type="text" class="datepicker" value="2020/04/01"></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" value="9999/12/31"></input>
+											<input disabled type="text" class="datepicker" value="9999/12/31"></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"><input type="hidden" id="assignRoleTableVoList0.isModifiable" value="false"></input></td>
 								</tr>
 							</tbody>
 						</table>
@@ -135,8 +144,8 @@
 				</div>
 				<!-- 移動ボタン -->
 				<div class="col s1">
-					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveAdditionBtn_onClick();">◀</a></div>
-					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveRemovalBtn_onClick();">▶</a></div>
+					<div class="oaex_move_btn"><a id="move_add_btn" class="btn waves-effect waves-light" href="javascript:oaex_moveAddBtn_onClick();">◀</a></div>
+					<div class="oaex_move_btn"><a id="move_remove_btn" class="btn waves-effect waves-light" href="javascript:oaex_moveRemoveBtn_onClick();">▶</a></div>
 				</div>
 				<!-- 未付与ロールテーブル -->
 				<div class="col s4">
@@ -151,31 +160,28 @@
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
 					<div class="oaex_unassign_role_table" onScroll="oa_linkageScrollX(this, 'unassign_role_table_head')">
-						<!-- th using -->
-						<!--/*/
-						<div  th:each="itemrow, iterStat : *{form.oa11040UnAssignRoleTableVoList}">
-							<input type="hidden" th:name="'oa11040UnAssignRoleTableVoList['+${iterStat.index}+'].roleCode'" th:value="${itemrow.roleCode}"/>
-							<input type="hidden" th:name="'oa11040UnAssignRoleTableVoList['+${iterStat.index}+'].roleName'" th:value="${itemrow.roleName}"/>
-						</div>
-						/*/-->
 						<table id="unassign_role_table" class="highlight">
 							<!-- th using -->
 							<!--/*/
 							<tbody>
-								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11040UnAssignRoleTableVoList}">
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);" th:each="itemrow, iterStat : *{form.unAssignRoleTableVoList}">
 									<td class="oaex_unassign_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_unassign_role_table_name" th:text="${itemrow.roleName}"></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].isModifiable}"></input></td>
+
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></tc>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].roleName}"></input></tc>
 								</tr>
 							</tbody>
 							/*/-->
 							<tbody th:remove="all">
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">0000</td><td class="oaex_unassign_role_table_name">JA管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">1000</td><td class="oaex_unassign_role_table_name">業務統括者（購買）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">2110</td><td class="oaex_unassign_role_table_name">業務統括者（販売・青果）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">2120</td><td class="oaex_unassign_role_table_name">業務統括者（販売・花卉）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">2210</td><td class="oaex_unassign_role_table_name">業務統括者（販売・米）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">2220</td><td class="oaex_unassign_role_table_name">業務統括者（販売・麦）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">2300</td><td class="oaex_unassign_role_table_name">業務統括者（販売・畜産）</td></tr>
+							<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">0000</td><td class="oaex_unassign_role_table_name">JA管理者</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList0.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">1000</td><td class="oaex_unassign_role_table_name">業務統括者（購買）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList1.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">2110</td><td class="oaex_unassign_role_table_name">業務統括者（販売・青果）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList2.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">2120</td><td class="oaex_unassign_role_table_name">業務統括者（販売・花卉）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList3.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">2210</td><td class="oaex_unassign_role_table_name">業務統括者（販売・米）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList4.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">2220</td><td class="oaex_unassign_role_table_name">業務統括者（販売・麦）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList5.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">2300</td><td class="oaex_unassign_role_table_name">業務統括者（販売・畜産）</td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList6.isModifiable" value="true"></input></td></tr>
 							</tbody>
 						</table>
 					</div>

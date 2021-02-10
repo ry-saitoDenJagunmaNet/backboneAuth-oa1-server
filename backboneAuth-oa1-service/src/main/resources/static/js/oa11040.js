@@ -10,6 +10,102 @@ function oaex_th_onload() {
 	// 未付与ロールテーブルを初期非表示
 	oaex_initHiddenUnAssignRoleList();
 }
+window.onload = function() {
+	// 未付与ロールテーブルを初期非表示
+	oaex_initHiddenUnAssignRoleList();
+}
+/**
+ * 未付与ロール一リストの付与したロール行を非表示にします
+ * 初期表示時に付与したサブシステムロールを未付与ロール一覧から非表示
+ */
+function oaex_initHiddenUnAssignRoleList() {
+	let assignRoleTable = document.getElementById("assign_role_table");
+	let unAssignRoleTable = document.getElementById("unassign_role_table");
+	for (let assignRoleTableRow of assignRoleTable.rows) {
+		for (let unAssignRoleTableRow of unAssignRoleTable.rows) {
+			if (unAssignRoleTableRow.cells[0].innerText == assignRoleTableRow.cells[0].innerText ) {
+				unAssignRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
+			}
+		}
+	}
+}
+
+/**
+ * 表示有効行を選択状態にします
+ * @param {TableObject} objTable 対象テーブル
+ * @param {*} rowNo 元の選択行
+ */
+function oaex_setSelectRow(objTable, rowNo) {
+	let num = -1;
+	if (rowNo <= objTable.rows.length - 1) {
+		// 選択行より下で表示行を検索
+		for(let i = rowNo + 1; i < objTable.rows.length; i++) {
+			// 非表示行は除く
+			if (objTable.rows[i].classList.length == 0
+				|| !objTable.rows[i].classList.contains(_RIGHT_TABLE_HIDDEN)) {
+				num = i
+				break;
+			}
+		}
+		if (num == -1) {
+			// 選択行より上で表示行を検索
+			for(let i = rowNo - 1; i >= 0; i--) {
+				//非表示行は除く
+				if (objTable.rows[i].classList.length == 0
+					|| !objTable.rows[i].classList.contains(_RIGHT_TABLE_HIDDEN)) {
+					num = i
+					break;
+				}
+			}
+		}
+	}
+	if (num == -1) {
+		// 表示行無し
+		oa_setTableRowSelectedRemoveAll(objTable);
+	} else {
+		oa_setTableRowSelected(objTable.rows[num]);
+	}
+}
+
+/**
+ * 付与ロールテーブル行 Clickイベントです
+ * （移動ボタン(▶)の有効/無効を切り替えます）
+ * @param {TableRowObject} assignRoleTableRow 対象テーブル行
+ */
+function oaex_assignRoleTableRow_onClick(assignRoleTableRow) {
+	let id = "assignRoleTableVoList" + (assignRoleTableRow.rowIndex-1) + ".isModifiable";
+	let isModifiable = document.getElementById(id);
+	// 右から左に移動したロール
+	if (isModifiable == null) {
+		document.getElementById("move_remove_btn").removeAttribute("disabled");
+	 	return;
+	}
+	// 画面表示時からあったロール
+	if (isModifiable.value == "true") {
+		document.getElementById("move_remove_btn").removeAttribute("disabled");
+	} else {
+		// ボタン無効
+		document.getElementById("move_remove_btn").setAttribute("disabled", "disabled");
+	}
+}
+
+/**
+ * 未付与ロールテーブル行 Clickイベントです
+ * （移動ボタン(◀)の有効/無効を切り替えます）
+ * @param {TableRowObject} unAssignRoleTableRow 対象テーブル行
+ */
+function oaex_unAssignRoleTableRow_onClick(unAssignRoleTableRow) {
+	let id = "unAssignRoleTableVoList" + unAssignRoleTableRow.rowIndex + ".isModifiable";
+	let isModifiable = document.getElementById(id);
+
+	// 全ロール
+	if (isModifiable.value == "true") {
+		document.getElementById("move_add_btn").removeAttribute("disabled");
+	} else {
+		// ボタン無効
+		document.getElementById("move_add_btn").setAttribute("disabled", "disabled");
+	}
+}
 
 /**
  * コピーボタン Clickイベントです
@@ -24,7 +120,7 @@ function oaex_th_copyBtn_onClick() {
  * （◀）移動ボタン Clickイベントです
  * 付与ロールテーブルへ追加
  */
-function oaex_moveAdditionBtn_onClick() {
+function oaex_moveAddBtn_onClick() {
 	let assignRoleTable = document.getElementById("assign_role_table");
 	let unAssignRoleTable = document.getElementById("unassign_role_table");
 	for(let i = 0; i < unAssignRoleTable.rows.length; i++){
@@ -39,18 +135,34 @@ function oaex_moveAdditionBtn_onClick() {
 			// 追加行にClickイベントを追加
 			newRow.addEventListener('click', function(event) {
 				oa_setTableRowSelected(this);
+				oaex_assignRoleTableRow_onClick(this);
 			});
-			// datepicker の初期化
-			oa_initDatepicker();
-		
 			// コード、名称を追加行に設定
 			newRow.cells[0].innerText = tableRow.cells[0].innerText;
 			newRow.cells[1].innerText = tableRow.cells[1].innerText;
+			newRow.cells[2].innerHTML = "<div class='input-field'>" +
+										"	<input type='text' class='datepicker' name='assignRoleTableVoList[" + i + "].validThruStartDate'></input>" +
+										"</div>" +
+										"<span>～</span>" +
+										"<div class='input-field'>" +
+										"	<input type='text' class='datepicker' name='assignRoleTableVoList[" + i + "].validThruEndDate'></input>" +
+										"</div>";
+			newRow.cells[3].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleCode' value='" + tableRow.cells[0].innerText + "'></input>";
+			newRow.cells[4].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleName' value='" + tableRow.cells[1].innerText + "'></input>";
+			newRow.cells[5].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[2].innerText + "'></input>";
 			// 選択行非表示
 			unAssignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
 			oaex_setSelectRow(unAssignRoleTable, i);
-			return; 
+			// 未付与ロールテーブル行 Clickイベントです（移動ボタン(◀)の有効/無効を切り替えます）
+			oaex_unAssignRoleTableRow_onClick(unAssignRoleTable.rows[i+1]);
+			// datepicker の初期化
+			oa_initDatepicker();
+			// input-field の初期化
+			oa_initInputField();
+			// テーブル子nodeの項目名Indexを再採番し変更する
+			oa_renumberItemNameIndexForTableChild(assignRoleTable);
+			return;
 		}
 	}
 }
@@ -59,7 +171,7 @@ function oaex_moveAdditionBtn_onClick() {
  * （▶）移動ボタン Clickイベントです
  * 付与ロールテーブルから削除
  */
-function oaex_moveRemovalBtn_onClick() {
+function oaex_moveRemoveBtn_onClick() {
 	let assignRoleTable = document.getElementById("assign_role_table");
 	let unAssignRoleTable = document.getElementById("unassign_role_table");
 	for(let i = 1; i < assignRoleTable.rows.length; i++) {
@@ -112,57 +224,4 @@ function oaex_th_applyBtn_onClick() {
 	document.forms[0].action = "apply";
 	document.forms[0].method = "POST";
 	document.forms[0].submit();
-}
-
-/**
- * 表示有効行を選択状態にします
- * @param {TableObject} objTable 対象テーブル
- * @param {*} rowNo 元の選択行
- */
-function oaex_setSelectRow(objTable, rowNo) {
-	let num = -1;
-	if (rowNo <= objTable.rows.length - 1) {
-		// 選択行より下で表示行を検索
-		for(let i = rowNo + 1; i < objTable.rows.length; i++) {
-			// 非表示行は除く
-			if (objTable.rows[i].classList.length == 0
-				|| !objTable.rows[i].classList.contains(_RIGHT_TABLE_HIDDEN)) {
-				num = i
-				break;
-			}
-		}
-		if (num == -1) {
-			// 選択行より上で表示行を検索
-			for(let i = rowNo - 1; i >= 0; i--) {
-				//非表示行は除く
-				if (objTable.rows[i].classList.length == 0
-					|| !objTable.rows[i].classList.contains(_RIGHT_TABLE_HIDDEN)) {
-					num = i
-					break;
-				}
-			}
-		} 
-	}
-	if (num == -1) {
-		// 表示行無し
-		oa_setTableRowSelectedRemoveAll(objTable);
-	} else {
-		oa_setTableRowSelected(objTable.rows[num]);
-	}
-}
-
-/**
- * 未付与ロール一リストの付与したロール行を非表示にします
- * 初期表示時に付与したサブシステムロールを未付与ロール一覧から非表示
- */
-function oaex_initHiddenUnAssignRoleList() {
-	let assignRoleTable = document.getElementById("assign_role_table");
-	let unAssignRoleTable = document.getElementById("unassign_role_table");
-	for (let assignRoleTableRow of assignRoleTable.rows) {
-		for (let unAssignRoleTableRow of unAssignRoleTable.rows) {
-			if (unAssignRoleTableRow.cells[0].innerText == assignRoleTableRow.cells[0].innerText ) {
-				unAssignRoleTableRow.classList.add(_RIGHT_TABLE_HIDDEN)
-			}
-		}
-	}
 }
