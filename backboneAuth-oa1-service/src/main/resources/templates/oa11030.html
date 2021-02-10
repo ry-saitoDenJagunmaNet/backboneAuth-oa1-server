@@ -259,7 +259,7 @@
 							<tbody>
 								<!-- th using -->
 								<!--/*/
-								<tr th:each="itemrow, iterStat : *{form.oa11030SubSystemRoleTableVoList}">
+								<tr th:each="itemrow, iterStat : *{form.subSystemRoleTableVoList}">
 									<td class="oaex_subsystem_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_subsystem_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
 								</tr>
@@ -311,7 +311,7 @@
 							<tbody>
 								<!-- th using -->
 								<!--/*/
-								<tr th:each="itemrow, iterStat : *{form.oa11030BizTranRoleTableVoList}">
+								<tr th:each="itemrow, iterStat : *{form.bizTranRoleTableVoList}">
 									<td class="oaex_biztran_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_biztran_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_biztran_role_table_valid_thru" th:text="${itemrow.validThruDate}"></td>
