@@ -2,10 +2,8 @@ package net.jagunma.backbone.auth.authmanager.application.queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAllRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
@@ -82,7 +80,10 @@ public class SearchSubSystemRoleGranted {
     Operator_SubSystemRoles searchOperator_SubSystemRoles(Long operatorId) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty());
+
+        List<Operator_SubSystemRole> operator_SubSystemRoleList = operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty()).getValues();
+        operator_SubSystemRoleList = operator_SubSystemRoleList.stream().sorted(Orders.empty().addOrder("subSystemRole.displaySortOrder").toComparator()).collect(Collectors.toList());
+        return Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
     }
 
     /**

@@ -20,7 +20,6 @@ class GrantSubSystemRoleTest {
 
     // 実行既定値
     private Long operatorId = 123456L;
-    private List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
     private SubSystemRole subSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole subSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole subSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -36,6 +35,7 @@ class GrantSubSystemRoleTest {
     private LocalDate validThruEndDate2 = LocalDate.of(2020, 9, 22);
     private LocalDate validThruEndDate4 = LocalDate.of(2020, 9, 24);
     private LocalDate validThruEndDate6 = LocalDate.of(2020, 9, 26);
+    private List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
     private String changeCause = "業務統括者（販売・花卉）も兼務";
     List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole0.getCode(), validThruStartDate0, validThruEndDate0, null, null, subSystemRole0),
@@ -45,6 +45,18 @@ class GrantSubSystemRoleTest {
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole6.getCode(), validThruStartDate6, validThruEndDate6, null, null, subSystemRole6));
     Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
+    // テスト対象クラス生成
+    private GrantSubSystemRole createGrantSubSystemRole() {
+
+        Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore = new Operator_SubSystemRoleRepositoryForStore() {
+            @Override
+            public void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
+            }
+        };
+
+        return new GrantSubSystemRole(operator_SubSystemRoleRepositoryForStore);
+    }
+    // Request作成
     private SubSystemRoleGrantRequest createRequest() {
         return new SubSystemRoleGrantRequest() {
             @Override
@@ -61,98 +73,27 @@ class GrantSubSystemRoleTest {
             }
         };
     }
-
+    // アサインロールリスト作成
     private List<SubSystemRoleGrantRequestAssignRole> createAssignRoleList() {
-
-        SubSystemRoleGrantRequestAssignRole assignRole0 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole0;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate0;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate0;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole1 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole1;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate1;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate1;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole2 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole2;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate2;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate2;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole4 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole4;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate4;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate4;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole6 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole6;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate6;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate6;
-            }
-        };
-
-        return newArrayList(
-            assignRole0,
-            assignRole1,
-            assignRole2,
-            assignRole4,
-            assignRole6);
-    }
-
-    // テスト対象クラス生成
-    private GrantSubSystemRole createGrantSubSystemRole() {
-
-        Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore = new Operator_SubSystemRoleRepositoryForStore() {
-            @Override
-            public void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
-            }
-        };
-
-        return new GrantSubSystemRole(operator_SubSystemRoleRepositoryForStore);
+        List<SubSystemRoleGrantRequestAssignRole> subSystemRoleGrantRequestAssignRoleList = newArrayList();
+        for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
+            SubSystemRoleGrantRequestAssignRole assignRole = new SubSystemRoleGrantRequestAssignRole() {
+                @Override
+                public SubSystemRole getSubSystemRole() {
+                    return operator_SubSystemRole.getSubSystemRole();
+                }
+                @Override
+                public LocalDate getValidThruStartDate() {
+                    return operator_SubSystemRole.getValidThruStartDate();
+                }
+                @Override
+                public LocalDate getValidThruEndDate() {
+                    return operator_SubSystemRole.getValidThruEndDate();
+                }
+            };
+            subSystemRoleGrantRequestAssignRoleList.add(assignRole);
+        }
+        return subSystemRoleGrantRequestAssignRoleList;
     }
 
     /**

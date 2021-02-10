@@ -288,10 +288,13 @@ class CopySubSystemRoleGrantedTest {
         // テスト対象クラス生成
         CopySubSystemRoleGranted copySubSystemRoleGranted = createCopySubSystemRoleGranted();
 
+        // 実行値
+        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(5, 4, 3, 2, 1, 0));
+
         // 期待値
         Operator_SubSystemRoleCriteria expectedCriteria = new Operator_SubSystemRoleCriteria();
         expectedCriteria.getOperatorIdCriteria().setEqualTo(signInOperatorId);
-        Operator_SubSystemRoles expectedOperator_SubSystemRoles = signInOperator_SubSystemRoles;
+        Operator_SubSystemRoles expectedOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0, 1, 2, 3, 4, 5));
 
         // 実行
         Operator_SubSystemRoles operator_SubSystemRoles = copySubSystemRoleGranted.searchOperator_SubSystemRoles(signInOperatorId);

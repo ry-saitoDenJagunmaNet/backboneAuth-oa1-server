@@ -264,13 +264,16 @@ class SearchSubSystemRoleGrantedTest {
         // テスト対象クラス生成
         SearchSubSystemRoleGranted searchSubSystemRoleGranted = createSearchSubSystemRoleGranted();
 
+        // 実行値
+        signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(5, 4, 3, 2, 1, 0));
+
         // 期待値
         Operator_SubSystemRoleCriteria expectedCriteria = new Operator_SubSystemRoleCriteria();
-        expectedCriteria.getOperatorIdCriteria().setEqualTo(targetOperatorId);
-        Operator_SubSystemRoles expectedOperator_SubSystemRoles = targetOperator_SubSystemRoles;
+        expectedCriteria.getOperatorIdCriteria().setEqualTo(signInOperatorId);
+        Operator_SubSystemRoles expectedOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0, 1, 2, 3, 4, 5));
 
         // 実行
-        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRoleGranted.searchOperator_SubSystemRoles(targetOperatorId);
+        Operator_SubSystemRoles operator_SubSystemRoles = searchSubSystemRoleGranted.searchOperator_SubSystemRoles(signInOperatorId);
 
         // 結果検証
         assertThat(actualOperator_SubSystemRoleCriteria.toString()).isEqualTo(expectedCriteria.toString());
