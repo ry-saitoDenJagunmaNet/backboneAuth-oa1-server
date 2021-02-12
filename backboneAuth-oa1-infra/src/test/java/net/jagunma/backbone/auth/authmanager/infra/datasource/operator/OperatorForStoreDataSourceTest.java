@@ -356,8 +356,8 @@ class OperatorForStoreDataSourceTest {
                 assertThat(e.getArgs()).containsSequence("オペレーターコード");
                 assertThat(e.getArgs()).containsSequence(alreadyExistsOperatorCode);
             });
-        // 結果検証 // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperatorCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorCriteria).defaultConfig().toString());
+        // 結果検証
+        assertThat(actualOperatorCriteria.toString()).isEqualTo(expectedOperatorCriteria.toString());
     }
 
     /**
@@ -518,8 +518,7 @@ class OperatorForStoreDataSourceTest {
 
         // 結果検証
         assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperatorEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperatorEntityCriteria).defaultConfig().toString());
+        assertThat(actualOperatorEntityCriteria.toString()).isEqualTo(expectedOperatorEntityCriteria.toString());
     }
 
     /**
@@ -591,9 +590,8 @@ class OperatorForStoreDataSourceTest {
 
         // 結果検証
         assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualPasswordHistoryCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryCriteria).defaultConfig().toString());
-        assertThat(toStringHelper(actualPasswordHistoryOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryOrders).defaultConfig().toString());
+        assertThat(actualPasswordHistoryCriteria.toString()).isEqualTo(expectedPasswordHistoryCriteria.toString());
+        assertThat(actualPasswordHistoryOrders).usingRecursiveComparison().isEqualTo(expectedPasswordHistoryOrders);
     }
 
     /**
@@ -638,8 +636,7 @@ class OperatorForStoreDataSourceTest {
 
         // 結果検証
         assertThat(passwordHistory).usingRecursiveComparison().isEqualTo(expectedModel);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualPasswordHistoryCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryCriteria).defaultConfig().toString());
-        assertThat(toStringHelper(actualPasswordHistoryOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedPasswordHistoryOrders).defaultConfig().toString());
+        assertThat(actualPasswordHistoryCriteria.toString()).isEqualTo(expectedPasswordHistoryCriteria.toString());
+        assertThat(actualPasswordHistoryOrders).usingRecursiveComparison().isEqualTo(expectedPasswordHistoryOrders);
     }
 }

@@ -153,8 +153,8 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
         // 実行
         operator_SubSystemRoleForStoreDataSource.deleteOperator_SubSystemRole(operatorId);
 
-        // 結果検証 // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperator_SubSystemRoleEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleEntityCriteria).defaultConfig().toString());
+        // 結果検証
+        assertThat(actualOperator_SubSystemRoleEntityCriteria.toString()).isEqualTo(expectedOperator_SubSystemRoleEntityCriteria.toString());
     }
 
     /**

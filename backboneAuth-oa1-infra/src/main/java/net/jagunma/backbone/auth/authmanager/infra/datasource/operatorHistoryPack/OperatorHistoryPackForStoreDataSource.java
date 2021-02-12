@@ -124,9 +124,21 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
      * @return オペレーター履歴エンティティ
      */
     OperatorHistoryEntity insertOperatorHistory(Long operatorHistoryId, Operator operator) {
-
-        OperatorHistoryEntity operatorHistoryEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operator).execute();
+        OperatorHistoryEntity operatorHistoryEntity = new OperatorHistoryEntity();
         operatorHistoryEntity.setOperatorHistoryId(operatorHistoryId);
+
+        operatorHistoryEntity.setOperatorId(operator.getOperatorId());
+        operatorHistoryEntity.setOperatorCode(operator.getOperatorCode());
+        operatorHistoryEntity.setOperatorName(operator.getOperatorName());
+        operatorHistoryEntity.setMailAddress(operator.getMailAddress());
+        operatorHistoryEntity.setValidThruStartDate(operator.getValidThruStartDate());
+        operatorHistoryEntity.setValidThruEndDate(operator.getValidThruEndDate());
+        operatorHistoryEntity.setIsDeviceAuth(operator.getIsDeviceAuth());
+        operatorHistoryEntity.setJaId(operator.getJaId());
+        operatorHistoryEntity.setJaCode(operator.getJaCode());
+        operatorHistoryEntity.setBranchId(operator.getBranchId());
+        operatorHistoryEntity.setBranchCode(operator.getBranchCode());
+        operatorHistoryEntity.setAvailableStatus(operator.getAvailableStatus().getCode());
 
         operatorHistoryEntityDao.insert(operatorHistoryEntity);
 
@@ -150,9 +162,14 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
 
         // インサート
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-
-            Operator_SubSystemRoleHistoryEntity operator_SubSystemRoleHistoryEntity = Beans.createAndCopy(Operator_SubSystemRoleHistoryEntity.class, operator_SubSystemRole).execute();
+            Operator_SubSystemRoleHistoryEntity operator_SubSystemRoleHistoryEntity = new Operator_SubSystemRoleHistoryEntity();
             operator_SubSystemRoleHistoryEntity.setOperatorHistoryId(operatorHistoryId);
+
+            operator_SubSystemRoleHistoryEntity.setOperator_SubSystemRoleId(operator_SubSystemRole.getOperator_SubSystemRoleId());
+            operator_SubSystemRoleHistoryEntity.setOperatorId(operator_SubSystemRole.getOperatorId());
+            operator_SubSystemRoleHistoryEntity.setSubSystemRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
+            operator_SubSystemRoleHistoryEntity.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
+            operator_SubSystemRoleHistoryEntity.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
 
             operator_SubSystemRoleHistoryEntityDao.insert(operator_SubSystemRoleHistoryEntity);
 
@@ -180,9 +197,14 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
 
         // インサート
         for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-
-            Operator_BizTranRoleHistoryEntity operator_BizTranRoleHistoryEntity = Beans.createAndCopy(Operator_BizTranRoleHistoryEntity.class, operator_BizTranRole).execute();
+            Operator_BizTranRoleHistoryEntity operator_BizTranRoleHistoryEntity = new Operator_BizTranRoleHistoryEntity();
             operator_BizTranRoleHistoryEntity.setOperatorHistoryId(operatorHistoryId);
+
+            operator_BizTranRoleHistoryEntity.setOperator_BizTranRoleId(operator_BizTranRole.getOperator_BizTranRoleId());
+            operator_BizTranRoleHistoryEntity.setOperatorId(operator_BizTranRole.getOperatorId());
+            operator_BizTranRoleHistoryEntity.setBizTranRoleId(operator_BizTranRole.getBizTranRoleId());
+            operator_BizTranRoleHistoryEntity.setValidThruStartDate(operator_BizTranRole.getValidThruStartDate());
+            operator_BizTranRoleHistoryEntity.setValidThruEndDate(operator_BizTranRole.getValidThruEndDate());
 
             operator_BizTranRoleHistoryEntityDao.insert(operator_BizTranRoleHistoryEntity);
 

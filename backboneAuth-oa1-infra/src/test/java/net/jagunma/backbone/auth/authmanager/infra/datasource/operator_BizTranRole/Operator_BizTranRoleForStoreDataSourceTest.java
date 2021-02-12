@@ -158,8 +158,8 @@ class Operator_BizTranRoleForStoreDataSourceTest {
         // 実行
         operator_BizTranRoleForStoreDataSource.deleteOperator_BizTranRole(operatorId);
 
-        // 結果検証 // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperator_BizTranRoleEntityCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_BizTranRoleEntityCriteria).defaultConfig().toString());
+        // 結果検証
+        assertThat(actualOperator_BizTranRoleEntityCriteria.toString()).isEqualTo(expectedOperator_BizTranRoleEntityCriteria.toString());
     }
 
     /**
