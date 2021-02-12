@@ -15,6 +15,8 @@ import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrac
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntity;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.signInTrace.SignInTraceEntityDao;
@@ -59,8 +61,8 @@ public class SignInTraceDataSource implements SignInTraceRepository {
             entity.getTryDateTime(),
             entity.getTryIpAddress(),
             entity.getOperatorCode(),
-            entity.getSignInCause(),
-            entity.getSignInResult(),
+            SignInCause.codeOf(entity.getSignInCause()),
+            SignInResult.codeOf(entity.getSignInResult()),
             entity.getRecordVersion(),
             operator);
     }
@@ -91,8 +93,8 @@ public class SignInTraceDataSource implements SignInTraceRepository {
                 entity.getTryDateTime(),
                 entity.getTryIpAddress(),
                 entity.getOperatorCode(),
-                entity.getSignInCause(),
-                entity.getSignInResult(),
+                SignInCause.codeOf(entity.getSignInCause()),
+                SignInResult.codeOf(entity.getSignInResult()),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorCode().equals(entity.getOperatorCode())).findFirst().orElse(null)
@@ -133,8 +135,8 @@ public class SignInTraceDataSource implements SignInTraceRepository {
                 entity.getTryDateTime(),
                 entity.getTryIpAddress(),
                 entity.getOperatorCode(),
-                entity.getSignInCause(),
-                entity.getSignInResult(),
+                SignInCause.codeOf(entity.getSignInCause()),
+                SignInResult.codeOf(entity.getSignInResult()),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorCode().equals(entity.getOperatorCode())).findFirst().orElse(null)));

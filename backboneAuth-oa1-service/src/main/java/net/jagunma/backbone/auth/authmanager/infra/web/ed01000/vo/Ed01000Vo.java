@@ -11,7 +11,7 @@ public class Ed01000Vo extends BaseOfVo {
     private static final long serialVersionUID = 1L;
 
     /**
-     * オペレーターCode
+     * オペレーターコード
      */
     private String operatorCode;
     /**

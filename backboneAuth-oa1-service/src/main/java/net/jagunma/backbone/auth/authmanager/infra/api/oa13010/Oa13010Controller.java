@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
@@ -52,7 +51,6 @@ public class Oa13010Controller extends BaseOfController {
     /**
      * サインインを行います
      *
-     * @param request リクエスト
      * @param arg     サインイン Arg
      * @return 認証結果
      */
@@ -64,20 +62,18 @@ public class Oa13010Controller extends BaseOfController {
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
     public ResponseEntity<Oa13010SignInResult> signIn(
-        HttpServletRequest request,
         @RequestBody Oa13010SignInArg arg) {
 
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
         // サインイン
-        return signIn(arg, request.getRemoteAddr(), SignInCause.サインイン);
+        return signIn(arg, SignInCause.サインイン);
     }
 
     /**
      * 継続サインインを行います
      *
-     * @param request リクエスト
      * @param arg     サインイン Arg
      * @return 認証結果
      */
@@ -89,27 +85,24 @@ public class Oa13010Controller extends BaseOfController {
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
     public ResponseEntity<Oa13010SignInResult> continuedSignIn(
-        HttpServletRequest request,
         @RequestBody Oa13010SignInArg arg) {
 
         // ToDo: テストサインイン情報セット
         setAuthInf();
 
         // サインイン
-        return signIn(arg, request.getRemoteAddr(), SignInCause.継続サインイン);
+        return signIn(arg, SignInCause.継続サインイン);
     }
 
     /**
      * サインインを行います
      *
      * @param arg         サインイン Arg
-     * @param remoteAddr  リモートIPアドレス
      * @param signInCause サインイン起因
      * @return 認証結果
      */
     private ResponseEntity<Oa13010SignInResult> signIn(
         Oa13010SignInArg arg,
-        String remoteAddr,
         SignInCause signInCause) {
 
         LOGGER.debug("operatorCode:" + arg.getOperatorCode());
@@ -123,7 +116,7 @@ public class Oa13010Controller extends BaseOfController {
 
             // サインイン証跡登録
             Oa13010EntryConverter entryConverter = Oa13010EntryConverter.with(
-                remoteAddr,
+                arg.getClientIpaddress(),
                 arg.getOperatorCode(),
                 signInCause,
                 authenticationPresenter.getSignInResult());

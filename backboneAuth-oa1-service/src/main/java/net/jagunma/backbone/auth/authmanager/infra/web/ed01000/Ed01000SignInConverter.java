@@ -8,13 +8,17 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.S
 public class Ed01000SignInConverter implements SignInRequest {
 
     /**
-     * オペレーターCode
+     * オペレーターコード
      */
     private String operatorCode;
     /**
      * パスワード
      */
     private String password;
+    /**
+     * クライアントIPアドレス
+     */
+    private String clientIpaddress;
     /**
      * モード
      */
@@ -28,11 +32,13 @@ public class Ed01000SignInConverter implements SignInRequest {
     Ed01000SignInConverter(
         String operatorCode,
         String password,
+        String clientIpaddress,
         Integer mode,
         String accessToken) {
 
         this.operatorCode = operatorCode;
         this.password = password;
+        this.clientIpaddress = clientIpaddress;
         this.mode = mode;
         this.accessToken = accessToken;
     }
@@ -41,10 +47,11 @@ public class Ed01000SignInConverter implements SignInRequest {
     public static Ed01000SignInConverter with(
         String operatorCode,
         String password,
+        String clientIpaddress,
         Integer mode,
         String accessToken) {
 
-        return new Ed01000SignInConverter(operatorCode, password, mode, accessToken);
+        return new Ed01000SignInConverter(operatorCode, password, clientIpaddress, mode, accessToken);
     }
 
     // Getter／Setter
@@ -53,6 +60,9 @@ public class Ed01000SignInConverter implements SignInRequest {
     }
     public String getPassword() {
         return password;
+    }
+    public String getClientIpaddress() {
+        return clientIpaddress;
     }
     public Integer getMode() {
         return mode;

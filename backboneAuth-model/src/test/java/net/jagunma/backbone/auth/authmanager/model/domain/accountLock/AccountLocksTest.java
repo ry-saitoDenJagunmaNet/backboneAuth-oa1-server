@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
@@ -38,9 +39,9 @@ class AccountLocksTest {
 
         // 実行値 ＆ 期待値
         List<AccountLock> list = newArrayList();
-        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020, 10, 1, 8,30,12),(short) 2,1,createOperator(18L)));
-        list.add(AccountLock.createFrom(2L,19L,LocalDateTime.of(2020, 10, 1, 8,30,12),(short) 2,1,createOperator(19L)));
-        list.add(AccountLock.createFrom(3L,20L,LocalDateTime.of(2020, 10, 1, 8,30,12),(short) 2,1,createOperator(20L)));
+        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020, 10, 1, 8,30,12),AccountLockStatus.アンロック,1,createOperator(18L)));
+        list.add(AccountLock.createFrom(2L,19L,LocalDateTime.of(2020, 10, 1, 8,30,12),AccountLockStatus.アンロック,1,createOperator(19L)));
+        list.add(AccountLock.createFrom(3L,20L,LocalDateTime.of(2020, 10, 1, 8,30,12),AccountLockStatus.アンロック,1,createOperator(20L)));
 
         // 実行
         AccountLocks accountLocks = AccountLocks.createFrom(list);

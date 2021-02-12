@@ -37,8 +37,8 @@ public class SignInTraceForStoreDataSource implements SignInTraceRepositoryForSt
         entity.setTryDateTime(signInTrace.getTryDateTime());
         entity.setTryIpAddress(signInTrace.getTryIpAddress());
         entity.setOperatorCode(signInTrace.getOperatorCode());
-        entity.setSignInCause(signInTrace.getSignInCause());
-        entity.setSignInResult(signInTrace.getSignInResult());
+        entity.setSignInCause(signInTrace.getSignInCause().getCode());
+        entity.setSignInResult(signInTrace.getSignInResult().getCode());
         signInTraceEntityDao.insert(entity);
 
         return signInTraceRepository.findOneById(entity.getSignInTraceId());

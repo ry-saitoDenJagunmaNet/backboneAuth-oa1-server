@@ -8,13 +8,17 @@ public class Oa13010SignInArg {
     private static final long serialVersionUID = 1L;
 
     /**
-     * オペレーターCode
+     * オペレーターコード
      */
     private String operatorCode;
     /**
      * パスワード
      */
     private String password;
+    /**
+     * クライアントIPアドレス
+     */
+    private String clientIpaddress;
 
     // Getter／Setter
     public String getOperatorCode() {
@@ -28,5 +32,11 @@ public class Oa13010SignInArg {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getClientIpaddress() {
+        return clientIpaddress;
+    }
+    public void setClientIpaddress(String clientIpaddress) {
+        this.clientIpaddress = clientIpaddress;
     }
 }

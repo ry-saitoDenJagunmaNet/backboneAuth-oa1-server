@@ -2,6 +2,8 @@ package net.jagunma.backbone.auth.authmanager.model.domain.signInTrace;
 
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 
 /**
  * サインイン証跡
@@ -12,8 +14,8 @@ public class SignInTrace {
     private final LocalDateTime tryDateTime;
     private final String tryIpAddress;
     private final String operatorCode;
-    private final Short signInCause;
-    private final Short signInResult;
+    private final SignInCause signInCause;
+    private final SignInResult signInResult;
     private final Integer recordVersion;
     private final Operator operator;
 
@@ -23,8 +25,8 @@ public class SignInTrace {
         LocalDateTime tryDateTime,
         String tryIpAddress,
         String operatorCode,
-        Short signInCause,
-        Short signInResult,
+        SignInCause signInCause,
+        SignInResult signInResult,
         Integer recordVersion,
         Operator operator) {
 
@@ -44,8 +46,8 @@ public class SignInTrace {
         LocalDateTime tryDateTime,
         String tryIpAddress,
         String operatorCode,
-        Short signInCause,
-        Short signInResult,
+        SignInCause signInCause,
+        SignInResult signInResult,
         Integer recordVersion,
         Operator operator) {
 
@@ -73,10 +75,10 @@ public class SignInTrace {
     public String getOperatorCode() {
         return operatorCode;
     }
-    public Short getSignInCause() {
+    public SignInCause getSignInCause() {
         return signInCause;
     }
-    public Short getSignInResult() {
+    public SignInResult getSignInResult() {
         return signInResult;
     }
     public Integer getRecordVersion() {

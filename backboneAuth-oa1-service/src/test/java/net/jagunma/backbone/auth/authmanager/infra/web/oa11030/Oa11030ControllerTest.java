@@ -128,8 +128,8 @@ class Oa11030ControllerTest {
 
     // アカウントロック履歴系
     private List<AccountLock> accountLockList = newArrayList(
-        AccountLock.createFrom(202L,operatorId, LocalDateTime.of(2020,10,2,3,4,5),AccountLockStatus.アンロック.getCode(), recordVersion, operator),
-        AccountLock.createFrom(201L,operatorId, LocalDateTime.of(2020,10,1,2,3,4),AccountLockStatus.ロック.getCode(), recordVersion, operator));
+        AccountLock.createFrom(202L,operatorId, LocalDateTime.of(2020,10,2,3,4,5),AccountLockStatus.アンロック, recordVersion, operator),
+        AccountLock.createFrom(201L,operatorId, LocalDateTime.of(2020,10,1,2,3,4),AccountLockStatus.ロック, recordVersion, operator));
     private AccountLocks accountLocks = AccountLocks.createFrom(accountLockList);
 
     // オペレーター_サブシステムロール割当履歴系
@@ -190,6 +190,10 @@ class Oa11030ControllerTest {
             }
         };
         AccountLockRepository accountLockRepository = new AccountLockRepository() {
+            @Override
+            public AccountLock findOneById(Long accountLockId) {
+                return null;
+            }
             @Override
             public boolean existsByOperatorId(Long operatorId) {
                 return false;

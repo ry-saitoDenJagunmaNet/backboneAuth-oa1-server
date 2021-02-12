@@ -57,7 +57,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
 
         vo.setChangeCausePlaceholder(operatorHistoryHeaders.getValues().get(0).getChangeCause());
 
-        vo.setAccountLockStatus((!accountLocks.getValues().isEmpty())? accountLocks.getValues().get(0).getLockStatus() : 0);
+        vo.setAccountLockStatus((!accountLocks.getValues().isEmpty())? accountLocks.getValues().get(0).getLockStatus().getCode() : 0);
 
         List<Oa11030SubSystemRoleTableVo> subSystemRoleTableVoList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {

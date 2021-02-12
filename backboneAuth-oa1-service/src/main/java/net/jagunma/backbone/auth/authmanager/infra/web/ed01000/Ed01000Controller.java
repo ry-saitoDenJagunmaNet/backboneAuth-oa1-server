@@ -1,8 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
-import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
+import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
-import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -47,17 +46,10 @@ public class Ed01000Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01000Controller.class);
 
-    private final Authentication authentication;
-    private final EntrySignInTrace entrySignInTrace;
     private SignIn signIn;
 
     // コンストラクタ
-    public Ed01000Controller(Authentication authentication,
-        EntrySignInTrace entrySignInTrace,
-        SignIn signIn) {
-
-        this.authentication = authentication;
-        this.entrySignInTrace = entrySignInTrace;
+    public Ed01000Controller(SignIn signIn) {
         this.signIn = signIn;
     }
 
@@ -117,13 +109,14 @@ public class Ed01000Controller extends BaseOfController {
      * @return view名
      */
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public String signIn(Model model, Ed01000Vo vo) {
+    public String signIn(HttpServletRequest request, Model model, Ed01000Vo vo) {
 
         LOGGER.debug("signIn START");
 
         try {
             // リクエストを作成
-            Ed01000SignInConverter converter = Ed01000SignInConverter.with(vo.getOperatorCode(), vo.getPassword(), vo.getMode(), vo.getAccessToken());
+            Ed01000SignInConverter converter = Ed01000SignInConverter.with(
+                vo.getOperatorCode(), vo.getPassword(), request.getRemoteAddr(), vo.getMode(), vo.getAccessToken());
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
             // サインインサービス実行
             signIn.execute(converter, presenter);

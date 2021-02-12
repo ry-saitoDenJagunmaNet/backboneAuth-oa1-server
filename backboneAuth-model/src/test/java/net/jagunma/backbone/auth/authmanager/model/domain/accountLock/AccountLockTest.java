@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class AccountLockTest {
 
     /**
-     * {@link AccountLock#createFrom(Long, Long, LocalDateTime, Short, Integer, Operator)}テスト
+     * {@link AccountLock#createFrom(Long, Long, LocalDateTime, AccountLockStatus, Integer, Operator)}テスト
      *  ●パターン
      *    正常
      *
@@ -30,7 +31,7 @@ class AccountLockTest {
         Long accountLockId = 123L;
         Long operatorId = 18L;
         LocalDateTime occurredDateTime = LocalDateTime.of(2020, 10, 1, 8,30,12);
-        Short lockStatus = (short) 2;
+        AccountLockStatus lockStatus = AccountLockStatus.アンロック;
         Integer recordVersion = 78;
 
         String operatorCode = "yu001009";
