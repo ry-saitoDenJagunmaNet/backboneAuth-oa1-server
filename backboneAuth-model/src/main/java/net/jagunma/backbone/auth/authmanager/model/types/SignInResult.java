@@ -71,7 +71,17 @@ public enum SignInResult {
      *
      * @return true:成功
      */
-    public boolean isSuccess() {
+    public boolean is成功() {
         return this.equals(成功);
     }
+
+    /**
+     * 失敗_パスワード誤りかを判定します
+     *
+     * @return true:失敗_パスワード誤り
+     */
+    public boolean is失敗_パスワード誤り() {
+        return this.equals(失敗_パスワード誤り);
+    }
+
 }

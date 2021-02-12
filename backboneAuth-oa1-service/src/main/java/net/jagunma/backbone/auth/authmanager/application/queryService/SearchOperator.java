@@ -428,12 +428,12 @@ public class SearchOperator {
         if (!accountLockStatusLock == accountLockStatusUnlock) {
             if (accountLockStatusLock) {
                 //ロック
-                if (accountLock == null || accountLock.getLockStatus().equals(AccountLockStatus.アンロック.getCode())) {
+                if (accountLock == null || accountLock.getLockStatus().isアンロック()) {
                     return false;
                 }
             } else if (accountLockStatusUnlock) {
                 //アンロック
-                if (accountLock != null && accountLock.getLockStatus().equals(AccountLockStatus.ロック.getCode())) {
+                if (accountLock != null && accountLock.getLockStatus().isロック()) {
                     return false;
                 }
             }
@@ -551,7 +551,7 @@ public class SearchOperator {
             if (signInTrace == null) { return false; }
             // 配列をリストに変換
             List<Short> signInResultList = Arrays.asList(request.getSignintraceSignInResult());
-            if (!signInResultList.contains(signInTrace.getSignInResult())) {
+            if (!signInResultList.contains(signInTrace.getSignInResult().getCode())) {
                 return false;
             }
         }

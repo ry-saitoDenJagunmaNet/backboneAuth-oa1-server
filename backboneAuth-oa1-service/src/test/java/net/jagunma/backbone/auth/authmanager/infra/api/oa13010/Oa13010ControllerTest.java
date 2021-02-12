@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
 import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
@@ -11,6 +10,7 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceComm
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
+import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLocks;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
@@ -21,7 +21,10 @@ import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.Passwo
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceCriteria;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraceRepositoryForStore;
+import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTraces;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.ddd.model.orders.Orders;
@@ -30,12 +33,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
 
 class Oa13010ControllerTest {
 
     // 実行既定値
-    MockHttpServletRequest request = new MockHttpServletRequest();
+    private String clientIpaddress = "001.001.001.001";
     private String operatorCode = "yu001009";
     private String password = "password1234";
     SignInResult authentication_execute_signInTrace = SignInResult.成功;
@@ -48,6 +50,7 @@ class Oa13010ControllerTest {
     // Oa13010 サインイン Arg 作成
     private Oa13010SignInArg createOa13010SignInArg() {
         Oa13010SignInArg signInArg = new Oa13010SignInArg();
+        signInArg.setClientIpaddress(clientIpaddress);
         signInArg.setOperatorCode(operatorCode);
         signInArg.setPassword(password);
         return signInArg;
@@ -96,6 +99,10 @@ class Oa13010ControllerTest {
         // アカウントロック検索リポジトリのスタブ
         AccountLockRepository accountLockRepository = new AccountLockRepository() {
             @Override
+            public AccountLock findOneById(Long accountLockId) {
+                return null;
+            }
+            @Override
             public boolean existsByOperatorId(Long operatorId) {
                 return false;
             }
@@ -126,8 +133,26 @@ class Oa13010ControllerTest {
                 return null;
             }
         };
+        // サインイン証跡リポジトリのスタブ
+        SignInTraceRepository signInTraceRepository = new SignInTraceRepository() {
+            @Override
+            public SignInTrace findOneById(Long signInTraceId) {
+                return null;
+            }
+            @Override
+            public SignInTraces selectBy(SignInTraceCriteria signInTraceCriteria, Orders orders) {
+                return null;
+            }
+        };
+        // アカウントロック格納リポジトリのスタブ
+        AccountLockRepositoryForStore accountLockRepositoryForStore = new AccountLockRepositoryForStore() {
+            @Override
+            public AccountLock insert(AccountLock AccountLock) {
+                return null;
+            }
+        };
         // サインイン証跡登録サービスのスタブ
-        EntrySignInTrace entrySignInTrace = new EntrySignInTrace(signInTraceRepositoryForStore) {
+        EntrySignInTrace entrySignInTrace = new EntrySignInTrace(signInTraceRepositoryForStore, signInTraceRepository, accountLockRepositoryForStore) {
             public void execute(SignInTraceEntryRequest request) {
                 actualSignInTraceEntryRequest = request;
             }
@@ -136,7 +161,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#signIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#signIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    正常
      *
@@ -151,7 +176,6 @@ class Oa13010ControllerTest {
         Oa13010Controller controller = createOa13010Controller();
 
         // 実行値
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -161,13 +185,13 @@ class Oa13010ControllerTest {
         ResponseEntity<Oa13010SignInResult> expected = new ResponseEntity<>(oa13010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
         SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa13010EntryConverter.with(
-            request.getRemoteAddr(),
+            clientIpaddress,
             operatorCode,
             signInCause,
             signInTrace);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -176,7 +200,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#signIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#signIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    正常（サインイン失敗）
      *
@@ -192,7 +216,6 @@ class Oa13010ControllerTest {
 
         // 実行値
         authentication_execute_signInTrace = SignInResult.拒否_アカウントロック中;
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -202,13 +225,13 @@ class Oa13010ControllerTest {
         ResponseEntity<Oa13010SignInResult> expected = new ResponseEntity<>(oa13010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
         SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa13010EntryConverter.with(
-            request.getRemoteAddr(),
+            clientIpaddress,
             operatorCode,
             signInCause,
             signInTrace);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -217,7 +240,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#signIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#signIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -233,7 +256,6 @@ class Oa13010ControllerTest {
 
         // 実行値
         password = runtimeException;
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -242,7 +264,7 @@ class Oa13010ControllerTest {
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.signIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -251,7 +273,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#continuedSignIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#continuedSignIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    正常
      *
@@ -266,7 +288,6 @@ class Oa13010ControllerTest {
         Oa13010Controller controller = createOa13010Controller();
 
         // 実行値
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -276,13 +297,13 @@ class Oa13010ControllerTest {
         ResponseEntity<Oa13010SignInResult> expected = new ResponseEntity<>(oa13010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
         SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa13010EntryConverter.with(
-            request.getRemoteAddr(),
+            clientIpaddress,
             operatorCode,
             signInCause,
             signInTrace);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -291,7 +312,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#continuedSignIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#continuedSignIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    正常（サインイン失敗）
      *
@@ -307,7 +328,6 @@ class Oa13010ControllerTest {
 
         // 実行値
         authentication_execute_signInTrace = SignInResult.失敗_パスワード誤り;
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -317,13 +337,13 @@ class Oa13010ControllerTest {
         ResponseEntity<Oa13010SignInResult> expected = new ResponseEntity<>(oa13010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
         SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa13010EntryConverter.with(
-            request.getRemoteAddr(),
+            clientIpaddress,
             operatorCode,
             signInCause,
             signInTrace);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
@@ -332,7 +352,7 @@ class Oa13010ControllerTest {
     }
 
     /**
-     * {@link Oa13010Controller#continuedSignIn(HttpServletRequest, Oa13010SignInArg)}のテスト
+     * {@link Oa13010Controller#continuedSignIn(Oa13010SignInArg)}のテスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
@@ -348,7 +368,6 @@ class Oa13010ControllerTest {
 
         // 実行値
         password = runtimeException;
-//        String signInArg = createSignInArgString();
         Oa13010SignInArg signInArg = createOa13010SignInArg();
 
         // 期待値
@@ -357,7 +376,7 @@ class Oa13010ControllerTest {
         AuthenticationRequest expectedAuthenticationRequest = Oa13010AuthenticationConverter.with(operatorCode, password);
 
         // 実行
-        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(request, signInArg);
+        ResponseEntity<Oa13010SignInResult> actual = controller.continuedSignIn(signInArg);
 
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);

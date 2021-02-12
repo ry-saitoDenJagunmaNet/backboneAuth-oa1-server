@@ -266,7 +266,7 @@ class AccountLockDataSourceTest {
             entity.getAccountLockId(),
             entity.getOperatorId(),
             entity.getOccurredDateTime(),
-            entity.getLockStatus(),
+            AccountLockStatus.codeOf(entity.getLockStatus()),
             entity.getRecordVersion(),
             operatorList.stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null));
         AccountLockEntityCriteria expectedAccountLockEntityDao_criteria = new AccountLockEntityCriteria();
@@ -349,7 +349,7 @@ class AccountLockDataSourceTest {
                 entity.getAccountLockId(),
                 entity.getOperatorId(),
                 entity.getOccurredDateTime(),
-                entity.getLockStatus(),
+                AccountLockStatus.codeOf(entity.getLockStatus()),
                 entity.getRecordVersion(),
                 operatorList.stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null)));
         }

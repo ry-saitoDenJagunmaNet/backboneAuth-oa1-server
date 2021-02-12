@@ -40,9 +40,9 @@ class SignInTracesTest {
 
         // 実行値 ＆ 期待値
         List<SignInTrace> list = newArrayList();
-        list.add(SignInTrace.createFrom(1L, LocalDateTime.of(2020,10,1,8,30,12), "001.001.001.001", "yu001009", SignInCause.サインイン.getCode(), SignInResult.成功.getCode(), 1, createOperator("yu001009")));
-        list.add(SignInTrace.createFrom(2L, LocalDateTime.of(2020,10,1,8,31,23), "001.001.001.001", "yu001010", SignInCause.サインイン.getCode(), SignInResult.成功.getCode(), 1, createOperator("yu001010")));
-        list.add(SignInTrace.createFrom(3L, LocalDateTime.of(2020,10,1,8,32,34), "001.001.001.001", "yu001011", SignInCause.サインイン.getCode(), SignInResult.成功.getCode(), 1, createOperator("yu001011")));
+        list.add(SignInTrace.createFrom(1L, LocalDateTime.of(2020,10,1,8,30,12), "001.001.001.001", "yu001009", SignInCause.サインイン, SignInResult.成功, 1, createOperator("yu001009")));
+        list.add(SignInTrace.createFrom(2L, LocalDateTime.of(2020,10,1,8,31,23), "001.001.001.001", "yu001010", SignInCause.サインイン, SignInResult.成功, 1, createOperator("yu001010")));
+        list.add(SignInTrace.createFrom(3L, LocalDateTime.of(2020,10,1,8,32,34), "001.001.001.001", "yu001011", SignInCause.サインイン, SignInResult.成功, 1, createOperator("yu001011")));
 
         // 実行
         SignInTraces signInTraces = SignInTraces.createFrom(list);

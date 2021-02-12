@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operators;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntity;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.accountLock.AccountLockEntityDao;
@@ -34,6 +35,31 @@ public class AccountLockDataSource implements AccountLockRepository {
 
         this.accountLockEntityDao = accountLockEntityDao;
         this.operatorRepository = operatorRepository;
+    }
+
+    /**
+     * アカウントロックの検索を行います
+     *
+     * @param accountLockId アカウントロックID
+     * @return アカウントロック
+     */
+    public AccountLock findOneById(Long accountLockId) {
+
+        // アカウントロック検索
+        AccountLockEntityCriteria entityCriteria = new AccountLockEntityCriteria();
+        entityCriteria.getAccountLockIdCriteria().setEqualTo(accountLockId);
+        AccountLockEntity entity = accountLockEntityDao.findOneBy(entityCriteria);
+
+        // オペレーターの検索
+        Operator operator = operatorRepository.findOneById(entity.getOperatorId());
+
+        return AccountLock.createFrom(
+            entity.getAccountLockId(),
+            entity.getOperatorId(),
+            entity.getOccurredDateTime(),
+            AccountLockStatus.codeOf(entity.getLockStatus()),
+            entity.getRecordVersion(),
+            operator);
     }
 
     /**
@@ -76,7 +102,7 @@ public class AccountLockDataSource implements AccountLockRepository {
             entity.getAccountLockId(),
             entity.getOperatorId(),
             entity.getOccurredDateTime(),
-            entity.getLockStatus(),
+            AccountLockStatus.codeOf(entity.getLockStatus()),
             entity.getRecordVersion(),
             operator);
     }
@@ -106,7 +132,7 @@ public class AccountLockDataSource implements AccountLockRepository {
                 entity.getAccountLockId(),
                 entity.getOperatorId(),
                 entity.getOccurredDateTime(),
-                entity.getLockStatus(),
+                AccountLockStatus.codeOf(entity.getLockStatus()),
                 entity.getRecordVersion(),
                 operators.getValues().stream().filter(o->
                     o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null)

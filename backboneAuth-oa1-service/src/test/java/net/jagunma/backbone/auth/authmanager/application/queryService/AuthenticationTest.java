@@ -122,7 +122,7 @@ class AuthenticationTest {
             12345L,
             operatorId,
             LocalDateTime.of(2020,1,21,8,30,1),
-            accountLockStatus.getCode(),
+            accountLockStatus,
             1,
             operator);
     }
@@ -175,6 +175,10 @@ class AuthenticationTest {
             public AccountLock latestOneByOperatorId(Long operatorId) {
                 actualAccountLockRepository_latestOneByOperatorId_operatorId = operatorId;
                 return accountLock;
+            }
+            @Override
+            public AccountLock findOneById(Long accountLockId) {
+                return null;
             }
             @Override
             public boolean existsByOperatorId(Long operatorId) {

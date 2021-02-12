@@ -4,31 +4,38 @@ public class SignInRequestDto {
 
     private static final long serialVersionUID = 1L;
 
-    // コンストラクタ
-    SignInRequestDto(
-        String operatorCode,
-        String password) {
-
-        this.operatorCode = operatorCode;
-        this.password = password;
-    }
-
-    // ファクトリーメソッド
-    public static SignInRequestDto with(
-        String operatorCode,
-        String password) {
-
-        return new SignInRequestDto(operatorCode, password);
-    }
-
     /**
-     * オペレーターCode
+     * オペレーターコード
      */
     private String operatorCode;
     /**
      * パスワード
      */
     private String password;
+    /**
+     * クライアントIPアドレス
+     */
+    private String clientIpaddress;
+
+    // コンストラクタ
+    SignInRequestDto(
+        String operatorCode,
+        String password,
+        String clientIpaddress) {
+
+        this.operatorCode = operatorCode;
+        this.password = password;
+        this.clientIpaddress = clientIpaddress;
+    }
+
+    // ファクトリーメソッド
+    public static SignInRequestDto with(
+        String operatorCode,
+        String password,
+        String clientIpaddress) {
+
+        return new SignInRequestDto(operatorCode, password, clientIpaddress);
+    }
 
     // Getter／Setter
     public String getOperatorCode() {
@@ -36,5 +43,8 @@ public class SignInRequestDto {
     }
     public String getPassword() {
         return password;
+    }
+    public String getClientIpaddress() {
+        return clientIpaddress;
     }
 }

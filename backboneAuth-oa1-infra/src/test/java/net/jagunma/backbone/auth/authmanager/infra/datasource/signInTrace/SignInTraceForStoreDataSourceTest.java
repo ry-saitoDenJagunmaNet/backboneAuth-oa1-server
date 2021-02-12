@@ -171,8 +171,8 @@ class SignInTraceForStoreDataSourceTest {
                     tryDateTime,
                     tryIpAddress,
                     operatorCode,
-                    signInCause,
-                    signInResult,
+                    SignInCause.codeOf(signInCause),
+                    SignInResult.codeOf(signInResult),
                     recordVersion,
                     operator);
             }
@@ -207,8 +207,8 @@ class SignInTraceForStoreDataSourceTest {
             tryDateTime,
             tryIpAddress,
             operatorCode,
-            signInCause,
-            signInResult,
+            SignInCause.codeOf(signInCause),
+            SignInResult.codeOf(signInResult),
             null,
             null);
 
@@ -218,8 +218,8 @@ class SignInTraceForStoreDataSourceTest {
             tryDateTime,
             tryIpAddress,
             operatorCode,
-            signInCause,
-            signInResult,
+            SignInCause.codeOf(signInCause),
+            SignInResult.codeOf(signInResult),
             recordVersion,
             operator);
         SignInTraceEntity expectedSignInTraceEntity = new SignInTraceEntity();

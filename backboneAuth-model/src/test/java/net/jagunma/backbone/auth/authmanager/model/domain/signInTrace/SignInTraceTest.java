@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 class SignInTraceTest {
 
     /**
-     * {@link SignInTrace#createFrom(Long, LocalDateTime, String, String, Short, Short, Integer, Operator)}テスト
+     * {@link SignInTrace#createFrom(Long, LocalDateTime, String, String, SignInCause, SignInResult, Integer, Operator)}テスト
      *  ●パターン
      *    正常
      *
@@ -33,8 +33,8 @@ class SignInTraceTest {
         LocalDateTime tryDateTime = LocalDateTime.of(2020,10,1,8,30,12);
         String tryIpAddress = "001.001.001.001";
         String operatorCode = "yu001009";
-        Short signInCause = SignInCause.サインイン.getCode();
-        Short signInResult = SignInResult.成功.getCode();
+        SignInCause signInCause = SignInCause.サインイン;
+        SignInResult signInResult = SignInResult.成功;
         Integer recordVersion = 1;
 
         Long operatorId = 18L;

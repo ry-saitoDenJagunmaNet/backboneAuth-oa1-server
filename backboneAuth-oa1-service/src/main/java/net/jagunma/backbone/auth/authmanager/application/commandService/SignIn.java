@@ -33,13 +33,8 @@ public class SignIn extends BaseOfService {
 
         String operatorCode = request.getOperatorCode();
 
-        // ToDo: 再認証の場合、オペレーターコードが無いのでアクセストークンからProfileを取得
-        if (request.getMode().equals(MODE_RESIGNIN)) {
-//            OperatorProfile operatorProfile = getOperatorProfile(request.getAccessToken());
-//            operatorCode = operatorProfile.getOperatorCode();
-        }
-
-        SignInRequestDto signInRequestDto = SignInRequestDto.with(request.getOperatorCode(), request.getPassword());
+        SignInRequestDto signInRequestDto = SignInRequestDto.with(
+            request.getOperatorCode(), request.getPassword(), request.getClientIpaddress());
 
         // 認証apiのUrlを設定
         final String path = "/oa13010/signIn";
@@ -50,19 +45,7 @@ public class SignIn extends BaseOfService {
         RestTemplate restTemplate = restTemplateBuilder.build();
         SignInResponseDto signInResponseDto = restTemplate.postForObject(uri, signInRequestDto, SignInResponseDto.class);
 
-        signInResponseDto.bindTo(response);
+        response.setSignInResultCode(signInResponseDto.getSignInResultCode());
+        response.setSignInResultMessage(signInResponseDto.getSignInResultMessage());
     }
-
-//    private OperatorProfile getOperatorProfile(String accessToken) {
-//
-//        // 認証apiのUrlを設定
-//        final String path = "/oa2XXXXX/getProfile";
-//        URI uri = createBackboneAuthOa2ServeUri(path);
-//
-//        // オペレーターＰｒｏＦｉｌｅを取得
-//        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-//        RestTemplate restTemplate = restTemplateBuilder.build();
-//        return restTemplate.postForObject(uri, accessToken, OperatorProfile.class);
-//
-//    }
 }

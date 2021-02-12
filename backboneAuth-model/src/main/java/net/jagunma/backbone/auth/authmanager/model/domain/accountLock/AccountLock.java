@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.domain.accountLock;
 
 import java.time.LocalDateTime;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 
 /**
  * アカウントロック
@@ -11,7 +12,7 @@ public class AccountLock {
     private final Long accountLockId;
     private final Long operatorId;
     private final LocalDateTime occurredDateTime;
-    private final Short lockStatus;
+    private final AccountLockStatus lockStatus;
     private final Integer recordVersion;
     private final Operator operator;
 
@@ -20,7 +21,7 @@ public class AccountLock {
         Long accountLockId,
         Long operatorId,
         LocalDateTime occurredDateTime,
-        Short lockStatus,
+        AccountLockStatus lockStatus,
         Integer recordVersion,
         Operator operator) {
 
@@ -37,7 +38,7 @@ public class AccountLock {
         Long accountLockId,
         Long operatorId,
         LocalDateTime occurredDateTime,
-        Short lockStatus,
+        AccountLockStatus lockStatus,
         Integer recordVersion,
         Operator operator) {
 
@@ -60,7 +61,7 @@ public class AccountLock {
     public LocalDateTime getOccurredDateTime() {
         return occurredDateTime;
     }
-    public Short getLockStatus() {
+    public AccountLockStatus getLockStatus() {
         return lockStatus;
     }
     public Integer getRecordVersion() {

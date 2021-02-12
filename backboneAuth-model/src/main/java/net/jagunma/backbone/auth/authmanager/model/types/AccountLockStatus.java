@@ -61,4 +61,22 @@ public enum AccountLockStatus {
         }
         return AccountLockStatus.UnKnown;
     }
+
+    /**
+     * アンロックかを判定します
+     *
+     * @return true:アンロック
+     */
+    public boolean isアンロック() {
+        return this.equals(アンロック);
+    }
+
+    /**
+     * ロックかを判定します
+     *
+     * @return true:ロック
+     */
+    public boolean isロック() {
+        return this.equals(ロック);
+    }
 }

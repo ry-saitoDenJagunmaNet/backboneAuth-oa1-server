@@ -8,6 +8,13 @@ import net.jagunma.common.ddd.model.orders.Orders;
 public interface AccountLockRepository {
 
     /**
+     * アカウントロックの検索を行います
+     *
+     * @param accountLockId アカウントロックID
+     * @return アカウントロック
+     */
+    AccountLock findOneById(Long accountLockId);
+    /**
      * アカウントロックの存在チェックを行います
      *
      * @param operatorId オペレーターID

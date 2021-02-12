@@ -105,7 +105,7 @@ class SignInResultTest {
     }
 
     /**
-     * {@link SignInResult#isSuccess()}テスト
+     * {@link SignInResult#is成功()}テスト
      *  ●パターン
      *    正常
      *
@@ -120,11 +120,11 @@ class SignInResultTest {
         SignInResult actual = SignInResult.成功;
 
         // 実行 & 結果検証
-        assertTrue(actual.isSuccess());
+        assertTrue(actual.is成功());
     }
 
     /**
-     * {@link SignInResult#isSuccess()}テスト
+     * {@link SignInResult#is成功()}テスト
      *  ●パターン
      *    異常
      *
@@ -139,6 +139,6 @@ class SignInResultTest {
         SignInResult actual = SignInResult.失敗_パスワード誤り;
 
         // 実行 & 結果検証
-        assertThat(actual.isSuccess()).isEqualTo(false);
+        assertThat(actual.is成功()).isEqualTo(false);
     }
 }

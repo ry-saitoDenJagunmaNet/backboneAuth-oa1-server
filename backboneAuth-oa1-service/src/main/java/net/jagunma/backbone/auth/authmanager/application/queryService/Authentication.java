@@ -44,7 +44,7 @@ public class Authentication {
 
         LocalDate today = LocalDate.now();
 
-        // オペレーター検索
+        // オペレーターよる認証
         if (!operatorRepository.existsByCode(request.getOperatorCode())) {
             response.setSignInResult(SignInResult.失敗_存在しないオペレーター);
             return;
@@ -56,15 +56,7 @@ public class Authentication {
             return;
         }
 
-        // パスワード履歴検索
-        PasswordHistory passwordHistory = passwordHistoryRepository.latestOneByOperatorId(operator.getOperatorId());
-        signInResult = isAuthenticationByPasswordHistory(passwordHistory, request.getPassword());
-        if (!SignInResult.成功.equals(signInResult)) {
-            response.setSignInResult(signInResult);
-            return;
-        }
-
-        // アカウントロック検索
+        // アカウントロックよる認証
         if (accountLockRepository.existsByOperatorId(operator.getOperatorId())) {
             AccountLock accountLock = accountLockRepository.latestOneByOperatorId(operator.getOperatorId());
             signInResult =  isAuthenticationByAccountLock(accountLock);
@@ -73,6 +65,17 @@ public class Authentication {
                 return;
             }
         }
+
+        // JA割当IPアドレス範囲よる認証
+
+        // パスワード履歴よる認証
+        PasswordHistory passwordHistory = passwordHistoryRepository.latestOneByOperatorId(operator.getOperatorId());
+        signInResult = isAuthenticationByPasswordHistory(passwordHistory, request.getPassword());
+        if (!SignInResult.成功.equals(signInResult)) {
+            response.setSignInResult(signInResult);
+            return;
+        }
+
 
         response.setSignInResult(signInResult);
     }
@@ -131,7 +134,7 @@ public class Authentication {
     private SignInResult isAuthenticationByAccountLock(AccountLock accountLock) {
 
         // アカウントロック
-        if (AccountLockStatus.ロック.getCode() == accountLock.getLockStatus()) {
+        if (accountLock.getLockStatus().isロック()) {
             return SignInResult.拒否_アカウントロック中;
         }
 

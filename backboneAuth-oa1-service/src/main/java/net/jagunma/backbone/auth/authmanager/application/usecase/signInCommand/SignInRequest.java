@@ -6,9 +6,9 @@ package net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand;
 public interface SignInRequest {
 
     /**
-     * オペレーターCodeのＧｅｔ
+     * オペレーターコードのＧｅｔ
      *
-     * @return オペレーターCode
+     * @return オペレーターコード
      */
     String getOperatorCode();
     /**
@@ -17,6 +17,12 @@ public interface SignInRequest {
      * @return パスワード
      */
     String getPassword();
+    /**
+     * クライアントIPアドレスのＧｅｔ
+     *
+     * @return クライアントIPアドレス
+     */
+    String getClientIpaddress();
     /**
      * モードのＧｅｔ
      *

@@ -208,8 +208,8 @@ class SignInTraceDataSourceTest {
             signInTraceEntity.getTryDateTime(),
             signInTraceEntity.getTryIpAddress(),
             signInTraceEntity.getOperatorCode(),
-            signInTraceEntity.getSignInCause(),
-            signInTraceEntity.getSignInResult(),
+            SignInCause.codeOf(signInTraceEntity.getSignInCause()),
+            SignInResult.codeOf(signInTraceEntity.getSignInResult()),
             signInTraceEntity.getRecordVersion(),
             operator);
         SignInTraceEntityCriteria expectedSignInTraceEntityDao_criteria = new SignInTraceEntityCriteria();
@@ -257,8 +257,8 @@ class SignInTraceDataSourceTest {
                 entity.getTryDateTime(),
                 entity.getTryIpAddress(),
                 entity.getOperatorCode(),
-                entity.getSignInCause(),
-                entity.getSignInResult(),
+                SignInCause.codeOf(entity.getSignInCause()),
+                SignInResult.codeOf(entity.getSignInResult()),
                 entity.getRecordVersion(),
                 operatorList.stream().filter(o->o.getOperatorCode().equals(entity.getOperatorCode())).findFirst().orElse(null)));
         }
@@ -350,8 +350,8 @@ class SignInTraceDataSourceTest {
                 entity.getTryDateTime(),
                 entity.getTryIpAddress(),
                 entity.getOperatorCode(),
-                entity.getSignInCause(),
-                entity.getSignInResult(),
+                SignInCause.codeOf(entity.getSignInCause()),
+                SignInResult.codeOf(entity.getSignInResult()),
                 entity.getRecordVersion(),
                 operatorList.stream().filter(o->o.getOperatorCode().equals(entity.getOperatorCode())).findFirst().orElse(null)));
         }

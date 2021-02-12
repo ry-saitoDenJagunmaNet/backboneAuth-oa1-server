@@ -17,6 +17,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.O
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_BizTranRole.Operator_BizTranRoles;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
+import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
@@ -82,8 +83,8 @@ class Oa11010SearchPresenterTest {
     }
     private AccountLocks getAccountLocks() {
         List<AccountLock> list = newArrayList();
-        list.add(AccountLock.createFrom(1L,18L, LocalDateTime.of(2020,10,1,8,30,12), (short) 0,0,null));
-        list.add(AccountLock.createFrom(2L,19L, LocalDateTime.of(2020,10,1,8,30,12), (short) 1,0,null));
+        list.add(AccountLock.createFrom(1L,18L, LocalDateTime.of(2020,10,1,8,30,12), AccountLockStatus.アンロック,0,null));
+        list.add(AccountLock.createFrom(2L,19L, LocalDateTime.of(2020,10,1,8,30,12), AccountLockStatus.ロック,0,null));
         return AccountLocks.createFrom(list);
     }
     private Operator_SubSystemRoles getOperator_SubSystemRoles() {

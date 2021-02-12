@@ -156,6 +156,10 @@ class SearchOperatorTest {
                 return AccountLocks.createFrom(list);
             }
             @Override
+            public AccountLock findOneById(Long accountLockId) {
+                return null;
+            }
+            @Override
             public boolean existsByOperatorId(Long operatorId) {
                 return false;
             }
@@ -321,9 +325,9 @@ class SearchOperatorTest {
     // アカウントロックリストデータ作成
     private List<AccountLock> createAccountLockList() {
         List<AccountLock> list = newArrayList();
-        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),(short) 0,0,null));
-        list.add(AccountLock.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),(short) 1,0,null));
-        list.add(AccountLock.createFrom(3L,19L,LocalDateTime.of(2020,10,1,8,30,23),(short) 1,0,null));
+        list.add(AccountLock.createFrom(1L,18L,LocalDateTime.of(2020,10,1,8,31,12),AccountLockStatus.ロック,0,null));
+        list.add(AccountLock.createFrom(2L,18L,LocalDateTime.of(2020,10,1,8,30,12),AccountLockStatus.アンロック,0,null));
+        list.add(AccountLock.createFrom(3L,19L,LocalDateTime.of(2020,10,1,8,30,23),AccountLockStatus.アンロック,0,null));
         return list;
     }
     // パスワード履歴リストデータ作成
@@ -336,9 +340,9 @@ class SearchOperatorTest {
     // サインイン証跡リストデータ作成
     private List<SignInTrace> createSignInTraceList() {
         List<SignInTrace> list = newArrayList();
-        list.add(SignInTrace.createFrom(1L,LocalDateTime.of(2020,10,2,9,0,12),"001.001.001.001","yu001009",SignInCause.サインイン.getCode(),SignInResult.失敗_存在しないオペレーター.getCode(),1,null));
-        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,1,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.成功.getCode(),1,null));
-        list.add(SignInTrace.createFrom(3L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",SignInCause.サインイン.getCode(),SignInResult.失敗_パスワード誤り.getCode(),1,null));
+        list.add(SignInTrace.createFrom(1L,LocalDateTime.of(2020,10,2,9,0,12),"001.001.001.001","yu001009",SignInCause.サインイン,SignInResult.失敗_存在しないオペレーター,1,null));
+        list.add(SignInTrace.createFrom(2L,LocalDateTime.of(2020,10,2,9,1,34),"001.001.001.001","yu001010",SignInCause.サインイン,SignInResult.成功,1,null));
+        list.add(SignInTrace.createFrom(3L,LocalDateTime.of(2020,10,2,9,0,34),"001.001.001.001","yu001010",SignInCause.サインイン,SignInResult.失敗_パスワード誤り,1,null));
         return list;
     }
     // サインアウト証跡リストデータ作成
@@ -1425,7 +1429,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockOccurredDateFrom = LocalDate.of(2020, 10, 2);
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック, 0, null);
 
         // 期待値
         boolean expected = false;
@@ -1457,7 +1461,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockOccurredDateTo = LocalDate.of(2020, 9, 30);
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック, 0, null);
 
         // 期待値
         boolean expected = false;
@@ -1489,7 +1493,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockStatusLock = true;
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック, 0, null);
 
         // 期待値
         boolean expected = true;
@@ -1521,7 +1525,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockStatusLock = true;
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック, 0, null);
 
         // 期待値
         boolean expected = false;
@@ -1553,7 +1557,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockStatusUnlock = true;
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.アンロック, 0, null);
 
         // 期待値
         boolean expected = true;
@@ -1585,7 +1589,7 @@ class SearchOperatorTest {
 
         // 実行値
         accountLockStatusUnlock = true;
-        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック.getCode(), 0, null);
+        AccountLock accountLocks = AccountLock.createFrom(1L, 18L, LocalDateTime.of(2020, 10, 1, 8, 30, 12),AccountLockStatus.ロック, 0, null);
 
         // 期待値
         boolean expected = false;
@@ -2255,8 +2259,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,2,8,30,12),
             "001.001.001.001",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2296,8 +2300,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,1,8,30,12),
             "001.001.001.001",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2337,8 +2341,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "001.001.001.001",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2410,8 +2414,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "001.001.001.001",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2451,8 +2455,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "001.001.001.001",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2491,8 +2495,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "145.254.211.51",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2531,8 +2535,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "145.254.211.51",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2602,8 +2606,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "145.254.211.51",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2644,8 +2648,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "145.254.211.51",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );
@@ -2716,8 +2720,8 @@ class SearchOperatorTest {
             LocalDateTime.of(2020,10,3,8,30,12),
             "145.254.211.51",
             "yu001009",
-            SignInCause.サインイン.getCode(),
-            SignInResult.成功.getCode(),
+            SignInCause.サインイン,
+            SignInResult.成功,
             1,
             null
         );

@@ -36,7 +36,7 @@ public class Ed01000SignInPresenter implements SignInResponse {
      */
     public boolean isSignInResultSuccess() {
         if (signInResultCode == null) { return false; }
-        return SignInResult.codeOf(signInResultCode).isSuccess();
+        return SignInResult.codeOf(signInResultCode).is成功();
     }
 
     /**

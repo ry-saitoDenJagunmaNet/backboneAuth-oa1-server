@@ -96,7 +96,7 @@ class Oa11010SearchPresenter extends BaseOfOperatorSearchResponse implements Ope
         String available_status = operator.getAvailableStatus().getCode()==0? "oaex_available_status_possible":"oaex_available_status_inpossible";
         html.append(String.format("<td class=\"oaex_operator_available_status\"><div class=\"%s\"></div></td>", available_status));
         // ロック
-        String lockStatus = (accountLock!=null && accountLock.getLockStatus()==1)? "oaex_account_lock":"oaex_account_unlock";
+        String lockStatus = (accountLock!=null && accountLock.getLockStatus().isロック())? "oaex_account_lock":"oaex_account_unlock";
         html.append(String.format("<td class=\"oaex_operator_account_lock\"><div class=\"%s\"></div></td>", lockStatus));
         // 店舗
         if (branchAtMoment == null) {
