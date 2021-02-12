@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operatorHistoryPack;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
-import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -38,7 +37,6 @@ import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operato
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.beans.Beans;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

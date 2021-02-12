@@ -24,7 +24,6 @@ import net.jagunma.backbone.auth.model.dao.operator_BizTranRoleHistory.Operator_
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntity;
 import net.jagunma.backbone.auth.model.dao.operator_SubSystemRoleHistory.Operator_SubSystemRoleHistoryEntityDao;
 import net.jagunma.common.ddd.model.orders.Orders;
-import net.jagunma.common.util.beans.Beans;
 import org.springframework.stereotype.Component;
 
 /**

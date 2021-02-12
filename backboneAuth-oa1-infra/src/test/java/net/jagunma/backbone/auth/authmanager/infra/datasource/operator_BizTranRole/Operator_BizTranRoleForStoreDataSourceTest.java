@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.datasource.operator_BizTranRole;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
-import static net.jagunma.common.util.objects2.Objects2.toStringHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
