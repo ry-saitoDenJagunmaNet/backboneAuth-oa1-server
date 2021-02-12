@@ -212,7 +212,7 @@ public class OperatorForStoreDataSource implements OperatorRepositoryForStore {
 
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
-        PasswordHistories passwordHistories = passwordHistoryRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+        PasswordHistories passwordHistories = passwordHistoryRepository.selectBy(passwordHistoryCriteria, Orders.empty().addOrder("changeDateTime", Order.DESC));
 
         if (isDeviceAuth) {
             // 前回の「パスワード」と 「変更種別」機器認証パスワード を補完

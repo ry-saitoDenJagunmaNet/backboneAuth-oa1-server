@@ -584,7 +584,7 @@ class OperatorForStoreDataSourceTest {
             null);
         PasswordHistoryCriteria expectedPasswordHistoryCriteria = new PasswordHistoryCriteria();
         expectedPasswordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
+        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("changeDateTime", Order.DESC);
 
         // 実行
         PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);
@@ -631,7 +631,7 @@ class OperatorForStoreDataSourceTest {
             null);
         PasswordHistoryCriteria expectedPasswordHistoryCriteria = new PasswordHistoryCriteria();
         expectedPasswordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("ChangeDateTime", Order.DESC);
+        Orders  expectedPasswordHistoryOrders = Orders.empty().addOrder("changeDateTime", Order.DESC);
 
         // 実行
         PasswordHistory passwordHistory = operatorForStoreDataSource.storePasswordHistory(operatorId, updatedAt, isDeviceAuth);

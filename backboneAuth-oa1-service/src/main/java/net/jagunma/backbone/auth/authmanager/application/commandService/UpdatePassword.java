@@ -94,7 +94,7 @@ public class UpdatePassword {
         passwordHistoryCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
 
         PasswordHistories passwordHistories = passwordHistoryRepository
-            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("changeDateTime", Order.DESC));
 
         if (passwordHistories.getValues().get(0).getPasswordChangeType().equals(PasswordChangeType.機器認証パスワード)) {
             throw new GunmaRuntimeException("EOA12002");
@@ -115,7 +115,7 @@ public class UpdatePassword {
         passwordHistoryCriteria.getChangeTypeCriteria().setNotEqualTo(PasswordChangeType.機器認証パスワード.getCode());
 
         PasswordHistories passwordHistories = passwordHistoryRepository
-            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("ChangeDateTime", Order.DESC));
+            .selectBy(passwordHistoryCriteria, Orders.empty().addOrder("changeDateTime", Order.DESC));
 
         int counter = 0;
         for (PasswordHistory passwordHistory : passwordHistories.getValues()) {

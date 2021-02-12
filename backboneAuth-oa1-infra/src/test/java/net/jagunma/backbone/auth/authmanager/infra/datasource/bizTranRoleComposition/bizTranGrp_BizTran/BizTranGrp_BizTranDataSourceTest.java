@@ -194,7 +194,7 @@ class BizTranGrp_BizTranDataSourceTest {
         String subSystemCode = SubSystem.販売_畜産.getCode();
         BizTranGrp_BizTranCriteria criteria = new BizTranGrp_BizTranCriteria();
         criteria.getSubSystemCodeCriteria().setEqualTo(subSystemCode);
-        Orders orders =Orders.empty().addOrder("subsystemCode");
+        Orders orders = Orders.empty().addOrder("subsystemCode");
 
         // テスト対象クラス生成
         BizTranGrp_BizTranDataSource bizTranGrp_BizTranDataSource = new BizTranGrp_BizTranDataSource(
