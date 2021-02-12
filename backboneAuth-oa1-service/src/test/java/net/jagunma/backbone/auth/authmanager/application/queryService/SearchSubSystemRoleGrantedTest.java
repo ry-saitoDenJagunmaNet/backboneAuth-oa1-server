@@ -228,8 +228,7 @@ class SearchSubSystemRoleGrantedTest {
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
+        for (SubSystemRole subSystemRole : SubSystemRole.getValidList()) {
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
             allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
@@ -426,8 +425,7 @@ class SearchSubSystemRoleGrantedTest {
 
         // 期待値
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
+        for (SubSystemRole subSystemRole : SubSystemRole.getValidList()) {
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
             allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));
@@ -462,8 +460,7 @@ class SearchSubSystemRoleGrantedTest {
 
         // 期待値
         List<SubSystemRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
+        for (SubSystemRole subSystemRole : SubSystemRole.getValidList()) {
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
             allRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(subSystemRole.getCode(), signInOperator_SubSystemRoles));

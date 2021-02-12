@@ -266,8 +266,7 @@ class Oa11040ControllerTest {
         return unAssignRoleTableVoList;
     }
     private void createAllRole(List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList, List<Oa11040UnAssignRoleTableVo> unAssignRoleTableVoList) {
-        for (SubSystemRole subSystemRole : SubSystemRole.values()) {//ToDo:ソートオーダー回し実装（ユーティリティで実現）
-            if (subSystemRole.getCode().length() == 0) { continue; }
+        for (SubSystemRole subSystemRole : SubSystemRole.getValidList()) {
             SubSystemRoleGrantedAllRoleDto allRoleDto = new SubSystemRoleGrantedAllRoleDto();
             allRoleDto.setSubSystemRole(subSystemRole);
             allRoleDto.setIsModifiable(true);
