@@ -581,7 +581,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
         }
         Operator_SubSystemRoleCriteria expectedOperator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
         expectedOperator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Orders expectedOperator_SubSystemRoleOrders = Orders.empty().addOrder("Operator_SubSystemRoleId");
+        Orders expectedOperator_SubSystemRoleOrders = Orders.empty().addOrder("operator_SubSystemRoleId");
 
         // 実行
         List<Operator_SubSystemRoleHistoryEntity> operator_SubSystemRoleHistoryEntityList = operatorHistoryPackForStoreDataSource.insertOperator_SubSystemRoleHistory(operatorHistoryId, operatorId);

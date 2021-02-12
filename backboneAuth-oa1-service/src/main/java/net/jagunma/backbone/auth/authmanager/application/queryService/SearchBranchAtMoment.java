@@ -48,7 +48,7 @@ public class SearchBranchAtMoment {
         criteria.getJaIdentifierCriteria().setEqualTo(jaId);
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        Orders orders = Orders.empty().addOrder("BranchAttribute.BranchCode");
+        Orders orders = Orders.empty().addOrder("branchAttribute.branchCode");
         return branchAtMomentRepository.selectBy(criteria, orders);
     }
 
@@ -64,7 +64,7 @@ public class SearchBranchAtMoment {
         criteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(jaCode));
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        Orders orders = Orders.empty().addOrder("BranchAttribute.BranchCode");
+        Orders orders = Orders.empty().addOrder("branchAttribute.branchCode");
         return branchAtMomentRepository.selectBy(criteria, orders);
     }
 }

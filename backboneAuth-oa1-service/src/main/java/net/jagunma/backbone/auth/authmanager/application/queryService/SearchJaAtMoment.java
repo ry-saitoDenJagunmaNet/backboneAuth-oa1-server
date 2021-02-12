@@ -45,7 +45,7 @@ public class SearchJaAtMoment {
         JaAtMomentCriteria criteria = new JaAtMomentCriteria();
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
-        Orders orders = Orders.empty().addOrder("JaAttribute.JaCode");
+        Orders orders = Orders.empty().addOrder("jaAttribute.jaCode");
         return jaAtMomentRepository.selectBy(criteria, orders);
     }
 

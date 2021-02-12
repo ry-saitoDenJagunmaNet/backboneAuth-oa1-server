@@ -24,6 +24,6 @@ public class SimpleSearchBizTranRole {
      * @return 取引ロール群
      */
     public BizTranRoles getBizTranRoles() {
-        return bizTranRoleRepository.selectAll(Orders.empty().addOrder("BizTranRoleCode"));
+        return bizTranRoleRepository.selectAll(Orders.empty().addOrder("bizTranRoleCode"));
     }
 }

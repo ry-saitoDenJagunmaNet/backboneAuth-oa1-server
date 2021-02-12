@@ -625,7 +625,7 @@ public class SearchOperator {
     private  Operator_SubSystemRoles searchOperator_SubSystemRoles(List<Long> operatorIdList) {
         Operator_SubSystemRoleCriteria criteria = new Operator_SubSystemRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
+        return operator_SubSystemRoleRepository.selectBy(criteria, Orders.empty().addOrder("operatorId"));
     }
 
     /**
@@ -637,7 +637,7 @@ public class SearchOperator {
     private Operator_BizTranRoles searchOperator_BizTranRoles(List<Long> operatorIdList) {
         Operator_BizTranRoleCriteria criteria = new Operator_BizTranRoleCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return operator_BizTranRoleRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId"));
+        return operator_BizTranRoleRepository.selectBy(criteria, Orders.empty().addOrder("operatorId"));
     }
 
     /**
@@ -649,7 +649,7 @@ public class SearchOperator {
     private AccountLocks searchAccountLocks(List<Long> operatorIdList) {
         AccountLockCriteria criteria = new AccountLockCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return accountLockRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("OccurredDateTime", Order.DESC));
+        return accountLockRepository.selectBy(criteria, Orders.empty().addOrder("operatorId").addOrder("occurredDateTime", Order.DESC));
     }
 
     /**
@@ -661,7 +661,7 @@ public class SearchOperator {
     private PasswordHistories searchPasswordHistories(List<Long> operatorIdList) {
         PasswordHistoryCriteria criteria = new PasswordHistoryCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return passwordHistoryRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
+        return passwordHistoryRepository.selectBy(criteria, Orders.empty().addOrder("operatorId").addOrder("changeDateTime", Order.DESC));
     }
 
     /**
@@ -673,7 +673,7 @@ public class SearchOperator {
     private SignInTraces searchSignInTraces(List<String> operatorCodeList) {
         SignInTraceCriteria criteria = new SignInTraceCriteria();
         criteria.getOperatorCodeCriteria().getIncludes().addAll(operatorCodeList);
-        return signInTraceRepository.selectBy(criteria, Orders.empty().addOrder("OperatorCode").addOrder("TryDateTime", Order.DESC));
+        return signInTraceRepository.selectBy(criteria, Orders.empty().addOrder("operatorCode").addOrder("tryDateTime", Order.DESC));
     }
 
     /**
@@ -685,7 +685,7 @@ public class SearchOperator {
     private SignOutTraces searchSignOutTraces(List<Long> operatorIdList) {
         SignOutTraceCriteria criteria = new SignOutTraceCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
-        return signOutTraceRepository.selectBy(criteria, Orders.empty().addOrder("OperatorId").addOrder("SignOutDateTime", Order.DESC));
+        return signOutTraceRepository.selectBy(criteria, Orders.empty().addOrder("operatorId").addOrder("signOutDateTime", Order.DESC));
     }
 
     /**
@@ -698,6 +698,6 @@ public class SearchOperator {
         OperatorHistoryHeaderCriteria criteria = new OperatorHistoryHeaderCriteria();
         criteria.getOperatorIdCriteria().getIncludes().addAll(operatorIdList);
         return operatorHistoryHeaderRepository.selectBy(criteria,
-            Orders.empty().addOrder("OperatorId").addOrder("ChangeDateTime", Order.DESC));
+            Orders.empty().addOrder("operatorId").addOrder("changeDateTime", Order.DESC));
     }
 }

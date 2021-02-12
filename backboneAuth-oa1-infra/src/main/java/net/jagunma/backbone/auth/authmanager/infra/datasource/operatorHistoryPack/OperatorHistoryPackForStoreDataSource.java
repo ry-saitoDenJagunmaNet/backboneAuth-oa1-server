@@ -146,8 +146,7 @@ public class OperatorHistoryPackForStoreDataSource implements OperatorHistoryPac
         // 現在の割当を取得
         Operator_SubSystemRoleCriteria operator_SubSystemRoleCriteria = new Operator_SubSystemRoleCriteria();
         operator_SubSystemRoleCriteria.getOperatorIdCriteria().setEqualTo(operatorId);
-        Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRoleRepository.selectBy(operator_SubSystemRoleCriteria,
-            Orders.empty().addOrder("Operator_SubSystemRoleId"));
+        Operator_SubSystemRoles operator_SubSystemRoles = operator_SubSystemRoleRepository.selectBy(operator_SubSystemRoleCriteria, Orders.empty().addOrder("operator_SubSystemRoleId"));
 
         // インサート
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
