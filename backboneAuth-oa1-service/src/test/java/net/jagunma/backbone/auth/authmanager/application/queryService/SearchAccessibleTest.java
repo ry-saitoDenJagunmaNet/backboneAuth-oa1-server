@@ -75,13 +75,16 @@ class SearchAccessibleTest {
     // オペレーター_取引ロール割当データ作成
     private List<Operator_BizTranRole> createOperator_BizTranRoleList() {
         List<Operator_BizTranRole> list = newArrayList();
-        list.add(Operator_BizTranRole.createFrom(101L,18L,1l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(1l)));
-        list.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        list.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        list.add(Operator_BizTranRole.createFrom(101L,18L,1l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(1l)));
+        list.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        list.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         return list;
     }
     // オペレーターデータ作成
-    private Operator creatrOperator(Long id) {
+    private Operator createOperator(Long id) {
         List<Operator> list = newArrayList();
         list.add(Operator.createFrom(18L,"yu001009",null,null,null,null,null,6L,"006",33L,"001",null,null,null));
         return list.stream().filter(b -> b.getOperatorId().equals(id)).findFirst().orElse(null);
@@ -1193,8 +1196,10 @@ class SearchAccessibleTest {
         // 実行値
         // 対象を畜産だけに
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
         systemAvailableTimeZones = SystemAvailableTimeZones.createFrom(newArrayList());
@@ -1233,8 +1238,10 @@ class SearchAccessibleTest {
         // 実行値
         // 対象を畜産だけに
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
         List<SystemAvailableTimeZone> list = newArrayList();
@@ -1276,8 +1283,10 @@ class SearchAccessibleTest {
         // 実行値
         // 対象を畜産だけに
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
         List<SystemAvailableTimeZone> list = newArrayList();
@@ -1319,8 +1328,10 @@ class SearchAccessibleTest {
         // 実行値
         // 対象を畜産だけに
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
         List<SystemAvailableTimeZone> list = newArrayList();
@@ -1376,8 +1387,10 @@ class SearchAccessibleTest {
         // 実行値
         // 対象を畜産だけに
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(2l)));
-        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,creatrOperator(18L),createBizTranRole(3l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(201L,18L,2l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(2l)));
+        operator_BizTranRoleList.add(Operator_BizTranRole.createFrom(202L,18L,3l,LocalDate.of(2021,1,1),LocalDate.of(9999,12,31),1,
+            createOperator(18L),createBizTranRole(3l)));
         operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
         List<SystemAvailableTimeZone> list = newArrayList();

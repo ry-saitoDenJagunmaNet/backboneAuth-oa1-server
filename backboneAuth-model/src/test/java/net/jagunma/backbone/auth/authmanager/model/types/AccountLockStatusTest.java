@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.types;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import net.jagunma.common.tests.constants.TestSize;
@@ -86,4 +87,82 @@ class AccountLockStatusTest {
         assertThat(AccountLockStatus.codeOf((short) -1)).isEqualTo(AccountLockStatus.UnKnown);
         assertThat(AccountLockStatus.codeOf((short) 9)).isEqualTo(AccountLockStatus.UnKnown);
     }
+
+    /**
+     * {@link AccountLockStatus#isアンロック()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・AccountLockStatusの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isアンロック_test0() {
+
+        // 実行
+        AccountLockStatus actual = AccountLockStatus.アンロック;
+
+        // 実行 & 結果検証
+        assertTrue(actual.isアンロック());
+    }
+
+    /**
+     * {@link AccountLockStatus#isアンロック()}テスト
+     *  ●パターン
+     *    正常（アンロック以外）
+     *
+     *  ●検証事項
+     *  ・AccountLockStatusの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isアンロック_test1() {
+
+        // 実行
+        AccountLockStatus actual = AccountLockStatus.ロック;
+
+        // 実行 & 結果検証
+        assertThat(actual.isアンロック()).isEqualTo(false);
+    }
+
+    /**
+     * {@link AccountLockStatus#isロック()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・AccountLockStatusの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isロック_test0() {
+
+        // 実行
+        AccountLockStatus actual = AccountLockStatus.ロック;
+
+        // 実行 & 結果検証
+        assertTrue(actual.isロック());
+    }
+
+    /**
+     * {@link AccountLockStatus#isロック()}テスト
+     *  ●パターン
+     *    正常（ロック以外）
+     *
+     *  ●検証事項
+     *  ・AccountLockStatusの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isロック_test1() {
+
+        // 実行
+        AccountLockStatus actual = AccountLockStatus.アンロック;
+
+        // 実行 & 結果検証
+        assertThat(actual.isロック()).isEqualTo(false);
+    }
+
+
 }

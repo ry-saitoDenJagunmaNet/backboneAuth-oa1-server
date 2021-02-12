@@ -58,7 +58,7 @@ class Oa12020ControllerTest {
             }) {
             public void execute(SuspendBizTransSearchRequest request, SuspendBizTransSearchResponse response) {
                 if (throwExceptio == null) {
-                    response.setSuspendBizTrans(SuspendBizTrans.createFrom(cresteSuspendBizTran()));
+                    response.setSuspendBizTrans(SuspendBizTrans.createFrom(createSuspendBizTran()));
                     return;
                 }
                 // createOa12020Controllerの引数 throwExceptio == -1 の場合：RuntimeException を発生させる
@@ -75,7 +75,7 @@ class Oa12020ControllerTest {
     }
 
     // 一時取引抑止リストデータ作成
-    private List<SuspendBizTran> cresteSuspendBizTran() {
+    private List<SuspendBizTran> createSuspendBizTran() {
         List<SuspendBizTran> list = newArrayList();
         list.add(SuspendBizTran.createFrom(1L,"006","001",SubSystem.販売_畜産.getCode(),"ANTG01","AN0001",LocalDate.of(2020,11,1),LocalDate.of(2020,11,2),"不具合により緊急抑止",1,
             createJaAtMomentList().stream().filter(j->j.getIdentifier().equals(6L)).findFirst().orElse(null),
@@ -244,7 +244,7 @@ class Oa12020ControllerTest {
         String expectedViewName = "oa12020";
         Oa12020Vo expectedVo = new Oa12020Vo();
         List<Oa12020SearchResultVo> searchResultVoList = newArrayList();
-        for (SuspendBizTran suspendBizTran : cresteSuspendBizTran()) {
+        for (SuspendBizTran suspendBizTran : createSuspendBizTran()) {
             Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
             searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
             searchResultVo.setJaCode((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaCode());
@@ -371,7 +371,7 @@ class Oa12020ControllerTest {
         String expectedViewName = "oa12020";
         Oa12020Vo expectedVo = new Oa12020Vo();
         List<Oa12020SearchResultVo> searchResultVoList = newArrayList();
-        for (SuspendBizTran suspendBizTran : cresteSuspendBizTran()) {
+        for (SuspendBizTran suspendBizTran : createSuspendBizTran()) {
             Oa12020SearchResultVo searchResultVo = new Oa12020SearchResultVo();
             searchResultVo.setSuspendBizTranId(suspendBizTran.getSuspendBizTranId());
             searchResultVo.setJaCode((suspendBizTran.getJaAtMoment() == null)? null : suspendBizTran.getJaCode());

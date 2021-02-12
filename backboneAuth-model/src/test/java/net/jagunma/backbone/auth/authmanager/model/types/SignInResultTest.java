@@ -110,11 +110,11 @@ class SignInResultTest {
      *    正常
      *
      *  ●検証事項
-     *  ・CalendarTypeの判定
+     *  ・SignInResultの判定
      */
     @Test
     @Tag(TestSize.SMALL)
-    void isSuccess_test0() {
+    void is成功_test0() {
 
         // 実行
         SignInResult actual = SignInResult.成功;
@@ -126,19 +126,57 @@ class SignInResultTest {
     /**
      * {@link SignInResult#is成功()}テスト
      *  ●パターン
-     *    異常
+     *    正常（成功以外）
      *
      *  ●検証事項
-     *  ・CalendarTypeの判定
+     *  ・SignInResultの判定
      */
     @Test
     @Tag(TestSize.SMALL)
-    void isSuccess_test1() {
+    void is成功_test1() {
+
+        // 実行
+        SignInResult actual = SignInResult.失敗_存在しないオペレーター;
+
+        // 実行 & 結果検証
+        assertThat(actual.is成功()).isEqualTo(false);;
+    }
+
+    /**
+     * {@link SignInResult#is失敗_パスワード誤り()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・SignInResultの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is失敗_パスワード誤り_test0() {
 
         // 実行
         SignInResult actual = SignInResult.失敗_パスワード誤り;
 
         // 実行 & 結果検証
-        assertThat(actual.is成功()).isEqualTo(false);
+        assertTrue(actual.is失敗_パスワード誤り());
+    }
+
+    /**
+     * {@link SignInResult#is失敗_パスワード誤り()}テスト
+     *  ●パターン
+     *    正常（失敗_パスワード誤り以外）
+     *
+     *  ●検証事項
+     *  ・SignInResultの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is失敗_パスワード誤り_test1() {
+
+        // 実行
+        SignInResult actual = SignInResult.遮断_IPアドレス範囲外;
+
+        // 実行 & 結果検証
+        assertThat(actual.is失敗_パスワード誤り()).isEqualTo(false);
     }
 }
