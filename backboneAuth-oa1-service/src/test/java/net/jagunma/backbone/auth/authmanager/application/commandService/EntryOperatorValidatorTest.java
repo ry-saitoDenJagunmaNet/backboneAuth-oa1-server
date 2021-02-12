@@ -505,33 +505,6 @@ class EntryOperatorValidatorTest {
     /**
      * {@link EntryOperatorValidator#validate()}テスト
      *  ●パターン
-     *    全角混入チェック  メールアドレス
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Disabled // ToDo:
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test17() {
-        // 実行値
-        mailAddress = "te全st@den.jagunma.net";
-        OperatorEntryRequest request = createRequest();
-
-        assertThatThrownBy(() ->
-            // 実行
-            EntryOperatorValidator.with(request).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
-                assertThat(e.getArgs()).containsSequence("メールアドレス");
-            });
-    }
-
-    /**
-     * {@link EntryOperatorValidator#validate()}テスト
-     *  ●パターン
      *    全角混入チェック  パスワード
      *
      *  ●検証事項
@@ -541,7 +514,7 @@ class EntryOperatorValidatorTest {
     @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test18() {
+    void validate_Test17() {
         // 実行値
         password = "PaSs全WoRd";
         OperatorEntryRequest request = createRequest();
@@ -567,7 +540,7 @@ class EntryOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test19() {
+    void validate_Test18() {
         // 実行値
         operatorCode6 = "1.3-aB";
         OperatorEntryRequest request = createRequest();
@@ -579,6 +552,32 @@ class EntryOperatorValidatorTest {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13006");
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）");
+            });
+    }
+
+    /**
+     * {@link EntryOperatorValidator#validate()}テスト
+     *  ●パターン
+     *    メールアドレスフォーマット有効チェック  メールアドレス
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test19() {
+        // 実行値
+        mailAddress = "te全st.@den.jagunma.net";
+        OperatorEntryRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            EntryOperatorValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13009");
+                assertThat(e.getArgs()).containsSequence("メールアドレス");
             });
     }
 

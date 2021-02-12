@@ -406,33 +406,6 @@ class UpdateOperatorValidatorTest {
     /**
      * {@link UpdateOperatorValidator#validate()}テスト
      *  ●パターン
-     *    全角混入チェック  メールアドレス
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Disabled // ToDo:
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test13() {
-        // 実行値
-        mailAddress = "te全st@den.jagunma.net";
-        OperatorUpdateRequest request = createRequest();
-
-        assertThatThrownBy(() ->
-            // 実行
-            UpdateOperatorValidator.with(request).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA13005");
-                assertThat(e.getArgs()).containsSequence("メールアドレス");
-            });
-    }
-
-    /**
-     * {@link UpdateOperatorValidator#validate()}テスト
-     *  ●パターン
      *    列挙型未定義チェック  利用可否状態
      *
      *  ●検証事項
@@ -441,7 +414,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test14() {
+    void validate_Test13() {
         // 実行値
         availableStatus = AvailableStatus.UnKnown;
         OperatorUpdateRequest request = createRequest();
@@ -467,7 +440,7 @@ class UpdateOperatorValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test15() {
+    void validate_Test14() {
         // 実行値
         validThruEndDate = LocalDate.of(2020, 8, 31);
         OperatorUpdateRequest request = createRequest();
@@ -479,6 +452,32 @@ class UpdateOperatorValidatorTest {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13008");
                 assertThat(e.getArgs()).containsSequence("有効期限");
+            });
+    }
+
+    /**
+     * {@link UpdateOperatorValidator#validate()}テスト
+     *  ●パターン
+     *    メールアドレスフォーマット有効チェック  メールアドレス
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test15() {
+        // 実行値
+        mailAddress = "te全st.@den.jagunma.net";
+        OperatorUpdateRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            UpdateOperatorValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13009");
+                assertThat(e.getArgs()).containsSequence("メールアドレス");
             });
     }
 }
