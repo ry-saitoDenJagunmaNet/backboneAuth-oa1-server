@@ -50,13 +50,15 @@ class EntryOperatorValidator {
 
         // ToDo: 全角混入チェック
         //  throw new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）");
-        //  throw new GunmaRuntimeException("EOA13005", "メールアドレス"); ←どこまでチェックするか？ライブラリ提供あるかも
         //  throw new GunmaRuntimeException("EOA13005", "パスワード");
 
         // 数値チェック
         if (!Strings2.isDigit(request.getOperatorCode6())) {
             throw new GunmaRuntimeException("EOA13006", "オペレーターコード（下6桁）");
         }
+
+        // メールアドレスフォーマット有効チェック
+        Preconditions.checkAvailableMailAddressFormat(request.getMailAddress(), () -> new GunmaRuntimeException("EOA13009", "メールアドレス"));
 
         // 範囲指定不正チェック
         Preconditions.checkMax(request.getValidThruEndDate(), request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
