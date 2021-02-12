@@ -57,12 +57,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
     private Long branchId = 1L;
     private String branchCode = "001";
     private AvailableStatus availableStatus = AvailableStatus.利用可能;
-    private Long createdBy = 100L;
     private LocalDateTime createdAt = LocalDateTime.of(2020, 10, 30,1,2,3);
-    private String createdIpAddress = "100.100.100.100";
-    private Long updatedBy = 200L;
-    private LocalDateTime updatedAt = LocalDateTime.of(2020, 10, 31,4,5,6);
-    private String updatedIpAddress = "200.200.200.200";
     private Integer recordVersion = 1;
 
     // オペレーター履歴ヘッダー系
@@ -92,12 +87,11 @@ class OperatorHistoryPackForStoreDataSourceTest {
     private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
     // 検証値
-    OperatorCriteria actualOperatorCriteria;
+    Long actualOperatorId;
     Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
     Orders actualOperator_SubSystemRoleOrders;
     Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
     Orders actualOperator_BizTranRoleOrders;
-    Long actualOperatorId;
 
     // テスト対象クラス生成
     private OperatorHistoryPackForStoreDataSource createOperatorHistoryPackForStoreDataSource() {
@@ -105,13 +99,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
             @Override
             public int insert(OperatorHistoryHeaderEntity entity) {
                 entity.setOperatorHistoryId(operatorHistoryId);
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
                 return 0;
             }
             @Override
@@ -161,17 +148,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
         };
         OperatorHistoryEntityDao operatorHistoryEntityDao = new OperatorHistoryEntityDao() {
             @Override
-            public int insert(OperatorHistoryEntity entity) {
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
             public List<OperatorHistoryEntity> findAll(Orders orders) {
                 return null;
             }
@@ -185,6 +161,10 @@ class OperatorHistoryPackForStoreDataSourceTest {
             }
             @Override
             public int countBy(OperatorHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(OperatorHistoryEntity entity) {
                 return 0;
             }
             @Override
@@ -218,17 +198,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
         };
         Operator_SubSystemRoleHistoryEntityDao operator_SubSystemRoleHistoryEntityDao = new Operator_SubSystemRoleHistoryEntityDao() {
             @Override
-            public int insert(Operator_SubSystemRoleHistoryEntity entity) {
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
             public List<Operator_SubSystemRoleHistoryEntity> findAll(Orders orders) {
                 return null;
             }
@@ -242,6 +211,10 @@ class OperatorHistoryPackForStoreDataSourceTest {
             }
             @Override
             public int countBy(Operator_SubSystemRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(Operator_SubSystemRoleHistoryEntity entity) {
                 return 0;
             }
             @Override
@@ -275,17 +248,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
         };
         Operator_BizTranRoleHistoryEntityDao operator_BizTranRoleHistoryEntityDao = new Operator_BizTranRoleHistoryEntityDao() {
             @Override
-            public int insert(Operator_BizTranRoleHistoryEntity entity) {
-                entity.setCreatedBy(createdBy);
-                entity.setCreatedAt(createdAt);
-                entity.setCreatedIpAddress(createdIpAddress);
-                entity.setUpdatedBy(null);
-                entity.setUpdatedAt(null);
-                entity.setUpdatedIpAddress(null);
-                entity.setRecordVersion(recordVersion);
-                return 0;
-            }
-            @Override
             public List<Operator_BizTranRoleHistoryEntity> findAll(Orders orders) {
                 return null;
             }
@@ -299,6 +261,10 @@ class OperatorHistoryPackForStoreDataSourceTest {
             }
             @Override
             public int countBy(Operator_BizTranRoleHistoryEntityCriteria criteria) {
+                return 0;
+            }
+            @Override
+            public int insert(Operator_BizTranRoleHistoryEntity entity) {
                 return 0;
             }
             @Override
@@ -413,7 +379,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
         // テスト対象クラス生成
         OperatorHistoryPackForStoreDataSource operatorHistoryPackForStoreDataSource = createOperatorHistoryPackForStoreDataSource();
 
-        // Todo: Beans.createAndCopy の enum 対応がされたら再確認
         assertThatCode(() ->
             // 実行
             operatorHistoryPackForStoreDataSource.store(operatorId, createdAt, changeCause))
@@ -482,13 +447,6 @@ class OperatorHistoryPackForStoreDataSourceTest {
         expectedEntity.setOperatorId(operatorId);
         expectedEntity.setChangeDateTime(createdAt);
         expectedEntity.setChangeCause(changeCause);
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(null);
-        expectedEntity.setUpdatedAt(null);
-        expectedEntity.setUpdatedIpAddress(null);
-        expectedEntity.setRecordVersion(recordVersion);
 
         // 実行
         OperatorHistoryHeaderEntity operatorHistoryHeaderEntity = operatorHistoryPackForStoreDataSource.insertOperatorHistoryHeader(operatorId, createdAt, changeCause);
@@ -530,16 +488,20 @@ class OperatorHistoryPackForStoreDataSourceTest {
             null);
 
         // 期待値
-        // Todo: Beans.createAndCopy の enum 対応がされたら再確認
-        OperatorHistoryEntity expectedEntity = Beans.createAndCopy(OperatorHistoryEntity.class, operator).execute();
+        OperatorHistoryEntity expectedEntity = new OperatorHistoryEntity();
         expectedEntity.setOperatorHistoryId(operatorHistoryId);
-        expectedEntity.setCreatedBy(createdBy);
-        expectedEntity.setCreatedAt(createdAt);
-        expectedEntity.setCreatedIpAddress(createdIpAddress);
-        expectedEntity.setUpdatedBy(null);
-        expectedEntity.setUpdatedAt(null);
-        expectedEntity.setUpdatedIpAddress(null);
-        expectedEntity.setRecordVersion(recordVersion);
+        expectedEntity.setOperatorId(operator.getOperatorId());
+        expectedEntity.setOperatorCode(operator.getOperatorCode());
+        expectedEntity.setOperatorName(operator.getOperatorName());
+        expectedEntity.setMailAddress(operator.getMailAddress());
+        expectedEntity.setValidThruStartDate(operator.getValidThruStartDate());
+        expectedEntity.setValidThruEndDate(operator.getValidThruEndDate());
+        expectedEntity.setIsDeviceAuth(operator.getIsDeviceAuth());
+        expectedEntity.setJaId(operator.getJaId());
+        expectedEntity.setJaCode(operator.getJaCode());
+        expectedEntity.setBranchId(operator.getBranchId());
+        expectedEntity.setBranchCode(operator.getBranchCode());
+        expectedEntity.setAvailableStatus(operator.getAvailableStatus().getCode());
 
         // 実行
         OperatorHistoryEntity operatorHistoryEntity = operatorHistoryPackForStoreDataSource.insertOperatorHistory(operatorHistoryId, operator);
@@ -566,16 +528,14 @@ class OperatorHistoryPackForStoreDataSourceTest {
         // 期待値
         List<Operator_SubSystemRoleHistoryEntity> expectedEntityList = newArrayList();
         for (Operator_SubSystemRole operator_SubSystemRole : operator_SubSystemRoles.getValues()) {
-
-            Operator_SubSystemRoleHistoryEntity expectedEntity = Beans.createAndCopy(Operator_SubSystemRoleHistoryEntity.class, operator_SubSystemRole).execute();
+            Operator_SubSystemRoleHistoryEntity expectedEntity = new Operator_SubSystemRoleHistoryEntity();
             expectedEntity.setOperatorHistoryId(operatorHistoryId);
-            expectedEntity.setCreatedBy(createdBy);
-            expectedEntity.setCreatedAt(createdAt);
-            expectedEntity.setCreatedIpAddress(createdIpAddress);
-            expectedEntity.setUpdatedBy(null);
-            expectedEntity.setUpdatedAt(null);
-            expectedEntity.setUpdatedIpAddress(null);
-            expectedEntity.setRecordVersion(recordVersion);
+
+            expectedEntity.setOperator_SubSystemRoleId(operator_SubSystemRole.getOperator_SubSystemRoleId());
+            expectedEntity.setOperatorId(operator_SubSystemRole.getOperatorId());
+            expectedEntity.setSubSystemRoleCode(operator_SubSystemRole.getSubSystemRoleCode());
+            expectedEntity.setValidThruStartDate(operator_SubSystemRole.getValidThruStartDate());
+            expectedEntity.setValidThruEndDate(operator_SubSystemRole.getValidThruEndDate());
 
             expectedEntityList.add(expectedEntity);
         }
@@ -588,9 +548,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
         // 結果検証
         assertThat(operator_SubSystemRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperator_SubSystemRoleCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleCriteria).defaultConfig().toString());
-        assertThat(toStringHelper(actualOperator_SubSystemRoleOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_SubSystemRoleOrders).defaultConfig().toString());
+        assertThat(actualOperator_SubSystemRoleCriteria.toString()).isEqualTo(expectedOperator_SubSystemRoleCriteria.toString());
+        assertThat(actualOperator_SubSystemRoleOrders).usingRecursiveComparison().isEqualTo(expectedOperator_SubSystemRoleOrders);
     }
 
     /**
@@ -611,16 +570,14 @@ class OperatorHistoryPackForStoreDataSourceTest {
         // 期待値
         List<Operator_BizTranRoleHistoryEntity> expectedEntityList = newArrayList();
         for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
-
-            Operator_BizTranRoleHistoryEntity expectedEntity = Beans.createAndCopy(Operator_BizTranRoleHistoryEntity.class, operator_BizTranRole).execute();
+            Operator_BizTranRoleHistoryEntity expectedEntity = new Operator_BizTranRoleHistoryEntity();
             expectedEntity.setOperatorHistoryId(operatorHistoryId);
-            expectedEntity.setCreatedBy(createdBy);
-            expectedEntity.setCreatedAt(createdAt);
-            expectedEntity.setCreatedIpAddress(createdIpAddress);
-            expectedEntity.setUpdatedBy(null);
-            expectedEntity.setUpdatedAt(null);
-            expectedEntity.setUpdatedIpAddress(null);
-            expectedEntity.setRecordVersion(recordVersion);
+
+            expectedEntity.setOperator_BizTranRoleId(operator_BizTranRole.getOperator_BizTranRoleId());
+            expectedEntity.setOperatorId(operator_BizTranRole.getOperatorId());
+            expectedEntity.setBizTranRoleId(operator_BizTranRole.getBizTranRoleId());
+            expectedEntity.setValidThruStartDate(operator_BizTranRole.getValidThruStartDate());
+            expectedEntity.setValidThruEndDate(operator_BizTranRole.getValidThruEndDate());
 
             expectedEntityList.add(expectedEntity);
         }
@@ -633,8 +590,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
 
         // 結果検証
         assertThat(Operator_BizTranRoleHistoryEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
-        // Todo:継承元のメソッド追加後要修正
-        assertThat(toStringHelper(actualOperator_BizTranRoleCriteria).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_BizTranRoleCriteria).defaultConfig().toString());
-        assertThat(toStringHelper(actualOperator_BizTranRoleOrders).defaultConfig().toString()).isEqualTo(toStringHelper(expectedOperator_BizTranRoleOrders).defaultConfig().toString());
+        assertThat(actualOperator_BizTranRoleCriteria.toString()).isEqualTo(expectedOperator_BizTranRoleCriteria.toString());
+        assertThat(actualOperator_BizTranRoleOrders).usingRecursiveComparison().isEqualTo(expectedOperator_BizTranRoleOrders);
     }
 }
