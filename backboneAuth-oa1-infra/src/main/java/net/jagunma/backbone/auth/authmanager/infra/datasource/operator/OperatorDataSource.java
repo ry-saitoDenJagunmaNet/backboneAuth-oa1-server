@@ -79,7 +79,6 @@ public class OperatorDataSource implements OperatorRepository {
         // Branch検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
         branchAtMomentCriteria.getIdentifierCriteria().setEqualTo(entity.getBranchId());
-//        branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(entity.getJaId());
         branchAtMomentCriteria.setTargetDate(TargetDate.now());
         branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         BranchAtMoment branchAtMoment = branchAtMomentRepository.findOneBy(branchAtMomentCriteria);
@@ -151,22 +150,6 @@ public class OperatorDataSource implements OperatorRepository {
         for (OperatorEntity entity : operatorEntityList) {
             list.add(operatorCreateFrom(entity,
                 branchesAtMoment.getValue().stream().filter(b -> b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)));
-//            list.add(Operator.createFrom(
-//                entity.getOperatorId(),
-//                entity.getOperatorCode(),
-//                entity.getOperatorName(),
-//                entity.getMailAddress(),
-//                entity.getValidThruStartDate(),
-//                entity.getValidThruEndDate(),
-//                entity.getIsDeviceAuth(),
-//                entity.getJaId(),
-//                entity.getJaCode(),
-//                entity.getBranchId(),
-//                entity.getBranchCode(),
-//                AvailableStatus.codeOf(entity.getAvailableStatus()),
-//                entity.getRecordVersion(),
-//                branchesAtMoment.getValue().stream().filter(b -> b.getIdentifier().equals(entity.getBranchId())).findFirst().orElse(null)
-//            ));
         }
         return Operators.createFrom(list);
     }

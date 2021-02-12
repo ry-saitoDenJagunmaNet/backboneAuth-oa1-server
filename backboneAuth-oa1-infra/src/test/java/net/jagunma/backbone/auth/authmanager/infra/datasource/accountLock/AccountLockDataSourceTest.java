@@ -110,11 +110,13 @@ class AccountLockDataSourceTest {
                 return accountLockEntityDaoExistsBy;
             }
             @Override
-            public List<AccountLockEntity> findAll(Orders orders) {
-                return null;
+            public AccountLockEntity findOneBy(AccountLockEntityCriteria criteria) {
+                actualAccountLockEntityDao_criteria = criteria;
+                return accountLockEntityList.stream().
+                    filter(a -> a.getAccountLockId().equals(criteria.getAccountLockIdCriteria().getEqualTo())).findFirst().orElse(null);
             }
             @Override
-            public AccountLockEntity findOneBy(AccountLockEntityCriteria criteria) {
+            public List<AccountLockEntity> findAll(Orders orders) {
                 return null;
             }
             @Override
@@ -200,6 +202,48 @@ class AccountLockDataSourceTest {
                 return false;
             }
         };
+    }
+
+    /**
+     * {@link AccountLockDataSource#findOneById(Long)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・検索結果
+     *  ・Dao検索条件
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void findOneById_test0() {
+
+        // 実行値
+        Long accountLockId = 1L;
+
+        // テスト対象クラス生成
+        AccountLockDataSource accountLockDataSource = new AccountLockDataSource(
+            createAccountLockEntityDao(),
+            createOperatorRepository());
+
+        // 期待値
+        AccountLockEntity entity = accountLockEntityList.stream().filter(a -> a.getAccountLockId().equals(accountLockId)).findFirst().orElse(null);
+        AccountLock expectedAccountLock = AccountLock.createFrom(
+            entity.getAccountLockId(),
+            entity.getOperatorId(),
+            entity.getOccurredDateTime(),
+            AccountLockStatus.codeOf(entity.getLockStatus()),
+            entity.getRecordVersion(),
+            operatorList.stream().filter(o->o.getOperatorId().equals(entity.getOperatorId())).findFirst().orElse(null));
+        AccountLockEntityCriteria expectedAccountLockEntityDao_criteria = new AccountLockEntityCriteria();
+        expectedAccountLockEntityDao_criteria.getAccountLockIdCriteria().setEqualTo(accountLockId);
+
+        // 実行
+        AccountLock actualAccountLock = accountLockDataSource.findOneById(accountLockId);
+
+        // 結果検証
+        assertThat(actualAccountLock).usingRecursiveComparison().isEqualTo(expectedAccountLock);
+        assertThat(actualAccountLockEntityDao_criteria.toString()).isEqualTo(expectedAccountLockEntityDao_criteria.toString());
     }
 
     /**

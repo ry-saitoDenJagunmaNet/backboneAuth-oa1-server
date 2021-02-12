@@ -25,7 +25,7 @@ class BizTranRoleCompositionTest {
 
     // 実行既定値
     // 取引群データ作成
-    private BizTrans cretaeBizTrans() {
+    private BizTrans createBizTrans() {
         List<BizTran> list = newArrayList();
         list.add(BizTran.createFrom(100001L,"AN0001","畜産メインメニュー",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31), SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         list.add(BizTran.createFrom(100002L,"AN1110","前日処理照会",false,LocalDate.of(2010,1,1),LocalDate.of(9999,12,31), SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
@@ -33,7 +33,7 @@ class BizTranRoleCompositionTest {
         return BizTrans.createFrom(list);
     }
     // 取引グループ群データ作成
-    private BizTranGrps cretaeBizTranGrps() {
+    private BizTranGrps createBizTranGrps() {
         List<BizTranGrp> list = newArrayList();
         list.add(BizTranGrp.createFrom(10001L,"ANTG01","データ入力取引グループ", SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
         list.add(BizTranGrp.createFrom(10002L,"ANTG02","精算取引グループ", SubSystem.販売_畜産.getCode(),1,SubSystem.販売_畜産));
@@ -41,24 +41,24 @@ class BizTranRoleCompositionTest {
         return BizTranGrps.createFrom(list);
     }
     // 取引グループ_取引割当群データ作成
-    private BizTranGrp_BizTrans cretaeBizTranGrp_BizTrans() {
+    private BizTranGrp_BizTrans createBizTranGrp_BizTrans() {
         List<BizTranGrp_BizTran> list = newArrayList();
         list.add(BizTranGrp_BizTran.createFrom(101L,10001L,100001L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10001L)).findFirst().orElse(null),
-            cretaeBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100001L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10001L)).findFirst().orElse(null),
+            createBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100001L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         list.add(BizTranGrp_BizTran.createFrom(102L,10002L,100002L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10002L)).findFirst().orElse(null),
-            cretaeBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100002L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10002L)).findFirst().orElse(null),
+            createBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100002L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         list.add(BizTranGrp_BizTran.createFrom(103L,10003L,100003L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10003L)).findFirst().orElse(null),
-            cretaeBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100003L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10003L)).findFirst().orElse(null),
+            createBizTrans().getValues().stream().filter(b->b.getBizTranId().equals(100003L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         return BizTranGrp_BizTrans.createFrom(list);
     }
     // 取引ロール群データ作成
-    private BizTranRoles cretaeBizTranRoles() {
+    private BizTranRoles createBizTranRoles() {
         List<BizTranRole> list = newArrayList();
         list.add(BizTranRole.createFrom(1001L,"ANAG01","（畜産）取引全般","KB",1,SubSystem.購買));
         list.add(BizTranRole.createFrom(1002L,"ANAG02","（畜産）維持管理担当者","KB",1,SubSystem.購買));
@@ -66,19 +66,19 @@ class BizTranRoleCompositionTest {
         return BizTranRoles.createFrom(list);
     }
     // 取引ロール_取引グループ割当群データ作成
-    private BizTranRole_BizTranGrps cretaeBizTranRole_BizTranGrps() {
+    private BizTranRole_BizTranGrps createBizTranRole_BizTranGrps() {
         List<BizTranRole_BizTranGrp> list = newArrayList();
         list.add(BizTranRole_BizTranGrp.createFrom(1L,1001L,10001L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1001L)).findFirst().orElse(null),
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10001L)).findFirst().orElse(null),
+            createBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1001L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10001L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         list.add(BizTranRole_BizTranGrp.createFrom(2L,1002L,10002L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1002L)).findFirst().orElse(null),
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10002L)).findFirst().orElse(null),
+            createBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1002L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10002L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         list.add(BizTranRole_BizTranGrp.createFrom(3L,1003L,10003L,SubSystem.販売_畜産.getCode(),1,
-            cretaeBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1003L)).findFirst().orElse(null),
-            cretaeBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10003L)).findFirst().orElse(null),
+            createBizTranRoles().getValues().stream().filter(b->b.getBizTranRoleId().equals(1003L)).findFirst().orElse(null),
+            createBizTranGrps().getValues().stream().filter(b->b.getBizTranGrpId().equals(10003L)).findFirst().orElse(null),
             SubSystem.販売_畜産));
         return BizTranRole_BizTranGrps.createFrom(list);
     }
@@ -96,11 +96,11 @@ class BizTranRoleCompositionTest {
     void createFrom_test0() {
 
         // 実行値 ＆ 期待値
-        BizTrans bizTrans = cretaeBizTrans();
-        BizTranGrps bizTranGrps = cretaeBizTranGrps();
-        BizTranGrp_BizTrans bizTranGrp_BizTrans = cretaeBizTranGrp_BizTrans();
-        BizTranRoles bizTranRoles = cretaeBizTranRoles();
-        BizTranRole_BizTranGrps bizTranRole_BizTranGrps = cretaeBizTranRole_BizTranGrps();
+        BizTrans bizTrans = createBizTrans();
+        BizTranGrps bizTranGrps = createBizTranGrps();
+        BizTranGrp_BizTrans bizTranGrp_BizTrans = createBizTranGrp_BizTrans();
+        BizTranRoles bizTranRoles = createBizTranRoles();
+        BizTranRole_BizTranGrps bizTranRole_BizTranGrps = createBizTranRole_BizTranGrps();
 
         // 実行
         BizTranRoleComposition bizTranRoleComposition = BizTranRoleComposition.createFrom(
