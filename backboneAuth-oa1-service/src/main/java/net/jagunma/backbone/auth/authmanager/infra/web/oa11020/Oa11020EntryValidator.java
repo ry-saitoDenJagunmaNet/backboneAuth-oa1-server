@@ -47,12 +47,14 @@ class Oa11020EntryValidator {
 
         // ToDo: 全角混入チェック
         //  throw new GunmaRuntimeException("EOA14005", "オペレーターコード（下6桁）");
-        //  throw new GunmaRuntimeException("EOA14005", "メールアドレス"); ←どこまでチェックするか？ライブラリ提供あるかも
 
         // 数値チェック
         if (!Strings2.isDigit(vo.getOperatorCode6())) {
             throw new GunmaRuntimeException("EOA14006", "オペレーターコード（下6桁）");
         }
+
+        // メールアドレスフォーマット有効チェック
+        Preconditions.checkAvailableMailAddressFormat(vo.getMailAddress(), () -> new GunmaRuntimeException("EOA14009", "メールアドレス"));
 
         // 範囲指定不正チェック
         Preconditions.checkMax(vo.getValidThruEndDate(), vo.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA14008", "有効期限"));
