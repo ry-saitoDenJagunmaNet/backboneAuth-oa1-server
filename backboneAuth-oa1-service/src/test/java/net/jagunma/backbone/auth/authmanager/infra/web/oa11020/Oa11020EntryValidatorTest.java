@@ -375,33 +375,6 @@ class Oa11020EntryValidatorTest {
     /**
      * {@link Oa11020EntryValidator#validate()}テスト
      *  ●パターン
-     *    全角混入チェック  メールアドレス
-     *
-     *  ●検証事項
-     *  ・エラー発生
-     *
-     */
-    @Disabled // ToDo:
-    @Test
-    @Tag(TestSize.SMALL)
-    void validate_Test13() {
-        // 実行値
-        mailAddress = "te全st@den.jagunma.net";
-        Oa11020Vo vo = createOa11020Vo();
-
-        assertThatThrownBy(() ->
-            // 実行
-            Oa11020EntryValidator.with(vo).validate())
-            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
-                // 結果検証
-                assertThat(e.getMessageCode()).isEqualTo("EOA14005");
-                assertThat(e.getArgs()).containsSequence("メールアドレス");
-            });
-    }
-
-    /**
-     * {@link Oa11020EntryValidator#validate()}テスト
-     *  ●パターン
      *    数値チェック  オペレーターコード（下6桁）
      *
      *  ●検証事項
@@ -410,7 +383,7 @@ class Oa11020EntryValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void validate_Test14() {
+    void validate_Test13() {
         // 実行値
         operatorCode6 = "1.3-aB";
         Oa11020Vo vo = createOa11020Vo();
@@ -422,6 +395,32 @@ class Oa11020EntryValidatorTest {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA14006");
                 assertThat(e.getArgs()).containsSequence("オペレーターコード（下6桁）");
+            });
+    }
+
+    /**
+     * {@link Oa11020EntryValidator#validate()}テスト
+     *  ●パターン
+     *    メールアドレスフォーマット有効チェック  メールアドレス
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test14() {
+        // 実行値
+        mailAddress = "te全st.@den.jagunma.net";
+        Oa11020Vo vo = createOa11020Vo();
+
+        assertThatThrownBy(() ->
+            // 実行
+            Oa11020EntryValidator.with(vo).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA14009");
+                assertThat(e.getArgs()).containsSequence("メールアドレス");
             });
     }
 
