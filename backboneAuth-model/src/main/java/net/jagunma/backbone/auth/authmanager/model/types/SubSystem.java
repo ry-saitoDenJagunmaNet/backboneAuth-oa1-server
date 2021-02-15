@@ -51,7 +51,7 @@ public enum SubSystem {
 
     /**
      * 有効なリストのＧｅｔ
-     * （UnKnownを除いたリスト）
+     * （UnKnownを除いたリスト、displaySortOrderで昇順Sort）
      *
      * @return 有効なリスト
      */
@@ -59,6 +59,16 @@ public enum SubSystem {
         List<SubSystem> list = Arrays.asList(values());
         return list.stream().filter(s->!s.name().equals("UnKnown"))
             .sorted(Comparator.comparing(SubSystem::getDisplaySortOrder)).collect(Collectors.toList());
+    }
+
+    /**
+     * 有効なSubSystemのＧｅｔ
+     * （UnKnownを除いたSubSystem、displaySortOrderで昇順Sort）
+     *
+     * @return 有効なSubSystem
+     */
+    public static SubSystem[] getValidValues() {
+        return getValidList().toArray(new SubSystem[getValidList().size()]);
     }
 
     /**
