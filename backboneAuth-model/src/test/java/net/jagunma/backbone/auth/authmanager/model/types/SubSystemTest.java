@@ -81,6 +81,35 @@ class SubSystemTest {
     }
 
     /**
+     * {@link SubSystem#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・SubSystemの値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<SubSystem> list = newArrayList();
+        list.add(SubSystem.購買);
+        list.add(SubSystem.販売_青果);
+        list.add(SubSystem.販売_花卉);
+        list.add(SubSystem.販売_米);
+        list.add(SubSystem.販売_麦);
+        list.add(SubSystem.販売_畜産);
+        SubSystem expected[] = list.toArray(new SubSystem[list.size()]);
+
+        // 実行
+        SubSystem actual[] = SubSystem.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link SubSystem#codeOf(String)}テスト
      *  ●パターン
      *    正常
