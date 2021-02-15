@@ -9,7 +9,6 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -484,7 +483,6 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test16() {
@@ -511,7 +509,6 @@ class EntryOperatorValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test17() {

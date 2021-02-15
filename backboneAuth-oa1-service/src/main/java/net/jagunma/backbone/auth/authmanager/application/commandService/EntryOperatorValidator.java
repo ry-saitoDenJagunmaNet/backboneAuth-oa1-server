@@ -48,9 +48,9 @@ class EntryOperatorValidator {
         Preconditions.checkSize(0, 255, request.getChangeCause(), () -> new GunmaRuntimeException("EOA13003", "変更事由", "255", "以下"));
         Preconditions.checkSize(8, 255, request.getPassword(), () -> new GunmaRuntimeException("EOA13004", "パスワード", "8", "以上", "255", "以下"));
 
-        // ToDo: 全角混入チェック
-        //  throw new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）");
-        //  throw new GunmaRuntimeException("EOA13005", "パスワード");
+        // 全角混入チェック
+        Preconditions.checkAllCharactersAreHankaku(request.getOperatorCode6(), () -> new GunmaRuntimeException("EOA13005", "オペレーターコード（下6桁）"));
+        Preconditions.checkAllCharactersAreHankaku(request.getPassword(), () -> new GunmaRuntimeException("EOA13005", "パスワード"));
 
         // 数値チェック
         if (!Strings2.isDigit(request.getOperatorCode6())) {

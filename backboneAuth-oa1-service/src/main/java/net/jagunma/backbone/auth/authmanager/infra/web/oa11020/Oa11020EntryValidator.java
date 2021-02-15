@@ -45,8 +45,8 @@ class Oa11020EntryValidator {
         Preconditions.checkSize(0, 255, vo.getMailAddress(), () -> new GunmaRuntimeException("EOA14003", "メールアドレス", "255", "以下"));
         Preconditions.checkSize(0, 255, vo.getChangeCause(), () -> new GunmaRuntimeException("EOA14003", "変更事由", "255", "以下"));
 
-        // ToDo: 全角混入チェック
-        //  throw new GunmaRuntimeException("EOA14005", "オペレーターコード（下6桁）");
+        // 全角混入チェック
+        Preconditions.checkAllCharactersAreHankaku(vo.getOperatorCode6(), () -> new GunmaRuntimeException("EOA14005", "オペレーターコード（下6桁）"));
 
         // 数値チェック
         if (!Strings2.isDigit(vo.getOperatorCode6())) {

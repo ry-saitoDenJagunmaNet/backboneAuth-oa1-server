@@ -9,7 +9,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -354,7 +353,6 @@ class Oa11020EntryValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test12() {

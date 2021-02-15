@@ -15,7 +15,7 @@ buildscript {
         commonServerVersion = '22.0.3'
 //        commonCommonVersion = '22.0.7'
         commonCommonVersion = '22.0.15'
-        commonUtilsVersion = '22.0.5'
+        commonUtilsVersion = '22.1.1'
         commonFaoVersion = '20.0.118'
         jacsonDatabindVersion = '2.11.3'
         domaCoreVersion = '2.44.3'

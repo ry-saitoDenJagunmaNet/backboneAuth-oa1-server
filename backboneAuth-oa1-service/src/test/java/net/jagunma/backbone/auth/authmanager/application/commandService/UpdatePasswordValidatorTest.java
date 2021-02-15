@@ -9,7 +9,6 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.passwordCommand
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.util.strings2.Strings2;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -283,7 +282,33 @@ class UpdatePasswordValidatorTest {
     @Tag(TestSize.SMALL)
     void bothValidate_Test3() {
         // 実行値
-        newPassword= Strings2.repeat("*", 7);
+        newPassword = Strings2.repeat("*", 7);
+        PasswordChangeRequest request = createPasswordChangeRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            UpdatePasswordValidator.with(request).bothValidate(newPassword, confirmPassword, messageAddition))
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13004");
+                assertThat(e.getArgs()).containsSequence(messageAddition + "パスワード", "8", "以上", "255", "以下");
+            });
+    }
+
+    /**
+     * {@link UpdatePasswordValidator#bothValidate(String newPassword, String confirmPassword, String messageAddition)}テスト
+     *  ●パターン
+     *    桁数チェック  新しいパスワード
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void bothValidate_Test4() {
+        // 実行値
+        newPassword = Strings2.repeat("*", 256);
         PasswordChangeRequest request = createPasswordChangeRequest();
 
         assertThatThrownBy(() ->
@@ -305,10 +330,9 @@ class UpdatePasswordValidatorTest {
      *  ・エラー発生
      *
      */
-    @Disabled // ToDo:
     @Test
     @Tag(TestSize.SMALL)
-    void bothValidate_Test4() {
+    void bothValidate_Test5() {
         // 実行値
         newPassword = "PaSs全WoRd";
         PasswordChangeRequest request = createPasswordChangeRequest();
@@ -334,7 +358,7 @@ class UpdatePasswordValidatorTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void bothValidate_Test5() {
+    void bothValidate_Test6() {
         confirmPassword = "pAsSwOrD";
         PasswordChangeRequest request = createPasswordChangeRequest();
 
