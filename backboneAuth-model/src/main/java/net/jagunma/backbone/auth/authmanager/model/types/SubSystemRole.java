@@ -64,7 +64,7 @@ public enum SubSystemRole {
 
     /**
      * 有効なリストのＧｅｔ
-     * （UnKnownを除いたリスト）
+     * （UnKnownを除いたリスト、displaySortOrderで昇順Sort）
      *
      * @return 有効なリスト
      */
@@ -72,6 +72,16 @@ public enum SubSystemRole {
         List<SubSystemRole> list = Arrays.asList(values());
         return list.stream().filter(s->!s.name().equals("UnKnown"))
             .sorted(Comparator.comparing(SubSystemRole::getDisplaySortOrder)).collect(Collectors.toList());
+    }
+
+    /**
+     * 有効なSubSystemRoleのＧｅｔ
+     * （UnKnownを除いたSubSystemRole、displaySortOrderで昇順Sort）
+     *
+     * @return 有効なSubSystemRole
+     */
+    public static SubSystemRole[] getValidValues() {
+        return getValidList().toArray(new SubSystemRole[getValidList().size()]);
     }
 
     /**

@@ -37,7 +37,7 @@ class Oa12010InitPresenterTest {
         Oa12010Vo expectedVo = new Oa12010Vo();
         expectedVo.setMode(mode);
         expectedVo.setSubSystemCode(subSystemCode);
-        expectedVo.setSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        expectedVo.setSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
 
         // 実行
         presenter.bindTo(vo);

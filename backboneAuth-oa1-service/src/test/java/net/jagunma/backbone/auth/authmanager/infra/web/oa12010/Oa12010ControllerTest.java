@@ -73,7 +73,7 @@ class Oa12010ControllerTest {
     // 実行 ＆ 期待 既定値
     private String mode = "import";
     private String subSystemCode = "";
-    private List<SelectOptionItemSource> subSystemList = SelectOptionItemsSource.createFrom(SubSystem.values()).getValue();
+    private List<SelectOptionItemSource> subSystemList = SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue();
     private byte[] exportExcelBook = null;
     private BizTranRole_BizTranGrpsSheet bizTranRole_BizTranGrpsSheet = null;
     private BizTranGrp_BizTransSheet bizTranGrp_BizTransSheet = null;

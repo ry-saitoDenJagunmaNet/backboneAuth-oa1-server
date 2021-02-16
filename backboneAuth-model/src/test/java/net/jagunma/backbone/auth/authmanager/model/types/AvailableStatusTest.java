@@ -69,6 +69,31 @@ class AvailableStatusTest {
     }
 
     /**
+     * {@link AvailableStatus#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・list値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<AvailableStatus> list = newArrayList();
+        list.add(AvailableStatus.利用可能);
+        list.add(AvailableStatus.利用不可);
+        AvailableStatus expected[] = list.toArray(new AvailableStatus[list.size()]);
+
+        // 実行
+        AvailableStatus actual[] = AvailableStatus.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link AvailableStatus#codeOf(short)}テスト
      *  ●パターン
      *    正常

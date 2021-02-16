@@ -12,6 +12,7 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SearchJaAt
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
+import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTrans;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrpRepository;
@@ -126,7 +127,7 @@ public class FormElementsController {
     public String getSubSystemItemsSource(@RequestParam("viewId") String viewId, ModelMap model) {
 
         LOGGER.debug("######## getSubSystemItemsSource START");
-        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        model.addAttribute("selectAjaxItems", SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
         return viewId+"::ajaxSelectSubSystem";
     }
 
@@ -193,7 +194,7 @@ public class FormElementsController {
                 .map(BizTranGrp_BizTran::getBizTran)
                 .sorted(comparator)
                 .distinct().collect(Collectors.toList());
-            list = SelectOptionItemsSource.createFrom(bizTranList, (!Strings2.isNull(firstRowStatus))).getValue();
+            list = SelectOptionItemsSource.createFrom(BizTrans.createFrom(bizTranList), (!Strings2.isNull(firstRowStatus))).getValue();
         }
         if (Strings2.isNotEmpty(firstRowStatus)) {
             list.get(0).setName(firstRowStatus);

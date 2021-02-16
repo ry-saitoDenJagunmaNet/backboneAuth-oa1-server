@@ -134,7 +134,7 @@ class Oa11010InitPresenter {
         // 取引ロール条件選択
         vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         // 取引ロールサブシステムリスト
-        vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
         // 取引ロールリスト
         List<Oa11010BizTranRoleVo> bizTranRoleVoList = newArrayList();
         for (BizTranRole bizTranRole :  bizTranRoles.getValues()) {

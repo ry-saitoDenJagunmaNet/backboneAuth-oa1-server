@@ -108,6 +108,44 @@ class OperatorCodePrefixTest {
     }
 
     /**
+     * {@link OperatorCodePrefix#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・OperatorCodePrefix値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<OperatorCodePrefix> list = newArrayList();
+        list.add(OperatorCodePrefix.赤城たちばな);
+        list.add(OperatorCodePrefix.前橋市);
+        list.add(OperatorCodePrefix.たかさき);
+        list.add(OperatorCodePrefix.はぐくみ);
+        list.add(OperatorCodePrefix.北群渋川);
+        list.add(OperatorCodePrefix.たのふじ);
+        list.add(OperatorCodePrefix.甘楽富岡);
+        list.add(OperatorCodePrefix.碓氷安中);
+        list.add(OperatorCodePrefix.あがつま);
+        list.add(OperatorCodePrefix.利根沼田);
+        list.add(OperatorCodePrefix.佐波伊勢崎);
+        list.add(OperatorCodePrefix.にったみどり);
+        list.add(OperatorCodePrefix.太田市);
+        list.add(OperatorCodePrefix.邑楽館林);
+        list.add(OperatorCodePrefix.電算センター);
+        OperatorCodePrefix expected[] = list.toArray(new OperatorCodePrefix[list.size()]);
+
+        // 実行
+        OperatorCodePrefix actual[] = OperatorCodePrefix.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link OperatorCodePrefix#codeOf(String)}テスト
      *  ●パターン
      *    正常

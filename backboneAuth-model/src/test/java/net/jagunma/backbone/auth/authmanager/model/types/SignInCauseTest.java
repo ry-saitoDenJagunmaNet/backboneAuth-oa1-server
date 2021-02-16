@@ -69,6 +69,31 @@ class SignInCauseTest {
     }
 
     /**
+     * {@link SignInCause#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・SignInCause値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<SignInCause> list = newArrayList();
+        list.add(SignInCause.サインイン);
+        list.add(SignInCause.継続サインイン);
+        SignInCause expected[] = list.toArray(new SignInCause[list.size()]);
+
+        // 実行
+        SignInCause actual[] = SignInCause.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link SignInCause#codeOf(short)}テスト
      *  ●パターン
      *    正常

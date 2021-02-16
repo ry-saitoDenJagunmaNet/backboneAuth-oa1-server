@@ -38,6 +38,6 @@ public class Oa12010InitPresenter {
     public void bindTo(Oa12010Vo vo) {
         vo.setMode(mode);
         vo.setSubSystemCode(subSystemCode);
-        vo.setSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        vo.setSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
     }
 }

@@ -76,6 +76,33 @@ class CalendarTypeTest {
     }
 
     /**
+     * {@link CalendarType#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・CalendarType値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<CalendarType> list = newArrayList();
+        list.add(CalendarType.天文台カレンダー);
+        list.add(CalendarType.経済システム稼働カレンダー);
+        list.add(CalendarType.信用カレンダー);
+        list.add(CalendarType.広域物流カレンダー);
+        CalendarType expected[] = list.toArray(new CalendarType[list.size()]);
+
+        // 実行
+        CalendarType actual[] = CalendarType.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link CalendarType#codeOf(short)}テスト
      *  ●パターン
      *    正常

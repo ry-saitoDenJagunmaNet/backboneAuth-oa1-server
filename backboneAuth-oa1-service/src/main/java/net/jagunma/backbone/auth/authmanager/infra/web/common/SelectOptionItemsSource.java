@@ -98,16 +98,16 @@ public class SelectOptionItemsSource {
     }
 
     /**
-     * 取引リスト（List<BizTran>）から作成します
+     * 取引群（BizTrans）から作成します
      *
-     * @param bizTranList      取引リスト
+     * @param bizTrans         取引群
      * @param isFirstRowInsert 最初の空行挿入（true：最初の空行挿入あり、false：最初の空行挿入なし）
      * @return 取引コンボボックス選択肢群
      */
-    public static SelectOptionItemsSource createFrom(List<BizTran> bizTranList, Boolean isFirstRowInsert) {
+    public static SelectOptionItemsSource createFrom(BizTrans bizTrans, Boolean isFirstRowInsert) {
         List<SelectOptionItemSource> list = newArrayList();
         if (isFirstRowInsert) {list.add(SelectOptionItemSource.empty());}
-        for (BizTran bizTran : bizTranList) {
+        for (BizTran bizTran : bizTrans.getValues()) {
             list.add(new SelectOptionItemSource(
                 bizTran.getBizTranId(),
                 bizTran.getBizTranCode(),
@@ -118,30 +118,20 @@ public class SelectOptionItemsSource {
     }
 
     /**
-     * 取引リスト（List<BizTran>）から作成します
-     *
-     * @param bizTranList 取引リスト
-     * @return 取引コンボボックス選択肢群
-     */
-    public static SelectOptionItemsSource createFrom(List<BizTran> bizTranList) {
-        return createFrom(bizTranList, true);
-    }
-
-    /**
      * 取引群（BizTrans）から作成します
      *
      * @param bizTrans 取引群
      * @return 取引コンボボックス選択肢群
      */
     public static SelectOptionItemsSource createFrom(BizTrans bizTrans) {
-        return createFrom(bizTrans.getValues(), true);
+        return createFrom(bizTrans, true);
     }
 
     /**
      * サブシステム（enum）から作成します
      * <pre>
      * 記述例
-     *   SelectOptionItemsSource.createFrom(SubSystem.values())
+     *   SelectOptionItemsSource.createFrom(SubSystem.getValidValues())
      * </pre>
      *
      * @param subSystems サブシステム（enum）配列

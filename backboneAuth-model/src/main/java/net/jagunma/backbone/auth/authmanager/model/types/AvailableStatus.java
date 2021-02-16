@@ -48,6 +48,16 @@ public enum AvailableStatus {
     }
 
     /**
+     * 有効なAvailableStatusのＧｅｔ
+     * （UnKnownを除いたAvailableStatus）
+     *
+     * @return 有効なAvailableStatus
+     */
+    public static AvailableStatus[] getValidValues() {
+        return getValidList().toArray(new AvailableStatus[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード

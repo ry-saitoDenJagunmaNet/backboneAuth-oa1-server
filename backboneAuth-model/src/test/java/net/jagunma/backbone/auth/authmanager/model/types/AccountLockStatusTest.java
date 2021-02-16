@@ -70,6 +70,31 @@ class AccountLockStatusTest {
     }
 
     /**
+     * {@link AccountLockStatus#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・AccountLockStatus値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<AccountLockStatus> list = newArrayList();
+        list.add(AccountLockStatus.アンロック);
+        list.add(AccountLockStatus.ロック);
+        AccountLockStatus expected[] = list.toArray(new AccountLockStatus[list.size()]);
+
+        // 実行
+        AccountLockStatus actual[] = AccountLockStatus.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link AccountLockStatus#codeOf(short)}テスト
      *  ●パターン
      *    正常
