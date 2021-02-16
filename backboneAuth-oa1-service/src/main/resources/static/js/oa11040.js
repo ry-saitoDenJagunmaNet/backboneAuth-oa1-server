@@ -147,9 +147,9 @@ function oaex_moveAddBtn_onClick() {
 										"<div class='input-field'>" +
 										"	<input type='text' class='datepicker' name='assignRoleTableVoList[" + i + "].validThruEndDate'></input>" +
 										"</div>";
-			newRow.cells[3].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleCode' value='" + tableRow.cells[0].innerText + "'></input>";
-			newRow.cells[4].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleName' value='" + tableRow.cells[1].innerText + "'></input>";
-			newRow.cells[5].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[2].innerText + "'></input>";
+			newRow.cells[3].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleCode' value='" + tableRow.cells[2].childNodes[0].value + "'></input>";
+			newRow.cells[4].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleName' value='" + tableRow.cells[3].childNodes[0].value + "'></input>";
+			newRow.cells[5].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[4].childNodes[0].value + "'></input>";
 			// 選択行非表示
 			unAssignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
