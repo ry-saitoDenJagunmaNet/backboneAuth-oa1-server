@@ -50,6 +50,16 @@ public enum PasswordChangeType {
     }
 
     /**
+     * 有効なPasswordChangeTypeのＧｅｔ
+     * （UnKnownを除いたPasswordChangeType）
+     *
+     * @return 有効なPasswordChangeType
+     */
+    public static PasswordChangeType[] getValidValues() {
+        return getValidList().toArray(new PasswordChangeType[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード

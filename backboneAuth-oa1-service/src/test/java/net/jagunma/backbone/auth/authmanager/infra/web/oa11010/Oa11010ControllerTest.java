@@ -319,7 +319,7 @@ class Oa11010ControllerTest {
         oa11010Vo.setSubSystemRoleList(subSystemRoleVoList);
         oa11010Vo.setBizTranRoleConditionsSelect(bizTranRoleConditionsSelect);
         oa11010Vo.setBizTranRoleSubSystemCode(bizTranRoleSubSystemCode);
-        oa11010Vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.values()).getValue());
+        oa11010Vo.setBizTranRoleSubSystemList(SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
         List<Oa11010BizTranRoleVo> oa11010BizTranRoleVoList = newArrayList();
         for (BizTranRole bizTranRole :  createBizTranRoles().getValues()) {
             Oa11010BizTranRoleVo bizTranRoleVo = new Oa11010BizTranRoleVo();

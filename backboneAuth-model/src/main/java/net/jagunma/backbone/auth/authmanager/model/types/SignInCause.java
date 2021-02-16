@@ -48,6 +48,16 @@ public enum SignInCause {
     }
 
     /**
+     * 有効なSignInCauseのＧｅｔ
+     * （UnKnownを除いたSignInCause）
+     *
+     * @return 有効なSignInCause
+     */
+    public static SignInCause[] getValidValues() {
+        return getValidList().toArray(new SignInCause[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード

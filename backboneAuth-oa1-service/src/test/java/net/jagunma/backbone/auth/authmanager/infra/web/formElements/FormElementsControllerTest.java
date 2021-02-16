@@ -334,7 +334,7 @@ class FormElementsControllerTest {
         String expectedItemsSourceName = "oa12020::ajaxSelectSubSystem";
         List<SelectOptionItemSource> expectedItemsSourcelist = newArrayList();
         expectedItemsSourcelist.add(SelectOptionItemSource.empty());
-        for (SubSystem subSystem : SubSystem.values()) {
+        for (SubSystem subSystem : SubSystem.getValidValues()) {
             if (subSystem.getCode().isEmpty()) { continue; }
             expectedItemsSourcelist.add(new SelectOptionItemSource(
                 null, subSystem.getCode(), subSystem.getDisplayName()));

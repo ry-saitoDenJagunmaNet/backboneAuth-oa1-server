@@ -106,6 +106,36 @@ class SubSystemRoleTest {
     }
 
     /**
+     * {@link SubSystemRole#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・SubSystemRoleの値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<SubSystemRole> list = newArrayList();
+        list.add(SubSystemRole.JA管理者);
+        list.add(SubSystemRole.業務統括者_購買);
+        list.add(SubSystemRole.業務統括者_販売_青果);
+        list.add(SubSystemRole.業務統括者_販売_花卉);
+        list.add(SubSystemRole.業務統括者_販売_米);
+        list.add(SubSystemRole.業務統括者_販売_麦);
+        list.add(SubSystemRole.業務統括者_販売_畜産);
+        SubSystemRole expected[] = list.toArray(new SubSystemRole[list.size()]);
+
+        // 実行
+        SubSystemRole actual[] = SubSystemRole.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link SubSystemRole#codeOf(String)}テスト
      *  ●パターン
      *    正常

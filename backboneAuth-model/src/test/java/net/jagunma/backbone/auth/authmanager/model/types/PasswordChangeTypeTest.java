@@ -75,6 +75,33 @@ class PasswordChangeTypeTest {
     }
 
     /**
+     * {@link PasswordChangeType#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeType値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<PasswordChangeType> list = newArrayList();
+        list.add(PasswordChangeType.初期);
+        list.add(PasswordChangeType.ユーザーによる変更);
+        list.add(PasswordChangeType.管理者によるリセット);
+        list.add(PasswordChangeType.機器認証パスワード);
+        PasswordChangeType expected[] = list.toArray(new PasswordChangeType[list.size()]);
+
+        // 実行
+        PasswordChangeType actual[] = PasswordChangeType.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link PasswordChangeType#codeOf(short)}テスト
      *  ●パターン
      *    正常

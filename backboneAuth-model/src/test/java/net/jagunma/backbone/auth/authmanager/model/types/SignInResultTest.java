@@ -82,6 +82,35 @@ class SignInResultTest {
     }
 
     /**
+     * {@link SignInResult#getValidValues()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・SignInResult値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getValidValues_test0() {
+
+        // 期待値
+        List<SignInResult> list = newArrayList();
+        list.add(SignInResult.成功);
+        list.add(SignInResult.失敗_存在しないオペレーター);
+        list.add(SignInResult.失敗_パスワード誤り);
+        list.add(SignInResult.遮断_IPアドレス範囲外);
+        list.add(SignInResult.拒否_アカウントロック中);
+        list.add(SignInResult.拒否_有効期限範囲外);
+        SignInResult expected[] = list.toArray(new SignInResult[list.size()]);
+
+        // 実行
+        SignInResult actual[] = SignInResult.getValidValues();
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    /**
      * {@link SignInResult#codeOf(short)}テスト
      *  ●パターン
      *    正常

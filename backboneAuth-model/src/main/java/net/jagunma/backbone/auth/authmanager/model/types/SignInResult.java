@@ -52,6 +52,16 @@ public enum SignInResult {
     }
 
     /**
+     * 有効なSignInResultのＧｅｔ
+     * （UnKnownを除いたSignInResult）
+     *
+     * @return 有効なSignInResult
+     */
+    public static SignInResult[] getValidValues() {
+        return getValidList().toArray(new SignInResult[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード

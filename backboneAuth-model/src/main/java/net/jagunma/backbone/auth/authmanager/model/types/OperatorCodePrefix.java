@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.model.types;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +58,16 @@ public enum OperatorCodePrefix {
     public static List<OperatorCodePrefix> getValidList() {
         List<OperatorCodePrefix> list = Arrays.asList(values());
         return list.stream().filter(s->!s.name().equals("UnKnown")).collect(Collectors.toList());
+    }
+
+    /**
+     * 有効なOperatorCodePrefixのＧｅｔ
+     * （UnKnownを除いたOperatorCodePrefix）
+     *
+     * @return OperatorCodePrefix
+     */
+    public static OperatorCodePrefix[] getValidValues() {
+        return getValidList().toArray(new OperatorCodePrefix[getValidList().size()]);
     }
 
     /**

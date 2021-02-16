@@ -50,6 +50,16 @@ public enum CalendarType {
     }
 
     /**
+     * 有効なCalendarTypeのＧｅｔ
+     * （UnKnownを除いたCalendarType）
+     *
+     * @return 有効なCalendarType
+     */
+    public static CalendarType[] getValidValues() {
+        return getValidList().toArray(new CalendarType[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード

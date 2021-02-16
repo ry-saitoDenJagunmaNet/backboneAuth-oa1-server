@@ -48,6 +48,16 @@ public enum AccountLockStatus {
     }
 
     /**
+     * 有効なAccountLockStatusのＧｅｔ
+     * （UnKnownを除いたAccountLockStatus）
+     *
+     * @return 有効なAccountLockStatus
+     */
+    public static AccountLockStatus[] getValidValues() {
+        return getValidList().toArray(new AccountLockStatus[getValidList().size()]);
+    }
+
+    /**
      * コードで検索を行います
      *
      * @param code コード
