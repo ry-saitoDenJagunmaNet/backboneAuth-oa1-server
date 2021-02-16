@@ -11,7 +11,6 @@
 	<script src="../static/js/common.js" th:src="@{/js/common.js}"></script>
 	<script src="../static/js/sidenav.js" th:src="@{/js/sidenav.js}"></script>
 	<script src="../static/js/oa11050.js" th:src="@{/js/oa11050.js}"></script>
-	<script src="../static/js/oa11040.js"></script>	<!-- 同一処理部共用（oa11050.jsは独自部分のみ記述） -->
 </head>
 <body th:onLoad="oaex_th_onload();">
 <form>
@@ -114,7 +113,7 @@
 					<div class="oaex_assign_role_table" onScroll="oa_linkageScrollX(this, 'assign_role_table_head')">
 						<table id="assign_role_table" class="highlight">
 							<tbody>
-								<tr class="oaex_assign_role_table_template_row" onclick="oa_setTableRowSelected(this)">
+								<tr class="oaex_assign_role_table_template_row" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
 									<td class="oaex_assign_role_table_code"></td>
 									<td class="oaex_assign_role_table_name"></td>
 									<td class="oaex_assign_role_table_valid_thru">
@@ -126,48 +125,64 @@
 											<input type="text" class="datepicker" value=""></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
 								</tr>
 								<!-- th using -->
 								<!--/*/
-								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11050AssignRoleTableVoList}">
+								<tr onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);" th:each="itemrow, iterStat : *{form.assignRoleTableVoList}">
 									<td class="oaex_assign_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_assign_role_table_name" th:text="${itemrow.roleName}"></td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruStartDate}" th:disabled="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}==false"></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" th:value="${form.validThruStartDate}"></input>
+											<input type="text" class="datepicker" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].validThruEndDate}" th:disabled="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}==false"></input>
 										</div>
 									</td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleId}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleName}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}"></input></td>
 								</tr>
 								/*/-->
-								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
 									<td class="oaex_assign_role_table_code">YSAG30</td>
 									<td class="oaex_assign_role_table_name">（青果）集荷場担当</td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" value="2020/05/01"></input>
+											<input type="text" class="datepicker" value="2020/05/01" disabled></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" value="9999/12/31"></input>
+											<input type="text" class="datepicker" value="9999/12/31" disabled></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"><input type="hidden" id="assignRoleTableVoList0.isModifiable" value="false"></input></td>
 								</tr>
-								<tr th:remove="all" onclick="oa_setTableRowSelected(this)">
+								<tr th:remove="all" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
 									<td class="oaex_assign_role_table_code">YSAG40</td>
 									<td class="oaex_assign_role_table_name">（青果）単価計算担当</td>
 									<td class="oaex_assign_role_table_valid_thru">
 										<div class="input-field">
-											<input type="text" class="datepicker" value="2020/09/01"></input>
+											<input type="text" class="datepicker" value="2020/09/01" disabled></input>
 										</div>
 										<span>～</span>
 										<div class="input-field">
-											<input type="text" class="datepicker" value="9999/12/31"></input>
+											<input type="text" class="datepicker" value="9999/12/31" disabled></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"></td>
+									<td style="display:none;"><input type="hidden" id="assignRoleTableVoList1.isModifiable" value="false"></input></td>
 								</tr>
 							</tbody>
 						</table>
@@ -175,8 +190,8 @@
 				</div>
 				<!-- 移動ボタン -->
 				<div class="col s1">
-					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveAdditionBtn_onClick();">◀</a></div>
-					<div class="oaex_move_btn"><a class="btn waves-effect waves-light" href="javascript:oaex_moveRemovalBtn_onClick();">▶</a></div>
+					<div class="oaex_move_btn"><a id="move_add_btn" class="btn waves-effect waves-light" href="javascript:oaex_moveAddBtn_onClick();">◀</a></div>
+					<div class="oaex_move_btn"><a id="move_remove_btn" class="btn waves-effect waves-light" href="javascript:oaex_moveRemoveBtn_onClick();">▶</a></div>
 				</div>
 				<!-- 未付与ロールテーブル -->
 				<div class="col s4">
@@ -191,71 +206,70 @@
 						<div class="oa_table_head_flex_scroll_bar"></div>
 					</div>
 					<div class="oaex_unassign_role_table" onScroll="oa_linkageScrollX(this, 'unassign_role_table_head')">
-						<!-- th using -->
-						<!--/*/
-						<div  th:each="itemrow, iterStat : *{form.oa11050UnAssignRoleTableVoList}">
-							<input type="hidden" th:name="'oa11050UnAssignRoleTableVoList['+${iterStat.index}+'].roleCode'" th:value="${itemrow.roleCode}"/>
-							<input type="hidden" th:name="'oa11050UnAssignRoleTableVoList['+${iterStat.index}+'].roleName'" th:value="${itemrow.roleName}"/>
-						</div>
-						/*/-->
 						<table id="unassign_role_table" class="highlight">
 							<!-- th using -->
 							<!--/*/
 							<tbody>
-								<tr onclick="oa_setTableRowSelected(this)" th:each="itemrow, iterStat : *{form.oa11050UnAssignRoleTableVoList}">
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);" th:each="itemrow, iterStat : *{form.unAssignRoleTableVoList}">
 									<td class="oaex_unassign_role_table_code" th:text="${itemrow.roleCode}"></td>
 									<td class="oaex_unassign_role_table_name" th:text="${itemrow.roleName}"></td>
+
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].roleId}"></input></tc>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></tc>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].roleName}"></input></tc>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].subSystemCode}"></input></tc>
+									<td style="display:none;"><input type="hidden" th:field="*{form.unAssignRoleTableVoList[__${iterStat.index}__].isModifiable}"></input></td>
 								</tr>
 							</tbody>
 							/*/-->
 							<tbody th:remove="all">
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG01</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG02</td><td class="oaex_unassign_role_table_name">（購買）本所業務</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG03</td><td class="oaex_unassign_role_table_name">（購買）本所管理業務</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG04</td><td class="oaex_unassign_role_table_name">（購買）バラエサ処理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG05</td><td class="oaex_unassign_role_table_name">（購買）在庫管理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG06</td><td class="oaex_unassign_role_table_name">（購買）支払業務</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG07</td><td class="oaex_unassign_role_table_name">（購買）受入業務</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG08</td><td class="oaex_unassign_role_table_name">（購買）受注管理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG09</td><td class="oaex_unassign_role_table_name">（購買）未収金管理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG10</td><td class="oaex_unassign_role_table_name">（購買）損害金利息管理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG11</td><td class="oaex_unassign_role_table_name">（購買）配送管理</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG12</td><td class="oaex_unassign_role_table_name">（購買）LPG担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG13</td><td class="oaex_unassign_role_table_name">（購買）LPG入金</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG14</td><td class="oaex_unassign_role_table_name">（購買）レジ担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG15</td><td class="oaex_unassign_role_table_name">（購買）支所マスタ担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG16</td><td class="oaex_unassign_role_table_name">（購買）食材担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG17</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本２</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG18</td><td class="oaex_unassign_role_table_name">（購買）窓口供給（店舗用２）</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG19</td><td class="oaex_unassign_role_table_name">（購買）合併</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG20</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本３</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG50</td><td class="oaex_unassign_role_table_name">（購買）マスタ移行</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">KBAG99</td><td class="oaex_unassign_role_table_name">（購買）電算センター</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG10</td><td class="oaex_unassign_role_table_name">（青果）管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG20</td><td class="oaex_unassign_role_table_name">（青果）精算担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG30</td><td class="oaex_unassign_role_table_name">（青果）集荷場担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG40</td><td class="oaex_unassign_role_table_name">（青果）単価計算担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG50</td><td class="oaex_unassign_role_table_name">（青果）入力担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG60</td><td class="oaex_unassign_role_table_name">（青果）安定基金管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG70</td><td class="oaex_unassign_role_table_name">（青果）支所担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YSAG90</td><td class="oaex_unassign_role_table_name">（青果）電算センター維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG10</td><td class="oaex_unassign_role_table_name">（花卉）管理者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG20</td><td class="oaex_unassign_role_table_name">（花卉）精算担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG30</td><td class="oaex_unassign_role_table_name">（花卉）集荷場担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG40</td><td class="oaex_unassign_role_table_name">（花卉）単価計算担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG50</td><td class="oaex_unassign_role_table_name">（花卉）入力担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG70</td><td class="oaex_unassign_role_table_name">（花卉）支所担当</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">YFAG90</td><td class="oaex_unassign_role_table_name">（花卉）電算センター維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HKAG10</td><td class="oaex_unassign_role_table_name">（米）ＪＡ取引全般</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HKAG15</td><td class="oaex_unassign_role_table_name">（米）ＪＡ取引振込以外全般</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HKAG99</td><td class="oaex_unassign_role_table_name">（米）センター維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HMAG20</td><td class="oaex_unassign_role_table_name">（麦）ＪＡ取引全般</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HMAG25</td><td class="oaex_unassign_role_table_name">（麦）ＪＡ取引振込以外全般</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">HMAG99</td><td class="oaex_unassign_role_table_name">（麦）センター維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">ANAG01</td><td class="oaex_unassign_role_table_name">（畜産）取引全般</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">ANAG02</td><td class="oaex_unassign_role_table_name">（畜産）維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">ANAG98</td><td class="oaex_unassign_role_table_name">（畜産）センター維持管理担当者</td></tr>
-								<tr onclick="oa_setTableRowSelected(this)"><td class="oaex_unassign_role_table_code">ANAG99</td><td class="oaex_unassign_role_table_name">（畜産）維持管理責任者</td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG01</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList0.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList0.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG02</td><td class="oaex_unassign_role_table_name">（購買）本所業務</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList1.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList1.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG03</td><td class="oaex_unassign_role_table_name">（購買）本所管理業務</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList2.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList2.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG04</td><td class="oaex_unassign_role_table_name">（購買）バラエサ処理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList3.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList3.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG05</td><td class="oaex_unassign_role_table_name">（購買）在庫管理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList4.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList4.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG06</td><td class="oaex_unassign_role_table_name">（購買）支払業務</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList5.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList5.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG07</td><td class="oaex_unassign_role_table_name">（購買）受入業務</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList6.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList6.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG08</td><td class="oaex_unassign_role_table_name">（購買）受注管理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList7.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList7.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG09</td><td class="oaex_unassign_role_table_name">（購買）未収金管理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList8.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList8.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG10</td><td class="oaex_unassign_role_table_name">（購買）損害金利息管理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList9.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList9.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG11</td><td class="oaex_unassign_role_table_name">（購買）配送管理</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList10.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList10.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG12</td><td class="oaex_unassign_role_table_name">（購買）LPG担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList11.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList11.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG13</td><td class="oaex_unassign_role_table_name">（購買）LPG入金</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList12.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList12.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG14</td><td class="oaex_unassign_role_table_name">（購買）レジ担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList13.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList13.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG15</td><td class="oaex_unassign_role_table_name">（購買）支所マスタ担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList14.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList14.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG16</td><td class="oaex_unassign_role_table_name">（購買）食材担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList15.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList15.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG17</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本２</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList16.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList16.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG18</td><td class="oaex_unassign_role_table_name">（購買）窓口供給（店舗用２）</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList17.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList17.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG19</td><td class="oaex_unassign_role_table_name">（購買）合併</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList18.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList18.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG20</td><td class="oaex_unassign_role_table_name">（購買）購買業務基本３</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList19.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList19.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG50</td><td class="oaex_unassign_role_table_name">（購買）マスタ移行</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList20.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList20.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">KBAG99</td><td class="oaex_unassign_role_table_name">（購買）電算センター</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList21.subSystemCode" value="KB"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList21.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG10</td><td class="oaex_unassign_role_table_name">（青果）管理者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList30.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList30.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG20</td><td class="oaex_unassign_role_table_name">（青果）精算担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList31.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList31.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG30</td><td class="oaex_unassign_role_table_name">（青果）集荷場担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList32.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList32.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG40</td><td class="oaex_unassign_role_table_name">（青果）単価計算担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList33.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList33.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG50</td><td class="oaex_unassign_role_table_name">（青果）入力担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList34.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList34.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG60</td><td class="oaex_unassign_role_table_name">（青果）安定基金管理者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList35.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList35.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG70</td><td class="oaex_unassign_role_table_name">（青果）支所担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList36.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList36.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YSAG90</td><td class="oaex_unassign_role_table_name">（青果）電算センター維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList37.subSystemCode" value="YS"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList37.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG10</td><td class="oaex_unassign_role_table_name">（花卉）管理者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList40.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList40.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG20</td><td class="oaex_unassign_role_table_name">（花卉）精算担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList41.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList41.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG30</td><td class="oaex_unassign_role_table_name">（花卉）集荷場担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList42.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList42.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG40</td><td class="oaex_unassign_role_table_name">（花卉）単価計算担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList43.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList43.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG50</td><td class="oaex_unassign_role_table_name">（花卉）入力担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList44.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList44.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG70</td><td class="oaex_unassign_role_table_name">（花卉）支所担当</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList45.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList45.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">YFAG90</td><td class="oaex_unassign_role_table_name">（花卉）電算センター維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList46.subSystemCode" value="YF"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList46.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HKAG10</td><td class="oaex_unassign_role_table_name">（米）ＪＡ取引全般</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList50.subSystemCode" value="HK"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList50.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HKAG15</td><td class="oaex_unassign_role_table_name">（米）ＪＡ取引振込以外全般</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList51.subSystemCode" value="HK"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList51.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HKAG99</td><td class="oaex_unassign_role_table_name">（米）センター維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList52.subSystemCode" value="HK"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList52.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HMAG20</td><td class="oaex_unassign_role_table_name">（麦）ＪＡ取引全般</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList60.subSystemCode" value="HM"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList60.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HMAG25</td><td class="oaex_unassign_role_table_name">（麦）ＪＡ取引振込以外全般</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList61.subSystemCode" value="HM"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList61.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">HMAG99</td><td class="oaex_unassign_role_table_name">（麦）センター維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList62.subSystemCode" value="HM"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList62.isModifiable" value="false"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">ANAG01</td><td class="oaex_unassign_role_table_name">（畜産）取引全般</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList70.subSystemCode" value="AN"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList70.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">ANAG02</td><td class="oaex_unassign_role_table_name">（畜産）維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList71.subSystemCode" value="AN"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList71.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">ANAG98</td><td class="oaex_unassign_role_table_name">（畜産）センター維持管理担当者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList72.subSystemCode" value="AN"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList72.isModifiable" value="true"></input></td></tr>
+								<tr onclick="oa_setTableRowSelected(this); oaex_unAssignRoleTableRow_onClick(this);"><td class="oaex_unassign_role_table_code">ANAG99</td><td class="oaex_unassign_role_table_name">（畜産）維持管理責任者</td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList73.subSystemCode" value="AN"></input></td><td style="display:none;"><input type="hidden" id="unAssignRoleTableVoList73.isModifiable" value="true"></input></td></tr>
 							</tbody>
 						</table>
 					</div>
