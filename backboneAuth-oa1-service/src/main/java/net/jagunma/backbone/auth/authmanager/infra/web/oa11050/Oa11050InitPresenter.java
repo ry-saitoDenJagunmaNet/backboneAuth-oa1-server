@@ -12,7 +12,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.oa11050.vo.Oa11050UnAssig
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11050.vo.Oa11050Vo;
 import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.operatorHistoryHeader.OperatorHistoryHeader;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
-import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 
 /**
  * OA11050 初期表示 Presenter
@@ -24,7 +23,6 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
     private List<BizTranRoleGrantedAssignRoleDto> assignRoleDtoList;
     private List<BizTranRoleGrantedAllRoleDto> allRoleDtoList;
     private OperatorHistoryHeader operatorHistoryHeader;
-    private SubSystem subSystemForSubSystemItemsSource;//todo:★
 
     // コンストラクタ
     Oa11050InitPresenter() {
@@ -70,15 +68,6 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
     public void setOperatorHistoryHeader(OperatorHistoryHeader operatorHistoryHeader) {
         this.operatorHistoryHeader = operatorHistoryHeader;
     }
-    /**
-     * サブシステムコンボボックスItemsSource の為の サブシステムのＳｅｔ
-     *
-     * @param subSystemForSubSystemItemsSource
-     */
-    //todo:★
-    public void setSubSystemForSubSystemItemsSource(SubSystem subSystemForSubSystemItemsSource) {
-        this.subSystemForSubSystemItemsSource = subSystemForSubSystemItemsSource;
-    }
 
     /**
      * voに変換します
@@ -112,7 +101,6 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
         vo.setAssignRoleTableVoList(assignRoleTableVoList);
         vo.setUnAssignRoleTableVoList(unAssignRoleTableVoList);
         vo.setChangeCausePlaceholder(operatorHistoryHeader.getChangeCause());
-//todo:★        vo.setSubSystemItemsSource(SelectOptionItemsSource.createFrom(subSystemForSubSystemItemsSource).getValue());
-
+        vo.setSubSystemItemsSource(SelectOptionItemsSource.createFrom(SubSystem.getValidValues()).getValue());
     }
 }

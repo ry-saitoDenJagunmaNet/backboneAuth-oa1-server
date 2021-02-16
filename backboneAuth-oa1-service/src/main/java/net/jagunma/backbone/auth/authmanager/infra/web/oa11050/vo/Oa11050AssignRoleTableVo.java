@@ -10,6 +10,10 @@ public class Oa11050AssignRoleTableVo {
     private static final long serialVersionUID = 1L;
 
     /**
+     * ロールID
+     */
+    private Long roleId;
+    /**
      * ロールコード
      */
     private String roleCode;
@@ -31,6 +35,9 @@ public class Oa11050AssignRoleTableVo {
     private Boolean isModifiable;
 
     // Getter
+    public Long getRoleId() {
+        return roleId;
+    }
     public String getRoleCode() {
         return roleCode;
     }
@@ -48,6 +55,9 @@ public class Oa11050AssignRoleTableVo {
     }
 
     // Setter
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
     public void setRoleCode(String roleCode) {
         this.roleCode = roleCode;
     }
