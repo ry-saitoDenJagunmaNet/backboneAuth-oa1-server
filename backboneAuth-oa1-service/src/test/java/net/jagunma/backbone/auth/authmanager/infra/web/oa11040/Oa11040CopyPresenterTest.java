@@ -90,7 +90,7 @@ class Oa11040CopyPresenterTest {
      * {@link Oa11040CopyPresenter#bindTo(Oa11040Vo vo)}テスト
      *  ●パターン
      *    正常
-     *    （アサインロールDto（オペレーター_サブシステムロール割当履歴）が ０件）
+     *    （アサインロールDto（オペレーター_サブシステムロール割当）が ０件）
      *
      *  ●検証事項
      *  ・Voへのセット

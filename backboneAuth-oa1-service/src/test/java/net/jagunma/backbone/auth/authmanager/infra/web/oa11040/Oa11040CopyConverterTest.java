@@ -24,7 +24,7 @@ class Oa11040CopyConverterTest {
     private Long selectedOperatorId = 876543L;
     private Long operatorId = 123456L;
 
-    // オペレーター_サブシステムロール割当履歴項目系
+    // オペレーター_サブシステムロール割当項目系
     private SubSystemRole subSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole subSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole subSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -41,7 +41,7 @@ class Oa11040CopyConverterTest {
     private LocalDate validThruEndDate4 = LocalDate.of(2020, 9, 24);
     private LocalDate validThruEndDate6 = LocalDate.of(2020, 9, 26);
 
-    // オペレーター_サブシステムロール割当履歴系
+    // オペレーター_サブシステムロール割当系
     private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole0.getCode(), validThruStartDate0, validThruEndDate0, null, null, subSystemRole0),
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole1.getCode(), validThruStartDate1, validThruEndDate1, null, null, subSystemRole1),
