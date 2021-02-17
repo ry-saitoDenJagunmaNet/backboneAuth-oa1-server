@@ -62,7 +62,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
     private Long operatorHistoryId = 234567L;
     private String changeCause = "新職員の入組による登録";
 
-    // オペレーター_サブシステムロール割当履歴系
+    // オペレーター_サブシステムロール割当系
     private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
         Operator_SubSystemRole.createFrom(301L, operatorId, SubSystemRole.JA管理者.getCode(), validThruStartDate, validThruEndDate, 391, null, SubSystemRole.JA管理者),
         Operator_SubSystemRole.createFrom(302L, operatorId, SubSystemRole.業務統括者_購買.getCode(), validThruStartDate, validThruEndDate, 392, null, SubSystemRole.業務統括者_購買),
@@ -71,7 +71,7 @@ class OperatorHistoryPackForStoreDataSourceTest {
         Operator_SubSystemRole.createFrom(305L, operatorId, SubSystemRole.業務統括者_販売_畜産.getCode(), validThruStartDate, validThruEndDate, 395, null, SubSystemRole.業務統括者_販売_畜産));
     private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
-    // オペレーター_取引ロール割当履歴系
+    // オペレーター_取引ロール割当系
     private List<BizTranRole> bizTranRoleList = newArrayList(
         BizTranRole.createFrom(401L, "KBAG01", "（購買）購買業務基本", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
         BizTranRole.createFrom(402L, "YSAG19", "（青果）管理者（仕切実績修正）", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果),

@@ -63,7 +63,7 @@ class Oa11040ControllerTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
 
-    // オペレーター_サブシステムロール割当履歴項目系
+    // オペレーター_サブシステムロール割当項目系
     private SubSystemRole subSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole subSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole subSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -107,7 +107,7 @@ class Oa11040ControllerTest {
     // オペレーター系
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, null, null, null, null, null, jaCode, branchId, branchCode, null, null, branchAtMoment);
 
-    // オペレーター_サブシステムロール割当履歴系
+    // オペレーター_サブシステムロール割当系
     private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole0.getCode(), validThruStartDate0, validThruEndDate0, null, operator, subSystemRole0),
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole1.getCode(), validThruStartDate1, validThruEndDate1, null, operator, subSystemRole1),
