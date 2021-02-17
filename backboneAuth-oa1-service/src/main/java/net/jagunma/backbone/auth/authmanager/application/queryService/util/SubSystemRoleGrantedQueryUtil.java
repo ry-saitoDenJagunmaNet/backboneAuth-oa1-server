@@ -22,7 +22,7 @@ public class SubSystemRoleGrantedQueryUtil {
     public boolean judgeIsModifiable(String subSystemRoleCode, Operator_SubSystemRoles signInOperator_SubSystemRoles) {
         LocalDate today = LocalDate.now();
 
-        // サインインオペレーター の オペレーター_サブシステムロール割当群 をコードをキーにしてMap化
+        // サインインオペレーター の オペレーター_サブシステムロール割当群 を サブシステムロールコード をキーにしてMap化
         Map<String, Operator_SubSystemRole> signInOperator_SubSystemRoleMap = new HashMap<>();
         for (Operator_SubSystemRole operator_SubSystemRole : signInOperator_SubSystemRoles.getValues()) {
             signInOperator_SubSystemRoleMap.put(operator_SubSystemRole.getSubSystemRoleCode(), operator_SubSystemRole);
