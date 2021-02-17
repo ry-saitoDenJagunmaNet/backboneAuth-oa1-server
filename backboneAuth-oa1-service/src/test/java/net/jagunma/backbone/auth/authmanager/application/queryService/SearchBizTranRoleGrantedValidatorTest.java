@@ -1,0 +1,128 @@
+package net.jagunma.backbone.auth.authmanager.application.queryService;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleGrantReference.BizTranRoleGrantedSearchRequest;
+import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+class SearchBizTranRoleGrantedValidatorTest {
+
+    // 実行既定値
+    private Long signInOperatorId = 987654L;
+    private Long targetOperatorId = 123456L;
+
+    private BizTranRoleGrantedSearchRequest createRequest() {
+        return new BizTranRoleGrantedSearchRequest() {
+            @Override
+            public Long getSignInOperatorId() {
+                return signInOperatorId;
+            }
+            @Override
+            public Long getTargetOperatorId() {
+                return targetOperatorId;
+            }
+        };
+    }
+
+    /**
+     * {@link SearchBizTranRoleGrantedValidator#validate()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test() {
+        // 実行値
+        BizTranRoleGrantedSearchRequest request = createRequest();
+
+        assertThatCode(() ->
+            // 実行
+            SearchBizTranRoleGrantedValidator.with(request).validate())
+            .doesNotThrowAnyException();
+    }
+
+    /**
+     * {@link SearchBizTranRoleGrantedValidator#validate()}テスト
+     *  ●パターン
+     *    リクエスト不正チェック
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test01() {
+        // 実行値
+        BizTranRoleGrantedSearchRequest request = null;
+
+        assertThatThrownBy(() ->
+            // 実行
+            SearchBizTranRoleGrantedValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13001");
+            });
+    }
+
+    /**
+     * {@link SearchBizTranRoleGrantedValidator#validate()}テスト
+     *  ●パターン
+     *    未セットチェック  サインインオペレーターID
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test02() {
+        // 実行値
+        signInOperatorId = null;
+        BizTranRoleGrantedSearchRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            SearchBizTranRoleGrantedValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
+                assertThat(e.getArgs()).containsSequence("サインインオペレーターID");
+            });
+    }
+
+    /**
+     * {@link SearchBizTranRoleGrantedValidator#validate()}テスト
+     *  ●パターン
+     *    未セットチェック  ターゲットオペレーターID
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test03() {
+        // 実行値
+        targetOperatorId = null;
+        BizTranRoleGrantedSearchRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            SearchBizTranRoleGrantedValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13002");
+                assertThat(e.getArgs()).containsSequence("ターゲットオペレーターID");
+            });
+    }
+}
