@@ -515,6 +515,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・Entityへのセット
+     *  ・Criteriaへのセット
+     *  ・modelへのセット
      *
      */
     @Test
@@ -557,6 +559,8 @@ class OperatorHistoryPackForStoreDataSourceTest {
      *
      *  ●検証事項
      *  ・Entityへのセット
+     *  ・Criteriaへのセット
+     *  ・modelへのセット
      *
      */
     @Test
