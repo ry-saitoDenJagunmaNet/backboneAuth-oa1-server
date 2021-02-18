@@ -254,6 +254,7 @@ class SearchSubSystemRoleGrantedTest {
      *    正常
      *
      *  ●検証事項
+     *  ・Criteriaへのセット
      *  ・modelへのセット
      *
      */

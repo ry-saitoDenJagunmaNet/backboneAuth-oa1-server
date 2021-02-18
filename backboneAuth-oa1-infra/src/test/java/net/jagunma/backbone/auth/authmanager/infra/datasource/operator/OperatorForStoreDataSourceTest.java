@@ -475,8 +475,8 @@ class OperatorForStoreDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・Entityへのセット
      *  ・Criteriaへのセット
+     *  ・Entityへのセット
      *
      */
     @Test
@@ -516,8 +516,8 @@ class OperatorForStoreDataSourceTest {
         OperatorEntity operatorEntity = operatorForStoreDataSource.updateOperator(operatorUpdatePack);
 
         // 結果検証
-        assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
         assertThat(actualOperatorEntityCriteria.toString()).isEqualTo(expectedOperatorEntityCriteria.toString());
+        assertThat(operatorEntity).usingRecursiveComparison().isEqualTo(expectedEntity);
     }
 
     /**
@@ -558,8 +558,8 @@ class OperatorForStoreDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・modelへのセット
      *  ・Criteriaへのセット
+     *  ・modelへのセット
      *
      */
     @Test
@@ -599,8 +599,8 @@ class OperatorForStoreDataSourceTest {
      *    正常
      *
      *  ●検証事項
-     *  ・modelへのセット
      *  ・Criteriaへのセット
+     *  ・modelへのセット
      *
      */
     @Test
