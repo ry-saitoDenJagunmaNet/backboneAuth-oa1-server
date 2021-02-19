@@ -27,6 +27,14 @@ public class BaseOfController {
     // Http ServletRequest
     @Autowired
     private HttpServletRequest httpServletRequest;
+    /**
+     * HttpServletRequestのＳｅｔ
+     *
+     * @param httpServletRequest HttpServletRequest
+     */
+    public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
+    }
 
     /**
      * AuditInfoHolder のＳｅｔ

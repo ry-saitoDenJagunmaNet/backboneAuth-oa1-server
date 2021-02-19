@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 
 class Oa31010ControllerTest {
 
@@ -177,6 +179,7 @@ class Oa31010ControllerTest {
 
         // 実行値
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInCause signInCause = SignInCause.サインイン;
@@ -219,6 +222,7 @@ class Oa31010ControllerTest {
         // 実行値
         authentication_execute_signInTrace = SignInResult.拒否_アカウントロック中;
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInCause signInCause = SignInCause.サインイン;
@@ -261,6 +265,7 @@ class Oa31010ControllerTest {
         // 実行値
         password = runtimeException;
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInResult signInTrace = authentication_execute_signInTrace;
@@ -294,6 +299,7 @@ class Oa31010ControllerTest {
 
         // 実行値
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInCause signInCause = SignInCause.継続サインイン;
@@ -336,6 +342,7 @@ class Oa31010ControllerTest {
         // 実行値
         authentication_execute_signInTrace = SignInResult.失敗_パスワード誤り;
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInCause signInCause = SignInCause.継続サインイン;
@@ -378,6 +385,7 @@ class Oa31010ControllerTest {
         // 実行値
         password = runtimeException;
         Oa31010SignInArg signInArg = createOa31010SignInArg();
+        controller.setHttpServletRequest(new MockHttpServletRequest());
 
         // 期待値
         SignInResult signInTrace = authentication_execute_signInTrace;
