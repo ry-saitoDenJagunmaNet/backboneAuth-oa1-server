@@ -53,9 +53,7 @@ class EntryOperatorValidator {
         Preconditions.checkAllCharactersAreHankaku(request.getPassword(), () -> new GunmaRuntimeException("EOA13005", "パスワード"));
 
         // 数値チェック
-        if (!Strings2.isDigit(request.getOperatorCode6())) {
-            throw new GunmaRuntimeException("EOA13006", "オペレーターコード（下6桁）");
-        }
+        Preconditions.checkState(Strings2.isDigit(request.getOperatorCode6()), () -> new GunmaRuntimeException("EOA13006", "オペレーターコード（下6桁）"));
 
         // メールアドレスフォーマット有効チェック
         Preconditions.checkAvailableMailAddressFormat(request.getMailAddress(), () -> new GunmaRuntimeException("EOA13009", "メールアドレス"));
@@ -63,9 +61,7 @@ class EntryOperatorValidator {
         // 範囲指定不正チェック
         Preconditions.checkMax(request.getValidThruEndDate(), request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));
 
-        // パスワード不一致チェック
-        if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new GunmaRuntimeException("EOA13101");
-        }
+        // パスワード一致チェック
+        Preconditions.checkState(request.getPassword().equals(request.getConfirmPassword()), () -> new GunmaRuntimeException("EOA13101"));
     }
 }

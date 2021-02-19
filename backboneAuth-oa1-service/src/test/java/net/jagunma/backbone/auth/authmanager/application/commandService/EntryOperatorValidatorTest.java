@@ -607,7 +607,7 @@ class EntryOperatorValidatorTest {
     /**
      * {@link EntryOperatorValidator#validate()}テスト
      *  ●パターン
-     *    パスワード不一致チェック
+     *    パスワード一致チェック
      *
      *  ●検証事項
      *  ・エラー発生

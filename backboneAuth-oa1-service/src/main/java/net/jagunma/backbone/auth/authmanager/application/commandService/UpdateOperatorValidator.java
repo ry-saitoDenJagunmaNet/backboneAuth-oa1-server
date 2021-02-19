@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorCommand.OperatorUpdateRequest;
+import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
@@ -46,7 +47,7 @@ class UpdateOperatorValidator {
         Preconditions.checkSize(0, 255, request.getChangeCause(), () -> new GunmaRuntimeException("EOA13003", "変更事由", "255", "以下"));
 
         // 列挙型未定義チェック
-        Preconditions.checkNonNegative(request.getAvailableStatus().getCode(), () -> new GunmaRuntimeException("EOA13007", "利用可否状態"));
+        Preconditions.checkState(!request.getAvailableStatus().equals(AvailableStatus.UnKnown), () -> new GunmaRuntimeException("EOA13007", "利用可否状態"));
 
         // 範囲指定不正チェック
         Preconditions.checkMax(request.getValidThruEndDate(), request.getValidThruStartDate(), () -> new GunmaRuntimeException("EOA13008", "有効期限"));

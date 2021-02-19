@@ -19,7 +19,6 @@ class GrantSubSystemRoleValidatorTest {
 
     // 実行既定値
     private Long operatorId = 123456L;
-    private List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
     private SubSystemRole subSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole subSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole subSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -35,6 +34,7 @@ class GrantSubSystemRoleValidatorTest {
     private LocalDate validThruEndDate2 = LocalDate.of(2020, 9, 22);
     private LocalDate validThruEndDate4 = LocalDate.of(2020, 9, 24);
     private LocalDate validThruEndDate6 = LocalDate.of(2020, 9, 26);
+    private List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
     private String changeCause = "業務統括者（販売・花卉）も兼務";
 
     private SubSystemRoleGrantRequest createRequest() {
@@ -55,86 +55,29 @@ class GrantSubSystemRoleValidatorTest {
     }
 
     private List<SubSystemRoleGrantRequestAssignRole> createAssignRoleList() {
-
-        SubSystemRoleGrantRequestAssignRole assignRole0 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole0;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate0;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate0;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole1 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole1;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate1;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate1;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole2 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole2;
-           }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate2;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate2;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole4 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole4;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate4;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate4;
-            }
-        };
-        SubSystemRoleGrantRequestAssignRole assignRole6 = new SubSystemRoleGrantRequestAssignRole() {
-            @Override
-            public SubSystemRole getSubSystemRole() {
-                return subSystemRole6;
-            }
-            @Override
-            public LocalDate getValidThruStartDate() {
-                return validThruStartDate6;
-            }
-            @Override
-            public LocalDate getValidThruEndDate() {
-                return validThruEndDate6;
-            }
-        };
-
-        List<SubSystemRoleGrantRequestAssignRole> list = newArrayList();
-        list.add(assignRole0);
-        list.add(assignRole1);
-        list.add(assignRole2);
-        list.add(assignRole4);
-        list.add(assignRole6);
-
-        return list;
+        List<SubSystemRole> subSystemRoleList = newArrayList(subSystemRole0, subSystemRole1, subSystemRole2, subSystemRole4, subSystemRole6);
+        List<LocalDate> validThruStartDateList = newArrayList(validThruStartDate0, validThruStartDate1, validThruStartDate2, validThruStartDate4, validThruStartDate6);
+        List<LocalDate> validThruEndDateList = newArrayList(validThruEndDate0, validThruEndDate1, validThruEndDate2, validThruEndDate4, validThruEndDate6);
+        List<SubSystemRoleGrantRequestAssignRole> subSystemRoleGrantRequestAssignRoleList = newArrayList();
+        for (int i = 0; i < subSystemRoleList.size(); i++) {
+            int _i = i;
+            SubSystemRoleGrantRequestAssignRole assignRole = new SubSystemRoleGrantRequestAssignRole() {
+                @Override
+                public SubSystemRole getSubSystemRole() {
+                    return subSystemRoleList.get(_i);
+                }
+                @Override
+                public LocalDate getValidThruStartDate() {
+                    return validThruStartDateList.get(_i);
+                }
+                @Override
+                public LocalDate getValidThruEndDate() {
+                    return validThruEndDateList.get(_i);
+                }
+            };
+            subSystemRoleGrantRequestAssignRoleList.add(assignRole);
+        }
+        return subSystemRoleGrantRequestAssignRoleList;
     }
 
     /**
@@ -321,7 +264,7 @@ class GrantSubSystemRoleValidatorTest {
     /**
      * {@link GrantSubSystemRoleValidator#validate()}テスト
      *  ●パターン
-     *    範囲指定不正チェック  有効期限
+     *    列挙型未定義チェック  サブシステムロール
      *
      *  ●検証事項
      *  ・エラー発生
@@ -330,6 +273,33 @@ class GrantSubSystemRoleValidatorTest {
     @Test
     @Tag(TestSize.SMALL)
     void validate_Test07() {
+        // 実行値
+        subSystemRole0 = SubSystemRole.UnKnown;
+        assignRoleList = createAssignRoleList();
+        SubSystemRoleGrantRequest request = createRequest();
+
+        assertThatThrownBy(() ->
+            // 実行
+            GrantSubSystemRoleValidator.with(request).validate())
+            .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
+                // 結果検証
+                assertThat(e.getMessageCode()).isEqualTo("EOA13007");
+                assertThat(e.getArgs()).containsSequence("サブシステムロール");
+            });
+    }
+
+    /**
+     * {@link GrantSubSystemRoleValidator#validate()}テスト
+     *  ●パターン
+     *    範囲指定不正チェック  有効期限
+     *
+     *  ●検証事項
+     *  ・エラー発生
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void validate_Test08() {
         // 実行値
         validThruStartDate0 = LocalDate.of(2020, 10, 30);
         validThruEndDate0 = LocalDate.of(2020, 10, 1);
