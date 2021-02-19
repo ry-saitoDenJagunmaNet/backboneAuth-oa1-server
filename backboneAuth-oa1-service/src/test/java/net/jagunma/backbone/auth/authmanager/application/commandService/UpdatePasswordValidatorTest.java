@@ -350,7 +350,7 @@ class UpdatePasswordValidatorTest {
     /**
      * {@link UpdatePasswordValidator#bothValidate(String newPassword, String confirmPassword, String messageAddition)}テスト
      *  ●パターン
-     *    パスワード不一致チェック
+     *    パスワード一致チェック
      *
      *  ●検証事項
      *  ・エラー発生
