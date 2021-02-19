@@ -1,8 +1,11 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
+import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.dto.Ed01000Dto;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.common.common.constant.SpecialOperator;
@@ -12,7 +15,6 @@ import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
-import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -49,6 +51,8 @@ public class Ed01000Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01000Controller.class);
 
+    private final String SESSIONKEY_REDIRECT_URI = "session_ed01000Redirect_uri";
+
     private final SignIn signIn;
 
     // コンストラクタ
@@ -60,11 +64,12 @@ public class Ed01000Controller extends BaseOfController {
      * サインインを行います
      *
      * @param redirect_uri HttpListenerのリダイレクト用URL（ループバックアドレス＋ポート）
+     * @param request      HttpServletRequest
      * @param model        モデル
      * @return 認証結果
      */
     @GetMapping(path = "/get")
-    public String get(@RequestParam(name = "redirect_uri") String redirect_uri, Model model) {
+    public String get(@RequestParam(name = "redirect_uri") String redirect_uri, HttpServletRequest request, Model model) {
 
         LOGGER.debug("get START");
 
@@ -73,6 +78,68 @@ public class Ed01000Controller extends BaseOfController {
 
         Ed01000Vo vo = new Ed01000Vo();
         try {
+            // リダイレクトuri（サインインの呼び出し元）をSessionに格納
+            setSessionAttribute(SESSIONKEY_REDIRECT_URI, redirect_uri);
+
+            // ToDo: Oa2認証Apiで認証コードを取得する
+            String clientId = "";
+            String scope = "";
+            String state = "";
+            StringBuilder sbOAuthRedirectUri = new StringBuilder();
+            sbOAuthRedirectUri.append(request.getScheme()).append("://");
+            sbOAuthRedirectUri.append("145.254.211.73");
+            sbOAuthRedirectUri.append(":").append(request.getServerPort());
+            sbOAuthRedirectUri.append("/").append("ed01000/oAuthRedirect");
+            String oAuthRedirectUri = sbOAuthRedirectUri.toString();
+            String responseType = "code";
+
+            // ToDo: 暫定でOa2認証Apiからリダイレクトされた提でoAuthRedirectメソッドにリダイレクト
+            StringBuilder uri = new StringBuilder();
+            uri.append("redirect:");
+            uri.append(oAuthRedirectUri);
+            uri.append("?code=").append("code12345");
+            uri.append("&state=").append("state12345");
+            return uri.toString();
+
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "ed01000";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+    }
+
+    /**
+     * サインインを行います
+     *
+     * @param error エラーメッセージ
+     * @param code  認可コード
+     * @param state リクエストに含めた state
+     * @param model モデル
+     * @return 認証結果
+     */
+    @GetMapping(path = "/oAuthRedirect")
+    public String oAuthRedirect(@RequestParam(name = "error", required = false) String error,
+        @RequestParam(name = "code") String code,
+        @RequestParam(name = "state") String state,
+        Model model) {
+
+        LOGGER.debug("get START");
+
+        // リダイレクトuri（サインインの呼び出し元）をSessionから取出
+        String redirect_uri =  (String) getSessionAttribute(SESSIONKEY_REDIRECT_URI);
+
+        // 未ログインオペレータを設定
+        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
+
+        Ed01000Vo vo = new Ed01000Vo();
+        try {
+            vo.setRedirectUri(redirect_uri);
             vo.setMode((int) SignInCause.サインイン.getCode());
             // ToDo: oa2Serverで認証コードを取得する
 
@@ -94,8 +161,9 @@ public class Ed01000Controller extends BaseOfController {
     /**
      * サインインを行います
      *
-     * @param model モデル
-     * @param vo    ViewObject
+     * @param request HttpServletRequest
+     * @param model   モデル
+     * @param vo      ViewObject
      * @return view名
      */
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
@@ -112,15 +180,16 @@ public class Ed01000Controller extends BaseOfController {
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
             // サインインサービス実行
             signIn.execute(converter, presenter);
+            Ed01000Dto dto = new Ed01000Dto();
+            presenter.bindTo(dto);
 
-            if (presenter.isSignInResultSuccess()) {
-                // ToDo: HttpListenerレスポンス に認証結果を送信する
-
-
-
-                // ToDo: 下記は暫定で自画面に戻る記述
-                model.addAttribute("form", vo);
-                return "ed01000";
+            if (dto.isSignInResultSuccess()) {
+                StringBuilder uri = new StringBuilder();
+                uri.append("redirect:");
+                uri.append(vo.getRedirectUri());
+                uri.append("?access_token=").append(dto.getAccessToken());
+                // HttpListenerレスポンス に認証結果を送信する
+                return uri.toString();
             }
 
             // サインインに失敗
