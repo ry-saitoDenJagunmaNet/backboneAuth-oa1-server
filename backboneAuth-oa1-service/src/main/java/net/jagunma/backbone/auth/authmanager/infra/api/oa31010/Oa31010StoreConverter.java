@@ -1,13 +1,13 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 
 /**
  * Oa31010 登録 Converter
  */
-public class Oa31010EntryConverter implements SignInTraceEntryRequest {
+public class Oa31010StoreConverter implements SignInTraceStoreRequest {
 
     private final String tryIpAddress;
     private final String operatorCode;
@@ -15,7 +15,7 @@ public class Oa31010EntryConverter implements SignInTraceEntryRequest {
     private final SignInResult signInResult;
 
     // コンストラクタ
-    Oa31010EntryConverter(
+    Oa31010StoreConverter(
         String tryIpAddress,
         String operatorCode,
         SignInCause signInCause,
@@ -28,13 +28,13 @@ public class Oa31010EntryConverter implements SignInTraceEntryRequest {
     }
 
     // ファクトリーメソッド
-    public static Oa31010EntryConverter with(
+    public static Oa31010StoreConverter with(
         String tryIpAddress,
         String operatorCode,
         SignInCause signInCause,
         SignInResult signInResult) {
 
-        return new Oa31010EntryConverter(
+        return new Oa31010StoreConverter(
             tryIpAddress,
             operatorCode,
             signInCause,

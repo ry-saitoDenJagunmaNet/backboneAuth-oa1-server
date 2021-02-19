@@ -1,6 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInRequest;
+import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 
 /**
  * Ed01000 サインイン Converter
@@ -8,56 +9,42 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.S
 public class Ed01000SignInConverter implements SignInRequest {
 
     /**
-     * オペレーターコード
+     * ED01010 View Object
      */
-    private String operatorCode;
-    /**
-     * パスワード
-     */
-    private String password;
+    private Ed01000Vo vo;
     /**
      * クライアントIPアドレス
      */
     private String clientIpaddress;
-    /**
-     * モード
-     */
-    private Integer mode;
 
     // コンストラクタ
     Ed01000SignInConverter(
-        String operatorCode,
-        String password,
-        String clientIpaddress,
-        Integer mode) {
+        Ed01000Vo vo,
+        String clientIpaddress) {
 
-        this.operatorCode = operatorCode;
-        this.password = password;
+        this.vo = vo;
         this.clientIpaddress = clientIpaddress;
-        this.mode = mode;
     }
 
     // ファクトリーメソッド
     public static Ed01000SignInConverter with(
-        String operatorCode,
-        String password,
-        String clientIpaddress,
-        Integer mode) {
+        Ed01000Vo vo,
+        String clientIpaddress) {
 
-        return new Ed01000SignInConverter(operatorCode, password, clientIpaddress, mode);
+        return new Ed01000SignInConverter(vo, clientIpaddress);
     }
 
     // Getter
     public String getOperatorCode() {
-        return operatorCode;
+        return vo.getOperatorCode();
     }
     public String getPassword() {
-        return password;
+        return vo.getPassword();
+    }
+    public Integer getMode() {
+        return vo.getMode();
     }
     public String getClientIpaddress() {
         return clientIpaddress;
-    }
-    public Integer getMode() {
-        return mode;
     }
 }

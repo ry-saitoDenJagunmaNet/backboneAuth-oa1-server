@@ -9,12 +9,6 @@ import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 public interface AuthenticationResponse {
 
     /**
-     * オペレーターのＳｅｔ
-     *
-     * @param operator オペレーター
-     */
-    void setOperator(Operator operator);
-    /**
      * サインイン結果のＳｅｔ
      *
      * @param signInResult サインイン結果

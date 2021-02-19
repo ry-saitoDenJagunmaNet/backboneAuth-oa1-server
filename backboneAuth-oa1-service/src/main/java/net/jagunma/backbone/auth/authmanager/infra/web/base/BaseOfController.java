@@ -2,7 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -24,30 +23,29 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BaseOfController {
 
+    // ToDo: setAuditInfoHolderメソッドでgetRemoteAddr()を使用するために定義
+    // Http ServletRequest
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
     /**
      * AuditInfoHolder のＳｅｔ
      *
-     * @param operator オペレーター
+     * @param simpleOperator オペレーター(簡略版)
      */
-    public void setAuditInfoHolder(Operator operator) {
-        SimpleOperator simpleOperator = new SimpleOperatorBuilder()
-            .withIdentifier(operator.getOperatorId())
-            .withOperatorCode(OperatorCode.of(operator.getOperatorCode()))
-            .withOperatorName(operator.getOperatorName())
-            .withBranchIdentifier(operator.getBranchId())
-            .withBranch(operator.getBranchAtMoment())
-            .build();
+    public void setAuditInfoHolder(SimpleOperator simpleOperator) {
 
+        // ToDo: 各コントローラが動作する前にAuditInfoHolderが設定されるはず・・・・
         AuditInfoHolder.set(AuthInf.createFrom(
-            operator.getBranchAtMoment().getJaAtMoment().getJaAttribute().getJaCode().getValue(),
-            operator.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue(),
-            operator.getOperatorId(),
-            operator.getOperatorName(),
-            ""),
+            simpleOperator.getBranch().getJaAtMoment().getJaAttribute().getJaCode().getValue(),
+            simpleOperator.getBranch().getBranchAttribute().getBranchCode().getValue(),
+            simpleOperator.getIdentifier().longValue(),
+            simpleOperator.getOperatorName(),
+            httpServletRequest.getRemoteAddr()),
             DateProvider.currentLocalDateTime(),
             Route.createFrom("", ""),
-            operator.getBranchAtMoment().getJaAtMoment(),
-            operator.getBranchAtMoment(),
+            simpleOperator.getBranch().getJaAtMoment(),
+            simpleOperator.getBranch(),
             simpleOperator);
     }
 

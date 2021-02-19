@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
@@ -25,7 +25,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class EntrySignInTraceTest {
+class StoreSignInTraceTest {
 
     // 実行既定値
     private final String tryIpAddress = "001.001.001.001";
@@ -88,7 +88,7 @@ class EntrySignInTraceTest {
     }
 
     // サインイン証跡登録サービス作成（テスト対象クラス）
-    private EntrySignInTrace createEntrySignInTrace() {
+    private StoreSignInTrace createStoreSignInTrace() {
         // サインイン証跡格納リポジトリのスタブ
         SignInTraceRepositoryForStore signInTraceRepositoryForStore = new SignInTraceRepositoryForStore() {
             @Override
@@ -126,11 +126,11 @@ class EntrySignInTraceTest {
                 return null;
             }
         };
-        return new EntrySignInTrace(signInTraceRepositoryForStore, signInTraceRepository, accountLockRepositoryForStore);
+        return new StoreSignInTrace(signInTraceRepositoryForStore, signInTraceRepository, accountLockRepositoryForStore);
     }
     // サインイン証跡登録サービス Request作成
-    private SignInTraceEntryRequest createSignInTraceEntryRequest() {
-        return new SignInTraceEntryRequest() {
+    private SignInTraceStoreRequest createSignInTraceEntryRequest() {
+        return new SignInTraceStoreRequest() {
             @Override
             public String getTryIpAddress() {
                 return tryIpAddress;
@@ -151,7 +151,7 @@ class EntrySignInTraceTest {
     }
 
     /**
-     * {@link EntrySignInTrace#execute(SignInTraceEntryRequest)}テスト
+     * {@link StoreSignInTrace#execute(SignInTraceStoreRequest)}テスト
      *  ●パターン
      *    正常
      *
@@ -164,14 +164,14 @@ class EntrySignInTraceTest {
     void execute_test0() {
 
         // テスト対象クラス生成
-        EntrySignInTrace entrySignInTrace = createEntrySignInTrace();
+        StoreSignInTrace storeSignInTrace = createStoreSignInTrace();
 
         // 実行値
-        SignInTraceEntryRequest request = createSignInTraceEntryRequest();
+        SignInTraceStoreRequest request = createSignInTraceEntryRequest();
 
         assertThatCode(() ->
             // 実行
-            entrySignInTrace.execute(request)).doesNotThrowAnyException();
+            storeSignInTrace.execute(request)).doesNotThrowAnyException();
 
         // 期待値
         SignInTrace expectedSignInTrace = SignInTrace.createFrom(
@@ -202,7 +202,7 @@ class EntrySignInTraceTest {
     }
 
     /**
-     * {@link EntrySignInTrace#execute(SignInTraceEntryRequest)}テスト
+     * {@link StoreSignInTrace#execute(SignInTraceStoreRequest)}テスト
      *  ●パターン
      *    正常（3回目の失敗 パスワード誤りでアカウントロックにInsert）
      *
@@ -214,15 +214,15 @@ class EntrySignInTraceTest {
     @Tag(TestSize.SMALL)
     void execute_test1() {
         // テスト対象クラス生成
-        EntrySignInTrace entrySignInTrace = createEntrySignInTrace();
+        StoreSignInTrace storeSignInTrace = createStoreSignInTrace();
 
         // 実行値
-        SignInTraceEntryRequest request = createSignInTraceEntryRequest();
+        SignInTraceStoreRequest request = createSignInTraceEntryRequest();
         signInTraces = SignInTraces.createFrom(createSignInTraceListForPasswordError(3));
 
         assertThatCode(() ->
             // 実行
-            entrySignInTrace.execute(request)).doesNotThrowAnyException();
+            storeSignInTrace.execute(request)).doesNotThrowAnyException();
 
         // 期待値
         SignInTrace expectedSignInTrace = SignInTrace.createFrom(
@@ -247,7 +247,7 @@ class EntrySignInTraceTest {
    }
 
     /**
-     * {@link EntrySignInTrace#execute(SignInTraceEntryRequest)}テスト
+     * {@link StoreSignInTrace#execute(SignInTraceStoreRequest)}テスト
      *  ●パターン
      *    正常（2回目の失敗 パスワード誤り。アカウントロックにInsert無し）
      *
@@ -259,15 +259,15 @@ class EntrySignInTraceTest {
     @Tag(TestSize.SMALL)
     void execute_test2() {
         // テスト対象クラス生成
-        EntrySignInTrace entrySignInTrace = createEntrySignInTrace();
+        StoreSignInTrace storeSignInTrace = createStoreSignInTrace();
 
         // 実行値
-        SignInTraceEntryRequest request = createSignInTraceEntryRequest();
+        SignInTraceStoreRequest request = createSignInTraceEntryRequest();
         signInTraces = SignInTraces.createFrom(createSignInTraceListForPasswordError(2));
 
         assertThatCode(() ->
             // 実行
-            entrySignInTrace.execute(request)).doesNotThrowAnyException();
+            storeSignInTrace.execute(request)).doesNotThrowAnyException();
 
         // 期待値
         SignInTrace expectedSignInTrace = SignInTrace.createFrom(
