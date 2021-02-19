@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,10 +7,10 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Oa13010AuthenticationPresenterTest {
+class Oa31010AuthenticationPresenterTest {
 
     /**
-     * {@link Oa13010AuthenticationPresenter} のテスト
+     * {@link Oa31010AuthenticationPresenter} のテスト
      *  ●パターン
      *    通常
      *
@@ -22,7 +22,7 @@ class Oa13010AuthenticationPresenterTest {
     void test0() {
 
         // テスト対象クラス生成
-        Oa13010AuthenticationPresenter actualPresenter = new Oa13010AuthenticationPresenter();
+        Oa31010AuthenticationPresenter actualPresenter = new Oa31010AuthenticationPresenter();
 
         // 実行値
         SignInResult signInResult = SignInResult.成功;

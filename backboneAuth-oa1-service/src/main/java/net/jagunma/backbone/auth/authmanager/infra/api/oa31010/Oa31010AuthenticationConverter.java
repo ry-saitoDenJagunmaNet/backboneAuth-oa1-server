@@ -1,17 +1,17 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
 
 /**
- * Oa13010 認証 Converter
+ * Oa31010 認証 Converter
  */
-public class Oa13010AuthenticationConverter implements AuthenticationRequest {
+public class Oa31010AuthenticationConverter implements AuthenticationRequest {
 
     private final String operatorCode;
     private final String password;
 
     // コンストラクタ
-    Oa13010AuthenticationConverter(
+    Oa31010AuthenticationConverter(
         String operatorCode,
         String password) {
 
@@ -20,11 +20,11 @@ public class Oa13010AuthenticationConverter implements AuthenticationRequest {
     }
 
     // ファクトリーメソッド
-    public static Oa13010AuthenticationConverter with(
+    public static Oa31010AuthenticationConverter with(
         String operatorCode,
         String password) {
 
-        return new Oa13010AuthenticationConverter(operatorCode, password);
+        return new Oa31010AuthenticationConverter(operatorCode, password);
     }
 
     /**

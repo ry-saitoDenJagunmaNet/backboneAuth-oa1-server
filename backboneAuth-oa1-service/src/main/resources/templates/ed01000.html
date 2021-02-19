@@ -33,11 +33,7 @@
 		<section class="edex_sign_in">
 			<!-- Hidden項目 -->
 			<div>
-				<input type="hidden" id="clientId" name="clientId" th:value="${form.clientId}"/>
 				<input type="hidden" id="redirectUri" name="redirectUri" th:value="${form.redirectUri}"/>
-				<input type="hidden" id="state" name="state" th:value="${form.state}"/>
-				<input type="hidden" id="code" name="state" th:value="${form.code}"/>
-				<input type="hidden" id="accessToken" name="accessToken" th:value="${form.accessToken}"/>
 			</div>
 			<!-- オペレーターコード -->
 			<div class="row">
@@ -90,19 +86,19 @@
 
 
 	<!-- ★モックアップ時表示★ -->
-	<br><br><br><br><br>
-	<br><br><br><br><br>
 	<div class="row" id="display_at_mockup_row">
+		<br><br><br><br><br>
+		<br><br><br><br><br>
 		<p>★モックアップ時表示★</p>
 		<div>
 			<label>
-				<input type="radio" id="mode_initial" name="mode" checked="checked" th:checked="${form.mode == 0}" value="0" onchange="edex_mode_onChange()"/>
+				<input type="radio" id="mode_initial" name="mode" checked="checked" th:checked="${form.mode == 1}" value="1" onchange="edex_mode_onChange()"/>
 				<span>初期認証</span>
 			</label>
 		</div>
 		<div>
 			<label>
-				<input type="radio" id="mode_reset" name="mode" th:checked="${form.mode == 1}" value="1" onchange="edex_mode_onChange()"/>
+				<input type="radio" id="mode_reset" name="mode" th:checked="${form.mode == 2}" value="2" onchange="edex_mode_onChange()"/>
 				<span>継続再認証</span>
 			</label>
 		</div>

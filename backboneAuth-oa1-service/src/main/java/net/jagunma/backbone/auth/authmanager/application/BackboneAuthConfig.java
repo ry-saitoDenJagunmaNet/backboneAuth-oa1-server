@@ -9,6 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackboneAuthConfig {
 
+    @Value("${backbone.authOa2.scheme}") // yamlのキーを設定します。
+    private String oa2scheme;
+    @Value("${backbone.authOa2.host}") // yamlのキーを設定します。
+    private String oa2host;
+    @Value("${backbone.authOa2.port}") // yamlのキーを設定します。
+    private int oa2port;
+
     @Value("${backbone.authOa3.scheme}") // yamlのキーを設定します。
     private String oa3scheme;
     @Value("${backbone.authOa3.host}") // yamlのキーを設定します。
@@ -17,6 +24,27 @@ public class BackboneAuthConfig {
     private int oa3port;
 
     // Getter／Setter
+    public String getOa2scheme() {
+        return oa2scheme;
+    }
+    public void setOa2scheme(String oa2scheme) {
+        this.oa2scheme = oa2scheme;
+    }
+    public String getOa2host() {
+        return oa2host;
+    }
+    public void setOa2host(String oa2host) {
+        this.oa2host = oa2host;
+    }
+    public int getOa2port() {
+        return oa2port;
+    }
+    public void setOa2port(int oa2port) {
+        this.oa2port = oa2port;
+    }
+    public void setOa3scheme(String oa3scheme) {
+        this.oa3scheme = oa3scheme;
+    }
 
     public String getOa3scheme() {
         return oa3scheme;

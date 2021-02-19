@@ -137,6 +137,9 @@ public class OperatorDataSource implements OperatorRepository {
 
         // オペレーター検索
         List<OperatorEntity> operatorEntityList = operatorEntityDao.findBy(convertCriteria(operatorCriteria), orders);
+        if (operatorEntityList.size() == 0) {
+            return Operators.createFrom(newArrayList());
+        }
 
         // BranchesAtMoment検索
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();

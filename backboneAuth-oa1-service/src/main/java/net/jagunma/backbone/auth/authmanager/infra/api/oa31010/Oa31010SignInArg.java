@@ -1,9 +1,9 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 /**
- * Oa13010 サインイン Arg
+ * Oa31010 サインイン Arg
  */
-public class Oa13010SignInArg {
+public class Oa31010SignInArg {
 
     private static final long serialVersionUID = 1L;
 

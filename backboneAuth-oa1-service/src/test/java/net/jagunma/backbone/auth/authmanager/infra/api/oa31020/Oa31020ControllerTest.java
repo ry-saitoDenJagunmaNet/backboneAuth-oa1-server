@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class Oa13020ControllerTest {
+class Oa31020ControllerTest {
 
     // 実行既定値
     private Long operatorId = 123456789L;
@@ -55,7 +55,7 @@ class Oa13020ControllerTest {
     }
 
     // テスト対象クラス
-    private Oa13020Controller createOa13020Controller() {
+    private Oa31020Controller createOa31020Controller() {
         // オペレーター_取引ロール割当群検索リポジトリのスタブ
         Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {
             @Override
@@ -150,11 +150,11 @@ class Oa13020ControllerTest {
                 response.setSearchAccessibleDtoList(list);
             };
         };
-        return new Oa13020Controller(SearchAccessible);
+        return new Oa31020Controller(SearchAccessible);
     }
 
     /**
-     * {@link Oa13020Controller#Oa13020Controller(SearchAccessible)} のテスト
+     * {@link Oa31020Controller#Oa31020Controller(SearchAccessible)} のテスト
      *  ●パターン
      *    正常
      *
@@ -166,7 +166,7 @@ class Oa13020ControllerTest {
     void getAccessible_test0() {
 
         // テスト対象クラス生成
-        Oa13020Controller controller = createOa13020Controller();
+        Oa31020Controller controller = createOa31020Controller();
 
         // 期待値
         Map<String, List<String>> map = new HashMap<>();
@@ -174,7 +174,7 @@ class Oa13020ControllerTest {
             map.put(key, searchAccessibleMap.get(key));
         }
         ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(map, HttpStatus.OK);
-        AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa13020Converter.with(operatorId);
+        AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa31020Converter.with(operatorId);
 
         // 実行
         ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
@@ -185,7 +185,7 @@ class Oa13020ControllerTest {
     }
 
     /**
-     * {@link Oa13020Controller#Oa13020Controller(SearchAccessible)} のテスト
+     * {@link Oa31020Controller#Oa31020Controller(SearchAccessible)} のテスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -200,7 +200,7 @@ class Oa13020ControllerTest {
         operatorId = -1L;
 
         // テスト対象クラス生成
-        Oa13020Controller controller = createOa13020Controller();
+        Oa31020Controller controller = createOa31020Controller();
 
         // 期待値
         ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
