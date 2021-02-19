@@ -1,16 +1,16 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
-import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
+import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.dto.Ed01000Dto;
 
 /**
  * Ed01000 サインイン Presenter
  */
 public class Ed01000SignInPresenter implements SignInResponse {
 
-    public Short signInResultCode;
-    public String signInResultMessage;
-    public String accessToken;
+    private Short signInResultCode;
+    private String signInResultMessage;
+    private String accessToken;
 
     /**
      * サインイン結果コードのＳｅｔ
@@ -19,7 +19,7 @@ public class Ed01000SignInPresenter implements SignInResponse {
      */
     public void setSignInResultCode(Short signInResultCode) {
         this.signInResultCode = signInResultCode;
-    };
+    }
     /**
      * サインイン結果メッセージのＳｅｔ
      *
@@ -38,13 +38,13 @@ public class Ed01000SignInPresenter implements SignInResponse {
     }
 
     /**
-     * サインインが成功したか判定します
+     * dtoに変換します
      *
-     * @return サインイン結果
+     * @param dto サインイン Dto
      */
-    public boolean isSignInResultSuccess() {
-        if (signInResultCode == null) { return false; }
-        return SignInResult.codeOf(signInResultCode).is成功();
+    public void bindTo(Ed01000Dto dto) {
+        dto.setSignInResultCode(signInResultCode);
+        dto.setSignInResultMessage(signInResultMessage);
+        dto.setAccessToken(accessToken);
     }
-
 }

@@ -50,7 +50,7 @@ public class SignIn extends BaseOfService {
 
         if (SignInResult.codeOf(signInResponseDto.getSignInResultCode()).is成功()) {
             // ToDo: 認証に成功したらAccessTokenを取得
-            response.setAccessToken("AccessToken");
+            response.setAccessToken("AccessToken12345");
         }
 
         response.setSignInResultCode(signInResponseDto.getSignInResultCode());
