@@ -29,10 +29,4 @@ public interface SignInRequest {
      * @return モード
      */
     Integer getMode();
-    /**
-     * アクセストークンのＧｅｔ
-     *
-     * @return アクセストークン
-     */
-    String getAccessToken();
 }

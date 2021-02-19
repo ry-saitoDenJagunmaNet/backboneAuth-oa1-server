@@ -1,6 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -21,6 +23,33 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Controllerの基底クラス
  */
 public class BaseOfController {
+
+    /**
+     * AuditInfoHolder のＳｅｔ
+     *
+     * @param operator オペレーター
+     */
+    public void setAuditInfoHolder(Operator operator) {
+        SimpleOperator simpleOperator = new SimpleOperatorBuilder()
+            .withIdentifier(operator.getOperatorId())
+            .withOperatorCode(OperatorCode.of(operator.getOperatorCode()))
+            .withOperatorName(operator.getOperatorName())
+            .withBranchIdentifier(operator.getBranchId())
+            .withBranch(operator.getBranchAtMoment())
+            .build();
+
+        AuditInfoHolder.set(AuthInf.createFrom(
+            operator.getBranchAtMoment().getJaAtMoment().getJaAttribute().getJaCode().getValue(),
+            operator.getBranchAtMoment().getBranchAttribute().getBranchCode().getValue(),
+            operator.getOperatorId(),
+            operator.getOperatorName(),
+            ""),
+            DateProvider.currentLocalDateTime(),
+            Route.createFrom("", ""),
+            operator.getBranchAtMoment().getJaAtMoment(),
+            operator.getBranchAtMoment(),
+            simpleOperator);
+    }
 
     // Http Session
     @Autowired
@@ -98,7 +127,6 @@ public class BaseOfController {
     public static void setAuthInf() {
         setAuthInf(null, null, null, null, null);
     }
-
     public static void setAuthInf(
         Long operatorId,
         String operatorCode,

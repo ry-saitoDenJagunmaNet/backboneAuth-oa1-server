@@ -48,7 +48,7 @@ function edex_th_signInBtn_onClick() {
  */
 function edex_mode_onChange() {
 	let mode = oa_getRadioCheckedValue("mode");
-	if (mode == "0") {
+	if (mode == "1") {
 		// 初期認証
 		for (let signIn of document.querySelectorAll(".edex_sign_in")) {
 			signIn.style.display = "block";
@@ -56,7 +56,7 @@ function edex_mode_onChange() {
 		for (let reSignIn of document.querySelectorAll(".edex_re_sign_in")) {
 			reSignIn.style.display = "none";
 		} 
-	} else if (mode == "1") {
+	} else if (mode == "2") {
 		// 継続再認証
 		for (let signIn of document.querySelectorAll(".edex_sign_in")) {
 			signIn.style.display = "none";

@@ -15,6 +15,20 @@ public class BaseOfService {
     }
 
     /**
+     * backboneAuth-oa2-serve の Uriを作成します
+     *
+     * @param path path
+     * @return backboneAuth-oa2-serve の Uri
+     */
+    protected URI createBackboneAuthOa2ServeUri(String path) {
+        return UriComponentsBuilder.newInstance()
+            .scheme(backboneAuthConfig.getOa3scheme())
+            .host(backboneAuthConfig.getOa3host())
+            .port(backboneAuthConfig.getOa3port())
+            .path(path).build().toUri();
+    }
+
+    /**
      * backboneAuth-oa3-serve の Uriを作成します
      *
      * @param path path
@@ -27,5 +41,4 @@ public class BaseOfService {
             .port(backboneAuthConfig.getOa3port())
             .path(path).build().toUri();
     }
-
 }

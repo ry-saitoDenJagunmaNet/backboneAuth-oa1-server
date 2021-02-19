@@ -46,6 +46,10 @@ logging:
 
 # 基幹系認証のapiサーバー
 backbone:
+  authOa2:
+    scheme: http
+    host: localhost
+    port: 18701
   authOa3:
     scheme: http
     host: localhost

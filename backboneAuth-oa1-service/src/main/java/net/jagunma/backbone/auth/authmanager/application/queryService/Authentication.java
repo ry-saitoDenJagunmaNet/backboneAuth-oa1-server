@@ -9,7 +9,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.OperatorRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
-import net.jagunma.backbone.auth.authmanager.model.types.AccountLockStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.AvailableStatus;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import org.springframework.stereotype.Service;
@@ -47,9 +46,25 @@ public class Authentication {
         // オペレーターよる認証
         if (!operatorRepository.existsByCode(request.getOperatorCode())) {
             response.setSignInResult(SignInResult.失敗_存在しないオペレーター);
+            response.setOperator(Operator.createFrom(
+                0L,
+                request.getOperatorCode(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null));
             return;
         }
         Operator operator = operatorRepository.findOneByCode(request.getOperatorCode());
+        response.setOperator(operator);
         SignInResult signInResult = isAuthenticationByOperator(operator);
         if (!SignInResult.成功.equals(signInResult)) {
             response.setSignInResult(signInResult);

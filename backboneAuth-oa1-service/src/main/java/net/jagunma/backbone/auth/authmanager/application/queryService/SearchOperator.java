@@ -145,6 +145,10 @@ public class SearchOperator {
         // オペレーター検索
         Orders orders = Orders.empty().addOrder("branchCode").addOrder("operatorCode");
         Operators operators = operatorRepository.selectBy(createOperatorCriteria(request), orders);
+        if (operators.getValues().size() == 0) {
+            response.setOperators(operators);
+            return;
+        }
 
         // オペレーターIDリスト
         List<Long> operatorIdList = operators.getValues().stream().map(Operator::getOperatorId).collect(Collectors.toList());

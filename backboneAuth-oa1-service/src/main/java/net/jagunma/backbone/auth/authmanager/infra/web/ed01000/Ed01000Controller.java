@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -46,7 +47,7 @@ public class Ed01000Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01000Controller.class);
 
-    private SignIn signIn;
+    private final SignIn signIn;
 
     // コンストラクタ
     public Ed01000Controller(SignIn signIn) {
@@ -54,38 +55,22 @@ public class Ed01000Controller extends BaseOfController {
     }
 
     /**
-     * 継続サインインを行います
+     * サインインを行います
      *
-     * @param client_id     クライアントID
-     * @param redirect_uri  HttpListenerのリダイレクト用URL（ループバックアドレス＋ポート）
-     * @param state         リダイレクトして返される値 ※リクエストした値と一致しない場合、認証不正と判定
-     * @param code          アクセストークン取得時に使用するコード
-     * @param response_type
-     * @param scope
-     * @param code_challenge
-     * @param code_challenge_method
-     * @param login_hint
-     * @param access_token アクセストークン
+     * @param redirect_uri HttpListenerのリダイレクト用URL（ループバックアドレス＋ポート）
+     * @param model        モデル
      * @return 認証結果
      */
     @GetMapping(path = "/get")
-    public String get(
-        @RequestParam(name = "client_id") String client_id,
-        @RequestParam(name = "redirect_uri") String redirect_uri,
-        @RequestParam(name = "state") String state,
-        @RequestParam(name = "code") String code,
-        @RequestParam(name = "response_type", required = false) String response_type,
-        @RequestParam(name = "scope", required = false) String scope,
-        @RequestParam(name = "code_challenge", required = false) String code_challenge,
-        @RequestParam(name = "code_challenge_method", required = false) String code_challenge_method,
-        @RequestParam(name = "login_hint", required = false) String login_hint,
-        @RequestParam(name = "access_token", required = false) String access_token,
-        Model model) {
+    public String get(@RequestParam(name = "redirect_uri") String redirect_uri, Model model) {
 
         LOGGER.debug("get START");
 
-        Ed01000Vo vo = new Ed01000Vo(client_id, redirect_uri, state, code, access_token);
+        Ed01000Vo vo = new Ed01000Vo();
         try {
+            vo.setMode((int) SignInCause.サインイン.getCode());
+            // ToDo: oa2Serverで認証コードを取得する
+
             model.addAttribute("form", vo);
             return "ed01000";
         } catch (GunmaRuntimeException gre) {
@@ -105,7 +90,7 @@ public class Ed01000Controller extends BaseOfController {
      * サインインを行います
      *
      * @param model モデル
-     * @param vo ViewObject
+     * @param vo    ViewObject
      * @return view名
      */
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
@@ -116,7 +101,7 @@ public class Ed01000Controller extends BaseOfController {
         try {
             // リクエストを作成
             Ed01000SignInConverter converter = Ed01000SignInConverter.with(
-                vo.getOperatorCode(), vo.getPassword(), request.getRemoteAddr(), vo.getMode(), vo.getAccessToken());
+                vo.getOperatorCode(), vo.getPassword(), request.getRemoteAddr(), vo.getMode());
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
             // サインインサービス実行
             signIn.execute(converter, presenter);
@@ -128,6 +113,7 @@ public class Ed01000Controller extends BaseOfController {
                 return "ed01000";
             }
 
+            // サインインに失敗
             throw new GunmaRuntimeException("EOA12006");
 
         } catch (GunmaRuntimeException gre) {

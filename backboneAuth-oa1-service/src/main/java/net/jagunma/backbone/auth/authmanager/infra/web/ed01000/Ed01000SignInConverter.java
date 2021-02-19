@@ -23,24 +23,18 @@ public class Ed01000SignInConverter implements SignInRequest {
      * モード
      */
     private Integer mode;
-    /**
-     * アクセストークン
-     */
-    private String accessToken;
 
     // コンストラクタ
     Ed01000SignInConverter(
         String operatorCode,
         String password,
         String clientIpaddress,
-        Integer mode,
-        String accessToken) {
+        Integer mode) {
 
         this.operatorCode = operatorCode;
         this.password = password;
         this.clientIpaddress = clientIpaddress;
         this.mode = mode;
-        this.accessToken = accessToken;
     }
 
     // ファクトリーメソッド
@@ -48,13 +42,12 @@ public class Ed01000SignInConverter implements SignInRequest {
         String operatorCode,
         String password,
         String clientIpaddress,
-        Integer mode,
-        String accessToken) {
+        Integer mode) {
 
-        return new Ed01000SignInConverter(operatorCode, password, clientIpaddress, mode, accessToken);
+        return new Ed01000SignInConverter(operatorCode, password, clientIpaddress, mode);
     }
 
-    // Getter／Setter
+    // Getter
     public String getOperatorCode() {
         return operatorCode;
     }
@@ -66,8 +59,5 @@ public class Ed01000SignInConverter implements SignInRequest {
     }
     public Integer getMode() {
         return mode;
-    }
-    public String getAccessToken() {
-        return accessToken;
     }
 }

@@ -1,17 +1,17 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13010;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 
 /**
- * Oa13010 サインイン Result
+ * Oa31010 サインイン Result
  */
-public class Oa13010SignInResult {
+public class Oa31010SignInResult {
 
     private Short signInResultCode = null;
     private String signInResultMessage = "";
 
     // コンストラクタ
-    Oa13010SignInResult(Short signInResultCode,
+    Oa31010SignInResult(Short signInResultCode,
         String signInResultMessage) {
 
         this.signInResultCode = signInResultCode;
@@ -19,8 +19,8 @@ public class Oa13010SignInResult {
     }
 
     // ファクトリーメソッド
-    public static Oa13010SignInResult createFrom(SignInResult signInResult) {
-        return new Oa13010SignInResult(signInResult.getCode(), signInResult.getDisplayName());
+    public static Oa31010SignInResult createFrom(SignInResult signInResult) {
+        return new Oa31010SignInResult(signInResult.getCode(), signInResult.getDisplayName());
     }
 
     /**

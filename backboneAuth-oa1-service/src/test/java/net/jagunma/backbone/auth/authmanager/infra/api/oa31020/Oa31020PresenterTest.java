@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +11,7 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Oa13020PresenterTest {
+class Oa31020PresenterTest {
 
     // 実行既定値
 
@@ -34,7 +34,7 @@ class Oa13020PresenterTest {
     }
 
     /**
-     * {@link Oa13020Presenter#getResponse()} のテスト
+     * {@link Oa31020Presenter#getResponse()} のテスト
      *  ●パターン
      *    通常
      *
@@ -46,7 +46,7 @@ class Oa13020PresenterTest {
     void getResponse_test0() {
 
         // テスト対象クラス生成
-        Oa13020Presenter presenter = new Oa13020Presenter();
+        Oa31020Presenter presenter = new Oa31020Presenter();
 
         // 実行値
         List<SearchAccessibleDto> searchAccessibleDtoList = createSearchAccessibleDtoList();

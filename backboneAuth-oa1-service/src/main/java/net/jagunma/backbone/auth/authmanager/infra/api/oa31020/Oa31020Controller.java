@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * OA13020コントローラ
+ * OA31020コントローラ
  *
  * <pre>
  * -------------------------------------------------
  * システム：O 業務共通システム
  * サブシステム：OA 基幹系認証管理サブシステム
- * 機能グループID：OA1
- * 機能グループ名：管理WEB
- * 機能ID：OA13020
+ * 機能グループID：OA3
+ * 機能グループ名：認可API
+ * 機能ID：OA31020
  * 機能名：権限取得
- * サービスID：OA13020
- * サービス名：OA13020サービス
+ * サービスID：OA31020
+ * サービス名：OA31020サービス
  * -------------------------------------------------
  * </pre>
  */
 @RestController
-@RequestMapping(value = "oa13020")
-public class Oa13020Controller {
+@RequestMapping(value = "oa31020")
+public class Oa31020Controller {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Oa13020Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Oa31020Controller.class);
 
     private final SearchAccessible searchAccessible;
 
     // コンストラクタ
-    public Oa13020Controller(SearchAccessible searchAccessible) {
+    public Oa31020Controller(SearchAccessible searchAccessible) {
         this.searchAccessible = searchAccessible;
     }
 
@@ -61,9 +61,9 @@ public class Oa13020Controller {
 
         LOGGER.debug("operatorId:" + operatorId);
 
-        Oa13020Presenter presenter = new Oa13020Presenter();
+        Oa31020Presenter presenter = new Oa31020Presenter();
         try {
-            Oa13020Converter converter = Oa13020Converter.with(operatorId);
+            Oa31020Converter converter = Oa31020Converter.with(operatorId);
 
             searchAccessible.execute(converter, presenter);
         } catch (RuntimeException re) {
