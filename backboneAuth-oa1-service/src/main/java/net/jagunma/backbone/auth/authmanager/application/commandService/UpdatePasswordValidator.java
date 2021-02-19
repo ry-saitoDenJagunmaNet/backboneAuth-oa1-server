@@ -100,9 +100,7 @@ class UpdatePasswordValidator {
         // 全角混入チェック
         Preconditions.checkAllCharactersAreHankaku(newPassword, () -> new GunmaRuntimeException("EOA13005", messageAddition + "パスワード"));
 
-        // パスワード不一致チェック
-        if (!newPassword.equals(confirmPassword)) {
-            throw new GunmaRuntimeException("EOA13101");
-        }
+        // パスワード一致チェック
+        Preconditions.checkState(newPassword.equals(confirmPassword), () -> new GunmaRuntimeException("EOA13101"));
     }
 }
