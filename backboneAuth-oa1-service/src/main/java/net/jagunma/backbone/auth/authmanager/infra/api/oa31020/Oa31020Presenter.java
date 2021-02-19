@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +7,9 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAcce
 import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchResponse;
 
 /**
- * OA13020 権限取得 Presenter
+ * OA31020 権限取得 Presenter
  */
-public class Oa13020Presenter implements AccessibleSearchResponse {
+public class Oa31020Presenter implements AccessibleSearchResponse {
 
     private List<SearchAccessibleDto> searchAccessibleDtoList;
 

@@ -19,41 +19,17 @@ public class Ed01000Vo extends BaseOfVo {
      */
     private String password;
     /**
-     * client id
-     */
-    private String clientId;
-    /**
      * redirect uri
      */
     private String redirectUri;
     /**
-     * state
+     * 画面表示モード
+     * （1:初期認証、2:継続再認証）
      */
-    private String state;
-    /**
-     * code
-     */
-    private String code;
-    /**
-     * アクセストークン
-     */
-    private String accessToken;
+    private Integer mode;
 
     // コンストラクタ
     public Ed01000Vo() {};
-    public Ed01000Vo(
-        String clientId,
-        String redirectUri,
-        String state,
-        String code,
-        String accessToken) {
-
-        this.clientId = clientId;
-        this.redirectUri = redirectUri;
-        this.state = state;
-        this.code = code;
-        this.accessToken = accessToken;
-    }
 
     // Getter／Setter
     public String getOperatorCode() {
@@ -68,37 +44,16 @@ public class Ed01000Vo extends BaseOfVo {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getClientId() {
-        return clientId;
-    }
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
     public String getRedirectUri() {
         return redirectUri;
     }
     public void setRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
     }
-    public String getState() {
-        return state;
-    }
-    public void setState(String state) {
-        this.state = state;
-    }
-    public String getCode() {
-        return code;
-    }
-    public void setCode(String code) {
-        this.code = code;
-    }
-    public String getAccessToken() {
-        return accessToken;
-    }
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
     public Integer getMode() {
-        return Strings2.isEmpty(accessToken)? 0 : 1;
+        return mode;
+    }
+    public void setMode(Integer mode) {
+        this.mode = mode;
     }
 }

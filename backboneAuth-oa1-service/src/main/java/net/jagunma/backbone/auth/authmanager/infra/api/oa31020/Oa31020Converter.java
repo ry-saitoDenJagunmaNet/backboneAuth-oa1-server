@@ -1,21 +1,21 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa13020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchRequest;
 
 /**
- * OA13020 権限取得 Converter
+ * OA31020 権限取得 Converter
  */
-public class Oa13020Converter implements AccessibleSearchRequest {
+public class Oa31020Converter implements AccessibleSearchRequest {
 
     private Long operatorId;
 
     // コンストラクタ
-    Oa13020Converter(Long operatorId) {
+    Oa31020Converter(Long operatorId) {
         this.operatorId = operatorId;
     }
 
     // ファクトリーメソッド
-    public static Oa13020Converter with(Long operatorId) {return new Oa13020Converter(operatorId);
+    public static Oa31020Converter with(Long operatorId) {return new Oa31020Converter(operatorId);
     }
 
     /**
