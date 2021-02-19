@@ -34,8 +34,8 @@ public class SignIn extends BaseOfService {
      */
     public void execute(SignInRequest request, SignInResponse response) {
 
-        //String operatorCode = request.getOperatorCode();
-        // ToDo: Validatord追加してoperatorCode.passwordの必須チェックを追加
+        // パラメーターの検証
+        SignInValidator.with(request).validate();
 
         SignInRequestDto signInRequestDto = SignInRequestDto.with(
             request.getOperatorCode(), request.getPassword(), request.getClientIpaddress());
@@ -49,8 +49,8 @@ public class SignIn extends BaseOfService {
         SignInResponseDto signInResponseDto = restTemplate.postForObject(uri, signInRequestDto, SignInResponseDto.class);
 
         if (SignInResult.codeOf(signInResponseDto.getSignInResultCode()).is成功()) {
-            // 認証に成功したらAccessTokenを取得
-
+            // ToDo: 認証に成功したらAccessTokenを取得
+            response.setAccessToken("AccessToken");
         }
 
         response.setSignInResultCode(signInResponseDto.getSignInResultCode());

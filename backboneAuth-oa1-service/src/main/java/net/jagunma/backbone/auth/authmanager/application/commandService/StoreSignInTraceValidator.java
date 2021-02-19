@@ -1,21 +1,21 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 
-public class EntrySignInTraceValidator {
+public class StoreSignInTraceValidator {
 
-    private SignInTraceEntryRequest request;
+    private SignInTraceStoreRequest request;
 
     // コンストラクタ
-    EntrySignInTraceValidator(SignInTraceEntryRequest request) {
+    StoreSignInTraceValidator(SignInTraceStoreRequest request) {
         this.request = request;
     }
 
     // ファクトリーメソッド
-    public static EntrySignInTraceValidator with(SignInTraceEntryRequest request) {
-        return new EntrySignInTraceValidator(request);
+    public static StoreSignInTraceValidator with(SignInTraceStoreRequest request) {
+        return new StoreSignInTraceValidator(request);
     }
 
     /**

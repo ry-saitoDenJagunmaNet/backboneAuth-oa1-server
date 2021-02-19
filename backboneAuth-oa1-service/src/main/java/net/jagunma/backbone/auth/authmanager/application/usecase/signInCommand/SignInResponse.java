@@ -17,4 +17,10 @@ public interface SignInResponse {
      * @param signInResultMessage サインイン結果メッセージ
      */
     public void setSignInResultMessage(String signInResultMessage);
+    /**
+     * アクセストークンのＳｅｔ
+     *
+     * @param accessToken アクセストークン
+     */
+    void setAccessToken(String accessToken);
 }

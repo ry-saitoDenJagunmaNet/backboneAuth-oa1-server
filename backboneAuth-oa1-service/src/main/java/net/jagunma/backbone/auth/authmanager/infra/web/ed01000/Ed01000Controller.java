@@ -5,12 +5,14 @@ import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
+import net.jagunma.common.common.constant.SpecialOperator;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -66,6 +68,9 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("get START");
 
+        // 未ログインオペレータを設定
+        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
+
         Ed01000Vo vo = new Ed01000Vo();
         try {
             vo.setMode((int) SignInCause.サインイン.getCode());
@@ -98,16 +103,21 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("signIn START");
 
+        // 未ログインオペレータを設定
+        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
+
         try {
             // リクエストを作成
-            Ed01000SignInConverter converter = Ed01000SignInConverter.with(
-                vo.getOperatorCode(), vo.getPassword(), request.getRemoteAddr(), vo.getMode());
+            Ed01000SignInConverter converter = Ed01000SignInConverter.with(vo, request.getRemoteAddr());
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
             // サインインサービス実行
             signIn.execute(converter, presenter);
 
             if (presenter.isSignInResultSuccess()) {
                 // ToDo: HttpListenerレスポンス に認証結果を送信する
+
+
+
                 // ToDo: 下記は暫定で自画面に戻る記述
                 model.addAttribute("form", vo);
                 return "ed01000";

@@ -59,7 +59,6 @@ class AuthenticationTest {
 
     // 検証値
     private SignInResult actualSignInResult;
-    private Operator actualOperator;
     private String actualOperatorRepository_existsByCode_operatorCode;
     private Long actualPasswordHistoryRepository_latestOneByOperatorId_operatorId;
     private Long actualAccountLockRepository_latestOneByOperatorId_operatorId;
@@ -212,10 +211,6 @@ class AuthenticationTest {
     private AuthenticationResponse createAuthenticationResponse() {
         return new AuthenticationResponse() {
             @Override
-            public void setOperator(Operator operator) {
-                actualOperator = operator;
-            }
-            @Override
             public void setSignInResult(SignInResult signInResult) {
                 actualSignInResult = signInResult;
             }
@@ -254,7 +249,6 @@ class AuthenticationTest {
             .doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualOperator).isEqualTo(expectedOperator);
         assertThat(actualSignInResult).isEqualTo(expectedSignInResult);
         assertThat(actualOperatorRepository_existsByCode_operatorCode).isEqualTo(expectedOperatorCode);
         assertThat(actualPasswordHistoryRepository_latestOneByOperatorId_operatorId).isEqualTo(expectedOperatorId);
