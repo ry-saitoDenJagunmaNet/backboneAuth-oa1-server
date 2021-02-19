@@ -109,9 +109,9 @@ public class Oa31010Controller extends BaseOfController {
             // 認証
             authentication.execute(authenticationConverter, authenticationPresenter);
 
-            // AuditInfoHoldeの設定
-            setAuditInfoHolder(authenticationPresenter.getOperator());
-
+//            // AuditInfoHoldeの設定
+//            setAuditInfoHolder(authenticationPresenter.getOperator());
+//
             // サインイン証跡登録
             Oa31010EntryConverter entryConverter = Oa31010EntryConverter.with(
                 arg.getClientIpaddress(),
