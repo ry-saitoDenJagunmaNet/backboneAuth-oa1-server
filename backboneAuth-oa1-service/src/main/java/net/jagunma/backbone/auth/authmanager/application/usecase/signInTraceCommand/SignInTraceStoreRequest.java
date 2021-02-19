@@ -6,7 +6,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 /**
  * サインイン証跡登録サービス Request
  */
-public interface SignInTraceEntryRequest {
+public interface SignInTraceStoreRequest {
 
     /**
      * 試行IPアドレスのＧｅｔ

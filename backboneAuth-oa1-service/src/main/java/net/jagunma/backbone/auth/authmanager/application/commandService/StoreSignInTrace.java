@@ -1,7 +1,7 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
 import java.time.LocalDateTime;
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.signInTrace.SignInTrace;
@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class EntrySignInTrace {
+public class StoreSignInTrace {
 
     private final SignInTraceRepositoryForStore signInTraceRepositoryForStore;
     private final SignInTraceRepository signInTraceRepository;
     private final AccountLockRepositoryForStore accountLockRepositoryForStore;
 
     // コンストラクタ
-    public EntrySignInTrace(
+    public StoreSignInTrace(
         SignInTraceRepositoryForStore signInTraceRepositoryForStore,
         SignInTraceRepository signInTraceRepository,
         AccountLockRepositoryForStore accountLockRepositoryForStore) {
@@ -42,10 +42,10 @@ public class EntrySignInTrace {
      *
      * @param request サインイン証跡登録サービス Request
      */
-    public void execute(SignInTraceEntryRequest request) {
+    public void execute(SignInTraceStoreRequest request) {
 
         // パラメーターの検証
-        EntrySignInTraceValidator.with(request).validate();
+        StoreSignInTraceValidator.with(request).validate();
 
         // サインイン証跡の登録
         SignInTrace signInTrace = insertSignInTrace(request);
@@ -63,7 +63,7 @@ public class EntrySignInTrace {
      * @param request サインイン証跡登録サービス Request
      * @return サインイン証跡
      */
-    private SignInTrace insertSignInTrace(SignInTraceEntryRequest request) {
+    private SignInTrace insertSignInTrace(SignInTraceStoreRequest request) {
 
         // サインイン証跡モデルに変換
         SignInTrace signInTrace = SignInTrace.createFrom(

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.tests.constants.TestSize;
@@ -12,7 +12,7 @@ import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class EntrySignInTraceValidatorTest {
+class StoreSignInTraceValidatorTest {
 
     // 実行既定値
     private String tryIpAddress = "001.001.001.001";
@@ -21,8 +21,8 @@ class EntrySignInTraceValidatorTest {
     private SignInResult signInResult = SignInResult.成功;
 
     // サインイン証跡登録サービス Requestのスタブ
-    private SignInTraceEntryRequest createRequest() {
-        return new SignInTraceEntryRequest() {
+    private SignInTraceStoreRequest createRequest() {
+        return new SignInTraceStoreRequest() {
             @Override
             public String getTryIpAddress() {
                 return tryIpAddress;
@@ -43,7 +43,7 @@ class EntrySignInTraceValidatorTest {
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    正常
      *
@@ -55,16 +55,16 @@ class EntrySignInTraceValidatorTest {
     void validate_Test0() {
 
         // 実行値
-        SignInTraceEntryRequest request = createRequest();
+        SignInTraceStoreRequest request = createRequest();
 
         assertThatCode(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .doesNotThrowAnyException();
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    リクエスト不正チェック
      *
@@ -76,11 +76,11 @@ class EntrySignInTraceValidatorTest {
     void validate_Test1() {
 
         // 実行値
-        SignInTraceEntryRequest request = null;
+        SignInTraceStoreRequest request = null;
 
         assertThatThrownBy(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13001");
@@ -88,7 +88,7 @@ class EntrySignInTraceValidatorTest {
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    未セットチェック  試行IPアドレス
      *
@@ -101,11 +101,11 @@ class EntrySignInTraceValidatorTest {
 
         // 実行値
         tryIpAddress = null;
-        SignInTraceEntryRequest request = createRequest();
+        SignInTraceStoreRequest request = createRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");
@@ -114,7 +114,7 @@ class EntrySignInTraceValidatorTest {
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    未セットチェック  オペレーターコード
      *
@@ -127,11 +127,11 @@ class EntrySignInTraceValidatorTest {
 
         // 実行値
         operatorCode = null;
-        SignInTraceEntryRequest request = createRequest();
+        SignInTraceStoreRequest request = createRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");
@@ -140,7 +140,7 @@ class EntrySignInTraceValidatorTest {
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    未セットチェック  サインイン起因
      *
@@ -153,11 +153,11 @@ class EntrySignInTraceValidatorTest {
 
         // 実行値
         signInCause = null;
-        SignInTraceEntryRequest request = createRequest();
+        SignInTraceStoreRequest request = createRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");
@@ -166,7 +166,7 @@ class EntrySignInTraceValidatorTest {
     }
 
     /**
-     * {@link EntrySignInTraceValidator#validate()}テスト
+     * {@link StoreSignInTraceValidator#validate()}テスト
      *  ●パターン
      *    未セットチェック  サインイン結果
      *
@@ -179,11 +179,11 @@ class EntrySignInTraceValidatorTest {
 
         // 実行値
         signInResult = null;
-        SignInTraceEntryRequest request = createRequest();
+        SignInTraceStoreRequest request = createRequest();
 
         assertThatThrownBy(() ->
             // 実行
-            EntrySignInTraceValidator.with(request).validate())
+            StoreSignInTraceValidator.with(request).validate())
             .isInstanceOfSatisfying(GunmaRuntimeException.class, e -> {
                 // 結果検証
                 assertThat(e.getMessageCode()).isEqualTo("EOA13002");

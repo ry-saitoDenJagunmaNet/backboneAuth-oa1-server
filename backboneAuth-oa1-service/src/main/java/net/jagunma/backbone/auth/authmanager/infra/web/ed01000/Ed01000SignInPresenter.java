@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
-import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 
 /**
@@ -11,6 +10,7 @@ public class Ed01000SignInPresenter implements SignInResponse {
 
     public Short signInResultCode;
     public String signInResultMessage;
+    public String accessToken;
 
     /**
      * サインイン結果コードのＳｅｔ
@@ -28,6 +28,14 @@ public class Ed01000SignInPresenter implements SignInResponse {
     public void setSignInResultMessage(String signInResultMessage) {
         this.signInResultMessage = signInResultMessage;
     }
+    /**
+     * アクセストークンのＳｅｔ
+     *
+     * @param accessToken アクセストークン
+     */
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     /**
      * サインインが成功したか判定します
@@ -39,11 +47,4 @@ public class Ed01000SignInPresenter implements SignInResponse {
         return SignInResult.codeOf(signInResultCode).is成功();
     }
 
-    /**
-     * voに変換します
-     *
-     * @param vo サインイン View Object
-     */
-    public void bindTo(Ed01000Vo vo) {
-    }
 }

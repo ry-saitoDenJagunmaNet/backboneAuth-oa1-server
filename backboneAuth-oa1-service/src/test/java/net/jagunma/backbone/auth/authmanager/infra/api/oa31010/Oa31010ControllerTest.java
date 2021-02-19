@@ -2,11 +2,11 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import net.jagunma.backbone.auth.authmanager.application.commandService.EntrySignInTrace;
+import net.jagunma.backbone.auth.authmanager.application.commandService.StoreSignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
 import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationResponse;
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceEntryRequest;
+import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
@@ -45,7 +45,7 @@ class Oa31010ControllerTest {
 
     // 検証値
     AuthenticationRequest actualAuthenticationRequest;
-    SignInTraceEntryRequest actualSignInTraceEntryRequest;
+    SignInTraceStoreRequest actualSignInTraceStoreRequest;
 
     // Oa31010 サインイン Arg 作成
     private Oa31010SignInArg createOa31010SignInArg() {
@@ -152,12 +152,12 @@ class Oa31010ControllerTest {
             }
         };
         // サインイン証跡登録サービスのスタブ
-        EntrySignInTrace entrySignInTrace = new EntrySignInTrace(signInTraceRepositoryForStore, signInTraceRepository, accountLockRepositoryForStore) {
-            public void execute(SignInTraceEntryRequest request) {
-                actualSignInTraceEntryRequest = request;
+        StoreSignInTrace storeSignInTrace = new StoreSignInTrace(signInTraceRepositoryForStore, signInTraceRepository, accountLockRepositoryForStore) {
+            public void execute(SignInTraceStoreRequest request) {
+                actualSignInTraceStoreRequest = request;
             }
         };
-        return new Oa31010Controller(authentication, entrySignInTrace);
+        return new Oa31010Controller(authentication, storeSignInTrace);
     }
 
     /**
@@ -185,7 +185,7 @@ class Oa31010ControllerTest {
         ResponseEntity<Oa31010SignInResult> expected = new ResponseEntity<>(oa31010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa31010AuthenticationConverter
             .with(operatorCode, password);
-        SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa31010EntryConverter.with(
+        SignInTraceStoreRequest expectedSignInTraceStoreRequest = Oa31010StoreConverter.with(
             clientIpaddress,
             operatorCode,
             signInCause,
@@ -197,7 +197,8 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).usingRecursiveComparison().isEqualTo(expectedSignInTraceEntryRequest);
+        assertThat(actualSignInTraceStoreRequest).usingRecursiveComparison().isEqualTo(
+            expectedSignInTraceStoreRequest);
     }
 
     /**
@@ -226,7 +227,7 @@ class Oa31010ControllerTest {
         ResponseEntity<Oa31010SignInResult> expected = new ResponseEntity<>(oa31010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa31010AuthenticationConverter
             .with(operatorCode, password);
-        SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa31010EntryConverter.with(
+        SignInTraceStoreRequest expectedSignInTraceStoreRequest = Oa31010StoreConverter.with(
             clientIpaddress,
             operatorCode,
             signInCause,
@@ -238,7 +239,8 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).usingRecursiveComparison().isEqualTo(expectedSignInTraceEntryRequest);
+        assertThat(actualSignInTraceStoreRequest).usingRecursiveComparison().isEqualTo(
+            expectedSignInTraceStoreRequest);
     }
 
     /**
@@ -272,7 +274,7 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).isNull();
+        assertThat(actualSignInTraceStoreRequest).isNull();
     }
 
     /**
@@ -300,7 +302,7 @@ class Oa31010ControllerTest {
         ResponseEntity<Oa31010SignInResult> expected = new ResponseEntity<>(oa31010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa31010AuthenticationConverter
             .with(operatorCode, password);
-        SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa31010EntryConverter.with(
+        SignInTraceStoreRequest expectedSignInTraceStoreRequest = Oa31010StoreConverter.with(
             clientIpaddress,
             operatorCode,
             signInCause,
@@ -312,7 +314,8 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).usingRecursiveComparison().isEqualTo(expectedSignInTraceEntryRequest);
+        assertThat(actualSignInTraceStoreRequest).usingRecursiveComparison().isEqualTo(
+            expectedSignInTraceStoreRequest);
     }
 
     /**
@@ -341,7 +344,7 @@ class Oa31010ControllerTest {
         ResponseEntity<Oa31010SignInResult> expected = new ResponseEntity<>(oa31010SignInResult, HttpStatus.OK);
         AuthenticationRequest expectedAuthenticationRequest = Oa31010AuthenticationConverter
             .with(operatorCode, password);
-        SignInTraceEntryRequest expectedSignInTraceEntryRequest = Oa31010EntryConverter.with(
+        SignInTraceStoreRequest expectedSignInTraceStoreRequest = Oa31010StoreConverter.with(
             clientIpaddress,
             operatorCode,
             signInCause,
@@ -353,7 +356,8 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).usingRecursiveComparison().isEqualTo(expectedSignInTraceEntryRequest);
+        assertThat(actualSignInTraceStoreRequest).usingRecursiveComparison().isEqualTo(
+            expectedSignInTraceStoreRequest);
     }
 
     /**
@@ -387,6 +391,6 @@ class Oa31010ControllerTest {
         // 結果検証
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
-        assertThat(actualSignInTraceEntryRequest).isNull();
+        assertThat(actualSignInTraceStoreRequest).isNull();
     }
 }

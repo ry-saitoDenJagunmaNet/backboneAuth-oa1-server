@@ -46,25 +46,9 @@ public class Authentication {
         // オペレーターよる認証
         if (!operatorRepository.existsByCode(request.getOperatorCode())) {
             response.setSignInResult(SignInResult.失敗_存在しないオペレーター);
-            response.setOperator(Operator.createFrom(
-                0L,
-                request.getOperatorCode(),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null));
-            return;
+           return;
         }
         Operator operator = operatorRepository.findOneByCode(request.getOperatorCode());
-        response.setOperator(operator);
         SignInResult signInResult = isAuthenticationByOperator(operator);
         if (!SignInResult.成功.equals(signInResult)) {
             response.setSignInResult(signInResult);

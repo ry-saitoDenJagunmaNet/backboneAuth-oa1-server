@@ -9,10 +9,10 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Oa31010EntryConverterTest {
+class Oa31010StoreConverterTest {
 
     /**
-     * {@link  Oa31010EntryConverter#with(String, String, SignInCause, SignInResult)}テスト
+     * {@link  Oa31010StoreConverter#with(String, String, SignInCause, SignInResult)}テスト
      *  ●パターン
      *    通常
      *
@@ -30,13 +30,13 @@ class Oa31010EntryConverterTest {
         SignInResult signInResultCode = SignInResult.成功;
 
         // 実行
-        Oa31010EntryConverter converter = Oa31010EntryConverter.with(tryIpAddress,
+        Oa31010StoreConverter converter = Oa31010StoreConverter.with(tryIpAddress,
             operatorCode,
             signInCauseCode,
             signInResultCode);
 
         // 結果検証
-        assertTrue(converter instanceof Oa31010EntryConverter);
+        assertTrue(converter instanceof Oa31010StoreConverter);
         assertThat(converter.getTryIpAddress()).isEqualTo(tryIpAddress);
         assertThat(converter.getOperatorCode()).isEqualTo(operatorCode);
         assertThat(converter.getSignInCause()).isEqualTo(signInCauseCode);

@@ -9,25 +9,8 @@ import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
  */
 public class Oa31010AuthenticationPresenter implements AuthenticationResponse {
 
-    private Operator operator;
     private SignInResult signInResult;
 
-    /**
-     * オペレーターのＧｅｔ
-     *
-     * @return オペレーター
-     */
-    public Operator getOperator() {
-        return operator;
-    }
-    /**
-     * オペレーターのＳｅｔ
-     *
-     * @param operator オペレーター
-     */
-    public void setOperator(Operator operator) {
-        this.operator = operator;
-    }
     /**
      * サインイン結果のＧｅｔ
      *
