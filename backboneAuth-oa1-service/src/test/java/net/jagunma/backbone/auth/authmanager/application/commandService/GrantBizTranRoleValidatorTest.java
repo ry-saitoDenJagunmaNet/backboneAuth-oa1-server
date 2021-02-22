@@ -45,7 +45,7 @@ class GrantBizTranRoleValidatorTest {
     private BizTranRole targetBizTranRole2 = BizTranRole.createFrom(null, targetBizTranRoleCode2, targetBizTranRoleName2, "HK", null, SubSystem.販売_米);
     private BizTranRole targetBizTranRole3 = BizTranRole.createFrom(null, targetBizTranRoleCode3, targetBizTranRoleName3, "AN", null, SubSystem.販売_畜産);
     private List<BizTranRoleGrantRequestAssignRole> assignRoleList = newArrayList();
-    private String changeCause = "業務統括者（販売・花卉）も兼務";
+    private String changeCause = "（畜産）取引全般を担当";
 
     private BizTranRoleGrantRequest createRequest() {
         return new BizTranRoleGrantRequest() {
