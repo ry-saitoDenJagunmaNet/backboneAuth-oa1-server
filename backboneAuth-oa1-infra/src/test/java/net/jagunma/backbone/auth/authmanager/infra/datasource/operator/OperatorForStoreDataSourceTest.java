@@ -70,11 +70,11 @@ class OperatorForStoreDataSourceTest {
     private PasswordHistories passwordHistories;
 
     // 検証値
-    OperatorCriteria actualOperatorCriteria;
-    OperatorEntityCriteria actualOperatorEntityCriteria;
-    PasswordHistoryCriteria actualPasswordHistoryCriteria;
-    Orders actualPasswordHistoryOrders;
-    Long actualOperatorId;
+    private OperatorCriteria actualOperatorCriteria;
+    private OperatorEntityCriteria actualOperatorEntityCriteria;
+    private PasswordHistoryCriteria actualPasswordHistoryCriteria;
+    private Orders actualPasswordHistoryOrders;
+    private Long actualOperatorId;
 
     // オペレーターエントリーパック生成
     private OperatorEntryPack createOperatorEntryPack() {

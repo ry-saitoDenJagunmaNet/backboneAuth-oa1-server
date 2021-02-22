@@ -43,7 +43,7 @@ class Operator_BizTranRoleForStoreDataSourceTest {
     private String createdIpAddress = "100.100.100.100";
 
     // 検証値
-    Operator_BizTranRoleEntityCriteria actualOperator_BizTranRoleEntityCriteria;
+    private Operator_BizTranRoleEntityCriteria actualOperator_BizTranRoleEntityCriteria;
 
     // テスト対象クラス生成
     private Operator_BizTranRoleForStoreDataSource createOperator_BizTranRoleForStoreDataSource() {

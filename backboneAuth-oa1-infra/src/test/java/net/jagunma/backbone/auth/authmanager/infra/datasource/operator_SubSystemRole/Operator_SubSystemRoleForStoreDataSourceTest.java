@@ -38,7 +38,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
     private Integer recordVersion = 1;
 
     // 検証値
-    Operator_SubSystemRoleEntityCriteria actualOperator_SubSystemRoleEntityCriteria;
+    private Operator_SubSystemRoleEntityCriteria actualOperator_SubSystemRoleEntityCriteria;
 
     // テスト対象クラス生成
     private Operator_SubSystemRoleForStoreDataSource createOperator_SubSystemRoleForStoreDataSource() {
