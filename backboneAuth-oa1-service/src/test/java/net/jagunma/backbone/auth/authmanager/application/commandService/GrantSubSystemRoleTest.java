@@ -6,12 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.subSystemRoleGrantCommand.SubSystemRoleGrantRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRole;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoleRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator_SubSystemRole.Operator_SubSystemRoles;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
+import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -37,13 +39,13 @@ class GrantSubSystemRoleTest {
     private LocalDate validThruEndDate6 = LocalDate.of(2020, 9, 26);
     private List<SubSystemRoleGrantRequestAssignRole> assignRoleList = newArrayList();
     private String changeCause = "業務統括者（販売・花卉）も兼務";
-    List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
-        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole0.getCode(), validThruStartDate0, validThruEndDate0, null, null, subSystemRole0),
-        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole1.getCode(), validThruStartDate1, validThruEndDate1, null, null, subSystemRole1),
-        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole2.getCode(), validThruStartDate2, validThruEndDate2, null, null, subSystemRole2),
+    private List<Operator_SubSystemRole> operator_SubSystemRoleList = newArrayList(
+        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole6.getCode(), validThruStartDate6, validThruEndDate6, null, null, subSystemRole6),
         Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole4.getCode(), validThruStartDate4, validThruEndDate4, null, null, subSystemRole4),
-        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole6.getCode(), validThruStartDate6, validThruEndDate6, null, null, subSystemRole6));
-    Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
+        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole2.getCode(), validThruStartDate2, validThruEndDate2, null, null, subSystemRole2),
+        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole1.getCode(), validThruStartDate1, validThruEndDate1, null, null, subSystemRole1),
+        Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole0.getCode(), validThruStartDate0, validThruEndDate0, null, null, subSystemRole0));
+    private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
     // テスト対象クラス生成
     private GrantSubSystemRole createGrantSubSystemRole() {
@@ -141,7 +143,7 @@ class GrantSubSystemRoleTest {
         SubSystemRoleGrantRequest request = createRequest();
 
         // 期待値
-        Operator_SubSystemRoles expectedOperator_SubSystemRoles = operator_SubSystemRoles;
+        Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystemRole.displaySortOrder").toComparator()).collect(Collectors.toList()));
 
         // 実行
         Operator_SubSystemRoles operator_SubSystemRoles = grantSubSystemRole.createOperator_SubSystemRoles(request);
