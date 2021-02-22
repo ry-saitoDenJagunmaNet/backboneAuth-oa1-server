@@ -33,6 +33,7 @@ class SearchSubSystemRoleGrantedTest {
     private Long signInOperatorId = 987654L;
     private Long targetOperatorId = 123456L;
 
+    // オペレーター_サブシステムロール割当系（サインインオペレーター）
     private SubSystemRole signInSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole signInSubSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole signInSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -56,6 +57,7 @@ class SearchSubSystemRoleGrantedTest {
     private LocalDate signInValidThruEndDate6 = LocalDate.of(9999, 12, 26);
     private Operator_SubSystemRoles signInOperator_SubSystemRoles;
 
+    // オペレーター_サブシステムロール割当系（ターゲットオペレーター）
     private SubSystemRole targetSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole targetSubSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole targetSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
