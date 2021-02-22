@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAllRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.dto.SubSystemRoleGrantedAssignRoleDto;
 import net.jagunma.backbone.auth.authmanager.application.queryService.util.SubSystemRoleGrantedQueryUtil;
@@ -223,7 +224,7 @@ class SearchSubSystemRoleGrantedTest {
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystemRole.displaySortOrder").toComparator()).collect(Collectors.toList())) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
@@ -328,7 +329,7 @@ class SearchSubSystemRoleGrantedTest {
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystemRole.displaySortOrder").toComparator()).collect(Collectors.toList())) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
@@ -364,7 +365,7 @@ class SearchSubSystemRoleGrantedTest {
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
-        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues()) {
+        for (Operator_SubSystemRole operator_SubSystemRole : targetOperator_SubSystemRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystemRole.displaySortOrder").toComparator()).collect(Collectors.toList())) {
             SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
