@@ -85,11 +85,11 @@ class OperatorHistoryPackForStoreDataSourceTest {
     private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
     // 検証値
-    Long actualOperatorId;
-    Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
-    Orders actualOperator_SubSystemRoleOrders;
-    Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
-    Orders actualOperator_BizTranRoleOrders;
+    private Long actualOperatorId;
+    private Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
+    private Orders actualOperator_SubSystemRoleOrders;
+    private Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
+    private Orders actualOperator_BizTranRoleOrders;
 
     // テスト対象クラス生成
     private OperatorHistoryPackForStoreDataSource createOperatorHistoryPackForStoreDataSource() {
