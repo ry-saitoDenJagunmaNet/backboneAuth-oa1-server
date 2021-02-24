@@ -1,17 +1,10 @@
 plugins {
-    id 'java'
+    id 'org.springframework.boot'
 }
-
-group 'net.jagunma.backbone.auth'
-version '20.0.1-SNAPSHOT'
 
 jar {
     enabled = true
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {

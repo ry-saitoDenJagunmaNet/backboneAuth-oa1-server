@@ -12,11 +12,11 @@ buildscript {
         assertjVersion = '3.19.0'
         logbackClassicVersion = '1.2.3'
         logbackCoreVersion = '1.2.3'
-        commonServerVersion = '22.0.5'
-//        commonCommonVersion = '22.0.7'
-        commonCommonVersion = '22.0.15'
-        commonUtilsVersion = '22.1.2'
-        commonFaoVersion = '20.0.118'
+        commonDependencyVersion = '22.0.7'
+        backboneSharedDependencyVersion = '22.0.7'
+        backboneRunDependencyVersion = '22.0.7'
+        backboneAuthDependencyVersion = '22.0.7'
+        backboneAuthDaoVersion = '20.0.29'
         jacsonDatabindVersion = '2.11.3'
         domaCoreVersion = '2.44.3'
         domaVersion = '2.44.3'
@@ -25,18 +25,16 @@ buildscript {
         domaSpringBootStarterVersion = '1.4.0'
         jacksonAnnotationVersion = '2.12.1'
         mssqlJdbcVersion = '9.2.0.jre11'
-        backboneAuthDaoVersion = '20.0.29'
         junitJupiterVersion = '5.7.1'
         poiOoxmlVersion = '4.1.2'
         jedisVersion = '3.4.1'
-        backboneSharedVersion = '22.2.2'
         jacksonDatatypeJsr310Version = '2.12.1'
     }
 }
 
 plugins {
     id 'org.springframework.boot' version "2.4.3"
-    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE" apply false
     id 'net.researchgate.release' version '2.8.1'
     id 'java'
     id 'maven-publish'
@@ -127,6 +125,7 @@ subprojects {
     apply plugin: 'com.github.ben-manes.versions'
     apply plugin: 'se.patrikerdes.use-latest-versions'
     apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
 
     bootJar {
         enabled = false
@@ -168,9 +167,17 @@ subprojects {
             testOutputDir file('build/classes/test')
         }
     }
+    dependencyManagement {
+        imports {
+            mavenBom "net.jagunma.common2020:common-dependency-management:${commonDependencyVersion}"
+            mavenBom "net.jagunma.backbone.shared:backboneShared-dependency-management:${backboneSharedDependencyVersion}"
+            mavenBom "net.jagunma.backbone.run:backboneRun-dependency-management:${backboneRunDependencyVersion}"
+            mavenBom "net.jagunma.backbone.auth:backboneAuth-dependency-management:${backboneAuthDependencyVersion}"
+        }
+    }
     dependencies {
-        api("net.jagunma.common2020:jagunma-common-common:$commonCommonVersion")
-        api("net.jagunma.common2020:jagunma-common-utils:$commonUtilsVersion")
+        api("net.jagunma.common2020:jagunma-common-common")
+        api("net.jagunma.common2020:jagunma-common-utils")
         api "org.slf4j:slf4j-api:${sf4jApiVersion}"
         testImplementation "org.assertj:assertj-core:${assertjVersion}"
         testImplementation(platform("org.junit:junit-bom:${junitJupiterVersion}"))
