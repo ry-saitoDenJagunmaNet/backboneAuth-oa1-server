@@ -16,7 +16,7 @@ buildscript {
         backboneSharedDependencyVersion = '22.0.7'
         backboneRunDependencyVersion = '22.0.7'
         backboneAuthDependencyVersion = '22.0.7'
-        backboneAuthDaoVersion = '20.0.29'
+        backboneAuthDaoVersion = '20.0.30'
         jacsonDatabindVersion = '2.11.3'
         domaCoreVersion = '2.44.3'
         domaVersion = '2.44.3'
