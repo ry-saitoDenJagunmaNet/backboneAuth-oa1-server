@@ -16,10 +16,11 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
     testImplementation project(':backboneAuth-oa1-remoting-mock')
     testImplementation project(':backboneAuth-oa1-mock')
+    implementation "net.jagunma.backbone.auth:backboneAuth-oa3-interface"
+    testImplementation "net.jagunma.backbone.auth:backboneAuth-oa3-stub"
 
     implementation "net.jagunma.backbone.shared:backboneShared-interface"
     testImplementation "net.jagunma.backbone.shared:backboneShared-stub:"
-//    api "net.jagunma.backbone.run:backbone-interface:${backboneInterfaceVersion}"
     api("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
         exclude group: "net.jagunma.common2020"
         exclude group: "com.microsoft.sqlserver"

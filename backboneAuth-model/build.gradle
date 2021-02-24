@@ -6,12 +6,13 @@ jar {
     enabled = true
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
-
+bootJar {
+    enabled = false
+}
 dependencies {
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
     implementation "org.slf4j:slf4j-api:${sf4jApiVersion}"
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonAnnotationVersion}"
-
 
 }
