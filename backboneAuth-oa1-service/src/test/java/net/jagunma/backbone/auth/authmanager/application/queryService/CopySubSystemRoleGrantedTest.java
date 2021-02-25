@@ -28,6 +28,7 @@ class CopySubSystemRoleGrantedTest {
     private Long signInOperatorId = 987654L;
     private Long selectedOperatorId = 876543L;
 
+    // オペレーター_サブシステムロール割当系（サインインオペレーター）
     private SubSystemRole signInSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole signInSubSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole signInSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -51,6 +52,7 @@ class CopySubSystemRoleGrantedTest {
     private LocalDate signInValidThruEndDate6 = LocalDate.of(9999, 12, 26);
     private Operator_SubSystemRoles signInOperator_SubSystemRoles;
 
+    // オペレーター_サブシステムロール割当系（選択オペレーター）
     private SubSystemRole selectedSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole selectedSubSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole selectedSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -74,6 +76,7 @@ class CopySubSystemRoleGrantedTest {
     private LocalDate selectedValidThruEndDate6 = LocalDate.of(2020, 11, 26);
     private Operator_SubSystemRoles selectedOperator_SubSystemRoles;
 
+    // オペレーター_サブシステムロール割当系（ターゲットオペレーター）
     private SubSystemRole targetSubSystemRole0 = SubSystemRole.JA管理者;
     private SubSystemRole targetSubSystemRole1 = SubSystemRole.業務統括者_購買;
     private SubSystemRole targetSubSystemRole2 = SubSystemRole.業務統括者_販売_青果;
@@ -122,7 +125,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     // Request作成
-    private SubSystemRoleGrantedCopyRequest createRequest(CopySubSystemRoleGranted copySubSystemRoleGranted) {
+    private SubSystemRoleGrantedCopyRequest createRequest() {
         return new SubSystemRoleGrantedCopyRequest() {
             @Override
             public Long getSignInOperatorId() {
@@ -246,7 +249,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3, 4, 5));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(4, 5, 6));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
         SubSystemRoleGrantedCopyResponse response = createResponse();
 
         // 期待値
@@ -324,7 +327,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3, 4, 5));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(4, 5, 6));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -369,7 +372,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(1));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(6));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -414,7 +417,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(1));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -453,7 +456,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(2));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -492,7 +495,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(2));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(2));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -531,7 +534,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(4, 5, 6));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList());
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -565,7 +568,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList());
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(4, 5, 6));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -604,7 +607,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList());
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(1, 2, 3));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(4, 5, 6));
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
@@ -643,7 +646,7 @@ class CopySubSystemRoleGrantedTest {
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(0));
         selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(1, 2, 3));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList());
-        SubSystemRoleGrantedCopyRequest request = createRequest(copySubSystemRoleGranted);
+        SubSystemRoleGrantedCopyRequest request = createRequest();
 
         // 期待値
         List<SubSystemRoleGrantedAssignRoleDto> expectedAssignRoleDtoList = newArrayList();
