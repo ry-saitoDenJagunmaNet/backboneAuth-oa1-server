@@ -236,7 +236,7 @@ class CopySubSystemRoleGrantedTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・modelへのセット（コピー追加される）
+     *  ・dtoリストへのセット
      *
      */
     @Test
@@ -260,12 +260,14 @@ class CopySubSystemRoleGrantedTest {
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
-        SubSystemRoleGrantedAssignRoleDto assignRoleDto;
-        Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(1);
-        assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-        assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
-        expectedAssignRoleDtoList.add(assignRoleDto);
+        for (Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
+            if (operator_SubSystemRole.getSubSystemRole().equals(selectedSubSystemRole5)) {
+                SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+                assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+                assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+                expectedAssignRoleDtoList.add(assignRoleDto);
+            }
+        }
 
         assertThatCode(() ->
             // 実行
@@ -309,7 +311,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -325,7 +327,7 @@ class CopySubSystemRoleGrantedTest {
 
         // 実行値
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3, 4, 5));
-        selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(4, 5, 6));
+        selectedOperator_SubSystemRoles = createSelectedOperator_SubSystemRoles(newArrayList(3, 4, 5, 6));
         targetOperator_SubSystemRoles = createTargetOperator_SubSystemRoles(newArrayList(1, 4));
         SubSystemRoleGrantedCopyRequest request = createRequest();
 
@@ -337,12 +339,15 @@ class CopySubSystemRoleGrantedTest {
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
-        SubSystemRoleGrantedAssignRoleDto assignRoleDto;
-        Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(1);
-        assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-        assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
-        expectedAssignRoleDtoList.add(assignRoleDto);
+        for (Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
+            if (operator_SubSystemRole.getSubSystemRole().equals(selectedSubSystemRole3) ||
+                operator_SubSystemRole.getSubSystemRole().equals(selectedSubSystemRole5)) {
+                SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+                assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+                assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+                expectedAssignRoleDtoList.add(assignRoleDto);
+            }
+        }
 
         // 実行
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = copySubSystemRoleGranted.copyAddAssignRoleDtoList(request.getAssignRoleList(), signInOperator_SubSystemRoles, selectedOperator_SubSystemRoles);
@@ -352,7 +357,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （選択オペレーターのサブシステムロール を サインインオペレーターが操作可能 で ターゲットオペレーターは持っていない）
@@ -382,12 +387,14 @@ class CopySubSystemRoleGrantedTest {
             assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
-        SubSystemRoleGrantedAssignRoleDto assignRoleDto;
-        Operator_SubSystemRole operator_SubSystemRole = selectedOperator_SubSystemRoles.getValues().get(0);
-        assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
-        assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
-        assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
-        expectedAssignRoleDtoList.add(assignRoleDto);
+        for (Operator_SubSystemRole operator_SubSystemRole : selectedOperator_SubSystemRoles.getValues()) {
+            if (operator_SubSystemRole.getSubSystemRole().equals(selectedSubSystemRole1)) {
+                SubSystemRoleGrantedAssignRoleDto assignRoleDto = new SubSystemRoleGrantedAssignRoleDto();
+                assignRoleDto.setOperator_SubSystemRole(operator_SubSystemRole);
+                assignRoleDto.setIsModifiable(subSystemRoleGrantedQueryUtil.judgeIsModifiable(operator_SubSystemRole.getSubSystemRoleCode(), signInOperator_SubSystemRoles));
+                expectedAssignRoleDtoList.add(assignRoleDto);
+            }
+        }
 
         // 実行
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = copySubSystemRoleGranted.copyAddAssignRoleDtoList(request.getAssignRoleList(), signInOperator_SubSystemRoles, selectedOperator_SubSystemRoles);
@@ -397,7 +404,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （選択オペレーターのサブシステムロール を サインインオペレーターが操作可能 で ターゲットオペレーターは持っている）
@@ -436,7 +443,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （選択オペレーターのサブシステムロール を サインインオペレーターが操作不可 で ターゲットオペレーターは持っていない）
@@ -475,7 +482,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （選択オペレーターのサブシステムロール を サインインオペレーターが操作不可 で ターゲットオペレーターは持っている）
@@ -514,7 +521,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （返却が０件）
@@ -546,9 +553,8 @@ class CopySubSystemRoleGrantedTest {
         assertThat(assignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
     }
 
-
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （選択オペレーターのサブシステムロール が ０件）
@@ -587,7 +593,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （サインインオペレーターのサブシステムロール が ０件）
@@ -626,7 +632,7 @@ class CopySubSystemRoleGrantedTest {
     }
 
     /**
-     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List<SubSystemRoleGrantedCopyRequestAssignRole> currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
+     * {@link CopySubSystemRoleGranted#copyAddAssignRoleDtoList(List currentAssignRoleList, Operator_SubSystemRoles signInOperator_SubSystemRoles, Operator_SubSystemRoles selectedOperator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *    （ターゲットオペレーターのサブシステムロール が ０件）
