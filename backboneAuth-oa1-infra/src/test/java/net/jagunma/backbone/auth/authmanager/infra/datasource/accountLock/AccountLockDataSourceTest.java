@@ -351,7 +351,7 @@ class AccountLockDataSourceTest {
 
         // 期待値
         String expectedMessageCode = "EOA11002";
-        String[] expectedArgs = {"アカウントロック", "OperatorId="+operatorId.toString()};
+        List<String> expectedArgs = newArrayList("アカウントロック", "OperatorId="+operatorId.toString());
 
         assertThatThrownBy(() ->
             // 実行

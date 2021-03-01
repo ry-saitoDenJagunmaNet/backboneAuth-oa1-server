@@ -45,7 +45,7 @@ public class SearchBranchAtMoment {
     public BranchesAtMoment selectBy(long jaId) {
 
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-        criteria.getJaIdentifierCriteria().setEqualTo(jaId);
+        criteria.getJaAtMomentCriteria().getIdentifierCriteria().setEqualTo(jaId);
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         Orders orders = Orders.empty().addOrder("branchAttribute.branchCode");
@@ -61,7 +61,7 @@ public class SearchBranchAtMoment {
     public BranchesAtMoment selectBy(String jaCode) {
 
         BranchAtMomentCriteria criteria = new BranchAtMomentCriteria();
-        criteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(jaCode));
+        criteria.getJaAtMomentCriteria().getJaAttributeCriteria().getJaCodeCriteria().setEqualTo(JaCode.of(jaCode));
         criteria.setTargetDate(TargetDate.now());
         criteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
         Orders orders = Orders.empty().addOrder("branchAttribute.branchCode");

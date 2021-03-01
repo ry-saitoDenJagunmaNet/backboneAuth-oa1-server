@@ -269,7 +269,7 @@ class PasswordHistoryDataSourceTest {
 
         // 期待値
         String expectedMessageCode = "EOA11002";
-        String[] expectedArgs = {"パスワード履歴", "OperatorId="+operatorId.toString()};
+        List<String> expectedArgs = newArrayList("パスワード履歴", "OperatorId="+operatorId.toString());
 
         assertThatThrownBy(() ->
             // 実行

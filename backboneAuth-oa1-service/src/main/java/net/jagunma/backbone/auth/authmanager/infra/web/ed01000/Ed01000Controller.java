@@ -139,9 +139,9 @@ public class Ed01000Controller extends BaseOfController {
         if (code.length() == 0) { throw new GunmaRuntimeException("EOA10001"); }
 
         // リダイレクトuri（サインインの呼び出し元）、stateをSessionから取出
-        Map<String, String> sessionStringMap = (Map) getSessionAttribute(SESSIONKEY_STRING_MAP);
-        String redirectUri = sessionStringMap.get("redirect_uri");
-        String requestState =sessionStringMap.get("state");
+        Map sessionStringMap = (Map) getSessionAttribute(SESSIONKEY_STRING_MAP);
+        String redirectUri = sessionStringMap.get("redirect_uri").toString();
+        String requestState =sessionStringMap.get("state").toString();
 
         // コードが取得できない場合
         if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
