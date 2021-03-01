@@ -555,7 +555,7 @@ class Oa11040ControllerTest {
     }
 
     /**
-     * {@link Oa11040Controller#copyResponse(@ RequestParam (value = "operatorId", required = false) Long selectedOperatorId, Model model)}テスト
+     * {@link Oa11040Controller#copyResponse(Long selectedOperatorId, Model model)}テスト
      *  ●パターン
      *    正常
      *
@@ -591,7 +591,7 @@ class Oa11040ControllerTest {
     }
 
     /**
-     * {@link Oa11040Controller#copyResponse(@ RequestParam (value = "operatorId", required = false) Long selectedOperatorId, Model model)}テスト
+     * {@link Oa11040Controller#copyResponse(Long selectedOperatorId, Model model)}テスト
      *  ●パターン
      *    例外（GunmaRuntimeException）発生
      *
@@ -629,7 +629,7 @@ class Oa11040ControllerTest {
     }
 
     /**
-     * {@link Oa11040Controller#copyResponse(@ RequestParam (value = "operatorId", required = false) Long selectedOperatorId, Model model)}テスト
+     * {@link Oa11040Controller#copyResponse(Long selectedOperatorId, Model model)}テスト
      *  ●パターン
      *    例外（RuntimeException）発生
      *
