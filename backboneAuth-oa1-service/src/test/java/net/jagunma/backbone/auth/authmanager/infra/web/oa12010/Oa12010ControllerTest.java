@@ -193,8 +193,8 @@ class Oa12010ControllerTest {
         StoreBizTranRoleComposition storeBizTranRoleComposition = new StoreBizTranRoleComposition(
             new BizTranRoleCompositionRepositoryForStore() {
                 @Override
-                public void store(BizTranRoleComposition bizTranRoleComposition) {
-
+                public BizTranRoleComposition store(BizTranRoleComposition bizTranRoleComposition) {
+                    return null;
                 }
             }
         ) {

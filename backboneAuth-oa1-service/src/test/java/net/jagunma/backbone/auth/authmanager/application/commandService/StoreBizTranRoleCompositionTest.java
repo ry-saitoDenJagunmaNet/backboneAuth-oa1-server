@@ -51,7 +51,8 @@ class StoreBizTranRoleCompositionTest {
     private BizTranRoleCompositionRepositoryForStore createBizTranRoleCompositionRepositoryForStore() {
         return new BizTranRoleCompositionRepositoryForStore() {
             @Override
-            public void store(BizTranRoleComposition bizTranRoleComposition) {
+            public BizTranRoleComposition store(BizTranRoleComposition bizTranRoleComposition) {
+                return null;
             }
         };
     }
