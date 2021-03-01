@@ -30,7 +30,7 @@ public class SignIn extends BaseOfService {
      * サインインを行います
      *
      * @param request サインインサービス Request
-     * @param request サインインサービス Response
+     * @param response サインインサービス Response
      */
     public void execute(SignInRequest request, SignInResponse response) {
 

@@ -1,10 +1,10 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
+import static net.jagunma.common.util.collect.Lists2.newArrayList;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessible;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,30 +48,31 @@ public class Oa31020Controller {
      * 可能取引を取得します
      *
      * @param operatorId オペレータID
-     * @return
+     * @return 可能取引リスト
      */
-    @PostMapping(path = "getAccessible/{operatorId}}", name = "可能取引を返却する")
+    @PostMapping(path = "getAccessible/{operatorId}", name = "可能取引を返却する")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
         @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
         @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
-    public ResponseEntity<Map<String, List<String>>> getAccessible(@PathVariable("operatorId") Long operatorId) {
+    public ResponseEntity<List<Oa31020AccessibleResult>> getAccessible(@PathVariable("operatorId") Long operatorId) {
 
         LOGGER.debug("operatorId:" + operatorId);
 
         Oa31020Presenter presenter = new Oa31020Presenter();
         try {
             Oa31020Converter converter = Oa31020Converter.with(operatorId);
-
             searchAccessible.execute(converter, presenter);
         } catch (RuntimeException re) {
             //ToDo: 例外時の戻りが不明（APIの戻りの型はこれでよいのか？）
             //ToDo: catchする例外は RuntimeException でよい？ GunmaRuntimeExceptionは？ 「@ApiResponse」との関係は？
-            return new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(newArrayList(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(presenter.getResponse(), HttpStatus.OK);
+        List<Oa31020AccessibleResult> list = newArrayList();
+        presenter.bindTo(list);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

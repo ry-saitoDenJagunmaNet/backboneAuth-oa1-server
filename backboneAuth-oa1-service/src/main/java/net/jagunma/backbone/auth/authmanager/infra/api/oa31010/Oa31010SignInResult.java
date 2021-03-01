@@ -32,27 +32,11 @@ public class Oa31010SignInResult {
         return signInResultCode;
     }
     /**
-     * サインイン結果コードのＳｅｔ
-     *
-     * @param signInResultCode サインイン結果コード
-     */
-    public void setSignInResultCode(Short signInResultCode) {
-        this.signInResultCode = signInResultCode;
-    }
-    /**
      * サインイン結果メッセージのＧｅｔ
      *
      * @return サインイン結果メッセージ
      */
     public String getSignInResultMessage() {
         return signInResultMessage;
-    }
-    /**
-     * サインイン結果メッセージのＳｅｔ
-     *
-     * @param signInResultMessage サインイン結果メッセージ
-     */
-    public void setSignInResultMessage(String signInResultMessage) {
-        this.signInResultMessage = signInResultMessage;
     }
 }

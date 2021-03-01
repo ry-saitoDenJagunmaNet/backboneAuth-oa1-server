@@ -1,8 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchResponse;
 
@@ -24,15 +22,16 @@ public class Oa31020Presenter implements AccessibleSearchResponse {
     }
 
     /**
-     * 可能取引リストのＧｅｔ
+     * Resultに変換します
      *
-     * @return 可能取引リスト
+     * @param list 権限リスト
      */
-    public Map<String, List<String>> getResponse() {
-        Map<String, List<String>> response = new HashMap<>();
+    public void bindTo(List<Oa31020AccessibleResult> list) {
         for (SearchAccessibleDto dto : searchAccessibleDtoList) {
-            response.put(dto.getSubSystemCode(), dto.getBizTranCodeList());
+            Oa31020AccessibleResult result = new Oa31020AccessibleResult();
+            result.setSubSystemCode(dto.getSubSystemCode());
+            result.setBizTranCodeList(dto.getBizTranCodeList());
+            list.add(result);
         }
-        return response;
     }
 }

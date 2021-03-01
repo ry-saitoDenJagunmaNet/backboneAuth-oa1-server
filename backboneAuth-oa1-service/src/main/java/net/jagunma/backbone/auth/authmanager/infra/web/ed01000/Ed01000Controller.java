@@ -1,8 +1,9 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
-import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.dto.Ed01000Dto;
@@ -51,7 +52,7 @@ public class Ed01000Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01000Controller.class);
 
-    private final String SESSIONKEY_REDIRECT_URI = "session_ed01000Redirect_uri";
+    private final String SESSIONKEY_STRING_MAP = "session_ed01000";
 
     private final SignIn signIn;
 
@@ -61,7 +62,7 @@ public class Ed01000Controller extends BaseOfController {
     }
 
     /**
-     * サインインを行います
+     * 認証を行います
      *
      * @param redirect_uri HttpListenerのリダイレクト用URL（ループバックアドレス＋ポート）
      * @param request      HttpServletRequest
@@ -78,28 +79,31 @@ public class Ed01000Controller extends BaseOfController {
 
         Ed01000Vo vo = new Ed01000Vo();
         try {
-            // リダイレクトuri（サインインの呼び出し元）をSessionに格納
-            setSessionAttribute(SESSIONKEY_REDIRECT_URI, redirect_uri);
-
-            // ToDo: Oa2認証Apiで認証コードを取得する
             String clientId = "";
             String scope = "";
-            String state = "";
-            StringBuilder sbOAuthRedirectUri = new StringBuilder();
-            sbOAuthRedirectUri.append(request.getScheme()).append("://");
-            sbOAuthRedirectUri.append("145.254.211.73");
-            sbOAuthRedirectUri.append(":").append(request.getServerPort());
-            sbOAuthRedirectUri.append("/").append("ed01000/oAuthRedirect");
-            String oAuthRedirectUri = sbOAuthRedirectUri.toString();
+            String state = createRandomString(32);
+            Map<String, String> sessionStringMap = new HashMap<>();
+            sessionStringMap.put("redirect_uri", redirect_uri);
+            sessionStringMap.put("state", state);
+
+            // リダイレクトuri（サインインの呼び出し元）をSessionに格納
+            setSessionAttribute(SESSIONKEY_STRING_MAP, sessionStringMap);
+
+            // ToDo: Oa2認証Apiで認証コードを取得する
+            String oAuthRedirectUri = request.getScheme() + "://"
+                + "145.254.211.73"
+                + ":" + request.getServerPort()
+                + "/" + "ed01000/oAuthReception";
             String responseType = "code";
 
             // ToDo: 暫定でOa2認証Apiからリダイレクトされた提でoAuthRedirectメソッドにリダイレクト
-            StringBuilder uri = new StringBuilder();
-            uri.append("redirect:");
-            uri.append(oAuthRedirectUri);
-            uri.append("?code=").append("code12345");
-            uri.append("&state=").append("state12345");
-            return uri.toString();
+//            StringBuilder uri = new StringBuilder();
+//            uri.append("redirect:");
+//            uri.append(oAuthRedirectUri);
+//            uri.append("?code=").append("code12345");
+//            uri.append("&state=").append(state);
+//            return uri.toString();
+            return oAuthReception("", "code12345", state, model);
 
         } catch (GunmaRuntimeException gre) {
             // 業務例外が発生した場合
@@ -115,7 +119,7 @@ public class Ed01000Controller extends BaseOfController {
     }
 
     /**
-     * サインインを行います
+     * 認証コード取得リクエストから戻りサインインを行います
      *
      * @param error エラーメッセージ
      * @param code  認可コード
@@ -123,25 +127,32 @@ public class Ed01000Controller extends BaseOfController {
      * @param model モデル
      * @return 認証結果
      */
-    @GetMapping(path = "/oAuthRedirect")
-    public String oAuthRedirect(@RequestParam(name = "error", required = false) String error,
+    @GetMapping(path = "/oAuthReception")
+    public String oAuthReception(@RequestParam(name = "error", required = false) String error,
         @RequestParam(name = "code") String code,
         @RequestParam(name = "state") String state,
         Model model) {
 
-        LOGGER.debug("get START");
+        LOGGER.debug("oAuthReception START");
 
-        // リダイレクトuri（サインインの呼び出し元）をSessionから取出
-        String redirect_uri =  (String) getSessionAttribute(SESSIONKEY_REDIRECT_URI);
+        // コードが取得できない場合
+        if (code.length() == 0) { throw new GunmaRuntimeException("EOA10001"); }
+
+        // リダイレクトuri（サインインの呼び出し元）、stateをSessionから取出
+        Map<String, String> sessionStringMap = (Map) getSessionAttribute(SESSIONKEY_STRING_MAP);
+        String redirectUri = sessionStringMap.get("redirect_uri");
+        String requestState =sessionStringMap.get("state");
+
+        // コードが取得できない場合
+        if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
 
         // 未ログインオペレータを設定
         setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
 
         Ed01000Vo vo = new Ed01000Vo();
         try {
-            vo.setRedirectUri(redirect_uri);
+            vo.setRedirectUri(redirectUri);
             vo.setMode((int) SignInCause.サインイン.getCode());
-            // ToDo: oa2Serverで認証コードを取得する
 
             model.addAttribute("form", vo);
             return "ed01000";
@@ -178,6 +189,7 @@ public class Ed01000Controller extends BaseOfController {
             // リクエストを作成
             Ed01000SignInConverter converter = Ed01000SignInConverter.with(vo, request.getRemoteAddr());
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
+
             // サインインサービス実行
             signIn.execute(converter, presenter);
             Ed01000Dto dto = new Ed01000Dto();
@@ -206,5 +218,23 @@ public class Ed01000Controller extends BaseOfController {
             model.addAttribute("form", vo);
             return "oa19999";
         }
+    }
+
+    /**
+     * ランダムな文字列を作成します
+     *
+     * @param length 文字列の長さ
+     * @return ランダムな文字列
+     */
+    private String createRandomString(int length) {
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[length];
+        random.nextBytes(bytes);
+
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < bytes.length; i++) {
+            buf.append(String.format("%02x", bytes[i]));
+        }
+        return buf.toString();
     }
 }
