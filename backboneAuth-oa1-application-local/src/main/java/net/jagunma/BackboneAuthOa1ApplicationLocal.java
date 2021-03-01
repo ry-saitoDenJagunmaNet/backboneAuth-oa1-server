@@ -30,43 +30,34 @@ public class BackboneAuthOa1ApplicationLocal {
     public List<Branch> getBranches() {
         return BranchMock.getMockData();
     }
-
     @Bean("jas")
     public List<Ja> getJas() {
-        return JaMock.全JA;
+        return JaMock.getMockData();
     }
-
     @Bean("banks")
     public List<Bank> getBanks() {
         return BankMock.getMockData();
     }
-
     @Bean("bankBranches")
     public List<BankBranch> getBankBranches() {
         return BankBranchMock.getMockData();
     }
-
     @Bean("simpleAddresses")
     public List<SimpleAddress> getSimpleAddresses() {
         return SimpleAddressMock.getMockData();
     }
-
     @Bean("prefectures")
     public List<Prefecture> getPrefectures() {
-        return PrefecturesMock.全都道府県;
+        return PrefecturesMock.getMockData();
     }
-
     @Bean("cities")
     public List<City> getCities() {
-        var mock = new CitiesMock();
-        return mock.群馬県;
+        return CitiesMock.getMockData();
     }
-
     @Bean("azas")
     public List<Aza> getAzas() {
         return AzasMock.getMockData();
     }
-
     @Bean("ooAzas")
     public List<OoAza> getOoAza() {
         return OoAzaMock.getMockData();
@@ -74,7 +65,6 @@ public class BackboneAuthOa1ApplicationLocal {
 
     public static void main(String[] args) {
         SpringApplication.run(BackboneAuthOa1ApplicationLocal.class, args);
-
     }
 
 }
