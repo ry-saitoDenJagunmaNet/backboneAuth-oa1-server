@@ -89,7 +89,7 @@ public class SuspendBizTranDataSource implements SuspendBizTranRepository {
         BranchAtMoment branchAtMoment = null;
         if (Strings2.isNotEmpty(suspendBizTranEntity.getBranchCode())) {
             BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
-            branchAtMomentCriteria.getNarrowedJaCodeCriteria().setEqualTo(JaCode.of(suspendBizTranEntity.getJaCode()));
+            branchAtMomentCriteria.getJaAtMomentCriteria().getJaAttributeCriteria().getJaCodeCriteria().setEqualTo(JaCode.of(suspendBizTranEntity.getJaCode()));
             branchAtMomentCriteria.getBranchAttributeCriteria().getBranchCodeCriteria().setEqualTo(BranchCode.of(suspendBizTranEntity.getBranchCode()));
             branchAtMomentCriteria.setTargetDate(TargetDate.now());
             branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
@@ -154,7 +154,7 @@ public class SuspendBizTranDataSource implements SuspendBizTranRepository {
         BranchAtMomentCriteria branchAtMomentCriteria = new BranchAtMomentCriteria();
         List<BranchAtMoment> branchAtMomentList = newArrayList();
         for (JaAtMoment jaAtMoment : jasAtMoment.getValue()) {
-            branchAtMomentCriteria.getJaIdentifierCriteria().setEqualTo(jaAtMoment.getIdentifier());
+            branchAtMomentCriteria.getJaAtMomentCriteria().getIdentifierCriteria().setEqualTo(jaAtMoment.getIdentifier());
             branchAtMomentCriteria.setTargetDate(TargetDate.now());
             branchAtMomentCriteria.getAvailableDatePeriodCriteria().getIsAvailableCriteria().at(TargetDate.now());
             BranchesAtMoment branchesAtMoment = branchAtMomentRepository.selectBy(branchAtMomentCriteria, Orders.empty());

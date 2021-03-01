@@ -279,7 +279,7 @@ class OperatorHistoryHeaderDataSourceTest {
 
         // 期待値
         String expectedMessageCode = "EOA11002";
-        String[] expectedArgs = {"オペレーター履歴ヘッダー", "OperatorId="+operatorId.toString()};
+        List<String> expectedArgs = newArrayList("オペレーター履歴ヘッダー", "OperatorId="+operatorId.toString());
 
         assertThatThrownBy(() ->
             // 実行

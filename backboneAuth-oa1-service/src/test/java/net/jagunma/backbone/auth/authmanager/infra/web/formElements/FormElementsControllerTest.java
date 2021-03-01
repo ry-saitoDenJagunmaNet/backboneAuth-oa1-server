@@ -131,7 +131,7 @@ class FormElementsControllerTest {
         SearchBranchAtMoment searchBranchAtMoment = new SearchBranchAtMoment(new BranchAtMomentRepository() {
             @Override
             public BranchesAtMoment selectBy(BranchAtMomentCriteria criteria, Orders orders) {
-                List<BranchAtMoment> list = createBranchAtMomentList().stream().filter(b->b.getJaAtMoment().getJaAttribute().getJaCode().getValue().equals(criteria.getNarrowedJaCodeCriteria().getEqualTo().getValue())).collect(Collectors.toList());
+                List<BranchAtMoment> list = createBranchAtMomentList().stream().filter(b->b.getJaAtMoment().getJaAttribute().getJaCode().getValue().equals(criteria.getJaAtMomentCriteria().getJaAttributeCriteria().getJaCodeCriteria().getEqualTo().getValue())).collect(Collectors.toList());
                 return BranchesAtMoment.of(list);
             }
             @Override
