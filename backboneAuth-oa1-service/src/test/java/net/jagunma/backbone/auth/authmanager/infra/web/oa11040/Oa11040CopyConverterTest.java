@@ -51,7 +51,7 @@ class Oa11040CopyConverterTest {
     private Operator_SubSystemRoles operator_SubSystemRoles = Operator_SubSystemRoles.createFrom(operator_SubSystemRoleList);
 
     /**
-     * {@link Oa11040CopyConverter#with(List<Oa11040AssignRoleTableVo> assignRoleTableVoList, Long signInOperatorId, Long selectedOperatorId)}テスト
+     * {@link Oa11040CopyConverter#with(Oa11040Vo vo, Long signInOperatorId, Long selectedOperatorId)}テスト
      *  ●パターン
      *    正常
      *
@@ -94,7 +94,7 @@ class Oa11040CopyConverterTest {
     }
 
     /**
-     * {@link Oa11040CopyConverter#with(List<Oa11040AssignRoleTableVo> assignRoleTableVoList, Long signInOperatorId, Long selectedOperatorId)}テスト
+     * {@link Oa11040CopyConverter#with(Oa11040Vo vo, Long signInOperatorId, Long selectedOperatorId)}テスト
      *  ●パターン
      *    正常
      *    （付与ロールテーブル が ０件）
