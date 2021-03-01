@@ -21,11 +21,11 @@ class GrantBizTranRoleValidatorTest {
     // 実行既定値
     private Long operatorId = 123456L;
     private String targetBizTranRoleCode0 = "KBAG01";
-    private String targetBizTranRoleCode1 = "YSAG19";
+    private String targetBizTranRoleCode1 = "YSAG10";
     private String targetBizTranRoleCode2 = "HKAG10";
     private String targetBizTranRoleCode3 = "ANAG01";
     private String targetBizTranRoleName0 = "（購買）購買業務基本";
-    private String targetBizTranRoleName1 = "（青果）管理者（仕切実績修正）";
+    private String targetBizTranRoleName1 = "（青果）管理者";
     private String targetBizTranRoleName2 = "（米）ＪＡ取引全般";
     private String targetBizTranRoleName3 = "（畜産）取引全般";
     private SubSystem targetSubSystem0 = SubSystem.購買;

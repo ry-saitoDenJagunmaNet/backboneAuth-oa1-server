@@ -69,11 +69,11 @@ class SearchBizTranRoleGrantedTest {
 
     // オペレーター_取引ロール割当系
     private String targetBizTranRoleCode0 = "KBAG01";
-    private String targetBizTranRoleCode1 = "YSAG19";
+    private String targetBizTranRoleCode1 = "YSAG10";
     private String targetBizTranRoleCode2 = "HKAG10";
     private String targetBizTranRoleCode3 = "ANAG01";
     private String targetBizTranRoleName0 = "（購買）購買業務基本";
-    private String targetBizTranRoleName1 = "（青果）管理者（仕切実績修正）";
+    private String targetBizTranRoleName1 = "（青果）管理者";
     private String targetBizTranRoleName2 = "（米）ＪＡ取引全般";
     private String targetBizTranRoleName3 = "（畜産）取引全般";
     private SubSystem targetSubSystem0 = SubSystem.購買;
@@ -257,15 +257,15 @@ class SearchBizTranRoleGrantedTest {
     }
     // オペレーター_取引ロール割当群作成
     private Operator_BizTranRoles createTargetOperator_BizTranRoles(List<Integer> createNoList) {
-        BizTranRole bizTranRole1 = BizTranRole.createFrom(401L, targetBizTranRoleCode0, targetBizTranRoleName0, targetSubSystem0.getCode(), null, targetSubSystem0);
-        BizTranRole bizTranRole2 = BizTranRole.createFrom(402L, targetBizTranRoleCode1, targetBizTranRoleName1, targetSubSystem1.getCode(), null, targetSubSystem1);
-        BizTranRole bizTranRole3 = BizTranRole.createFrom(403L, targetBizTranRoleCode2, targetBizTranRoleName2, targetSubSystem2.getCode(), null, targetSubSystem2);
-        BizTranRole bizTranRole4 = BizTranRole.createFrom(404L, targetBizTranRoleCode3, targetBizTranRoleName3, targetSubSystem3.getCode(), null, targetSubSystem3);
+        BizTranRole bizTranRole0 = BizTranRole.createFrom(401L, targetBizTranRoleCode0, targetBizTranRoleName0, targetSubSystem0.getCode(), null, targetSubSystem0);
+        BizTranRole bizTranRole1 = BizTranRole.createFrom(402L, targetBizTranRoleCode1, targetBizTranRoleName1, targetSubSystem1.getCode(), null, targetSubSystem1);
+        BizTranRole bizTranRole2 = BizTranRole.createFrom(403L, targetBizTranRoleCode2, targetBizTranRoleName2, targetSubSystem2.getCode(), null, targetSubSystem2);
+        BizTranRole bizTranRole3 = BizTranRole.createFrom(404L, targetBizTranRoleCode3, targetBizTranRoleName3, targetSubSystem3.getCode(), null, targetSubSystem3);
         List<Operator_BizTranRole> preOperator_BizTranRoleList = newArrayList(
-            Operator_BizTranRole.createFrom(501L, targetOperatorId, bizTranRole1.getBizTranRoleId(), targetValidThruStartDate0, targetValidThruEndDate0, null, null, bizTranRole1),
-            Operator_BizTranRole.createFrom(502L, targetOperatorId, bizTranRole2.getBizTranRoleId(), targetValidThruStartDate1, targetValidThruEndDate1, null, null, bizTranRole2),
-            Operator_BizTranRole.createFrom(503L, targetOperatorId, bizTranRole3.getBizTranRoleId(), targetValidThruStartDate2, targetValidThruEndDate2, null, null, bizTranRole3),
-            Operator_BizTranRole.createFrom(504L, targetOperatorId, bizTranRole4.getBizTranRoleId(), targetValidThruStartDate3, targetValidThruEndDate3, null, null, bizTranRole4));
+            Operator_BizTranRole.createFrom(501L, targetOperatorId, bizTranRole0.getBizTranRoleId(), targetValidThruStartDate0, targetValidThruEndDate0, null, null, bizTranRole0),
+            Operator_BizTranRole.createFrom(502L, targetOperatorId, bizTranRole1.getBizTranRoleId(), targetValidThruStartDate1, targetValidThruEndDate1, null, null, bizTranRole1),
+            Operator_BizTranRole.createFrom(503L, targetOperatorId, bizTranRole2.getBizTranRoleId(), targetValidThruStartDate2, targetValidThruEndDate2, null, null, bizTranRole2),
+            Operator_BizTranRole.createFrom(504L, targetOperatorId, bizTranRole3.getBizTranRoleId(), targetValidThruStartDate3, targetValidThruEndDate3, null, null, bizTranRole3));
 
         List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList();
         for (Integer createNo : createNoList) {
