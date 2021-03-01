@@ -3,9 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
@@ -34,7 +32,7 @@ class Oa31020PresenterTest {
     }
 
     /**
-     * {@link Oa31020Presenter#getResponse()} のテスト
+     * {@link Oa31020Presenter#bindTo(List<Oa31020AccessibleResult>)} のテスト
      *  ●パターン
      *    通常
      *
@@ -43,7 +41,7 @@ class Oa31020PresenterTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void getResponse_test0() {
+    void bindTo_test0() {
 
         // テスト対象クラス生成
         Oa31020Presenter presenter = new Oa31020Presenter();
@@ -51,17 +49,21 @@ class Oa31020PresenterTest {
         // 実行値
         List<SearchAccessibleDto> searchAccessibleDtoList = createSearchAccessibleDtoList();
         presenter.setSearchAccessibleDtoList(searchAccessibleDtoList);
+        List<Oa31020AccessibleResult> actualList = newArrayList();
 
         // 期待値
-        Map<String, List<String>> expectedSearchAccessible = new HashMap<>();
+        List<Oa31020AccessibleResult> expectedList = newArrayList();
         for (SearchAccessibleDto dto : createSearchAccessibleDtoList()) {
-            expectedSearchAccessible.put(dto.getSubSystemCode(), dto.getBizTranCodeList());
+            Oa31020AccessibleResult result = new Oa31020AccessibleResult();
+            result.setSubSystemCode(dto.getSubSystemCode());
+            result.setBizTranCodeList(dto.getBizTranCodeList());
+            expectedList.add(result);
         }
 
         // 実行
-        Map<String, List<String>> actualSearchAccessible = presenter.getResponse();
+        presenter.bindTo(actualList);
 
         // 結果検証
-        assertThat(actualSearchAccessible).usingRecursiveComparison().isEqualTo(expectedSearchAccessible);
+        assertThat(actualList).usingRecursiveComparison().isEqualTo(expectedList);
     }
 }

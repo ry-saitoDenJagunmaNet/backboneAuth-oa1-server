@@ -3,9 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessible;
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchRequest;
@@ -41,17 +39,23 @@ class Oa31020ControllerTest {
 
     // 実行既定値
     private Long operatorId = 123456789L;
-    private final Map<String, List<String>> searchAccessibleMap = createSearchAccessibleMap();
+    private final List<SearchAccessibleDto> searchAccessibleList = createSearchAccessibleList();
 
     // 兼用値
     private AccessibleSearchRequest actualAccessibleSearchRequest;
 
     // 可能取引データの作成
-    private Map<String, List<String>> createSearchAccessibleMap() {
-        Map<String, List<String>> searchAccessibleMap = new HashMap<>();
-        searchAccessibleMap.put("KB", newArrayList("KB0000","KB0001","KB0002"));
-        searchAccessibleMap.put("AN", newArrayList("AN0001","AN1110"));
-        return searchAccessibleMap;
+    private List<SearchAccessibleDto> createSearchAccessibleList() {
+        List<SearchAccessibleDto> list = newArrayList();
+        SearchAccessibleDto result = new SearchAccessibleDto();
+        result.setSubSystemCode("KB");
+        result.setBizTranCodeList(newArrayList("KB0000","KB0001","KB0002"));
+        list.add(result);
+        result = new SearchAccessibleDto();
+        result.setSubSystemCode("AN");
+        result.setBizTranCodeList(newArrayList("AN0001","AN1110"));
+        list.add(result);
+        return list;
     }
 
     // テスト対象クラス
@@ -140,14 +144,7 @@ class Oa31020ControllerTest {
                 if (request.getOperatorId().equals(-1L)) {
                     throw new RuntimeException();
                 }
-                List<SearchAccessibleDto> list = newArrayList();
-                for (String key : searchAccessibleMap.keySet()) {
-                    SearchAccessibleDto dto = new SearchAccessibleDto();
-                    dto.setSubSystemCode(key);
-                    dto.setBizTranCodeList(searchAccessibleMap.get(key));
-                    list.add(dto);
-                }
-                response.setSearchAccessibleDtoList(list);
+                response.setSearchAccessibleDtoList(searchAccessibleList);
             };
         };
         return new Oa31020Controller(SearchAccessible);
@@ -169,18 +166,21 @@ class Oa31020ControllerTest {
         Oa31020Controller controller = createOa31020Controller();
 
         // 期待値
-        Map<String, List<String>> map = new HashMap<>();
-        for (String key : searchAccessibleMap.keySet()) {
-            map.put(key, searchAccessibleMap.get(key));
+        List<Oa31020AccessibleResult> list = newArrayList();
+        for (SearchAccessibleDto dto : searchAccessibleList) {
+            Oa31020AccessibleResult result = new Oa31020AccessibleResult();
+            result.setSubSystemCode(dto.getSubSystemCode());
+            result.setBizTranCodeList(dto.getBizTranCodeList());
+            list.add(result);
         }
-        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(map, HttpStatus.OK);
+        ResponseEntity<List<Oa31020AccessibleResult>> expected = new ResponseEntity<>(list, HttpStatus.OK);
         AccessibleSearchRequest expectedAccessibleSearchRequest =  Oa31020Converter.with(operatorId);
 
         // 実行
-        ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
+        ResponseEntity<List<Oa31020AccessibleResult>> actual = controller.getAccessible(operatorId);
 
         // 結果検証
-        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         assertThat(actualAccessibleSearchRequest).usingRecursiveComparison().isEqualTo(expectedAccessibleSearchRequest);
     }
 
@@ -203,10 +203,10 @@ class Oa31020ControllerTest {
         Oa31020Controller controller = createOa31020Controller();
 
         // 期待値
-        ResponseEntity<Map<String, List<String>>> expected = new ResponseEntity<>(new HashMap<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseEntity<List<Oa31020AccessibleResult>> expected = new ResponseEntity<>(newArrayList(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         // 実行
-        ResponseEntity<Map<String, List<String>>> result = controller.getAccessible(operatorId);
+        ResponseEntity<List<Oa31020AccessibleResult>> result = controller.getAccessible(operatorId);
 
         // 結果検証
         assertThat(result).usingRecursiveComparison().isEqualTo(expected);
