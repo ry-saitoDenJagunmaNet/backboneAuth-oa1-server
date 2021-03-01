@@ -17,6 +17,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.BizTranRoleCompositionRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole_BizTranGrp.BizTranRole_BizTranGrps;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.backbone.auth.model.dao.bizTran.BizTranEntity;
 import net.jagunma.backbone.auth.model.dao.bizTran.BizTranEntityCriteria;
 import net.jagunma.backbone.auth.model.dao.bizTran.BizTranEntityDao;
@@ -72,8 +73,9 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
      * 取引ロール編成の登録を行います
      *
      * @param bizTranRoleComposition 取引ロール編成
+     * @return 登録した取引ロール編成
      */
-    public void store(BizTranRoleComposition bizTranRoleComposition) {
+    public BizTranRoleComposition store(BizTranRoleComposition bizTranRoleComposition) {
 
         // 取引グループ_取引割当の削除
         deleteBizTranGrp_BizTrans(bizTranRoleComposition.getBizTranGrp_BizTrans().getValues().get(0).getSubSystemCode());
@@ -89,7 +91,7 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         BizTranGrps bizTranGrps = storeBizTranGrps(bizTranRoleComposition.getBizTranGrps());
         LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store storeBizTranGrps 取引グループの登録 end count="+bizTranRoleComposition.getBizTranGrps().getValues().size());
         // 取引グループ_取引割当の追加
-        insertBizTranGrp_BizTrans(bizTranRoleComposition.getBizTranGrp_BizTrans(),
+        BizTranGrp_BizTrans bizTranGrp_BizTrans = insertBizTranGrp_BizTrans(bizTranRoleComposition.getBizTranGrp_BizTrans(),
             bizTranGrps,
             bizTrans,
             bizTranRoleComposition.getBizTranGrp_BizTrans().getValues().get(0).getSubSystemCode());
@@ -99,18 +101,25 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
         BizTranRoles bizTranRoles = storeBizTranRoles(bizTranRoleComposition.getBizTranRoles());
         LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store storeBizTranRoles 取引ロールの登録 end count="+bizTranRoleComposition.getBizTranRoles().getValues().size());
         // 取引ロール_取引グループ割当の追加
-        insertBizTranRole_BizTranGrps(bizTranRoleComposition.getBizTranRole_BizTranGrps(),
+        BizTranRole_BizTranGrps bizTranRole_BizTranGrps = insertBizTranRole_BizTranGrps(bizTranRoleComposition.getBizTranRole_BizTranGrps(),
             bizTranRoles,
             bizTranGrps,
             bizTranRoleComposition.getBizTranRole_BizTranGrps().getValues().get(0).getSubSystemCode());
         LOGGER.debug("### BizTranRoleCompositionForStoreDataSource.store insertBizTranRole_BizTranGrps 取引ロール_取引グループ割当の追加 end count="+bizTranRoleComposition.getBizTranRole_BizTranGrps().getValues().size());
+
+        return BizTranRoleComposition.createFrom(
+            bizTrans,
+            bizTranGrps,
+            bizTranGrp_BizTrans,
+            bizTranRoles,
+            bizTranRole_BizTranGrps);
     }
 
     /**
      * 取引の登録を行います
      *
      * @param bizTrans 取引群（登録対象）
-     * @return 取引群（登録後）
+     * @return 登録した取引群
      */
     BizTrans storeBizTrans(BizTrans bizTrans) {
 
@@ -149,7 +158,7 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
      * 取引グループの登録を行います
      *
      * @param bizTranGrps 取引グループ群（登録対象）
-     * @return 取引グループ群（登録後）
+     * @return 登録取引グループ群
      */
     BizTranGrps storeBizTranGrps(BizTranGrps bizTranGrps) {
 
@@ -196,8 +205,9 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
      * @param bizTranGrps         取引グループ群
      * @param bizTrans            取引群
      * @param subSystemCode       サブシステムコード
+     * @return 追加した取引グループ_取引割当群
      */
-    void insertBizTranGrp_BizTrans(BizTranGrp_BizTrans bizTranGrp_BizTrans,
+    BizTranGrp_BizTrans insertBizTranGrp_BizTrans(BizTranGrp_BizTrans bizTranGrp_BizTrans,
         BizTranGrps bizTranGrps,
         BizTrans bizTrans,
         String subSystemCode) {
@@ -214,14 +224,26 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             entity.setBizTranId(bizTran.getBizTranId());
             entity.setSubSystemCode(subSystemCode);
             bizTranGrp_BizTranEntityDao.insert(entity);
+
+            bizTranGrp_BizTranList.add(BizTranGrp_BizTran.createFrom(
+                entity.getBizTranGrp_BizTranId(),
+                entity.getBizTranGrpId(),
+                entity.getBizTranId(),
+                entity.getSubSystemCode(),
+                entity.getRecordVersion(),
+                bizTranGrp,
+                bizTran,
+                SubSystem.codeOf(subSystemCode)));
         }
+
+        return BizTranGrp_BizTrans.createFrom(bizTranGrp_BizTranList);
     }
 
     /**
      * 取引ロールの登録を行います
      *
      * @param bizTranRoles 取引ロール群（登録対象）
-     * @return 取引ロール群（登録後）
+     * @return 登録取引ロール群
      */
     BizTranRoles storeBizTranRoles(BizTranRoles bizTranRoles) {
 
@@ -287,17 +309,19 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
     /**
      * 取引ロール_取引グループ割当の追加を行います
      *
-     * @param bizTranRole_BizTranGrps 取引ロール_取引グループ割当群
+     * @param bizTranRole_BizTranGrps 取引ロール_取引グループ割当群（追加対象）
      * @param bizTranRoles            取引ロール群
      * @param bizTranGrps             取引グループ群
      * @param subSystemCode           サブシステムコード
+     * @return 追加した取引ロール_取引グループ割当群
      */
-    void insertBizTranRole_BizTranGrps(BizTranRole_BizTranGrps bizTranRole_BizTranGrps,
+    BizTranRole_BizTranGrps insertBizTranRole_BizTranGrps(BizTranRole_BizTranGrps bizTranRole_BizTranGrps,
         BizTranRoles bizTranRoles,
         BizTranGrps bizTranGrps,
         String subSystemCode) {
 
         // 登録対象の取引ロール_取引グループ割当を抽出
+        List<BizTranRole_BizTranGrp> bizTranRole_BizTranGrpList = newArrayList();
         for (BizTranRole_BizTranGrp bizTranRole_BizTranGrp : bizTranRole_BizTranGrps.getValues()) {
             BizTranRole bizTranRole = bizTranRoles.getValues().stream().filter(
                 b->b.getBizTranRoleCode().equals(bizTranRole_BizTranGrp.getBizTranRole().getBizTranRoleCode())).findFirst().orElse(null);
@@ -309,6 +333,18 @@ public class BizTranRoleCompositionForStoreDataSource implements BizTranRoleComp
             entity.setBizTranGrpId(bizTranGrp.getBizTranGrpId());
             entity.setSubSystemCode(subSystemCode);
             bizTranRole_BizTranGrpEntityDao.insert(entity);
+
+            bizTranRole_BizTranGrpList.add(BizTranRole_BizTranGrp.createFrom(
+                entity.getBizTranRole_BizTranGrpId(),
+                entity.getBizTranRoleId(),
+                entity.getBizTranGrpId(),
+                entity.getSubSystemCode(),
+                entity.getRecordVersion(),
+                bizTranRole,
+                bizTranGrp,
+                SubSystem.codeOf(subSystemCode)));
         }
+
+        return BizTranRole_BizTranGrps.createFrom(bizTranRole_BizTranGrpList);
     }
 }

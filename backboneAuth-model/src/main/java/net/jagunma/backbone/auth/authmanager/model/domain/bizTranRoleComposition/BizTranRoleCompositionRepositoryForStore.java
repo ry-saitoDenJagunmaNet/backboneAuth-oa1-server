@@ -10,5 +10,5 @@ public interface BizTranRoleCompositionRepositoryForStore {
      *
      * @param bizTranRoleComposition 取引ロール編成
      */
-    void store(BizTranRoleComposition bizTranRoleComposition);
+    BizTranRoleComposition store(BizTranRoleComposition bizTranRoleComposition);
 }
