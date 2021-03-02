@@ -144,7 +144,7 @@ class Oa11030ControllerTest {
     // オペレーター_取引ロール割当系
     private List<BizTranRole> bizTranRoleList = newArrayList(
         BizTranRole.createFrom(401L, "KBAG01", "（購買）購買業務基本", SubSystem.購買.getCode(), recordVersion, SubSystem.購買),
-        BizTranRole.createFrom(402L, "YSAG19", "（青果）管理者（仕切実績修正）", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果),
+        BizTranRole.createFrom(402L, "YSAG10", "（青果）管理者", SubSystem.販売_青果.getCode(), recordVersion, SubSystem.販売_青果),
         BizTranRole.createFrom(403L, "HKAG10", "（米）ＪＡ取引全般", SubSystem.販売_米.getCode(), recordVersion, SubSystem.販売_米),
         BizTranRole.createFrom(404L, "ANAG01", "（畜産）取引全般", SubSystem.販売_畜産.getCode(), recordVersion, SubSystem.販売_畜産));
     private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
