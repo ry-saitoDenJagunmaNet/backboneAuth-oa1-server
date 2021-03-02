@@ -95,7 +95,7 @@ class Oa11040ApplyConverterTest {
      * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
      *  ●パターン
      *    正常
-     *    （割当対象サブシステムロール が ０件）
+     *    （アサインサブシステムロール が ０件）
      *
      *  ●検証事項
      *  ・Converterへのセット
