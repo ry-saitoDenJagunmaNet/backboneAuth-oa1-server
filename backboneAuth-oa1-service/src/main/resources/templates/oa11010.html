@@ -373,94 +373,6 @@
 											</tr>
 											/*/-->
 
-
-											<tr>
-												<td class="oaex_subsystem_role_check">
-													<label class="oa_non_label_checkbox">
-														<input type="checkbox"
-															   name="'subSystemRoleList[10].subSystemRoleSelected'"
-															   checked="true"/>
-														<span></span>
-													</label>
-													<input type="hidden"
-														   name="subSystemRoleList[10].subSystemRoleCode" value="Test"/>
-													<input type="hidden"
-														   name="subSystemRoleList[10].subSystemRoleName" value="テスト"/>
-												</td>
-												<td class="oaex_subsystem_role_subsystem_role_code">Test</td>
-												<td class="oaex_subsystem_role_subsystem_role_name">テスト</td>
-												<td class="oaex_subsystem_role_valid_thru_sel_non">
-													<label>
-														<input type="radio" value="0"
-															   id="subsystem_role_valid_thru_sel_non[10]"
-															   name="subSystemRoleList[10].validThruSelect}"
-															  />
-														<span>指定なし</span>
-													</label>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_sel_status">
-													<label>
-														<input type="radio" value="1"
-															   id="subsystem_role_valid_thru_sel_status[10]"
-															   name="subSystemRoleList[10].validThruSelect"/>
-														<span>状態指定日</span>
-													</label>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_status_date">
-													<div class="input-field">
-														<input type="text" class="validate datepicker"
-															   id="subsystem_role_valid_thru_status_date[10]"
-															   name="subSystemRoleList[10].validThruStatusDate"/>
-													</div>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_sel_conditions">
-													<label>
-														<input type="radio" value="2"
-															   id="subsystem_role_valid_thru_sel_conditions[10]"
-															   name="subSystemRoleList[10].validThruSelect"/>
-														<span>条件指定</span>
-													</label>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_start_date_from">
-													<div class="input-field">
-														<input type="text" class="validate datepicker"
-															   id="subsystem_role_valid_thru_start_date_from[10]"
-															   name="subSystemRoleList[10].validThruStartDateFrom"/>
-													</div>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_start_date_tilde">～</td>
-												<td class="oaex_subsystem_role_valid_thru_start_date_to">
-													<div class="input-field">
-														<input type="text" class="validate datepicker"
-															   id="subsystem_role_valid_thru_start_date_to[10]"
-															   name="form.subSystemRoleList[10].validThruStartDateTo"/>
-													</div>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_end_date_from">
-													<div class="input-field">
-														<input type="text" class="validate datepicker"
-															   id="subsystem_role_valid_thru_end_date_from[10]"
-															   name="subSystemRoleList[10].validThruEndDateFrom}"/>
-													</div>
-												</td>
-												<td class="oaex_subsystem_role_valid_thru_end_date_tilde">～</td>
-												<td class="oaex_subsystem_role_valid_thru_end_date_to">
-													<div class="input-field">
-														<input type="text" class="validate datepicker"
-															   id="subsystem_role_valid_thru_end_date_to[10]"
-															   name="subSystemRoleList[10].validThruEndDateTo"/>
-													</div>
-												</td>
-											</tr>
-
-
-
-
-
-
-
-
-
 											<tr th:remove="all">
 												<td class="oaex_subsystem_role_check">
 													<label class="oa_non_label_checkbox">
@@ -740,7 +652,7 @@
 							<div class="col s4">
 								<div class="input-field">
 									<select id="subsystem_filter" name="subSystemRoleSubSystemCode" class="validate"
-											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_SubsystemFilter_onChange(this)">
+											th:value="${form.bizTranRoleSubSystemCode}" th:onchange="oaex_th_subsystemFilter_onChange(this)">
 										<!-- th using -->
 										<!--/*/
 										<option th:each="item  : ${form.bizTranRoleSubSystemList}"
