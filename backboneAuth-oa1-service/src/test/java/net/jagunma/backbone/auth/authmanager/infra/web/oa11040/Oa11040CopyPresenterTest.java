@@ -100,9 +100,8 @@ class Oa11040CopyPresenterTest {
     @Tag(TestSize.SMALL)
     void bindTo_test1() {
         // 実行値
-        List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
         Oa11040CopyPresenter presenter = new Oa11040CopyPresenter();
-        presenter.setAssignRoleDtoList(assignRoleDtoList);
+        presenter.setAssignRoleDtoList(newArrayList());
         Oa11040Vo vo = new Oa11040Vo();
 
         // 期待値
