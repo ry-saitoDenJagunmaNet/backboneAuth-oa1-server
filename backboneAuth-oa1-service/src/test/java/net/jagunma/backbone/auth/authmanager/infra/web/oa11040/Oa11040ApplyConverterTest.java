@@ -107,6 +107,35 @@ class Oa11040ApplyConverterTest {
         // 実行値
         Oa11040Vo vo = new Oa11040Vo();
         vo.setOperatorId(operatorId);
+        vo.setAssignRoleTableVoList(newArrayList());
+        vo.setChangeCause(changeCause);
+
+        // 実行
+        Oa11040ApplyConverter converter = Oa11040ApplyConverter.with(vo);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11040ApplyConverter);
+        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
+        assertThat(converter.getAssignRoleList()).usingRecursiveComparison().isEqualTo(newArrayList());
+        assertThat(converter.getChangeCause()).isEqualTo(changeCause);
+    }
+
+    /**
+     * {@link Oa11040ApplyConverter#with(Oa11040Vo vo)}テスト
+     *  ●パターン
+     *    正常
+     *    （アサインサブシステムロール が null）
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test2() {
+        // 実行値
+        Oa11040Vo vo = new Oa11040Vo();
+        vo.setOperatorId(operatorId);
         vo.setAssignRoleTableVoList(null);
         vo.setChangeCause(changeCause);
 

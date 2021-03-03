@@ -107,9 +107,38 @@ class Oa11040CopyConverterTest {
     @Tag(TestSize.SMALL)
     void with_test1() {
         // 実行値
-        List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         Oa11040Vo vo = new Oa11040Vo();
-        vo.setAssignRoleTableVoList(assignRoleTableVoList);
+        vo.setAssignRoleTableVoList(newArrayList());
+
+        // 期待値
+        List<SubSystemRoleGrantedCopyRequestAssignRole> assignRoleList = newArrayList();
+
+        // 実行
+        Oa11040CopyConverter converter = Oa11040CopyConverter.with(vo, signInOperatorId, selectedOperatorId);
+
+        // 結果検証
+        assertTrue(converter instanceof Oa11040CopyConverter);
+        assertThat(converter.getSignInOperatorId()).isEqualTo(signInOperatorId);
+        assertThat(converter.getSelectedOperatorId()).isEqualTo(selectedOperatorId);
+        assertThat(converter.getAssignRoleList()).usingRecursiveComparison().isEqualTo(assignRoleList);
+    }
+
+    /**
+     * {@link Oa11040CopyConverter#with(Oa11040Vo vo, Long signInOperatorId, Long selectedOperatorId)}テスト
+     *  ●パターン
+     *    正常
+     *    （付与ロールテーブル が null）
+     *
+     *  ●検証事項
+     *  ・Converterへのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void with_test2() {
+        // 実行値
+        Oa11040Vo vo = new Oa11040Vo();
+        vo.setAssignRoleTableVoList(null);
 
         // 期待値
         List<SubSystemRoleGrantedCopyRequestAssignRole> assignRoleList = newArrayList();
