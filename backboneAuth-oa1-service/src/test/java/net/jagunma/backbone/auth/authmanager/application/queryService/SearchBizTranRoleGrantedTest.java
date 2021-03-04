@@ -95,7 +95,7 @@ class SearchBizTranRoleGrantedTest {
     private OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.createFrom(null, targetOperatorId, LocalDateTime.of(2020, 1, 1, 0, 0, 0, 0), changeCause, null, null);
 
     // 取引ロール系
-    private List<BizTranRole> bizTranRoleList = newArrayList(
+    private List<BizTranRole> allBizTranRoleList = newArrayList(
         BizTranRole.createFrom(39L, "HKAG10", "（米）ＪＡ取引全般", SubSystem.販売_米.getCode(), null, SubSystem.販売_米),
         BizTranRole.createFrom(40L, "HKAG10", "（米）ＪＡ取引全般", SubSystem.販売_米.getCode(), null, SubSystem.販売_米),
         BizTranRole.createFrom(41L, "HKAG15", "（米）ＪＡ取引振込以外全般", SubSystem.販売_米.getCode(), null, SubSystem.販売_米),
@@ -147,7 +147,7 @@ class SearchBizTranRoleGrantedTest {
         BizTranRole.createFrom(49L, "ANAG02", "（畜産）維持管理担当者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産),
         BizTranRole.createFrom(50L, "ANAG98", "（畜産）センター維持管理担当者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産),
         BizTranRole.createFrom(51L, "ANAG99", "（畜産）維持管理責任者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産));
-    private BizTranRoles bizTranRoles = BizTranRoles.createFrom(bizTranRoleList);
+    private BizTranRoles allBizTranRoles = BizTranRoles.createFrom(allBizTranRoleList);
 
     // 検証値
     private Operator_BizTranRoleCriteria actualOperator_BizTranRoleCriteria;
@@ -191,7 +191,7 @@ class SearchBizTranRoleGrantedTest {
             }
             @Override
             public BizTranRoles selectAll(Orders orders) {
-                return bizTranRoles;
+                return allBizTranRoles;
             }
         };
 
@@ -306,7 +306,7 @@ class SearchBizTranRoleGrantedTest {
             expectedAssignRoleDtoList.add(assignRoleDto);
         }
         List<BizTranRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (BizTranRole bizTranRole : bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
+        for (BizTranRole bizTranRole : allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
             BizTranRoleGrantedAllRoleDto allRoleDto = new BizTranRoleGrantedAllRoleDto();
             allRoleDto.setBizTranRole(bizTranRole);
             allRoleDto.setIsModifiable(bizTranRoleGrantedQueryUtil.judgeIsModifiable(bizTranRole, signInOperator_SubSystemRoles));
@@ -431,7 +431,7 @@ class SearchBizTranRoleGrantedTest {
         SearchBizTranRoleGranted searchBizTranRoleGranted = createSearchBizTranRoleGranted();
 
         // 期待値
-        BizTranRoles expectedBizTranRoles = BizTranRoles.createFrom(bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
+        BizTranRoles expectedBizTranRoles = BizTranRoles.createFrom(allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
 
         // 実行
         BizTranRoles bizTranRoles = searchBizTranRoleGranted.searchBizTranRoles();
@@ -558,11 +558,11 @@ class SearchBizTranRoleGrantedTest {
 
         // 実行値
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList(1, 2, 3));
-        bizTranRoles = BizTranRoles.createFrom(bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
+        allBizTranRoles = BizTranRoles.createFrom(allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
 
         // 期待値
         List<BizTranRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (BizTranRole bizTranRole : bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
+        for (BizTranRole bizTranRole : allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
             BizTranRoleGrantedAllRoleDto allRoleDto = new BizTranRoleGrantedAllRoleDto();
             allRoleDto.setBizTranRole(bizTranRole);
             allRoleDto.setIsModifiable(bizTranRoleGrantedQueryUtil.judgeIsModifiable(bizTranRole, signInOperator_SubSystemRoles));
@@ -570,7 +570,7 @@ class SearchBizTranRoleGrantedTest {
         }
 
         // 実行
-        List<BizTranRoleGrantedAllRoleDto> allRoleDtoList = searchBizTranRoleGranted.createAllRoleDtoList(signInOperator_SubSystemRoles, bizTranRoles);
+        List<BizTranRoleGrantedAllRoleDto> allRoleDtoList = searchBizTranRoleGranted.createAllRoleDtoList(signInOperator_SubSystemRoles, allBizTranRoles);
 
         // 結果検証
         assertThat(allRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAllRoleDtoList);
@@ -594,11 +594,11 @@ class SearchBizTranRoleGrantedTest {
 
         // 実行値
         signInOperator_SubSystemRoles = createSignInOperator_SubSystemRoles(newArrayList());
-        bizTranRoles = BizTranRoles.createFrom(bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
+        allBizTranRoles = BizTranRoles.createFrom(allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList()));
 
         // 期待値
         List<BizTranRoleGrantedAllRoleDto> expectedAllRoleDtoList = newArrayList();
-        for (BizTranRole bizTranRole : bizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
+        for (BizTranRole bizTranRole : allBizTranRoles.getValues().stream().sorted(Orders.empty().addOrder("subSystem.displaySortOrder").addOrder("bizTranRoleCode").toComparator()).collect(Collectors.toList())) {
             BizTranRoleGrantedAllRoleDto allRoleDto = new BizTranRoleGrantedAllRoleDto();
             allRoleDto.setBizTranRole(bizTranRole);
             allRoleDto.setIsModifiable(bizTranRoleGrantedQueryUtil.judgeIsModifiable(bizTranRole, signInOperator_SubSystemRoles));
@@ -606,7 +606,7 @@ class SearchBizTranRoleGrantedTest {
         }
 
         // 実行
-        List<BizTranRoleGrantedAllRoleDto> allRoleDtoList = searchBizTranRoleGranted.createAllRoleDtoList(signInOperator_SubSystemRoles, bizTranRoles);
+        List<BizTranRoleGrantedAllRoleDto> allRoleDtoList = searchBizTranRoleGranted.createAllRoleDtoList(signInOperator_SubSystemRoles, allBizTranRoles);
 
         // 結果検証
         assertThat(allRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAllRoleDtoList);

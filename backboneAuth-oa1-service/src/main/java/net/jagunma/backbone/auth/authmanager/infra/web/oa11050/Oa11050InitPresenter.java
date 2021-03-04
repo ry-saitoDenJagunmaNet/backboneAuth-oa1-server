@@ -79,6 +79,7 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
         List<Oa11050AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (BizTranRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
             Oa11050AssignRoleTableVo assignRoleTableVo = new Oa11050AssignRoleTableVo();
+            assignRoleTableVo.setRoleId(assignRoleDto.getOperator_BizTranRole().getBizTranRoleId());
             assignRoleTableVo.setRoleCode(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleCode());
             assignRoleTableVo.setRoleName(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleName());
             assignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_BizTranRole().getValidThruStartDate());
@@ -89,8 +90,10 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
         List<Oa11050UnAssignRoleTableVo> unAssignRoleTableVoList = newArrayList();
         for (BizTranRoleGrantedAllRoleDto allRoleDto : allRoleDtoList) {
             Oa11050UnAssignRoleTableVo unAssignRoleTableVo = new Oa11050UnAssignRoleTableVo();
+            unAssignRoleTableVo.setRoleId(allRoleDto.getBizTranRole().getBizTranRoleId());
             unAssignRoleTableVo.setRoleCode(allRoleDto.getBizTranRole().getBizTranRoleCode());
             unAssignRoleTableVo.setRoleName(allRoleDto.getBizTranRole().getBizTranRoleName());
+            unAssignRoleTableVo.setSubSystemCode(allRoleDto.getBizTranRole().getSubSystemCode());
             unAssignRoleTableVo.setIsModifiable(allRoleDto.getIsModifiable());
             unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
