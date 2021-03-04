@@ -34,19 +34,20 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
     /**
      * オペレーター_取引ロール割当群の格納を行います
      *
+     * @param operatorId オペレーターID
      * @param operator_BizTranRoles オペレーター_取引ロール割当群
      * @param changeCause 変更事由
      */
-    public void store(Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
+    public void store(Long operatorId, Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
 
         // オペレーター_取引ロール割当のデリートを行います
-        deleteOperator_BizTranRole(operator_BizTranRoles.getValues().get(0).getOperatorId());
+        deleteOperator_BizTranRole(operatorId);
 
         // オペレーター_取引ロール割当のインサートを行います
         List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = insertOperator_BizTranRole(operator_BizTranRoles);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operator_BizTranRoles.getValues().get(0).getOperatorId(), operator_BizTranRoleEntityList.get(0).getCreatedAt(), changeCause);
+        operatorHistoryPackRepositoryForStore.store(operatorId, operator_BizTranRoleEntityList.get(0).getCreatedAt(), changeCause);
     }
 
     /**
