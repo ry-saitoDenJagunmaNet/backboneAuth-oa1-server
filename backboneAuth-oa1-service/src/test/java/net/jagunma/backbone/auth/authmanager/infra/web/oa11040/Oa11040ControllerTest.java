@@ -56,6 +56,8 @@ class Oa11040ControllerTest {
     // 実行既定値
     // サインインオペレーター項目系
     private Long signInOperatorId = 987654L;
+
+    // 選択オペレーター項目系
     private Long selectedOperatorId = 876543L;
 
     // ターゲットオペレーター項目系
@@ -221,17 +223,17 @@ class Oa11040ControllerTest {
         return assignRoleTableVoList;
     }
     private List<SubSystemRoleGrantedAssignRoleDto> createSubSystemRoleGrantedAssignRoleDtoCopiedExpectedList() {
-        List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList(operator_SubSystemRoleList);
-        expectedOperator_SubSystemRoleList.add(Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole5.getCode(), validThruStartDate5, validThruEndDate5, null, operator, subSystemRole5));
+        List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList(operator_SubSystemRoleList,
+            Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole5.getCode(), validThruStartDate5, validThruEndDate5, null, operator, subSystemRole5));
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
-        createOa11040AssignRole(assignRoleDtoList, newArrayList(),expectedOperator_SubSystemRoles);
+        createOa11040AssignRole(assignRoleDtoList, newArrayList(), expectedOperator_SubSystemRoles);
         return assignRoleDtoList;
     }
     private List<Oa11040AssignRoleTableVo> createOa11040AssignRoleTableVoCopiedExpectedList() {
-        List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList(operator_SubSystemRoleList);
-        expectedOperator_SubSystemRoleList.add(Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole5.getCode(), validThruStartDate5, validThruEndDate5, null, operator, subSystemRole5));
+        List<Operator_SubSystemRole> expectedOperator_SubSystemRoleList = newArrayList(operator_SubSystemRoleList,
+            Operator_SubSystemRole.createFrom(null, operatorId, subSystemRole5.getCode(), validThruStartDate5, validThruEndDate5, null, operator, subSystemRole5));
         Operator_SubSystemRoles expectedOperator_SubSystemRoles = Operator_SubSystemRoles.createFrom(expectedOperator_SubSystemRoleList);
 
         List<Oa11040AssignRoleTableVo> assignRoleTableVoList = newArrayList();
