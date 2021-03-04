@@ -61,7 +61,7 @@ class GrantBizTranRoleTest {
 
         Operator_BizTranRoleRepositoryForStore operator_BizTranRoleRepositoryForStore = new Operator_BizTranRoleRepositoryForStore() {
             @Override
-            public void store(Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
+            public void store(Long operatorId, Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
             }
         };
 

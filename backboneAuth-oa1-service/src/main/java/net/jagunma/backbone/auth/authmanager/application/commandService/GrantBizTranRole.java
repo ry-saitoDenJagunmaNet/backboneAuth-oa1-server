@@ -40,7 +40,7 @@ public class GrantBizTranRole {
         Operator_BizTranRoles operator_BizTranRoles = createOperator_BizTranRoles(request);
 
         // オペレーター_取引ロール割当群の登録を行います
-        operator_BizTranRoleRepositoryForStore.store(operator_BizTranRoles, request.getChangeCause());
+        operator_BizTranRoleRepositoryForStore.store(request.getOperatorId(), operator_BizTranRoles, request.getChangeCause());
 
     }
 

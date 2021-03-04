@@ -201,7 +201,7 @@ class Oa11050ControllerTest {
     private Oa11050Controller createOa11050Controller() {
         Operator_BizTranRoleRepositoryForStore operator_BizTranRoleRepositoryForStore = new Operator_BizTranRoleRepositoryForStore() {
             @Override
-            public void store(Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
+            public void store(Long operatorId, Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
             }
         };
         GrantBizTranRole grantBizTranRole = new GrantBizTranRole(operator_BizTranRoleRepositoryForStore) {

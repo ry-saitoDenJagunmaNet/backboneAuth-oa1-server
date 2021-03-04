@@ -72,8 +72,7 @@
 							<!--/*/
 							<option th:each="item : ${form.subSystemItemsSource}"
 									th:value="${item.code}"
-									th:text="${item.name}"
-									th:selected="${item.code == form.subsystemCode}"></option>
+									th:text="${item.name}"></option>
 							/*/-->
 							<option th:remove="all" value=""></option>
 							<option th:remove="all" value="KB">購買</option>
