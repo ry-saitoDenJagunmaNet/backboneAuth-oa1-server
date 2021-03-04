@@ -38,6 +38,7 @@ class Oa11050CopyPresenter implements BizTranRoleGrantedCopyResponse {
         List<Oa11050AssignRoleTableVo> assignRoleTableVoList = newArrayList();
         for (BizTranRoleGrantedAssignRoleDto assignRoleDto : assignRoleDtoList) {
             Oa11050AssignRoleTableVo assignRoleTableVo = new Oa11050AssignRoleTableVo();
+            assignRoleTableVo.setRoleId(assignRoleDto.getOperator_BizTranRole().getBizTranRoleId());
             assignRoleTableVo.setRoleCode(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleCode());
             assignRoleTableVo.setRoleName(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleName());
             assignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_BizTranRole().getValidThruStartDate());

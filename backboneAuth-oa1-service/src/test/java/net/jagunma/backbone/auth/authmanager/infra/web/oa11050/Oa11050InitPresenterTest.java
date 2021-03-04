@@ -41,27 +41,27 @@ class Oa11050InitPresenterTest {
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
 
-    // オペレーター_取引ロール割当系
-    private String targetBizTranRoleCode0 = "KBAG01";
-    private String targetBizTranRoleCode1 = "YSAG10";
-    private String targetBizTranRoleCode2 = "HKAG10";
-    private String targetBizTranRoleCode3 = "ANAG01";
-    private String targetBizTranRoleName0 = "（購買）購買業務基本";
-    private String targetBizTranRoleName1 = "（青果）管理者";
-    private String targetBizTranRoleName2 = "（米）ＪＡ取引全般";
-    private String targetBizTranRoleName3 = "（畜産）取引全般";
-    private SubSystem targetSubSystem0 = SubSystem.購買;
-    private SubSystem targetSubSystem1 = SubSystem.販売_青果;
-    private SubSystem targetSubSystem2 = SubSystem.販売_米;
-    private SubSystem targetSubSystem3 = SubSystem.販売_畜産;
-    private LocalDate targetValidThruStartDate0 = LocalDate.of(2020, 1, 1);
-    private LocalDate targetValidThruStartDate1 = LocalDate.of(2020, 1, 2);
-    private LocalDate targetValidThruStartDate2 = LocalDate.of(2020, 1, 3);
-    private LocalDate targetValidThruStartDate3 = LocalDate.of(2020, 1, 4);
-    private LocalDate targetValidThruEndDate0 = LocalDate.of(9999, 1, 21);
-    private LocalDate targetValidThruEndDate1 = LocalDate.of(9999, 1, 22);
-    private LocalDate targetValidThruEndDate2 = LocalDate.of(9999, 1, 23);
-    private LocalDate targetValidThruEndDate3 = LocalDate.of(9999, 1, 24);
+    // オペレーター_取引ロール割当項目系
+    private String bizTranRoleCode0 = "KBAG01";
+    private String bizTranRoleCode1 = "YSAG10";
+    private String bizTranRoleCode2 = "HKAG10";
+    private String bizTranRoleCode3 = "ANAG01";
+    private String bizTranRoleName0 = "（購買）購買業務基本";
+    private String bizTranRoleName1 = "（青果）管理者";
+    private String bizTranRoleName2 = "（米）ＪＡ取引全般";
+    private String bizTranRoleName3 = "（畜産）取引全般";
+    private SubSystem subSystem0 = SubSystem.購買;
+    private SubSystem subSystem1 = SubSystem.販売_青果;
+    private SubSystem subSystem2 = SubSystem.販売_米;
+    private SubSystem subSystem3 = SubSystem.販売_畜産;
+    private LocalDate validThruStartDate0 = LocalDate.of(2020, 1, 1);
+    private LocalDate validThruStartDate1 = LocalDate.of(2020, 1, 2);
+    private LocalDate validThruStartDate2 = LocalDate.of(2020, 1, 3);
+    private LocalDate validThruStartDate3 = LocalDate.of(2020, 1, 4);
+    private LocalDate validThruEndDate0 = LocalDate.of(9999, 1, 21);
+    private LocalDate validThruEndDate1 = LocalDate.of(9999, 1, 22);
+    private LocalDate validThruEndDate2 = LocalDate.of(9999, 1, 23);
+    private LocalDate validThruEndDate3 = LocalDate.of(9999, 1, 24);
 
     // オペレーター履歴ヘッダー項目系
     private String changeCausePlaceholder = "業務統括者（販売・青果）に昇格";
@@ -87,23 +87,23 @@ class Oa11050InitPresenterTest {
     private Operator operator = Operator.createFrom(operatorId, operatorCode, operatorName, null, null, null, null, null, jaCode, branchId, branchCode, null, null, branchAtMoment);
 
     // オペレーター_取引ロール割当系
-    private List<BizTranRole> targetBizTranRoleList = newArrayList(
-        BizTranRole.createFrom(401L, targetBizTranRoleCode0, targetBizTranRoleName0, targetSubSystem0.getCode(), null, targetSubSystem0),
-        BizTranRole.createFrom(402L, targetBizTranRoleCode1, targetBizTranRoleName1, targetSubSystem1.getCode(), null, targetSubSystem1),
-        BizTranRole.createFrom(403L, targetBizTranRoleCode2, targetBizTranRoleName2, targetSubSystem2.getCode(), null, targetSubSystem2),
-        BizTranRole.createFrom(404L, targetBizTranRoleCode3, targetBizTranRoleName3, targetSubSystem3.getCode(), null, targetSubSystem3));
+    private List<BizTranRole> bizTranRoleList = newArrayList(
+        BizTranRole.createFrom(401L, bizTranRoleCode0, bizTranRoleName0, subSystem0.getCode(), null, subSystem0),
+        BizTranRole.createFrom(402L, bizTranRoleCode1, bizTranRoleName1, subSystem1.getCode(), null, subSystem1),
+        BizTranRole.createFrom(403L, bizTranRoleCode2, bizTranRoleName2, subSystem2.getCode(), null, subSystem2),
+        BizTranRole.createFrom(404L, bizTranRoleCode3, bizTranRoleName3, subSystem3.getCode(), null, subSystem3));
     private List<Operator_BizTranRole> operator_BizTranRoleList = newArrayList(
-        Operator_BizTranRole.createFrom(501L, operatorId, targetBizTranRoleList.get(0).getBizTranRoleId(), targetValidThruStartDate0, targetValidThruEndDate0, null, operator, targetBizTranRoleList.get(0)),
-        Operator_BizTranRole.createFrom(502L, operatorId, targetBizTranRoleList.get(1).getBizTranRoleId(), targetValidThruStartDate1, targetValidThruEndDate1, null, operator, targetBizTranRoleList.get(1)),
-        Operator_BizTranRole.createFrom(503L, operatorId, targetBizTranRoleList.get(2).getBizTranRoleId(), targetValidThruStartDate2, targetValidThruEndDate2, null, operator, targetBizTranRoleList.get(2)),
-        Operator_BizTranRole.createFrom(504L, operatorId, targetBizTranRoleList.get(3).getBizTranRoleId(), targetValidThruStartDate3, targetValidThruEndDate3, null, operator, targetBizTranRoleList.get(3)));
-    private Operator_BizTranRoles targetOperator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
+        Operator_BizTranRole.createFrom(501L, operatorId, bizTranRoleList.get(0).getBizTranRoleId(), validThruStartDate0, validThruEndDate0, null, operator, bizTranRoleList.get(0)),
+        Operator_BizTranRole.createFrom(502L, operatorId, bizTranRoleList.get(1).getBizTranRoleId(), validThruStartDate1, validThruEndDate1, null, operator, bizTranRoleList.get(1)),
+        Operator_BizTranRole.createFrom(503L, operatorId, bizTranRoleList.get(2).getBizTranRoleId(), validThruStartDate2, validThruEndDate2, null, operator, bizTranRoleList.get(2)),
+        Operator_BizTranRole.createFrom(504L, operatorId, bizTranRoleList.get(3).getBizTranRoleId(), validThruStartDate3, validThruEndDate3, null, operator, bizTranRoleList.get(3)));
+    private Operator_BizTranRoles operator_BizTranRoles = Operator_BizTranRoles.createFrom(operator_BizTranRoleList);
 
     // オペレーター履歴ヘッダー系
-    OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.createFrom(null, operatorId, LocalDateTime.of(2020,10,1,0,1,2), changeCausePlaceholder, null, operator);
+    private OperatorHistoryHeader operatorHistoryHeader = OperatorHistoryHeader.createFrom(null, operatorId, LocalDateTime.of(2020,10,1,0,1,2), changeCausePlaceholder, null, operator);
 
     // 取引ロール系
-    private List<BizTranRole> bizTranRoleList = newArrayList(
+    private List<BizTranRole> allBizTranRoleList = newArrayList(
         BizTranRole.createFrom(1L, "KBAG01", "（購買）購買業務基本", SubSystem.購買.getCode(), null, SubSystem.購買),
         BizTranRole.createFrom(2L, "KBAG02", "（購買）本所業務", SubSystem.購買.getCode(), null, SubSystem.購買),
         BizTranRole.createFrom(3L, "KBAG03", "（購買）本所管理業務", SubSystem.購買.getCode(), null, SubSystem.購買),
@@ -155,7 +155,7 @@ class Oa11050InitPresenterTest {
         BizTranRole.createFrom(49L, "ANAG02", "（畜産）維持管理担当者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産),
         BizTranRole.createFrom(50L, "ANAG98", "（畜産）センター維持管理担当者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産),
         BizTranRole.createFrom(51L, "ANAG99", "（畜産）維持管理責任者", SubSystem.販売_畜産.getCode(), null, SubSystem.販売_畜産));
-    private BizTranRoles bizTranRoles = BizTranRoles.createFrom(bizTranRoleList);
+    private BizTranRoles allBizTranRoles = BizTranRoles.createFrom(allBizTranRoleList);
 
     private List<BizTranRoleGrantedAssignRoleDto> createBizTranRoleGrantedAssignRoleDtoList() {
         List<BizTranRoleGrantedAssignRoleDto> assignRoleDtoList = newArrayList();
@@ -168,7 +168,7 @@ class Oa11050InitPresenterTest {
         return assignRoleTableVoList;
     }
     private void createOa11050AssignRole(List<BizTranRoleGrantedAssignRoleDto> assignRoleDtoList, List<Oa11050AssignRoleTableVo> assignRoleTableVoList) {
-        for (Operator_BizTranRole operator_BizTranRole : targetOperator_BizTranRoles.getValues()) {
+        for (Operator_BizTranRole operator_BizTranRole : operator_BizTranRoles.getValues()) {
             BizTranRoleGrantedAssignRoleDto assignRoleDto = new BizTranRoleGrantedAssignRoleDto();
             assignRoleDto.setOperator_BizTranRole(operator_BizTranRole);
             assignRoleDto.setIsModifiable(true);
@@ -196,7 +196,7 @@ class Oa11050InitPresenterTest {
         return unAssignRoleTableVoList;
     }
     private void createAllRole(List<BizTranRoleGrantedAllRoleDto> allRoleDtoList, List<Oa11050UnAssignRoleTableVo> unAssignRoleTableVoList) {
-        for (BizTranRole bizTranRole : bizTranRoles.getValues()) {
+        for (BizTranRole bizTranRole : allBizTranRoles.getValues()) {
             BizTranRoleGrantedAllRoleDto allRoleDto = new BizTranRoleGrantedAllRoleDto();
             allRoleDto.setBizTranRole(bizTranRole);
             allRoleDto.setIsModifiable(true);
