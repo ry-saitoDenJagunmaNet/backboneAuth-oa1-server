@@ -110,7 +110,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
     }
 
     /**
-     * {@link Operator_SubSystemRoleForStoreDataSource#store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause)}テスト
+     * {@link Operator_SubSystemRoleForStoreDataSource#store(Long operatorId, Operator_SubSystemRoles operator_SubSystemRoles, String changeCause)}テスト
      *  ●パターン
      *    正常
      *
@@ -126,7 +126,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
 
         assertThatCode(() ->
             // 実行
-            operator_SubSystemRoleForStoreDataSource.store(operator_SubSystemRoles, changeCause))
+            operator_SubSystemRoleForStoreDataSource.store(operatorId, operator_SubSystemRoles, changeCause))
             .doesNotThrowAnyException();
     }
 

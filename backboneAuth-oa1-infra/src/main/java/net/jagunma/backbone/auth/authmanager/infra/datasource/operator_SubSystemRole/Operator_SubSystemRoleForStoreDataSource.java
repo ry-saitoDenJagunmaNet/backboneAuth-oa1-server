@@ -34,19 +34,20 @@ public class Operator_SubSystemRoleForStoreDataSource implements Operator_SubSys
     /**
      * オペレーター_サブシステムロール割当群の格納を行います
      *
+     * @param operatorId オペレーターID
      * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
      * @param changeCause 変更事由
      */
-    public void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
+    public void store(Long operatorId, Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
 
         // オペレーター_サブシステムロール割当のデリートを行います
-        deleteOperator_SubSystemRole(operator_SubSystemRoles.getValues().get(0).getOperatorId());
+        deleteOperator_SubSystemRole(operatorId);
 
         // オペレーター_サブシステムロール割当のインサートを行います
         List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = insertOperator_SubSystemRole(operator_SubSystemRoles);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operator_SubSystemRoles.getValues().get(0).getOperatorId(), operator_SubSystemRoleEntityList.get(0).getCreatedAt(), changeCause);
+        operatorHistoryPackRepositoryForStore.store(operatorId, operator_SubSystemRoleEntityList.get(0).getCreatedAt(), changeCause);
     }
 
     /**
