@@ -52,7 +52,7 @@ class GrantSubSystemRoleTest {
 
         Operator_SubSystemRoleRepositoryForStore operator_SubSystemRoleRepositoryForStore = new Operator_SubSystemRoleRepositoryForStore() {
             @Override
-            public void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
+            public void store(Long operatorId, Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
             }
         };
 

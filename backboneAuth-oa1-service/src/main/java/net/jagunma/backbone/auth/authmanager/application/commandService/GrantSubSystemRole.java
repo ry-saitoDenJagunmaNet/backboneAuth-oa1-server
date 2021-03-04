@@ -40,7 +40,7 @@ public class GrantSubSystemRole {
         Operator_SubSystemRoles operator_SubSystemRoles = createOperator_SubSystemRoles(request);
 
         // オペレーター_サブシステムロール割当群の登録を行います
-        operator_SubSystemRoleRepositoryForStore.store(operator_SubSystemRoles, request.getChangeCause());
+        operator_SubSystemRoleRepositoryForStore.store(request.getOperatorId(), operator_SubSystemRoles, request.getChangeCause());
 
     }
 

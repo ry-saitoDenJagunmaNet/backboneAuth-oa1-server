@@ -8,8 +8,9 @@ public interface Operator_SubSystemRoleRepositoryForStore {
     /**
      * オペレーター_サブシステムロール割当群の格納を行います
      *
+     * @param operatorId オペレーターID
      * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
      * @param changeCause 変更事由
      */
-    void store(Operator_SubSystemRoles operator_SubSystemRoles, String changeCause);
+    void store(Long operatorId, Operator_SubSystemRoles operator_SubSystemRoles, String changeCause);
 }
