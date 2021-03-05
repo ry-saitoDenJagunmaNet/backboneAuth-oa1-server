@@ -83,6 +83,7 @@ class Oa11050CopyPresenterTest {
             assignRoleTableVo.setRoleId(operator_BizTranRole.getBizTranRoleId());
             assignRoleTableVo.setRoleCode(operator_BizTranRole.getBizTranRole().getBizTranRoleCode());
             assignRoleTableVo.setRoleName(operator_BizTranRole.getBizTranRole().getBizTranRoleName());
+            assignRoleTableVo.setSubSystemCode(operator_BizTranRole.getBizTranRole().getSubSystemCode());
             assignRoleTableVo.setValidThruStartDate(operator_BizTranRole.getValidThruStartDate());
             assignRoleTableVo.setValidThruEndDate(operator_BizTranRole.getValidThruEndDate());
             assignRoleTableVo.setIsModifiable(true);
