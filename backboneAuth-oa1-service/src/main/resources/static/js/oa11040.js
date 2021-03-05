@@ -192,11 +192,12 @@ function oaex_moveRemoveBtn_onClick() {
 				assignRoleTable.deleteRow(i);
 				// 有効行を選択状態
 				if (i <= assignRoleTable.rows.length - 1) {
-					oa_setDataTableRowSelected(assignRoleTable.rows[i]);
+					oaex_setSelectRow(assignRoleTable, i-1);
 				} else {
-					oa_setDataTableRowSelected(assignRoleTable.rows[i-1]);
+					oaex_setSelectRow(assignRoleTable, i-2);
 				}
-
+				// テーブル子nodeの項目名Indexを再採番し変更する
+				oa_renumberItemNameIndexForTableChild(assignRoleTable);
 				return; 
 			}
 		}
