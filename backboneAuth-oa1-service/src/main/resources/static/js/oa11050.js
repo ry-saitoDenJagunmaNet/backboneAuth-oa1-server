@@ -150,7 +150,8 @@ function oaex_moveAddBtn_onClick() {
 			newRow.cells[3].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleId' value='" + tableRow.cells[2].childNodes[0].value + "'></input>";
 			newRow.cells[4].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleCode' value='" + tableRow.cells[3].childNodes[0].value + "'></input>";
 			newRow.cells[5].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].roleName' value='" + tableRow.cells[4].childNodes[0].value + "'></input>";
-			newRow.cells[6].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[6].childNodes[0].value + "'></input>";
+			newRow.cells[6].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].subSystemCode' value='" + tableRow.cells[5].childNodes[0].value + "'></input>";
+			newRow.cells[7].innerHTML = "<input type='hidden' name='assignRoleTableVoList[" + i + "].isModifiable' value='" + tableRow.cells[6].childNodes[0].value + "'></input>";
 			// 選択行非表示
 			unAssignRoleTable.rows[i].classList.add(_RIGHT_TABLE_HIDDEN)
 			// 有効行を選択状態
@@ -193,11 +194,12 @@ function oaex_moveRemoveBtn_onClick() {
 				assignRoleTable.deleteRow(i);
 				// 有効行を選択状態
 				if (i <= assignRoleTable.rows.length - 1) {
-					oa_setDataTableRowSelected(assignRoleTable.rows[i]);
+					oaex_setSelectRow(assignRoleTable, i-1);
 				} else {
-					oa_setDataTableRowSelected(assignRoleTable.rows[i-1]);
+					oaex_setSelectRow(assignRoleTable, i-2);
 				}
-
+				// テーブル子nodeの項目名Indexを再採番し変更する
+				oa_renumberItemNameIndexForTableChild(assignRoleTable);
 				return;
 			}
 		}

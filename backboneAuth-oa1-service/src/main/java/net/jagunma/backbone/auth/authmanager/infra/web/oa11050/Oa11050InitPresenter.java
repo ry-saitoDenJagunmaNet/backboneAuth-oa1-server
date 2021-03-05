@@ -82,6 +82,7 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
             assignRoleTableVo.setRoleId(assignRoleDto.getOperator_BizTranRole().getBizTranRoleId());
             assignRoleTableVo.setRoleCode(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleCode());
             assignRoleTableVo.setRoleName(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getBizTranRoleName());
+            assignRoleTableVo.setSubSystemCode(assignRoleDto.getOperator_BizTranRole().getBizTranRole().getSubSystemCode());
             assignRoleTableVo.setValidThruStartDate(assignRoleDto.getOperator_BizTranRole().getValidThruStartDate());
             assignRoleTableVo.setValidThruEndDate(assignRoleDto.getOperator_BizTranRole().getValidThruEndDate());
             assignRoleTableVo.setIsModifiable(assignRoleDto.getIsModifiable());

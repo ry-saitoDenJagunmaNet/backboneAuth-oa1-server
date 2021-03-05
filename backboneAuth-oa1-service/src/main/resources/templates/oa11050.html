@@ -131,6 +131,7 @@
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>
+									<td style="display:none;"></td>
 								</tr>
 								<!-- th using -->
 								<!--/*/
@@ -149,6 +150,7 @@
 									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleId}"></input></td>
 									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleCode}"></input></td>
 									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].roleName}"></input></td>
+									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].subSystemCode}"></input></tc>
 									<td style="display:none;"><input type="hidden" th:field="*{form.assignRoleTableVoList[__${iterStat.index}__].isModifiable}"></input></td>
 								</tr>
 								/*/-->
@@ -167,6 +169,7 @@
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>
+									<td style="display:none;"></td>
 									<td style="display:none;"><input type="hidden" id="assignRoleTableVoList0.isModifiable" value="false"></input></td>
 								</tr>
 								<tr th:remove="all" onclick="oa_setTableRowSelected(this); oaex_assignRoleTableRow_onClick(this);">
@@ -181,6 +184,7 @@
 											<input type="text" class="datepicker" value="9999/12/31" disabled></input>
 										</div>
 									</td>
+									<td style="display:none;"></td>
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>
 									<td style="display:none;"></td>

@@ -22,6 +22,10 @@ public class Oa11050AssignRoleTableVo {
      */
     private String roleName;
     /**
+     * サブシステムコード
+     */
+    private String subSystemCode;
+    /**
      * 有効期限（開始日）
      */
     private LocalDate validThruStartDate;
@@ -44,6 +48,9 @@ public class Oa11050AssignRoleTableVo {
     public String getRoleName() {
         return roleName;
     }
+    public String getSubSystemCode() {
+        return subSystemCode;
+    }
     public LocalDate getValidThruStartDate() {
         return validThruStartDate;
     }
@@ -63,6 +70,9 @@ public class Oa11050AssignRoleTableVo {
     }
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+    public void setSubSystemCode(String subSystemCode) {
+        this.subSystemCode = subSystemCode;
     }
     public void setValidThruStartDate(LocalDate validThruStartDate) {
         this.validThruStartDate = validThruStartDate;
