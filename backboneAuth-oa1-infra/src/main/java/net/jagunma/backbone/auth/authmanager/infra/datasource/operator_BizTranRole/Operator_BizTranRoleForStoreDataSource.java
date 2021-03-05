@@ -39,15 +39,16 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
      * @param changeCause 変更事由
      */
     public void store(Long operatorId, Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
+        LocalDateTime createdAt = LocalDateTime.now();
 
         // オペレーター_取引ロール割当のデリートを行います
         deleteOperator_BizTranRole(operatorId);
 
         // オペレーター_取引ロール割当のインサートを行います
-        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = insertOperator_BizTranRole(operator_BizTranRoles);
+        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = insertOperator_BizTranRole(operator_BizTranRoles, createdAt);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operatorId, operator_BizTranRoleEntityList.get(0).getCreatedAt(), changeCause);
+        operatorHistoryPackRepositoryForStore.store(operatorId, createdAt, changeCause);
     }
 
     /**
@@ -66,11 +67,10 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
      * オペレーター_取引ロール割当のインサートを行います
      *
      * @param operator_BizTranRoles オペレーター_取引ロール割当群
+     * @param createdAt 登録日時
      * @return オペレーター_取引ロール割当エンティティリスト
      */
-    List<Operator_BizTranRoleEntity> insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles) {
-
-        LocalDateTime createdAt = LocalDateTime.now();
+    List<Operator_BizTranRoleEntity> insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles, LocalDateTime createdAt) {
 
         List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = newArrayList();
 
