@@ -39,15 +39,16 @@ public class Operator_SubSystemRoleForStoreDataSource implements Operator_SubSys
      * @param changeCause 変更事由
      */
     public void store(Long operatorId, Operator_SubSystemRoles operator_SubSystemRoles, String changeCause) {
+        LocalDateTime createdAt = LocalDateTime.now();
 
         // オペレーター_サブシステムロール割当のデリートを行います
         deleteOperator_SubSystemRole(operatorId);
 
         // オペレーター_サブシステムロール割当のインサートを行います
-        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = insertOperator_SubSystemRole(operator_SubSystemRoles);
+        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = insertOperator_SubSystemRole(operator_SubSystemRoles, createdAt);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operatorId, operator_SubSystemRoleEntityList.get(0).getCreatedAt(), changeCause);
+        operatorHistoryPackRepositoryForStore.store(operatorId, createdAt, changeCause);
     }
 
     /**
@@ -66,11 +67,10 @@ public class Operator_SubSystemRoleForStoreDataSource implements Operator_SubSys
      * オペレーター_サブシステムロール割当のインサートを行います
      *
      * @param operator_SubSystemRoles オペレーター_サブシステムロール割当群
+     * @param createdAt 登録日時
      * @return オペレーター_サブシステムロール割当エンティティリスト
      */
-    List<Operator_SubSystemRoleEntity> insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles) {
-
-        LocalDateTime createdAt = LocalDateTime.now();
+    List<Operator_SubSystemRoleEntity> insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles, LocalDateTime createdAt) {
 
         List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = newArrayList();
 
