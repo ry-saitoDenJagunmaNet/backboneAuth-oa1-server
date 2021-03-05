@@ -14,19 +14,21 @@
 </head>
 <body th:onLoad="oaex_th_onload();">
 <form>
-	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
-	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"/>
-	<!-- モーダルダイアログ用定義 -->
-	<script th:remove="all">oa_getMessageDialog();</script>
 	<!-- 共通部品用定義 -->
 	<div th:replace="include/commonParts :: commonParts"></div>
-	<!-- 左に表示するメニュー用定義 -->
-	<script>oa_getSidenav("oa12030");</script>
 	<!-- header定義 -->
 	<header>
-		<script th:remove="all">oa_getHeader("oa12030", "一時取引抑止登録");</script>
 		<div th:replace="include/header :: header (id='oa12030', title='一時取引抑止登録')"></div>
+		<!-- モック表示用 -->
+		<script th:remove="all">oa_getHeader("oa12030", "一時取引抑止登録");</script>
 	</header>
+	<!-- モック表示用 -->
+	<!-- imgファイルのファイルパス定義 -->
+	<input type="hidden" id="imageUrl" value="../static/img/"/>
+	<!-- モーダルダイアログ用定義 -->
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script th:remove="all">oa_getSidenav("oa12030");</script>
 
 	<!-- main定義 -->
 	<main>
@@ -294,7 +296,7 @@
 				<div class="row">
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="valid_thru_start_date" name="suspendStartDate" class="validate datepicker" th:value="${form.suspendStartDate}"></input>
+							<input type="text" id="valid_thru_start_date" name="suspendStartDate" class="validate datepicker" th:value="${form.suspendStartDate}"/>
 							<label for="valid_thru_start_date">（開始日）</label>
 						</div>
 					</div>
@@ -303,7 +305,7 @@
 					</div>
 					<div class="col s4">
 						<div class="input-field">
-							<input type="text" id="valid_thru_end_date" name="suspendEndDate" class="validate datepicker" th:value="${form.suspendEndDate}"></input>
+							<input type="text" id="valid_thru_end_date" name="suspendEndDate" class="validate datepicker" th:value="${form.suspendEndDate}"/>
 							<label for="valid_thru_end_date">（終了日）</label>
 						</div>
 					</div>
@@ -315,7 +317,7 @@
 			<div class="row oa_required">
 				<div class="col s7">
 					<div class="input-field">
-						<input type="text" id="suspend_reason" name="suspendReason" class="validate" value="" th:value="${form.suspendReason}"></input>
+						<input type="text" id="suspend_reason" name="suspendReason" class="validate" value="" th:value="${form.suspendReason}"/>
 						<label for="suspend_reason">抑止理由</label>
 					</div>
 				</div>

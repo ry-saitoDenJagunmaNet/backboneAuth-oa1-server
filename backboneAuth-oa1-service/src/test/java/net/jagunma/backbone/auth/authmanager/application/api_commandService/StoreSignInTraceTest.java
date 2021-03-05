@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.commandService;
+package net.jagunma.backbone.auth.authmanager.application.api_commandService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepositoryForStore;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;

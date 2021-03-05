@@ -23,6 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BaseOfController {
 
+    // TODO: access tokenをsessionで管理する場合（検討中）
+    // access token の session key
+    protected final String SESSION_KEY_ACCES_TOKEN = "session_key_access_token";
+
     // ToDo: setAuditInfoHolderメソッドでgetRemoteAddr()を使用するために定義
     // Http ServletRequest
     @Autowired
@@ -41,7 +45,7 @@ public class BaseOfController {
      *
      * @param simpleOperator オペレーター(簡略版)
      */
-    public void setAuditInfoHolder(SimpleOperator simpleOperator) {
+    protected void setAuditInfoHolder(SimpleOperator simpleOperator) {
 
         // ToDo: 各コントローラが動作する前にAuditInfoHolderが設定されるはず・・・・
         AuditInfoHolder.set(AuthInf.createFrom(
@@ -139,6 +143,8 @@ public class BaseOfController {
         String operatorName,
         JaAtMoment jaAtMoment,
         BranchAtMoment branchAtMoment) {
+
+        if (AuditInfoHolder.getAuthInf() != null) { return; }
 
         JaAtMoment ja = createJaAtMoment();
         BranchAtMoment branch = createBranchAtMoment();

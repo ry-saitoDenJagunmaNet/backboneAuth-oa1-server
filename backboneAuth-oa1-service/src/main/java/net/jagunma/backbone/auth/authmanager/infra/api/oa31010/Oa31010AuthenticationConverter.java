@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationRequest;
 
 /**
  * Oa31010 認証 Converter

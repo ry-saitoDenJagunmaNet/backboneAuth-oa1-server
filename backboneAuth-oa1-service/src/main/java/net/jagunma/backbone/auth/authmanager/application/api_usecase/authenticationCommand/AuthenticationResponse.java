@@ -1,6 +1,5 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand;
+package net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand;
 
-import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 
 /**

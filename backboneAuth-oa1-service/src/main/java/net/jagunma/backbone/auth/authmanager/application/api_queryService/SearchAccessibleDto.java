@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.queryService;
+package net.jagunma.backbone.auth.authmanager.application.api_queryService;
 
 import java.util.List;
 

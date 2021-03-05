@@ -18,8 +18,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class SignIn extends BaseOfService {
 
-    // 認可API 業務オペレーター認証 URI
-    private final String authenticationUriPath = "/oa31010/authentication";
+    // 認可api 業務オペレーター認証 URI
+    private final String AUTHENTICATION_URI_PATH = "/oa31010/authentication";
 
     // コンストラクタ
     public SignIn(BackboneAuthConfig backboneAuthConfig) {
@@ -41,7 +41,7 @@ public class SignIn extends BaseOfService {
             request.getOperatorCode(), request.getPassword(), request.getClientIpaddress());
 
         // 認証apiのUriを設定
-        URI uri = createBackboneAuthOa3ServeUri(authenticationUriPath);
+        URI uri = createBackboneAuthOa3ServeUri(AUTHENTICATION_URI_PATH);
 
         // 認証apiでサインイン
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
@@ -49,8 +49,10 @@ public class SignIn extends BaseOfService {
         SignInResponseDto signInResponseDto = restTemplate.postForObject(uri, signInRequestDto, SignInResponseDto.class);
 
         if (SignInResult.codeOf(signInResponseDto.getSignInResultCode()).is成功()) {
-            // ToDo: 認証に成功したらAccessTokenを取得
-            response.setAccessToken("AccessToken12345");
+            // ToDo: 認証に成功したらAccessTokenを取得（oa2への接続方法確認）
+//            response.setAccessToken("AccessToken12345");
+            // ToDo: 暫定でオペレーターコードを設定。この値オペレータ―情報の取得で使用する
+            response.setAccessToken(request.getOperatorCode());
         }
 
         response.setSignInResultCode(signInResponseDto.getSignInResultCode());

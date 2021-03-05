@@ -5,7 +5,8 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessible;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessible;
+import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "oa31020")
-public class Oa31020Controller {
+public class Oa31020Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa31020Controller.class);
 

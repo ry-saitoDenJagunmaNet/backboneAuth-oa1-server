@@ -1,8 +1,8 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessibleDto;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchResponse;
 
 /**
  * OA31020 権限取得 Presenter

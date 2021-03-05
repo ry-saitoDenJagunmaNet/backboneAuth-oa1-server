@@ -14,20 +14,21 @@
 </head>
 <body th:onLoad="oaex_th_onload();">
 <form>
-
-	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
-	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"/>
-	<!-- モーダルダイアログ用定義 -->
-	<script th:remove="all">oa_getMessageDialog();</script>
 	<!-- 共通部品用定義 -->
 	<div th:replace="include/commonParts :: commonParts"></div>
-	<!-- 左に表示するメニュー用定義 -->
-	<script>oa_getSidenav("oa12020");</script>
 	<!-- header定義 -->
 	<header>
-		<script th:remove="all">oa_getHeader("oa12020", "一時取引抑止<一覧>");</script>
 		<div th:replace="include/header :: header (id='oa12020', title='一時取引抑止<一覧>')"></div>
+		<!-- モック表示用 -->
+		<script th:remove="all">oa_getHeader("oa12020", "一時取引抑止<一覧>");</script>
 	</header>
+	<!-- モック表示用 -->
+	<!-- imgファイルのファイルパス定義 -->
+	<input type="hidden" id="imageUrl" value="../static/img/"/>
+	<!-- モーダルダイアログ用定義 -->
+	<script th:remove="all">oa_getMessageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script th:remove="all">oa_getSidenav("oa12020");</script>
 
 	<!-- main定義 -->
 	<main>

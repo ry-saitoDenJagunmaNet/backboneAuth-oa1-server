@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand;
+package net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand;
 
 /**
  * 認証サービス Request

@@ -5,6 +5,13 @@ window.onload = function() {
 	// 初期化処理
 	oaex_initialize();
 }
+function oaex_th_onload() {
+	_isThymeleaf = true;
+
+	// 初期化処理
+	oaex_initialize();
+
+}
 
 /**
  * 初期化処理です。
