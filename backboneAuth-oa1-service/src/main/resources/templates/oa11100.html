@@ -14,17 +14,21 @@
 </head>
 <body th:onLoad="oaex_th_onload();">
 <form>
-
-	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
-	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"></input>
-	<!-- モーダルダイアログ用定義 -->
-	<script>oa_getMassageDialog();</script>
-	<!-- 左に表示するメニュー用定義 -->
-	<script>oa_getSidenav("oa11100");</script>
+	<!-- 共通部品用定義 -->
+	<div th:replace="include/commonParts :: commonParts"></div>
 	<!-- header定義 -->
 	<header>
-		<script>oa_getHeader("oa11100", "オペレーター履歴確認");</script>
+		<div th:replace="include/header :: header (id='oa11100', title='オペレーター履歴確認')"></div>
+		<!-- モック表示用 -->
+		<script th:remove="all">oa_getHeader("oa11100", "オペレーター履歴確認");</script>
 	</header>
+	<!-- モック表示用 -->
+	<!-- imgファイルのファイルパス定義 -->
+	<input type="hidden" id="imageUrl" value="../static/img/"></input>
+	<!-- モーダルダイアログ用定義 -->
+	<script th:remove="all">oa_getMassageDialog();</script>
+	<!-- 左に表示するメニュー用定義 -->
+	<script th:remove="all">oa_getSidenav("oa11100");</script>
 
 	<!-- main定義 -->
 	<main>

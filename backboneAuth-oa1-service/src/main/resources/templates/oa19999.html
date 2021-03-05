@@ -8,8 +8,8 @@
 	<script src="../static/materialize/js/materialize.min.js" th:src="@{/materialize/js/materialize.min.js}"></script>
 </head>
 <body>
-	<div style="padding-top: 20px;" th:utext="${form.errorMessage}"></div>
-	<div style="padding-top: 20px;" th:utext="${form.errorDetailsMessage}"></div>
-	<div style="padding-top: 20px;" th:utext="${form.stackTrace}"></div>
+	<div style="padding-top: 20px;" th:text="${form.errorMessage}"></div>
+	<div style="padding-top: 20px;" th:text="${form.errorDetailsMessage}"></div>
+	<div style="padding-top: 20px;" th:text="${form.stackTrace}"></div>
 </body>
 </html>
