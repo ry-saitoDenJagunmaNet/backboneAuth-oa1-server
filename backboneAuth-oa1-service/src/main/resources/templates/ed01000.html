@@ -12,12 +12,8 @@
 </head>
 <body th:onLoad="edex_th_onload();">
 <form>
-	<!-- imgファイルのファイルパス定義 モック表示時と実環境でパスが異なるため -->
-	<input type="hidden" id="imageUrl" value="../static/img/" th:value="@{/img/}"/>
-	<!-- モーダルダイアログ用定義 -->
-	<script th:remove="all">oa_getMessageDialog();</script>
-	<div th:replace="include/messageDialog :: messageDialog"></div>
-
+	<!-- 共通部品用定義 -->
+	<div th:replace="include/commonParts :: commonParts(viewSidenav='false')"></div>
 	<!-- header定義 -->
 	<header>
 		<div class="row">
@@ -27,6 +23,11 @@
 			</div>
 		</div>
 	</header>
+	<!-- モック表示用 -->
+	<!-- imgファイルのファイルパス定義 -->
+	<input type="hidden" id="imageUrl" value="../static/img/"></input>
+	<!-- モーダルダイアログ用定義 -->
+	<script th:remove="all">oa_getMessageDialog();</script>
 
 	<!-- main定義 -->
 	<main>

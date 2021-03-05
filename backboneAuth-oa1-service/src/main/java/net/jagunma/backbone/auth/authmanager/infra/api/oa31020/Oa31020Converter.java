@@ -1,6 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchRequest;
 
 /**
  * OA31020 権限取得 Converter

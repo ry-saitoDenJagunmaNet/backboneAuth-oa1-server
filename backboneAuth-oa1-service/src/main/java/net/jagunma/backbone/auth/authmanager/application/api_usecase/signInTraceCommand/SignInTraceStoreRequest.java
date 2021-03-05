@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand;
+package net.jagunma.backbone.auth.authmanager.application.api_usecase.signInTraceCommand;
 
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;

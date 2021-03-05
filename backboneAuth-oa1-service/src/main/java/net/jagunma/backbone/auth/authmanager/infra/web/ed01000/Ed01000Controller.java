@@ -74,35 +74,26 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("get START");
 
-        // 未ログインオペレータを設定
+        // 未サインインオペレータを設定
         setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
 
         Ed01000Vo vo = new Ed01000Vo();
         try {
+            // ToDo: clientId、scope他リクエストIFの値を確認要
             String clientId = "";
             String scope = "";
             String state = createRandomString(32);
+            String oAuthRedirectUri = String.format("%1$s://%2$s:%3$s/ed01000/oAuthReception", request.getScheme(), request.getLocalAddr(), request.getServerPort());
+            String responseType = "code";
+
+            // リダイレクトuri（サインインの呼び出し元）をSessionに格納
             Map<String, String> sessionStringMap = new HashMap<>();
             sessionStringMap.put("redirect_uri", redirect_uri);
             sessionStringMap.put("state", state);
-
-            // リダイレクトuri（サインインの呼び出し元）をSessionに格納
             setSessionAttribute(SESSIONKEY_STRING_MAP, sessionStringMap);
 
-            // ToDo: Oa2認証Apiで認証コードを取得する
-            String oAuthRedirectUri = request.getScheme() + "://"
-                + "145.254.211.73"
-                + ":" + request.getServerPort()
-                + "/" + "ed01000/oAuthReception";
-            String responseType = "code";
-
-            // ToDo: 暫定でOa2認証Apiからリダイレクトされた提でoAuthRedirectメソッドにリダイレクト
-//            StringBuilder uri = new StringBuilder();
-//            uri.append("redirect:");
-//            uri.append(oAuthRedirectUri);
-//            uri.append("?code=").append("code12345");
-//            uri.append("&state=").append(state);
-//            return uri.toString();
+            // ToDo: oa2認証Apiで認証コードを取得する
+            // ToDo: 暫定でoa2認証Apiからリダイレクトされた提でoAuthRedirectメソッドを呼ぶ（oa2への接続方法確認）
             return oAuthReception("", "code12345", state, model);
 
         } catch (GunmaRuntimeException gre) {
@@ -146,7 +137,7 @@ public class Ed01000Controller extends BaseOfController {
         // コードが取得できない場合
         if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
 
-        // 未ログインオペレータを設定
+        // 未サインインオペレータを設定
         setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
 
         Ed01000Vo vo = new Ed01000Vo();
@@ -182,12 +173,12 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("signIn START");
 
-        // 未ログインオペレータを設定
+        // 未サインインオペレータを設定
         setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
 
         try {
             // リクエストを作成
-            Ed01000SignInConverter converter = Ed01000SignInConverter.with(vo, request.getRemoteAddr());
+            Ed01000SignInConverter converter = Ed01000SignInConverter.with(vo, request.getLocalAddr());
             Ed01000SignInPresenter presenter = new Ed01000SignInPresenter();
 
             // サインインサービス実行

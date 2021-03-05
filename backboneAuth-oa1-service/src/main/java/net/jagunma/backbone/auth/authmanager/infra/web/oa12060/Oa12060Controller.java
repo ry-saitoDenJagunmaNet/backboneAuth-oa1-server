@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class Oa12060Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Oa12060Controller.class);
+
     private final SearchCalendar searchCalendar;
     private final StoreCalendar storeCalendar;
 
@@ -68,11 +69,6 @@ public class Oa12060Controller extends BaseOfController {
         Oa12060Vo vo = new Oa12060Vo();
         Oa12060InitPresenter presenter = new Oa12060InitPresenter();
         try {
-            // ToDo: Oa2認証コード取得
-
-
-
-
             // 画面を初期化
             presenter.bindTo(vo);
             model.addAttribute("form", vo);

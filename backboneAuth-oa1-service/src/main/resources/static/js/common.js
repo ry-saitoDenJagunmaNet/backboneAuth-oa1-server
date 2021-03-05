@@ -720,7 +720,7 @@ function oa_renumberItemNameIndexForTableChildSubFunction(elme, ix, isNameChenge
 function oa_getMessageDialog() {
 	let html = '';
     html += '<div>';
-    html += '   <button class="modal-trigger" id="btnShowAlert" data-target="alert" style="display: none;">alert</button>';
+    html += '   <a class="btn modal-trigger" id="btnShowAlert" data-target="alert" style="display: none;">alert</a>';
     html += '   <div id="alert" class="modal">';
     html += '       <div class="modal-content" id="alertMessage"></div>';
     html += '       <div class="modal-footer">';
@@ -728,7 +728,7 @@ function oa_getMessageDialog() {
     html += '       </div>';
     html += '   </div>';
 
-    html += '   <button class="modal-trigger" id="btnShowConfirm" data-target="confirm" style="display: none;">alert</button>';
+    html += '   <a class="btn modal-trigger" id="btnShowConfirm" data-target="confirm" style="display: none;">confirm</a>';
     html += '   <div id="confirm" class="modal">';
     html += '       <div class="modal-content" id="confirmMessage"></div>';
     html += '       <div class="modal-footer">';

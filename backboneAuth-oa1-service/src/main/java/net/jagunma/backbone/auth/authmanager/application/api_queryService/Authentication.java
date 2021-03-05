@@ -1,8 +1,8 @@
-package net.jagunma.backbone.auth.authmanager.application.queryService;
+package net.jagunma.backbone.auth.authmanager.application.api_queryService;
 
 import java.time.LocalDate;
-import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.operator.Operator;

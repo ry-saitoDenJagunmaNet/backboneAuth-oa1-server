@@ -4,7 +4,7 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessibleDto;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

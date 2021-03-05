@@ -1,7 +1,7 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference;
+package net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessibleDto;
 
 /**
  * 可能取引検索サービス Response

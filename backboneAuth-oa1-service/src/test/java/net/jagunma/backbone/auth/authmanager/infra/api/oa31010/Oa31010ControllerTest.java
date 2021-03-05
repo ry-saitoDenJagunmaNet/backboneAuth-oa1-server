@@ -2,11 +2,12 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import net.jagunma.backbone.auth.authmanager.application.commandService.StoreSignInTrace;
-import net.jagunma.backbone.auth.authmanager.application.queryService.Authentication;
-import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.authenticationCommand.AuthenticationResponse;
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInTraceCommand.SignInTraceStoreRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_commandService.StoreSignInTrace;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.Authentication;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchSimpleOperator;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.signInTraceCommand.SignInTraceStoreRequest;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
@@ -34,7 +35,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpSession;
 
 class Oa31010ControllerTest {
 
@@ -159,7 +159,9 @@ class Oa31010ControllerTest {
                 actualSignInTraceStoreRequest = request;
             }
         };
-        return new Oa31010Controller(authentication, storeSignInTrace);
+        // サインイン証跡登録サービスのスタブ
+        SearchSimpleOperator searchSimpleOperator = new SearchSimpleOperator(operatorRepository) {};
+        return new Oa31010Controller(authentication, storeSignInTrace, searchSimpleOperator);
     }
 
     /**

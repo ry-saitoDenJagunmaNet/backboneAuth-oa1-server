@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.queryService;
+package net.jagunma.backbone.auth.authmanager.application.api_queryService;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTran.BizTran;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTran;

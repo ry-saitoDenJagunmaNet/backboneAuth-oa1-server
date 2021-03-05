@@ -20,7 +20,6 @@ import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.Passwo
 import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepositoryForStore;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
-import net.jagunma.common.util.base.Preconditions;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAttribute;

@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference;
+package net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference;
 
 /**
  * 可能取引検索サービス Request

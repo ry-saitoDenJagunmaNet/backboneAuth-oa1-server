@@ -4,10 +4,10 @@ import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessible;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchAccessibleDto;
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchRequest;
-import net.jagunma.backbone.auth.authmanager.application.usecase.accessibleReference.AccessibleSearchResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessible;
+import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchAccessibleDto;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.accessibleReference.AccessibleSearchResponse;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTranRepository;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp_BizTran.BizTranGrp_BizTrans;
