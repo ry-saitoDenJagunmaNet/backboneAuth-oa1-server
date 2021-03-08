@@ -1,7 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService.dto;
 
-import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
-
 public class SignInResponseDto {
 
     private Short signInResultCode;

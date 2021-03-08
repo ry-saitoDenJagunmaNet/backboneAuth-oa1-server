@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import net.jagunma.backbone.auth.authmanager.application.util.RestTemplateUtil;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -23,14 +24,25 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BaseOfController {
 
+    // TODO: ProFile取得api URI（本当はao2へ接続）（oa2への接続方法確認）
+    private final String GET_SIMPLEOPERATOR_URI_PATH = "/oa31010/getSimpleOperator";
+
     // TODO: access tokenをsessionで管理する場合（検討中）
     // access token の session key
     protected final String SESSION_KEY_ACCES_TOKEN = "session_key_access_token";
 
-    // ToDo: setAuditInfoHolderメソッドでgetRemoteAddr()を使用するために定義
-    // Http ServletRequest
+    /**
+     * RestTemplateUtil
+     */
+    @Autowired
+    private RestTemplateUtil restTemplateUtil;
+
+    /**
+     * HttpServletRequest
+     */
     @Autowired
     private HttpServletRequest httpServletRequest;
+
     /**
      * HttpServletRequestのＳｅｔ
      *
@@ -61,7 +73,9 @@ public class BaseOfController {
             simpleOperator);
     }
 
-    // Http Session
+    /**
+     *  Http Session
+     */
     @Autowired
     protected HttpSession httpSession;
 
@@ -118,33 +132,50 @@ public class BaseOfController {
 
 
     // ToDo:認証情報（ＰＧ用暫定）
-    private static Long defaultJaId = 6L;
-    private static String defaultJaCode = "006";
-    private static String defaultJaName = "JA前橋市";
+    private Long defaultJaId = 6L;
+    private String defaultJaCode = "006";
+    private String defaultJaName = "JA前橋市";
 
-    private static Long defaultBranchId = 1L;
-    private static String defaultBranchCode = "001";
-    private static String defaultBranchName = "本店";
+    private Long defaultBranchId = 1L;
+    private String defaultBranchCode = "001";
+    private String defaultBranchName = "本店";
 
-    private static Long defaultOperatorId = 18L;
-    private static String defaultOperatorCode = "yu001009";
-    private static String defaultOperatorName = "ｙｕ００１００９";
-    private static String defaultOperatorIp = "001.001.001.001";
+    private Long defaultOperatorId = 18L;
+    private String defaultOperatorCode = "yu001009";
+    private String defaultOperatorName = "ｙｕ００１００９";
+    private String defaultOperatorIp = "001.001.001.001";
 
     /**
      * 認証情報を設定します（ＰＧ用暫定）
      */
-    public static void setAuthInf() {
+    public void setAuthInf() {
         setAuthInf(null, null, null, null, null);
     }
-    public static void setAuthInf(
+    public void setAuthInf(
         Long operatorId,
         String operatorCode,
         String operatorName,
         JaAtMoment jaAtMoment,
         BranchAtMoment branchAtMoment) {
 
-        if (AuditInfoHolder.getAuthInf() != null) { return; }
+        //if (AuditInfoHolder.getAuthInf() != null) { return; }
+        // ToDo: access tokenをsessionで管理する場合（検討中）
+        Object obj = null;
+        if (httpSession != null) {
+            // この判定はjunitテストを通すための判定（テストでhttpSessionがないので異常終了する）
+            obj = getSessionAttribute(SESSION_KEY_ACCES_TOKEN, false);
+        }
+        if (obj == null) {
+            // ToDo: access tokenが無い場合は、Errorにする
+            // ToDo: まだ、認証しないで動作させたいため、疑似的にAuditInfoHolderを設定する
+            //throw new GunmaRuntimeException("EOAXXXXX");
+        } else {
+            String accesstoken = obj.toString();
+            // ToDo: 本当はoa2の「Oa2refreshTken取得」を行う
+            SimpleOperator simpleOperator = (SimpleOperator)restTemplateUtil.postBackboneAuthOa3ForJsonString(GET_SIMPLEOPERATOR_URI_PATH, accesstoken, SimpleOperator.class);
+            setAuditInfoHolder(simpleOperator);
+            return;
+        }
 
         JaAtMoment ja = createJaAtMoment();
         BranchAtMoment branch = createBranchAtMoment();
@@ -182,11 +213,11 @@ public class BaseOfController {
             branch, operator);
     }
 
-    public static JaAtMoment createJaAtMoment() {
+    public JaAtMoment createJaAtMoment() {
         return createJaAtMoment(null, null, null);
     }
 
-    public static JaAtMoment createJaAtMoment(Long jaId, String jaCode, String jaName) {
+    public JaAtMoment createJaAtMoment(Long jaId, String jaCode, String jaName) {
 
         if (jaId != null) {
             defaultJaId = jaId;
@@ -210,11 +241,11 @@ public class BaseOfController {
             .build();
     }
 
-    public static BranchAtMoment createBranchAtMoment() {
+    public BranchAtMoment createBranchAtMoment() {
         return createBranchAtMoment(null, null, null, null);
     }
 
-    public static BranchAtMoment createBranchAtMoment(Long branchId, String branchCode,
+    public BranchAtMoment createBranchAtMoment(Long branchId, String branchCode,
         String branchName, JaAtMoment jaAtMoment) {
         JaAtMoment ajAtMoment = createJaAtMoment(null, null, null);
         if (branchId != null) {

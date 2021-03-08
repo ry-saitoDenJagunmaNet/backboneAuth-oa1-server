@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.oa10000;
 
 import javax.servlet.http.HttpServletRequest;
-import net.jagunma.backbone.auth.authmanager.application.queryService.SearchProfile;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
@@ -49,12 +48,8 @@ public class Oa10000Controller extends BaseOfController {
     // サインイン画面にリダイレクイトするreturn文字列
     private final String SIGNIN_REDIRECT = "redirect:/ed01000/get?redirect_uri=%1$s://%2$s:%3$s/oa10000/showForm";
 
-    private final SearchProfile searchProfile;
-
     // コンストラクタ
-    public Oa10000Controller(SearchProfile searchProfile) {
-        this.searchProfile = searchProfile;
-    }
+    public Oa10000Controller() {}
 
     /**
      * 画面を初期表示します
@@ -75,7 +70,7 @@ public class Oa10000Controller extends BaseOfController {
             }
 
             // ToDo: access tokenをsessionで管理する場合（検討中）
-            String accesstoken = getSessionAttribute(SESSION_KEY_ACCES_TOKEN).toString();
+            String accesstoken = getSessionAttribute(SESSION_KEY_ACCES_TOKEN, false).toString();
 
             return showForm(accesstoken, model);
 
@@ -107,17 +102,12 @@ public class Oa10000Controller extends BaseOfController {
         LOGGER.debug("showForm START");
 
         BaseOfVo vo = new BaseOfVo();
-        Oa10000SearchProfilePresenter presenter = new Oa10000SearchProfilePresenter();
         try {
             // ToDo: access tokenをsessionで管理する場合（検討中）
             setSessionAttribute(SESSION_KEY_ACCES_TOKEN, access_token);
 
-            // ToDo: オペレーター情報取得（oa2への接続方法確認）
-            // アクセストークンを引数にしてoa2で取得する
-            //setAuthInf();
-            Oa10000SearchProfileConverter converter = Oa10000SearchProfileConverter.with(access_token);
-            searchProfile.execute(converter, presenter);
-            presenter.bindToAuditInfoHolder();
+            // オペレーター情報取得（oa2への接続方法確認）
+            setAuthInf();
 
             model.addAttribute("form", vo);
             return "oa10000";

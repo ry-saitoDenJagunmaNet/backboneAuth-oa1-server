@@ -9,7 +9,6 @@ import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.dto.Ed01000Dto;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
-import net.jagunma.common.common.constant.SpecialOperator;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -74,9 +73,6 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("get START");
 
-        // 未サインインオペレータを設定
-        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
-
         Ed01000Vo vo = new Ed01000Vo();
         try {
             // ToDo: clientId、scope他リクエストIFの値を確認要
@@ -137,13 +133,10 @@ public class Ed01000Controller extends BaseOfController {
         // コードが取得できない場合
         if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
 
-        // 未サインインオペレータを設定
-        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
-
         Ed01000Vo vo = new Ed01000Vo();
         try {
             vo.setRedirectUri(redirectUri);
-            vo.setMode((int) SignInCause.サインイン.getCode());
+            vo.setMode(SignInCause.サインイン.getCode());
 
             model.addAttribute("form", vo);
             return "ed01000";
@@ -172,9 +165,6 @@ public class Ed01000Controller extends BaseOfController {
     public String signIn(HttpServletRequest request, Model model, Ed01000Vo vo) {
 
         LOGGER.debug("signIn START");
-
-        // 未サインインオペレータを設定
-        setAuditInfoHolder(SpecialOperator.NON_LOGIN_OPERATOR.simpleOperator());
 
         try {
             // リクエストを作成

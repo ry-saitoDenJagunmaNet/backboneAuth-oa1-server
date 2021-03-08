@@ -165,9 +165,7 @@ public class BaseOfVo implements Serializable {
         menuVo.setMenuItemList(menuItemVoList);
         list.add(menuVo);
 
-        // ToDo
-        //if (simpleOperator.getBranch().getJaAtMoment().isセンターJa()) {
-        if (simpleOperator.getBranch().getJaAtMoment().getJaAttribute().getJaCode().getValue().equals("990")) {
+        if (simpleOperator.getBranch().getJaAtMoment().is電算センター()) {
             menuVo = new MenuVo();
             menuVo.setName("電算センターオペレーター専用");
             menuItemVoList = newArrayList();

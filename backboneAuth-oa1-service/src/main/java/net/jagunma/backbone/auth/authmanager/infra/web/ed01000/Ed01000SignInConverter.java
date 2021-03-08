@@ -55,7 +55,7 @@ public class Ed01000SignInConverter implements SignInRequest {
      *
      * @return 画面表示モード
      */
-    public Integer getMode() {
+    public Short getMode() {
         return vo.getMode();
     }
     /**
