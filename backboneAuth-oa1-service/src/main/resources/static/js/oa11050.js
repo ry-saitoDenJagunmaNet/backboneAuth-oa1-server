@@ -263,4 +263,7 @@ function oaex_subsystemFilter_onChange() {
 			}
 		}
 	}
+
+	// Tableの選択を全解除
+	oa_setTableRowSelectedRemoveAll(unAssignRoleTable);
 }

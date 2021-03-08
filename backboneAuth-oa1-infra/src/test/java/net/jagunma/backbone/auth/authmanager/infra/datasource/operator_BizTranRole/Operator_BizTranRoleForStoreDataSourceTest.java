@@ -162,7 +162,7 @@ class Operator_BizTranRoleForStoreDataSourceTest {
     }
 
     /**
-     * {@link Operator_BizTranRoleForStoreDataSource#insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles, LocalDateTime createdAt)}テスト
+     * {@link Operator_BizTranRoleForStoreDataSource#insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -199,7 +199,7 @@ class Operator_BizTranRoleForStoreDataSourceTest {
         operator_BizTranRoleId = 1L;
 
         // 実行
-        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = operator_BizTranRoleForStoreDataSource.insertOperator_BizTranRole(operator_BizTranRoles, createdAt);
+        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = operator_BizTranRoleForStoreDataSource.insertOperator_BizTranRole(operator_BizTranRoles);
 
         // 結果検証
         assertThat(operator_BizTranRoleEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
