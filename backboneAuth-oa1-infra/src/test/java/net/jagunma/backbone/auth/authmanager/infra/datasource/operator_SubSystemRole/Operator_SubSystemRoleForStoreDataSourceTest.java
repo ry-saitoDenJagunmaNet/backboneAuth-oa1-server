@@ -157,7 +157,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
     }
 
     /**
-     * {@link Operator_SubSystemRoleForStoreDataSource#insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles, LocalDateTime createdAt)}テスト
+     * {@link Operator_SubSystemRoleForStoreDataSource#insertOperator_SubSystemRole(Operator_SubSystemRoles operator_SubSystemRoles)}テスト
      *  ●パターン
      *    正常
      *
@@ -194,7 +194,7 @@ class Operator_SubSystemRoleForStoreDataSourceTest {
         operator_SubSystemRoleId = 1L;
 
         // 実行
-        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = operator_SubSystemRoleForStoreDataSource.insertOperator_SubSystemRole(operator_SubSystemRoles, createdAt);
+        List<Operator_SubSystemRoleEntity> operator_SubSystemRoleEntityList = operator_SubSystemRoleForStoreDataSource.insertOperator_SubSystemRole(operator_SubSystemRoles);
 
         // 結果検証
         assertThat(operator_SubSystemRoleEntityList).usingRecursiveComparison().isEqualTo(expectedEntityList);
