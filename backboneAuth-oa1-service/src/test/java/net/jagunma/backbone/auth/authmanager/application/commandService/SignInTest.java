@@ -1,8 +1,15 @@
 package net.jagunma.backbone.auth.authmanager.application.commandService;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import net.jagunma.backbone.auth.authmanager.application.BackboneAuthConfig;
+import net.jagunma.backbone.auth.authmanager.application.commandService.dto.SignInRequestDto;
+import net.jagunma.backbone.auth.authmanager.application.commandService.dto.SignInResponseDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
+import net.jagunma.backbone.auth.authmanager.application.util.RestTemplateUtil;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,18 +20,39 @@ class SignInTest {
     private String operatorCode = "yu001009";
     private String password = "password12345";
     private String clientIpaddress = "001.001.001.001";
-    private Integer mode = 1;
+    private Short mode = 1;
+    private SignInResult signInResult = SignInResult.成功;
 
     // 検証値
     private Short actualSignInResultCode;
     private String actualSignInResultMessage;
     private String actualAccessToken;
 
+    private String actualRestTemplateUtilPath;
+    private Object actualRequest;
+    private Class<?> actualClazz;
+
+    // サインイン結果Dtoデータ作成
+    private SignInResponseDto createSignInResponseDto() {
+        SignInResponseDto dto = new SignInResponseDto();
+        dto.setSignInResultCode(signInResult.getCode());
+        dto.setSignInResultMessage(signInResult.getDisplayName());
+        return dto;
+    }
     // サインインサービス作成（テスト対象クラス）
     private SignIn createSignIn() {
         // 基幹系認証 Configのスタブ
         BackboneAuthConfig backboneAuthConfig = new BackboneAuthConfig();
-        return new SignIn(backboneAuthConfig);
+        // RestTemplateUtilのスタブ
+        RestTemplateUtil restTemplateUtil = new RestTemplateUtil(backboneAuthConfig) {
+            public Object postBackboneAuthOa3(String path, Object request, Class<?> clazz) {
+                actualRestTemplateUtilPath = path;
+                actualRequest = request;
+                actualClazz = clazz;
+                return createSignInResponseDto();
+            }
+        };
+        return new SignIn(restTemplateUtil);
     }
     // サインインサービス Request作成
     private SignInRequest createSignInRequest() {
@@ -42,7 +70,7 @@ class SignInTest {
                 return clientIpaddress;
             }
             @Override
-            public Integer getMode() {
+            public Short getMode() {
                 return mode;
             }
         };
@@ -72,7 +100,7 @@ class SignInTest {
      *
      *  ●検証事項
      *  ・正常終了
-     *  ・
+     *  ・処理結果
      */
     @Test
     @Tag(TestSize.SMALL)
@@ -86,12 +114,67 @@ class SignInTest {
         SignInResponse response = createSignInResponse();
 
         // 期待値
+        Short expectedSignInResultCode = signInResult.getCode();
+        String expectedSignInResultMessage = signInResult.getDisplayName();
+        String expectedAccessToken = "";
+        String expectedRestTemplateUtilPath = "/oa31010/authentication";
+        SignInRequestDto expectedRequest = SignInRequestDto.with(operatorCode, password, clientIpaddress);
+        Class<?> expectedClazz = SignInResponseDto.class;
 
-        // ToDo: 認証Apiを呼ぶテスト方式が不明
-//        assertThatCode(() ->
-//            // 実行
-//            signIn.execute(request, response)).doesNotThrowAnyException();
+        // ToDo: 認証Apiを呼ぶテスト方式が不明Code
+        assertThatCode(() ->
+            // 実行
+            signIn.execute(request, response)).doesNotThrowAnyException();
 
         // 結果検証
+        assertThat(actualRestTemplateUtilPath).isEqualTo(expectedRestTemplateUtilPath);
+        assertThat(actualRequest).usingRecursiveComparison().isEqualTo(expectedRequest);
+        assertThat(actualClazz).isEqualTo(expectedClazz);
+        assertThat(actualSignInResultCode).isEqualTo(expectedSignInResultCode);
+        assertThat(actualSignInResultMessage).isEqualTo(expectedSignInResultMessage);
+//        assertThat(actualAccessToken).isEqualTo(expectedAccessToken);
+    }
+
+    /**
+     * {@link SignIn#execute(SignInRequest, SignInResponse)}テスト
+     *  ●パターン
+     *    サインイン失敗
+     *
+     *  ●検証事項
+     *  ・失敗
+     *  ・処理結果
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_test1() {
+
+        // テスト対象クラス生成
+        SignIn signIn = createSignIn();
+
+        // 実行値
+        signInResult = SignInResult.失敗_パスワード誤り;
+        SignInRequest request = createSignInRequest();
+        SignInResponse response = createSignInResponse();
+
+        // 期待値
+        Short expectedSignInResultCode = signInResult.getCode();
+        String expectedSignInResultMessage = signInResult.getDisplayName();
+        String expectedAccessToken = null;
+        String expectedRestTemplateUtilPath = "/oa31010/authentication";
+        SignInRequestDto expectedRequest = SignInRequestDto.with(operatorCode, password, clientIpaddress);
+        Class<?> expectedClazz = SignInResponseDto.class;
+
+        // ToDo: 認証Apiを呼ぶテスト方式が不明Code
+        assertThatCode(() ->
+            // 実行
+            signIn.execute(request, response)).doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualRestTemplateUtilPath).isEqualTo(expectedRestTemplateUtilPath);
+        assertThat(actualRequest).usingRecursiveComparison().isEqualTo(expectedRequest);
+        assertThat(actualClazz).isEqualTo(expectedClazz);
+        assertThat(actualSignInResultCode).isEqualTo(expectedSignInResultCode);
+        assertThat(actualSignInResultMessage).isEqualTo(expectedSignInResultMessage);
+        assertThat(actualAccessToken).isEqualTo(expectedAccessToken);
     }
 }

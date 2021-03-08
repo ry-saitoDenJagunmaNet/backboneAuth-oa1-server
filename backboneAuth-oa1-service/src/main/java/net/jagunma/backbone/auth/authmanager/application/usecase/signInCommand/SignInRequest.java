@@ -28,5 +28,5 @@ public interface SignInRequest {
      *
      * @return モード
      */
-    Integer getMode();
+    Short getMode();
 }

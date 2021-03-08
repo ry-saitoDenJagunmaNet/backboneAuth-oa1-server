@@ -26,7 +26,7 @@ public class Ed01000Vo extends BaseOfVo {
      * 画面表示モード
      * （1:初期認証、2:継続再認証）
      */
-    private Integer mode;
+    private Short mode;
 
     // コンストラクタ
     public Ed01000Vo() {};
@@ -50,10 +50,10 @@ public class Ed01000Vo extends BaseOfVo {
     public void setRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
     }
-    public Integer getMode() {
+    public Short getMode() {
         return mode;
     }
-    public void setMode(Integer mode) {
+    public void setMode(Short mode) {
         this.mode = mode;
     }
 }
