@@ -39,16 +39,15 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
      * @param changeCause 変更事由
      */
     public void store(Long operatorId, Operator_BizTranRoles operator_BizTranRoles, String changeCause) {
-        LocalDateTime createdAt = LocalDateTime.now();
 
         // オペレーター_取引ロール割当のデリートを行います
         deleteOperator_BizTranRole(operatorId);
 
         // オペレーター_取引ロール割当のインサートを行います
-        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = insertOperator_BizTranRole(operator_BizTranRoles, createdAt);
+        List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = insertOperator_BizTranRole(operator_BizTranRoles);
 
         // オペレーター履歴パックの格納を行います
-        operatorHistoryPackRepositoryForStore.store(operatorId, createdAt, changeCause);
+        operatorHistoryPackRepositoryForStore.store(operatorId, (operator_BizTranRoleEntityList.size() != 0)? operator_BizTranRoleEntityList.get(0).getCreatedAt() : LocalDateTime.now(), changeCause);
     }
 
     /**
@@ -67,10 +66,9 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
      * オペレーター_取引ロール割当のインサートを行います
      *
      * @param operator_BizTranRoles オペレーター_取引ロール割当群
-     * @param createdAt 登録日時
      * @return オペレーター_取引ロール割当エンティティリスト
      */
-    List<Operator_BizTranRoleEntity> insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles, LocalDateTime createdAt) {
+    List<Operator_BizTranRoleEntity> insertOperator_BizTranRole(Operator_BizTranRoles operator_BizTranRoles) {
 
         List<Operator_BizTranRoleEntity> operator_BizTranRoleEntityList = newArrayList();
 
@@ -81,7 +79,6 @@ public class Operator_BizTranRoleForStoreDataSource implements Operator_BizTranR
             operator_BizTranRoleEntity.setBizTranRoleId(operator_BizTranRole.getBizTranRoleId());
             operator_BizTranRoleEntity.setValidThruStartDate(operator_BizTranRole.getValidThruStartDate());
             operator_BizTranRoleEntity.setValidThruEndDate(operator_BizTranRole.getValidThruEndDate());
-            operator_BizTranRoleEntity.setCreatedAt(createdAt);
 
             operator_BizTranRoleEntityDao.insert(operator_BizTranRoleEntity);
 
