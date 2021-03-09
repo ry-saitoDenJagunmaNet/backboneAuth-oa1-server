@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo;
 
 import net.jagunma.backbone.auth.authmanager.infra.web.base.vo.BaseOfVo;
-import net.jagunma.common.util.strings2.Strings2;
 
 /**
  * ED01010 ViewObject

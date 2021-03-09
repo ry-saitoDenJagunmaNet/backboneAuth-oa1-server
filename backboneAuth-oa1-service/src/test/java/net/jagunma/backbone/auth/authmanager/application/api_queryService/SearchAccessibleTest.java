@@ -118,7 +118,8 @@ class SearchAccessibleTest {
         List<BizTranGrp_BizTran> list = newArrayList();
         list.add(BizTranGrp_BizTran.createFrom(10001L,11L,100001L,SubSystem.購買.getCode(),1,createBizTranGrp(11L),createBizTran(100001L),SubSystem.購買));
         list.add(BizTranGrp_BizTran.createFrom(10002L,12L,100002L,SubSystem.販売_畜産.getCode(),1,createBizTranGrp(12L),createBizTran(100002L),SubSystem.販売_畜産));
-        list.add(BizTranGrp_BizTran.createFrom(10003L,13L,100003L,SubSystem.販売_畜産.getCode(),1,createBizTranGrp(13L),createBizTran(100003L),SubSystem.販売_畜産));
+        list.add(BizTranGrp_BizTran.createFrom(10003L,13L,100002L,SubSystem.販売_畜産.getCode(),1,createBizTranGrp(13L),createBizTran(100002L),SubSystem.販売_畜産));
+        list.add(BizTranGrp_BizTran.createFrom(10004L,13L,100003L,SubSystem.販売_畜産.getCode(),1,createBizTranGrp(13L),createBizTran(100003L),SubSystem.販売_畜産));
         return list;
     }
     // 取引データ作成
@@ -340,7 +341,7 @@ class SearchAccessibleTest {
             createBizTranRole_BizTranGrpList().stream().map(BizTranRole_BizTranGrp::getBizTranRoleId).collect(Collectors.toList()));
         BizTranGrp_BizTranCriteria expectedBizTranGrp_BizTranCriteria  = new BizTranGrp_BizTranCriteria();
         expectedBizTranGrp_BizTranCriteria.getBizTranGrpIdCriteria().getIncludes().addAll(
-            createBizTranGrp_BizTranList().stream().map(BizTranGrp_BizTran::getBizTranGrpId).collect(Collectors.toList()));
+            createBizTranGrp_BizTranList().stream().map(BizTranGrp_BizTran::getBizTranGrpId).distinct().collect(Collectors.toList()));
         SuspendBizTranCriteria expectedSuspendBizTranCriteria = new SuspendBizTranCriteria();
         expectedSuspendBizTranCriteria.getSuspendStartDateCriteria().setLessOrEqual(today);
         expectedSuspendBizTranCriteria.getSuspendEndDateCriteria().setMoreOrEqual(today);
@@ -911,7 +912,10 @@ class SearchAccessibleTest {
                 expectedSearchAccessibleDto.setBizTranCodeList(newArrayList(bizTranGrp_BizTran.getBizTran().getBizTranCode()));
                 expectedSearchAccessibleDtoList.add(expectedSearchAccessibleDto);
             } else {
-                expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                // すでにあるサブシステム毎のdtoに取引コードを追加（重複する取引は除外）
+                if (!expectedSearchAccessibleDto.getBizTranCodeList().contains(bizTranGrp_BizTran.getBizTran().getBizTranCode())) {
+                    expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                }
             }
         }
 
@@ -959,7 +963,10 @@ class SearchAccessibleTest {
                 expectedSearchAccessibleDto.setBizTranCodeList(newArrayList(bizTranGrp_BizTran.getBizTran().getBizTranCode()));
                 expectedSearchAccessibleDtoList.add(expectedSearchAccessibleDto);
             } else {
-                expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                // すでにあるサブシステム毎のdtoに取引コードを追加（重複する取引は除外）
+                if (!expectedSearchAccessibleDto.getBizTranCodeList().contains(bizTranGrp_BizTran.getBizTran().getBizTranCode())) {
+                    expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                }
             }
         }
 
@@ -1007,7 +1014,10 @@ class SearchAccessibleTest {
                 expectedSearchAccessibleDto.setBizTranCodeList(newArrayList(bizTranGrp_BizTran.getBizTran().getBizTranCode()));
                 expectedSearchAccessibleDtoList.add(expectedSearchAccessibleDto);
             } else {
-                expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                // すでにあるサブシステム毎のdtoに取引コードを追加（重複する取引は除外）
+                if (!expectedSearchAccessibleDto.getBizTranCodeList().contains(bizTranGrp_BizTran.getBizTran().getBizTranCode())) {
+                    expectedSearchAccessibleDto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
+                }
             }
         }
 
@@ -1024,7 +1034,7 @@ class SearchAccessibleTest {
      * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
      *  ●パターン
      *    正常
-     *    ・カレンダーの抑止確認
+     *    ・カレンダーの抑止確認（休日）
      *
      *  ●検証事項
      *  ・正常終了
@@ -1040,6 +1050,104 @@ class SearchAccessibleTest {
         // 実行値
         List<Calendar> list = newArrayList();
         list.add(Calendar.createFrom(2L,CalendarType.経済システム稼働カレンダー,LocalDate.now(),true,null,null,1));
+        calendars = Calendars.createFrom(list);
+        AccessibleSearchRequest request = createAccessibleSearchRequest();
+        AccessibleSearchResponse response = createAccessibleSearchResponse();
+
+        // 期待値
+        List<SearchAccessibleDto> expectedSearchAccessibleDtoList = newArrayList();
+        for (BizTran bizTran : createBizTranList()) {
+            // 抑止対象の取引を除外
+            if (SearchAccessible.browseCalendarSubsystem.contains(bizTran.getSubSystemCode())) { continue; }
+            SearchAccessibleDto expectedSearchAccessibleDto = expectedSearchAccessibleDtoList.stream().filter(s -> s.getSubSystemCode().equals(bizTran.getSubSystemCode())).findFirst().orElse(null);
+            if (expectedSearchAccessibleDto == null) {
+                expectedSearchAccessibleDto = new SearchAccessibleDto();
+                expectedSearchAccessibleDto.setSubSystemCode(bizTran.getSubSystemCode());
+                expectedSearchAccessibleDto.setBizTranCodeList(newArrayList(bizTran.getBizTranCode()));
+                expectedSearchAccessibleDtoList.add(expectedSearchAccessibleDto);
+            } else {
+                expectedSearchAccessibleDto.getBizTranCodeList().add(bizTran.getBizTranCode());
+            }
+        }
+
+        assertThatCode(() ->
+            // 実行
+            searchAccessible.execute(request, response))
+            .doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualSearchAccessibleDtoList).usingRecursiveComparison().isEqualTo(expectedSearchAccessibleDtoList);
+    }
+
+    /**
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
+     *  ●パターン
+     *    正常
+     *    ・カレンダーの抑止確認（営業日）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・可能取引リスト
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_isSuspendCalendar_test01() {
+
+        // テスト対象クラス生成
+        SearchAccessible searchAccessible = createSearchAccessible();
+
+        // 実行値
+        List<Calendar> list = newArrayList();
+        list.add(Calendar.createFrom(2L,CalendarType.経済システム稼働カレンダー,LocalDate.now(),false,null,null,1));
+        calendars = Calendars.createFrom(list);
+        AccessibleSearchRequest request = createAccessibleSearchRequest();
+        AccessibleSearchResponse response = createAccessibleSearchResponse();
+
+        // 期待値
+        List<SearchAccessibleDto> expectedSearchAccessibleDtoList = newArrayList();
+        for (BizTran bizTran : createBizTranList()) {
+            // 抑止対象の取引を除外
+            //if (SearchAccessible.browseCalendarSubsystem.contains(bizTran.getSubSystemCode())) { continue; }
+            SearchAccessibleDto expectedSearchAccessibleDto = expectedSearchAccessibleDtoList.stream().filter(s -> s.getSubSystemCode().equals(bizTran.getSubSystemCode())).findFirst().orElse(null);
+            if (expectedSearchAccessibleDto == null) {
+                expectedSearchAccessibleDto = new SearchAccessibleDto();
+                expectedSearchAccessibleDto.setSubSystemCode(bizTran.getSubSystemCode());
+                expectedSearchAccessibleDto.setBizTranCodeList(newArrayList(bizTran.getBizTranCode()));
+                expectedSearchAccessibleDtoList.add(expectedSearchAccessibleDto);
+            } else {
+                expectedSearchAccessibleDto.getBizTranCodeList().add(bizTran.getBizTranCode());
+            }
+        }
+
+        assertThatCode(() ->
+            // 実行
+            searchAccessible.execute(request, response))
+            .doesNotThrowAnyException();
+
+        // 結果検証
+        assertThat(actualSearchAccessibleDtoList).usingRecursiveComparison().isEqualTo(expectedSearchAccessibleDtoList);
+    }
+
+    /**
+     * {@link SearchAccessible#execute(AccessibleSearchRequest, AccessibleSearchResponse)}テスト
+     *  ●パターン
+     *    正常
+     *    ・カレンダーの抑止確認（カレンダー未登録）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *  ・可能取引リスト
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void execute_isSuspendCalendar_test02() {
+
+        // テスト対象クラス生成
+        SearchAccessible searchAccessible = createSearchAccessible();
+
+        // 実行値
+        List<Calendar> list = newArrayList();
+        //list.add(Calendar.createFrom(2L,CalendarType.経済システム稼働カレンダー,LocalDate.now(),true,null,null,1));
         calendars = Calendars.createFrom(list);
         AccessibleSearchRequest request = createAccessibleSearchRequest();
         AccessibleSearchResponse response = createAccessibleSearchResponse();

@@ -2,12 +2,17 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import net.jagunma.backbone.auth.authmanager.application.api_commandService.StoreSignInTrace;
 import net.jagunma.backbone.auth.authmanager.application.api_queryService.Authentication;
 import net.jagunma.backbone.auth.authmanager.application.api_queryService.SearchSimpleOperator;
 import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationRequest;
 import net.jagunma.backbone.auth.authmanager.application.api_usecase.authenticationCommand.AuthenticationResponse;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.operatorReference.SimpleOperatorSearchRequest;
+import net.jagunma.backbone.auth.authmanager.application.api_usecase.operatorReference.SimpleOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.application.api_usecase.signInTraceCommand.SignInTraceStoreRequest;
+import net.jagunma.backbone.auth.authmanager.infra.api.JacksonConfig;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLock;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockCriteria;
 import net.jagunma.backbone.auth.authmanager.model.domain.accountLock.AccountLockRepository;
@@ -30,6 +35,17 @@ import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.ddd.model.orders.Orders;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.util.exception.GunmaRuntimeException;
+import net.jagunma.common.util.strings2.Strings2;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchAttribute;
+import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
+import net.jagunma.common.values.model.ja.JaAtMoment;
+import net.jagunma.common.values.model.ja.JaAttribute;
+import net.jagunma.common.values.model.ja.JaCode;
+import net.jagunma.common.values.model.operator.OperatorCode;
+import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -39,15 +55,24 @@ import org.springframework.mock.web.MockHttpServletRequest;
 class Oa31010ControllerTest {
 
     // 実行既定値
-    private String clientIpaddress = "001.001.001.001";
+    private final String clientIpaddress = "001.001.001.001";
+    private final Long operatorId = 1018L;
     private String operatorCode = "yu001009";
+    private final String operatorName = "ＹＵ００１００９";
     private String password = "password1234";
     SignInResult authentication_execute_signInTrace = SignInResult.成功;
-    private String runtimeException = "runtimeException";
+    private final String runtimeException = "runtimeException";
+    private final Long jaId = 6L;
+    private final String jaCode = "006";
+    private final String jaName = "ＪＡ００６";
+    private final Long branchId = 33L;
+    private final String branchCode = "001";
+    private final String branchName = "店舗００１";
 
     // 検証値
-    AuthenticationRequest actualAuthenticationRequest;
-    SignInTraceStoreRequest actualSignInTraceStoreRequest;
+    private AuthenticationRequest actualAuthenticationRequest;
+    private SignInTraceStoreRequest actualSignInTraceStoreRequest;
+    private SimpleOperatorSearchRequest actualSimpleOperatorSearchRequest;
 
     // Oa31010 サインイン Arg 作成
     private Oa31010SignInArg createOa31010SignInArg() {
@@ -56,6 +81,50 @@ class Oa31010ControllerTest {
         signInArg.setOperatorCode(operatorCode);
         signInArg.setPassword(password);
         return signInArg;
+    }
+    // オペレーターデータの作成
+    private Operator createOperator() {
+        return Operator.createFrom(
+            operatorId,
+            operatorCode,
+            operatorName,
+            null,
+            null,
+            null,
+            null,
+            jaId,
+            jaCode,
+            branchId,
+            branchCode,
+            null,
+            1,
+            createBranchAtMoment()
+        );
+    }
+    // JaAtMomentデータの作成
+    public JaAtMoment createJaAtMoment() {
+        return JaAtMoment.builder()
+            .withIdentifier(jaId)
+            .withJaAttribute(JaAttribute
+                .builder()
+                .withJaCode(JaCode.of(jaCode))
+                .withName(jaName)
+                .withFormalName("")
+                .withAbbreviatedName("")
+                .build())
+            .build();
+    }
+    // BranchAtMomentデータの作成
+    public BranchAtMoment createBranchAtMoment() {
+        return BranchAtMoment.builder()
+            .withIdentifier(branchId)
+            .withJaAtMoment(createJaAtMoment())
+            .withBranchAttribute(BranchAttribute.builder()
+                .withBranchType(BranchType.一般)
+                .withBranchCode(BranchCode.of(branchCode))
+                .withName(branchName)
+                .build())
+            .build();
     }
 
     // 業務オペレーター認証クラス作成（テスト対象クラス）
@@ -160,7 +229,15 @@ class Oa31010ControllerTest {
             }
         };
         // サインイン証跡登録サービスのスタブ
-        SearchSimpleOperator searchSimpleOperator = new SearchSimpleOperator(operatorRepository) {};
+        SearchSimpleOperator searchSimpleOperator = new SearchSimpleOperator(operatorRepository) {
+            public void execute(SimpleOperatorSearchRequest request, SimpleOperatorSearchResponse response) {
+                if (Strings2.isEmpty(request.getOperatorCode())) {
+                    throw new  GunmaRuntimeException("EOA13002", "オペレーターコード");
+                }
+                actualSimpleOperatorSearchRequest = request;
+                response.setOperator(createOperator());
+            }
+        };
         return new Oa31010Controller(authentication, storeSignInTrace, searchSimpleOperator);
     }
 
@@ -403,4 +480,80 @@ class Oa31010ControllerTest {
         assertThat(actualAuthenticationRequest).usingRecursiveComparison().isEqualTo(expectedAuthenticationRequest);
         assertThat(actualSignInTraceStoreRequest).isNull();
     }
+
+    /**
+     * {@link Oa31010Controller#getSimpleOperator(String)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・サービスの引数
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getSimpleOperator_test0() throws JsonProcessingException {
+
+        // テスト対象クラス生成
+        Oa31010Controller controller = createOa31010Controller();
+
+        // 実行値
+        Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 期待値
+        SimpleOperator simpleOperator = SimpleOperator.builder()
+            .withIdentifier(operatorId)
+            .withOperatorCode(OperatorCode.of(operatorCode))
+            .withOperatorName(operatorName)
+            .withBranch(createBranchAtMoment())
+            .build();
+        JacksonConfig jacksonConfig = new JacksonConfig();
+        String simpleOperatorJsonString;
+        try {
+            simpleOperatorJsonString = jacksonConfig.objectMapperBuilder().build()
+                .registerModule(new JavaTimeModule())
+                .writeValueAsString(simpleOperator);
+        } catch (RuntimeException | JsonProcessingException re) {
+            throw re;
+        }
+        ResponseEntity<String> expected = new ResponseEntity<>(simpleOperatorJsonString, HttpStatus.OK);
+        Oa31010SearchSimpleOperatorConverter expectedSimpleOperatorSearchRequest = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 実行
+        ResponseEntity<String> actual = controller.getSimpleOperator(operatorCode);
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actualSimpleOperatorSearchRequest).usingRecursiveComparison().isEqualTo(expectedSimpleOperatorSearchRequest);
+    }
+
+    /**
+     * {@link Oa31010Controller#getSimpleOperator(String)}のテスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getSimpleOperator_test1() throws JsonProcessingException {
+
+        // テスト対象クラス生成
+        operatorCode = null;
+        Oa31010Controller controller = createOa31010Controller();
+
+        // 実行値
+        Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 期待値
+        ResponseEntity<String> expected = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        // 実行
+        ResponseEntity<String> actual = controller.getSimpleOperator(operatorCode);
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
 }

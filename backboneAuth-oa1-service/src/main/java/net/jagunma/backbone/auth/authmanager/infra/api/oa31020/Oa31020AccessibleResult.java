@@ -3,7 +3,7 @@ package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
 import java.util.List;
 
 /**
- * Oa31010 サインイン Result
+ * Oa31010 可能取引 Result
  */
 public class Oa31020AccessibleResult {
 

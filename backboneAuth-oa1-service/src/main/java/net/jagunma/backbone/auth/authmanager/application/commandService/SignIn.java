@@ -4,7 +4,7 @@ import net.jagunma.backbone.auth.authmanager.application.commandService.dto.Sign
 import net.jagunma.backbone.auth.authmanager.application.commandService.dto.SignInResponseDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
-import net.jagunma.backbone.auth.authmanager.application.util.RestTemplateUtil;
+import net.jagunma.backbone.auth.authmanager.application.util.HttpSendUtil;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +17,11 @@ public class SignIn {
     // 認可api 業務オペレーター認証 URI
     private final String AUTHENTICATION_URI_PATH = "/oa31010/authentication";
 
-    private RestTemplateUtil restTemplateUtil;
+    private HttpSendUtil httpSendUtil;
 
     // コンストラクタ
-    public SignIn(RestTemplateUtil restTemplateUtil) {
-        this.restTemplateUtil = restTemplateUtil;
+    public SignIn(HttpSendUtil httpSendUtil) {
+        this.httpSendUtil = httpSendUtil;
     }
 
     /**
@@ -39,7 +39,7 @@ public class SignIn {
             request.getOperatorCode(), request.getPassword(), request.getClientIpaddress());
 
         // 認証apiでサインイン
-        SignInResponseDto signInResponseDto = (SignInResponseDto)restTemplateUtil.postBackboneAuthOa3(AUTHENTICATION_URI_PATH, signInRequestDto, SignInResponseDto.class);
+        SignInResponseDto signInResponseDto = (SignInResponseDto) httpSendUtil.postBackboneAuthOa3(AUTHENTICATION_URI_PATH, signInRequestDto, SignInResponseDto.class);
 
         if (SignInResult.codeOf(signInResponseDto.getSignInResultCode()).is成功()) {
             // ToDo: 認証に成功したらAccessTokenを取得（oa2への接続方法確認）
