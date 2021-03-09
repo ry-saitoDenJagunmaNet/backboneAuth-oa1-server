@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleGrantReference.BizTranRoleGrantedCopyRequestAssignRole;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11050.vo.Oa11050AssignRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 
 /**
  * OA11050 コピー Converter
@@ -32,7 +33,7 @@ class Oa11050CopyAssignRoleConverter implements BizTranRoleGrantedCopyRequestAss
      * @return 取引ロール
      */
     public BizTranRole getBizTranRole() {
-        return BizTranRole.createFrom(vo.getRoleId(), vo.getRoleCode(), vo.getRoleName(), null, null, null);
+        return BizTranRole.createFrom(vo.getRoleId(), vo.getRoleCode(), vo.getRoleName(), vo.getSubSystemCode(), null, SubSystem.codeOf(vo.getSubSystemCode()));
     }
     /**
      * 有効期限開始日のＧｅｔ

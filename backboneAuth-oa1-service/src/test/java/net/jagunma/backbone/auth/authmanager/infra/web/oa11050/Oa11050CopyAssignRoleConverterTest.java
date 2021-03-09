@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11050.vo.Oa11050AssignRoleTableVo;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranRole.BizTranRole;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -16,9 +17,11 @@ class Oa11050CopyAssignRoleConverterTest {
     private Long bizTranRoleId = 401L;
     private String bizTranRoleCode = "KBAG01";
     private String bizTranRoleName = "（購買）購買業務基本";
+    private String subSystemCode = "KB";
+    private SubSystem subSystem = SubSystem.codeOf(subSystemCode) ;
     private LocalDate validThruStartDate = LocalDate.of(2020, 1, 1);
     private LocalDate validThruEndDate = LocalDate.of(9999, 1, 21);
-    private BizTranRole bizTranRole = BizTranRole.createFrom(401L, bizTranRoleCode, bizTranRoleName, null, null, null);
+    private BizTranRole bizTranRole = BizTranRole.createFrom(401L, bizTranRoleCode, bizTranRoleName, subSystemCode, null, subSystem);
     private Boolean isModifiable = true;
 
     /**
@@ -38,6 +41,7 @@ class Oa11050CopyAssignRoleConverterTest {
         vo.setRoleId(bizTranRoleId);
         vo.setRoleCode(bizTranRoleCode);
         vo.setRoleName(bizTranRoleName);
+        vo.setSubSystemCode(subSystemCode);
         vo.setValidThruStartDate(validThruStartDate);
         vo.setValidThruEndDate(validThruEndDate);
         vo.setIsModifiable(isModifiable);
