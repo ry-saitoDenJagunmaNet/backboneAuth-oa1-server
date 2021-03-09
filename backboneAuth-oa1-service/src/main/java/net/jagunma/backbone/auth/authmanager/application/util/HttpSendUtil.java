@@ -15,19 +15,32 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class RestTemplateUtil {
+public class HttpSendUtil {
 
+    /**
+     * Http送信 ユーティリティ
+     */
     @Autowired
     private BackboneAuthConfig backboneAuthConfig;
 
     // コンストラクタ
-    public RestTemplateUtil(BackboneAuthConfig backboneAuthConfig) {
+    public HttpSendUtil(BackboneAuthConfig backboneAuthConfig) {
         this.backboneAuthConfig = backboneAuthConfig;
     }
 
     /**
+     * backboneAuth-oa2-serverにHttpリクエストを行います
+     * @param path    path
+     * @param request リクエスト
+     * @param clazz   httpのResponseのクラス
+     * @return httpのResponse
+     */
+    public Object postBackboneAuthOa2(String path, Object request, Class<?> clazz) {
+        return restTemplatePostForObject(createBackboneAuthOa2ServeUri(path), request, clazz);
+    }
+
+    /**
      * backboneAuth-oa3-serverにHttpリクエストを行います
-     *   responseがjson type
      * @param path    path
      * @param request リクエスト
      * @param clazz   httpのResponseのクラス
@@ -35,18 +48,6 @@ public class RestTemplateUtil {
      */
     public Object postBackboneAuthOa3(String path, Object request, Class<?> clazz) {
         return restTemplatePostForObject(createBackboneAuthOa3ServeUri(path), request, clazz);
-    }
-
-    /**
-     * backboneAuth-oa3-serverにHttpリクエストを行います
-     *   responseがString
-     * @param path    path
-     * @param request リクエスト
-     * @param clazz   httpのResponseのクラス
-     * @return httpのResponse
-     */
-    public Object postBackboneAuthOa3ForJsonString(String path, Object request, Class<?> clazz) {
-        return restTemplatePostForObjectString(createBackboneAuthOa3ServeUri(path), request, clazz);
     }
 
     /**
@@ -77,30 +78,28 @@ public class RestTemplateUtil {
             .path(path).build().toUri();
     }
 
+//    /**
+//     * Httpリクエストを行います
+//     * @param uri     URI
+//     * @param request リクエスト
+//     * @param clazz   httpのResponseのクラス
+//     * @return httpのResponse
+//     */
+//    private Object restTemplatePostForObject(URI uri, Object request, Class<?> clazz) {
+//
+//        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
+//        RestTemplate restTemplate = restTemplateBuilder.build();
+//        return restTemplate.postForObject(uri, request, clazz);
+//    }
+
     /**
      * Httpリクエストを行います
-     *   responseがjson type
      * @param uri     URI
      * @param request リクエスト
      * @param clazz   httpのResponseのクラス
      * @return httpのResponse
      */
     private Object restTemplatePostForObject(URI uri, Object request, Class<?> clazz) {
-
-        RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        return restTemplate.postForObject(uri, request, clazz);
-    }
-
-    /**
-     * Httpリクエストを行います
-     *   responseがString
-     * @param uri     URI
-     * @param request リクエスト
-     * @param clazz   httpのResponseのクラス
-     * @return httpのResponse
-     */
-    private Object restTemplatePostForObjectString(URI uri, Object request, Class<?> clazz) {
 
         RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder();
         RestTemplate restTemplate = restTemplateBuilder.build();

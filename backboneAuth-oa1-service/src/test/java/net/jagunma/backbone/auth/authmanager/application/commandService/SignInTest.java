@@ -8,7 +8,7 @@ import net.jagunma.backbone.auth.authmanager.application.commandService.dto.Sign
 import net.jagunma.backbone.auth.authmanager.application.commandService.dto.SignInResponseDto;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInRequest;
 import net.jagunma.backbone.auth.authmanager.application.usecase.signInCommand.SignInResponse;
-import net.jagunma.backbone.auth.authmanager.application.util.RestTemplateUtil;
+import net.jagunma.backbone.auth.authmanager.application.util.HttpSendUtil;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
@@ -44,7 +44,7 @@ class SignInTest {
         // 基幹系認証 Configのスタブ
         BackboneAuthConfig backboneAuthConfig = new BackboneAuthConfig();
         // RestTemplateUtilのスタブ
-        RestTemplateUtil restTemplateUtil = new RestTemplateUtil(backboneAuthConfig) {
+        HttpSendUtil httpSendUtil = new HttpSendUtil(backboneAuthConfig) {
             public Object postBackboneAuthOa3(String path, Object request, Class<?> clazz) {
                 actualRestTemplateUtilPath = path;
                 actualRequest = request;
@@ -52,7 +52,7 @@ class SignInTest {
                 return createSignInResponseDto();
             }
         };
-        return new SignIn(restTemplateUtil);
+        return new SignIn(httpSendUtil);
     }
     // サインインサービス Request作成
     private SignInRequest createSignInRequest() {

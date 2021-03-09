@@ -2,7 +2,7 @@ package net.jagunma.backbone.auth.authmanager.infra.web.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import net.jagunma.backbone.auth.authmanager.application.util.RestTemplateUtil;
+import net.jagunma.backbone.auth.authmanager.application.util.HttpSendUtil;
 import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.server.model.securities.AuthInf;
 import net.jagunma.common.server.model.securities.Route;
@@ -35,7 +35,7 @@ public class BaseOfController {
      * RestTemplateUtil
      */
     @Autowired
-    private RestTemplateUtil restTemplateUtil;
+    private HttpSendUtil httpSendUtil;
 
     /**
      * HttpServletRequest
@@ -172,7 +172,7 @@ public class BaseOfController {
         } else {
             String accesstoken = obj.toString();
             // ToDo: 本当はoa2の「Oa2refreshTken取得」を行う
-            SimpleOperator simpleOperator = (SimpleOperator)restTemplateUtil.postBackboneAuthOa3ForJsonString(GET_SIMPLEOPERATOR_URI_PATH, accesstoken, SimpleOperator.class);
+            SimpleOperator simpleOperator = (SimpleOperator) httpSendUtil.postBackboneAuthOa2(GET_SIMPLEOPERATOR_URI_PATH, accesstoken, SimpleOperator.class);
             setAuditInfoHolder(simpleOperator);
             return;
         }

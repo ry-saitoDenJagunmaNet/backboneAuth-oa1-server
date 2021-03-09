@@ -163,11 +163,13 @@ public class SearchAccessible {
 
             SearchAccessibleDto dto = searchAccessibleDtoList.stream().filter(s -> s.getSubSystemCode().equals(bizTranGrp_BizTran.getSubSystemCode())).findFirst().orElse(null);
             if (dto == null) {
+                // サブシステム毎のdtoを追加
                 dto = new SearchAccessibleDto();
                 dto.setSubSystemCode(bizTranGrp_BizTran.getSubSystemCode());
                 dto.setBizTranCodeList(newArrayList(bizTranGrp_BizTran.getBizTran().getBizTranCode()));
                 searchAccessibleDtoList.add(dto);
             } else {
+                // すでにあるサブシステム毎のdtoに取引コードを追加（重複する取引は除外）
                 if (!dto.getBizTranCodeList().contains(bizTranGrp_BizTran.getBizTran().getBizTranCode())) {
                     dto.getBizTranCodeList().add(bizTranGrp_BizTran.getBizTran().getBizTranCode());
                 }
@@ -330,6 +332,9 @@ public class SearchAccessible {
 
         // 対象サブシステム判定
         if (!browseCalendarSubsystem.contains(subSystemCode)) { return false; }
+
+        // 対象日の経済システム稼働カレンダーがない場合trueを返却
+        if (calendars.getValues().stream().noneMatch(c -> c.getCalendarType().is経済システム稼働カレンダー())) { return true; }
 
         // カレンダーが休日の場合trueを返却
         return calendars.getValues().stream().anyMatch(c -> c.getCalendarType().is経済システム稼働カレンダー() && c.getIsHoliday());

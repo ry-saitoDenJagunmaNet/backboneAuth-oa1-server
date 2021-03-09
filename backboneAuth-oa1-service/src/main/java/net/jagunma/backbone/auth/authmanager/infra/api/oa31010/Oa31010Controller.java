@@ -11,7 +11,6 @@ import net.jagunma.backbone.auth.authmanager.infra.api.JacksonConfig;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.common.common.constant.SpecialOperator;
-import net.jagunma.common.values.model.operator.OperatorCode;
 import net.jagunma.common.values.model.operator.SimpleOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,13 +162,7 @@ public class Oa31010Controller extends BaseOfController {
             Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
             searchSimpleOperator.execute(converter, presenter);
 
-            SimpleOperator simpleOperator = SimpleOperator.builder()
-                .withIdentifier(presenter.getOperator().getOperatorId())
-                .withOperatorCode(OperatorCode.reconstruct(presenter.getOperator().getOperatorCode()))
-                .withOperatorName(presenter.getOperator().getOperatorName())
-                .withBranch(presenter.getOperator().getBranchAtMoment())
-                .build();
-
+            SimpleOperator simpleOperator = presenter.bindToSimpleOperator();
             JacksonConfig jacksonConfig = new JacksonConfig();
             try {
                 String response = jacksonConfig.objectMapperBuilder().build()

@@ -41,7 +41,7 @@ class Oa31020ControllerTest {
     private Long operatorId = 123456789L;
     private final List<SearchAccessibleDto> searchAccessibleList = createSearchAccessibleList();
 
-    // 兼用値
+    // 検証値
     private AccessibleSearchRequest actualAccessibleSearchRequest;
 
     // 可能取引データの作成
@@ -58,7 +58,7 @@ class Oa31020ControllerTest {
         return list;
     }
 
-    // テスト対象クラス
+    // テスト対象クラス生成
     private Oa31020Controller createOa31020Controller() {
         // オペレーター_取引ロール割当群検索リポジトリのスタブ
         Operator_BizTranRoleRepository operator_BizTranRoleRepository = new Operator_BizTranRoleRepository() {

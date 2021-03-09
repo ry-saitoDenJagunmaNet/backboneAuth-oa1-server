@@ -1,4 +1,4 @@
-package net.jagunma.backbone.auth.authmanager.infra.api.oa31020;
+package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,10 +7,10 @@ import net.jagunma.common.tests.constants.TestSize;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-class Oa31020ConverterTest {
+class Oa31010SearchSimpleOperatorConverterTest {
 
     /**
-     * {@link Oa31020Converter#with(Long)}テスト
+     * {@link Oa31010SearchSimpleOperatorConverter#with(String)}テスト
      *  ●パターン
      *    通常
      *
@@ -22,13 +22,13 @@ class Oa31020ConverterTest {
     void with_test0() {
 
         // 実行値
-        Long operatorId = 123456789L;
+        String operatorCode = "yu001009";
 
         // 実行
-        Oa31020Converter converter = Oa31020Converter.with(operatorId);
+        Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
 
         // 結果検証
-        assertTrue(converter instanceof Oa31020Converter);
-        assertThat(converter.getOperatorId()).isEqualTo(operatorId);
+        assertTrue(converter instanceof Oa31010SearchSimpleOperatorConverter);
+        assertThat(converter.getOperatorCode()).isEqualTo(operatorCode);
     }
 }
