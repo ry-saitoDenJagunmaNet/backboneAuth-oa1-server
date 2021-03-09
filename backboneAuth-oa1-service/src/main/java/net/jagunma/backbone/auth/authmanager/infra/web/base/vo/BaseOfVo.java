@@ -153,7 +153,7 @@ public class BaseOfVo implements Serializable {
         menuVo.setName("ロール");
         menuItemVoList = newArrayList();
         menuItemVoList.add(MenuItemVo.createFrom("oa11140/get", "oa11140.png", "ロール確認", "… 各ロール設定の確認用に情報をExcelファイルに出力します", newArrayList()));
-        menuItemVoList.add(MenuItemVo.createFrom("oa11070/get", "oa11070.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", newArrayList()));
+        menuItemVoList.add(MenuItemVo.createFrom("oa11060/get", "oa11060.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", newArrayList()));
         menuItemVoList.add(MenuItemVo.createFrom("oa11080/get", "oa11080.png", "取引ロールオペレーター割当", "…取引ロールに対してオペレーターを割り当てます", newArrayList()));
         menuVo.setMenuItemList(menuItemVoList);
         list.add(menuVo);
