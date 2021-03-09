@@ -140,7 +140,7 @@ function oa_getSidenav(selectNavId) {
 	html += '				<a class="waves-effect collapsible-header"><img src="' + imgUrl + 'collapsible.png" alt="collapsible"/>ロール</a>';
 	html += '				<div class="collapsible-body">';
 	html += oa_getSidenavRow(selectNavId, "OA11140", imgUrl + "oa11140.png", "ロール確認", "… 各ロール設定の確認用に情報をExcelファイルに出力します", []);
-	html += oa_getSidenavRow(selectNavId, "OA11070", imgUrl + "oa11070.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", []);
+	html += oa_getSidenavRow(selectNavId, "OA11060", imgUrl + "oa11060.png", "サブシステムロールオペレーター割当", "…サブシステムロールに対してオペレーターを割り当てます", []);
 	html += oa_getSidenavRow(selectNavId, "OA11080", imgUrl + "oa11080.png", "取引ロールオペレーター割当", "…取引ロールに対してオペレーターを割り当てます", []);
 	html += '				</div>';
 	html += '			</li>';

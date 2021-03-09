@@ -16,7 +16,7 @@ function oaex_additionBtn_onClick(pgId) {
 
 	// 変更事由をサンプルセット
 	let changeCause = document.getElementById("change_cause");
-	if (pgId == "oa11070"){
+	if (pgId == "oa11060"){
 		changeCause.value = "JA管理者を一括割当て";
 	} else {
 		changeCause.value="（青果）管理者（仕切実績修正）を一括割当て";
