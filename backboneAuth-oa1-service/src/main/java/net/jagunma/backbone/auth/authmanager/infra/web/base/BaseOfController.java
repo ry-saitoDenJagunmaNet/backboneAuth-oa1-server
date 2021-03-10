@@ -38,6 +38,15 @@ public class BaseOfController {
     private HttpSendUtil httpSendUtil;
 
     /**
+     * RestTemplateUtilのＳｅｔ
+     *
+     * @param httpSendUtil
+     */
+    public void setHttpSendUtil(HttpSendUtil httpSendUtil) {
+        this.httpSendUtil = httpSendUtil;
+    }
+
+    /**
      * HttpServletRequest
      */
     @Autowired
