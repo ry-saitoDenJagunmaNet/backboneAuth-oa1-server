@@ -58,7 +58,7 @@ public class Authentication {
         // アカウントロックよる認証
         if (accountLockRepository.existsByOperatorId(operator.getOperatorId())) {
             AccountLock accountLock = accountLockRepository.latestOneByOperatorId(operator.getOperatorId());
-            signInResult =  isAuthenticationByAccountLock(accountLock);
+            signInResult = isAuthenticationByAccountLock(accountLock);
             if (!SignInResult.成功.equals(signInResult)) {
                 response.setSignInResult(signInResult);
                 return;

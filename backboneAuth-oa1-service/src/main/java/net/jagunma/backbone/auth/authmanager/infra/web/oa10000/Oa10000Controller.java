@@ -65,7 +65,7 @@ public class Oa10000Controller extends BaseOfController {
 
         try {
             if (AuditInfoHolder.getAuthInf() == null) {
-                // 未認証の場合サインイン画面にリダイレクイト
+                // 未認証の場合サインイン画面にリダイレクト
                 return String.format(SIGNIN_REDIRECT, request.getScheme(), request.getServerName(), request.getServerPort());
             }
 

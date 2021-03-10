@@ -122,19 +122,19 @@ public class Ed01000Controller extends BaseOfController {
 
         LOGGER.debug("oAuthReception START");
 
-        // コードが取得できない場合（予期せぬエラー\n\nCL:サーバーで予期しないエラーが発生しました。）
-        if (code.length() == 0) { throw new GunmaRuntimeException("EOA10001"); }
-
-        // リダイレクトuri（サインインの呼び出し元）、stateをSessionから取出
-        Map<String, String> sessionStringMap =  (Map<String, String>) getSessionAttribute(SESSIONKEY_STRING_MAP);
-        String redirectUri = sessionStringMap.get("redirect_uri").toString();
-        String requestState =sessionStringMap.get("state").toString();
-
-        // stateが一致しない場合エラー（予期せぬエラー\n\nCL:サーバーで予期しないエラーが発生しました。）
-        if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
-
         Ed01000Vo vo = new Ed01000Vo();
         try {
+            // codeが取得できない場合（予期せぬエラー\n\nCL:サーバーで予期しないエラーが発生しました。）
+            if (code.length() == 0) { throw new GunmaRuntimeException("EOA10001"); }
+
+            // リダイレクトuri（サインインの呼び出し元）、stateをSessionから取出
+            Map<String, String> sessionStringMap =  (Map<String, String>) getSessionAttribute(SESSIONKEY_STRING_MAP);
+            String redirectUri = sessionStringMap.get("redirect_uri").toString();
+            String requestState =sessionStringMap.get("state").toString();
+
+            // stateが一致しない場合エラー（予期せぬエラー\n\nCL:サーバーで予期しないエラーが発生しました。）
+            if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
+
             vo.setRedirectUri(redirectUri);
             vo.setMode(SignInCause.サインイン.getCode());
 

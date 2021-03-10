@@ -125,6 +125,80 @@ class Ed01000ControllerTest {
     }
 
     /**
+     * {@link Ed01000Controller#oAuthReception(String, String, String, Model)}のテスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException ）発生
+     *    ・codeが取得できない場合
+     *
+     *  ●検証事項
+     *  ・戻り値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void oAuthReception_test1() {
+
+        // テスト対象クラス生成
+        Ed01000Controller controller = createEd01000Controller();
+
+        // 実行値
+        controller.setHttpSession(mockHttpServletRequest.getSession());
+        String error = "";
+        String code = "";
+        String state = "state12345";
+
+        // 期待値
+        String expected = "ed01000";
+        String expectedMessageCode = "EOA10001";
+
+        // 実行
+        String actual = controller.oAuthReception(error, code, state, model);
+        Ed01000Vo actualVo = (Ed01000Vo)model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+    }
+
+    /**
+     * {@link Ed01000Controller#oAuthReception(String, String, String, Model)}のテスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException ）発生
+     *    ・stateが一致しない場合
+     *
+     *  ●検証事項
+     *  ・戻り値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void oAuthReception_test2() {
+
+        // テスト対象クラス生成
+        Ed01000Controller controller = createEd01000Controller();
+
+        // 実行値
+        controller.setHttpSession(mockHttpServletRequest.getSession());
+        String error = "";
+        String code = "code12345";
+        String state = "state12345";
+        Map<String, String> sessionStringMap = new HashMap<>();
+        sessionStringMap.put("redirect_uri", redirectUri);
+        sessionStringMap.put("state", state);
+        controller.setSessionAttribute(controller.SESSIONKEY_STRING_MAP, sessionStringMap);
+
+        // 期待値
+        String expected = "ed01000";
+        String expectedMessageCode = "EOA10001";
+
+        // 実行
+        String actual = controller.oAuthReception(error, code, "state12345X", model);
+        Ed01000Vo actualVo = (Ed01000Vo)model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actual).isEqualTo(expected);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+    }
+
+    /**
      * {@link Ed01000Controller#signIn(HttpServletRequest, Model, Ed01000Vo)}のテスト
      *  ●パターン
      *    正常
