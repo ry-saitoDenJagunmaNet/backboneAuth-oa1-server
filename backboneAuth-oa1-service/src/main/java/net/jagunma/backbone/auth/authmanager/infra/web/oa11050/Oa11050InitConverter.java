@@ -8,9 +8,12 @@ import net.jagunma.backbone.auth.authmanager.application.usecase.bizTranRoleGran
 class Oa11050InitConverter implements BizTranRoleGrantedSearchRequest {
 
     /**
-     * OA11050 Various OperatorId
+     * サインインオペレーターID
      */
     private final Long signInOperatorId;
+    /**
+     * ターゲットオペレーターID
+     */
     private final Long targetOperatorId;
 
     // コンストラクタ

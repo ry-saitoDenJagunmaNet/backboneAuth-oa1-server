@@ -76,10 +76,9 @@ public class Oa11030Controller extends BaseOfController {
         setAuthInf();
 
         Oa11030Vo vo = new Oa11030Vo();
-        vo.setOperatorId(operatorId);
 
         try {
-            Oa11030InitConverter converter = Oa11030InitConverter.with(vo);
+            Oa11030InitConverter converter = Oa11030InitConverter.with(operatorId);
             Oa11030InitPresenter presenter = new Oa11030InitPresenter();
             presenter.setBranchesAtMomentForBranchItemsSource(searchBranchAtMoment.selectBy(AuditInfoHolder.getJa().getIdentifier()));
 
