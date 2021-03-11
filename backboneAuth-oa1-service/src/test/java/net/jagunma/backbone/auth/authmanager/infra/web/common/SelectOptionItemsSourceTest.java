@@ -11,6 +11,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.util.strings2.Strings2;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
@@ -311,4 +312,38 @@ class SelectOptionItemsSourceTest {
         // 結果検証
         assertThat(actual.getValue()).usingRecursiveComparison().isEqualTo(expected);
     }
+
+    /**
+     * {@link SelectOptionItemsSource#createFrom(SubSystem[])}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void createFrom_subSystemRole_test0() {
+
+        // 実行値
+        SubSystemRole subSystemRoles[] = SubSystemRole.getValidValues();
+
+        // 期待値
+        List<SelectOptionItemSource> expected = newArrayList();
+        expected.add(SelectOptionItemSource.empty());
+        for(SubSystemRole subSystemRole : SubSystemRole.getValidValues()) {
+            if (subSystemRole.name().equals("UnKnown")) { continue; }
+            expected.add(new SelectOptionItemSource(
+                null,
+                subSystemRole.getCode(),
+                subSystemRole.getDisplayName()));
+        }
+
+        // 実行
+        SelectOptionItemsSource actual = SelectOptionItemsSource.createFrom(SubSystemRole.getValidValues());
+
+        // 結果検証
+        assertThat(actual.getValue()).usingRecursiveComparison().isEqualTo(expected);
+    }
+
 }
