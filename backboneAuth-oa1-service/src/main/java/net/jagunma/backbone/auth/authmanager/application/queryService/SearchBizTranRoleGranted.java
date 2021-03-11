@@ -79,8 +79,7 @@ public class SearchBizTranRoleGranted {
         List<BizTranRoleGrantedAllRoleDto> allRoleDtoList = createAllRoleDtoList(signInOperator_SubSystemRoles, bizTranRoles);
 
         // Responseへセット
-        response.setSignInOperatorId(request.getSignInOperatorId());
-        response.setTargetOperatorId(request.getTargetOperatorId());
+        response.setOperatorId(request.getTargetOperatorId());
         response.setAssignRoleDtoList(assignRoleDtoList);
         response.setAllRoleDtoList(allRoleDtoList);
         response.setOperatorHistoryHeader(operatorHistoryHeader);

@@ -33,10 +33,7 @@ import org.junit.jupiter.api.Test;
 class Oa11050InitPresenterTest {
 
     // 実行既定値
-    // サインインオペレーター項目系
-    private Long signInOperatorId = 987654L;
-
-    // ターゲットオペレーター項目系
+    // オペレーター項目系
     private Long operatorId = 123456L;
     private String operatorCode = "yu123456";
     private String operatorName = "オペレーター名";
@@ -228,8 +225,7 @@ class Oa11050InitPresenterTest {
         // 実行値
         Oa11050Vo vo = new Oa11050Vo();
         Oa11050InitPresenter presenter = new Oa11050InitPresenter();
-        presenter.setSignInOperatorId(signInOperatorId);
-        presenter.setTargetOperatorId(operatorId);
+        presenter.setOperatorId(operatorId);
         presenter.setAssignRoleDtoList(createBizTranRoleGrantedAssignRoleDtoList());
         presenter.setAllRoleDtoList(createBizTranRoleGrantedAllRoleDtoList());
         presenter.setOperatorHistoryHeader(operatorHistoryHeader);
@@ -269,8 +265,7 @@ class Oa11050InitPresenterTest {
         // 実行値
         Oa11050Vo vo = new Oa11050Vo();
         Oa11050InitPresenter presenter = new Oa11050InitPresenter();
-        presenter.setSignInOperatorId(signInOperatorId);
-        presenter.setTargetOperatorId(operatorId);
+        presenter.setOperatorId(operatorId);
         presenter.setAssignRoleDtoList(newArrayList());
         presenter.setAllRoleDtoList(newArrayList());
         presenter.setOperatorHistoryHeader(operatorHistoryHeader);
