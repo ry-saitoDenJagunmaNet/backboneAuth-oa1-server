@@ -10,17 +10,11 @@ import net.jagunma.backbone.auth.authmanager.model.domain.operatorHistoryPack.op
  */
 public interface BizTranRoleGrantedSearchResponse {
     /**
-     * サインインオペレーターIDのSｅｔ
+     * オペレーターIDのＳｅｔ
      *
-     * @param signInOperatorId サインインオペレーターID
+     * @param operatorId オペレーターID
      */
-    void setSignInOperatorId(Long signInOperatorId);
-    /**
-     * ターゲットオペレーターIDのＳｅｔ
-     *
-     * @param targetOperatorId ターゲットオペレーターID
-     */
-    void setTargetOperatorId(Long targetOperatorId);
+    void setOperatorId(Long operatorId);
     /**
      * アサインロールDtoリストのＳｅｔ
      *

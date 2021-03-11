@@ -48,7 +48,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 class Oa11040ControllerTest {
@@ -173,8 +172,7 @@ class Oa11040ControllerTest {
                 if (request.getTargetOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
-                response.setSignInOperatorId(signInOperatorId);
-                response.setTargetOperatorId(operatorId);
+                response.setOperatorId(operatorId);
                 response.setAssignRoleDtoList(createSubSystemRoleGrantedAssignRoleDtoList());
                 response.setAllRoleDtoList(createSubSystemRoleGrantedAllRoleDtoList());
                 response.setOperatorHistoryHeader(operatorHistoryHeader);

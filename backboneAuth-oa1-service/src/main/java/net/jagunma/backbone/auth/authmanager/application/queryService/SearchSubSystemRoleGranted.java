@@ -64,8 +64,7 @@ public class SearchSubSystemRoleGranted {
         List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList = createAllRoleDtoList(signInOperator_SubSystemRoles);
 
         // Responseへセット
-        response.setSignInOperatorId(request.getSignInOperatorId());
-        response.setTargetOperatorId(request.getTargetOperatorId());
+        response.setOperatorId(request.getTargetOperatorId());
         response.setAssignRoleDtoList(assignRoleDtoList);
         response.setAllRoleDtoList(allRoleDtoList);
         response.setOperatorHistoryHeader(operatorHistoryHeader);

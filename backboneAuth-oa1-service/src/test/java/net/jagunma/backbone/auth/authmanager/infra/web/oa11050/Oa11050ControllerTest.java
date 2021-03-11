@@ -261,8 +261,7 @@ class Oa11050ControllerTest {
                 if (request.getTargetOperatorId().equals(12L)) {
                     throw new RuntimeException();
                 }
-                response.setSignInOperatorId(signInOperatorId);
-                response.setTargetOperatorId(operatorId);
+                response.setOperatorId(operatorId);
                 response.setAssignRoleDtoList(createBizTranRoleGrantedAssignRoleDtoList());
                 response.setAllRoleDtoList(createBizTranRoleGrantedAllRoleDtoList());
                 response.setOperatorHistoryHeader(operatorHistoryHeader);

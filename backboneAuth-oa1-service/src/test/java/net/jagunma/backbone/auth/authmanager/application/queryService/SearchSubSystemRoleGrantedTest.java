@@ -88,8 +88,7 @@ class SearchSubSystemRoleGrantedTest {
 
     // 検証値
     private Operator_SubSystemRoleCriteria actualOperator_SubSystemRoleCriteria;
-    private Long actualSignInOperatorId;
-    private Long actualTargetOperatorId;
+    private Long actualOperatorId;
     private List<SubSystemRoleGrantedAssignRoleDto> actualAssignRoleDtoList;
     private List<SubSystemRoleGrantedAllRoleDto> actualAllRoleDtoList;
     private OperatorHistoryHeader actualOperatorHistoryHeader;
@@ -141,12 +140,8 @@ class SearchSubSystemRoleGrantedTest {
     private SubSystemRoleGrantedSearchResponse createResponse() {
         return new SubSystemRoleGrantedSearchResponse() {
             @Override
-            public void setSignInOperatorId(Long signInOperatorId) {
-               actualSignInOperatorId = signInOperatorId;
-            }
-            @Override
-            public void setTargetOperatorId(Long targetOperatorId) {
-                actualTargetOperatorId = targetOperatorId;
+            public void setOperatorId(Long operatorId) {
+                actualOperatorId = targetOperatorId;
             }
             @Override
             public void setAssignRoleDtoList(List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList) {
@@ -244,8 +239,7 @@ class SearchSubSystemRoleGrantedTest {
             .doesNotThrowAnyException();
 
         // 結果検証
-        assertThat(actualSignInOperatorId).isEqualTo(signInOperatorId);
-        assertThat(actualTargetOperatorId).isEqualTo(targetOperatorId);
+        assertThat(actualOperatorId).isEqualTo(targetOperatorId);
         assertThat(actualAssignRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAssignRoleDtoList);
         assertThat(actualAllRoleDtoList).usingRecursiveComparison().isEqualTo(expectedAllRoleDtoList);
         assertThat(actualOperatorHistoryHeader).usingRecursiveComparison().isEqualTo(operatorHistoryHeader);

@@ -17,8 +17,7 @@ import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
  */
 class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
 
-    private Long signInOperatorId;
-    private Long targetOperatorId;
+    private Long operatorId;
     private List<SubSystemRoleGrantedAssignRoleDto> assignRoleDtoList;
     private List<SubSystemRoleGrantedAllRoleDto> allRoleDtoList;
     private OperatorHistoryHeader operatorHistoryHeader;
@@ -28,20 +27,12 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
     }
 
     /**
-     * サインインオペレーターIDのSｅｔ
+     * オペレーターIDのＳｅｔ
      *
-     * @param signInOperatorId サインインオペレーターID
+     * @param operatorId オペレーターID
      */
-    public void setSignInOperatorId(Long signInOperatorId) {
-        this.signInOperatorId = signInOperatorId;
-    }
-    /**
-     * ターゲットオペレーターIDのＳｅｔ
-     *
-     * @param targetOperatorId ターゲットオペレーターID
-     */
-    public void setTargetOperatorId(Long targetOperatorId) {
-        this.targetOperatorId = targetOperatorId;
+    public void setOperatorId(Long operatorId) {
+        this.operatorId = operatorId;
     }
     /**
      * アサインロールDtoリストのＳｅｔ
