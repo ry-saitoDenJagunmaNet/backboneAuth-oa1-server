@@ -12,6 +12,7 @@ import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrp;
 import net.jagunma.backbone.auth.authmanager.model.domain.bizTranRoleComposition.bizTranGrp.BizTranGrps;
 import net.jagunma.backbone.auth.authmanager.model.types.SubSystem;
+import net.jagunma.backbone.auth.authmanager.model.types.SubSystemRole;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 import net.jagunma.common.values.model.ja.JaAtMoment;
@@ -147,6 +148,31 @@ public class SelectOptionItemsSource {
                 null,
                 subSystem.getCode(),
                 subSystem.getDisplayName()
+            ));
+        }
+        return new SelectOptionItemsSource(list);
+    }
+
+    /**
+     * サブシステムロール（enum）から作成します
+     * <pre>
+     * 記述例
+     *   SelectOptionItemsSource.createFrom(SubSystemRole.getValidValues())
+     * </pre>
+     *
+     * @param subSystemRoles サブシステムロール（enum）配列
+     * @return サブシステムロールコンボボックス選択肢群
+     */
+    public static SelectOptionItemsSource createFrom(SubSystemRole[] subSystemRoles) {
+        List<SubSystemRole> subSystemRoleList = Arrays.asList(subSystemRoles);
+        List<SelectOptionItemSource> list = newArrayList();
+        list.add(SelectOptionItemSource.empty());
+        for (SubSystemRole subSystemRole : subSystemRoleList.stream().sorted(Comparator.comparing(SubSystemRole::getDisplaySortOrder)).collect(Collectors.toList())) {
+            if (subSystemRole.getCode().length() == 0) { continue; }
+            list.add(new SelectOptionItemSource(
+                null,
+                subSystemRole.getCode(),
+                subSystemRole.getDisplayName()
             ));
         }
         return new SelectOptionItemsSource(list);
