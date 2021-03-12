@@ -75,7 +75,7 @@ public class Ed01010Controller extends BaseOfController {
         vo.setOperatorId(operatorId);
 
         try {
-            Ed01010InitConverter converter = Ed01010InitConverter.with(vo);
+            Ed01010InitConverter converter = Ed01010InitConverter.with(operatorId);
             Ed01010InitPresenter presenter = new Ed01010InitPresenter();
 
             searchOperator.execute(converter, presenter);

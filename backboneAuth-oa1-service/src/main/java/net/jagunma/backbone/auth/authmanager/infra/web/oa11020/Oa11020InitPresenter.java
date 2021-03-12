@@ -2,6 +2,8 @@ package net.jagunma.backbone.auth.authmanager.infra.web.oa11020;
 
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
+import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
@@ -9,9 +11,6 @@ import net.jagunma.common.values.model.branch.BranchesAtMoment;
  */
 class Oa11020InitPresenter {
 
-    private String jaCode;
-    private String jaName;
-    private String operatorCodePrefix;
     private BranchesAtMoment branchesAtMomentForBranchItemsSource;
 
     // コンストラクタ
@@ -19,33 +18,9 @@ class Oa11020InitPresenter {
     }
 
     /**
-     * ＪＡコードのＳｅｔ
+     * 店舗コンボボックスItemsSourceのＳｅｔ
      *
-     * @param jaCode
-     */
-    public void setJaCode(String jaCode) {
-        this.jaCode = jaCode;
-    }
-    /**
-     * ＪＡ名のＳｅｔ
-     *
-     * @param jaName
-     */
-    public void setJaName(String jaName) {
-        this.jaName = jaName;
-    }
-    /**
-     * 識別（オペレーターコードプレフィックス）のＳｅｔ
-     *
-     * @param operatorCodePrefix
-     */
-    public void setOperatorCodePrefix(String operatorCodePrefix) {
-        this.operatorCodePrefix = operatorCodePrefix;
-    }
-    /**
-     * 店舗コンボボックスItemsSource の為の 店舗群AtMomentのＳｅｔ
-     *
-     * @param branchesAtMomentForBranchItemsSource
+     * @param branchesAtMomentForBranchItemsSource 店舗コンボボックスItemsSource
      */
     public void setBranchesAtMomentForBranchItemsSource(BranchesAtMoment branchesAtMomentForBranchItemsSource) {
         this.branchesAtMomentForBranchItemsSource = branchesAtMomentForBranchItemsSource;
@@ -54,12 +29,12 @@ class Oa11020InitPresenter {
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11020Vo vo) {
-        vo.setJa(jaCode + " " + jaName);
+        vo.setJa(AuditInfoHolder.getAuthInf().getJaCode() + " " + AuditInfoHolder.getJa().getJaAttribute().getName());
         vo.setBranchId(null);
-        vo.setOperatorCodePrefix(operatorCodePrefix);
+        vo.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
         vo.setOperatorCode6(null);
         vo.setOperatorName(null);
         vo.setMailAddress(null);

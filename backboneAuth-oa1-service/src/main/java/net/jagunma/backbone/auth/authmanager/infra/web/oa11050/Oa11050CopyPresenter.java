@@ -31,7 +31,7 @@ class Oa11050CopyPresenter implements BizTranRoleGrantedCopyResponse {
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11050Vo vo) {
 
