@@ -28,9 +28,9 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
     }
 
     /**
-     * 店舗コンボボックスItemsSource の為の 店舗群AtMoment
+     * 店舗コンボボックスItemsSourceのＳｅｔ
      *
-     * @param branchesAtMomentForBranchItemsSource
+     * @param branchesAtMomentForBranchItemsSource 店舗コンボボックスItemsSource
      */
     public void setBranchesAtMomentForBranchItemsSource(BranchesAtMoment branchesAtMomentForBranchItemsSource) {
         this.branchesAtMomentForBranchItemsSource = branchesAtMomentForBranchItemsSource;
@@ -39,7 +39,7 @@ class Oa11030InitPresenter extends BaseOfOperatorSearchResponse implements Opera
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11030Vo vo) {
 

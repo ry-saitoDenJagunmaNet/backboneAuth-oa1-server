@@ -32,7 +32,7 @@ class Oa11040CopyPresenter implements SubSystemRoleGrantedCopyResponse {
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11040Vo vo) {
 

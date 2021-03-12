@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import net.jagunma.backbone.auth.authmanager.infra.web.common.SelectOptionItemsSource;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
+import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.tests.constants.TestSize;
 import net.jagunma.common.values.model.branch.BranchAtMoment;
 import net.jagunma.common.values.model.branch.BranchAttribute;
@@ -19,9 +21,6 @@ import org.junit.jupiter.api.Test;
 class Oa11020InitPresenterTest {
 
     // 実行既定値
-    private String jaCode = "006";
-    private String jaName = "JA前橋市";
-    private String operatorCodePrefix = "yu";
     private List<BranchAtMoment> branchAtMomentList = newArrayList(
         BranchAtMoment.builder().withIdentifier(1L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("001")).withName("本店").build()).build(),
         BranchAtMoment.builder().withIdentifier(2L).withJaAtMoment(new JaAtMoment()).withBranchAttribute(BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of("002")).withName("店舗002").build()).build(),
@@ -43,16 +42,13 @@ class Oa11020InitPresenterTest {
         // 実行値
         Oa11020Vo vo = new Oa11020Vo();
         Oa11020InitPresenter presenter = new Oa11020InitPresenter();
-        presenter.setJaCode(jaCode);
-        presenter.setJaName(jaName);
-        presenter.setOperatorCodePrefix(operatorCodePrefix);
         presenter.setBranchesAtMomentForBranchItemsSource(branchesAtMoment);
 
         // 期待値
         Oa11020Vo expectedVo = new Oa11020Vo();
-        expectedVo.setJa(jaCode + " " + jaName);
+        expectedVo.setJa(AuditInfoHolder.getAuthInf().getJaCode() + " " + AuditInfoHolder.getJa().getJaAttribute().getName());
         expectedVo.setBranchId(null);
-        expectedVo.setOperatorCodePrefix(operatorCodePrefix);
+        expectedVo.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
         expectedVo.setOperatorCode6(null);
         expectedVo.setOperatorName(null);
         expectedVo.setMailAddress(null);

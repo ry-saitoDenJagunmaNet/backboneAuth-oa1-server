@@ -3,14 +3,11 @@ package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfOperatorSearchResponse;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
-import net.jagunma.common.values.model.branch.BranchesAtMoment;
 
 /**
  * ED01010 初期表示 Presenter
  */
 class Ed01010InitPresenter extends BaseOfOperatorSearchResponse implements OperatorSearchResponse {
-
-    private BranchesAtMoment branchesAtMomentForBranchItemsSource;
 
     // コンストラクタ
     Ed01010InitPresenter() {
@@ -19,7 +16,7 @@ class Ed01010InitPresenter extends BaseOfOperatorSearchResponse implements Opera
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Ed01010Vo vo) {
 

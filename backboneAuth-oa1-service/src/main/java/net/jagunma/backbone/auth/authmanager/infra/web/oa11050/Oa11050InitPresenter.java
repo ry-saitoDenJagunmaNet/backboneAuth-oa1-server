@@ -63,7 +63,7 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11050Vo vo) {
 
@@ -90,7 +90,7 @@ class Oa11050InitPresenter implements BizTranRoleGrantedSearchResponse {
             unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
 
-        vo.setOperatorId(operatorHistoryHeader.getOperator().getOperatorId());
+        vo.setOperatorId(operatorId);
         vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
         vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
         vo.setAssignRoleTableVoList(assignRoleTableVoList);

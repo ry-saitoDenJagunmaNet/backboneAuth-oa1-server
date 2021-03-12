@@ -62,7 +62,7 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
     /**
      * voに変換します
      *
-     * @param vo
+     * @param vo ViewObject
      */
     public void bindTo(Oa11040Vo vo) {
 
@@ -85,7 +85,7 @@ class Oa11040InitPresenter implements SubSystemRoleGrantedSearchResponse {
             unAssignRoleTableVoList.add(unAssignRoleTableVo);
         }
 
-        vo.setOperatorId(operatorHistoryHeader.getOperator().getOperatorId());
+        vo.setOperatorId(operatorId);
         vo.setJa(operatorHistoryHeader.getOperator().getJaCode() + " " + operatorHistoryHeader.getOperator().getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
         vo.setOperator(operatorHistoryHeader.getOperator().getOperatorCode() + " " + operatorHistoryHeader.getOperator().getOperatorName());
         vo.setAssignRoleTableVoList(assignRoleTableVoList);

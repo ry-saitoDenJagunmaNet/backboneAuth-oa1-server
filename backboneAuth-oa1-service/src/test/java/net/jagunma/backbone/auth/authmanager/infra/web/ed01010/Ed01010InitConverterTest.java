@@ -14,7 +14,7 @@ class Ed01010InitConverterTest {
     private Long operatorId = 123456L;
 
     /**
-     * {@link Ed01010InitConverter#with(Ed01010Vo vo)}テスト
+     * {@link Ed01010InitConverter#with(Long operatorId)}テスト
      *  ●パターン
      *    正常
      *
@@ -30,7 +30,7 @@ class Ed01010InitConverterTest {
         vo.setOperatorId(operatorId);
 
         // 実行
-        Ed01010InitConverter converter = Ed01010InitConverter.with(vo);
+        Ed01010InitConverter converter = Ed01010InitConverter.with(operatorId);
 
         // 結果検証
         assertTrue(converter instanceof Ed01010InitConverter);

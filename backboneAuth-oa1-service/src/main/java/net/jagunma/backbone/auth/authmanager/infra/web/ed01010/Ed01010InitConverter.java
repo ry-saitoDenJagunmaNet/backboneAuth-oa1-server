@@ -1,7 +1,6 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01010;
 
 import net.jagunma.backbone.auth.authmanager.application.usecase.operatorReference.OperatorSearchRequest;
-import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 
 /**
  * ED01010 初期表示 Converter
@@ -9,18 +8,18 @@ import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 class Ed01010InitConverter implements OperatorSearchRequest {
 
     /**
-     * ED01010 View Object
+     * オペレーターID
      */
-    private final Ed01010Vo vo;
+    private final Long operatorId;
 
     // コンストラクタ
-    Ed01010InitConverter(Ed01010Vo vo)  {
-        this.vo = vo;
+    Ed01010InitConverter(Long operatorId) {
+        this.operatorId = operatorId;
     }
 
     // ファクトリーメソッド
-    public static Ed01010InitConverter with(Ed01010Vo vo) {
-        return new Ed01010InitConverter(vo);
+    public static Ed01010InitConverter with(Long operatorId) {
+        return new Ed01010InitConverter(operatorId);
     }
 
     /**
@@ -29,6 +28,6 @@ class Ed01010InitConverter implements OperatorSearchRequest {
      * @return オペレーターID
      */
     public Long getOperatorId() {
-        return vo.getOperatorId();
+        return operatorId;
     }
 }

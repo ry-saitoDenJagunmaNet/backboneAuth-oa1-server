@@ -13,7 +13,7 @@ class Oa11030InitConverter implements OperatorSearchRequest {
     private final Long operatorId;
 
     // コンストラクタ
-    Oa11030InitConverter(Long operatorId)  {
+    Oa11030InitConverter(Long operatorId) {
         this.operatorId = operatorId;
     }
 

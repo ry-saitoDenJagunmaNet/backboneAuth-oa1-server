@@ -5,7 +5,6 @@ import net.jagunma.backbone.auth.authmanager.application.queryService.SearchBran
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
 import net.jagunma.backbone.auth.authmanager.infra.web.oa11020.vo.Oa11020Vo;
-import net.jagunma.backbone.auth.authmanager.model.types.OperatorCodePrefix;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -77,11 +76,8 @@ public class Oa11020Controller extends BaseOfController {
 
         try {
             Oa11020InitPresenter presenter = new Oa11020InitPresenter();
-
-            presenter.setJaCode(AuditInfoHolder.getAuthInf().getJaCode());
-            presenter.setJaName(AuditInfoHolder.getJa().getJaAttribute().getName());
-            presenter.setOperatorCodePrefix(OperatorCodePrefix.codeOf(AuditInfoHolder.getAuthInf().getJaCode()).getPrefix());
             presenter.setBranchesAtMomentForBranchItemsSource(searchBranchAtMoment.selectBy(AuditInfoHolder.getJa().getIdentifier()));
+
             presenter.bindTo(vo);
 
             model.addAttribute("form", vo);
