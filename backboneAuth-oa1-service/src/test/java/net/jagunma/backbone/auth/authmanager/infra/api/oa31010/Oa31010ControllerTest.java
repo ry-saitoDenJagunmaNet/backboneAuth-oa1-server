@@ -537,7 +537,7 @@ class Oa31010ControllerTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void getSimpleOperator_test1() throws JsonProcessingException {
+    void getSimpleOperator_test1() {
 
         // テスト対象クラス生成
         operatorCode = null;
@@ -556,4 +556,79 @@ class Oa31010ControllerTest {
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
+    /**
+     * {@link Oa31010Controller#getOperatorInfo(String)}のテスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・サービスの引数
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getOperatorInfo_test0() {
+
+        // テスト対象クラス生成
+        Oa31010Controller controller = createOa31010Controller();
+
+        // 実行値
+        Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 期待値
+        SimpleOperator simpleOperator = SimpleOperator.builder()
+            .withIdentifier(operatorId)
+            .withOperatorCode(OperatorCode.of(operatorCode))
+            .withOperatorName(operatorName)
+            .withBranch(createBranchAtMoment())
+            .build();
+        Oa31010OpertorInfoResult result = new Oa31010OpertorInfoResult();
+        result.setJaId(simpleOperator.getBranch().getJaAtMoment().getIdentifier());
+        result.setJaCode(simpleOperator.getBranch().getJaAtMoment().getJaAttribute().getJaCode().getValue());
+        result.setJaName(simpleOperator.getBranch().getJaAtMoment().getJaAttribute().getName());
+        result.setBranchId(simpleOperator.getBranch().getIdentifier());
+        result.setBranchCode(simpleOperator.getBranch().getBranchAttribute().getBranchCode().getValue());
+        result.setBranchName(simpleOperator.getBranch().getBranchAttribute().getName());
+        result.setOperatorId(simpleOperator.getIdentifier());
+        result.setOperatorCode(simpleOperator.getOperatorCode().getValue());
+        result.setOperatorName(simpleOperator.getOperatorName());
+        ResponseEntity<Oa31010OpertorInfoResult> expected = new ResponseEntity<>(result, HttpStatus.OK);
+        Oa31010SearchSimpleOperatorConverter expectedSimpleOperatorSearchRequest = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 実行
+        ResponseEntity<Oa31010OpertorInfoResult> actual = controller.getOperatorInfo(operatorCode);
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actualSimpleOperatorSearchRequest).usingRecursiveComparison().isEqualTo(expectedSimpleOperatorSearchRequest);
+    }
+
+    /**
+     * {@link Oa31010Controller#getOperatorInfo(String)}のテスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getOperatorInfo_test1() {
+
+        // テスト対象クラス生成
+        operatorCode = null;
+        Oa31010Controller controller = createOa31010Controller();
+
+        // 実行値
+        Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+
+        // 期待値
+        ResponseEntity<Oa31010OpertorInfoResult> expected = new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        // 実行
+        ResponseEntity<Oa31010OpertorInfoResult> actual = controller.getOperatorInfo(operatorCode);
+
+        // 結果検証
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
 }
