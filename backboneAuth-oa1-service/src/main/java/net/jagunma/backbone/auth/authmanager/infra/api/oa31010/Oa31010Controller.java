@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -151,8 +152,7 @@ public class Oa31010Controller extends BaseOfController {
         @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
         @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
         @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
-    public ResponseEntity<String> getSimpleOperator(
-        @RequestBody String operatorCode) {
+    public ResponseEntity<String> getSimpleOperator(@RequestBody String operatorCode) {
 
         LOGGER.debug("getSimpleOperator:" + operatorCode);
 
@@ -172,6 +172,40 @@ public class Oa31010Controller extends BaseOfController {
             } catch (RuntimeException | JsonProcessingException re) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+
+        } catch (RuntimeException re) {
+            //ToDo: 例外時の戻りが不明（APIの戻りの型はこれでよいのか？）
+            //ToDo: catchする例外は RuntimeException でよい？ GunmaRuntimeExceptionは？ 「@ApiResponse」との関係は？
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * オペレーター情報の検索を行います
+     *
+     * @param operatorCode オペレーターコード
+     * @return オペレーター情報
+     */
+    @PostMapping(path = "/getOperatorInfo/{operatorCode}")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "業務処理成功(GunmaBusinessRuntimeExceptionもここ)"),
+        @ApiResponse(responseCode = "401", description = "認証情報が特定できない場合"),
+        @ApiResponse(responseCode = "403", description = "認証情報は特定できたが処理を認可できない場合"),
+        @ApiResponse(responseCode = "404", description = "対象URLが存在しない場合"),
+        @ApiResponse(responseCode = "500", description = "GunmaRuntimeExceptionはここ")})
+    public ResponseEntity<Oa31010OpertorInfoResult> getOperatorInfo(@PathVariable("operatorCode") String operatorCode) {
+
+        LOGGER.debug("getSimpleOperator:" + operatorCode);
+
+        Oa31010SearchSimpleOperatorPresenter presenter = new Oa31010SearchSimpleOperatorPresenter();
+
+        try {
+            Oa31010SearchSimpleOperatorConverter converter = Oa31010SearchSimpleOperatorConverter.with(operatorCode);
+            searchSimpleOperator.execute(converter, presenter);
+
+            Oa31010OpertorInfoResult opertorInfoResult = new Oa31010OpertorInfoResult();
+            presenter.bindTo(opertorInfoResult);
+            return new ResponseEntity<>(opertorInfoResult, HttpStatus.OK);
 
         } catch (RuntimeException re) {
             //ToDo: 例外時の戻りが不明（APIの戻りの型はこれでよいのか？）

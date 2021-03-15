@@ -35,4 +35,20 @@ public class Oa31010SearchSimpleOperatorPresenter implements SimpleOperatorSearc
             .build();
     }
 
+    /**
+     * Oa31010 オペレーター情報 Resultに変換します
+     *
+     * @param result Oa31010 オペレーター情報 Result
+     */
+    public void bindTo(Oa31010OpertorInfoResult result) {
+        result.setJaId(operator.getJaId());
+        result.setJaCode(operator.getJaCode());
+        result.setJaName(operator.getBranchAtMoment().getJaAtMoment().getJaAttribute().getName());
+        result.setBranchId(operator.getBranchId());
+        result.setBranchCode(operator.getBranchCode());
+        result.setBranchName(operator.getBranchAtMoment().getBranchAttribute().getName());
+        result.setOperatorId(operator.getOperatorId());
+        result.setOperatorCode(operator.getOperatorCode());
+        result.setOperatorName(operator.getOperatorName());
+    }
 }
