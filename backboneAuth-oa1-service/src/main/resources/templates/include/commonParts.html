@@ -51,7 +51,7 @@
 
 
 	<!-- サイドナビゲーション -->
-	<div id="sidenav" th:if="${viewSidenav!='false'}">
+	<div id="sidenav" th:if="${viewSidenav!=false}">
 		<a class="sidenav-trigger oa_sidenav_open" href="#" data-target="slide-out"><img src="../../static/img/sidenav_open.png" th:src="@{/img/sidenav_open.png}" alt="sidenav open"/></a>
 		<ul class="sidenav" id="slide-out">
 			<li>

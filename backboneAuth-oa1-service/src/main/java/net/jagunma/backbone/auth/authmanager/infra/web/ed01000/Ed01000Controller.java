@@ -1,22 +1,24 @@
 package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.dto.Ed01000Dto;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistory;
+import net.jagunma.backbone.auth.authmanager.model.domain.passwordHistory.PasswordHistoryRepository;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
 import net.jagunma.common.server.annotation.SubSystemInfo;
 import net.jagunma.common.server.annotation.SystemInfo;
+import net.jagunma.common.server.aop.AuditInfoHolder;
 import net.jagunma.common.util.exception.GunmaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +53,8 @@ public class Ed01000Controller extends BaseOfController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Ed01000Controller.class);
 
-    final String SESSIONKEY_STRING_MAP = "session_ed01000";
+    final String SESSIONKEY_REDIRECT_URI = "session_ed01000_redirect_uri";
+    final String SESSIONKEY_STATE = "session_ed01000_state";
 
     private final SignIn signIn;
 
@@ -83,10 +86,8 @@ public class Ed01000Controller extends BaseOfController {
             String responseType = "code";
 
             // リダイレクトuri（サインインの呼び出し元）をSessionに格納
-            Map<String, String> sessionStringMap = new HashMap<>();
-            sessionStringMap.put("redirect_uri", redirect_uri);
-            sessionStringMap.put("state", state);
-            setSessionAttribute(SESSIONKEY_STRING_MAP, sessionStringMap);
+            setSessionAttribute(SESSIONKEY_REDIRECT_URI, redirect_uri);
+            setSessionAttribute(SESSIONKEY_STATE, state);
 
             // ToDo: oa2認証Apiで認証コードを取得する
             // ToDo: 暫定でoa2認証Apiからリダイレクトされた提でoAuthRedirectメソッドを呼ぶ（oa2への接続方法確認）
@@ -128,9 +129,8 @@ public class Ed01000Controller extends BaseOfController {
             if (code.length() == 0) { throw new GunmaRuntimeException("EOA10001"); }
 
             // リダイレクトuri（サインインの呼び出し元）、stateをSessionから取出
-            Map<String, String> sessionStringMap = (Map<String, String>) getSessionAttribute(SESSIONKEY_STRING_MAP);
-            String redirectUri = sessionStringMap.get("redirect_uri").toString();
-            String requestState =sessionStringMap.get("state").toString();
+            String redirectUri = (String) getSessionAttribute(SESSIONKEY_REDIRECT_URI);
+            String requestState = (String) getSessionAttribute(SESSIONKEY_STATE);
 
             // stateが一致しない場合エラー（予期せぬエラー\n\nCL:サーバーで予期しないエラーが発生しました。）
             if (!state.equals(requestState)) { throw new GunmaRuntimeException("EOA10001"); }
@@ -177,12 +177,20 @@ public class Ed01000Controller extends BaseOfController {
             presenter.bindTo(dto);
 
             if (dto.isSignInResultSuccess()) {
-                StringBuilder uri = new StringBuilder();
-                uri.append("redirect:");
-                uri.append(vo.getRedirectUri());
-                uri.append("?access_token=").append(dto.getAccessToken());
+                setSessionAttribute(SESSION_KEY_ACCES_TOKEN, dto.getAccessToken());
+                setAuthInf();
+
+                // ToDo: 「パスワード変更種別」が初期 or 管理者によるリセットの場合パスワード変更を求める
+                if (isPasswordChange()) {
+                    Long operatorId = AuditInfoHolder.getOperator().getIdentifier();
+                    return String.format("redirect:/ed01010/getForUpdate?operatorId=%1$d&redirect_uri=%2$s&access_token=%3$s",
+                        operatorId, vo.getRedirectUri(), dto.getAccessToken());
+                }
+
                 // HttpListenerレスポンス に認証結果を送信する
-                return uri.toString();
+                return "redirect:"
+                    + vo.getRedirectUri()
+                    + "?access_token=" + dto.getAccessToken();
             }
 
             // サインインに失敗
@@ -199,6 +207,16 @@ public class Ed01000Controller extends BaseOfController {
             model.addAttribute("form", vo);
             return "oa19999";
         }
+    }
+
+    // ToDo: 本当はSimpleOperatorに「パスワード変更種別」が定義されている予定だが、まだ無いのでPasswordHistoryを検索して判定する
+    @Autowired
+    private PasswordHistoryRepository passwordHistoryRepository;
+
+    // ToDo: 本当はSimpleOperatorに「パスワード変更種別」が定義されている予定だが、まだ無いのでPasswordHistoryを検索して判定する
+    private boolean isPasswordChange() {
+        PasswordHistory passwordHistory = passwordHistoryRepository.latestOneByOperatorId(AuditInfoHolder.getOperator().getIdentifier());
+        return passwordHistory.getPasswordChangeType().is初期() || passwordHistory.getPasswordChangeType().is管理者によるリセット();
     }
 
     /**

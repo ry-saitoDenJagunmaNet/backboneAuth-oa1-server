@@ -4,6 +4,8 @@ import net.jagunma.backbone.auth.authmanager.application.commandService.UpdatePa
 import net.jagunma.backbone.auth.authmanager.application.queryService.SearchOperator;
 import net.jagunma.backbone.auth.authmanager.infra.web.base.BaseOfController;
 import net.jagunma.backbone.auth.authmanager.infra.web.ed01010.vo.Ed01010Vo;
+import net.jagunma.backbone.auth.authmanager.model.types.PasswordChangeType;
+import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.common.server.annotation.FeatureGroupInfo;
 import net.jagunma.common.server.annotation.FeatureInfo;
 import net.jagunma.common.server.annotation.ServiceInfo;
@@ -119,6 +121,11 @@ public class Ed01010Controller extends BaseOfController {
             if (vo.getMode().equals("Change")) {
                 Ed01010ChangeConverter converter = Ed01010ChangeConverter.with(vo);
                 updatePassword.execute(converter);
+
+                // サインイン直後のパスワード変更要求の場合
+                if (vo.getRedirectUri().length() > 0 && vo.getAccessToken().length() > 0) {
+                    return String.format("redirect:%1$s?access_token=%2$s",vo.getRedirectUri(), vo.getAccessToken());
+                }
             }
 
             model.addAttribute("form", vo);
@@ -136,4 +143,53 @@ public class Ed01010Controller extends BaseOfController {
             return "oa19999";
         }
     }
+
+    /**
+     * 画面を初期表示します
+     *
+     * @param operatorId オペレーターID
+     * @param redirectUri リダイレクトURI
+     * @param accessToken アクセストークン
+     * @param model モデル
+     * @return view名
+     */
+    @GetMapping(path = "/getForUpdate")
+    public String getForUpdate(@RequestParam("operatorId") Long operatorId,
+        @RequestParam("redirect_uri") String redirectUri,
+        @RequestParam("access_token") String accessToken,
+        Model model) {
+
+        // ToDo: テストサインイン情報セット
+        setAuthInf();
+
+        Ed01010Vo vo = new Ed01010Vo();
+        vo.setMode("Change");
+        vo.setOperatorId(operatorId);
+
+        try {
+            Ed01010InitConverter converter = Ed01010InitConverter.with(operatorId);
+            Ed01010InitPresenter presenter = new Ed01010InitPresenter();
+
+            searchOperator.execute(converter, presenter);
+
+            presenter.bindTo(vo);
+            vo.setRedirectUri(redirectUri);
+            vo.setAccessToken(accessToken);
+
+            model.addAttribute("form", vo);
+            return "ed01010";
+
+        } catch (GunmaRuntimeException gre) {
+            // 業務例外が発生した場合
+            vo.setExceptionMessage(gre);
+            model.addAttribute("form", vo);
+            return "ed01010";
+        } catch (RuntimeException re) {
+            // その他予期せぬ例外が発生した場合
+            vo.setExceptionMessage(re);
+            model.addAttribute("form", vo);
+            return "oa19999";
+        }
+    }
+
 }

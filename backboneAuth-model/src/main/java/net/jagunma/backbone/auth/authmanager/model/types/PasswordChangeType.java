@@ -73,4 +73,40 @@ public enum PasswordChangeType {
         }
         return PasswordChangeType.UnKnown;
     }
+
+    /**
+     * 初期かを判定します
+     *
+     * @return true:初期
+     */
+    public boolean is初期() {
+        return this.equals(初期);
+    }
+
+    /**
+     * ユーザーによる変更かを判定します
+     *
+     * @return true:ユーザーによる変更
+     */
+    public boolean isユーザーによる変更() {
+        return this.equals(ユーザーによる変更);
+    }
+
+    /**
+     * 管理者によるリセットかを判定します
+     *
+     * @return true:管理者によるリセット
+     */
+    public boolean is管理者によるリセット() {
+        return this.equals(管理者によるリセット);
+    }
+
+    /**
+     * 機器認証パスワードかを判定します
+     *
+     * @return true:機器認証パスワード
+     */
+    public boolean is機器認証パスワード() {
+        return this.equals(機器認証パスワード);
+    }
 }

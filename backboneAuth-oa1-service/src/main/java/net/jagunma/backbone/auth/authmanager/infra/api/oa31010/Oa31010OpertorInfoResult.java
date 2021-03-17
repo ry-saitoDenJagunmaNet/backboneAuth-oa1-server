@@ -1,7 +1,5 @@
 package net.jagunma.backbone.auth.authmanager.infra.api.oa31010;
 
-import net.jagunma.common.values.model.operator.SimpleOperator;
-
 /**
  * Oa31010 オペレーター情報 Result
  */

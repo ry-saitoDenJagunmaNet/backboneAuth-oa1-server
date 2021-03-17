@@ -2,6 +2,7 @@ package net.jagunma.backbone.auth.authmanager.model.types;
 
 import static net.jagunma.common.util.collect.Lists2.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import net.jagunma.common.tests.constants.TestSize;
@@ -120,5 +121,158 @@ class PasswordChangeTypeTest {
         assertThat(PasswordChangeType.codeOf((short) 3)).isEqualTo(PasswordChangeType.機器認証パスワード);
         assertThat(PasswordChangeType.codeOf((short) -1)).isEqualTo(PasswordChangeType.UnKnown);
         assertThat(PasswordChangeType.codeOf((short) 9)).isEqualTo(PasswordChangeType.UnKnown);
+    }
+
+    /**
+     * {@link PasswordChangeType#is初期()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is初期_test0() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.初期;
+
+        // 実行 & 結果検証
+        assertTrue(actual.is初期());
+    }
+
+    /**
+     * {@link PasswordChangeType#is初期()}テスト
+     *  ●パターン
+     *    正常（初期以外）
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is初期_test1() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.ユーザーによる変更;
+
+        // 実行 & 結果検証
+        assertThat(actual.is初期()).isEqualTo(false);
+    }
+
+    /**
+     * {@link PasswordChangeType#isユーザーによる変更()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isユーザーによる変更_test0() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.ユーザーによる変更;
+
+        // 実行 & 結果検証
+        assertTrue(actual.isユーザーによる変更());
+    }
+
+    /**
+     * {@link PasswordChangeType#isユーザーによる変更()}テスト
+     *  ●パターン
+     *    正常（ユーザーによる変更以外）
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void isユーザーによる変更_test1() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.管理者によるリセット;
+
+        // 実行 & 結果検証
+        assertThat(actual.isユーザーによる変更()).isEqualTo(false);
+    }
+
+    /**
+     * {@link PasswordChangeType#is管理者によるリセット()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is管理者によるリセット_test0() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.管理者によるリセット;
+
+        // 実行 & 結果検証
+        assertTrue(actual.is管理者によるリセット());
+    }
+
+    /**
+     * {@link PasswordChangeType#is管理者によるリセット()}テスト
+     *  ●パターン
+     *    正常（管理者によるリセット以外）
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is管理者によるリセット_test1() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.機器認証パスワード;
+
+        // 実行 & 結果検証
+        assertThat(actual.is管理者によるリセット()).isEqualTo(false);
+    }
+
+    /**
+     * {@link PasswordChangeType#is機器認証パスワード()}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is機器認証パスワード_test0() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.機器認証パスワード;
+
+        // 実行 & 結果検証
+        assertTrue(actual.is機器認証パスワード());
+    }
+
+    /**
+     * {@link PasswordChangeType#is機器認証パスワード()}テスト
+     *  ●パターン
+     *    正常（機器認証パスワード以外）
+     *    正常
+     *
+     *  ●検証事項
+     *  ・PasswordChangeTypeの判定
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void is機器認証パスワード_test1() {
+
+        // 実行
+        PasswordChangeType actual = PasswordChangeType.初期;
+
+        // 実行 & 結果検証
+        assertThat(actual.is機器認証パスワード()).isEqualTo(false);
     }
 }

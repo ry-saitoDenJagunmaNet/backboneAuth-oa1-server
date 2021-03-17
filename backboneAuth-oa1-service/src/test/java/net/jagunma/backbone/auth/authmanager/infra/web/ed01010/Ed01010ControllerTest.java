@@ -69,6 +69,10 @@ class Ed01010ControllerTest {
     private String newPassword = "PaSsWoRd";
     private String confirmPassword = "PaSsWoRd";
 
+    // サインイン直後の初期パスワード変更項目系
+    private String redirectUri = "";
+    private String accessToken = "";
+
     // テスト対象クラス生成
     private Ed01010Controller createEd01010Controller() {
 
@@ -159,6 +163,8 @@ class Ed01010ControllerTest {
         vo.setOldPassword(oldPassword);
         vo.setNewPassword(newPassword);
         vo.setConfirmPassword(confirmPassword);
+        vo.setRedirectUri(redirectUri);
+        vo.setAccessToken(accessToken);
 
         return vo;
     }
@@ -187,6 +193,8 @@ class Ed01010ControllerTest {
         oldPassword = null;
         newPassword = null;
         confirmPassword = null;
+        redirectUri = null;
+        accessToken = null;
         Ed01010Vo expectedVo = createEd01010Vo();
 
         // 実行
@@ -312,7 +320,7 @@ class Ed01010ControllerTest {
      */
     @Test
     @Tag(TestSize.SMALL)
-    void update_test_change() {
+    void update_test_change1() {
         // テスト対象クラス生成
         Ed01010Controller ed01010Controller = createEd01010Controller();
 
@@ -332,6 +340,39 @@ class Ed01010ControllerTest {
         // 結果検証
         assertThat(actualViewName).isEqualTo(expectedViewName);
         assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Ed01010Controller#update(Model model, Ed01010Vo vo)}テスト
+     *  ●パターン
+     *    正常（サインイン直後のパスワード変更要求の場合）
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void update_test_change2() {
+        // テスト対象クラス生成
+        Ed01010Controller ed01010Controller = createEd01010Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        mode = "Change";
+        redirectUri = "http://001.001.001.001:1234/redirectUri/get";
+        accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik5HVEZ2ZEstZnl0aEV1";
+        Ed01010Vo vo = createEd01010Vo();
+
+        // 期待値
+        String expectedViewName = String.format("redirect:%1$s?access_token=%2$s", redirectUri, accessToken);
+        Ed01010Vo expectedVo = createEd01010Vo();
+
+        // 実行
+        String actualViewName = ed01010Controller.update(model, vo);
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
     }
 
     /**
@@ -399,6 +440,111 @@ class Ed01010ControllerTest {
 
         // 実行
         String actualViewName = ed01010Controller.update(model, vo);
+        Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+    }
+
+    /**
+     * {@link Ed01010Controller#getForUpdate(Long operatorId, String redirectUri, String accessToken, Model model)}テスト
+     *  ●パターン
+     *    正常
+     *
+     *  ●検証事項
+     *  ・正常終了
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getForUpdate_test() {
+        // テスト対象クラス生成
+        Ed01010Controller ed01010Controller = createEd01010Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+
+        // 期待値
+        String expectedViewName = "ed01010";
+        mode = "Change";
+        oldPassword = null;
+        newPassword = null;
+        confirmPassword = null;
+        Ed01010Vo expectedVo = createEd01010Vo();
+
+        // 実行
+        String actualViewName = ed01010Controller.getForUpdate(operatorId, redirectUri, accessToken, model);
+        Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo).usingRecursiveComparison().isEqualTo(expectedVo);
+    }
+
+    /**
+     * {@link Ed01010Controller#getForUpdate(Long operatorId, String redirectUri, String accessToken, Model model)}テスト
+     *  ●パターン
+     *    例外（GunmaRuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getForUpdate_test1() {
+        // テスト対象クラス生成
+        Ed01010Controller ed01010Controller = createEd01010Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        mode = "Change";
+        operatorId = 11L;
+
+        // 期待値
+        String expectedViewName = "ed01010";
+        String expectedMessageCode = "EOA13002";
+        String expectedMessageArgs0 = "パスワードの確認入力";
+
+        // 実行
+        String actualViewName = ed01010Controller.getForUpdate(operatorId, redirectUri, accessToken, model);
+        Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
+
+        // 結果検証
+        assertThat(actualViewName).isEqualTo(expectedViewName);
+        assertThat(actualVo.getMessageCode()).isEqualTo(expectedMessageCode);
+        assertThat(actualVo.getMessageArgs().get(0)).isEqualTo(expectedMessageArgs0);
+    }
+
+    /**
+     * {@link Ed01010Controller#getForUpdate(Long operatorId, String redirectUri, String accessToken, Model model)}テスト
+     *  ●パターン
+     *    例外（RuntimeException）発生
+     *
+     *  ●検証事項
+     *  ・戻り値
+     *  ・エラーメッセージのセット
+     *
+     */
+    @Test
+    @Tag(TestSize.SMALL)
+    void getForUpdate_test2() {
+        // テスト対象クラス生成
+        Ed01010Controller ed01010Controller = createEd01010Controller();
+
+        // 実行値
+        ConcurrentModel model = new ConcurrentModel();
+        mode = "Change";
+        operatorId = 12L;
+
+        // 期待値
+        String expectedViewName = "oa19999";
+        String expectedMessageCode = "EOA10001";
+
+        // 実行
+        String actualViewName = ed01010Controller.getForUpdate(operatorId, redirectUri, accessToken, model);
         Ed01010Vo actualVo = (Ed01010Vo) model.getAttribute("form");
 
         // 結果検証

@@ -2,8 +2,6 @@ package net.jagunma.backbone.auth.authmanager.infra.web.ed01000;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import net.jagunma.backbone.auth.authmanager.application.BackboneAuthConfig;
 import net.jagunma.backbone.auth.authmanager.application.commandService.SignIn;
@@ -14,6 +12,16 @@ import net.jagunma.backbone.auth.authmanager.infra.web.ed01000.vo.Ed01000Vo;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInCause;
 import net.jagunma.backbone.auth.authmanager.model.types.SignInResult;
 import net.jagunma.common.tests.constants.TestSize;
+import net.jagunma.common.values.model.branch.BranchAtMoment;
+import net.jagunma.common.values.model.branch.BranchAttribute;
+import net.jagunma.common.values.model.branch.BranchCode;
+import net.jagunma.common.values.model.branch.BranchType;
+import net.jagunma.common.values.model.ja.JaAtMoment;
+import net.jagunma.common.values.model.ja.JaAttribute;
+import net.jagunma.common.values.model.ja.JaCode;
+import net.jagunma.common.values.model.operator.OperatorCode;
+import net.jagunma.common.values.model.operator.SimpleOperator;
+import net.jagunma.common.values.model.operator.SimpleOperator.SimpleOperatorBuilder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -30,18 +38,56 @@ class Ed01000ControllerTest {
     private SignInCause signInCause = SignInCause.サインイン;
     private SignInResult signInResult = SignInResult.成功;
     private final String accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik5HVEZ2ZEstZnl0aEV1";
+    private final Long operatorId = 1018L;
+    private final String operatorCode = "yu001009";
+    private final String operatorName = "ｙｕ００１００９";
+    private final Long branchId = 33L;
+    private final String branchCode = "001";
+    private final String branchName = "店舗００１";
+    private final Long jaId = 6L;
+    private final String jaCode = "006";
+    private final String jaName = "ＪＡ００６";
 
     // 検証値
     SignInRequest actualSignInRequest;
 
+    // SimpleOperatorデータの作成
+    private SimpleOperator createSimpleOperator() {
+        return new SimpleOperatorBuilder()
+            .withIdentifier(operatorId)
+            .withOperatorCode(OperatorCode.of(operatorCode))
+            .withOperatorName(operatorName)
+            .withBranchIdentifier(branchId)
+            .withBranch(createBranchAtMoment())
+            .build();
+    }
+    // BranchesAtMomentデータの作成
+    private BranchAtMoment createBranchAtMoment() {
+        return BranchAtMoment.builder()
+            .withIdentifier(branchId)
+            .withJaAtMoment(createJaAtMoment())
+            .withBranchAttribute(
+                BranchAttribute.builder().withBranchType(BranchType.一般).withBranchCode(BranchCode.of(branchCode)).withName(branchName).build())
+            .build();
+    }
+    // JaAtMomentデータの作成
+    private JaAtMoment createJaAtMoment() {
+        return JaAtMoment.builder()
+            .withIdentifier(jaId)
+            .withJaAttribute(JaAttribute
+                .builder()
+                .withJaCode(JaCode.of(jaCode))
+                .withName(jaName)
+                .withFormalName("")
+                .withAbbreviatedName("")
+                .build())
+            .build();
+    }
+
     // テスト対象クラス生成
     private Ed01000Controller createEd01000Controller() {
-        // BackboneAuthConfigのスタブ
-        BackboneAuthConfig backboneAuthConfig = new BackboneAuthConfig();
-        // Http送信 ユーティリティのスタブ
-        HttpSendUtil httpSendUtil = new HttpSendUtil(backboneAuthConfig);
         // サインインサービスのスタブ
-        SignIn signIn = new SignIn(httpSendUtil) {
+        SignIn signIn = new SignIn(createHttpSendUtil()) {
             public void execute(SignInRequest request, SignInResponse response) {
                 actualSignInRequest = request;
                 if (request.getMode() == SignInCause.UnKnown.getCode()) {
@@ -53,6 +99,17 @@ class Ed01000ControllerTest {
             }
         };
         return new Ed01000Controller(signIn);
+    }
+    // Http送信 ユーティリティのスタブ
+    private HttpSendUtil createHttpSendUtil() {
+        // BackboneAuthConfigのスタブ
+        BackboneAuthConfig backboneAuthConfig = new BackboneAuthConfig();
+        // Http送信 ユーティリティのスタブ
+        return new HttpSendUtil(backboneAuthConfig) {
+            public Object postBackboneAuthOa2(String path, Object request, Class<?> clazz) {
+                return createSimpleOperator();
+            };
+        };
     }
 
     /**
@@ -104,10 +161,8 @@ class Ed01000ControllerTest {
         String error = "";
         String code = "code12345";
         String state = "state12345";
-        Map<String, String> sessionStringMap = new HashMap<>();
-        sessionStringMap.put("redirect_uri", redirectUri);
-        sessionStringMap.put("state", state);
-        controller.setSessionAttribute(controller.SESSIONKEY_STRING_MAP, sessionStringMap);
+        controller.setSessionAttribute(controller.SESSIONKEY_REDIRECT_URI, redirectUri);
+        controller.setSessionAttribute(controller.SESSIONKEY_STATE, state);
 
         // 期待値
         String expected = "ed01000";
@@ -180,10 +235,8 @@ class Ed01000ControllerTest {
         String error = "";
         String code = "code12345";
         String state = "state12345";
-        Map<String, String> sessionStringMap = new HashMap<>();
-        sessionStringMap.put("redirect_uri", redirectUri);
-        sessionStringMap.put("state", state);
-        controller.setSessionAttribute(controller.SESSIONKEY_STRING_MAP, sessionStringMap);
+        controller.setSessionAttribute(controller.SESSIONKEY_REDIRECT_URI, redirectUri);
+        controller.setSessionAttribute(controller.SESSIONKEY_STATE, state);
 
         // 期待値
         String expected = "ed01000";
@@ -206,6 +259,7 @@ class Ed01000ControllerTest {
      *  ●検証事項
      *  ・戻り値
      */
+    @Disabled
     @Test
     @Tag(TestSize.SMALL)
     void signIn_test0() {
@@ -223,6 +277,9 @@ class Ed01000ControllerTest {
         vo.setMode(signInCause.getCode());
         String clientIpaddress = "001.001.001.001";
         mockHttpServletRequest.setLocalAddr(clientIpaddress);
+        controller.setHttpSession(mockHttpServletRequest.getSession());
+        controller.setHttpSendUtil(createHttpSendUtil());
+        controller.setHttpServletRequest(mockHttpServletRequest);
 
         // 期待値
         String expected = String.format("redirect:%1$s?access_token=%2$s", redirectUri, accessToken);

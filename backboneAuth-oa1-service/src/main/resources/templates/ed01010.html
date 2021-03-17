@@ -15,9 +15,9 @@
 <body th:onLoad="oaex_th_onload();">
 <form>
 	<!-- 共通部品用定義 -->
-	<div th:replace="include/commonParts :: commonParts"></div>
+	<div th:replace="include/commonParts :: commonParts(viewSidenav=${#strings.isEmpty(form.accessToken)})"></div>
 	<!-- header定義 -->
-	<header>
+	<header th:if="${#strings.isEmpty(form.accessToken)}">
 		<div th:replace="include/header :: header (id='ed01010', title='パスワード入力')"></div>
 		<!-- モック表示用 -->
 		<script th:remove="all">oa_getHeader("ed01010", "パスワード入力");</script>
@@ -42,10 +42,12 @@
 			<!-- Hidden項目 -->
 			<div>
 				<input type="hidden" id="operator_id" name="operatorId" th:value="${form.operatorId}"></input>
+				<input type="hidden" id="redirect_uri" name="redirectUri" th:value="${form.redirectUri}"></input>
+				<input type="hidden" id="access_token" name="accessToken" th:value="${form.accessToken}"></input>
 			</div>
 			<!-- ＪＡ -->
 			<div class="row">
-				<div class="col s6 offset-s3">
+				<div class="col s8 m6 offset-s2 offset-m3">
 					<div class="input-field">
 						<input type="text" id="ja" name="ja" readonly="readonly" value="006 JA前橋" th:value="${form.ja}"></input>
 						<label for="ja">ＪＡ</label>
@@ -54,7 +56,7 @@
 			</div>
 			<!-- オペレーター -->
 			<div class="row">
-				<div class="col s6 offset-s3">
+				<div class="col s8 m6 offset-s2 offset-m3">
 					<div class="input-field">
 						<input type="text" id="operator" name="operator" readonly="readonly" value="OP006027 前橋小太郎" th:value="${form.operator}"></input>
 						<label for="operator">オペレーター</label>
@@ -69,7 +71,7 @@
 		<section>
 			<!-- 古いパスワード -->
 			<div class="row" id="password_old_row">
-				<div class="col s6 offset-s3">
+				<div class="col s8 m6 offset-s2 offset-m3">
 					<div class="input-field">
 						<input type="password" id="password_old" name="oldPassword" class="validate" th:value="${form.oldPassword}"></input>
 						<label for="password_old">古いパスワード</label>
@@ -78,7 +80,7 @@
 			</div>
 			<!-- 新しいパスワード -->
 			<div class="row">
-				<div class="col s6 offset-s3">
+				<div class="col s8 m6 offset-s2 offset-m3">
 					<div class="input-field">
 						<input type="password" id="password_new" name="newPassword" class="validate" th:value="${form.newPassword}"></input>
 						<label for="password_new" id="password_new_label">パスワード</label>
@@ -87,14 +89,14 @@
 			</div>
 			<!-- パスワードの確認入力 -->
 			<div class="row">
-				<div class="col s6 offset-s3">
+				<div class="col s8 m6 offset-s2 offset-m3">
 					<div class="input-field">
 						<input type="password" id="password_confirm" name="confirmPassword" class="validate" th:value="${form.confirmPassword}"></input>
 						<label for="password_confirm">パスワードの確認入力</label>
 					</div>
 				</div>
 				<!-- →ボタン -->
-				<div class="col s3">
+				<div class="col s2 m3">
 					<a class="btn waves-effect waves-light" href="javascript:oaex_arrowBtn_onClick();">➡</a>
 				</div>
 			</div>

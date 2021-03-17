@@ -37,6 +37,14 @@ public class Ed01010Vo extends BaseOfVo {
      * パスワードの確認入力
      */
     private String confirmPassword;
+    /**
+     * リダイレクトURIの確認入力
+     */
+    private String redirectUri;
+    /**
+     * アクセストークンの確認入力
+     */
+    private String accessToken;
 
     // Getter
     public String getMode() {
@@ -60,6 +68,12 @@ public class Ed01010Vo extends BaseOfVo {
     public String getConfirmPassword() {
         return confirmPassword;
     }
+    public String getRedirectUri() {
+        return redirectUri;
+    }
+    public String getAccessToken() {
+        return accessToken;
+    }
 
     // Setter
     public void setMode(String mode) {
@@ -82,5 +96,11 @@ public class Ed01010Vo extends BaseOfVo {
     }
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+    public void setRedirectUri(String redirectUri) {
+        this.redirectUri = redirectUri;
+    }
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
