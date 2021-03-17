@@ -21,22 +21,22 @@ dependencies {
 
     implementation "net.jagunma.backbone.shared:backboneShared-interface"
     testImplementation "net.jagunma.backbone.shared:backboneShared-stub:"
-    api("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
+    implementation("net.jagunma.backbone.auth:backboneAuth-dao-server:${backboneAuthDaoVersion}"){
         exclude group: "net.jagunma.common2020"
         exclude group: "com.microsoft.sqlserver"
     }
-    api( "net.jagunma.common2020:jagunma-common-server"){
+    implementation( "net.jagunma.common2020:jagunma-common-server"){
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
     }
-    api "org.seasar.doma:doma-core:${domaCoreVersion}"
+    implementation "org.seasar.doma:doma-core:${domaCoreVersion}"
     implementation("org.springframework.boot:spring-boot-starter-aop")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-    api 'org.springframework.boot:spring-boot-starter-jdbc'
-    api 'org.springframework.boot:spring-boot-starter-web'
-    api "org.springframework.boot:spring-boot-devtools"
-    api 'org.springframework.boot:spring-boot-starter-actuator'
-    api 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    annotationProcessor "org.seasar.doma:doma-processor:${domaVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    annotationProcessor "org.seasar.doma:doma-processor:${domaCoreVersion}"
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackClassicVersion}"
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackCoreVersion}"
     runtimeOnly "org.slf4j:slf4j-api:${sf4jApiVersion}"
